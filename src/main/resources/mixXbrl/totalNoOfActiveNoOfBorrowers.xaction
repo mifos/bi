@@ -18,7 +18,7 @@
   <resources> 
     <job-file> 
       <solution-file> 
-        <location>etl/totalNumberOfActiveBrrower.kjb</location>  
+        <location>etl/totalNumberOfActiveBorrowers.kjb</location>  
         <mime-type>text/plain</mime-type> 
       </solution-file> 
     </job-file> 
