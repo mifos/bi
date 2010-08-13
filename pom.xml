@@ -50,4 +50,12 @@
             </plugin>
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>
