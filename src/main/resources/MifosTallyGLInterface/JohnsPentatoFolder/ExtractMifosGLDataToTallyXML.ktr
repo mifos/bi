@@ -173,26 +173,56 @@ the data to be extracted.</note>
            <schema_name/>
            </partitioning>
     <connection>tallyho</connection>
-    <sql>select  o.display_name as branch_name, 
+    <sql>
+select  o.display_name as branch_name, 
 DATE_FORMAT(fintrxn.action_date, &apos;%Y-%m-%d&apos;) as voucher_date,
-(case atrxn.account_action_id when 1 then &apos;RECEIPT&apos; WHEN 10 THEN &apos;PAYMENT&apos; ELSE &apos;JOURNAL&apos; END) as voucher_type,
+
+&#47;*All misspelling as in mifos lookup_value table :) *&#47;
+(CASE atrxn.account_action_id 
+WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
+WHEN 2 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;Penalty&apos;)
+WHEN 3 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;MiscellenousPenalty&apos;)
+WHEN 4 THEN &apos;JOURNAL&apos; &#47;*Fee*&#47;
+WHEN 5 THEN concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;MiscellenousFee&apos;) 
+WHEN 6 then &apos;RECEIPT&apos; &#47;*Deposit*&#47;
+WHEN 7 THEN &apos;PAYMENT&apos; &#47;*Withdrawal*&#47;
+WHEN 8 THEN concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;Payment&apos;) 
+WHEN 9 then &apos;RECEIPT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
+WHEN 10 THEN &apos;PAYMENT&apos; &#47;*Disbursal*&#47;
+WHEN 11 THEN &apos;JOURNAL&apos; &#47;*Interest_posting*&#47;
+WHEN 12 THEN &apos;JOURNAL&apos; &#47;*CustomerAccountRepayment*&#47;
+WHEN 13 THEN &apos;JOURNAL&apos; &#47;*CustomerAdjustment*&#47;
+
+WHEN 14 THEN &#47;*SavingsAdjustment - but covers deposits and withdrawals*&#47;
+    (case fintrxn.fin_action_id 
+    WHEN 18 then &apos;RECEIPT&apos; &#47;*MandatoryDepositAdjustment*&#47;
+    WHEN 19 then &apos;RECEIPT&apos; &#47;*VoluntoryDepositAdjustment*&#47;
+    WHEN 20 then &apos;PAYMENT&apos; &#47;*MandatoryWithdrawalAdjustment*&#47;
+    WHEN 21 then &apos;PAYMENT&apos; &#47;*VoluntoryWithdrawalAdjustment*&#47;
+    ELSE concat(&apos;SavingsAdjustment: Unknown Financial Action:&apos;, fintrxn.fin_action_id) 
+    END) 
+
+WHEN 15 THEN &apos;JOURNAL&apos; &#47;*LoanWrittenOff*&#47;
+WHEN 16 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;WaiveOffDue&apos;)
+WHEN 17 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;WaiveOffOverDue&apos;)
+WHEN 18 then &apos;RECEIPT&apos; &#47;*LoanReversal (undoes LoanRepayment)*&#47;
+WHEN 19 THEN &apos;PAYMENT&apos; &#47;*DisrbursalAmountReversal (undoes Disbursal)*&#47;
+WHEN 20 THEN &apos;JOURNAL&apos; &#47;*LoanRescheduled*&#47;
+
+ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id) 
+END) as voucher_type,
 
 gl.glcode_value as gl_code, coa.coa_name as gl_name,
-&#47;*fintrxn.posted_amount,  fintrxn.debit_credit_flag,*&#47;
-
 sum((case fintrxn.debit_credit_flag when 0 then abs(fintrxn.posted_amount) else 0 end )) as debit,
 sum((case fintrxn.debit_credit_flag when 0 then 0 else abs(fintrxn.posted_amount) end )) as credit
 
-&#47;*atrxn.account_action_id, fintrxn.fin_action_id, fintrxn.posted_date*&#47;
 from financial_trxn fintrxn
 inner join gl_code gl on gl.glcode_id = fintrxn.glcode_id
 inner join coa on coa.glcode_id = gl.glcode_id
 inner join account_trxn atrxn on atrxn.account_trxn_id = fintrxn.account_trxn_id
 inner join account a on a.account_id = atrxn.account_id
 inner join office o on o.office_id = a.office_id
-where fintrxn.posted_date between date(?) and date(?)
-&#47;*or (fintrxn.posted_date between date() and date()))  *&#47;
-and atrxn.account_action_id in (1, 10, 4)
+where fintrxn.posted_date between date(?) and date(?) 
 group by branch_name, voucher_date, voucher_type, gl_code, gl_name
 order by branch_name, voucher_date, voucher_type, gl_code, gl_name</sql>
     <limit>0</limit>
