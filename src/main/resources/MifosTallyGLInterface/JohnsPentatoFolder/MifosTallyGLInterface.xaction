@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Mifos - Tally GL Interface</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author>John Woodlock</author>  
+    <description>Empty blank action sequence document</description>  
+    <help/>  
+    <result-type/>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <datefrom type="string"> 
+      <sources> 
+        <request>datefrom</request> 
+      </sources>  
+      <default-value><![CDATA[2010-05-13]]></default-value> 
+    </datefrom>  
+    <dateto type="string"> 
+      <sources> 
+        <request>dateto</request> 
+      </sources>  
+      <default-value/> 
+    </dateto>  
+    <overwrite type="string"> 
+      <sources> 
+        <request>overwrite</request> 
+      </sources>  
+      <default-value><![CDATA[No]]></default-value> 
+    </overwrite>  
+    <YesNo type="string-list"> 
+      <sources> 
+        <request>YesNo</request> 
+      </sources>  
+      <default-value type="string-list"> 
+        <list-item>Yes</list-item>  
+        <list-item>No</list-item> 
+      </default-value> 
+    </YesNo>  
+    <run_interface type="string"> 
+      <sources> 
+        <request>run_interface</request> 
+      </sources>  
+      <default-value><![CDATA[Yes]]></default-value> 
+    </run_interface>  
+    <pathname type="string"> 
+      <sources> 
+        <request>pathname</request> 
+      </sources>  
+      <default-value><![CDATA[C:\Program Files\pentaho\biserver-ce\pentaho-solutions\JohnsPentatoFolder\TallyExtracts\]]></default-value> 
+    </pathname> 
+  </inputs>
+
+  <outputs> 
+    <report_output type="content"> 
+      <destinations> 
+        <response>content</response> 
+      </destinations> 
+    </report_output> 
+  </outputs>
+
+  <resources> 
+    <report-definition> 
+      <solution-file> 
+        <location>MifosTallyGLInterfaceReport.prpt</location>  
+        <mime-type>application/zip</mime-type> 
+      </solution-file> 
+    </report-definition>  
+    <transformation-file> 
+      <solution-file> 
+        <location>ExtractMifosGLDataToTallyXML.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </solution-file> 
+    </transformation-file>  
+    <transformation-file1> 
+      <solution-file> 
+        <location>CheckIfFileExists.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </solution-file> 
+    </transformation-file1>  
+    <transformation-file2> 
+      <solution-file> 
+        <location>ExtractMifosGLDataToTallyXML.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </solution-file> 
+    </transformation-file2> 
+  </resources>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SecureFilterComponent</component-name>
+      <action-type>Get Posted Date Range</action-type>
+      <action-inputs> 
+        <datefrom type="string"/>  
+        <dateto type="string"/> 
+      </action-inputs>
+      <component-definition> 
+        <selections> 
+          <datefrom filter="none"> 
+            <title>From Date:</title> 
+          </datefrom>  
+          <dateto filter="none" optional="true"> 
+            <title>To Date:</title> 
+          </dateto> 
+        </selections> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>JavascriptRule</component-name>
+      <action-type>Create Additional Parameters</action-type>
+      <action-inputs> 
+        <datefrom type="string"/>  
+        <dateto type="string"/>  
+        <pathname type="string"/> 
+      </action-inputs>
+      <action-outputs> 
+        <period type="string"/>  
+        <file_name type="string"/>  
+        <calc_dateto type="string"/>  
+        <full_file_name type="string"/> 
+      </action-outputs>
+      <component-definition> 
+        <script><![CDATA[period = datefrom
+if ( dateto > "" ) period = period + " to " + dateto;
+
+file_name = "Mifos Accounting Export " + period + ".xml";
+full_file_name = pathname + file_name;
+
+calc_dateto = dateto;
+if ( calc_dateto == "" ) calc_dateto = datefrom;]]></script> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>KettleComponent</component-name>
+      <action-type>Check If Output File Already Exists</action-type>
+      <action-inputs> 
+        <full_file_name type="string"/> 
+      </action-inputs>
+      <action-resources> 
+        <transformation-file type="resource" mapping="transformation-file1"/> 
+      </action-resources>
+      <action-outputs> 
+        <transformation-output-rows type="result-set" mapping="file_exists_query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <monitor-step><![CDATA[Final Result]]></monitor-step> 
+      </component-definition> 
+    </action-definition>
+  
+    <actions> 
+      <condition><![CDATA[file_exists_query_result.getValueAt(0,0)]]></condition>  
+      <action-definition> 
+        <component-name>SecureFilterComponent</component-name>
+        <action-type>Overwrite Existing File or Not</action-type>
+        <action-inputs> 
+          <overwrite type="string"/>  
+          <YesNo type="string-list"/> 
+        </action-inputs>
+        <component-definition> 
+          <selections> 
+            <overwrite> 
+              <title>File Already Exists - Do you want to Overwrite it?</title>  
+              <filter>YesNo</filter> 
+            </overwrite> 
+          </selections> 
+        </component-definition> 
+      </action-definition>
+  
+      <action-definition> 
+        <component-name>JavascriptRule</component-name>
+        <action-type>Abort if Not to Overwrite</action-type>
+        <action-inputs> 
+          <overwrite type="string"/> 
+        </action-inputs>
+        <action-outputs> 
+          <run_interface type="string"/> 
+        </action-outputs>
+        <component-definition> 
+          <script><![CDATA[run_interface = overwrite;]]></script> 
+        </component-definition> 
+      </action-definition>
+ 
+    </actions>
+  
+    <actions> 
+      <condition><![CDATA[run_interface == 'No']]></condition>  
+      <action-definition> 
+        <component-name>JavascriptRule</component-name>
+        <action-type>JavaScript</action-type>
+        <action-outputs> 
+          <report_output type="string"/> 
+        </action-outputs>
+        <component-definition> 
+          <script><![CDATA[report_output = 'Mifos GL Interface Report Aborted';]]></script> 
+        </component-definition> 
+      </action-definition>
+ 
+    </actions>
+  
+    <actions> 
+      <condition><![CDATA[run_interface == 'Yes']]></condition>  
+      <action-definition> 
+        <component-name>KettleComponent</component-name>
+        <action-type>Save Tally GL XML</action-type>
+        <action-inputs> 
+          <datefrom type="string"/>  
+          <calc_dateto type="string"/> 
+        </action-inputs>
+        <action-resources> 
+          <transformation-file type="resource" mapping="transformation-file2"/> 
+        </action-resources>
+        <action-outputs> 
+          <transformation-output-rows type="result-set" mapping="query_result"/> 
+        </action-outputs>
+        <component-definition> 
+          <monitor-step><![CDATA[GL Extract Result Set]]></monitor-step> 
+        </component-definition> 
+      </action-definition>
+  
+      <action-definition> 
+        <component-name>SimpleReportingComponent</component-name>
+        <action-type>Tally GL Interface Report</action-type>
+        <action-inputs> 
+          <query_result type="result-set"/>  
+          <file_name type="string"/>  
+          <period type="string"/> 
+        </action-inputs>
+        <action-outputs> 
+          <outputstream type="content" mapping="report_output"/> 
+        </action-outputs>
+        <component-definition> 
+          <outputType><![CDATA[application/pdf]]></outputType> 
+        </component-definition> 
+      </action-definition>
+ 
+    </actions>
+ 
+  </actions> 
+</action-sequence>
