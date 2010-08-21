@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>LoadLoanSchedules</name>
+    <name>LoadHistLoanArrears</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
     <directory>&#47;</directory>
     <parameters>
     </parameters>
@@ -62,7 +61,7 @@
     <clusterschemas>
     </clusterschemas>
   <modified_user>-</modified_user>
-  <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
+  <modified_date>2010&#47;08&#47;19 14:40:45.488</modified_date>
   </info>
   <notepads>
   </notepads>
@@ -142,9 +141,290 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Product Lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Customer Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Table output</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Product Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Formed By lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Payment Date lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read loan_schedule</from><to>Payment Date lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Create Arrears Information</from><to>Reads Arrears Information</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Product Key</from><to>Identify Branch Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Branch Key</from><to>Identify Loan Officer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Customer Key</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  <hop> <from>Reads Arrears Information</from><to>Identify Product Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Calculate In Arrears and Outstanding Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate In Arrears and Outstanding Values</from><to>Remove Unnecessary Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Officer Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Customer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Unnecessary Columns</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Branch lookup</name>
+    <name>Calculate In Arrears and Outstanding Values</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>principal_in_arrears</field_name>
+<calc_type>SUBTRACT</calc_type>
+<field_a>principal_due</field_a>
+<field_b>principal_paid</field_b>
+<field_c/>
+<value_type>-</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>interest_in_arrears</field_name>
+<calc_type>SUBTRACT</calc_type>
+<field_a>interest_due</field_a>
+<field_b>interest_paid</field_b>
+<field_c/>
+<value_type>-</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>total_in_arrears</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_in_arrears</field_a>
+<field_b>interest_in_arrears</field_b>
+<field_c/>
+<value_type>-</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>principal_outstanding</field_name>
+<calc_type>SUBTRACT</calc_type>
+<field_a>principal_scheduled</field_a>
+<field_b>principal_paid</field_b>
+<field_c/>
+<value_type>-</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>interest_outstanding</field_name>
+<calc_type>SUBTRACT</calc_type>
+<field_a>interest_scheduled</field_a>
+<field_b>interest_paid</field_b>
+<field_c/>
+<value_type>-</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>total_outstanding</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_outstanding</field_a>
+<field_b>interest_outstanding</field_b>
+<field_c/>
+<value_type>-</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>446</xloc>
+      <yloc>4</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create Arrears Information</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <sql>drop  table if exists arrears_accounts_temp;
+create  table arrears_accounts_temp(loan_account_id int, branch_id smallint, 
+loan_officer_id int,  customer_id int, prd_offering_id smallint,
+  `as_of_date` date NOT NULL,
+  `days_in_arrears` int(10) unsigned NOT NULL DEFAULT 0,
+  `installments_in_arrears` int(10) unsigned NOT NULL DEFAULT 0,
+  `principal_scheduled` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `interest_scheduled` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `principal_due` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `interest_due` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `principal_paid` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `interest_paid` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  PRIMARY KEY (loan_account_id));
+
+insert into arrears_accounts_temp(loan_account_id, branch_id, loan_officer_id,  customer_id, prd_offering_id, as_of_date)
+select la.account_id as loan_account_id, a.office_id as branch_id, a.personnel_id as loan_officer_id, a.customer_id as customer_id,
+la.prd_offering_id as prd_offering_id, date(&apos;${arrears_as_of_date}&apos;)
+from loan_account la
+join account a on a.account_id = la.account_id
+where exists
+(select &apos;f&apos; from account_status_change_history ch
+where ch.account_id = la.account_id
+and ch.new_status in (5,9)
+and ch.changed_date &lt;= date(&apos;${arrears_as_of_date}&apos;)
+and not exists
+    (select &apos;f&apos; from account_status_change_history ch2
+    where ch2.new_status not in (5,9)
+    and ch2.changed_date &lt;= date(&apos;${arrears_as_of_date}&apos;)
+    and ch2.account_id = la.account_id
+    and ch2.account_status_change_id &gt; ch.account_status_change_id))
+
+and exists
+(select &apos;f&apos; from loan_schedule ls
+where ls.account_id = la.account_id
+and (ls.payment_date is null or ls.payment_date &gt; date(&apos;${arrears_as_of_date}&apos;))
+and ls.action_date &lt; date(&apos;${arrears_as_of_date}&apos;));
+
+&#47;* amounts scheduled *&#47;
+update arrears_accounts_temp aat
+set principal_scheduled =
+ (select ifnull(sum(principal),0)
+ from loan_schedule ls 
+ where ls.account_id = aat.loan_account_id 
+ );
+
+update arrears_accounts_temp aat
+set interest_scheduled =
+ (select ifnull(sum(interest),0)
+ from loan_schedule ls 
+ where ls.account_id = aat.loan_account_id 
+ );
+ 
+&#47;* days and installments arrears *&#47;
+update arrears_accounts_temp aat
+set days_in_arrears =
+ (select ifnull(to_days(date(&apos;${arrears_as_of_date}&apos;)) - to_days(max(ls.action_date)),0)
+ from loan_schedule ls 
+ where ls.account_id = aat.loan_account_id 
+ and (ls.payment_date is null or ls.payment_date &gt; date(&apos;${arrears_as_of_date}&apos;))
+ and ls.action_date &lt; date(&apos;${arrears_as_of_date}&apos;)
+ );
+
+update arrears_accounts_temp aat
+set installments_in_arrears =
+ (select count(ls.id)
+ from loan_schedule ls 
+ where ls.account_id = aat.loan_account_id 
+ and (ls.payment_date is null or ls.payment_date &gt; date(&apos;${arrears_as_of_date}&apos;))
+ and ls.action_date &lt; date(&apos;${arrears_as_of_date}&apos;)
+ );
+ 
+&#47;* amounts due *&#47;
+update arrears_accounts_temp aat
+set principal_due =
+ (select ifnull(sum(principal),0)
+ from loan_schedule ls 
+ where ls.account_id = aat.loan_account_id 
+ and ls.action_date &lt; date(&apos;${arrears_as_of_date}&apos;)
+ );
+
+update arrears_accounts_temp aat
+set interest_due =
+ (select ifnull(sum(interest),0)
+ from loan_schedule ls 
+ where ls.account_id = aat.loan_account_id 
+ and ls.action_date &lt; date(&apos;${arrears_as_of_date}&apos;)
+ );
+ 
+ 
+&#47;* schedule totals*&#47;
+update arrears_accounts_temp aat
+set principal_paid =
+ (select ifnull(sum(ltd.principal_amount),0)
+ from account_trxn atr  
+ join loan_trxn_detail ltd on ltd.account_trxn_id = atr.account_trxn_id
+ where atr.account_id = aat.loan_account_id 
+ and atr.account_action_id = 1
+ and atr.action_date &lt; date(&apos;${arrears_as_of_date}&apos;)
+ );
+
+&#47;* paid totals *&#47;
+update arrears_accounts_temp aat
+set interest_paid =
+ (select ifnull(sum(ltd.interest_amount),0)
+ from account_trxn atr  
+ join loan_trxn_detail ltd on ltd.account_trxn_id = atr.account_trxn_id
+ where atr.account_id = aat.loan_account_id 
+ and atr.account_action_id = 1
+ and atr.action_date &lt; date(&apos;${arrears_as_of_date}&apos;)
+ );</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>59</xloc>
+      <yloc>47</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify As Of Date Key</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>100</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_date</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>as_of_date</name>
+        <field>date_value</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>date_key</name>
+        <rename>as_of_date_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>214</xloc>
+      <yloc>298</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Branch Key</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -178,96 +458,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>393</xloc>
-      <yloc>14</yloc>
+      <xloc>209</xloc>
+      <yloc>129</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Currency lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_currency</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>principal_currency_id</name>
-        <field>CURRENCY_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>currency_key</name>
-        <rename>currency_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>392</xloc>
-      <yloc>87</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Customer Formed By lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_personnel</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>customer_formedby_id</name>
-        <field>personnel_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>personnel_key</name>
-        <rename>customer_formedby_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>498</xloc>
-      <yloc>168</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Customer lookup</name>
+    <name>Identify Customer Key</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -301,55 +499,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>642</xloc>
-      <yloc>176</yloc>
+      <xloc>409</xloc>
+      <yloc>213</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Due Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>due_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>due_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>187</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Loan Account lookup</name>
+    <name>Identify Loan Account Key</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -369,7 +526,7 @@
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>account_id</name>
+        <name>loan_account_id</name>
         <field>account_id</field>
         <condition>=</condition>
         <name2/>
@@ -383,14 +540,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>635</xloc>
-      <yloc>88</yloc>
+      <xloc>400</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Loan Officer lookup</name>
+    <name>Identify Loan Officer Key</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -424,55 +581,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>494</xloc>
-      <yloc>14</yloc>
+      <xloc>215</xloc>
+      <yloc>209</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Payment Date lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>calc_payment_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>payment_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>289</xloc>
-      <yloc>102</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Product Lookup</name>
+    <name>Identify Product Key</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -506,14 +622,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>390</xloc>
-      <yloc>178</yloc>
+      <xloc>210</xloc>
+      <yloc>55</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Read loan_schedule</name>
+    <name>Reads Arrears Information</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -523,18 +639,7 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select c.customer_id, c.branch_id, 
-c.loan_officer_id, c.customer_formedby_id, la.prd_offering_id,
-ls.account_id, ls.installment_id,ls.principal_currency_id, 
-ls.action_date as due_date, 
-ls.principal as principal_amount, ls.interest as interest_amount, 
-ls.misc_fees as misc_fee_amount, 
-ls.misc_penalty as misc_penalty_amount,
-(CASE ls.payment_status WHEN 1 THEN ls.payment_date ELSE date(&apos;3001-01-01&apos;) END ) as calc_payment_date
-from loan_schedule ls
-inner join loan_account la on la.account_id = ls.account_id
-inner join account a on a.account_id = la.account_id
-inner join customer c on c.customer_id = a.customer_id</sql>
+    <sql>select * from arrears_accounts_temp;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -542,14 +647,89 @@ inner join customer c on c.customer_id = a.customer_id</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>101</xloc>
-      <yloc>96</yloc>
+      <xloc>66</xloc>
+      <yloc>257</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Table output</name>
+    <name>Remove Unnecessary Columns</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>days_in_arrears</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>installments_in_arrears</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>product_key</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>branch_key</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>loan_officer_key</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>as_of_date_key</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>customer_key</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>loan_account_key</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>principal_in_arrears</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>interest_in_arrears</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>total_in_arrears</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>principal_outstanding</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>interest_outstanding</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>total_outstanding</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>543</xloc>
+      <yloc>188</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write hist_loan_arrears</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -560,9 +740,9 @@ inner join customer c on c.customer_id = a.customer_id</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <schema/>
-    <table>fact_loan_schedules</table>
-    <commit>1000</commit>
-    <truncate>Y</truncate>
+    <table>hist_loan_arrears</table>
+    <commit>50</commit>
+    <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
     <specify_fields>Y</specify_fields>
@@ -577,32 +757,16 @@ inner join customer c on c.customer_id = a.customer_id</sql>
     <return_field/>
     <fields>
         <field>
-          <column_name>principal_amount</column_name>
-          <stream_name>principal_amount</stream_name>
+          <column_name>days_in_arrears</column_name>
+          <stream_name>days_in_arrears</stream_name>
         </field>
         <field>
-          <column_name>interest_amount</column_name>
-          <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_fee_amount</column_name>
-          <stream_name>misc_fee_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty_amount</column_name>
-          <stream_name>misc_penalty_amount</stream_name>
-        </field>
-        <field>
-          <column_name>due_date_key</column_name>
-          <stream_name>due_date_key</stream_name>
+          <column_name>installments_in_arrears</column_name>
+          <stream_name>installments_in_arrears</stream_name>
         </field>
         <field>
           <column_name>product_key</column_name>
           <stream_name>product_key</stream_name>
-        </field>
-        <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
         </field>
         <field>
           <column_name>branch_key</column_name>
@@ -613,8 +777,8 @@ inner join customer c on c.customer_id = a.customer_id</sql>
           <stream_name>loan_officer_key</stream_name>
         </field>
         <field>
-          <column_name>customer_formedby_key</column_name>
-          <stream_name>customer_formedby_key</stream_name>
+          <column_name>as_of_date_key</column_name>
+          <stream_name>as_of_date_key</stream_name>
         </field>
         <field>
           <column_name>customer_key</column_name>
@@ -625,18 +789,34 @@ inner join customer c on c.customer_id = a.customer_id</sql>
           <stream_name>loan_account_key</stream_name>
         </field>
         <field>
-          <column_name>installment_id</column_name>
-          <stream_name>installment_id</stream_name>
+          <column_name>principal_in_arrears</column_name>
+          <stream_name>principal_in_arrears</stream_name>
         </field>
         <field>
-          <column_name>payment_key</column_name>
-          <stream_name>payment_key</stream_name>
+          <column_name>interest_in_arrears</column_name>
+          <stream_name>interest_in_arrears</stream_name>
+        </field>
+        <field>
+          <column_name>total_in_arrears</column_name>
+          <stream_name>total_in_arrears</stream_name>
+        </field>
+        <field>
+          <column_name>principal_outstanding</column_name>
+          <stream_name>principal_outstanding</stream_name>
+        </field>
+        <field>
+          <column_name>interest_outstanding</column_name>
+          <stream_name>interest_outstanding</stream_name>
+        </field>
+        <field>
+          <column_name>total_outstanding</column_name>
+          <stream_name>total_outstanding</stream_name>
         </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>799</xloc>
-      <yloc>47</yloc>
+      <xloc>691</xloc>
+      <yloc>186</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
