@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Extract Mifos GL Data To Tally XML</name>
+    <name>CheckIfFileExists</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,50 +65,6 @@
   <modified_date>2010&#47;08&#47;11 00:54:35.411</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Remove date range parameters
- from the output fields.</note>
-      <xloc>424</xloc>
-      <yloc>249</yloc>
-      <width>171</width>
-      <heigth>35</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
-    <notepad>
-      <note>The Query that extract 
-the data to be extracted.</note>
-      <xloc>243</xloc>
-      <yloc>82</yloc>
-      <width>128</width>
-      <heigth>35</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>tallyho</name>
@@ -161,10 +117,10 @@ the data to be extracted.</note>
     </attributes>
   </connection>
   <order>
-  <hop> <from>ExtractGLData</from><to>GL Extract Result Set</to><enabled>Y</enabled> </hop>  <hop> <from>GL Extract Result Set</from><to>SaveXML</to><enabled>Y</enabled> </hop>  <hop> <from>GetDateParameters</from><to>ExtractGLData</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>File exists</from><to>Set Full File Name Variable</to><enabled>Y</enabled> </hop>  <hop> <from>Set Full File Name Variable</from><to>Final Result</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>File exists</to><enabled>Y</enabled> </hop>  <hop> <from>Get Full File Name</from><to>Get Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Get Variables</from><to>Calculator</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>ExtractGLData</name>
-    <type>TableInput</type>
+    <name>File exists</name>
+    <type>FileExists</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -172,74 +128,21 @@ the data to be extracted.</note>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>tallyho</connection>
-    <sql>
-select  o.display_name as branch_name, 
-DATE_FORMAT(fintrxn.action_date, &apos;%Y-%m-%d&apos;) as voucher_date,
-
-&#47;*All misspelling as in mifos lookup_value table :) *&#47;
-(CASE atrxn.account_action_id 
-WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
-WHEN 2 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;Penalty&apos;)
-WHEN 3 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;MiscellenousPenalty&apos;)
-WHEN 4 THEN &apos;JOURNAL&apos; &#47;*Fee*&#47;
-WHEN 5 THEN concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;MiscellenousFee&apos;) 
-WHEN 6 then &apos;RECEIPT&apos; &#47;*Deposit*&#47;
-WHEN 7 THEN &apos;PAYMENT&apos; &#47;*Withdrawal*&#47;
-WHEN 8 THEN concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;Payment&apos;) 
-WHEN 9 then &apos;RECEIPT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
-WHEN 10 THEN &apos;PAYMENT&apos; &#47;*Disbursal*&#47;
-WHEN 11 THEN &apos;JOURNAL&apos; &#47;*Interest_posting*&#47;
-WHEN 12 THEN &apos;JOURNAL&apos; &#47;*CustomerAccountRepayment*&#47;
-WHEN 13 THEN &apos;JOURNAL&apos; &#47;*CustomerAdjustment*&#47;
-
-WHEN 14 THEN &#47;*SavingsAdjustment - but covers deposits and withdrawals*&#47;
-    (case fintrxn.fin_action_id 
-    WHEN 18 then &apos;RECEIPT&apos; &#47;*MandatoryDepositAdjustment*&#47;
-    WHEN 19 then &apos;RECEIPT&apos; &#47;*VoluntoryDepositAdjustment*&#47;
-    WHEN 20 then &apos;PAYMENT&apos; &#47;*MandatoryWithdrawalAdjustment*&#47;
-    WHEN 21 then &apos;PAYMENT&apos; &#47;*VoluntoryWithdrawalAdjustment*&#47;
-    ELSE concat(&apos;SavingsAdjustment: Unknown Financial Action:&apos;, fintrxn.fin_action_id) 
-    END) 
-
-WHEN 15 THEN &apos;JOURNAL&apos; &#47;*LoanWrittenOff*&#47;
-WHEN 16 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;WaiveOffDue&apos;)
-WHEN 17 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;WaiveOffOverDue&apos;)
-WHEN 18 then &apos;RECEIPT&apos; &#47;*LoanReversal (undoes LoanRepayment)*&#47;
-WHEN 19 THEN &apos;PAYMENT&apos; &#47;*DisrbursalAmountReversal (undoes Disbursal)*&#47;
-WHEN 20 THEN &apos;JOURNAL&apos; &#47;*LoanRescheduled*&#47;
-
-ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id) 
-END) as voucher_type,
-
-gl.glcode_value as gl_code, coa.coa_name as gl_name,
-sum((case fintrxn.debit_credit_flag when 0 then abs(fintrxn.posted_amount) else 0 end )) as debit,
-sum((case fintrxn.debit_credit_flag when 0 then 0 else abs(fintrxn.posted_amount) end )) as credit
-
-from financial_trxn fintrxn
-inner join gl_code gl on gl.glcode_id = fintrxn.glcode_id
-inner join coa on coa.glcode_id = gl.glcode_id
-inner join account_trxn atrxn on atrxn.account_trxn_id = fintrxn.account_trxn_id
-inner join account a on a.account_id = atrxn.account_id
-inner join office o on o.office_id = a.office_id
-where fintrxn.posted_date between date(?) and date(?) 
-group by branch_name, voucher_date, voucher_type, gl_code, gl_name
-order by branch_name, voucher_date, voucher_type, gl_code, gl_name</sql>
-    <limit>0</limit>
-    <lookup>GetDateParameters</lookup>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <filenamefield>fullfilename</filenamefield>
+    <resultfieldname>result</resultfieldname>
+    <includefiletype>N</includefiletype>
+    <filetypefieldname/>
+    <addresultfilenames>N</addresultfilenames>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>289</xloc>
-      <yloc>165</yloc>
+      <xloc>413</xloc>
+      <yloc>104</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>GL Extract Result Set</name>
+    <name>Final Result</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -248,45 +151,21 @@ order by branch_name, voucher_date, voucher_type, gl_code, gl_name</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>branch_name</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>voucher_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>voucher_type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>gl_code</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>gl_name</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>debit</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>credit</name>
+    <fields>      <field>        <name>result</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>483</xloc>
-      <yloc>167</yloc>
+      <xloc>616</xloc>
+      <yloc>235</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>GetDateParameters</name>
+    <name>Get Full File Name</name>
     <type>SystemInfo</type>
     <description/>
     <distribute>Y</distribute>
@@ -297,25 +176,21 @@ order by branch_name, voucher_date, voucher_type, gl_code, gl_name</sql>
            </partitioning>
     <fields>
       <field>
-        <name>datefrom</name>
+        <name>filename</name>
         <type>command line argument 1</type>
-        </field>
-      <field>
-        <name>calc_dateto</name>
-        <type>command line argument 2</type>
         </field>
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>89</xloc>
-      <yloc>166</yloc>
+      <xloc>72</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>SaveXML</name>
-    <type>XMLOutput</type>
+    <name>Set Full File Name Variable</name>
+    <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -323,114 +198,111 @@ order by branch_name, voucher_date, voucher_type, gl_code, gl_name</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <encoding>UTF-8</encoding>
-    <name_space/>
-    <xml_main_element>Rows</xml_main_element>
-    <xml_repeat_element>Row</xml_repeat_element>
-    <file>
-      <name>${FULL_FILE_NAME}</name>
-      <extention/>
-      <do_not_open_newfile_init>Y</do_not_open_newfile_init>
-      <split>N</split>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <omit_null_values>N</omit_null_values>
-      <date_time_format/>
-      <add_to_result_filenames>N</add_to_result_filenames>
-      <zipped>N</zipped>
-      <splitevery>0</splitevery>
-    </file>
     <fields>
       <field>
-        <name>branch_name</name>
-        <element/>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>200</length>
-        <precision>-1</precision>
-      </field>
+        <field_name>filename</field_name>
+        <variable_name>FULL_FILE_NAME</variable_name>
+        <variable_type>JVM</variable_type>
+        <default_value/>
+        </field>
+      </fields>
+    <use_formatting>Y</use_formatting>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>421</xloc>
+      <yloc>237</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculator</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>subfoldername</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>&#47;output&#47;</field_a>
+<field_b/>
+<field_c/>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>fulldirname</field_name>
+<calc_type>ADD</calc_type>
+<field_a>directoryname</field_a>
+<field_b>subfoldername</field_b>
+<field_c/>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>fullfilename</field_name>
+<calc_type>ADD</calc_type>
+<field_a>fulldirname</field_a>
+<field_b>filename</field_b>
+<field_c/>
+<value_type>String</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>289</xloc>
+      <yloc>101</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
       <field>
-        <name>voucher_date</name>
-        <element/>
-        <type>Date</type>
+        <name>directoryname</name>
+        <variable>${Internal.Transformation.Filename.Directory}</variable>
+        <type>-</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif/>
         <length>-1</length>
         <precision>-1</precision>
-      </field>
-      <field>
-        <name>voucher_type</name>
-        <element/>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>7</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>gl_code</name>
-        <element/>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>50</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>gl_name</name>
-        <element/>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>150</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>debit</name>
-        <element/>
-        <type>BigNumber</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>43</length>
-        <precision>4</precision>
-      </field>
-      <field>
-        <name>credit</name>
-        <element/>
-        <type>BigNumber</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>43</length>
-        <precision>4</precision>
+        <trim_type>none</trim_type>
       </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>675</xloc>
-      <yloc>166</yloc>
+      <xloc>190</xloc>
+      <yloc>94</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

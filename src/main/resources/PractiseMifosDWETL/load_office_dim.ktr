@@ -65,69 +65,6 @@
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Input</note>
-      <xloc>21</xloc>
-      <yloc>24</yloc>
-      <width>44</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Output</note>
-      <xloc>33</xloc>
-      <yloc>265</yloc>
-      <width>54</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Transformation</note>
-      <xloc>15</xloc>
-      <yloc>130</yloc>
-      <width>104</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -179,36 +116,33 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>wcm</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
-  <hop> <from>Missing Office</from><to>Load dim_office</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Office Data</from><to>Add Office Key</to><enabled>Y</enabled> </hop>  <hop> <from>Add Office Key</from><to>Load dim_office</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Add Office Key</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <valuename>office_key</valuename>
-      <use_database>N</use_database>
-      <connection/>
-      <schema/>
-      <seqname>SEQ_</seqname>
-      <use_counter>Y</use_counter>
-      <counter_name>office_sequence_counter</counter_name>
-      <start_at>1</start_at>
-      <increment_by>1</increment_by>
-      <max_value>999999999</max_value>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>276</xloc>
-      <yloc>133</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Extract Office Data</from><to>Office Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Extract Office Data</name>
     <type>TableInput</type>
@@ -220,8 +154,7 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select office_id, office_level_id, search_id, display_name, 
-office_short_name, parent_office_id, status_id
+    <sql>select office_id, display_name, office_level_id, search_id, ifnull(created_date, date(&apos;1900-01-01&apos;)) as created_date
 from office</sql>
     <limit>0</limit>
     <lookup/>
@@ -230,15 +163,15 @@ from office</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
+      <xloc>212</xloc>
       <yloc>24</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Load dim_office</name>
-    <type>TableOutput</type>
+    <name>Office Dimension lookup&#47;update</name>
+    <type>DimensionLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -246,170 +179,61 @@ from office</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <schema/>
-    <table>dim_office</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
+      <schema/>
+      <table>dim_office</table>
+      <connection>DestinationDB</connection>
+      <commit>100</commit>
+      <update>Y</update>
+      <fields>
+        <key>
+          <name>office_id</name>
+          <lookup>office_id</lookup>
+        </key>
+        <date>
+          <name/>
+          <from>valid_from</from>
+          <to>valid_to</to>
+        </date>
         <field>
-          <column_name>office_id</column_name>
-          <stream_name>office_id</stream_name>
+          <name>display_name</name>
+          <lookup>display_name</lookup>
+          <update>Punch through</update>
         </field>
         <field>
-          <column_name>office_level_id</column_name>
-          <stream_name>office_level_id</stream_name>
+          <name>office_level_id</name>
+          <lookup>office_level_id</lookup>
+          <update>Punch through</update>
         </field>
         <field>
-          <column_name>search_id</column_name>
-          <stream_name>search_id</stream_name>
+          <name>search_id</name>
+          <lookup>search_id</lookup>
+          <update>Punch through</update>
         </field>
         <field>
-          <column_name>display_name</column_name>
-          <stream_name>display_name</stream_name>
+          <name>created_date</name>
+          <lookup>created_date</lookup>
+          <update>Punch through</update>
         </field>
-        <field>
-          <column_name>office_short_name</column_name>
-          <stream_name>office_short_name</stream_name>
-        </field>
-        <field>
-          <column_name>parent_office_id</column_name>
-          <stream_name>parent_office_id</stream_name>
-        </field>
-        <field>
-          <column_name>status_id</column_name>
-          <stream_name>status_id</stream_name>
-        </field>
-        <field>
-          <column_name>office_key</column_name>
-          <stream_name>office_key</stream_name>
-        </field>
-    </fields>
+        <return>
+          <name>office_key</name>
+          <rename/>
+          <creation_method>tablemax</creation_method>
+          <use_autoinc>N</use_autoinc>
+          <version>version</version>
+        </return>
+      </fields>
+      <sequence/>
+      <min_year>1900</min_year>
+      <max_year>2199</max_year>
+      <cache_size>500</cache_size>
+      <preload_cache>N</preload_cache>
+      <use_start_date_alternative>N</use_start_date_alternative>
+      <start_date_alternative>none</start_date_alternative>
+      <start_date_field_name/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>275</xloc>
-      <yloc>259</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Missing Office</name>
-    <type>RowGenerator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>office_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>office_level_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>search_id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>100</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>display_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>200</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>office_short_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unk</nullif>
-        <length>4</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>parent_office_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>status_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>-1</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>office_key</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <limit>1</limit>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>427</xloc>
-      <yloc>131</yloc>
+      <xloc>212</xloc>
+      <yloc>184</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

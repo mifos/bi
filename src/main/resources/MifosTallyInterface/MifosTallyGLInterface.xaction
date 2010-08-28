@@ -39,18 +39,12 @@
         <list-item>No</list-item> 
       </default-value> 
     </YesNo>  
-    <run_interface type="string"> 
+    <runinterface type="string"> 
       <sources> 
-        <request>run_interface</request> 
+        <request>runinterface</request> 
       </sources>  
       <default-value><![CDATA[Yes]]></default-value> 
-    </run_interface>  
-    <pathname type="string"> 
-      <sources> 
-        <request>pathname</request> 
-      </sources>  
-      <default-value><![CDATA[C:\Program Files\pentaho\biserver-ce\pentaho-solutions\JohnsPentatoFolder\TallyExtracts\]]></default-value> 
-    </pathname> 
+    </runinterface> 
   </inputs>
 
   <outputs> 
@@ -113,24 +107,21 @@
       <action-type>Create Additional Parameters</action-type>
       <action-inputs> 
         <datefrom type="string"/>  
-        <dateto type="string"/>  
-        <pathname type="string"/> 
+        <dateto type="string"/> 
       </action-inputs>
       <action-outputs> 
         <period type="string"/>  
-        <file_name type="string"/>  
-        <calc_dateto type="string"/>  
-        <full_file_name type="string"/> 
+        <filename type="string"/>  
+        <calcdateto type="string"/> 
       </action-outputs>
       <component-definition> 
         <script><![CDATA[period = datefrom
 if ( dateto > "" ) period = period + " to " + dateto;
 
-file_name = "Mifos Accounting Export " + period + ".xml";
-full_file_name = pathname + file_name;
+filename = "MifosAccountingExport" + period + ".xml";
 
-calc_dateto = dateto;
-if ( calc_dateto == "" ) calc_dateto = datefrom;]]></script> 
+calcdateto = dateto;
+if ( calcdateto == "" ) calcdateto = datefrom;]]></script> 
       </component-definition> 
     </action-definition>
   
@@ -138,7 +129,7 @@ if ( calc_dateto == "" ) calc_dateto = datefrom;]]></script>
       <component-name>KettleComponent</component-name>
       <action-type>Check If Output File Already Exists</action-type>
       <action-inputs> 
-        <full_file_name type="string"/> 
+        <filename type="string"/> 
       </action-inputs>
       <action-resources> 
         <transformation-file type="resource" mapping="transformation-file1"/> 
@@ -177,17 +168,17 @@ if ( calc_dateto == "" ) calc_dateto = datefrom;]]></script>
           <overwrite type="string"/> 
         </action-inputs>
         <action-outputs> 
-          <run_interface type="string"/> 
+          <runinterface type="string"/> 
         </action-outputs>
         <component-definition> 
-          <script><![CDATA[run_interface = overwrite;]]></script> 
+          <script><![CDATA[runinterface = overwrite;]]></script> 
         </component-definition> 
       </action-definition>
  
     </actions>
   
     <actions> 
-      <condition><![CDATA[run_interface == 'No']]></condition>  
+      <condition><![CDATA[runinterface == 'No']]></condition>  
       <action-definition> 
         <component-name>JavascriptRule</component-name>
         <action-type>JavaScript</action-type>
@@ -202,22 +193,22 @@ if ( calc_dateto == "" ) calc_dateto = datefrom;]]></script>
     </actions>
   
     <actions> 
-      <condition><![CDATA[run_interface == 'Yes']]></condition>  
+      <condition><![CDATA[runinterface == 'Yes']]></condition>  
       <action-definition> 
         <component-name>KettleComponent</component-name>
         <action-type>Save Tally GL XML</action-type>
-        <action-inputs> 
-          <datefrom type="string"/>  
-          <calc_dateto type="string"/> 
+        <action-inputs>
+          <datefrom type="string"/>
+          <calcdateto type="string"/>
         </action-inputs>
         <action-resources> 
           <transformation-file type="resource" mapping="transformation-file2"/> 
         </action-resources>
         <action-outputs> 
-          <transformation-output-rows type="result-set" mapping="query_result"/> 
+          <transformation-output-rows type="result-set" mapping="queryresult"/> 
         </action-outputs>
         <component-definition> 
-          <monitor-step><![CDATA[GL Extract Result Set]]></monitor-step> 
+          <monitor-step><![CDATA[customisedextract]]></monitor-step> 
         </component-definition> 
       </action-definition>
   
@@ -225,8 +216,8 @@ if ( calc_dateto == "" ) calc_dateto = datefrom;]]></script>
         <component-name>SimpleReportingComponent</component-name>
         <action-type>Tally GL Interface Report</action-type>
         <action-inputs> 
-          <query_result type="result-set"/>  
-          <file_name type="string"/>  
+          <queryresult type="result-set"/>  
+          <filename type="string"/>  
           <period type="string"/> 
         </action-inputs>
         <action-outputs> 
