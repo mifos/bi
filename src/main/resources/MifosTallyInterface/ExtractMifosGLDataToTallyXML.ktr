@@ -185,7 +185,7 @@ WHEN 1 then &apos;RECEIPT&apos; &#47;*PRINCIPALPOSTING*&#47;
 WHEN 2 then &apos;RECEIPT&apos; &#47;*INTERESTPOSTING*&#47;
 WHEN 3 then &apos;RECEIPT&apos; &#47;*FEEPOSTING*&#47;
 WHEN 4 then &apos;RECEIPT&apos; &#47;*MISCFEEPOSTING*&#47;
-WHEN 5 then &apos;RECEIPT&apos; &#47;*PENALTYPOSTING - However, this is not not used by mifos*&#47;
+WHEN 5 then &apos;RECEIPT&apos; &#47;*PENALTYPOSTING - However, this is not used by mifos*&#47;
 WHEN 6 then &apos;RECEIPT&apos; &#47;*MISCPENALTYPOSTING*&#47;
 WHEN 9 then &apos;RECEIPT&apos; &#47;*MANDATORYDEPOSIT*&#47;
 WHEN 10 then &apos;RECEIPT&apos; &#47;*VOLUNTORYDEPOSIT*&#47;
