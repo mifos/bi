@@ -66,13 +66,18 @@
   </info>
   <notepads>
     <notepad>
-      <note>Input</note>
-      <xloc>21</xloc>
-      <yloc>24</yloc>
-      <width>44</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
+      <note>Only office changes are treated at type 2 (where a new entry and valid_from &amp; valid_to dates are set).
+Need history of personnel movements so that loan officer history at mfi can be reported on.
+
+Current ETL transformation handles &apos;first loan&apos;... doesn&apos;t cater for ongoing changes yet
+
+Also assumes that an office history is maintained (but it isn&apos;t)</note>
+      <xloc>204</xloc>
+      <yloc>18</yloc>
+      <width>508</width>
+      <heigth>85</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
@@ -84,49 +89,7 @@
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Output</note>
-      <xloc>33</xloc>
-      <yloc>265</yloc>
-      <width>54</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Transformation</note>
-      <xloc>15</xloc>
-      <yloc>130</yloc>
-      <width>104</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
+      <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
   <connection>
@@ -179,36 +142,33 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>wcm</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
-  <hop> <from>Missing Personnel</from><to>Load dim_personnel</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Personnel Data</from><to>Add Personnel Key</to><enabled>Y</enabled> </hop>  <hop> <from>Add Personnel Key</from><to>Load dim_personnel</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Add Personnel Key</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <valuename>personnel_key</valuename>
-      <use_database>N</use_database>
-      <connection/>
-      <schema/>
-      <seqname>SEQ_</seqname>
-      <use_counter>Y</use_counter>
-      <counter_name>personnel_sequence_counter</counter_name>
-      <start_at>1</start_at>
-      <increment_by>1</increment_by>
-      <max_value>999999999</max_value>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>276</xloc>
-      <yloc>133</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Extract Personnel Data</from><to>Office lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Office lookup</from><to>Personnel Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Extract Personnel Data</name>
     <type>TableInput</type>
@@ -220,8 +180,64 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select personnel_id, level_id, office_id, display_name
-from personnel</sql>
+    <sql>
+select p.personnel_id, p.display_name, lv.lookup_name gender,
+
+(case p.level_id
+when 1 then 1
+else 0
+end) as is_loan_officer,
+
+&#47;* For column became_loan_officer:
+try to use the 1st time data changed to loan_officer 
+however if entry was created as a loan_officer (and still is) then 
+no change log would have been created to date the loan officer status
+in this case can use mfi_joining date*&#47;
+ifnull(cl.changed_date, 
+    (case p.level_id
+    when 1 then pd.date_of_joining_mfi
+    else null
+    end))  as date_became_loan_officer,
+
+pd.date_of_joining_mfi, 
+
+&#47;* personnel_movement entries aren&apos;t created until a personnel moves office.
+The first change...mifos writes 2 entries... the one that should have been written 
+when the personnel was attached to an office on create... and one representing
+the office move 
+So if there is no personnel_movement entry the current office info (and date_of_joining_branch)
+is used instead of personnel_movement info
+Also because mifos write the &apos;initial&apos; office entry after the move entry the personnel_movement_id 
+can&apos;t be relied on to be in date order*&#47;
+ifnull(opm.office_id, o.office_id) office_id, 
+
+&#47;*extra ifnull to ensure mifos personnel entry gets transferred*&#47;
+ifnull(ifnull(pm.start_date, pd.date_of_joining_branch),date(&apos;1900-01-01&apos;)) as date_of_joining_branch,
+pm.end_date as date_of_leaving_branch
+
+
+&#47;* was a date of leaving mfi but can&apos;t find anything to represent that.
+was going to find the date of going inactive but its not the same*&#47;
+
+from personnel p
+join personnel_details pd on pd.personnel_id = p.personnel_id
+left join lookup_value lv on lv.lookup_id = pd.gender
+join office o on o.office_id = p.office_id
+
+left join change_log cl on cl.change_log_id = 
+(select min(clmin.change_log_id) from change_log clmin
+join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id 
+                                            and cldmin.field_name = &apos;User Hierarchy&apos;
+                                            and cldmin.new_value = &apos;Loan Officer&apos;
+where clmin.entity_id = p.personnel_id 
+and clmin.entity_type = 17) 
+
+left join personnel_movement pm on pm.personnel_id = p.personnel_id
+left join office opm on opm.office_id = pm.office_id
+
+order by p.personnel_id, pm.start_date, ifnull(pm.end_date, date(&apos;2199-12-31&apos;))
+
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -229,15 +245,109 @@ from personnel</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
-      <yloc>24</yloc>
+      <xloc>96</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Load dim_personnel</name>
-    <type>TableOutput</type>
+    <name>Personnel Dimension lookup&#47;update</name>
+    <type>DimensionLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <schema/>
+      <table>dim_personnel</table>
+      <connection>DestinationDB</connection>
+      <commit>100</commit>
+      <update>Y</update>
+      <fields>
+        <key>
+          <name>personnel_id</name>
+          <lookup>personnel_id</lookup>
+        </key>
+        <date>
+          <name/>
+          <from>valid_from</from>
+          <to>valid_to</to>
+        </date>
+        <field>
+          <name>display_name</name>
+          <lookup>display_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>gender</name>
+          <lookup>gender</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>is_loan_officer</name>
+          <lookup>is_loan_officer</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>date_of_joining_mfi</name>
+          <lookup>date_of_joining_mfi</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>date_of_joining_branch</name>
+          <lookup>date_of_joining_branch</lookup>
+          <update>Insert</update>
+        </field>
+        <field>
+          <name>date_of_leaving_branch</name>
+          <lookup>date_of_leaving_branch</lookup>
+          <update>Insert</update>
+        </field>
+        <field>
+          <name>office_key</name>
+          <lookup>office_key</lookup>
+          <update>Insert</update>
+        </field>
+        <field>
+          <name>office_name</name>
+          <lookup>office_name</lookup>
+          <update>Insert</update>
+        </field>
+        <field>
+          <name>date_became_loan_officer</name>
+          <lookup>date_became_loan_officer</lookup>
+          <update>Punch through</update>
+        </field>
+        <return>
+          <name>personnel_key</name>
+          <rename/>
+          <creation_method>tablemax</creation_method>
+          <use_autoinc>N</use_autoinc>
+          <version>version</version>
+        </return>
+      </fields>
+      <sequence/>
+      <min_year>1900</min_year>
+      <max_year>2199</max_year>
+      <cache_size>-1</cache_size>
+      <preload_cache>N</preload_cache>
+      <use_start_date_alternative>Y</use_start_date_alternative>
+      <start_date_alternative>column_value</start_date_alternative>
+      <start_date_field_name>date_of_joining_branch</start_date_field_name>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>94</xloc>
+      <yloc>295</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Office lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -246,124 +356,50 @@ from personnel</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <schema/>
-    <table>dim_personnel</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>personnel_id</column_name>
-          <stream_name>personnel_id</stream_name>
-        </field>
-        <field>
-          <column_name>level_id</column_name>
-          <stream_name>level_id</stream_name>
-        </field>
-        <field>
-          <column_name>office_id</column_name>
-          <stream_name>office_id</stream_name>
-        </field>
-        <field>
-          <column_name>display_name</column_name>
-          <stream_name>display_name</stream_name>
-        </field>
-        <field>
-          <column_name>personnel_key</column_name>
-          <stream_name>personnel_key</stream_name>
-        </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>275</xloc>
-      <yloc>259</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Missing Personnel</name>
-    <type>RowGenerator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>personnel_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>level_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_office</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>Y</eat_row_on_failure>
+      <key>
         <name>office_id</name>
+        <field>office_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_of_joining_branch</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_of_joining_branch</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>office_key</name>
+        <rename>office_key</rename>
+        <default/>
         <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
+      </value>
+      <value>
         <name>display_name</name>
+        <rename>office_name</rename>
+        <default/>
         <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>200</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>personnel_key</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <limit>1</limit>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>428</xloc>
-      <yloc>131</yloc>
+      <xloc>94</xloc>
+      <yloc>141</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

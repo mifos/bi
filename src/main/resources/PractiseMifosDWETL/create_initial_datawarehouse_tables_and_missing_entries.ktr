@@ -65,6 +65,28 @@
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Add in rest a bit later on
+could be a mysqldump</note>
+      <xloc>518</xloc>
+      <yloc>29</yloc>
+      <width>131</width>
+      <heigth>35</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -157,7 +179,8 @@
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
-    <sql>CREATE TABLE dim_office (
+    <sql>DROP TABLE dim_office;
+CREATE TABLE dim_office (
   office_key smallint(5) unsigned NOT NULL,
   office_id smallint(6) NOT NULL,
   display_name varchar(200) NOT NULL,
@@ -186,8 +209,8 @@ VALUES (0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, &apos;1900-01-01&apos
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>228</xloc>
-      <yloc>181</yloc>
+      <xloc>106</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -206,7 +229,8 @@ VALUES (0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, &apos;1900-01-01&apos
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
-    <sql>CREATE TABLE dim_product (
+    <sql>DROP TABLE dim_product;
+CREATE TABLE dim_product (
   product_key smallint(5) unsigned NOT NULL,
   prd_offering_id smallint(6) NOT NULL,
   prd_offering_name varchar(50) NOT NULL,
@@ -230,8 +254,112 @@ VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;);</sql>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>233</xloc>
-      <yloc>78</yloc>
+      <xloc>101</xloc>
+      <yloc>33</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create dim_currency with missing entry</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE dim_currency;
+CREATE TABLE `dim_currency` (
+  `currency_key` smallint(5) unsigned NOT NULL,
+  `currency_id` smallint(6) NOT NULL,
+  `currency_name` varchar(50) not NULL,
+  `rounding_amount` decimal(6,3) not NULL,
+  `currency_code` varchar(3) not  NULL,
+  `valid_from` date NOT NULL DEFAULT &apos;1900-01-01&apos;,
+  `valid_to` date NOT NULL DEFAULT &apos;2199-12-31&apos;,
+  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
+  `current_record` tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`currency_key`),
+  KEY `currency_id` (`currency_id`),
+  KEY `currency_name` (`currency_name`),
+  KEY `currency_code` (`currency_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO dim_currency(currency_key, currency_id, currency_name, rounding_amount, currency_code)
+values (0,0,&apos;Unknown&apos;, 0.0, &apos;Unk&apos;);
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>358</xloc>
+      <yloc>31</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create dim_personnel with missing entry</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE dim_personnel;
+CREATE TABLE `dim_personnel` (
+  `personnel_key` smallint(5) unsigned NOT NULL,
+  `personnel_id` smallint(6) NOT NULL,
+  `display_name` varchar(200) NOT NULL,
+  `gender` varchar(100) NULL,
+  `is_loan_officer` tinyint(1) NOT NULL,
+  `date_became_loan_officer` date DEFAULT NULL,
+  `date_of_joining_mfi` date DEFAULT NULL,
+  `date_of_joining_branch` date DEFAULT NULL,
+  `date_of_leaving_branch` date DEFAULT NULL,
+  `office_key` smallint(5) unsigned NOT NULL,
+  `office_name` varchar(200) NOT NULL,
+  `valid_from` date NOT NULL DEFAULT &apos;1900-01-01&apos;,
+  `valid_to` date NOT NULL DEFAULT &apos;2199-12-31&apos;,
+  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
+  `current_record` tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`personnel_key`),
+  KEY `personnel_key` (`personnel_key`),
+  KEY `office_key` (`office_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO dim_personnel(personnel_key, personnel_id, display_name, gender, is_loan_officer,
+date_of_joining_mfi, date_of_joining_branch, date_of_leaving_branch, office_key, office_name)
+VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, &apos;1900-01-01&apos;, &apos;1900-01-01&apos;, &apos;1900-01-01&apos;, 0, &apos;Unknown&apos;);</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>363</xloc>
+      <yloc>127</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

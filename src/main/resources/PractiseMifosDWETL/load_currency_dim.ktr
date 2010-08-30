@@ -66,13 +66,15 @@
   </info>
   <notepads>
     <notepad>
-      <note>Input</note>
-      <xloc>21</xloc>
-      <yloc>24</yloc>
-      <width>44</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
+      <note>From source to destination (no staging).
+All fields are &apos;type 1&apos; (simple update).  
+Not expecting to do otherwise.</note>
+      <xloc>415</xloc>
+      <yloc>50</yloc>
+      <width>210</width>
+      <heigth>47</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
@@ -84,49 +86,7 @@
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Output</note>
-      <xloc>33</xloc>
-      <yloc>265</yloc>
-      <width>54</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Transformation</note>
-      <xloc>15</xloc>
-      <yloc>130</yloc>
-      <width>104</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
+      <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
   <connection>
@@ -177,36 +137,33 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>wcm</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
-  <hop> <from>Missing Currency</from><to>Load dim_currency</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Currency Data</from><to>Add Currency Key</to><enabled>Y</enabled> </hop>  <hop> <from>Add Currency Key</from><to>Load dim_currency</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Add Currency Key</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <valuename>currency_key</valuename>
-      <use_database>N</use_database>
-      <connection/>
-      <schema/>
-      <seqname>SEQ_</seqname>
-      <use_counter>Y</use_counter>
-      <counter_name>currency_sequence_counter</counter_name>
-      <start_at>1</start_at>
-      <increment_by>1</increment_by>
-      <max_value>999999999</max_value>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>276</xloc>
-      <yloc>133</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Extract Currency Data</from><to>Currency Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Extract Currency Data</name>
     <type>TableInput</type>
@@ -234,8 +191,8 @@ from currency</sql>
     </step>
 
   <step>
-    <name>Load dim_currency</name>
-    <type>TableOutput</type>
+    <name>Currency Dimension lookup&#47;update</name>
+    <type>DimensionLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -243,125 +200,56 @@ from currency</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <schema/>
-    <table>dim_currency</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
+      <schema/>
+      <table>dim_currency</table>
+      <connection>DestinationDB</connection>
+      <commit>100</commit>
+      <update>Y</update>
+      <fields>
+        <key>
+          <name>currency_id</name>
+          <lookup>currency_id</lookup>
+        </key>
+        <date>
+          <name/>
+          <from>valid_from</from>
+          <to>valid_to</to>
+        </date>
         <field>
-          <column_name>currency_id</column_name>
-          <stream_name>currency_id</stream_name>
+          <name>currency_name</name>
+          <lookup>currency_name</lookup>
+          <update>Punch through</update>
         </field>
         <field>
-          <column_name>currency_name</column_name>
-          <stream_name>currency_name</stream_name>
+          <name>rounding_amount</name>
+          <lookup>rounding_amount</lookup>
+          <update>Punch through</update>
         </field>
         <field>
-          <column_name>rounding_amount</column_name>
-          <stream_name>rounding_amount</stream_name>
+          <name>currency_code</name>
+          <lookup>currency_code</lookup>
+          <update>Punch through</update>
         </field>
-        <field>
-          <column_name>currency_code</column_name>
-          <stream_name>currency_code</stream_name>
-        </field>
-        <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
-        </field>
-    </fields>
+        <return>
+          <name>currency_key</name>
+          <rename/>
+          <creation_method>tablemax</creation_method>
+          <use_autoinc>N</use_autoinc>
+          <version>version</version>
+        </return>
+      </fields>
+      <sequence/>
+      <min_year>1900</min_year>
+      <max_year>2199</max_year>
+      <cache_size>500</cache_size>
+      <preload_cache>N</preload_cache>
+      <use_start_date_alternative>N</use_start_date_alternative>
+      <start_date_alternative>none</start_date_alternative>
+      <start_date_field_name/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>280</xloc>
-      <yloc>260</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Missing Currency</name>
-    <type>RowGenerator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>currency_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>currency_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>50</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>rounding_amount</name>
-        <type>Number</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0.0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>currency_code</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unk</nullif>
-        <length>3</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>currency_key</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <limit>1</limit>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>427</xloc>
-      <yloc>131</yloc>
+      <xloc>277</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
