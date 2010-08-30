@@ -172,8 +172,7 @@
            <schema_name/>
            </partitioning>
     <connection>tallyho</connection>
-    <sql>
-select tally.branchname, tally.voucherdate, tally.vouchertype, tally.glcode, tally.glname, tally.debit, tally.credit
+    <sql>select tally.branchname, tally.voucherdate, tally.vouchertype, tally.glcode, tally.glname, tally.debit, tally.credit
 
 from
 (
@@ -181,39 +180,31 @@ from
 select  o.display_name as &quot;branchname&quot;, 
 DATE_FORMAT(fintrxn.action_date, &apos;%Y-%m-%d&apos;) as &quot;voucherdate&quot;,
 
-&#47;*All misspelling as in mifos lookup_value table :) *&#47;
-(CASE atrxn.account_action_id 
-WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
-WHEN 2 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;Penalty&apos;)
-WHEN 3 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;MiscellenousPenalty&apos;)
-WHEN 4 THEN &apos;JOURNAL&apos; &#47;*Fee*&#47;
-WHEN 5 THEN concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;MiscellenousFee&apos;) 
-WHEN 6 then &apos;RECEIPT&apos; &#47;*Deposit*&#47;
-WHEN 7 THEN &apos;PAYMENT&apos; &#47;*Withdrawal*&#47;
-WHEN 8 THEN concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;Payment&apos;) 
-WHEN 9 then &apos;RECEIPT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
-WHEN 10 THEN &apos;PAYMENT&apos; &#47;*Disbursal*&#47;
-WHEN 11 THEN &apos;JOURNAL&apos; &#47;*Interest_posting*&#47;
-WHEN 12 THEN &apos;JOURNAL&apos; &#47;*CustomerAccountRepayment*&#47;
-WHEN 13 THEN &apos;JOURNAL&apos; &#47;*CustomerAdjustment*&#47;
+(CASE fintrxn.fin_action_id 
+WHEN 1 then &apos;RECEIPT&apos; &#47;*PRINCIPALPOSTING*&#47;
+WHEN 2 then &apos;RECEIPT&apos; &#47;*INTERESTPOSTING*&#47;
+WHEN 3 then &apos;RECEIPT&apos; &#47;*FEEPOSTING*&#47;
+WHEN 4 then &apos;RECEIPT&apos; &#47;*MISCFEEPOSTING*&#47;
+WHEN 5 then &apos;RECEIPT&apos; &#47;*PENALTYPOSTING - However, this is not not used by mifos*&#47;
+WHEN 6 then &apos;RECEIPT&apos; &#47;*MISCPENALTYPOSTING*&#47;
+WHEN 9 then &apos;RECEIPT&apos; &#47;*MANDATORYDEPOSIT*&#47;
+WHEN 10 then &apos;RECEIPT&apos; &#47;*VOLUNTORYDEPOSIT*&#47;
+WHEN 16 then &apos;RECEIPT&apos; &#47;*CUSTOMERACCOUNTMISCFEESPOSTING*&#47;
 
-WHEN 14 THEN &#47;*SavingsAdjustment - but covers deposits and withdrawals*&#47;
-    (case fintrxn.fin_action_id 
-    WHEN 18 then &apos;RECEIPT&apos; &#47;*MandatoryDepositAdjustment*&#47;
-    WHEN 19 then &apos;RECEIPT&apos; &#47;*VoluntoryDepositAdjustment*&#47;
-    WHEN 20 then &apos;PAYMENT&apos; &#47;*MandatoryWithdrawalAdjustment*&#47;
-    WHEN 21 then &apos;PAYMENT&apos; &#47;*VoluntoryWithdrawalAdjustment*&#47;
-    ELSE concat(&apos;SavingsAdjustment: Unknown Financial Action:&apos;, fintrxn.fin_action_id) 
-    END) 
+WHEN 7 then &apos;PAYMENT&apos; &#47;*DISBURSAL*&#47;
+WHEN 11 then &apos;PAYMENT&apos; &#47;*MANDATORYWITHDRAWAL*&#47;
+WHEN 12 then &apos;PAYMENT&apos; &#47;*VOLUNTORYWITHDRAWAL*&#47;
 
-WHEN 15 THEN &apos;JOURNAL&apos; &#47;*LoanWrittenOff*&#47;
-WHEN 16 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;WaiveOffDue&apos;)
-WHEN 17 then concat(&apos;Assumed Unused: &apos;, atrxn.account_action_id, &apos;WaiveOffOverDue&apos;)
-WHEN 18 then &apos;RECEIPT&apos; &#47;*LoanReversal (undoes LoanRepayment)*&#47;
-WHEN 19 THEN &apos;PAYMENT&apos; &#47;*DisrbursalAmountReversal (undoes Disbursal)*&#47;
-WHEN 20 THEN &apos;JOURNAL&apos; &#47;*LoanRescheduled*&#47;
+WHEN 8 then &apos;JOURNAL&apos; &#47;*ROUNDING*&#47;
+WHEN 14 then &apos;JOURNAL&apos; &#47;*SAVINGS_INTERESTPOSTING*&#47;
+WHEN 18 then &apos;JOURNAL&apos; &#47;*MANDATORYDEPOSIT_ADJUSTMENT*&#47;
+WHEN 19 then &apos;JOURNAL&apos; &#47;*VOLUNTORYDEPOSIT_ADJUSTMENT*&#47;
+WHEN 20 then &apos;JOURNAL&apos; &#47;*MANDATORYWITHDRAWAL_ADJUSTMENT*&#47;
+WHEN 21 then &apos;JOURNAL&apos; &#47;*VOLUNTORYWITHDRAWAL_ADJUSTMENT*&#47;
+WHEN 22 then &apos;JOURNAL&apos; &#47;*WRITEOFF*&#47;
+WHEN 23 then &apos;JOURNAL&apos; &#47;*RESCHEDULE*&#47;
 
-ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id) 
+ELSE concat(&apos;Unknown Financial Action:&apos;, fintrxn.fin_action_id)  &#47;*shouldnt ever get this *&#47;
 END) as &quot;vouchertype&quot;,
 
 gl.glcode_value as &quot;glcode&quot;, coa.coa_name as &quot;glname&quot;,
@@ -228,9 +219,7 @@ inner join account a on a.account_id = atrxn.account_id
 inner join office o on o.office_id = a.office_id
 where fintrxn.posted_date between date(?) and date(?)
 group by branchname, voucherdate, vouchertype, glcode, glname
-order by branchname, voucherdate, vouchertype, glcode, glname) tally;
-
-</sql>
+order by branchname, voucherdate, vouchertype, glcode, glname) tally;</sql>
     <limit>0</limit>
     <lookup>GetDateParameters</lookup>
     <execute_each_row>N</execute_each_row>
