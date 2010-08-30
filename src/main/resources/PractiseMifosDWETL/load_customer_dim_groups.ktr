@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_customer_dim</name>
+    <name>load_customer_dim_groups</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,13 +66,17 @@
   </info>
   <notepads>
     <notepad>
-      <note>Input</note>
-      <xloc>21</xloc>
-      <yloc>24</yloc>
-      <width>44</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
+      <note>Need to handle hierarchy and status changes.
+
+This first-cut just moves current hierarchy and status.
+
+Also just handles initial load.</note>
+      <xloc>225</xloc>
+      <yloc>12</yloc>
+      <width>273</width>
+      <heigth>72</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
@@ -84,16 +88,18 @@
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
+      <drawshadow>Y</drawshadow>
     </notepad>
     <notepad>
-      <note>Output</note>
-      <xloc>33</xloc>
-      <yloc>265</yloc>
-      <width>54</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
+      <note>Invalid Grandparent lookup step used to pick up the &apos;0&apos; key values in dim_customer.
+Center lookup step may also pick up the &apos;0&apos; key values  if the center hierarchy configuration
+is turned off or the group is not part of a center hierarchy.</note>
+      <xloc>379</xloc>
+      <yloc>166</yloc>
+      <width>456</width>
+      <heigth>47</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
@@ -105,28 +111,7 @@
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Transformation</note>
-      <xloc>15</xloc>
-      <yloc>130</yloc>
-      <width>104</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
+      <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
   <connection>
@@ -179,11 +164,36 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>wcm</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
-  <hop> <from>Missing Customer</from><to>Load dim_customer</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Customer Data</from><to>Add Customer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Add Customer Key</from><to>Load dim_customer</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Extract Group Data</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Formed By lookup</from><to>Invalid Grandparent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Grandparent lookup</from><to>Center lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Center lookup</from><to>Group lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Add Customer Key</name>
-    <type>Sequence</type>
+    <name>Branch lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -191,26 +201,92 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <valuename>customer_key</valuename>
-      <use_database>N</use_database>
-      <connection/>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
       <schema/>
-      <seqname>SEQ_</seqname>
-      <use_counter>Y</use_counter>
-      <counter_name>customer_sequence_counter</counter_name>
-      <start_at>1</start_at>
-      <increment_by>1</increment_by>
-      <max_value>999999999</max_value>
+      <table>dim_office</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>branch_id</name>
+        <field>office_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>office_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>branch_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>276</xloc>
-      <yloc>133</yloc>
+      <xloc>120</xloc>
+      <yloc>132</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Extract Customer Data</name>
+    <name>Center lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>10</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>parent_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>center_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>center_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>432</xloc>
+      <yloc>331</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Extract Group Data</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -220,9 +296,21 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select customer_id, customer_level_id, global_cust_num, display_name, 
-date_of_birth, branch_id, search_id
-from customer</sql>
+    <sql>select c.customer_id, c.display_name, 
+lv.lookup_name as customer_status,
+c.customer_level_id,
+ifnull(parent.customer_id, 0) as parent_id,
+ifnull(grandparent.customer_id, 0) as grandparent_id,
+c.loan_officer_id, 
+ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
+c.branch_id
+from customer c
+join customer_state cs on cs.status_id = c.status_id
+join lookup_value lv on lv.lookup_id = cs.status_lookup_id
+left join customer parent on parent.customer_id = c.parent_customer_id
+left join customer grandparent on grandparent.customer_id = parent.parent_customer_id
+where c.customer_level_id = 2
+order by c.customer_id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -230,15 +318,15 @@ from customer</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
-      <yloc>24</yloc>
+      <xloc>117</xloc>
+      <yloc>20</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Load dim_customer</name>
-    <type>TableOutput</type>
+    <name>Formed By lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -247,67 +335,45 @@ from customer</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <schema/>
-    <table>dim_customer</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>customer_id</column_name>
-          <stream_name>customer_id</stream_name>
-        </field>
-        <field>
-          <column_name>customer_level_id</column_name>
-          <stream_name>customer_level_id</stream_name>
-        </field>
-        <field>
-          <column_name>global_cust_num</column_name>
-          <stream_name>global_cust_num</stream_name>
-        </field>
-        <field>
-          <column_name>display_name</column_name>
-          <stream_name>display_name</stream_name>
-        </field>
-        <field>
-          <column_name>date_of_birth</column_name>
-          <stream_name>date_of_birth</stream_name>
-        </field>
-        <field>
-          <column_name>branch_id</column_name>
-          <stream_name>branch_id</stream_name>
-        </field>
-        <field>
-          <column_name>search_id</column_name>
-          <stream_name>search_id</stream_name>
-        </field>
-        <field>
-          <column_name>customer_key</column_name>
-          <stream_name>customer_key</stream_name>
-        </field>
-    </fields>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_personnel</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>customer_formedby_id</name>
+        <field>personnel_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>personnel_key</name>
+        <rename>formed_by_loan_officer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>formed_by_loan_officer_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>275</xloc>
-      <yloc>259</yloc>
+      <xloc>260</xloc>
+      <yloc>234</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Missing Customer</name>
-    <type>RowGenerator</type>
+    <name>Group lookup&#47;update</name>
+    <type>DimensionLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -315,101 +381,200 @@ from customer</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>
-      <field>
-        <name>customer_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>customer_level_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>global_cust_num</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>100</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>display_name</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>200</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>date_of_birth</name>
-        <type>Date</type>
-        <format>yyyyMMdd</format>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>00010101</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>branch_id</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>search_id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>Unknown</nullif>
-        <length>100</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>customer_key</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>0</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <limit>1</limit>
+      <schema/>
+      <table>dim_customer</table>
+      <connection>DestinationDB</connection>
+      <commit>1000</commit>
+      <update>Y</update>
+      <fields>
+        <key>
+          <name>customer_id</name>
+          <lookup>customer_id</lookup>
+        </key>
+        <date>
+          <name/>
+          <from>valid_from</from>
+          <to>valid_to</to>
+        </date>
+        <field>
+          <name>display_name</name>
+          <lookup>display_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>customer_status</name>
+          <lookup>customer_status</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>customer_level_id</name>
+          <lookup>customer_level_id</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>branch_key</name>
+          <lookup>branch_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>branch_name</name>
+          <lookup>branch_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>loan_officer_key</name>
+          <lookup>loan_officer_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>loan_officer_name</name>
+          <lookup>loan_officer_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>formed_by_loan_officer_key</name>
+          <lookup>formed_by_loan_officer_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>formed_by_loan_officer_name</name>
+          <lookup>formed_by_loan_officer_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>center_key</name>
+          <lookup>center_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>center_name</name>
+          <lookup>center_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>group_key</name>
+          <lookup>group_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>group_name</name>
+          <lookup>group_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <return>
+          <name>customer_key</name>
+          <rename/>
+          <creation_method>tablemax</creation_method>
+          <use_autoinc>N</use_autoinc>
+          <version>version</version>
+        </return>
+      </fields>
+      <sequence/>
+      <min_year>1900</min_year>
+      <max_year>2199</max_year>
+      <cache_size>500</cache_size>
+      <preload_cache>N</preload_cache>
+      <use_start_date_alternative>N</use_start_date_alternative>
+      <start_date_alternative>none</start_date_alternative>
+      <start_date_field_name/>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>427</xloc>
-      <yloc>131</yloc>
+      <xloc>199</xloc>
+      <yloc>335</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Invalid Grandparent lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>1</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>grandparent_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>group_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>group_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>433</xloc>
+      <yloc>233</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Loan Officer lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_personnel</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>loan_officer_id</name>
+        <field>personnel_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>personnel_key</name>
+        <rename>loan_officer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>loan_officer_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>260</xloc>
+      <yloc>133</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

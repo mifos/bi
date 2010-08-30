@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>LoadLoanPayments</name>
+    <name>Load_LoanRepayments</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#47;</directory>
     <parameters>
     </parameters>
@@ -64,6 +65,29 @@
   <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Need to link to valid date as at date
+
+Just initial load so far.</note>
+      <xloc>709</xloc>
+      <yloc>12</yloc>
+      <width>187</width>
+      <heigth>47</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -115,8 +139,33 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>wcm</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
-  <hop> <from>Read account_trxn</from><to>Switch &#47; Case</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Product Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Product Lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Customer Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Formed By lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Table output</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Product Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Product Lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Customer Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Formed By lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Account Action lookup</name>
     <type>DBLookup</type>
@@ -152,8 +201,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>497</xloc>
-      <yloc>170</yloc>
+      <xloc>468</xloc>
+      <yloc>218</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -170,8 +219,8 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
     <lookup>
       <schema/>
       <table>dim_date</table>
@@ -193,8 +242,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>291</xloc>
-      <yloc>14</yloc>
+      <xloc>180</xloc>
+      <yloc>27</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -234,8 +283,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>393</xloc>
-      <yloc>14</yloc>
+      <xloc>318</xloc>
+      <yloc>25</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -252,8 +301,8 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
     <lookup>
       <schema/>
       <table>dim_date</table>
@@ -275,8 +324,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>290</xloc>
-      <yloc>174</yloc>
+      <xloc>183</xloc>
+      <yloc>217</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -293,8 +342,8 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>10</cache_size>
     <lookup>
       <schema/>
       <table>dim_currency</table>
@@ -316,8 +365,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>392</xloc>
-      <yloc>87</yloc>
+      <xloc>322</xloc>
+      <yloc>120</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -350,15 +399,15 @@
       </key>
       <value>
         <name>personnel_key</name>
-        <rename>customer_formedby_key</rename>
+        <rename>formed_by_loan_officer_key</rename>
         <default/>
         <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>497</xloc>
-      <yloc>105</yloc>
+      <xloc>468</xloc>
+      <yloc>119</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -374,9 +423,9 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <cache>N</cache>
+    <cache>Y</cache>
     <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_size>100</cache_size>
     <lookup>
       <schema/>
       <table>dim_customer</table>
@@ -398,8 +447,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>605</xloc>
-      <yloc>169</yloc>
+      <xloc>610</xloc>
+      <yloc>214</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -416,8 +465,8 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
     <lookup>
       <schema/>
       <table>dim_date</table>
@@ -439,26 +488,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>290</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy (do nothing)</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>127</xloc>
-      <yloc>142</yloc>
+      <xloc>181</xloc>
+      <yloc>126</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -474,18 +505,18 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <cache>N</cache>
+    <cache>Y</cache>
     <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_size>100</cache_size>
     <lookup>
       <schema/>
-      <table>dim_loan_account</table>
+      <table>dim_loan</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
         <name>account_id</name>
-        <field>account_id</field>
+        <field>loan_account_id</field>
         <condition>=</condition>
         <name2/>
       </key>
@@ -498,8 +529,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>607</xloc>
-      <yloc>94</yloc>
+      <xloc>613</xloc>
+      <yloc>123</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -539,8 +570,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>494</xloc>
-      <yloc>14</yloc>
+      <xloc>465</xloc>
+      <yloc>24</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -580,8 +611,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>396</xloc>
-      <yloc>171</yloc>
+      <xloc>324</xloc>
+      <yloc>217</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -609,7 +640,15 @@ from account_trxn atxn
 inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
 inner join loan_account la on la.account_id = atxn.account_id
 inner join account a on a.account_id = la.account_id
-inner join customer c on c.customer_id = a.customer_id</sql>
+inner join customer c on c.customer_id = a.customer_id
+where atxn.account_action_id in (1,9,15,18,20)
+&#47;* 
+1  - &apos;AccountAction-LoanRepayment&apos;
+9  - &apos;AccountAction-Adjustment&apos;
+15 - &apos;AccountAction-LoanWrittenOff&apos;
+18 - &apos;AccountAction-LoanReversal&apos;
+20 - &apos;AccountAction-LoanRescheduled&apos;
+*&#47;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -617,47 +656,14 @@ inner join customer c on c.customer_id = a.customer_id</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>80</xloc>
-      <yloc>50</yloc>
+      <xloc>56</xloc>
+      <yloc>24</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Switch &#47; Case</name>
-    <type>SwitchCase</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<fieldname>account_action_id</fieldname>
-<use_contains>N</use_contains>
-<case_value_type>Integer</case_value_type>
-<case_value_format/>
-<case_value_decimal/>
-<case_value_group/>
-<default_target_step>Dummy (do nothing)</default_target_step>
-<cases><case><value>1</value>
-<target_step>Action Date Lookup</target_step>
-</case><case><value>9</value>
-<target_step>Action Date Lookup</target_step>
-</case><case><value>15</value>
-<target_step>Action Date Lookup</target_step>
-</case><case><value>20</value>
-<target_step>Action Date Lookup</target_step>
-</case></cases>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>183</xloc>
-      <yloc>50</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Table output</name>
+    <name>Create Loan Repayments</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -668,7 +674,7 @@ inner join customer c on c.customer_id = a.customer_id</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <schema/>
-    <table>fact_loan_payments</table>
+    <table>fact_loan_repayments</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -741,8 +747,8 @@ inner join customer c on c.customer_id = a.customer_id</sql>
           <stream_name>loan_officer_key</stream_name>
         </field>
         <field>
-          <column_name>customer_formedby_key</column_name>
-          <stream_name>customer_formedby_key</stream_name>
+          <column_name>formed_by_loan_officer_key</column_name>
+          <stream_name>formed_by_loan_officer_key</stream_name>
         </field>
         <field>
           <column_name>account_action_key</column_name>
@@ -759,8 +765,8 @@ inner join customer c on c.customer_id = a.customer_id</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>799</xloc>
-      <yloc>47</yloc>
+      <xloc>610</xloc>
+      <yloc>19</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

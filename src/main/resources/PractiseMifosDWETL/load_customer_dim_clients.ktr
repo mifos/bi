@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>LoadLoanSchedules</name>
+    <name>load_customer_dim_clients</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -17,7 +17,7 @@
 <size_limit_lines/>
 <interval/>
 <timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></trans-log-table>
 <perf-log-table><connection/>
 <schema/>
 <table/>
@@ -42,17 +42,17 @@
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
-    <size_rowset>10000</size_rowset>
-    <sleep_time_empty>50</sleep_time_empty>
-    <sleep_time_full>50</sleep_time_full>
+    <size_rowset>1000</size_rowset>
+    <sleep_time_empty>1</sleep_time_empty>
+    <sleep_time_full>1</sleep_time_full>
     <unique_connections>N</unique_connections>
     <feedback_shown>Y</feedback_shown>
-    <feedback_size>50000</feedback_size>
-    <using_thread_priorities>Y</using_thread_priorities>
+    <feedback_size>5000</feedback_size>
+    <using_thread_priorities>N</using_thread_priorities>
     <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
-    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <step_performance_capturing_size_limit/>
     <dependencies>
     </dependencies>
     <partitionschemas>
@@ -62,9 +62,34 @@
     <clusterschemas>
     </clusterschemas>
   <modified_user>-</modified_user>
-  <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
+  <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Need to handle hierarchy and status changes.
+
+This first-cut just moves current hierarchy and status.
+
+Also just handles initial load.</note>
+      <xloc>225</xloc>
+      <yloc>12</yloc>
+      <width>273</width>
+      <heigth>72</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -142,7 +167,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Product Lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Customer Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Table output</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Product Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Formed By lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Payment Date lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read loan_schedule</from><to>Payment Date lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Extract Client Data</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Formed By lookup</from><to>Center lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Center lookup</from><to>Group lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Group lookup</from><to>Client lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Branch lookup</name>
     <type>DBLookup</type>
@@ -175,17 +200,23 @@
         <default/>
         <type>Integer</type>
       </value>
+      <value>
+        <name>display_name</name>
+        <rename>branch_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>393</xloc>
-      <yloc>14</yloc>
+      <xloc>120</xloc>
+      <yloc>132</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Currency lookup</name>
+    <name>Center lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -196,37 +227,196 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>10</cache_size>
     <lookup>
       <schema/>
-      <table>dim_currency</table>
+      <table>dim_customer</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>principal_currency_id</name>
-        <field>CURRENCY_ID</field>
+        <name>grandparent_id</name>
+        <field>customer_id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>currency_key</name>
-        <rename>currency_key</rename>
+        <name>customer_key</name>
+        <rename>center_key</rename>
         <default/>
         <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>center_name</rename>
+        <default/>
+        <type>String</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>392</xloc>
-      <yloc>87</yloc>
+      <xloc>433</xloc>
+      <yloc>233</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Customer Formed By lookup</name>
+    <name>Client lookup&#47;update</name>
+    <type>DimensionLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <schema/>
+      <table>dim_customer</table>
+      <connection>DestinationDB</connection>
+      <commit>1000</commit>
+      <update>Y</update>
+      <fields>
+        <key>
+          <name>customer_id</name>
+          <lookup>customer_id</lookup>
+        </key>
+        <date>
+          <name/>
+          <from>valid_from</from>
+          <to>valid_to</to>
+        </date>
+        <field>
+          <name>display_name</name>
+          <lookup>display_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>customer_status</name>
+          <lookup>customer_status</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>customer_level_id</name>
+          <lookup>customer_level_id</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>branch_key</name>
+          <lookup>branch_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>branch_name</name>
+          <lookup>branch_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>loan_officer_key</name>
+          <lookup>loan_officer_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>loan_officer_name</name>
+          <lookup>loan_officer_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>formed_by_loan_officer_key</name>
+          <lookup>formed_by_loan_officer_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>formed_by_loan_officer_name</name>
+          <lookup>formed_by_loan_officer_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>center_key</name>
+          <lookup>center_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>center_name</name>
+          <lookup>center_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>group_key</name>
+          <lookup>group_key</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>group_name</name>
+          <lookup>group_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <return>
+          <name>customer_key</name>
+          <rename/>
+          <creation_method>tablemax</creation_method>
+          <use_autoinc>N</use_autoinc>
+          <version>version</version>
+        </return>
+      </fields>
+      <sequence/>
+      <min_year>1900</min_year>
+      <max_year>2199</max_year>
+      <cache_size>500</cache_size>
+      <preload_cache>N</preload_cache>
+      <use_start_date_alternative>N</use_start_date_alternative>
+      <start_date_alternative>none</start_date_alternative>
+      <start_date_field_name/>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>199</xloc>
+      <yloc>335</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Extract Client Data</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select c.customer_id, c.display_name, 
+lv.lookup_name as customer_status,
+c.customer_level_id,
+ifnull(parent.customer_id, 0) as parent_id,
+ifnull(grandparent.customer_id, 0) as grandparent_id,
+c.loan_officer_id, 
+ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
+c.branch_id
+from customer c
+join customer_state cs on cs.status_id = c.status_id
+join lookup_value lv on lv.lookup_id = cs.status_lookup_id
+left join customer parent on parent.customer_id = c.parent_customer_id
+left join customer grandparent on grandparent.customer_id = parent.parent_customer_id
+where c.customer_level_id = 1
+order by c.customer_id</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>117</xloc>
+      <yloc>20</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Formed By lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -253,62 +443,27 @@
       </key>
       <value>
         <name>personnel_key</name>
-        <rename>customer_formedby_key</rename>
+        <rename>formed_by_loan_officer_key</rename>
         <default/>
         <type>Integer</type>
       </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>498</xloc>
-      <yloc>168</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Customer lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_customer</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>customer_id</name>
-        <field>customer_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
       <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
+        <name>display_name</name>
+        <rename>formed_by_loan_officer_name</rename>
         <default/>
-        <type>Integer</type>
+        <type>String</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>642</xloc>
-      <yloc>176</yloc>
+      <xloc>260</xloc>
+      <yloc>234</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Due Date Lookup</name>
+    <name>Group lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -319,72 +474,37 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>due_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>due_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>187</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Loan Account lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>N</cache>
     <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
+    <cache_size>100</cache_size>
     <lookup>
       <schema/>
-      <table>dim_loan_account</table>
+      <table>dim_customer</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>account_id</name>
-        <field>account_id</field>
+        <name>parent_id</name>
+        <field>customer_id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>loan_account_key</name>
-        <rename>loan_account_key</rename>
+        <name>customer_key</name>
+        <rename>group_key</rename>
         <default/>
         <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>group_name</rename>
+        <default/>
+        <type>String</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>635</xloc>
-      <yloc>88</yloc>
+      <xloc>432</xloc>
+      <yloc>331</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -421,222 +541,17 @@
         <default/>
         <type>Integer</type>
       </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>494</xloc>
-      <yloc>14</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Payment Date lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>calc_payment_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
       <value>
-        <name>date_key</name>
-        <rename>payment_key</rename>
+        <name>display_name</name>
+        <rename>loan_officer_name</rename>
         <default/>
-        <type>Integer</type>
+        <type>String</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>289</xloc>
-      <yloc>102</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Product Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_product</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>prd_offering_id</name>
-        <field>prd_offering_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>product_key</name>
-        <rename>product_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>390</xloc>
-      <yloc>178</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Read loan_schedule</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select c.customer_id, c.branch_id, 
-c.loan_officer_id, c.customer_formedby_id, la.prd_offering_id,
-ls.account_id, ls.installment_id,ls.principal_currency_id, 
-ls.action_date as due_date, 
-ls.principal as principal_amount, ls.interest as interest_amount, 
-ls.misc_fees as misc_fee_amount, 
-ls.misc_penalty as misc_penalty_amount,
-(CASE ls.payment_status WHEN 1 THEN ls.payment_date ELSE date(&apos;3001-01-01&apos;) END ) as calc_payment_date
-from loan_schedule ls
-inner join loan_account la on la.account_id = ls.account_id
-inner join account a on a.account_id = la.account_id
-inner join customer c on c.customer_id = a.customer_id</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>101</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <schema/>
-    <table>fact_loan_schedules</table>
-    <commit>1000</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>principal_amount</column_name>
-          <stream_name>principal_amount</stream_name>
-        </field>
-        <field>
-          <column_name>interest_amount</column_name>
-          <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_fee_amount</column_name>
-          <stream_name>misc_fee_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty_amount</column_name>
-          <stream_name>misc_penalty_amount</stream_name>
-        </field>
-        <field>
-          <column_name>due_date_key</column_name>
-          <stream_name>due_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>product_key</column_name>
-          <stream_name>product_key</stream_name>
-        </field>
-        <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
-        </field>
-        <field>
-          <column_name>branch_key</column_name>
-          <stream_name>branch_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_officer_key</column_name>
-          <stream_name>loan_officer_key</stream_name>
-        </field>
-        <field>
-          <column_name>customer_formedby_key</column_name>
-          <stream_name>customer_formedby_key</stream_name>
-        </field>
-        <field>
-          <column_name>customer_key</column_name>
-          <stream_name>customer_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_account_key</column_name>
-          <stream_name>loan_account_key</stream_name>
-        </field>
-        <field>
-          <column_name>installment_id</column_name>
-          <stream_name>installment_id</stream_name>
-        </field>
-        <field>
-          <column_name>payment_key</column_name>
-          <stream_name>payment_key</stream_name>
-        </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>799</xloc>
-      <yloc>47</yloc>
+      <xloc>260</xloc>
+      <yloc>133</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -67,11 +67,12 @@
   <notepads>
     <notepad>
       <note>Add in rest a bit later on
-could be a mysqldump</note>
+could be a mysqldump
+to include dim_date and loan arrears tables</note>
       <xloc>518</xloc>
       <yloc>29</yloc>
-      <width>131</width>
-      <heigth>35</heigth>
+      <width>220</width>
+      <heigth>47</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -166,101 +167,6 @@ could be a mysqldump</note>
   <order>
   </order>
   <step>
-    <name>Create dim_office with missing entry</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <sql>DROP TABLE dim_office;
-CREATE TABLE dim_office (
-  office_key smallint(5) unsigned NOT NULL,
-  office_id smallint(6) NOT NULL,
-  display_name varchar(200) NOT NULL,
-  office_level_id smallint(6) NOT NULL,
-  search_id varchar(100) NOT NULL,
-  created_date date NOT NULL,
-  valid_from date NOT NULL DEFAULT &apos;1900-01-01&apos;,
-  valid_to date NOT NULL DEFAULT &apos;2199-12-31&apos;,
-  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
-  current_record tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
-  last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (office_key),
-  KEY office_id (office_id),
-  KEY display_name (display_name),
-  KEY search_id (search_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-INSERT INTO dim_office(office_key, office_id, display_name, office_level_id, search_id, created_date)
-VALUES (0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, &apos;1900-01-01&apos;);</sql>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>106</xloc>
-      <yloc>128</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create dim_product with missing entry</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <sql>DROP TABLE dim_product;
-CREATE TABLE dim_product (
-  product_key smallint(5) unsigned NOT NULL,
-  prd_offering_id smallint(6) NOT NULL,
-  prd_offering_name varchar(50) NOT NULL,
-  prd_offering_short_name varchar(50) NOT NULL,
-  valid_from date NOT NULL DEFAULT &apos;1900-01-01&apos;,
-  valid_to date NOT NULL DEFAULT &apos;2199-12-31&apos;,
-  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
-  current_record tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
-  last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (product_key)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-INSERT INTO dim_product(product_key, prd_offering_id, prd_offering_name, prd_offering_short_name)
-VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;);</sql>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>101</xloc>
-      <yloc>33</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Create dim_currency with missing entry</name>
     <type>ExecSQL</type>
     <description/>
@@ -306,6 +212,179 @@ values (0,0,&apos;Unknown&apos;, 0.0, &apos;Unk&apos;);
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>358</xloc>
       <yloc>31</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create dim_customer with missing entry</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE dim_customer;
+CREATE TABLE `dim_customer` (
+  `customer_key` int(10) unsigned NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `display_name` varchar(200) NOT NULL,
+  `customer_status` varchar(100) NOT NULL,
+  `customer_level_id` smallint(6) NOT NULL,
+  `group_key` int(10) unsigned NOT NULL,
+  `group_name` varchar(200) NOT NULL,
+  `center_key` int(10) unsigned NOT NULL,
+  `center_name` varchar(200) NOT NULL,
+  `loan_officer_key` smallint(5) unsigned NOT NULL,
+  `loan_officer_name` varchar(200) NOT NULL,
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
+  `formed_by_loan_officer_name` varchar(200) NOT NULL,
+  `branch_key` smallint(5) unsigned NOT NULL,
+  `branch_name` varchar(200) NOT NULL,
+  `valid_from` date NOT NULL DEFAULT &apos;1900-01-01&apos;,
+  `valid_to` date NOT NULL DEFAULT &apos;2199-12-31&apos;,
+  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
+  `current_record` tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`customer_key`),
+  KEY `customer_id` (`customer_id`),
+  KEY `group_key` (`group_key`),
+  KEY `center_key` (`center_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `formed_by_loan_officer_key` (`loan_officer_key`),
+  KEY `branch_key` (`branch_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO dim_customer(customer_key, customer_id, display_name, customer_status, customer_level_id,
+group_key, group_name, center_key, center_name, loan_officer_key, loan_officer_name, 
+formed_by_loan_officer_key, formed_by_loan_officer_name, branch_key, branch_name)
+VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;);
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>106</xloc>
+      <yloc>226</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create dim_loan with missing entry</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE dim_loan;
+CREATE TABLE `dim_loan` (
+  `loan_account_key` int(10) unsigned NOT NULL,
+  `customer_key` int(10) unsigned NOT NULL,
+  `product_key` int(10) unsigned NOT NULL,
+  `loan_account_id` int(11) NOT NULL,
+  `loan_status` varchar(100) NOT NULL,
+  `loan_amount` decimal(21,4) NOT NULL,
+  `original_principal` decimal(21,4) NOT NULL,
+  `original_interest` decimal(21,4) DEFAULT &apos;0.0000&apos;,
+  `original_fees` decimal(21,4) DEFAULT &apos;0.0000&apos;,
+  `original_penalty` decimal(21,4) DEFAULT &apos;0.0000&apos;,
+  `currency_key` smallint(5) unsigned NOT NULL,
+  `currency_code` varchar(3) DEFAULT NULL,
+  `valid_from` date NOT NULL DEFAULT &apos;1900-01-01&apos;,
+  `valid_to` date NOT NULL DEFAULT &apos;2199-12-31&apos;,
+  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
+  `current_record` tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`loan_account_key`),
+  KEY `loan_account_id` (`loan_account_id`),
+  KEY `customer_key` (`customer_key`),
+  KEY `product_key` (`product_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO dim_loan(loan_account_key, loan_account_id, loan_status, loan_amount, original_principal, 
+original_interest, original_fees, original_penalty, currency_key, currency_code, customer_key, product_key)
+VALUES (0, 0, &apos;Unknown&apos;, 0.0, 0.0, 0.0, 0.0, 0.0, 0, &apos;Unk&apos;, 0, 0);
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>365</xloc>
+      <yloc>225</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create dim_office with missing entry</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE dim_office;
+CREATE TABLE dim_office (
+  office_key smallint(5) unsigned NOT NULL,
+  office_id smallint(6) NOT NULL,
+  display_name varchar(200) NOT NULL,
+  office_level_id smallint(6) NOT NULL,
+  search_id varchar(100) NOT NULL,
+  created_date date NOT NULL,
+  valid_from date NOT NULL DEFAULT &apos;1900-01-01&apos;,
+  valid_to date NOT NULL DEFAULT &apos;2199-12-31&apos;,
+  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
+  current_record tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
+  last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (office_key),
+  KEY office_id (office_id),
+  KEY display_name (display_name),
+  KEY search_id (search_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO dim_office(office_key, office_id, display_name, office_level_id, search_id, created_date)
+VALUES (0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, &apos;1900-01-01&apos;);</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>106</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -360,6 +439,168 @@ VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, &apos;1900-01-01&apos
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>363</xloc>
       <yloc>127</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create dim_product with missing entry</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE dim_product;
+CREATE TABLE dim_product (
+  product_key smallint(5) unsigned NOT NULL,
+  prd_offering_id smallint(6) NOT NULL,
+  prd_offering_name varchar(50) NOT NULL,
+  prd_offering_short_name varchar(50) NOT NULL,
+  valid_from date NOT NULL DEFAULT &apos;1900-01-01&apos;,
+  valid_to date NOT NULL DEFAULT &apos;2199-12-31&apos;,
+  `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
+  current_record tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
+  last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (product_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO dim_product(product_key, prd_offering_id, prd_offering_name, prd_offering_short_name)
+VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;);</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>106</xloc>
+      <yloc>31</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create fact_loan_repayments</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE fact_loan_repayments;
+CREATE TABLE `fact_loan_repayments` (
+  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `currency_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `product_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `branch_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `customer_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_account_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `action_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `created_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `payment_id` int(11) NOT NULL,
+  `account_trxn_id` int(11) NOT NULL,
+  `installment_id` smallint(6) NOT NULL,
+  `principal_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `interest_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  PRIMARY KEY (`account_trxn_id`),
+  KEY `account_action_key` (`account_action_key`),
+  KEY `currency_key` (`currency_key`),
+  KEY `product_key` (`product_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
+  KEY `customer_key` (`customer_key`),
+  KEY `loan_account_key` (`loan_account_key`),
+  KEY `due_date_key` (`due_date_key`),
+  KEY `action_date_key` (`action_date_key`),
+  KEY `created_date_key` (`created_date_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>106</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create fact_loan_schedules</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE `fact_loan_schedules`;
+CREATE TABLE `fact_loan_schedules` (
+  `currency_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `product_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `branch_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `customer_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_account_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `installment_id` smallint(6) NOT NULL,
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `principal_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `interest_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  PRIMARY KEY (`loan_account_key`,`installment_id`),
+  KEY `currency_key` (`currency_key`),
+  KEY `product_key` (`product_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
+  KEY `customer_key` (`customer_key`),
+  KEY `due_date_key` (`due_date_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>365</xloc>
+      <yloc>324</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
