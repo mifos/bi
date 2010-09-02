@@ -15,7 +15,7 @@ import org.mifos.pentaho.tally.message.TallyMessage;
 import org.mifos.pentaho.tally.message.TallyMessageBuilder;
 import org.mifos.pentaho.tally.message.TallyMessageBuilderException;
 
-public class ETLTextOutputReader {
+public class ETLOutputReader {
 
     private static SimpleDateFormat parseDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -68,13 +68,36 @@ public class ETLTextOutputReader {
             builder.withVoucherDate(getVoucherDate(voucher.get(0).voucherdate));
 
             for (DataPerLine voucherEntry : voucher) {
-                builder.addAllLegderEntry(voucherEntry.amount, voucherEntry.glcode, voucherEntry.isDebit);
+                addCreditEntry(voucherEntry, builder);
+                addDebitEntry(voucherEntry, builder);
             }
 
             tallyMessages.add(builder.build());
 
         }
         return tallyMessages;
+    }
+
+    private static void addCreditEntry(DataPerLine voucherEntry, TallyMessageBuilder builder)
+            throws TallyMessageBuilderException {
+        BigDecimal amount = new BigDecimal(voucherEntry.credit);
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new TallyMessageBuilderException("Negative credit amount found:");
+        }
+        if (amount.compareTo(BigDecimal.ZERO) > 0) {
+            builder.addAllLegderEntry(voucherEntry.credit, voucherEntry.glcode, false);
+        }
+    }
+
+    private static void addDebitEntry(DataPerLine voucherEntry, TallyMessageBuilder builder)
+            throws TallyMessageBuilderException {
+        BigDecimal amount = new BigDecimal(voucherEntry.debit);
+        if (amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new TallyMessageBuilderException("Negative debit amount found:");
+        }
+        if (amount.compareTo(BigDecimal.ZERO) > 0) {
+            builder.addAllLegderEntry(voucherEntry.debit, voucherEntry.glcode, true);
+        }
     }
 
     private static Date getVoucherDate(String voucherdate) throws ParseException {
@@ -92,7 +115,7 @@ public class ETLTextOutputReader {
         throw new TallyMessageBuilderException("No such voucher type supported:" + vouchertype);
     }
 
-    public static DataPerLine parseLine(String line) throws TallyMessageBuilderException {
+    public static DataPerLine parseLine(String line) {
         StringTokenizer st = new StringTokenizer(line, ";");
         DataPerLine lineData = new DataPerLine();
         lineData.branchname = st.nextToken().trim();
@@ -102,25 +125,7 @@ public class ETLTextOutputReader {
         lineData.glname = st.nextToken().trim();
         lineData.debit = st.nextToken().trim();
         lineData.credit = st.nextToken().trim();
-        findAndAddCreditOrDebitFlag(lineData);
         return lineData;
-    }
-
-    private static void findAndAddCreditOrDebitFlag(DataPerLine data) throws TallyMessageBuilderException {
-        BigDecimal credit = new BigDecimal(data.credit);
-        BigDecimal debit = new BigDecimal(data.debit);
-        if (credit.compareTo(debit) < 0) {
-            data.isDebit = true;
-            data.amount = debit.subtract(credit).toString();
-        } else if (credit.compareTo(debit) > 0) {
-            data.isDebit = false;
-            data.amount = credit.subtract(debit).toString();
-        } else if (credit.compareTo(debit) == 0) {
-            data.isDebit = false;
-            data.amount = BigDecimal.ZERO.toString();
-        }  else {
-            throw new TallyMessageBuilderException("Unable to figure out the type of transaction");
-        }
     }
 }
 
@@ -132,13 +137,10 @@ class DataPerLine {
     String glname;
     String debit;
     String credit;
-    String amount;
-    boolean isDebit;
-    boolean skipZero = false;
 
     @Override
     public String toString() {
         return branchname + ";" + voucherdate + ";" + vouchertype + ";" + glcode + ";" + glname + ";" + debit + ";"
-                + credit + ";" + amount + ";" + isDebit;
+                + credit;
     }
 }

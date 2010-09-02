@@ -47,7 +47,7 @@ public class TallyImportGenerator {
     }
 
     private static List<TallyMessage> getTallyMessagesFromTmpOutputFile() throws Exception {
-        return ETLTextOutputReader.getTallyMessages();
+        return ETLOutputReader.getTallyMessages();
     }
 
     private static String getMasterData(List<TallyMessage> tallyMessages) throws IOException, TemplateException {
