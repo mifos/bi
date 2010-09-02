@@ -332,8 +332,8 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>200</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -344,8 +344,8 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>10</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -356,8 +356,8 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>31</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -368,8 +368,8 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>50</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -380,8 +380,8 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>150</length>
+        <trim_type>both</trim_type>
+        <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
@@ -392,9 +392,9 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>43</length>
-        <precision>4</precision>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
       <field>
         <name>credit</name>
@@ -404,9 +404,9 @@ org.mifos.pentaho.tally.TallyImportGenerator.process();</jsScript_script>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
-        <length>43</length>
-        <precision>4</precision>
+        <trim_type>both</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
       </field>
     </fields>
      <cluster_schema/>
