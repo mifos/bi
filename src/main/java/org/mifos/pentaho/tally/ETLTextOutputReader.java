@@ -47,7 +47,7 @@ public class ETLTextOutputReader {
 
         for (int i = 1; i < wholeData.size(); i++) {
             List<DataPerLine> voucher = new ArrayList<DataPerLine>();
-            voucher.add(wholeData.get(i-1));
+            voucher.add(wholeData.get(i - 1));
             DataPerLine prevLine = wholeData.get(i - 1);
             DataPerLine currentLine = wholeData.get(i);
 
@@ -58,7 +58,7 @@ public class ETLTextOutputReader {
                 i++;
                 prevLine = wholeData.get(i - 1);
 
-                if(i < wholeData.size()) {
+                if (i < wholeData.size()) {
                     currentLine = wholeData.get(i);
                 }
             }
@@ -68,27 +68,7 @@ public class ETLTextOutputReader {
             builder.withVoucherDate(getVoucherDate(voucher.get(0).voucherdate));
 
             for (DataPerLine voucherEntry : voucher) {
-                if (voucherType == VoucherType.JOURNAL) {
-                    builder.addJournalAllLegderEntry(voucherEntry.amount, voucherEntry.glcode, voucherEntry.isDebit);
-                } else {
-                    if (voucherType == VoucherType.PAYMENT) {
-                        if (!voucherEntry.isDebit) {
-                            builder.withPartyLedgerAmount(voucherEntry.amount);
-                            builder.withPartyLedgerName(voucherEntry.glcode);
-                        } else {
-                            builder.addAllLegderEntry(voucherEntry.amount, voucherEntry.glcode);
-
-                        }
-                    } else {
-                        if (voucherEntry.isDebit) {
-                            builder.withPartyLedgerAmount(voucherEntry.amount);
-                            builder.withPartyLedgerName(voucherEntry.glcode);
-                        } else {
-                            builder.addAllLegderEntry(voucherEntry.amount, voucherEntry.glcode);
-
-                        }
-                    }
-                }
+                builder.addAllLegderEntry(voucherEntry.amount, voucherEntry.glcode, voucherEntry.isDebit);
             }
 
             tallyMessages.add(builder.build());
@@ -115,27 +95,30 @@ public class ETLTextOutputReader {
     public static DataPerLine parseLine(String line) throws TallyMessageBuilderException {
         StringTokenizer st = new StringTokenizer(line, ";");
         DataPerLine lineData = new DataPerLine();
-        lineData.branchname = st.nextToken();
-        lineData.voucherdate = st.nextToken();
-        lineData.vouchertype = st.nextToken();
-        lineData.glcode = st.nextToken();
-        lineData.glname = st.nextToken();
-        lineData.debit = st.nextToken();
-        lineData.credit = st.nextToken();
-        findAndAddCreditOrDebitFlad(lineData);
+        lineData.branchname = st.nextToken().trim();
+        lineData.voucherdate = st.nextToken().trim();
+        lineData.vouchertype = st.nextToken().trim();
+        lineData.glcode = st.nextToken().trim();
+        lineData.glname = st.nextToken().trim();
+        lineData.debit = st.nextToken().trim();
+        lineData.credit = st.nextToken().trim();
+        findAndAddCreditOrDebitFlag(lineData);
         return lineData;
     }
 
-    private static void findAndAddCreditOrDebitFlad(DataPerLine data) throws TallyMessageBuilderException {
+    private static void findAndAddCreditOrDebitFlag(DataPerLine data) throws TallyMessageBuilderException {
         BigDecimal credit = new BigDecimal(data.credit);
         BigDecimal debit = new BigDecimal(data.debit);
-        if (credit.compareTo(BigDecimal.ZERO) == 0 && debit.compareTo(BigDecimal.ZERO) != 0) {
+        if (credit.compareTo(debit) < 0) {
             data.isDebit = true;
-            data.amount = data.debit;
-        } else if (credit.compareTo(BigDecimal.ZERO) != 0 && debit.compareTo(BigDecimal.ZERO) == 0) {
+            data.amount = debit.subtract(credit).toString();
+        } else if (credit.compareTo(debit) > 0) {
             data.isDebit = false;
-            data.amount = data.credit;
-        } else {
+            data.amount = credit.subtract(debit).toString();
+        } else if (credit.compareTo(debit) == 0) {
+            data.isDebit = false;
+            data.amount = BigDecimal.ZERO.toString();
+        }  else {
             throw new TallyMessageBuilderException("Unable to figure out the type of transaction");
         }
     }
@@ -151,9 +134,11 @@ class DataPerLine {
     String credit;
     String amount;
     boolean isDebit;
+    boolean skipZero = false;
 
     @Override
     public String toString() {
-        return branchname+";"+voucherdate+";"+vouchertype+";"+glcode+";"+glname+";"+debit+";"+credit+";"+amount+";"+isDebit;
+        return branchname + ";" + voucherdate + ";" + vouchertype + ";" + glcode + ";" + glname + ";" + debit + ";"
+                + credit + ";" + amount + ";" + isDebit;
     }
 }

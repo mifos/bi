@@ -73,13 +73,6 @@ public class TallyImportGenerator {
     }
 
     private static String getVoucherData(TallyMessage tallyMessage) throws TemplateException, IOException {
-        if (tallyMessage.getVoucherType() == VoucherType.JOURNAL) {
-            return getJournalVoucherData(tallyMessage);
-        }
-        return getPaymentOrReceiptVoucherData(tallyMessage);
-    }
-
-    private static String getJournalVoucherData(TallyMessage tallyMessage) throws TemplateException, IOException {
         String allLedgersOutput = "";
         for (AllLedger allLedger : tallyMessage.getAllLedgers()) {
             allLedgersOutput += getAllLedgerData(allLedger);
@@ -87,32 +80,6 @@ public class TallyImportGenerator {
         return allLedgersOutput.substring(0, allLedgersOutput.length() -1);
     }
 
-    private static String getPaymentOrReceiptVoucherData(TallyMessage tallyMessage) throws TemplateException,
-            IOException {
-        Template temp = getFTLConfig().getTemplate("payment_receipt.ftl");
-        /* Create a data-model */
-        Map<String, Object> root = new HashMap<String, Object>();
-        Map<String, Object> voucher = new HashMap<String, Object>();
-        root.put("voucher", voucher);
-        voucher.put("partyLedgerName", tallyMessage.getPartyLedgerName());
-
-        String allLedgersOutput = "";
-        for (AllLedger allLedger : tallyMessage.getAllLedgers()) {
-            allLedgersOutput += getAllLedgerData(allLedger);
-        }
-        voucher.put("allLedgers", allLedgersOutput.substring(0, allLedgersOutput.length()-1));
-
-        if (tallyMessage.getIsDeemedPositive()) {
-            voucher.put("partyIsDeemedPositive", "Yes");
-            voucher.put("partyAmount", "-" + tallyMessage.getPartyLedgerAmount());
-        } else {
-            voucher.put("partyIsDeemedPositive", "No");
-            voucher.put("partyAmount", tallyMessage.getPartyLedgerAmount());
-        }
-        StringWriter bow = new StringWriter();
-        temp.process(root, bow);
-        return bow.toString();
-    }
 
     private static String getAllLedgerData(AllLedger allLedger) throws TemplateException, IOException {
         Template temp = getFTLConfig().getTemplate("all_ledgers.ftl");
