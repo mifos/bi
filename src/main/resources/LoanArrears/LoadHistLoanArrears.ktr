@@ -6,8 +6,14 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#47;</directory>
     <parameters>
+        <parameter>
+            <name>arrears_as_of_date</name>
+            <default_value>2009-08-01</default_value>
+            <description/>
+        </parameter>
     </parameters>
     <log>
 <trans-log-table><connection/>
@@ -141,7 +147,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Create Arrears Information</from><to>Reads Arrears Information</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Product Key</from><to>Identify Branch Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Branch Key</from><to>Identify Loan Officer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Customer Key</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  <hop> <from>Reads Arrears Information</from><to>Identify Product Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Calculate In Arrears and Outstanding Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate In Arrears and Outstanding Values</from><to>Remove Unnecessary Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Officer Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Customer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Unnecessary Columns</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Create Arrears Information</from><to>Reads Arrears Information</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Product Key</from><to>Identify Branch Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Branch Key</from><to>Identify Loan Officer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Customer Key</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  <hop> <from>Reads Arrears Information</from><to>Identify Product Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Officer Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Customer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Identify Weekly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Weekly Band Key</from><to>Identify Monthly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Monthly Band Key</from><to>Calculate In Arrears and Outstanding Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate In Arrears and Outstanding Values</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Calculate In Arrears and Outstanding Values</name>
     <type>Calculator</type>
@@ -238,8 +244,8 @@
 </calculation>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>446</xloc>
-      <yloc>4</yloc>
+      <xloc>596</xloc>
+      <yloc>41</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -376,8 +382,8 @@ set interest_paid =
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>59</xloc>
-      <yloc>47</yloc>
+      <xloc>83</xloc>
+      <yloc>200</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -499,8 +505,8 @@ set interest_paid =
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>409</xloc>
-      <yloc>213</yloc>
+      <xloc>360</xloc>
+      <yloc>299</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -521,13 +527,13 @@ set interest_paid =
     <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>dim_loan_account</table>
+      <table>dim_loan</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
         <name>loan_account_id</name>
-        <field>account_id</field>
+        <field>loan_account_id</field>
         <condition>=</condition>
         <name2/>
       </key>
@@ -540,8 +546,8 @@ set interest_paid =
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>400</xloc>
-      <yloc>96</yloc>
+      <xloc>360</xloc>
+      <yloc>209</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -622,8 +628,8 @@ set interest_paid =
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>210</xloc>
-      <yloc>55</yloc>
+      <xloc>213</xloc>
+      <yloc>43</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -647,83 +653,8 @@ set interest_paid =
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>66</xloc>
-      <yloc>257</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Remove Unnecessary Columns</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>days_in_arrears</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>installments_in_arrears</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>product_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>branch_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>loan_officer_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>as_of_date_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>customer_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>loan_account_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>principal_in_arrears</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>interest_in_arrears</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>total_in_arrears</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>principal_outstanding</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>interest_outstanding</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>total_outstanding</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>543</xloc>
-      <yloc>188</yloc>
+      <xloc>82</xloc>
+      <yloc>41</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -741,7 +672,7 @@ set interest_paid =
     <connection>DestinationDB</connection>
     <schema/>
     <table>hist_loan_arrears</table>
-    <commit>50</commit>
+    <commit>500</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
@@ -789,6 +720,14 @@ set interest_paid =
           <stream_name>loan_account_key</stream_name>
         </field>
         <field>
+          <column_name>arrears_band_weekly_key</column_name>
+          <stream_name>arrears_band_weekly_key</stream_name>
+        </field>
+        <field>
+          <column_name>arrears_band_monthly_key</column_name>
+          <stream_name>arrears_band_monthly_key</stream_name>
+        </field>
+        <field>
           <column_name>principal_in_arrears</column_name>
           <stream_name>principal_in_arrears</stream_name>
         </field>
@@ -815,8 +754,102 @@ set interest_paid =
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>691</xloc>
-      <yloc>186</yloc>
+      <xloc>597</xloc>
+      <yloc>158</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Weekly Band Key</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_arrears_band_weekly</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>days_in_arrears</name>
+        <field>greater_than_days_in_arrears</field>
+        <condition>&lt;</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>days_in_arrears</name>
+        <field>less_than_days_in_arrears</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>arrears_band_weekly_key</name>
+        <rename>arrears_band_weekly_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>360</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Monthly Band Key</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_arrears_band_monthly</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>days_in_arrears</name>
+        <field>greater_than_days_in_arrears</field>
+        <condition>&lt;</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>days_in_arrears</name>
+        <field>less_than_days_in_arrears</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>arrears_band_monthly_key</name>
+        <rename>arrears_band_monthly_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>361</xloc>
+      <yloc>40</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
