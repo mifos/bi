@@ -252,19 +252,20 @@ CREATE TABLE `dim_customer` (
   `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
   `current_record` tinyint(4) NOT NULL DEFAULT &apos;0&apos;,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `gender` varchar(100) NOT NULL,
   PRIMARY KEY (`customer_key`),
   KEY `customer_id` (`customer_id`),
   KEY `group_key` (`group_key`),
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`),
-  KEY `branch_key` (`branch_key`)
+  KEY `branch_key` (`branch_key`),
+  KEY `formed_by_loan_officer_key` (`loan_officer_key`,`customer_status`,`valid_from`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO dim_customer(customer_key, customer_id, display_name, customer_status, customer_level_id,
 group_key, group_name, center_key, center_name, loan_officer_key, loan_officer_name, 
-formed_by_loan_officer_key, formed_by_loan_officer_name, branch_key, branch_name)
-VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;);
+formed_by_loan_officer_key, formed_by_loan_officer_name, branch_key, branch_name, gender)
+VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, &apos;Unknown&apos;);
 
 </sql>
     <insert_field/>

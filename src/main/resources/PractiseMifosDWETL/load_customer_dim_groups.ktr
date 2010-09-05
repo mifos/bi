@@ -303,7 +303,8 @@ ifnull(parent.customer_id, 0) as parent_id,
 ifnull(grandparent.customer_id, 0) as grandparent_id,
 c.loan_officer_id, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
-c.branch_id
+c.branch_id,
+&apos;n&#47;a&apos; gender
 from customer c
 join customer_state cs on cs.status_id = c.status_id
 join lookup_value lv on lv.lookup_id = cs.status_lookup_id
@@ -459,6 +460,11 @@ order by c.customer_id</sql>
         <field>
           <name>group_name</name>
           <lookup>group_name</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>gender</name>
+          <lookup>gender</lookup>
           <update>Punch through</update>
         </field>
         <return>

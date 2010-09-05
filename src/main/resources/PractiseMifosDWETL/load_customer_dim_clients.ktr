@@ -352,6 +352,11 @@ Also just handles initial load.</note>
           <lookup>group_name</lookup>
           <update>Punch through</update>
         </field>
+        <field>
+          <name>gender</name>
+          <lookup>gender</lookup>
+          <update>Punch through</update>
+        </field>
         <return>
           <name>customer_key</name>
           <rename/>
@@ -394,9 +399,15 @@ ifnull(parent.customer_id, 0) as parent_id,
 ifnull(grandparent.customer_id, 0) as grandparent_id,
 c.loan_officer_id, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
-c.branch_id
+c.branch_id,
+ifnull(cdlv.lookup_name, &apos;Unknown&apos;) as gender
 from customer c
 join customer_state cs on cs.status_id = c.status_id
+join customer_detail cd on cd.customer_id = c.customer_id
+left join lookup_value cdlv on cdlv.lookup_id = cd.gender
+
+
+
 join lookup_value lv on lv.lookup_id = cs.status_lookup_id
 left join customer parent on parent.customer_id = c.parent_customer_id
 left join customer grandparent on grandparent.customer_id = parent.parent_customer_id
