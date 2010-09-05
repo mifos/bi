@@ -16,7 +16,7 @@
       <sources> 
         <request>datefrom</request> 
       </sources>  
-      <default-value><![CDATA[2010-05-13]]></default-value> 
+      <default-value><![CDATA[2011-03-31]]></default-value> 
     </datefrom>  
     <dateto type="string"> 
       <sources> 
@@ -64,7 +64,7 @@
     </report-definition>  
     <transformation-file> 
       <solution-file> 
-        <location>ExtractMifosGLDataToTallyXML.ktr</location>  
+        <location>ExtractMifosGLData.ktr</location>  
         <mime-type>text/plain</mime-type> 
       </solution-file> 
     </transformation-file>  
@@ -74,12 +74,12 @@
         <mime-type>text/plain</mime-type> 
       </solution-file> 
     </transformation-file1>  
-    <transformation-file2> 
-      <solution-file> 
-        <location>ExtractMifosGLDataToTallyXML.ktr</location>  
-        <mime-type>text/plain</mime-type> 
-      </solution-file> 
-    </transformation-file2> 
+    <transformation-file2>
+      <solution-file>
+        <location>CreateTallyXML.ktr</location>
+        <mime-type>text/plain</mime-type>
+      </solution-file>
+    </transformation-file2>
   </resources>
   
   <actions> 
@@ -116,9 +116,9 @@
       </action-outputs>
       <component-definition> 
         <script><![CDATA[period = datefrom
-if ( dateto > "" ) period = period + " to " + dateto;
+if ( dateto > "" ) period = period + "_to_" + dateto;
 
-filename = "MifosAccountingExport" + period + ".xml";
+filename = "MifosAccountingExport-" + period + ".xml";
 
 calcdateto = dateto;
 if ( calcdateto == "" ) calcdateto = datefrom;]]></script> 
@@ -196,13 +196,13 @@ if ( calcdateto == "" ) calcdateto = datefrom;]]></script>
       <condition><![CDATA[runinterface == 'Yes']]></condition>  
       <action-definition> 
         <component-name>KettleComponent</component-name>
-        <action-type>Save Tally GL XML</action-type>
-        <action-inputs>
-          <datefrom type="string"/>
-          <calcdateto type="string"/>
+        <action-type>Extract Mifos GL Data</action-type>
+        <action-inputs> 
+          <datefrom type="string"/>  
+          <calcdateto type="string"/> 
         </action-inputs>
         <action-resources> 
-          <transformation-file type="resource" mapping="transformation-file2"/> 
+          <transformation-file type="resource" mapping="transformation-file"/> 
         </action-resources>
         <action-outputs> 
           <transformation-output-rows type="result-set" mapping="queryresult"/> 
@@ -212,6 +212,18 @@ if ( calcdateto == "" ) calcdateto = datefrom;]]></script>
         </component-definition> 
       </action-definition>
   
+      <action-definition>
+        <component-name>KettleComponent</component-name>
+        <action-type>Pentaho Data Integration</action-type>
+        <action-inputs>
+          <filename type="string"/>
+        </action-inputs>
+        <action-resources>
+          <transformation-file type="resource" mapping="transformation-file2"/>
+        </action-resources>
+        <component-definition/>
+      </action-definition>
+
       <action-definition> 
         <component-name>SimpleReportingComponent</component-name>
         <action-type>Tally GL Interface Report</action-type>

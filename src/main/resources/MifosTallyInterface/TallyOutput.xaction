@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Latest Tally Output by Mifos GL Data ETL</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author>Udai Gupta</author>  
+    <description>Mifos Accounting Tally Export Output</description>  
+    <help/>  
+    <result-type/>  
+    <icon/> 
+  </documentation>
+
+  <inputs/>
+
+  <outputs> 
+    <report_output type="content"> 
+      <destinations> 
+        <response>content</response> 
+      </destinations> 
+    </report_output> 
+  </outputs>
+
+  <resources> 
+    <report-definition> 
+      <solution-file> 
+        <location>reports/TallyOutputReport.prpt</location>  
+        <mime-type>application/zip</mime-type> 
+      </solution-file> 
+    </report-definition> 
+  </resources>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>JavascriptRule</component-name>
+      <action-type>JavaScript</action-type>
+      <action-outputs> 
+        <tallyData type="string" mapping="tallyData"/> 
+      </action-outputs>
+      <component-definition> 
+        <script><![CDATA[var tallyData;
+tallyData = org.mifos.pentaho.tally.TallyImportGenerator.getTallyReportData();]]></script> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>SimpleReportingComponent</component-name>
+      <action-type>Pentaho Report</action-type>
+      <action-inputs> 
+        <tallyData type="string"/> 
+      </action-inputs>
+      <action-resources> 
+        <report-definition type="resource"/> 
+      </action-resources>
+      <action-outputs> 
+        <outputstream type="content" mapping="report_output"/> 
+      </action-outputs>
+      <component-definition> 
+        <outputType><![CDATA[text/html]]></outputType> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

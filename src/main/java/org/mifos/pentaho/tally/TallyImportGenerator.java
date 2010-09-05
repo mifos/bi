@@ -20,12 +20,10 @@
 
 package org.mifos.pentaho.tally;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +41,12 @@ public class TallyImportGenerator {
 
     private static SimpleDateFormat tallyDateFormat = new SimpleDateFormat("yyyyMMdd");
 
-    public static void process() throws Exception {
-        PrintWriter file = new PrintWriter(new File("/tmp/TallyOutput-"+tallyDateFormat.format(new Date())+".xml"));
+    public static void process(String fullFileName) throws Exception {
+        String fileName = fullFileName;
+        if(fullFileName.startsWith("file:/")){
+            fileName = fullFileName.replace("file:", "/");
+        }
+        PrintWriter file = new PrintWriter(fileName);
         file.print(getTallyReportData());
         file.close();
     }
