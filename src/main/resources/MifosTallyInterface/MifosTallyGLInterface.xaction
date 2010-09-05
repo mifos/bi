@@ -58,7 +58,7 @@
   <resources> 
     <report-definition> 
       <solution-file> 
-        <location>MifosTallyGLInterfaceReport.prpt</location>  
+        <location>reports/MifosTallyGLInterfaceReport.prpt</location>  
         <mime-type>application/zip</mime-type> 
       </solution-file> 
     </report-definition>  
@@ -74,12 +74,12 @@
         <mime-type>text/plain</mime-type> 
       </solution-file> 
     </transformation-file1>  
-    <transformation-file2>
-      <solution-file>
-        <location>CreateTallyXML.ktr</location>
-        <mime-type>text/plain</mime-type>
-      </solution-file>
-    </transformation-file2>
+    <transformation-file2> 
+      <solution-file> 
+        <location>CreateTallyXML.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </solution-file> 
+    </transformation-file2> 
   </resources>
   
   <actions> 
@@ -212,18 +212,18 @@ if ( calcdateto == "" ) calcdateto = datefrom;]]></script>
         </component-definition> 
       </action-definition>
   
-      <action-definition>
+      <action-definition> 
         <component-name>KettleComponent</component-name>
         <action-type>Pentaho Data Integration</action-type>
-        <action-inputs>
-          <filename type="string"/>
+        <action-inputs> 
+          <filename type="string"/> 
         </action-inputs>
-        <action-resources>
-          <transformation-file type="resource" mapping="transformation-file2"/>
+        <action-resources> 
+          <transformation-file type="resource" mapping="transformation-file2"/> 
         </action-resources>
-        <component-definition/>
+        <component-definition/> 
       </action-definition>
-
+  
       <action-definition> 
         <component-name>SimpleReportingComponent</component-name>
         <action-type>Tally GL Interface Report</action-type>
