@@ -16,7 +16,7 @@
       <sources> 
         <request>datefrom</request> 
       </sources>  
-      <default-value><![CDATA[2011-03-31]]></default-value> 
+      <default-value><![CDATA[2010-02-15]]></default-value> 
     </datefrom>  
     <dateto type="string"> 
       <sources> 

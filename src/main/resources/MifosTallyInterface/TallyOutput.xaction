@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action-sequence> 
-  <title>Latest Tally Output by Mifos GL Data ETL</title>
+  <title>Latest Tally Output</title>
   <version>1</version>
   <logging-level>ERROR</logging-level>
   <documentation> 
