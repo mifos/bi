@@ -177,9 +177,18 @@ Not expecting to do otherwise.</note>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select prd_offering_id, prd_offering_name, prd_offering_short_name
-from prd_offering
-order by prd_offering_id</sql>
+    <sql>select po.created_date, po.prd_offering_id, po.prd_offering_name, po.prd_offering_short_name, 
+lvprdtype.lookup_name as product_type, 
+ifnull(lvsavingstype.lookup_name,&apos;n&#47;a&apos;) as savings_type, 
+ifnull(lvra.lookup_name,&apos;n&#47;a&apos;) as per_individual_or_complete_group
+from prd_offering po
+join prd_type pt on pt.prd_type_id = po.prd_type_id
+join lookup_value lvprdtype on lvprdtype.lookup_id = pt.prd_type_lookup_id
+left join savings_offering so on so.prd_offering_id = po.prd_offering_id
+left join savings_type st on st.savings_type_id = so.savings_type_id
+left join lookup_value lvsavingstype on lvsavingstype.lookup_id = st.lookup_id
+left join recommended_amnt_unit ra on ra.recommended_amnt_unit_id = so.recommended_amnt_unit_id
+left join lookup_value lvra on lvra.lookup_id = ra.lookup_id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -228,6 +237,21 @@ order by prd_offering_id</sql>
           <lookup>prd_offering_short_name</lookup>
           <update>Punch through</update>
         </field>
+        <field>
+          <name>product_type</name>
+          <lookup>product_type</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>savings_type</name>
+          <lookup>savings_type</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>per_individual_or_complete_group</name>
+          <lookup>per_individual_or_complete_group</lookup>
+          <update>Punch through</update>
+        </field>
         <return>
           <name>product_key</name>
           <rename/>
@@ -241,9 +265,9 @@ order by prd_offering_id</sql>
       <max_year>2199</max_year>
       <cache_size>100</cache_size>
       <preload_cache>N</preload_cache>
-      <use_start_date_alternative>N</use_start_date_alternative>
-      <start_date_alternative>none</start_date_alternative>
-      <start_date_field_name/>
+      <use_start_date_alternative>Y</use_start_date_alternative>
+      <start_date_alternative>column_value</start_date_alternative>
+      <start_date_field_name>created_date</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>262</xloc>

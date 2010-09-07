@@ -464,6 +464,9 @@ CREATE TABLE dim_product (
   prd_offering_id smallint(6) NOT NULL,
   prd_offering_name varchar(50) NOT NULL,
   prd_offering_short_name varchar(50) NOT NULL,
+  product_type varchar(100) NOT NULL,
+  savings_type varchar(100) NOT NULL,
+  per_individual_or_complete_group varchar(100) NOT NULL,
   valid_from date NOT NULL DEFAULT &apos;1900-01-01&apos;,
   valid_to date NOT NULL DEFAULT &apos;2199-12-31&apos;,
   `version` int(11) NOT NULL DEFAULT &apos;0&apos;,
@@ -473,8 +476,9 @@ CREATE TABLE dim_product (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO dim_product(product_key, prd_offering_id, prd_offering_name, prd_offering_short_name)
-VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;);</sql>
+INSERT INTO dim_product(product_key, prd_offering_id, prd_offering_name, prd_offering_short_name,
+product_type, savings_type, per_individual_or_complete_group)
+VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, &apos;Unknown&apos;, &apos;Unknown&apos;, &apos;Unknown&apos;);</sql>
     <insert_field/>
     <update_field/>
     <delete_field/>
@@ -602,6 +606,64 @@ CREATE TABLE `fact_loan_schedules` (
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>365</xloc>
       <yloc>324</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create fact_loan_disbursals</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE `fact_loan_disbursals`;
+CREATE TABLE `fact_loan_disbursals` (
+  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `currency_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `product_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `branch_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `customer_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_account_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `disbursal_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `created_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `payment_id` int(11) NOT NULL,
+  `account_trxn_id` int(11) NOT NULL,
+  `disbursal_count` tinyint not null,
+  `disbursal_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
+  PRIMARY KEY (`account_trxn_id`),
+  KEY `account_action_key` (`account_action_key`),
+  KEY `currency_key` (`currency_key`),
+  KEY `product_key` (`product_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
+  KEY `customer_key` (`customer_key`),
+  KEY `loan_account_key` (`loan_account_key`),
+  KEY `disbursal_date_key` (`disbursal_date_key`),
+  KEY `created_date_key` (`created_date_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>102</xloc>
+      <yloc>406</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

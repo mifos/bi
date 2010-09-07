@@ -252,13 +252,13 @@ from office</sql>
       <max_year>2199</max_year>
       <cache_size>500</cache_size>
       <preload_cache>N</preload_cache>
-      <use_start_date_alternative>N</use_start_date_alternative>
-      <start_date_alternative>none</start_date_alternative>
-      <start_date_field_name/>
+      <use_start_date_alternative>Y</use_start_date_alternative>
+      <start_date_alternative>column_value</start_date_alternative>
+      <start_date_field_name>created_date</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>215</xloc>
-      <yloc>201</yloc>
+      <xloc>206</xloc>
+      <yloc>204</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

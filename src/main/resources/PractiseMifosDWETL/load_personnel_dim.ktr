@@ -207,7 +207,7 @@ when the personnel was attached to an office on create... and one representing
 the office move 
 So if there is no personnel_movement entry the current office info (and date_of_joining_branch)
 is used instead of personnel_movement info
-Also because mifos write the &apos;initial&apos; office entry after the move entry the personnel_movement_id 
+Also because mifos writes the &apos;initial&apos; office entry after the move entry the personnel_movement_id 
 can&apos;t be relied on to be in date order*&#47;
 ifnull(opm.office_id, o.office_id) office_id, 
 
@@ -247,6 +247,65 @@ order by p.personnel_id, pm.start_date, ifnull(pm.end_date, date(&apos;2199-12-3
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>96</xloc>
       <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Office lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_office</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>Y</eat_row_on_failure>
+      <key>
+        <name>office_id</name>
+        <field>office_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_of_joining_branch</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_of_joining_branch</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>office_key</name>
+        <rename>office_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>display_name</name>
+        <rename>office_name</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>94</xloc>
+      <yloc>141</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -341,65 +400,6 @@ order by p.personnel_id, pm.start_date, ifnull(pm.end_date, date(&apos;2199-12-3
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>94</xloc>
       <yloc>295</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Office lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_office</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>Y</eat_row_on_failure>
-      <key>
-        <name>office_id</name>
-        <field>office_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>date_of_joining_branch</name>
-        <field>valid_from</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>date_of_joining_branch</name>
-        <field>valid_to</field>
-        <condition>&gt;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>office_key</name>
-        <rename>office_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>display_name</name>
-        <rename>office_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>94</xloc>
-      <yloc>141</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
