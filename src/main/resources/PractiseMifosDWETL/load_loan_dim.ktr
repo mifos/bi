@@ -169,53 +169,6 @@ Also just handles initial load. </note>
   <order>
   <hop> <from>Extract Loan Data</from><to>currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>currency lookup</from><to>product lookup </to><enabled>Y</enabled> </hop>  <hop> <from>product lookup </from><to>customer lookup </to><enabled>Y</enabled> </hop>  <hop> <from>customer lookup </from><to>Loan lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>currency lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>3</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_currency</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>currency_id</name>
-        <field>currency_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>currency_key</name>
-        <rename>currency_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>currency_code</name>
-        <rename>currency_code</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>240</xloc>
-      <yloc>32</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Extract Loan Data</name>
     <type>TableInput</type>
     <description/>
@@ -230,7 +183,8 @@ Also just handles initial load. </note>
 select a.account_id as loan_account_id,
 lv.lookup_name as loan_status, la.loan_amount, 
 ls.orig_principal as original_principal, ls.orig_interest as original_interest, ls.orig_fees as original_fees, ls.orig_penalty as original_penalty,
-la.loan_amount_currency_id as currency_id, a.customer_id, la.prd_offering_id
+la.loan_amount_currency_id as currency_id, a.customer_id, la.prd_offering_id,
+a.created_date
 
 from account a
 join loan_account la on la.account_id = a.account_id
@@ -247,88 +201,6 @@ order by a.customer_id</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>81</xloc>
       <yloc>31</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>product lookup </name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>10</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_product</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>prd_offering_id</name>
-        <field>prd_offering_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>product_key</name>
-        <rename>product_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>378</xloc>
-      <yloc>31</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>customer lookup </name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>10</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_customer</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>customer_id</name>
-        <field>customer_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>534</xloc>
-      <yloc>30</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -421,13 +293,178 @@ order by a.customer_id</sql>
       <max_year>2199</max_year>
       <cache_size>100</cache_size>
       <preload_cache>N</preload_cache>
-      <use_start_date_alternative>N</use_start_date_alternative>
-      <start_date_alternative>none</start_date_alternative>
-      <start_date_field_name/>
+      <use_start_date_alternative>Y</use_start_date_alternative>
+      <start_date_alternative>column_value</start_date_alternative>
+      <start_date_field_name>created_date</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>538</xloc>
       <yloc>155</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>currency lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>3</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_currency</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>currency_id</name>
+        <field>currency_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>currency_key</name>
+        <rename>currency_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>currency_code</name>
+        <rename>currency_code</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>240</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>customer lookup </name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>100</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>customer_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>534</xloc>
+      <yloc>30</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>product lookup </name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>10</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_product</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>prd_offering_id</name>
+        <field>prd_offering_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>product_key</name>
+        <rename>product_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>378</xloc>
+      <yloc>31</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

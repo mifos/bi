@@ -66,15 +66,13 @@
   </info>
   <notepads>
     <notepad>
-      <note>Need to handle hierarchy and status changes.
+      <note> 
 
-This first-cut just moves current hierarchy and status.
-
-Also just handles initial load.</note>
-      <xloc>225</xloc>
-      <yloc>12</yloc>
-      <width>273</width>
-      <heigth>72</heigth>
+need to handle center_hierarchy false and single clients</note>
+      <xloc>363</xloc>
+      <yloc>132</yloc>
+      <width>281</width>
+      <heigth>47</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -94,8 +92,8 @@ Also just handles initial load.</note>
       <note>Invalid Grandparent lookup step used to pick up the &apos;0&apos; key values in dim_customer.
 Center lookup step may also pick up the &apos;0&apos; key values  if the center hierarchy configuration
 is turned off or the group is not part of a center hierarchy.</note>
-      <xloc>379</xloc>
-      <yloc>166</yloc>
+      <xloc>231</xloc>
+      <yloc>29</yloc>
       <width>456</width>
       <heigth>47</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -190,54 +188,7 @@ is turned off or the group is not part of a center hierarchy.</note>
     </attributes>
   </connection>
   <order>
-  <hop> <from>Extract Group Data</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Formed By lookup</from><to>Invalid Grandparent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Grandparent lookup</from><to>Center lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Center lookup</from><to>Group lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Branch lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_office</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>branch_id</name>
-        <field>office_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>office_key</name>
-        <rename>branch_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>display_name</name>
-        <rename>branch_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>120</xloc>
-      <yloc>132</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Formed By lookup</from><to>Invalid Grandparent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Extract New Groups</from><to>Center lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Center lookup</from><to>Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Grandparent lookup</from><to>Group lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Center lookup</name>
     <type>DBLookup</type>
@@ -264,6 +215,18 @@ is turned off or the group is not part of a center hierarchy.</note>
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>customer_key</name>
         <rename>center_key</rename>
@@ -271,22 +234,28 @@ is turned off or the group is not part of a center hierarchy.</note>
         <type>Integer</type>
       </value>
       <value>
-        <name>display_name</name>
-        <rename>center_name</rename>
+        <name>loan_officer_key</name>
+        <rename>loan_officer_key</rename>
         <default/>
-        <type>String</type>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>432</xloc>
-      <yloc>331</yloc>
+      <xloc>120</xloc>
+      <yloc>132</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Extract Group Data</name>
+    <name>Extract New Groups</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -297,19 +266,41 @@ is turned off or the group is not part of a center hierarchy.</note>
            </partitioning>
     <connection>SourceDB</connection>
     <sql>select c.customer_id, c.display_name, 
-lv.lookup_name as customer_status,
+ifnull(cld.old_value, lv.lookup_name) as customer_status,
 c.customer_level_id,
-ifnull(parent.customer_id, 0) as parent_id,
-ifnull(grandparent.customer_id, 0) as grandparent_id,
-c.loan_officer_id, 
+&#47;*if a group is not active it won&apos;t be in the hierarchy yet*&#47;
+&#47;*also won&apos;t be in hierarchy if no parent *&#47;
+ifnull(ifnull(ch.parent_id, c.parent_customer_id),0) as parent_id,  
+0 as grandparent_id,
+c.loan_officer_id, &#47;* use this later if group has no parent*&#47;
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
-c.branch_id,
-&apos;n&#47;a&apos; gender
+&apos;n&#47;a&apos; gender,
+c.created_date
 from customer c
 join customer_state cs on cs.status_id = c.status_id
 join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-left join customer parent on parent.customer_id = c.parent_customer_id
-left join customer grandparent on grandparent.customer_id = parent.parent_customer_id
+
+
+&#47;* find first status if there has been a status change*&#47;
+left join change_log cl on c.customer_id = cl.entity_id
+                        and cl.entity_type = 12
+                        and cl.change_log_id = 
+                            (select min(clmin.change_log_id)
+                            from change_log clmin
+                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
+                                                and cldmin.field_name =  &apos;Status&apos;
+                            where clmin.entity_id = c.customer_id
+                            and clmin.entity_type = 12)
+left join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                        and cld.field_name =  &apos;Status&apos;
+                        
+&#47;*get parent from the hierarchy table*&#47;
+left join customer_hierarchy ch on ch.customer_id = c.customer_id
+                and ch.hierarchy_id = 
+                    (select min(hierarchy_id) from customer_hierarchy chmin
+                    where chmin.customer_id = c.customer_id)
+
+
 where c.customer_level_id = 2
 order by c.customer_id</sql>
     <limit>0</limit>
@@ -351,23 +342,29 @@ order by c.customer_id</sql>
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>personnel_key</name>
         <rename>formed_by_loan_officer_key</rename>
         <default/>
         <type>Integer</type>
       </value>
-      <value>
-        <name>display_name</name>
-        <rename>formed_by_loan_officer_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>260</xloc>
-      <yloc>234</yloc>
+      <xloc>119</xloc>
+      <yloc>241</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -418,18 +415,8 @@ order by c.customer_id</sql>
           <update>Punch through</update>
         </field>
         <field>
-          <name>branch_name</name>
-          <lookup>branch_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
           <name>loan_officer_key</name>
           <lookup>loan_officer_key</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
-          <name>loan_officer_name</name>
-          <lookup>loan_officer_name</lookup>
           <update>Punch through</update>
         </field>
         <field>
@@ -438,28 +425,13 @@ order by c.customer_id</sql>
           <update>Punch through</update>
         </field>
         <field>
-          <name>formed_by_loan_officer_name</name>
-          <lookup>formed_by_loan_officer_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
           <name>center_key</name>
           <lookup>center_key</lookup>
           <update>Punch through</update>
         </field>
         <field>
-          <name>center_name</name>
-          <lookup>center_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
           <name>group_key</name>
           <lookup>group_key</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
-          <name>group_name</name>
-          <lookup>group_name</lookup>
           <update>Punch through</update>
         </field>
         <field>
@@ -480,13 +452,13 @@ order by c.customer_id</sql>
       <max_year>2199</max_year>
       <cache_size>500</cache_size>
       <preload_cache>N</preload_cache>
-      <use_start_date_alternative>N</use_start_date_alternative>
-      <start_date_alternative>none</start_date_alternative>
-      <start_date_field_name/>
+      <use_start_date_alternative>Y</use_start_date_alternative>
+      <start_date_alternative>column_value</start_date_alternative>
+      <start_date_field_name>created_date</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>199</xloc>
-      <yloc>335</yloc>
+      <xloc>290</xloc>
+      <yloc>369</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -517,70 +489,29 @@ order by c.customer_id</sql>
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>customer_key</name>
         <rename>group_key</rename>
         <default/>
         <type>Integer</type>
       </value>
-      <value>
-        <name>display_name</name>
-        <rename>group_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>433</xloc>
-      <yloc>233</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Loan Officer lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_personnel</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>loan_officer_id</name>
-        <field>personnel_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>personnel_key</name>
-        <rename>loan_officer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>display_name</name>
-        <rename>loan_officer_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>260</xloc>
-      <yloc>133</yloc>
+      <xloc>289</xloc>
+      <yloc>237</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -66,14 +66,14 @@
   </info>
   <notepads>
     <notepad>
-      <note>Need to handle hierarchy and status changes.
+      <note>Loan Officer Reassignments and status changes handled in a separate transformation
 
-This first-cut just moves current hierarchy and status.
+This transformation identifies the initial loan officer and status values.
 
-Also just handles initial load.</note>
-      <xloc>225</xloc>
-      <yloc>12</yloc>
-      <width>273</width>
+Also just handles initial load.  Need to add date from parameter for incremental runs.</note>
+      <xloc>220</xloc>
+      <yloc>14</yloc>
+      <width>434</width>
       <heigth>72</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
@@ -93,8 +93,8 @@ Also just handles initial load.</note>
     <notepad>
       <note>Invalid Grandparent and Parent steps just used to set group and center details 
 to the &apos;0&apos; key values in dim_customer</note>
-      <xloc>379</xloc>
-      <yloc>166</yloc>
+      <xloc>341</xloc>
+      <yloc>142</yloc>
       <width>399</width>
       <heigth>35</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -189,54 +189,7 @@ to the &apos;0&apos; key values in dim_customer</note>
     </attributes>
   </connection>
   <order>
-  <hop> <from>Extract Center Data</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Formed By lookup</from><to>Invalid Grandparent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Grandparent lookup</from><to>Invalid Parent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Parent lookup</from><to>Center lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Branch lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_office</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>branch_id</name>
-        <field>office_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>office_key</name>
-        <rename>branch_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>display_name</name>
-        <rename>branch_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>120</xloc>
-      <yloc>132</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Formed By lookup</from><to>Invalid Grandparent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Grandparent lookup</from><to>Invalid Parent lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Invalid Parent lookup</from><to>Center lookup&#47;update</to><enabled>Y</enabled> </hop>  <hop> <from>Extract New Centers</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Loan Officer Id</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Formed By lookup</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Center lookup&#47;update</name>
     <type>DimensionLookup</type>
@@ -283,18 +236,8 @@ to the &apos;0&apos; key values in dim_customer</note>
           <update>Punch through</update>
         </field>
         <field>
-          <name>branch_name</name>
-          <lookup>branch_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
           <name>loan_officer_key</name>
           <lookup>loan_officer_key</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
-          <name>loan_officer_name</name>
-          <lookup>loan_officer_name</lookup>
           <update>Punch through</update>
         </field>
         <field>
@@ -303,28 +246,13 @@ to the &apos;0&apos; key values in dim_customer</note>
           <update>Punch through</update>
         </field>
         <field>
-          <name>formed_by_loan_officer_name</name>
-          <lookup>formed_by_loan_officer_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
           <name>center_key</name>
           <lookup>center_key</lookup>
           <update>Punch through</update>
         </field>
         <field>
-          <name>center_name</name>
-          <lookup>center_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
           <name>group_key</name>
           <lookup>group_key</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
-          <name>group_name</name>
-          <lookup>group_name</lookup>
           <update>Punch through</update>
         </field>
         <field>
@@ -357,7 +285,7 @@ to the &apos;0&apos; key values in dim_customer</note>
     </step>
 
   <step>
-    <name>Extract Center Data</name>
+    <name>Extract New Centers</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -368,13 +296,12 @@ to the &apos;0&apos; key values in dim_customer</note>
            </partitioning>
     <connection>SourceDB</connection>
     <sql>select c.customer_id, c.display_name, 
-lv.lookup_name as customer_status,
+ifnull(cld.old_value, lv.lookup_name) as customer_status,
 c.customer_level_id,
 ifnull(parent.customer_id, 0) as parent_id,
 ifnull(grandparent.customer_id, 0) as grandparent_id,
-c.loan_officer_id, 
+ifnull(cldlo.old_value, p.display_name) as loan_officer_name, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
-c.branch_id,
 &apos;n&#47;a&apos; gender,
 c.created_date
 from customer c
@@ -382,6 +309,36 @@ join customer_state cs on cs.status_id = c.status_id
 join lookup_value lv on lv.lookup_id = cs.status_lookup_id
 left join customer parent on parent.customer_id = c.parent_customer_id
 left join customer grandparent on grandparent.customer_id = parent.parent_customer_id
+
+
+&#47;* find first status and first loan officer*&#47;
+left join change_log cl on c.customer_id = cl.entity_id 
+                        and cl.entity_type = 20
+                        and cl.change_log_id = 
+                            (select min(clmin.change_log_id)
+                            from change_log clmin
+                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
+                                                and cldmin.field_name =  &apos;Status&apos;
+                            where clmin.entity_id = c.customer_id
+                            and clmin.entity_type = 20)
+left join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                        and cld.field_name =  &apos;Status&apos;
+
+join personnel p on p.personnel_id = c.loan_officer_id
+left join change_log cllo on c.customer_id = cllo.entity_id
+                        and cllo.entity_type = 20
+                        and cllo.change_log_id = 
+                            (select min(clmin.change_log_id)
+                            from change_log clmin
+                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
+                                                and cldmin.field_name =  &apos;Loan Officer Assigned&apos;
+                            where clmin.entity_id = c.customer_id
+                            and clmin.entity_type = 20)
+left join change_log_detail cldlo on cldlo.change_log_id = cllo.change_log_id
+                        and cldlo.field_name =  &apos;Loan Officer Assigned&apos;
+&#47;*end find first status and loan officer values*&#47;
+
+
 where c.customer_level_id = 3
 order by c.customer_id</sql>
     <limit>0</limit>
@@ -423,23 +380,29 @@ order by c.customer_id</sql>
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>personnel_key</name>
         <rename>formed_by_loan_officer_key</rename>
         <default/>
         <type>Integer</type>
       </value>
-      <value>
-        <name>display_name</name>
-        <rename>formed_by_loan_officer_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>260</xloc>
-      <yloc>234</yloc>
+      <xloc>251</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -470,17 +433,23 @@ order by c.customer_id</sql>
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>customer_key</name>
         <rename>center_key</rename>
         <default/>
         <type>Integer</type>
-      </value>
-      <value>
-        <name>display_name</name>
-        <rename>center_name</rename>
-        <default/>
-        <type>String</type>
       </value>
     </lookup>
      <cluster_schema/>
@@ -517,23 +486,29 @@ order by c.customer_id</sql>
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>customer_key</name>
         <rename>group_key</rename>
         <default/>
         <type>Integer</type>
       </value>
-      <value>
-        <name>display_name</name>
-        <rename>group_name</rename>
-        <default/>
-        <type>String</type>
-      </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>432</xloc>
-      <yloc>331</yloc>
+      <xloc>436</xloc>
+      <yloc>334</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -570,6 +545,12 @@ order by c.customer_id</sql>
         <condition>&lt;=</condition>
         <name2/>
       </key>
+      <key>
+        <name>created_date</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
       <value>
         <name>personnel_key</name>
         <rename>loan_officer_key</rename>
@@ -577,16 +558,57 @@ order by c.customer_id</sql>
         <type>Integer</type>
       </value>
       <value>
-        <name>display_name</name>
-        <rename>loan_officer_name</rename>
+        <name>office_key</name>
+        <rename>branch_key</rename>
         <default/>
-        <type>String</type>
+        <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>260</xloc>
-      <yloc>133</yloc>
+      <xloc>120</xloc>
+      <yloc>227</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Lookup Loan Officer Id</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>stg_personnel_names_and_name_changes</table>
+      <orderby/>
+      <fail_on_multiple>Y</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>loan_officer_name</name>
+        <field>DISPLAY_NAME</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>PERSONNEL_ID</name>
+        <rename>loan_officer_id</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>120</xloc>
+      <yloc>117</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
