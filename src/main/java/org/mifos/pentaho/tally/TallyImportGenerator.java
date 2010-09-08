@@ -47,11 +47,11 @@ public class TallyImportGenerator {
             fileName = fullFileName.replace("file:", "/");
         }
         PrintWriter file = new PrintWriter(fileName);
-        file.print(getTallyReportData());
+        file.print(getTallyReportData(fileName));
         file.close();
     }
 
-    public static String getTallyReportData() throws Exception {
+    public static String getTallyReportData(String fileName) throws Exception {
 
         Template temp = getFTLConfig().getTemplate("master.ftl");
 
@@ -62,7 +62,7 @@ public class TallyImportGenerator {
         Map<String, Object> tallyMessage = new HashMap<String, Object>();
         root.put("tallyMessage", tallyMessage);
         tallyMessage.put("headOfficeName", "HEAD OFFICE");
-        tallyMessage.put("data", getMasterData(tallyMessages));
+        tallyMessage.put("data", getMasterData(tallyMessages, fileName));
         StringWriter bow = new StringWriter();
         temp.process(root, bow);
         return bow.toString();
@@ -72,15 +72,15 @@ public class TallyImportGenerator {
         return ETLOutputReader.getTallyMessages();
     }
 
-    private static String getMasterData(List<TallyMessage> tallyMessages) throws IOException, TemplateException {
+    private static String getMasterData(List<TallyMessage> tallyMessages, String fileName) throws IOException, TemplateException {
         String tallyMessagesOutput = "";
         for (TallyMessage tallyMessage : tallyMessages) {
-            tallyMessagesOutput += getTallyMessageData(tallyMessage);
+            tallyMessagesOutput += getTallyMessageData(tallyMessage, fileName);
         }
         return tallyMessagesOutput;
     }
 
-    private static String getTallyMessageData(TallyMessage tallyMessage) throws TemplateException, IOException {
+    private static String getTallyMessageData(TallyMessage tallyMessage, String fileName) throws TemplateException, IOException {
         Template temp = getFTLConfig().getTemplate("tally_mesage.ftl");
         /* Create a data-model */
         Map<String, Object> root = new HashMap<String, Object>();
@@ -88,6 +88,7 @@ public class TallyImportGenerator {
         root.put("voucher", voucher);
         voucher.put("type", tallyMessage.getVoucherType().value);
         voucher.put("date", tallyDateFormat.format(tallyMessage.getVoucherDate()));
+        voucher.put("fileName", fileName);
         voucher.put("data", getVoucherData(tallyMessage));
         StringWriter bow = new StringWriter();
         temp.process(root, bow);

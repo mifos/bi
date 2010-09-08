@@ -34,7 +34,7 @@ public class TallyImportGeneratorTest {
         File file = new File(TallyImportGeneratorTest.class.getResource("SmallMifosTallyETLOutput.txt").toURI());
         File outputFile = new File("/tmp/MifosTallyETLOutput.txt");
         FileUtils.copyFile(file, outputFile);
-        String actual = TallyImportGenerator.getTallyReportData();
+        String actual = TallyImportGenerator.getTallyReportData("Mifos - GL Interface 2010-10-02 to 2010-10-05.xml");
         String expected = getExpectedDateForSmallImport();
         Assert.assertEquals(expected, actual);
         outputFile.delete();
@@ -45,7 +45,7 @@ public class TallyImportGeneratorTest {
         File file = new File(TallyImportGeneratorTest.class.getResource("BigMifosTallyETLOutput.txt").toURI());
         File outputFile = new File("/tmp/MifosTallyETLOutput.txt");
         FileUtils.copyFile(file, outputFile);
-        String actual = TallyImportGenerator.getTallyReportData();
+        String actual = TallyImportGenerator.getTallyReportData("Mifos - GL Interface 2010-10-02 to 2010-10-05.xml");
         String expected = getExpectedDateForBigImport();
         Assert.assertEquals(expected, actual);
         outputFile.delete();
