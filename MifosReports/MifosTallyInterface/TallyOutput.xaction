@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action-sequence> 
-  <title>Latest Tally Output</title>
+  <title>Tally Output - Latest</title>
   <version>1</version>
   <logging-level>INFO</logging-level>
   <documentation> 
-    <author>Udai Gupta</author>  
-    <description>Mifos Accounting Tally Export Output</description>  
-    <help/>  
-    <result-type/>  
-    <icon/> 
+    <author>Udai Gupta</author>
+    <description>Mifos Accounting Tally Export Output</description>
+    <help/>
+    <result-type/>
+    <icon/>
   </documentation>
 
   <inputs>
@@ -20,7 +20,7 @@
     </forceAttachment>
   </inputs>
 
-  <outputs> 
+  <outputs>
     <tallyData type="content">
       <destinations>
         <response>content</response>
@@ -28,16 +28,9 @@
     </tallyData>
   </outputs>
 
-  <resources> 
-    <report-definition> 
-      <solution-file> 
-        <location>reports/TallyOutputReport.prpt</location>  
-        <mime-type>application/zip</mime-type> 
-      </solution-file> 
-    </report-definition> 
-  </resources>
-  
-  <actions> 
+  <resources/>
+
+  <actions>
     <action-definition>
       <component-name>SecureFilterComponent</component-name>
       <action-type>Prompt/Secure Filter</action-type>
@@ -53,17 +46,17 @@
       </component-definition>
     </action-definition>
 
-    <action-definition> 
+    <action-definition>
       <component-name>JavascriptRule</component-name>
       <action-type>JavaScript</action-type>
-      <action-outputs> 
-        <tallyData type="content" mapping="tallyData"/> 
+      <action-outputs>
+        <tallyData type="content" mapping="tallyData"/>
       </action-outputs>
-      <component-definition> 
+      <component-definition>
         <script><![CDATA[var tallyData;
-tallyData = org.mifos.pentaho.tally.TallyImportGenerator.getTallyReportData();]]></script> 
-      </component-definition> 
+tallyData = org.mifos.pentaho.tally.TallyImportGenerator.getTallyReportData();]]></script>
+      </component-definition>
     </action-definition>
- 
-  </actions> 
+
+  </actions>
 </action-sequence>
