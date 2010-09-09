@@ -4,59 +4,83 @@
   <version>1</version>
   <logging-level>INFO</logging-level>
   <documentation> 
-    <author>Udai Gupta</author>
-    <description>Mifos Accounting Tally Export Output</description>
-    <help/>
-    <result-type/>
-    <icon/>
+    <author>Udai Gupta</author>  
+    <description>Mifos Accounting Tally Export Output</description>  
+    <help/>  
+    <result-type/>  
+    <icon/> 
   </documentation>
 
-  <inputs>
-    <forceAttachment type="string">
-      <sources>
-        <request>forceAttachment</request>
-      </sources>
-      <default-value><![CDATA[true]]></default-value>
-    </forceAttachment>
+  <inputs> 
+    <forceAttachment type="string"> 
+      <sources> 
+        <request>forceAttachment</request> 
+      </sources>  
+      <default-value><![CDATA[true]]></default-value> 
+    </forceAttachment> 
   </inputs>
 
-  <outputs>
-    <tallyData type="content">
-      <destinations>
-        <response>content</response>
-      </destinations>
-    </tallyData>
+  <outputs> 
+    <tallyData type="content"> 
+      <destinations> 
+        <response>content</response> 
+      </destinations> 
+    </tallyData> 
   </outputs>
 
-  <resources/>
-
-  <actions>
-    <action-definition>
+  <resources>
+    <transformation-file>
+      <solution-file>
+        <location>GetLatestXMLFileToBeUsedByTallyOutputAction.ktr</location>
+        <mime-type>text/plain</mime-type>
+      </solution-file>
+    </transformation-file>
+  </resources>
+  
+  <actions> 
+    <action-definition> 
       <component-name>SecureFilterComponent</component-name>
       <action-type>Prompt/Secure Filter</action-type>
-      <action-inputs>
-        <forceAttachment type="string"/>
+      <action-inputs> 
+        <forceAttachment type="string"/> 
       </action-inputs>
-      <component-definition>
-        <selections>
-          <forceAttachment filter="none">
-            <title>Download the output</title>
-          </forceAttachment>
-        </selections>
-      </component-definition>
+      <component-definition> 
+        <selections> 
+          <forceAttachment filter="none"> 
+            <title>Download the output</title> 
+          </forceAttachment> 
+        </selections> 
+      </component-definition> 
     </action-definition>
-
+  
     <action-definition>
-      <component-name>JavascriptRule</component-name>
-      <action-type>JavaScript</action-type>
+      <component-name>KettleComponent</component-name>
+      <action-type>Get Latest XML File Name</action-type>
+      <action-resources>
+        <transformation-file type="resource"/>
+      </action-resources>
       <action-outputs>
-        <tallyData type="content" mapping="tallyData"/>
+        <transformation-output-rows type="result-set" mapping="filename"/>
       </action-outputs>
       <component-definition>
-        <script><![CDATA[var tallyData;
-tallyData = org.mifos.pentaho.tally.TallyImportGenerator.getTallyReportData();]]></script>
+        <monitor-step><![CDATA[Text file input]]></monitor-step>
       </component-definition>
     </action-definition>
 
-  </actions>
+    <action-definition> 
+      <component-name>JavascriptRule</component-name>
+      <action-type>JavaScript</action-type>
+      <action-inputs>
+        <filename type="result-set"/>
+      </action-inputs>
+      <action-outputs> 
+        <tallyData type="content" mapping="tallyData"/> 
+      </action-outputs>
+      <component-definition> 
+        <script><![CDATA[var tallyData;
+tallyData = org.mifos.pentaho.tally.TallyImportGenerator.getTallyReportData(filename.getValueAt(0,0));]]></script> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
 </action-sequence>

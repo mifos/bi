@@ -16,7 +16,7 @@
       <sources> 
         <request>datefrom</request> 
       </sources>  
-      <default-value><![CDATA[2010-02-15]]></default-value> 
+      <default-value><![CDATA[2010-04-01]]></default-value> 
     </datefrom>  
     <dateto type="string"> 
       <sources> 
@@ -53,8 +53,8 @@
         <response>content</response> 
       </destinations> 
     </report_output>  
-    <Validation_Message type="string">
-      <destinations/>
+    <Validation_Message type="string"> 
+      <destinations/> 
     </Validation_Message> 
   </outputs>
 
@@ -82,7 +82,13 @@
         <location>CreateTallyXML.ktr</location>  
         <mime-type>text/plain</mime-type> 
       </solution-file> 
-    </transformation-file2> 
+    </transformation-file2>  
+    <transformation-file3>
+      <solution-file>
+        <location>SaveLatestXMLFileNameToBeUsedByTallyOuputAction.ktr</location>
+        <mime-type>text/plain</mime-type>
+      </solution-file>
+    </transformation-file3>
   </resources>
   
   <actions> 
@@ -109,32 +115,20 @@
       <component-name>JavascriptRule</component-name>
       <action-type>Create Additional Parameters</action-type>
       <action-inputs> 
-        <datefrom type="string"/>
-        <dateto type="string"/>
+        <datefrom type="string"/>  
+        <dateto type="string"/> 
       </action-inputs>
       <action-outputs> 
         <period type="string"/>  
         <filename type="string"/>  
         <calcdateto type="string"/>  
-        <part_validation_message type="string"/>
+        <part_validation_message type="string"/> 
       </action-outputs>
       <component-definition> 
-        <script><![CDATA[function isValidDate(d, dstr) {
-
-if ( Object.prototype.toString.call(d) !== "[object Date]" ) return false;
-
-if (isNaN(d.getTime())) return false;
-
-//because javascript data object tries to make valid dates like 2010-42-20 
-//check if date created from string still matches the string
-yyyy = dstr.substring(0,4);
-mm = dstr.substring(5,7);
-dd = dstr.substring(8,10);
-
-if ((d.getFullYear() != yyyy) || (d.getMonth()+1 != mm) || (d.getDate() != dd)) return false;
-
-return true;
-
+        <script><![CDATA[function isValidDate(d) {
+  if ( Object.prototype.toString.call(d) !== "[object Date]" )
+    return false;
+  return !isNaN(d.getTime());
 }
 
 
@@ -151,21 +145,21 @@ dDateto = new Date(calcdateto.replace("/",'A').replace(/-/g,'/'));
 dToday = new Date();
 part_validation_message = "";
 
-if ((part_validation_message == "") && (!isValidDate(dDatefrom, datefrom))) part_validation_message = "From Date: " + datefrom + " does not have correct date format (yyyy-mm-dd)";
-if ((part_validation_message == "") && (!isValidDate(dDateto, calcdateto))) part_validation_message = "To Date: " + dateto + " does not have correct date format (yyyy-mm-dd)";
+if ((part_validation_message == "") && (!isValidDate(dDatefrom))) part_validation_message = "From Date: " + datefrom + " does not have correct date format (yyyy-mm-dd)";
+if ((part_validation_message == "") && (!isValidDate(dDateto))) part_validation_message = "To Date: " + dateto + " does not have correct date format (yyyy-mm-dd)";
 if ((part_validation_message == "") && (dDatefrom > dDateto)) part_validation_message = "From Date: " + datefrom + "<br><br> is after <br><br>To Date: " + dateto;
 if ((part_validation_message == "") && (dDatefrom > dToday)) part_validation_message = "From Date: " + datefrom + " is after today";
-if ((part_validation_message == "") && (dDateto > dToday)) part_validation_message = "To Date: " + dateto + " is after today";]]></script>
+if ((part_validation_message == "") && (dDateto > dToday)) part_validation_message = "To Date: " + dateto + " is after today";]]></script> 
       </component-definition> 
     </action-definition>
-
+  
     <actions> 
       <condition><![CDATA[!( part_validation_message == '')]]></condition>  
       <action-definition> 
         <component-name>TemplateComponent</component-name>
         <action-type>From Date After To Date</action-type>
-        <action-inputs>
-          <part_validation_message type="string"/>
+        <action-inputs> 
+          <part_validation_message type="string"/> 
         </action-inputs>
         <action-outputs> 
           <output-message type="string" mapping="Validation_Message"/> 
@@ -275,7 +269,7 @@ if ((part_validation_message == "") && (dDateto > dToday)) part_validation_messa
   
         <action-definition> 
           <component-name>KettleComponent</component-name>
-          <action-type>Pentaho Data Integration</action-type>
+          <action-type>Create Tally XML</action-type>
           <action-inputs> 
             <filename type="string"/> 
           </action-inputs>
@@ -285,6 +279,18 @@ if ((part_validation_message == "") && (dDateto > dToday)) part_validation_messa
           <component-definition/> 
         </action-definition>
   
+        <action-definition>
+          <component-name>KettleComponent</component-name>
+          <action-type>Save Latest XML File Name</action-type>
+          <action-inputs>
+            <filename type="string"/>
+          </action-inputs>
+          <action-resources>
+            <transformation-file type="resource" mapping="transformation-file3"/>
+          </action-resources>
+          <component-definition/>
+        </action-definition>
+
         <action-definition> 
           <component-name>SimpleReportingComponent</component-name>
           <action-type>Tally GL Interface Report</action-type>
