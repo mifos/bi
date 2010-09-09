@@ -28,13 +28,19 @@
     </tallyData> 
   </outputs>
 
-  <resources>
-    <transformation-file>
-      <solution-file>
-        <location>GetLatestXMLFileToBeUsedByTallyOutputAction.ktr</location>
-        <mime-type>text/plain</mime-type>
-      </solution-file>
-    </transformation-file>
+  <resources> 
+    <transformation-file> 
+      <solution-file> 
+        <location>GetLatestXMLFileToBeUsedByTallyOutputAction.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </solution-file> 
+    </transformation-file>  
+    <pageTemplate> 
+      <solution-file> 
+        <location>CustomUI.xsl</location>  
+        <mime-type>text/plain</mime-type> 
+      </solution-file> 
+    </pageTemplate> 
   </resources>
   
   <actions> 
@@ -44,34 +50,38 @@
       <action-inputs> 
         <forceAttachment type="string"/> 
       </action-inputs>
+      <action-resources> 
+        <pageTemplate type="resource"/> 
+      </action-resources>
       <component-definition> 
         <selections> 
-          <forceAttachment filter="none"> 
-            <title>Download the output</title> 
+          <forceAttachment filter="none" style="radio"> 
+            <title>Download the output (Do not modify this):</title> 
           </forceAttachment> 
-        </selections> 
+        </selections>  
+        <xsl><![CDATA[pageTemplate]]></xsl> 
       </component-definition> 
     </action-definition>
   
-    <action-definition>
+    <action-definition> 
       <component-name>KettleComponent</component-name>
       <action-type>Get Latest XML File Name</action-type>
-      <action-resources>
-        <transformation-file type="resource"/>
+      <action-resources> 
+        <transformation-file type="resource"/> 
       </action-resources>
-      <action-outputs>
-        <transformation-output-rows type="result-set" mapping="filename"/>
+      <action-outputs> 
+        <transformation-output-rows type="result-set" mapping="filename"/> 
       </action-outputs>
-      <component-definition>
-        <monitor-step><![CDATA[Text file input]]></monitor-step>
-      </component-definition>
+      <component-definition> 
+        <monitor-step><![CDATA[Text file input]]></monitor-step> 
+      </component-definition> 
     </action-definition>
-
+  
     <action-definition> 
       <component-name>JavascriptRule</component-name>
       <action-type>JavaScript</action-type>
-      <action-inputs>
-        <filename type="result-set"/>
+      <action-inputs> 
+        <filename type="result-set"/> 
       </action-inputs>
       <action-outputs> 
         <tallyData type="content" mapping="tallyData"/> 
