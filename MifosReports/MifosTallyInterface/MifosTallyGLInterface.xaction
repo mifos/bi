@@ -119,10 +119,22 @@
         <part_validation_message type="string"/>
       </action-outputs>
       <component-definition> 
-        <script><![CDATA[function isValidDate(d) {
-  if ( Object.prototype.toString.call(d) !== "[object Date]" )
-    return false;
-  return !isNaN(d.getTime());
+        <script><![CDATA[function isValidDate(d, dstr) {
+
+if ( Object.prototype.toString.call(d) !== "[object Date]" ) return false;
+
+if (isNaN(d.getTime())) return false;
+
+//because javascript data object tries to make valid dates like 2010-42-20 
+//check if date created from string still matches the string
+yyyy = dstr.substring(0,4);
+mm = dstr.substring(5,7);
+dd = dstr.substring(8,10);
+
+if ((d.getFullYear() != yyyy) || (d.getMonth()+1 != mm) || (d.getDate() != dd)) return false;
+
+return true;
+
 }
 
 
@@ -139,8 +151,8 @@ dDateto = new Date(calcdateto.replace("/",'A').replace(/-/g,'/'));
 dToday = new Date();
 part_validation_message = "";
 
-if ((part_validation_message == "") && (!isValidDate(dDatefrom))) part_validation_message = "From Date: " + datefrom + " does not have correct date format (yyyy-mm-dd)";
-if ((part_validation_message == "") && (!isValidDate(dDateto))) part_validation_message = "To Date: " + dateto + " does not have correct date format (yyyy-mm-dd)";
+if ((part_validation_message == "") && (!isValidDate(dDatefrom, datefrom))) part_validation_message = "From Date: " + datefrom + " does not have correct date format (yyyy-mm-dd)";
+if ((part_validation_message == "") && (!isValidDate(dDateto, calcdateto))) part_validation_message = "To Date: " + dateto + " does not have correct date format (yyyy-mm-dd)";
 if ((part_validation_message == "") && (dDatefrom > dDateto)) part_validation_message = "From Date: " + datefrom + "<br><br> is after <br><br>To Date: " + dateto;
 if ((part_validation_message == "") && (dDatefrom > dToday)) part_validation_message = "From Date: " + datefrom + " is after today";
 if ((part_validation_message == "") && (dDateto > dToday)) part_validation_message = "To Date: " + dateto + " is after today";]]></script>
