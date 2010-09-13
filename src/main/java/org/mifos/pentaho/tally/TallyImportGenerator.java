@@ -43,7 +43,7 @@ public class TallyImportGenerator {
 
     public static void process(String fullFileName) throws Exception {
         String fileName = fullFileName;
-        if(fullFileName.startsWith("file:/")){
+        if (fullFileName.startsWith("file:/")) {
             fileName = fullFileName.replace("file:", "/");
         }
         PrintWriter file = new PrintWriter(fileName);
@@ -72,7 +72,8 @@ public class TallyImportGenerator {
         return ETLOutputReader.getTallyMessages();
     }
 
-    private static String getMasterData(List<TallyMessage> tallyMessages, String fileName) throws IOException, TemplateException {
+    private static String getMasterData(List<TallyMessage> tallyMessages, String fileName) throws IOException,
+            TemplateException {
         String tallyMessagesOutput = "";
         for (TallyMessage tallyMessage : tallyMessages) {
             tallyMessagesOutput += getTallyMessageData(tallyMessage, fileName);
@@ -80,7 +81,8 @@ public class TallyImportGenerator {
         return tallyMessagesOutput;
     }
 
-    private static String getTallyMessageData(TallyMessage tallyMessage, String fileName) throws TemplateException, IOException {
+    private static String getTallyMessageData(TallyMessage tallyMessage, String fileName) throws TemplateException,
+            IOException {
         Template temp = getFTLConfig().getTemplate("tally_mesage.ftl");
         /* Create a data-model */
         Map<String, Object> root = new HashMap<String, Object>();
@@ -97,12 +99,28 @@ public class TallyImportGenerator {
 
     private static String getVoucherData(TallyMessage tallyMessage) throws TemplateException, IOException {
         String allLedgersOutput = "";
-        for (AllLedger allLedger : tallyMessage.getAllLedgers()) {
-            allLedgersOutput += getAllLedgerData(allLedger);
-        }
-        return allLedgersOutput.substring(0, allLedgersOutput.length() -1);
-    }
+        // see payment specs for tally integration
+        if (tallyMessage.getVoucherType() == VoucherType.PAYMENT) {
+            // Add Debit Accounts
+            for (AllLedger allLedger : tallyMessage.getAllLedgers()) {
+                if (allLedger.getIsDeemedPositive().equals(Boolean.TRUE)) {
+                    allLedgersOutput += getAllLedgerData(allLedger);
+                }
+            }
+            // Add Credit Accounts
+            for (AllLedger allLedger : tallyMessage.getAllLedgers()) {
+                if (allLedger.getIsDeemedPositive().equals(Boolean.FALSE)) {
+                    allLedgersOutput += getAllLedgerData(allLedger);
+                }
+            }
 
+        } else {
+            for (AllLedger allLedger : tallyMessage.getAllLedgers()) {
+                allLedgersOutput += getAllLedgerData(allLedger);
+            }
+        }
+        return allLedgersOutput.substring(0, allLedgersOutput.length() - 1);
+    }
 
     private static String getAllLedgerData(AllLedger allLedger) throws TemplateException, IOException {
         Template temp = getFTLConfig().getTemplate("all_ledgers.ftl");
