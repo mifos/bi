@@ -54,15 +54,22 @@ public class TallyImportGenerator {
     public static String getTallyReportData(String fileName) throws Exception {
 
         Template temp = getFTLConfig().getTemplate("master.ftl");
-
-        List<TallyMessage> tallyMessages = getTallyMessagesFromTmpOutputFile();
+        String masterData = "";
+        try {
+            List<TallyMessage> tallyMessages = getTallyMessagesFromTmpOutputFile();
+            masterData = getMasterData(tallyMessages, fileName);
+        } catch (Exception e) {
+            masterData = "Contact admin: There was an error encountered :";
+            masterData += e.getMessage();
+            return masterData;
+        }
 
         /* Create a data-model */
         Map<String, Object> root = new HashMap<String, Object>();
         Map<String, Object> tallyMessage = new HashMap<String, Object>();
         root.put("tallyMessage", tallyMessage);
         tallyMessage.put("headOfficeName", "HEAD OFFICE");
-        tallyMessage.put("data", getMasterData(tallyMessages, fileName));
+        tallyMessage.put("data", masterData);
         StringWriter bow = new StringWriter();
         temp.process(root, bow);
         return bow.toString();

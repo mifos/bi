@@ -51,6 +51,17 @@ public class TallyImportGeneratorTest {
         outputFile.delete();
     }
 
+    @Test
+    public void wrongTallyImportReport() throws Exception {
+        File file = new File(TallyImportGeneratorTest.class.getResource("WrongOutput.txt").toURI());
+        File outputFile = new File("/tmp/MifosTallyETLOutput.txt");
+        FileUtils.copyFile(file, outputFile);
+        String actual = TallyImportGenerator.getTallyReportData("Mifos - GL Interface 2010-10-02 to 2010-10-05.xml");
+        String expected = "Contact admin: There was an error encountered :No such voucher type supported:Unknown Account Action:1 for Finanical Action 3";
+        Assert.assertEquals(expected, actual);
+        outputFile.delete();
+    }
+
     private String getExpectedDateForBigImport() throws Exception {
         File file = new File(TallyImportGeneratorTest.class.getResource("BigTallyImportExpected.xml").toURI());
         return FileUtils.readFileToString(file);
