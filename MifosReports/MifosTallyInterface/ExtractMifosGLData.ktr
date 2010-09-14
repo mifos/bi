@@ -185,35 +185,35 @@ DATE_FORMAT(fintrxn.action_date, &apos;%Y-%m-%d&apos;) as &quot;voucherdate&quot
 WHEN 1 then &#47;*PRINCIPALPOSTING*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
-		WHEN 9 then &apos;PAYMENT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
-		WHEN 18 then &apos;PAYMENT&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
+		WHEN 9 then &apos;JOURNAL&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
+		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
 	END)
 WHEN 2 then &#47;*INTERESTPOSTING*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
-		WHEN 9 then &apos;PAYMENT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
-		WHEN 18 then &apos;PAYMENT&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
+		WHEN 9 then &apos;JOURNAL&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
+		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
 	END)
 WHEN 4 then &#47;*MISCFEEPOSTING*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
-		WHEN 9 then &apos;PAYMENT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
-		WHEN 18 then &apos;PAYMENT&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
+		WHEN 9 then &apos;JOURNAL&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
+		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
 	END)
 WHEN 6 then &#47;*MISCPENALTYPOSTING*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
-		WHEN 9 then &apos;PAYMENT&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
-		WHEN 18 then &apos;PAYMENT&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
+		WHEN 9 then &apos;JOURNAL&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
+		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
 	END)
 WHEN 3 then  &#47;*FEEPOSTING*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 4 then &apos;RECEIPT&apos; &#47;*Fee*&#47;
-		WHEN 18 then &apos;PAYMENT&apos; &#47;*LoanReversal (reverses fees &amp; payments partsl)*&#47;
+		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments partsl)*&#47;
 		WHEN 12 then &apos;RECEIPT&apos; &#47;*Customer Fee*&#47;
 		WHEN 13 THEN &apos;JOURNAL&apos; &#47;*CustomerAdjustment*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
@@ -221,7 +221,7 @@ WHEN 3 then  &#47;*FEEPOSTING*&#47;
 WHEN 7 then  &#47;*DISBURSAL*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 10 then &apos;PAYMENT&apos; &#47;*Disbursal*&#47;
-		WHEN 19 then &apos;RECEIPT&apos; &#47;*DisrbursalAmountReversal (undoes Disbursal part)*&#47;
+		WHEN 19 then &apos;JOURNAL&apos; &#47;*DisrbursalAmountReversal (undoes Disbursal part)*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
 	END)
 
