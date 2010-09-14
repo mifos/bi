@@ -560,6 +560,58 @@ VALUES (0, 0, &apos;Unknown&apos;, 0, 0, 0, 0, 0, 0, 0, 0);
     </step>
 
   <step>
+    <name>Create fact_client_attendances</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>DROP TABLE IF EXISTS fact_client_attendances;
+CREATE TABLE fact_client_attendances (
+  `meeting_date_key` int(10) unsigned NOT NULL,
+  `client_key` int(10) unsigned NOT NULL,
+  `group_key` int(10) unsigned NOT NULL,
+  `center_key` int(10) unsigned NOT NULL,
+  `loan_officer_key` smallint(5) unsigned NOT NULL,
+  `branch_key` smallint(5) unsigned NOT NULL,
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
+  `present` tinyint DEFAULT &apos;0&apos;,
+  `absent` tinyint DEFAULT &apos;0&apos;,
+  `approved_leave` tinyint DEFAULT &apos;0&apos;,
+  `late` tinyint DEFAULT &apos;0&apos;,
+  PRIMARY KEY (`meeting_date_key`, `client_key`),
+  KEY `meeting_date_key` (`meeting_date_key`),
+  KEY `client_key` (`client_key`),
+  KEY `group_key` (`group_key`),
+  KEY `center_key` (`center_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>387</xloc>
+      <yloc>422</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Create fact_loan_disbursals</name>
     <type>ExecSQL</type>
     <description/>
@@ -638,13 +690,15 @@ CREATE TABLE `fact_loan_disbursals` (
     <sql>DROP TABLE fact_loan_repayments;
 CREATE TABLE `fact_loan_repayments` (
   `account_action_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `loan_account_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `currency_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `product_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `customer_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
+  `group_key` int(10) unsigned NOT NULL,
+  `center_key` int(10) unsigned NOT NULL,
   `branch_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT &apos;0&apos;,
-  `customer_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
-  `loan_account_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `due_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `action_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
   `created_date_key` int(10) unsigned NOT NULL DEFAULT &apos;0&apos;,
@@ -656,17 +710,20 @@ CREATE TABLE `fact_loan_repayments` (
   `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
   `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT &apos;0.0000&apos;,
   PRIMARY KEY (`account_trxn_id`),
+  KEY `loan_account_key` (`loan_account_key`),
   KEY `account_action_key` (`account_action_key`),
   KEY `currency_key` (`currency_key`),
   KEY `product_key` (`product_key`),
-  KEY `branch_key` (`branch_key`),
-  KEY `loan_officer_key` (`loan_officer_key`),
-  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
   KEY `customer_key` (`customer_key`),
-  KEY `loan_account_key` (`loan_account_key`),
+  KEY `group_key` (`group_key`),
+  KEY `center_key` (`center_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
   KEY `due_date_key` (`due_date_key`),
   KEY `action_date_key` (`action_date_key`),
-  KEY `created_date_key` (`created_date_key`)
+  KEY `created_date_key` (`created_date_key`),
+  KEY `payment_id` (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 </sql>
@@ -829,58 +886,6 @@ CREATE TABLE `stg_personnel_names_and_name_changes` (
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>712</xloc>
       <yloc>142</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create fact_client_attendances</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <sql>DROP TABLE IF EXISTS fact_client_attendances;
-CREATE TABLE fact_client_attendances (
-  `meeting_date_key` int(10) unsigned NOT NULL,
-  `client_key` int(10) unsigned NOT NULL,
-  `group_key` int(10) unsigned NOT NULL,
-  `center_key` int(10) unsigned NOT NULL,
-  `loan_officer_key` smallint(5) unsigned NOT NULL,
-  `branch_key` smallint(5) unsigned NOT NULL,
-  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
-  `present` tinyint DEFAULT &apos;0&apos;,
-  `absent` tinyint DEFAULT &apos;0&apos;,
-  `approved_leave` tinyint DEFAULT &apos;0&apos;,
-  `late` tinyint DEFAULT &apos;0&apos;,
-  PRIMARY KEY (`meeting_date_key`, `client_key`),
-  KEY `meeting_date_key` (`meeting_date_key`),
-  KEY `client_key` (`client_key`),
-  KEY `group_key` (`group_key`),
-  KEY `center_key` (`center_key`),
-  KEY `loan_officer_key` (`loan_officer_key`),
-  KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-</sql>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>387</xloc>
-      <yloc>422</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -421,20 +421,14 @@ and some null action dates</note>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select c.customer_id, c.branch_id, 
-c.loan_officer_id, c.customer_formedby_id, 
-la.prd_offering_id,
+    <sql>select 
 ls.account_id, ls.installment_id,
-ls.principal_currency_id, 
 ls.principal as principal_amount, 
 ls.interest as interest_amount, 
 ls.misc_fees as misc_fee_amount, 
 ls.misc_penalty as misc_penalty_amount,
 ls.action_date as due_date
-from loan_schedule ls
-inner join loan_account la on la.account_id = ls.account_id
-inner join account a on a.account_id = la.account_id
-inner join customer c on c.customer_id = a.customer_id</sql>
+from loan_schedule ls</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>

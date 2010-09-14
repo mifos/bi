@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_LoanRepayments</name>
+    <name>Load_ClientAttendances</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,12 +66,18 @@
   </info>
   <notepads>
     <notepad>
-      <note>some repayments before customer created
- (probably problem with account creation at secdep)</note>
-      <xloc>230</xloc>
-      <yloc>105</yloc>
-      <width>262</width>
-      <heigth>35</heigth>
+      <note>What to do with client_attendances that have been updated?
+
+If client is updated... could get the meetings again and update if necessary.
+
+or update all regardless (can be a lot)
+
+in secdep, are some meeting dates that are before the clients created_date
+and there can be duplicate meeting_id&#47;customer_id entries.</note>
+      <xloc>20</xloc>
+      <yloc>124</yloc>
+      <width>380</width>
+      <heigth>110</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -164,132 +170,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Read customer_attendance</from><to>Meeting Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Meeting Date Lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Calculate present Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate present Column</from><to>Calculate absent Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate absent Column</from><to>Calculate approved_leave Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate approved_leave Column</from><to>Calculate late Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate late Column</from><to>Create fact_client_attendances</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Account Action lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_account_action</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>account_action_id</name>
-        <field>account_action_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>account_action_key</name>
-        <rename>account_action_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>334</xloc>
-      <yloc>219</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Action Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>action_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>action_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>180</xloc>
-      <yloc>27</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>created_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>created_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>184</xloc>
-      <yloc>216</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create Loan Repayments</name>
+    <name>Create fact_client_attendances</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -300,7 +183,7 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <schema/>
-    <table>fact_loan_repayments</table>
+    <table>fact_client_attendances</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -317,60 +200,12 @@
     <return_field/>
     <fields>
         <field>
-          <column_name>account_trxn_id</column_name>
-          <stream_name>account_trxn_id</stream_name>
+          <column_name>meeting_date_key</column_name>
+          <stream_name>meeting_date_key</stream_name>
         </field>
         <field>
-          <column_name>payment_id</column_name>
-          <stream_name>payment_id</stream_name>
-        </field>
-        <field>
-          <column_name>installment_id</column_name>
-          <stream_name>installment_id</stream_name>
-        </field>
-        <field>
-          <column_name>principal_amount</column_name>
-          <stream_name>principal_amount</stream_name>
-        </field>
-        <field>
-          <column_name>interest_amount</column_name>
-          <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_fee_amount</column_name>
-          <stream_name>misc_fee_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty_amount</column_name>
-          <stream_name>misc_penalty_amount</stream_name>
-        </field>
-        <field>
-          <column_name>action_date_key</column_name>
-          <stream_name>action_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>due_date_key</column_name>
-          <stream_name>due_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>created_date_key</column_name>
-          <stream_name>created_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>account_action_key</column_name>
-          <stream_name>account_action_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_account_key</column_name>
-          <stream_name>loan_account_key</stream_name>
-        </field>
-        <field>
-          <column_name>customer_key</column_name>
-          <stream_name>customer_key</stream_name>
-        </field>
-        <field>
-          <column_name>product_key</column_name>
-          <stream_name>product_key</stream_name>
+          <column_name>client_key</column_name>
+          <stream_name>client_key</stream_name>
         </field>
         <field>
           <column_name>group_key</column_name>
@@ -393,61 +228,32 @@
           <stream_name>formed_by_loan_officer_key</stream_name>
         </field>
         <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
+          <column_name>present</column_name>
+          <stream_name>present</stream_name>
+        </field>
+        <field>
+          <column_name>absent</column_name>
+          <stream_name>absent</stream_name>
+        </field>
+        <field>
+          <column_name>approved_leave</column_name>
+          <stream_name>approved_leave</stream_name>
+        </field>
+        <field>
+          <column_name>late</column_name>
+          <stream_name>late</stream_name>
         </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>508</xloc>
-      <yloc>30</yloc>
+      <xloc>523</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Due Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>due_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>due_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>181</xloc>
-      <yloc>126</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Loan Account lookup</name>
+    <name>Customer lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -462,43 +268,31 @@
     <cache_size>100</cache_size>
     <lookup>
       <schema/>
-      <table>dim_loan</table>
+      <table>dim_customer</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>account_id</name>
-        <field>loan_account_id</field>
+        <name>customer_id</name>
+        <field>customer_id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <key>
-        <name>action_date</name>
+        <name>meeting_date</name>
         <field>valid_from</field>
         <condition>&lt;=</condition>
         <name2/>
       </key>
       <key>
-        <name>action_date</name>
+        <name>meeting_date</name>
         <field>valid_to</field>
         <condition>&gt;</condition>
         <name2/>
       </key>
       <value>
-        <name>loan_account_key</name>
-        <rename>loan_account_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
         <name>customer_key</name>
-        <rename>customer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>product_key</name>
-        <rename>product_key</rename>
+        <rename>client_key</rename>
         <default/>
         <type>Integer</type>
       </value>
@@ -532,23 +326,58 @@
         <default/>
         <type>Integer</type>
       </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>380</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Meeting Date Lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_date</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>meeting_date</name>
+        <field>date_value</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
       <value>
-        <name>currency_key</name>
-        <rename>currency_key</rename>
+        <name>date_key</name>
+        <rename>meeting_date_key</rename>
         <default/>
         <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>513</xloc>
-      <yloc>216</yloc>
+      <xloc>228</xloc>
+      <yloc>67</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Read account_trxn</name>
+    <name>Read customer_attendance</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -558,22 +387,8 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>
-select atxn.account_action_id, 
-atxn.account_trxn_id, atxn.account_id, atxn.payment_id, atxn.installment_id, 
-atxn.due_date, atxn.action_date, date(atxn.created_date) created_date, 
-ltxn.principal_amount, interest_amount, misc_fee_amount, 
-misc_penalty_amount
-from account_trxn atxn
-inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
-where atxn.account_action_id in (1,9,15,18,20)
-&#47;* 
-1  - &apos;AccountAction-LoanRepayment&apos;
-9  - &apos;AccountAction-Adjustment&apos;
-15 - &apos;AccountAction-LoanWrittenOff&apos;
-18 - &apos;AccountAction-LoanReversal&apos;
-20 - &apos;AccountAction-LoanRescheduled&apos;
-*&#47;</sql>
+    <sql>select meeting_date, customer_id, ifnull(attendance, 0) attendance
+from customer_attendance </sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -581,8 +396,116 @@ where atxn.account_action_id in (1,9,15,18,20)
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>56</xloc>
-      <yloc>24</yloc>
+      <xloc>69</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate present Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>present</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>1</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>553</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate absent Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>absent</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>2</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>692</xloc>
+      <yloc>63</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate approved_leave Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>approved_leave</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>3</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>700</xloc>
+      <yloc>218</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate late Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>late</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>4</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>524</xloc>
+      <yloc>222</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
