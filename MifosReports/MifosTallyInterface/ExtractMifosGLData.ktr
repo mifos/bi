@@ -207,11 +207,13 @@ WHEN 6 then &#47;*MISCPENALTYPOSTING*&#47;
 	(CASE atrxn.account_action_id 
 		WHEN 1 then &apos;RECEIPT&apos; &#47;*LoanRepayment*&#47;
 		WHEN 9 then &apos;JOURNAL&apos; &#47;*Adjustment (undoes LoanRepayment)*&#47;
+		WHEN 12 then &apos;RECEIPT&apos; &#47;*CustomerAccountRepayment*&#47;
 		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
 		ELSE concat(&apos;Unknown Account Action:&apos;, atrxn.account_action_id, &apos; for Finanical Action &apos;, fintrxn.fin_action_id) 
 	END)
 WHEN 3 then  &#47;*FEEPOSTING*&#47;
 	(CASE atrxn.account_action_id 
+		WHEN 1 then &apos;RECEIPT&apos; &#47;*Fee*&#47;
 		WHEN 4 then &apos;RECEIPT&apos; &#47;*Fee*&#47;
 		WHEN 18 then &apos;JOURNAL&apos; &#47;*LoanReversal (reverses fees &amp; payments parts)*&#47;
 		WHEN 12 then &apos;RECEIPT&apos; &#47;*Customer Fee*&#47;
