@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_LoanRepayments</name>
+    <name>Load_SavingsTransactions</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,10 +66,10 @@
   </info>
   <notepads>
     <notepad>
-      <note>some repayments before account created
+      <note>some repayments before customer created
  (probably problem with account creation at secdep)</note>
-      <xloc>230</xloc>
-      <yloc>105</yloc>
+      <xloc>345</xloc>
+      <yloc>160</yloc>
       <width>262</width>
       <heigth>35</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -164,7 +164,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account lookup</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Savings Account lookup</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Account Action lookup</name>
     <type>DBLookup</type>
@@ -200,8 +200,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>334</xloc>
-      <yloc>219</yloc>
+      <xloc>470</xloc>
+      <yloc>29</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -282,14 +282,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>184</xloc>
-      <yloc>216</yloc>
+      <xloc>332</xloc>
+      <yloc>29</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Create Loan Repayments</name>
+    <name>Create Savings Transactions</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -300,7 +300,7 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <schema/>
-    <table>fact_loan_repayments</table>
+    <table>fact_savings_transactions</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -329,20 +329,20 @@
           <stream_name>installment_id</stream_name>
         </field>
         <field>
-          <column_name>principal_amount</column_name>
-          <stream_name>principal_amount</stream_name>
+          <column_name>deposit_amount</column_name>
+          <stream_name>deposit_amount</stream_name>
+        </field>
+        <field>
+          <column_name>withdrawal_amount</column_name>
+          <stream_name>withdrawal_amount</stream_name>
         </field>
         <field>
           <column_name>interest_amount</column_name>
           <stream_name>interest_amount</stream_name>
         </field>
         <field>
-          <column_name>misc_fee_amount</column_name>
-          <stream_name>misc_fee_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty_amount</column_name>
-          <stream_name>misc_penalty_amount</stream_name>
+          <column_name>balance_amount</column_name>
+          <stream_name>balance_amount</stream_name>
         </field>
         <field>
           <column_name>action_date_key</column_name>
@@ -361,8 +361,8 @@
           <stream_name>account_action_key</stream_name>
         </field>
         <field>
-          <column_name>loan_account_key</column_name>
-          <stream_name>loan_account_key</stream_name>
+          <column_name>savings_account_key</column_name>
+          <stream_name>savings_account_key</stream_name>
         </field>
         <field>
           <column_name>customer_key</column_name>
@@ -399,8 +399,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>508</xloc>
-      <yloc>30</yloc>
+      <xloc>801</xloc>
+      <yloc>23</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -440,14 +440,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>181</xloc>
-      <yloc>126</yloc>
+      <xloc>265</xloc>
+      <yloc>137</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Loan Account lookup</name>
+    <name>Savings Account lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -462,13 +462,13 @@
     <cache_size>100</cache_size>
     <lookup>
       <schema/>
-      <table>dim_loan</table>
+      <table>dim_savings</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
         <name>account_id</name>
-        <field>loan_account_id</field>
+        <field>savings_account_id</field>
         <condition>=</condition>
         <name2/>
       </key>
@@ -485,8 +485,8 @@
         <name2/>
       </key>
       <value>
-        <name>loan_account_key</name>
-        <rename>loan_account_key</rename>
+        <name>savings_account_key</name>
+        <rename>savings_account_key</rename>
         <default/>
         <type>Integer</type>
       </value>
@@ -541,14 +541,14 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>513</xloc>
-      <yloc>216</yloc>
+      <xloc>603</xloc>
+      <yloc>28</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Read account_trxn</name>
+    <name>Read account_trxn for Savings Transactions</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -558,21 +558,18 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>
-select atxn.account_action_id, 
+    <sql>select atxn.account_action_id, 
 atxn.account_trxn_id, atxn.account_id, atxn.payment_id, atxn.installment_id, 
-atxn.due_date, atxn.action_date, date(atxn.created_date) created_date, 
-ltxn.principal_amount, ltxn.interest_amount, ltxn.misc_fee_amount, 
-ltxn.misc_penalty_amount
+ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, atxn.action_date, date(atxn.created_date) created_date, 
+stxn.deposit_amount, stxn.withdrawal_amount, stxn.interest_amount, stxn.balance as balance_amount
 from account_trxn atxn
-inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
-where atxn.account_action_id in (1,9,15,18,20)
+inner join  savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
+where atxn.account_action_id in (6,7, 11, 14)
 &#47;* 
-1  - &apos;AccountAction-LoanRepayment&apos;
-9  - &apos;AccountAction-Adjustment&apos;
-15 - &apos;AccountAction-LoanWrittenOff&apos;
-18 - &apos;AccountAction-LoanReversal&apos;
-20 - &apos;AccountAction-LoanRescheduled&apos;
+6 Deposit
+7 Withdrawal
+11 Interest_posting
+14 SavingsAdjustment - but covers deposits and withdrawals
 *&#47;</sql>
     <limit>0</limit>
     <lookup/>
@@ -581,8 +578,8 @@ where atxn.account_action_id in (1,9,15,18,20)
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>56</xloc>
-      <yloc>24</yloc>
+      <xloc>94</xloc>
+      <yloc>101</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
