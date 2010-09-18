@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_stg_customer_and_account_updates_For_Accounts</name>
+    <name>Load stg_customer_and_account_updates For Accounts</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -144,6 +144,58 @@
   <order>
   <hop> <from>Identify New Loan Accounts</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Savings Accounts</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Savings Account Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
   <step>
+    <name>Identify Loan Account Status Changes</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>
+select ah.changed_date as effective_date, -5 as level_id, a.account_id as entity_id, 
+&apos;S&apos; as change_type, ah.account_status_change_id as change_order, 
+lv.lookup_name as updated_status, 
+null as updated_parent_id, null as  updated_loan_officer_id, null as updated_branch_id,
+&apos;loan&apos; as account_type,
+la.prd_offering_id as account_prd_offering_id,
+la.loan_amount_currency_id as account_currency_id,
+ifnull(f.fund_name, &quot;N&#47;A&quot;) as funder_name,
+la.loan_amount as loan_amount,
+ls.orig_principal as loan_original_principal,
+ls.orig_interest as loan_original_interest,
+ls.orig_fees as loan_original_fees,
+ls.orig_penalty as loan_original_penalty
+from account a
+join loan_account la on la.account_id = a.account_id
+join loan_summary ls on ls.account_id = la.account_id
+join account_status_change_history ah on ah.account_id = a.account_id
+            and ah.account_status_change_id &gt; 
+                    (select min(ahmin.account_status_change_id)
+                        from account_status_change_history ahmin
+                        where ahmin.account_id = a.account_id) 
+
+join account_state ast on ast.account_state_id = ah.new_status
+join lookup_value lv on lv.lookup_id = ast.lookup_id
+left join fund f on f.fund_id = la.fund_id
+
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>139</xloc>
+      <yloc>30</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Identify New Loan Accounts</name>
     <type>TableInput</type>
     <description/>
@@ -162,6 +214,7 @@ a.customer_id as updated_parent_id, null as  updated_loan_officer_id, null as up
 &apos;loan&apos; as account_type,
 la.prd_offering_id as account_prd_offering_id,
 la.loan_amount_currency_id as account_currency_id,
+ifnull(f.fund_name, &quot;N&#47;A&quot;) as funder_name,
 la.loan_amount as loan_amount,
 ls.orig_principal as loan_original_principal,
 ls.orig_interest as loan_original_interest,
@@ -178,8 +231,7 @@ join account_status_change_history ah on ah.account_id = a.account_id
 
 join account_state ast on ast.account_state_id = ah.new_status
 join lookup_value lv on lv.lookup_id = ast.lookup_id
-
-</sql>
+left join fund f on f.fund_id = la.fund_id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -189,6 +241,102 @@ join lookup_value lv on lv.lookup_id = ast.lookup_id
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>144</xloc>
       <yloc>116</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify New Savings Accounts</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>
+select a.created_date as effective_date, -5 as level_id, a.account_id as entity_id, 
+&apos;A&apos; as change_type, 1 as change_order, 
+lv.lookup_name as updated_status, 
+a.customer_id as updated_parent_id, null as  updated_loan_officer_id, null as updated_branch_id,
+&apos;savings&apos; as account_type,
+sa.prd_offering_id as account_prd_offering_id,
+sa.savings_balance_currency_id as account_currency_id,
+null as funder_name,
+null as loan_amount,
+null as loan_original_principal,
+null as loan_original_interest,
+null as loan_original_fees,
+null as loan_original_penalty
+from account a
+join savings_account sa on sa.account_id = a.account_id
+join account_status_change_history ah on ah.account_id = a.account_id
+            and ah.account_status_change_id = 
+                    (select min(ahmin.account_status_change_id)
+                        from account_status_change_history ahmin
+                        where ahmin.account_id = a.account_id) 
+                        
+join account_state ast on ast.account_state_id = ah.new_status
+join lookup_value lv on lv.lookup_id = ast.lookup_id</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>653</xloc>
+      <yloc>116</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Savings Account Status Changes</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select ah.changed_date as effective_date, -5 as level_id, a.account_id as entity_id, 
+&apos;S&apos; as change_type, ah.account_status_change_id as change_order, 
+lv.lookup_name as updated_status, 
+null as updated_parent_id, null as  updated_loan_officer_id, null as updated_branch_id,
+&apos;savings&apos; as account_type,
+sa.prd_offering_id as account_prd_offering_id,
+sa.savings_balance_currency_id as account_currency_id,
+null as funder_name,
+null as loan_amount,
+null as loan_original_principal,
+null as loan_original_interest,
+null as loan_original_fees,
+null as loan_original_penalty
+from account a
+join savings_account sa on sa.account_id = a.account_id
+join account_status_change_history ah on ah.account_id = a.account_id
+            and ah.account_status_change_id &gt; 
+                    (select min(ahmin.account_status_change_id)
+                        from account_status_change_history ahmin
+                        where ahmin.account_id = a.account_id) 
+
+join account_state ast on ast.account_state_id = ah.new_status
+join lookup_value lv on lv.lookup_id = ast.lookup_id
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>648</xloc>
+      <yloc>25</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -270,6 +418,10 @@ join lookup_value lv on lv.lookup_id = ast.lookup_id
           <stream_name>account_currency_id</stream_name>
         </field>
         <field>
+          <column_name>funder_name</column_name>
+          <stream_name>funder_name</stream_name>
+        </field>
+        <field>
           <column_name>loan_amount</column_name>
           <stream_name>loan_amount</stream_name>
         </field>
@@ -294,150 +446,6 @@ join lookup_value lv on lv.lookup_id = ast.lookup_id
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>390</xloc>
       <yloc>115</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify Loan Account Status Changes</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>
-select ah.changed_date as effective_date, -5 as level_id, a.account_id as entity_id, 
-&apos;S&apos; as change_type, ah.account_status_change_id as change_order, 
-lv.lookup_name as updated_status, 
-null as updated_parent_id, null as  updated_loan_officer_id, null as updated_branch_id,
-&apos;loan&apos; as account_type,
-la.prd_offering_id as account_prd_offering_id,
-la.loan_amount_currency_id as account_currency_id,
-la.loan_amount as loan_amount,
-ls.orig_principal as loan_original_principal,
-ls.orig_interest as loan_original_interest,
-ls.orig_fees as loan_original_fees,
-ls.orig_penalty as loan_original_penalty
-from account a
-join loan_account la on la.account_id = a.account_id
-join loan_summary ls on ls.account_id = la.account_id
-join account_status_change_history ah on ah.account_id = a.account_id
-            and ah.account_status_change_id &gt; 
-                    (select min(ahmin.account_status_change_id)
-                        from account_status_change_history ahmin
-                        where ahmin.account_id = a.account_id) 
-
-join account_state ast on ast.account_state_id = ah.new_status
-join lookup_value lv on lv.lookup_id = ast.lookup_id
-
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>139</xloc>
-      <yloc>30</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify New Savings Accounts</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>
-select a.created_date as effective_date, -5 as level_id, a.account_id as entity_id, 
-&apos;A&apos; as change_type, 1 as change_order, 
-lv.lookup_name as updated_status, 
-a.customer_id as updated_parent_id, null as  updated_loan_officer_id, null as updated_branch_id,
-&apos;savings&apos; as account_type,
-sa.prd_offering_id as account_prd_offering_id,
-sa.savings_balance_currency_id as account_currency_id,
-null as loan_amount,
-null as loan_original_principal,
-null as loan_original_interest,
-null as loan_original_fees,
-null as loan_original_penalty
-from account a
-join savings_account sa on sa.account_id = a.account_id
-join account_status_change_history ah on ah.account_id = a.account_id
-            and ah.account_status_change_id = 
-                    (select min(ahmin.account_status_change_id)
-                        from account_status_change_history ahmin
-                        where ahmin.account_id = a.account_id) 
-                        
-join account_state ast on ast.account_state_id = ah.new_status
-join lookup_value lv on lv.lookup_id = ast.lookup_id</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>653</xloc>
-      <yloc>116</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify Savings Account Status Changes</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select ah.changed_date as effective_date, -5 as level_id, a.account_id as entity_id, 
-&apos;S&apos; as change_type, ah.account_status_change_id as change_order, 
-lv.lookup_name as updated_status, 
-null as updated_parent_id, null as  updated_loan_officer_id, null as updated_branch_id,
-&apos;savings&apos; as account_type,
-sa.prd_offering_id as account_prd_offering_id,
-sa.savings_balance_currency_id as account_currency_id,
-null as loan_amount,
-null as loan_original_principal,
-null as loan_original_interest,
-null as loan_original_fees,
-null as loan_original_penalty
-from account a
-join savings_account sa on sa.account_id = a.account_id
-join account_status_change_history ah on ah.account_id = a.account_id
-            and ah.account_status_change_id &gt; 
-                    (select min(ahmin.account_status_change_id)
-                        from account_status_change_history ahmin
-                        where ahmin.account_id = a.account_id) 
-
-join account_state ast on ast.account_state_id = ah.new_status
-join lookup_value lv on lv.lookup_id = ast.lookup_id
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>648</xloc>
-      <yloc>25</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

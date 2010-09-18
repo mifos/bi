@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_stg_customer_and_account_updates_For_Customers</name>
+    <name>Load stg_customer_and_account_updates For Customers</name>
     <description/>
     <extended_description/>
     <trans_version/>

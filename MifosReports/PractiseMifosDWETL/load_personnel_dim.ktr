@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_personnel_dim</name>
+    <name>Load dim_personnel</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -68,14 +68,11 @@
     <notepad>
       <note>Only office changes are treated at type 2 (where a new entry and valid_from &amp; valid_to dates are set).
 Need history of personnel movements so that loan officer history at mfi can be reported on.
-
-Current ETL transformation handles &apos;first loan&apos;... doesn&apos;t cater for ongoing changes yet
-
-Also assumes that an office history is maintained (but it isn&apos;t)</note>
-      <xloc>204</xloc>
+</note>
+      <xloc>203</xloc>
       <yloc>18</yloc>
       <width>508</width>
-      <heigth>85</heigth>
+      <heigth>35</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -181,7 +178,7 @@ Also assumes that an office history is maintained (but it isn&apos;t)</note>
            </partitioning>
     <connection>SourceDB</connection>
     <sql>
-select p.personnel_id, p.display_name, lv.lookup_name gender,
+select p.personnel_id, p.display_name, lv.lookup_name gender, pd.government_id_number,
 
 (case p.level_id
 when 1 then 1
@@ -201,6 +198,9 @@ ifnull(cl.changed_date,
 
 pd.date_of_joining_mfi, 
 
+&#47;* if current status is inactive... then the date of inactivity *&#47;
+null as date_of_leaving_mfi, 
+
 &#47;* personnel_movement entries aren&apos;t created until a personnel moves office.
 The first change...mifos writes 2 entries... the one that should have been written 
 when the personnel was attached to an office on create... and one representing
@@ -216,8 +216,6 @@ ifnull(ifnull(pm.start_date, pd.date_of_joining_branch),date(&apos;1900-01-01&ap
 pm.end_date as date_of_leaving_branch
 
 
-&#47;* was a date of leaving mfi but can&apos;t find anything to represent that.
-was going to find the date of going inactive but its not the same*&#47;
 
 from personnel p
 join personnel_details pd on pd.personnel_id = p.personnel_id
@@ -340,8 +338,18 @@ order by p.personnel_id, pm.start_date, ifnull(pm.end_date, date(&apos;2199-12-3
           <update>Punch through</update>
         </field>
         <field>
+          <name>government_id_number</name>
+          <lookup>government_id_number</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
           <name>is_loan_officer</name>
           <lookup>is_loan_officer</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>date_became_loan_officer</name>
+          <lookup>date_became_loan_officer</lookup>
           <update>Punch through</update>
         </field>
         <field>
@@ -350,24 +358,24 @@ order by p.personnel_id, pm.start_date, ifnull(pm.end_date, date(&apos;2199-12-3
           <update>Punch through</update>
         </field>
         <field>
+          <name>date_of_leaving_mfi</name>
+          <lookup>date_of_leaving_mfi</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
           <name>date_of_joining_branch</name>
           <lookup>date_of_joining_branch</lookup>
-          <update>Insert</update>
+          <update>Punch through</update>
         </field>
         <field>
           <name>date_of_leaving_branch</name>
           <lookup>date_of_leaving_branch</lookup>
-          <update>Insert</update>
+          <update>Punch through</update>
         </field>
         <field>
           <name>office_key</name>
           <lookup>office_key</lookup>
           <update>Insert</update>
-        </field>
-        <field>
-          <name>date_became_loan_officer</name>
-          <lookup>date_became_loan_officer</lookup>
-          <update>Punch through</update>
         </field>
         <return>
           <name>personnel_key</name>
