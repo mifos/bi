@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>LoadHistLoanArrears</name>
+    <name>LoadHistLoanArrearsPrevious</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -147,7 +147,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Create Arrears Information</from><to>Reads Arrears Information</to><enabled>Y</enabled> </hop>  <hop> <from>Reads Arrears Information</from><to>Identify Product Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Identify Weekly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Weekly Band Key</from><to>Identify Monthly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Monthly Band Key</from><to>Calculate In Arrears and Outstanding Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate In Arrears and Outstanding Values</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Product Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Create Arrears Information</from><to>Reads Arrears Information</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Product Key</from><to>Identify Branch Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Branch Key</from><to>Identify Loan Officer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Customer Key</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  <hop> <from>Reads Arrears Information</from><to>Identify Product Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Officer Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Customer Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Identify Weekly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Weekly Band Key</from><to>Identify Monthly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Monthly Band Key</from><to>Calculate In Arrears and Outstanding Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate In Arrears and Outstanding Values</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Calculate In Arrears and Outstanding Values</name>
     <type>Calculator</type>
@@ -382,8 +382,8 @@ set interest_paid =
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>84</xloc>
-      <yloc>246</yloc>
+      <xloc>83</xloc>
+      <yloc>200</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -423,8 +423,90 @@ set interest_paid =
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>212</xloc>
-      <yloc>241</yloc>
+      <xloc>214</xloc>
+      <yloc>298</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Branch Key</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_office</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>branch_id</name>
+        <field>office_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>office_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>209</xloc>
+      <yloc>129</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Customer Key</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>customer_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>360</xloc>
+      <yloc>299</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -455,57 +537,9 @@ set interest_paid =
         <condition>=</condition>
         <name2/>
       </key>
-      <key>
-        <name>as_of_date</name>
-        <field>valid_from</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>as_of_date</name>
-        <field>valid_to</field>
-        <condition>&gt;</condition>
-        <name2/>
-      </key>
       <value>
         <name>loan_account_key</name>
         <rename>loan_account_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>group_key</name>
-        <rename>group_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>center_key</name>
-        <rename>center_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>loan_officer_key</name>
-        <rename>loan_officer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>branch_key</name>
-        <rename>branch_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>formed_by_loan_officer_key</name>
-        <rename>formed_by_loan_officer_key</rename>
         <default/>
         <type>Integer</type>
       </value>
@@ -513,7 +547,48 @@ set interest_paid =
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>360</xloc>
-      <yloc>242</yloc>
+      <yloc>209</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Loan Officer Key</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_personnel</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>loan_officer_id</name>
+        <field>personnel_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>personnel_key</name>
+        <rename>loan_officer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>215</xloc>
+      <yloc>209</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -589,18 +664,6 @@ set interest_paid =
         <name>prd_offering_id</name>
         <field>prd_offering_id</field>
         <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>as_of_date</name>
-        <field>valid_from</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>as_of_date</name>
-        <field>valid_to</field>
-        <condition>&gt;</condition>
         <name2/>
       </key>
       <value>
@@ -703,7 +766,7 @@ set interest_paid =
     <connection>DestinationDB</connection>
     <schema/>
     <table>hist_loan_arrears</table>
-    <commit>1000</commit>
+    <commit>500</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
@@ -719,40 +782,36 @@ set interest_paid =
     <return_field/>
     <fields>
         <field>
-          <column_name>as_of_date_key</column_name>
-          <stream_name>as_of_date_key</stream_name>
+          <column_name>days_in_arrears</column_name>
+          <stream_name>days_in_arrears</stream_name>
+        </field>
+        <field>
+          <column_name>installments_in_arrears</column_name>
+          <stream_name>installments_in_arrears</stream_name>
         </field>
         <field>
           <column_name>product_key</column_name>
           <stream_name>product_key</stream_name>
         </field>
         <field>
-          <column_name>loan_account_key</column_name>
-          <stream_name>loan_account_key</stream_name>
+          <column_name>branch_key</column_name>
+          <stream_name>branch_key</stream_name>
+        </field>
+        <field>
+          <column_name>loan_officer_key</column_name>
+          <stream_name>loan_officer_key</stream_name>
+        </field>
+        <field>
+          <column_name>as_of_date_key</column_name>
+          <stream_name>as_of_date_key</stream_name>
         </field>
         <field>
           <column_name>customer_key</column_name>
           <stream_name>customer_key</stream_name>
         </field>
         <field>
-          <column_name>group_key</column_name>
-          <stream_name>group_key</stream_name>
-        </field>
-        <field>
-          <column_name>center_key</column_name>
-          <stream_name>center_key</stream_name>
-        </field>
-        <field>
-          <column_name>branch_key</column_name>
-          <stream_name>branch_key</stream_name>
-        </field>
-        <field>
-          <column_name>formed_by_loan_officer_key</column_name>
-          <stream_name>formed_by_loan_officer_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_officer_key</column_name>
-          <stream_name>loan_officer_key</stream_name>
+          <column_name>loan_account_key</column_name>
+          <stream_name>loan_account_key</stream_name>
         </field>
         <field>
           <column_name>arrears_band_weekly_key</column_name>
@@ -761,14 +820,6 @@ set interest_paid =
         <field>
           <column_name>arrears_band_monthly_key</column_name>
           <stream_name>arrears_band_monthly_key</stream_name>
-        </field>
-        <field>
-          <column_name>days_in_arrears</column_name>
-          <stream_name>days_in_arrears</stream_name>
-        </field>
-        <field>
-          <column_name>installments_in_arrears</column_name>
-          <stream_name>installments_in_arrears</stream_name>
         </field>
         <field>
           <column_name>principal_in_arrears</column_name>
