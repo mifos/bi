@@ -1,0 +1,76 @@
+<Schema name="Loan Arrears">
+  <Dimension type="TimeDimension" highCardinality="false" name="As Of">
+    <Hierarchy name="Period End" hasAll="true" primaryKey="date_key">
+      <Table name="dim_date">
+      </Table>
+      <Level name="Date" column="date_value" type="String" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" highCardinality="false" name="Monthly" caption="Monthly">
+    <Hierarchy hasAll="true" primaryKey="arrears_band_monthly_key">
+      <Table name="dim_arrears_band_monthly" alias="Monthly Arrears">
+      </Table>
+      <Level name="Arrears Aging" column="past_due_description" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" highCardinality="false" name="Weekly" caption="Weekly">
+    <Hierarchy hasAll="true" primaryKey="arrears_band_weekly_key">
+      <Table name="dim_arrears_band_weekly" alias="Weekly Arrears">
+      </Table>
+      <Level name="Arrears Aging" column="past_due_description" ordinalColumn="arrears_band_weekly_key" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" highCardinality="false" name="Branch" caption="Branch">
+    <Hierarchy hasAll="true" primaryKey="office_key">
+      <Table name="dim_office" alias="branch">
+      </Table>
+      <Level name="Branch Name" column="display_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" highCardinality="false" name="Loan Officer" caption="Loan Officer">
+    <Hierarchy hasAll="true" primaryKey="personnel_key">
+      <Table name="dim_personnel" alias="Loan Officer">
+      </Table>
+      <Level name="Loan Officer Name" column="display_name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="loan_arrears" caption="Loan Arrears" cache="true" enabled="true">
+    <Table name="hist_loan_arrears" alias="hist_loan_arrears">
+    </Table>
+    <DimensionUsage source="As Of" name="As OfDim" foreignKey="as_of_date_key" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Monthly" name="Monthly Dim" foreignKey="arrears_band_monthly_key" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Weekly" name="Weekly Dim" foreignKey="arrears_band_weekly_key" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Branch" name="Branch Dim" foreignKey="branch_key" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Loan Officer" name="Loan OfficerDim" foreignKey="loan_officer_key" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="Principal In Arrears" column="principal_in_arrears" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Interest In Arrears" column="interest_in_arrears" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Total In Arrears" column="total_in_arrears" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Principal Outstanding" column="principal_outstanding" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Interest Outstanding" column="interest_outstanding" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Total Outstanding" column="total_outstanding" datatype="Numeric" formatString="Currency" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Average Days In Arrears" column="days_in_arrears" datatype="Integer" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Average Installments In Arrears" column="installments_in_arrears" datatype="Integer" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="Clients" column="customer_key" aggregator="distinct-count" visible="true">
+    </Measure>
+    <Measure name="Loans" column="loan_account_key" aggregator="distinct-count" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
