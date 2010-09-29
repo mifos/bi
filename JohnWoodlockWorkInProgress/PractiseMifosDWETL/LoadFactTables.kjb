@@ -176,12 +176,12 @@
       <yloc>11</yloc>
       </entry>
     <entry>
-      <name>Load fact_loan_schedules</name>
+      <name>Load dw_loan_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanSchedules.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Loan_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -270,7 +270,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_loan_schedules</to>
+      <to>Load dw_loan_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

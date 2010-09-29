@@ -1,390 +1,381 @@
-INFO  22-09 12:07:31,362 - Using "C:\Users\Keith\AppData\Local\Temp\vfs_cache" as temporary files store.
-INFO  22-09 12:07:32,642 - Kitchen - Kitchen
-INFO  22-09 12:07:32,645 - Kitchen - Kitchen
-INFO  22-09 12:07:33,464 - Create Data Warehouse - Start of job execution
-INFO  22-09 12:07:33,485 - Create Data Warehouse - Starting entry [Load Simple High Level Dimensions]
-INFO  22-09 12:07:33,967 - Load Simple High Level Dimensions - Start of job execution
-INFO  22-09 12:07:33,986 - Load Simple High Level Dimensions - Starting entry [Load dim_account_action]
-INFO  22-09 12:07:33,990 - Load Simple High Level Dimensions - Launched job entry [Load dim_account_action] in parallel.
-INFO  22-09 12:07:33,995 - Load Simple High Level Dimensions - Starting entry [Load dim_currency]
-INFO  22-09 12:07:34,000 - Load Simple High Level Dimensions - Launched job entry [Load dim_currency] in parallel.
-INFO  22-09 12:07:34,005 - Load Simple High Level Dimensions - Starting entry [Load dim_fee]
-INFO  22-09 12:07:34,008 - Load Simple High Level Dimensions - Launched job entry [Load dim_fee] in parallel.
-INFO  22-09 12:07:34,013 - Load Simple High Level Dimensions - Starting entry [Load dim_product]
-INFO  22-09 12:07:34,028 - Load Simple High Level Dimensions - Launched job entry [Load dim_product] in parallel.
-INFO  22-09 12:07:34,034 - Load Simple High Level Dimensions - Starting entry [Load dim_office]
-INFO  22-09 12:07:34,037 - Load Simple High Level Dimensions - Launched job entry [Load dim_office] in parallel.
-INFO  22-09 12:07:34,039 - Load dim_currency - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_currency_dim.ktr]
-INFO  22-09 12:07:34,039 - Load dim_product - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_product_dim.ktr]
-INFO  22-09 12:07:34,042 - Load dim_account_action - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_account_action_dim.ktr]
-INFO  22-09 12:07:34,044 - Load dim_office - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_office_dim.ktr]
-INFO  22-09 12:07:34,045 - Load dim_fee - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_fees_dim.ktr]
-INFO  22-09 12:07:36,222 - load_product_dim - Dispatching started for transformation [load_product_dim]
-INFO  22-09 12:07:36,331 - load_product_dim - This transformation can be replayed with replay date: 2010/09/22 12:07:36
-INFO  22-09 12:07:36,436 - load_fees_dim - Dispatching started for transformation [load_fees_dim]
-INFO  22-09 12:07:36,445 - load_fees_dim - This transformation can be replayed with replay date: 2010/09/22 12:07:36
-INFO  22-09 12:07:36,527 - load_currency_dim - Dispatching started for transformation [load_currency_dim]
-INFO  22-09 12:07:36,547 - load_currency_dim - This transformation can be replayed with replay date: 2010/09/22 12:07:36
-INFO  22-09 12:07:36,670 - load_account_action_dim - Dispatching started for transformation [load_account_action_dim]
-INFO  22-09 12:07:36,676 - load_office_dim - Dispatching started for transformation [load_office_dim]
-INFO  22-09 12:07:36,678 - load_account_action_dim - This transformation can be replayed with replay date: 2010/09/22 12:07:36
-INFO  22-09 12:07:36,685 - load_office_dim - This transformation can be replayed with replay date: 2010/09/22 12:07:36
-INFO  22-09 12:07:36,915 - Extract Office Data - Finished reading query, closing connection.
-INFO  22-09 12:07:36,917 - Extract Currency Data - Finished reading query, closing connection.
-INFO  22-09 12:07:36,925 - Extract Currency Data - Finished processing (I=178, O=0, R=0, W=178, U=0, E=0)
-INFO  22-09 12:07:36,928 - Extract Office Data - Finished processing (I=9, O=0, R=0, W=9, U=0, E=0)
-INFO  22-09 12:07:36,999 - Extract Fee Data - Finished reading query, closing connection.
-INFO  22-09 12:07:37,002 - Office Dimension lookup/update - Finished processing (I=9, O=9, R=9, W=9, U=0, E=0)
-INFO  22-09 12:07:37,002 - Extract Fee Data - Finished processing (I=8, O=0, R=0, W=8, U=0, E=0)
-INFO  22-09 12:07:37,034 - Fee Dimension lookup/update - Finished processing (I=8, O=8, R=8, W=8, U=0, E=0)
-INFO  22-09 12:07:37,185 - Extract Account Action Data - Finished reading query, closing connection.
-INFO  22-09 12:07:37,186 - Extract Product Data - Finished reading query, closing connection.
-INFO  22-09 12:07:37,189 - Extract Account Action Data - Finished processing (I=20, O=0, R=0, W=20, U=0, E=0)
-INFO  22-09 12:07:37,190 - Extract Product Data - Finished processing (I=4, O=0, R=0, W=4, U=0, E=0)
-INFO  22-09 12:07:37,207 - Product Dimension lookup/update - Finished processing (I=4, O=4, R=4, W=4, U=0, E=0)
-INFO  22-09 12:07:37,229 - Currency Dimension lookup/update - Finished processing (I=178, O=178, R=178, W=178, U=0, E=0)
-INFO  22-09 12:07:37,229 - Account Action Dimension lookup/update - Finished processing (I=20, O=20, R=20, W=20, U=0, E=0)
-INFO  22-09 12:07:37,242 - Load Simple High Level Dimensions - Job execution finished
-INFO  22-09 12:07:37,257 - Create Data Warehouse - Starting entry [Load Personnel Dimension]
-INFO  22-09 12:07:37,688 - Load Personnel Dimension - Start of job execution
-INFO  22-09 12:07:37,706 - Load Personnel Dimension - Starting entry [Load dim_personnel]
-INFO  22-09 12:07:37,709 - Load dim_personnel - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_personnel_dim.ktr]
-INFO  22-09 12:07:38,277 - Load dim_personnel - Dispatching started for transformation [Load dim_personnel]
-INFO  22-09 12:07:38,290 - Load dim_personnel - This transformation can be replayed with replay date: 2010/09/22 12:07:38
-INFO  22-09 12:07:39,904 - Extract Personnel Data - Finished reading query, closing connection.
-INFO  22-09 12:07:39,908 - Extract Personnel Data - Finished processing (I=105, O=0, R=0, W=105, U=0, E=0)
-INFO  22-09 12:07:39,913 - Office lookup - Finished processing (I=10, O=0, R=105, W=105, U=0, E=0)
-INFO  22-09 12:07:40,059 - Personnel Dimension lookup/update - Finished processing (I=105, O=105, R=105, W=105, U=0, E=0)
-INFO  22-09 12:07:40,067 - Load Personnel Dimension - Finished job entry [Load dim_personnel] (result=[true])
-INFO  22-09 12:07:40,074 - Load Personnel Dimension - Job execution finished
-INFO  22-09 12:07:40,085 - Create Data Warehouse - Starting entry [Load Staging Tables]
-INFO  22-09 12:07:40,554 - Load Staging Tables - Start of job execution
-INFO  22-09 12:07:40,571 - Load Staging Tables - Starting entry [SQL]
-INFO  22-09 12:07:40,604 - Load Staging Tables - Starting entry [Load stg_personnel_names_and_name_changes]
-INFO  22-09 12:07:40,607 - Load stg_personnel_names_and_name_changes - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_stg_personnel_names_and_name_changes.ktr]
-INFO  22-09 12:07:41,167 - Load stg_personnel_names_and_name_changes - Dispatching started for transformation [Load stg_personnel_names_and_name_changes]
-INFO  22-09 12:07:41,179 - Load stg_personnel_names_and_name_changes - This transformation can be replayed with replay date: 2010/09/22 12:07:41
-INFO  22-09 12:07:41,192 - Write stg_personnel_names_and_name_changes - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:07:41,207 - Read Personnel Names (and name changes) - Finished reading query, closing connection.
-INFO  22-09 12:07:41,210 - Read Personnel Names (and name changes) - Finished processing (I=85, O=0, R=0, W=85, U=0, E=0)
-INFO  22-09 12:07:41,224 - Write stg_personnel_names_and_name_changes - Finished processing (I=0, O=85, R=85, W=85, U=0, E=0)
-INFO  22-09 12:07:41,232 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Customers]
-INFO  22-09 12:07:41,235 - Load stg_customer_and_account_updates For Customers - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_stg_customer_and_account_updates_For_Customers.ktr]
-INFO  22-09 12:07:41,800 - Load stg_customer_and_account_updates For Customers - Dispatching started for transformation [Load stg_customer_and_account_updates For Customers]
-INFO  22-09 12:07:41,838 - Load stg_customer_and_account_updates For Customers - This transformation can be replayed with replay date: 2010/09/22 12:07:41
-INFO  22-09 12:07:41,892 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:07:43,595 - Identify Center Status Changes - Finished reading query, closing connection.
-INFO  22-09 12:07:43,598 - Identify Center Status Changes - Finished processing (I=10, O=0, R=0, W=10, U=0, E=0)
-INFO  22-09 12:07:43,622 - Identify Group Status Changes - Finished reading query, closing connection.
-INFO  22-09 12:07:43,627 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished reading query, closing connection.
-INFO  22-09 12:07:43,629 - Identify Group Status Changes - Finished processing (I=2028, O=0, R=0, W=2028, U=0, E=0)
-INFO  22-09 12:07:43,638 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished processing (I=534, O=0, R=0, W=534, U=0, E=0)
-INFO  22-09 12:07:43,667 - Identify New Centers - Finished reading query, closing connection.
-INFO  22-09 12:07:43,684 - Identify New Centers - Finished processing (I=550, O=0, R=0, W=550, U=0, E=0)
-INFO  22-09 12:07:44,104 - Identify New Groups - Finished reading query, closing connection.
-INFO  22-09 12:07:44,107 - Lookup Loan Officer Id - Finished processing (I=1084, O=0, R=1084, W=1084, U=0, E=0)
-INFO  22-09 12:07:44,108 - Identify New Groups - Finished processing (I=1940, O=0, R=0, W=1940, U=0, E=0)
-INFO  22-09 12:07:44,111 - Remove Loan Officer Name - Finished processing (I=0, O=0, R=1084, W=1084, U=0, E=0)
-INFO  22-09 12:07:44,120 - Identify Group Hierarchy Changes - Finished reading query, closing connection.
-INFO  22-09 12:07:44,123 - Identify Group Hierarchy Changes - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
-INFO  22-09 12:07:44,915 - Identify Client Hierarchy Changes - Finished reading query, closing connection.
-INFO  22-09 12:07:44,934 - Identify Client Hierarchy Changes - Finished processing (I=649, O=0, R=0, W=649, U=0, E=0)
-INFO  22-09 12:07:46,153 - Identify New Clients - Finished reading query, closing connection.
-INFO  22-09 12:07:46,156 - Identify New Clients - Finished processing (I=11250, O=0, R=0, W=11250, U=0, E=0)
-INFO  22-09 12:07:46,707 - Identify Client Status Changes - Finished reading query, closing connection.
-INFO  22-09 12:07:46,710 - Identify Client Status Changes - Finished processing (I=14382, O=0, R=0, W=14382, U=0, E=0)
-INFO  22-09 12:07:48,429 - Write stg_customer_and_account_updates - Finished processing (I=0, O=31349, R=31349, W=31349, U=0, E=0)
-INFO  22-09 12:07:48,439 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Accounts]
-INFO  22-09 12:07:48,442 - Load stg_customer_and_account_updates For Accounts - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_stg_customer_and_account_updates_For_Accounts.ktr]
-INFO  22-09 12:07:49,027 - Load stg_customer_and_account_updates For Accounts - Dispatching started for transformation [Load stg_customer_and_account_updates For Accounts]
-INFO  22-09 12:07:49,043 - Load stg_customer_and_account_updates For Accounts - This transformation can be replayed with replay date: 2010/09/22 12:07:49
-INFO  22-09 12:07:49,052 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:07:54,930 - Identify Savings Account Status Changes - Finished reading query, closing connection.
-INFO  22-09 12:07:54,933 - Identify Savings Account Status Changes - Finished processing (I=17984, O=0, R=0, W=17984, U=0, E=0)
-INFO  22-09 12:07:56,070 - Identify New Savings Accounts - Finished reading query, closing connection.
-INFO  22-09 12:07:56,083 - Identify New Savings Accounts - Finished processing (I=21157, O=0, R=0, W=21157, U=0, E=0)
-INFO  22-09 12:07:56,592 - Identify New Loan Accounts - Finished reading query, closing connection.
-INFO  22-09 12:07:56,595 - Identify New Loan Accounts - Finished processing (I=22230, O=0, R=0, W=22230, U=0, E=0)
-INFO  22-09 12:07:56,783 - Write stg_customer_and_account_updates - linenr 50000
-INFO  22-09 12:08:02,305 - Write stg_customer_and_account_updates - linenr 100000
-INFO  22-09 12:08:02,433 - Identify Loan Account Status Changes - linenr 50000
-INFO  22-09 12:08:04,273 - Identify Loan Account Status Changes - Finished reading query, closing connection.
-INFO  22-09 12:08:04,277 - Identify Loan Account Status Changes - Finished processing (I=67018, O=0, R=0, W=67018, U=0, E=0)
-INFO  22-09 12:08:05,329 - Write stg_customer_and_account_updates - Finished processing (I=0, O=128389, R=128389, W=128389, U=0, E=0)
-INFO  22-09 12:08:05,337 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Accounts] (result=[true])
-INFO  22-09 12:08:05,340 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Customers] (result=[true])
-INFO  22-09 12:08:05,342 - Load Staging Tables - Finished job entry [Load stg_personnel_names_and_name_changes] (result=[true])
-INFO  22-09 12:08:05,345 - Load Staging Tables - Finished job entry [SQL] (result=[true])
-INFO  22-09 12:08:05,353 - Load Staging Tables - Job execution finished
-INFO  22-09 12:08:05,377 - Create Data Warehouse - Starting entry [Load Customer And Loan And Savings Dimensions]
-INFO  22-09 12:08:05,834 - Load Customer And Loan And Savings Dimensions - Start of job execution
-INFO  22-09 12:08:05,850 - Load Customer And Loan And Savings Dimensions - Starting entry [Load dim_customer, dim_loan and dim_savings]
-INFO  22-09 12:08:05,853 - Load dim_customer, dim_loan and dim_savings - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_customer_loan_savings_dim.ktr]
-INFO  22-09 12:08:06,409 - load_customer_loan_savings_dim - Dispatching started for transformation [load_customer_loan_savings_dim]
-INFO  22-09 12:08:06,417 - load_customer_loan_savings_dim - This transformation can be replayed with replay date: 2010/09/22 12:08:06
-INFO  22-09 12:10:01,712 - Execute SQL script - Finished reading query, closing connection.
-INFO  22-09 12:10:01,715 - Execute SQL script - Finished processing (I=0, O=0, R=0, W=1, U=0, E=0)
-INFO  22-09 12:10:01,722 - Load Customer And Loan And Savings Dimensions - Finished job entry [Load dim_customer, dim_loan and dim_savings] (result=[true])
-INFO  22-09 12:10:01,729 - Load Customer And Loan And Savings Dimensions - Job execution finished
-INFO  22-09 12:10:01,743 - Create Data Warehouse - Starting entry [Load Fact Tables]
-INFO  22-09 12:10:02,197 - Load Fact Tables - Start of job execution
-INFO  22-09 12:10:02,214 - Load Fact Tables - Starting entry [Load fact_loan_disbursals]
-INFO  22-09 12:10:02,217 - Load Fact Tables - Launched job entry [Load fact_loan_disbursals] in parallel.
-INFO  22-09 12:10:02,217 - Load fact_loan_disbursals - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_LoanDisbursals.ktr]
-INFO  22-09 12:10:02,222 - Load Fact Tables - Starting entry [Load fact_client_attendances]
-INFO  22-09 12:10:02,227 - Load Fact Tables - Launched job entry [Load fact_client_attendances] in parallel.
-INFO  22-09 12:10:02,232 - Load Fact Tables - Starting entry [Load fact_loan_repayments]
-INFO  22-09 12:10:02,243 - Load fact_loan_repayments - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_LoanRepayments.ktr]
-INFO  22-09 12:10:02,246 - Load Fact Tables - Launched job entry [Load fact_loan_repayments] in parallel.
-INFO  22-09 12:10:02,251 - Load Fact Tables - Starting entry [Load fact_loan_schedules]
-INFO  22-09 12:10:02,253 - Load fact_client_attendances - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_ClientAttendances.ktr]
-INFO  22-09 12:10:02,257 - Load Fact Tables - Launched job entry [Load fact_loan_schedules] in parallel.
-INFO  22-09 12:10:02,262 - Load Fact Tables - Starting entry [Load fact_savings_transactions]
-INFO  22-09 12:10:02,265 - Load Fact Tables - Launched job entry [Load fact_savings_transactions] in parallel.
-INFO  22-09 12:10:02,268 - Load fact_loan_schedules - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_LoanSchedules.ktr]
-INFO  22-09 12:10:02,335 - Load fact_savings_transactions - Loading transformation from XML file [file:///C:/dev/gitWoodlock/head/businessIntelligence/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_SavingsTransactions.ktr]
-INFO  22-09 12:10:03,589 - Load_ClientAttendances - Dispatching started for transformation [Load_ClientAttendances]
-INFO  22-09 12:10:03,614 - Load_ClientAttendances - This transformation can be replayed with replay date: 2010/09/22 12:10:03
-INFO  22-09 12:10:03,629 - Load_LoanSchedules - Dispatching started for transformation [Load_LoanSchedules]
-INFO  22-09 12:10:03,642 - Load_LoanSchedules - This transformation can be replayed with replay date: 2010/09/22 12:10:03
-INFO  22-09 12:10:03,862 - Create Loan_Schedules - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:10:03,878 - Create fact_client_attendances - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:10:03,891 - Load_SavingsTransactions - Dispatching started for transformation [Load_SavingsTransactions]
-INFO  22-09 12:10:03,921 - Load_LoanRepayments - Dispatching started for transformation [Load_LoanRepayments]
-INFO  22-09 12:10:03,952 - Load_LoanRepayments - This transformation can be replayed with replay date: 2010/09/22 12:10:03
-INFO  22-09 12:10:03,959 - Load_SavingsTransactions - This transformation can be replayed with replay date: 2010/09/22 12:10:03
-INFO  22-09 12:10:04,002 - Create Loan Repayments - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:10:04,017 - Create Savings Transactions - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:10:04,346 - Load_LoanDisbursals - Dispatching started for transformation [Load_LoanDisbursals]
-INFO  22-09 12:10:04,379 - Load_LoanDisbursals - This transformation can be replayed with replay date: 2010/09/22 12:10:04
-INFO  22-09 12:10:04,446 - Create Loan Disbursals - Connected to database [DestinationDB] (commit=1000)
-INFO  22-09 12:10:07,662 - Read account_trxn for Savings Transactions - linenr 50000
-INFO  22-09 12:10:08,013 - Read account_trxn - linenr 50000
-INFO  22-09 12:10:19,989 - Read account_trxn - Finished reading query, closing connection.
-INFO  22-09 12:10:19,994 - Read account_trxn - Finished processing (I=21512, O=0, R=0, W=21512, U=0, E=0)
-INFO  22-09 12:10:20,065 - Disbursal Date Lookup - Finished processing (I=210, O=0, R=21512, W=21512, U=0, E=0)
-INFO  22-09 12:10:20,148 - Create Date Lookup - Finished processing (I=201, O=0, R=21512, W=21512, U=0, E=0)
-INFO  22-09 12:10:20,970 - Account Action lookup - Finished processing (I=21, O=0, R=21512, W=21512, U=0, E=0)
-INFO  22-09 12:10:21,536 - Action Date Lookup - linenr 50000
-INFO  22-09 12:10:23,651 - Action Date Lookup - linenr 50000
-INFO  22-09 12:10:34,352 - Due Date Lookup - linenr 50000
-INFO  22-09 12:10:41,472 - Read loan_schedule - linenr 50000
-INFO  22-09 12:10:42,638 - Read customer_attendance - linenr 50000
-INFO  22-09 12:10:42,714 - Create Date Lookup - linenr 50000
-INFO  22-09 12:10:47,927 - Due Date Lookup - linenr 50000
-INFO  22-09 12:10:48,412 - Loan Account lookup - Finished processing (I=21512, O=0, R=21512, W=21512, U=0, E=0)
-INFO  22-09 12:10:49,582 - Due Date Lookup - linenr 50000
-INFO  22-09 12:10:50,228 - Meeting Date Lookup - linenr 50000
-INFO  22-09 12:10:54,520 - Customer lookup - linenr 50000
-INFO  22-09 12:10:55,247 - Account Action lookup - linenr 50000
-INFO  22-09 12:11:02,181 - Loan Account lookup - linenr 50000
-INFO  22-09 12:11:03,869 - Savings Account lookup - linenr 50000
-INFO  22-09 12:11:04,102 - Read account_trxn for Savings Transactions - linenr 100000
-INFO  22-09 12:11:12,626 - Create Loan Disbursals - Finished processing (I=0, O=21512, R=21512, W=21512, U=0, E=0)
-INFO  22-09 12:11:13,173 - Create Loan_Schedules - linenr 50000
-INFO  22-09 12:11:14,703 - Read customer_attendance - linenr 100000
-INFO  22-09 12:11:15,039 - Create Date Lookup - linenr 50000
-INFO  22-09 12:11:18,159 - Create Savings Transactions - linenr 50000
-INFO  22-09 12:11:19,256 - Action Date Lookup - linenr 100000
-INFO  22-09 12:11:28,314 - Meeting Date Lookup - linenr 100000
-INFO  22-09 12:11:29,835 - Due Date Lookup - linenr 100000
-INFO  22-09 12:11:32,000 - Read loan_schedule - linenr 100000
-INFO  22-09 12:11:35,233 - Account Action lookup - linenr 50000
-INFO  22-09 12:11:36,434 - Create fact_client_attendances - linenr 50000
-INFO  22-09 12:11:38,818 - Customer lookup - linenr 100000
-INFO  22-09 12:11:39,392 - Create Date Lookup - linenr 100000
-INFO  22-09 12:11:41,504 - Due Date Lookup - linenr 100000
-INFO  22-09 12:11:49,123 - Account Action lookup - linenr 100000
-INFO  22-09 12:11:50,718 - Loan Account lookup - linenr 100000
-INFO  22-09 12:11:51,190 - Loan Account lookup - linenr 50000
-INFO  22-09 12:11:51,629 - Read account_trxn - linenr 100000
-INFO  22-09 12:11:52,467 - Create Loan_Schedules - linenr 100000
-INFO  22-09 12:11:58,258 - Savings Account lookup - linenr 100000
-INFO  22-09 12:11:58,748 - Read account_trxn for Savings Transactions - linenr 150000
-INFO  22-09 12:11:59,304 - Create Savings Transactions - linenr 100000
-INFO  22-09 12:12:04,714 - Action Date Lookup - linenr 150000
-INFO  22-09 12:12:10,771 - Due Date Lookup - linenr 150000
-INFO  22-09 12:12:11,879 - Read loan_schedule - linenr 150000
-INFO  22-09 12:12:12,515 - Read customer_attendance - linenr 150000
-INFO  22-09 12:12:16,191 - Create Date Lookup - linenr 150000
-INFO  22-09 12:12:18,030 - Due Date Lookup - linenr 150000
-INFO  22-09 12:12:24,624 - Account Action lookup - linenr 150000
-INFO  22-09 12:12:29,262 - Create Loan Repayments - linenr 50000
-INFO  22-09 12:12:29,444 - Loan Account lookup - linenr 150000
-INFO  22-09 12:12:29,890 - Action Date Lookup - linenr 100000
-INFO  22-09 12:12:36,900 - Create Loan_Schedules - linenr 150000
-INFO  22-09 12:12:37,174 - Savings Account lookup - linenr 150000
-INFO  22-09 12:12:37,670 - Meeting Date Lookup - linenr 150000
-INFO  22-09 12:12:37,692 - Read account_trxn for Savings Transactions - linenr 200000
-INFO  22-09 12:12:51,239 - Due Date Lookup - linenr 100000
-INFO  22-09 12:12:53,423 - Create Savings Transactions - linenr 150000
-INFO  22-09 12:12:54,097 - Action Date Lookup - linenr 200000
-INFO  22-09 12:12:54,753 - Customer lookup - linenr 150000
-INFO  22-09 12:12:56,115 - Create fact_client_attendances - linenr 100000
-INFO  22-09 12:13:01,953 - Read loan_schedule - linenr 200000
-INFO  22-09 12:13:05,327 - Due Date Lookup - linenr 200000
-INFO  22-09 12:13:10,563 - Due Date Lookup - linenr 200000
-INFO  22-09 12:13:13,421 - Create Date Lookup - linenr 100000
-INFO  22-09 12:13:15,996 - Create Date Lookup - linenr 200000
-INFO  22-09 12:13:19,064 - Loan Account lookup - linenr 200000
-INFO  22-09 12:13:24,233 - Account Action lookup - linenr 200000
-INFO  22-09 12:13:28,968 - Create Loan_Schedules - linenr 200000
-INFO  22-09 12:13:34,700 - Savings Account lookup - linenr 200000
-INFO  22-09 12:13:34,880 - Read account_trxn for Savings Transactions - linenr 250000
-INFO  22-09 12:13:43,478 - Action Date Lookup - linenr 250000
-INFO  22-09 12:13:44,018 - Create Savings Transactions - linenr 200000
-INFO  22-09 12:13:47,403 - Account Action lookup - linenr 100000
-INFO  22-09 12:13:47,423 - Read customer_attendance - linenr 200000
-INFO  22-09 12:13:50,490 - Read loan_schedule - linenr 250000
-INFO  22-09 12:13:52,897 - Due Date Lookup - linenr 250000
-INFO  22-09 12:14:02,160 - Due Date Lookup - linenr 250000
-INFO  22-09 12:14:03,690 - Create Date Lookup - linenr 250000
-INFO  22-09 12:14:07,718 - Meeting Date Lookup - linenr 200000
-INFO  22-09 12:14:12,104 - Loan Account lookup - linenr 250000
-INFO  22-09 12:14:14,263 - Account Action lookup - linenr 250000
-INFO  22-09 12:14:15,200 - Loan Account lookup - linenr 100000
-INFO  22-09 12:14:15,643 - Read account_trxn - linenr 150000
-INFO  22-09 12:14:23,679 - Customer lookup - linenr 200000
-INFO  22-09 12:14:23,742 - Savings Account lookup - linenr 250000
-INFO  22-09 12:14:23,865 - Read account_trxn for Savings Transactions - linenr 300000
-INFO  22-09 12:14:23,971 - Create fact_client_attendances - linenr 150000
-INFO  22-09 12:14:24,048 - Create Loan_Schedules - linenr 250000
-INFO  22-09 12:14:35,442 - Create Savings Transactions - linenr 250000
-INFO  22-09 12:14:36,017 - Action Date Lookup - linenr 300000
-INFO  22-09 12:14:41,049 - Action Date Lookup - linenr 150000
-INFO  22-09 12:14:45,887 - Create Loan Repayments - linenr 100000
-INFO  22-09 12:14:48,292 - Due Date Lookup - linenr 300000
-INFO  22-09 12:14:59,214 - Create Date Lookup - linenr 300000
-INFO  22-09 12:15:03,202 - Due Date Lookup - linenr 150000
-INFO  22-09 12:15:05,255 - Read loan_schedule - linenr 300000
-INFO  22-09 12:15:12,917 - Account Action lookup - linenr 300000
-INFO  22-09 12:15:18,033 - Due Date Lookup - linenr 300000
-INFO  22-09 12:15:21,631 - Savings Account lookup - linenr 300000
-INFO  22-09 12:15:22,153 - Read account_trxn for Savings Transactions - linenr 350000
-INFO  22-09 12:15:25,812 - Read customer_attendance - linenr 250000
-INFO  22-09 12:15:26,081 - Create Date Lookup - linenr 150000
-INFO  22-09 12:15:41,430 - Meeting Date Lookup - linenr 250000
-INFO  22-09 12:15:44,975 - Action Date Lookup - linenr 350000
-INFO  22-09 12:15:45,032 - Loan Account lookup - linenr 300000
-INFO  22-09 12:15:45,932 - Create Savings Transactions - linenr 300000
-INFO  22-09 12:15:52,430 - Account Action lookup - linenr 150000
-INFO  22-09 12:16:00,002 - Due Date Lookup - linenr 350000
-INFO  22-09 12:16:02,869 - Customer lookup - linenr 250000
-INFO  22-09 12:16:04,869 - Create fact_client_attendances - linenr 200000
-INFO  22-09 12:16:09,785 - Create Loan_Schedules - linenr 300000
-INFO  22-09 12:16:16,690 - Loan Account lookup - linenr 150000
-INFO  22-09 12:16:16,845 - Read account_trxn - linenr 200000
-INFO  22-09 12:16:18,628 - Create Date Lookup - linenr 350000
-INFO  22-09 12:16:32,949 - Account Action lookup - linenr 350000
-INFO  22-09 12:16:34,727 - Create Loan Repayments - linenr 150000
-INFO  22-09 12:16:35,245 - Action Date Lookup - linenr 200000
-INFO  22-09 12:16:48,178 - Due Date Lookup - linenr 200000
-INFO  22-09 12:16:50,812 - Savings Account lookup - linenr 350000
-INFO  22-09 12:16:51,488 - Read account_trxn for Savings Transactions - linenr 400000
-INFO  22-09 12:16:53,633 - Read customer_attendance - linenr 300000
-INFO  22-09 12:16:56,346 - Read loan_schedule - linenr 350000
-INFO  22-09 12:17:07,757 - Action Date Lookup - linenr 400000
-INFO  22-09 12:17:08,499 - Create Savings Transactions - linenr 350000
-INFO  22-09 12:17:08,791 - Create Date Lookup - linenr 200000
-INFO  22-09 12:17:11,651 - Meeting Date Lookup - linenr 300000
-INFO  22-09 12:17:11,748 - Read customer_attendance - Finished reading query, closing connection.
-INFO  22-09 12:17:11,754 - Read customer_attendance - Finished processing (I=309985, O=0, R=0, W=309985, U=0, E=0)
-INFO  22-09 12:17:21,540 - Due Date Lookup - linenr 350000
-INFO  22-09 12:17:24,461 - Account Action lookup - linenr 200000
-INFO  22-09 12:17:26,403 - Customer lookup - linenr 300000
-INFO  22-09 12:17:26,407 - Meeting Date Lookup - Finished processing (I=197, O=0, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:17:26,513 - Create fact_client_attendances - linenr 250000
-INFO  22-09 12:17:28,876 - Due Date Lookup - linenr 400000
-INFO  22-09 12:17:39,277 - Loan Account lookup - linenr 200000
-INFO  22-09 12:17:39,640 - Read account_trxn - linenr 250000
-INFO  22-09 12:17:46,429 - Create Date Lookup - linenr 400000
-INFO  22-09 12:17:49,496 - Customer lookup - Finished processing (I=309985, O=0, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:17:54,644 - Loan Account lookup - linenr 350000
-INFO  22-09 12:17:55,913 - Create Loan Repayments - linenr 200000
-INFO  22-09 12:17:56,087 - Action Date Lookup - linenr 250000
-INFO  22-09 12:18:03,573 - Calculate present Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:18:09,175 - Due Date Lookup - linenr 250000
-INFO  22-09 12:18:15,263 - Account Action lookup - linenr 400000
-INFO  22-09 12:18:20,819 - Calculate absent Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:18:25,900 - Create Date Lookup - linenr 250000
-INFO  22-09 12:18:33,870 - Savings Account lookup - linenr 400000
-INFO  22-09 12:18:34,046 - Calculate approved_leave Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:18:34,390 - Read account_trxn for Savings Transactions - linenr 450000
-INFO  22-09 12:18:35,500 - Create Loan_Schedules - linenr 350000
-INFO  22-09 12:18:36,960 - Account Action lookup - linenr 250000
-INFO  22-09 12:18:50,121 - Calculate late Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:18:51,187 - Create fact_client_attendances - linenr 300000
-INFO  22-09 12:18:53,783 - Loan Account lookup - linenr 250000
-INFO  22-09 12:18:54,291 - Read account_trxn - linenr 300000
-INFO  22-09 12:18:58,058 - Create Savings Transactions - linenr 400000
-INFO  22-09 12:18:58,280 - Action Date Lookup - linenr 450000
-INFO  22-09 12:19:00,326 - Read account_trxn - Finished reading query, closing connection.
-INFO  22-09 12:19:00,329 - Read account_trxn - Finished processing (I=306777, O=0, R=0, W=306777, U=0, E=0)
-INFO  22-09 12:19:04,144 - Action Date Lookup - linenr 300000
-INFO  22-09 12:19:04,896 - Create Loan Repayments - linenr 250000
-INFO  22-09 12:19:08,450 - Create fact_client_attendances - Finished processing (I=0, O=309985, R=309985, W=309985, U=0, E=0)
-INFO  22-09 12:19:10,231 - Action Date Lookup - Finished processing (I=222, O=0, R=306777, W=306777, U=0, E=0)
-INFO  22-09 12:19:12,133 - Due Date Lookup - linenr 300000
-INFO  22-09 12:19:18,750 - Due Date Lookup - Finished processing (I=250, O=0, R=306777, W=306777, U=0, E=0)
-INFO  22-09 12:19:20,575 - Create Date Lookup - linenr 300000
-INFO  22-09 12:19:21,690 - Due Date Lookup - linenr 450000
-INFO  22-09 12:19:26,517 - Create Date Lookup - Finished processing (I=213, O=0, R=306777, W=306777, U=0, E=0)
-INFO  22-09 12:19:28,468 - Account Action lookup - linenr 300000
-INFO  22-09 12:19:35,503 - Account Action lookup - Finished processing (I=21, O=0, R=306777, W=306777, U=0, E=0)
-INFO  22-09 12:19:37,651 - Loan Account lookup - linenr 300000
-INFO  22-09 12:19:39,602 - Create Date Lookup - linenr 450000
-INFO  22-09 12:19:43,063 - Read loan_schedule - linenr 400000
-INFO  22-09 12:19:43,323 - Loan Account lookup - Finished processing (I=306777, O=0, R=306777, W=306777, U=0, E=0)
-INFO  22-09 12:19:46,789 - Create Loan Repayments - linenr 300000
-INFO  22-09 12:19:50,677 - Create Loan Repayments - Finished processing (I=0, O=306777, R=306777, W=306777, U=0, E=0)
-INFO  22-09 12:19:55,520 - Account Action lookup - linenr 450000
-INFO  22-09 12:20:04,819 - Due Date Lookup - linenr 400000
-INFO  22-09 12:20:09,719 - Savings Account lookup - linenr 450000
-INFO  22-09 12:20:10,120 - Read account_trxn for Savings Transactions - linenr 500000
-INFO  22-09 12:20:18,244 - Create Savings Transactions - linenr 450000
-INFO  22-09 12:20:18,373 - Action Date Lookup - linenr 500000
-INFO  22-09 12:20:20,671 - Loan Account lookup - linenr 400000
-INFO  22-09 12:20:29,554 - Due Date Lookup - linenr 500000
-INFO  22-09 12:20:29,675 - Read loan_schedule - Finished reading query, closing connection.
-INFO  22-09 12:20:29,679 - Read loan_schedule - Finished processing (I=426370, O=0, R=0, W=426370, U=0, E=0)
-INFO  22-09 12:20:35,793 - Create Loan_Schedules - linenr 400000
-INFO  22-09 12:20:38,970 - Create Date Lookup - linenr 500000
-INFO  22-09 12:20:41,628 - Due Date Lookup - Finished processing (I=539, O=0, R=426370, W=426370, U=0, E=0)
-INFO  22-09 12:20:46,962 - Account Action lookup - linenr 500000
-INFO  22-09 12:20:55,333 - Savings Account lookup - linenr 500000
-INFO  22-09 12:20:55,826 - Read account_trxn for Savings Transactions - linenr 550000
-INFO  22-09 12:20:56,176 - Loan Account lookup - Finished processing (I=426370, O=0, R=426370, W=426370, U=0, E=0)
-INFO  22-09 12:21:03,878 - Create Savings Transactions - linenr 500000
-INFO  22-09 12:21:03,994 - Action Date Lookup - linenr 550000
-INFO  22-09 12:21:07,020 - Create Loan_Schedules - Finished processing (I=0, O=426370, R=426370, W=426370, U=0, E=0)
-INFO  22-09 12:21:08,239 - Read account_trxn for Savings Transactions - Finished reading query, closing connection.
-INFO  22-09 12:21:08,242 - Read account_trxn for Savings Transactions - Finished processing (I=567106, O=0, R=0, W=567106, U=0, E=0)
-INFO  22-09 12:21:10,207 - Due Date Lookup - linenr 550000
-INFO  22-09 12:21:12,964 - Action Date Lookup - Finished processing (I=232, O=0, R=567106, W=567106, U=0, E=0)
-INFO  22-09 12:21:13,765 - Create Date Lookup - linenr 550000
-INFO  22-09 12:21:18,293 - Due Date Lookup - Finished processing (I=245, O=0, R=567106, W=567106, U=0, E=0)
-INFO  22-09 12:21:19,188 - Account Action lookup - linenr 550000
-INFO  22-09 12:21:21,603 - Create Date Lookup - Finished processing (I=225, O=0, R=567106, W=567106, U=0, E=0)
-INFO  22-09 12:21:22,295 - Savings Account lookup - linenr 550000
-INFO  22-09 12:21:25,603 - Account Action lookup - Finished processing (I=21, O=0, R=567106, W=567106, U=0, E=0)
-INFO  22-09 12:21:27,068 - Create Savings Transactions - linenr 550000
-INFO  22-09 12:21:29,049 - Savings Account lookup - Finished processing (I=567106, O=0, R=567106, W=567106, U=0, E=0)
-INFO  22-09 12:21:33,750 - Create Savings Transactions - Finished processing (I=0, O=567106, R=567106, W=567106, U=0, E=0)
-INFO  22-09 12:21:33,764 - Load Fact Tables - Job execution finished
-INFO  22-09 12:21:33,789 - Create Data Warehouse - Starting entry [Adjust Customer Status Values]
-INFO  22-09 12:21:34,216 - Adjust Customer Status Values - Start of job execution
-INFO  22-09 12:21:34,233 - Adjust Customer Status Values - Starting entry [SQL]
-INFO  22-09 12:21:48,804 - Adjust Customer Status Values - Finished job entry [SQL] (result=[true])
-INFO  22-09 12:21:48,811 - Adjust Customer Status Values - Job execution finished
-INFO  22-09 12:21:48,819 - Create Data Warehouse - Starting entry [Mail Success]
-INFO  22-09 12:21:55,484 - Create Data Warehouse - Finished job entry [Mail Success] (result=[true])
-INFO  22-09 12:21:55,489 - Create Data Warehouse - Finished job entry [Adjust Customer Status Values] (result=[true])
-INFO  22-09 12:21:55,491 - Create Data Warehouse - Finished job entry [Load Fact Tables] (result=[true])
-INFO  22-09 12:21:55,494 - Create Data Warehouse - Finished job entry [Load Customer And Loan And Savings Dimensions] (result=[true])
-INFO  22-09 12:21:55,496 - Create Data Warehouse - Finished job entry [Load Staging Tables] (result=[true])
-INFO  22-09 12:21:55,501 - Create Data Warehouse - Finished job entry [Load Personnel Dimension] (result=[true])
-INFO  22-09 12:21:55,504 - Create Data Warehouse - Finished job entry [Load Simple High Level Dimensions] (result=[true])
-INFO  22-09 12:21:55,511 - Create Data Warehouse - Job execution finished
-INFO  22-09 12:21:55,515 - Kitchen - Kitchen
-INFO  22-09 12:21:55,518 - Kitchen - Kitchen
-INFO  22-09 12:21:55,520 - Kitchen - Kitchen
+INFO  29-09 12:14:26,568 - Using "C:\Users\Keith\AppData\Local\Temp\vfs_cache" as temporary files store.
+INFO  29-09 12:14:28,792 - Kitchen - Kitchen
+INFO  29-09 12:14:28,796 - Kitchen - Kitchen
+INFO  29-09 12:14:29,943 - Create Data Warehouse - Start of job execution
+INFO  29-09 12:14:29,998 - Create Data Warehouse - Starting entry [Load Simple High Level Dimensions]
+INFO  29-09 12:14:30,629 - Load Simple High Level Dimensions - Start of job execution
+INFO  29-09 12:14:30,647 - Load Simple High Level Dimensions - Starting entry [Load dim_account_action]
+INFO  29-09 12:14:30,651 - Load Simple High Level Dimensions - Launched job entry [Load dim_account_action] in parallel.
+INFO  29-09 12:14:30,656 - Load Simple High Level Dimensions - Starting entry [Load dim_currency]
+INFO  29-09 12:14:30,659 - Load Simple High Level Dimensions - Launched job entry [Load dim_currency] in parallel.
+INFO  29-09 12:14:30,664 - Load Simple High Level Dimensions - Starting entry [Load dim_fee]
+INFO  29-09 12:14:30,667 - Load Simple High Level Dimensions - Launched job entry [Load dim_fee] in parallel.
+INFO  29-09 12:14:30,672 - Load Simple High Level Dimensions - Starting entry [Load dim_product]
+INFO  29-09 12:14:30,675 - Load Simple High Level Dimensions - Launched job entry [Load dim_product] in parallel.
+INFO  29-09 12:14:30,680 - Load Simple High Level Dimensions - Starting entry [Load dim_office]
+INFO  29-09 12:14:30,683 - Load Simple High Level Dimensions - Launched job entry [Load dim_office] in parallel.
+INFO  29-09 12:14:30,699 - Load dim_currency - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_currency_dim.ktr]
+INFO  29-09 12:14:30,703 - Load dim_office - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_office_dim.ktr]
+INFO  29-09 12:14:30,703 - Load dim_product - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_product_dim.ktr]
+INFO  29-09 12:14:30,704 - Load dim_fee - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_fees_dim.ktr]
+INFO  29-09 12:14:30,704 - Load dim_account_action - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_account_action_dim.ktr]
+INFO  29-09 12:14:33,038 - load_currency_dim - Dispatching started for transformation [load_currency_dim]
+INFO  29-09 12:14:33,091 - load_account_action_dim - Dispatching started for transformation [load_account_action_dim]
+INFO  29-09 12:14:33,173 - load_fees_dim - Dispatching started for transformation [load_fees_dim]
+INFO  29-09 12:14:33,267 - load_account_action_dim - This transformation can be replayed with replay date: 2010/09/29 12:14:33
+INFO  29-09 12:14:33,277 - load_currency_dim - This transformation can be replayed with replay date: 2010/09/29 12:14:33
+INFO  29-09 12:14:33,278 - load_product_dim - Dispatching started for transformation [load_product_dim]
+INFO  29-09 12:14:33,287 - load_product_dim - This transformation can be replayed with replay date: 2010/09/29 12:14:33
+INFO  29-09 12:14:33,294 - load_fees_dim - This transformation can be replayed with replay date: 2010/09/29 12:14:33
+INFO  29-09 12:14:33,491 - load_office_dim - Dispatching started for transformation [load_office_dim]
+INFO  29-09 12:14:33,500 - load_office_dim - This transformation can be replayed with replay date: 2010/09/29 12:14:33
+INFO  29-09 12:14:35,354 - Extract Office Data - Finished reading query, closing connection.
+INFO  29-09 12:14:35,517 - Extract Account Action Data - Finished reading query, closing connection.
+INFO  29-09 12:14:35,688 - Extract Fee Data - Finished reading query, closing connection.
+INFO  29-09 12:14:36,194 - Extract Account Action Data - Finished processing (I=20, O=0, R=0, W=20, U=0, E=0)
+INFO  29-09 12:14:36,211 - Extract Product Data - Finished reading query, closing connection.
+INFO  29-09 12:14:36,263 - Extract Office Data - Finished processing (I=9, O=0, R=0, W=9, U=0, E=0)
+INFO  29-09 12:14:36,274 - Extract Currency Data - Finished reading query, closing connection.
+INFO  29-09 12:14:36,278 - Extract Fee Data - Finished processing (I=8, O=0, R=0, W=8, U=0, E=0)
+INFO  29-09 12:14:36,286 - Extract Product Data - Finished processing (I=4, O=0, R=0, W=4, U=0, E=0)
+INFO  29-09 12:14:36,296 - Extract Currency Data - Finished processing (I=178, O=0, R=0, W=178, U=0, E=0)
+INFO  29-09 12:14:36,348 - Product Dimension lookup/update - Finished processing (I=4, O=4, R=4, W=4, U=0, E=0)
+INFO  29-09 12:14:36,381 - Fee Dimension lookup/update - Finished processing (I=8, O=8, R=8, W=8, U=0, E=0)
+INFO  29-09 12:14:36,386 - Office Dimension lookup/update - Finished processing (I=9, O=9, R=9, W=9, U=0, E=0)
+INFO  29-09 12:14:36,442 - Account Action Dimension lookup/update - Finished processing (I=20, O=20, R=20, W=20, U=0, E=0)
+INFO  29-09 12:14:36,541 - Currency Dimension lookup/update - Finished processing (I=178, O=178, R=178, W=178, U=0, E=0)
+INFO  29-09 12:14:36,554 - Load Simple High Level Dimensions - Job execution finished
+INFO  29-09 12:14:36,575 - Create Data Warehouse - Starting entry [Load Personnel Dimension]
+INFO  29-09 12:14:37,304 - Load Personnel Dimension - Start of job execution
+INFO  29-09 12:14:37,324 - Load Personnel Dimension - Starting entry [Load dim_personnel]
+INFO  29-09 12:14:37,328 - Load dim_personnel - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_personnel_dim.ktr]
+INFO  29-09 12:14:38,170 - Load dim_personnel - Dispatching started for transformation [Load dim_personnel]
+INFO  29-09 12:14:38,228 - Load dim_personnel - This transformation can be replayed with replay date: 2010/09/29 12:14:38
+INFO  29-09 12:14:38,952 - Extract Personnel Data - Finished reading query, closing connection.
+INFO  29-09 12:14:38,971 - Office lookup - Finished processing (I=10, O=0, R=105, W=105, U=0, E=0)
+INFO  29-09 12:14:38,974 - Extract Personnel Data - Finished processing (I=105, O=0, R=0, W=105, U=0, E=0)
+INFO  29-09 12:14:39,210 - Personnel Dimension lookup/update - Finished processing (I=105, O=105, R=105, W=105, U=0, E=0)
+INFO  29-09 12:14:39,218 - Load Personnel Dimension - Finished job entry [Load dim_personnel] (result=[true])
+INFO  29-09 12:14:39,225 - Load Personnel Dimension - Job execution finished
+INFO  29-09 12:14:39,234 - Create Data Warehouse - Starting entry [Load Staging Tables]
+INFO  29-09 12:14:39,946 - Load Staging Tables - Start of job execution
+INFO  29-09 12:14:39,966 - Load Staging Tables - Starting entry [SQL]
+INFO  29-09 12:14:40,001 - Load Staging Tables - Starting entry [Load stg_personnel_names_and_name_changes]
+INFO  29-09 12:14:40,004 - Load stg_personnel_names_and_name_changes - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_stg_personnel_names_and_name_changes.ktr]
+INFO  29-09 12:14:40,722 - Load stg_personnel_names_and_name_changes - Dispatching started for transformation [Load stg_personnel_names_and_name_changes]
+INFO  29-09 12:14:40,733 - Load stg_personnel_names_and_name_changes - This transformation can be replayed with replay date: 2010/09/29 12:14:40
+INFO  29-09 12:14:40,742 - Write stg_personnel_names_and_name_changes - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:14:40,756 - Read Personnel Names (and name changes) - Finished reading query, closing connection.
+INFO  29-09 12:14:40,760 - Read Personnel Names (and name changes) - Finished processing (I=85, O=0, R=0, W=85, U=0, E=0)
+INFO  29-09 12:14:40,777 - Write stg_personnel_names_and_name_changes - Finished processing (I=0, O=85, R=85, W=85, U=0, E=0)
+INFO  29-09 12:14:40,786 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Customers]
+INFO  29-09 12:14:40,788 - Load stg_customer_and_account_updates For Customers - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_stg_customer_and_account_updates_For_Customers.ktr]
+INFO  29-09 12:14:41,436 - Load stg_customer_and_account_updates For Customers - Dispatching started for transformation [Load stg_customer_and_account_updates For Customers]
+INFO  29-09 12:14:41,475 - Load stg_customer_and_account_updates For Customers - This transformation can be replayed with replay date: 2010/09/29 12:14:41
+INFO  29-09 12:14:41,531 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:14:47,311 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished reading query, closing connection.
+INFO  29-09 12:14:47,445 - Identify New Centers - Finished reading query, closing connection.
+INFO  29-09 12:14:48,792 - Identify Group Status Changes - Finished reading query, closing connection.
+INFO  29-09 12:14:48,829 - Identify Group Status Changes - Finished processing (I=2028, O=0, R=0, W=2028, U=0, E=0)
+INFO  29-09 12:14:48,864 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished processing (I=534, O=0, R=0, W=534, U=0, E=0)
+INFO  29-09 12:14:48,868 - Identify New Centers - Finished processing (I=550, O=0, R=0, W=550, U=0, E=0)
+INFO  29-09 12:14:48,871 - Identify Center Status Changes - Finished reading query, closing connection.
+INFO  29-09 12:14:48,881 - Identify Center Status Changes - Finished processing (I=10, O=0, R=0, W=10, U=0, E=0)
+INFO  29-09 12:14:49,348 - Lookup Loan Officer Id - Finished processing (I=1084, O=0, R=1084, W=1084, U=0, E=0)
+INFO  29-09 12:14:49,353 - Remove Loan Officer Name - Finished processing (I=0, O=0, R=1084, W=1084, U=0, E=0)
+INFO  29-09 12:14:50,531 - Identify Group Hierarchy Changes - Finished reading query, closing connection.
+INFO  29-09 12:14:50,536 - Identify Group Hierarchy Changes - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
+INFO  29-09 12:14:51,285 - Identify New Groups - Finished reading query, closing connection.
+INFO  29-09 12:14:51,355 - Identify New Groups - Finished processing (I=1940, O=0, R=0, W=1940, U=0, E=0)
+INFO  29-09 12:14:51,596 - Identify Client Hierarchy Changes - Finished reading query, closing connection.
+INFO  29-09 12:14:51,600 - Identify Client Hierarchy Changes - Finished processing (I=649, O=0, R=0, W=649, U=0, E=0)
+INFO  29-09 12:14:52,819 - Identify New Clients - Finished reading query, closing connection.
+INFO  29-09 12:14:52,823 - Identify New Clients - Finished processing (I=11250, O=0, R=0, W=11250, U=0, E=0)
+INFO  29-09 12:14:53,557 - Identify Client Status Changes - Finished reading query, closing connection.
+INFO  29-09 12:14:53,560 - Identify Client Status Changes - Finished processing (I=14382, O=0, R=0, W=14382, U=0, E=0)
+INFO  29-09 12:14:55,575 - Write stg_customer_and_account_updates - Finished processing (I=0, O=31349, R=31349, W=31349, U=0, E=0)
+INFO  29-09 12:14:55,585 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Accounts]
+INFO  29-09 12:14:55,588 - Load stg_customer_and_account_updates For Accounts - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_stg_customer_and_account_updates_For_Accounts.ktr]
+INFO  29-09 12:14:56,314 - Load stg_customer_and_account_updates For Accounts - Dispatching started for transformation [Load stg_customer_and_account_updates For Accounts]
+INFO  29-09 12:14:56,330 - Load stg_customer_and_account_updates For Accounts - This transformation can be replayed with replay date: 2010/09/29 12:14:56
+INFO  29-09 12:14:56,346 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:15:10,206 - Identify Savings Account Status Changes - Finished reading query, closing connection.
+INFO  29-09 12:15:10,210 - Identify Savings Account Status Changes - Finished processing (I=17984, O=0, R=0, W=17984, U=0, E=0)
+INFO  29-09 12:15:12,428 - Identify New Savings Accounts - Finished reading query, closing connection.
+INFO  29-09 12:15:12,432 - Identify New Savings Accounts - Finished processing (I=21157, O=0, R=0, W=21157, U=0, E=0)
+INFO  29-09 12:15:12,899 - Identify New Loan Accounts - Finished reading query, closing connection.
+INFO  29-09 12:15:12,904 - Identify New Loan Accounts - Finished processing (I=22230, O=0, R=0, W=22230, U=0, E=0)
+INFO  29-09 12:15:13,182 - Write stg_customer_and_account_updates - linenr 50000
+INFO  29-09 12:15:24,520 - Write stg_customer_and_account_updates - linenr 100000
+INFO  29-09 12:15:24,634 - Identify Loan Account Status Changes - linenr 50000
+INFO  29-09 12:15:27,088 - Identify Loan Account Status Changes - Finished reading query, closing connection.
+INFO  29-09 12:15:27,092 - Identify Loan Account Status Changes - Finished processing (I=67018, O=0, R=0, W=67018, U=0, E=0)
+INFO  29-09 12:15:28,827 - Write stg_customer_and_account_updates - Finished processing (I=0, O=128389, R=128389, W=128389, U=0, E=0)
+INFO  29-09 12:15:28,836 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Accounts] (result=[true])
+INFO  29-09 12:15:28,838 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Customers] (result=[true])
+INFO  29-09 12:15:28,842 - Load Staging Tables - Finished job entry [Load stg_personnel_names_and_name_changes] (result=[true])
+INFO  29-09 12:15:28,844 - Load Staging Tables - Finished job entry [SQL] (result=[true])
+INFO  29-09 12:15:28,852 - Load Staging Tables - Job execution finished
+INFO  29-09 12:15:28,893 - Create Data Warehouse - Starting entry [Load Customer And Loan And Savings Dimensions]
+INFO  29-09 12:15:29,526 - Load Customer And Loan And Savings Dimensions - Start of job execution
+INFO  29-09 12:15:29,545 - Load Customer And Loan And Savings Dimensions - Starting entry [Load dim_customer, dim_loan and dim_savings]
+INFO  29-09 12:15:29,548 - Load dim_customer, dim_loan and dim_savings - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/load_customer_loan_savings_dim.ktr]
+INFO  29-09 12:15:30,326 - load_customer_loan_savings_dim - Dispatching started for transformation [load_customer_loan_savings_dim]
+INFO  29-09 12:15:30,347 - load_customer_loan_savings_dim - This transformation can be replayed with replay date: 2010/09/29 12:15:30
+INFO  29-09 12:17:23,593 - Execute SQL script - Finished reading query, closing connection.
+INFO  29-09 12:17:23,598 - Execute SQL script - Finished processing (I=0, O=0, R=0, W=1, U=0, E=0)
+INFO  29-09 12:17:23,605 - Load Customer And Loan And Savings Dimensions - Finished job entry [Load dim_customer, dim_loan and dim_savings] (result=[true])
+INFO  29-09 12:17:23,613 - Load Customer And Loan And Savings Dimensions - Job execution finished
+INFO  29-09 12:17:23,625 - Create Data Warehouse - Starting entry [Load Fact Tables]
+INFO  29-09 12:17:24,235 - Load Fact Tables - Start of job execution
+INFO  29-09 12:17:24,253 - Load Fact Tables - Starting entry [Load fact_loan_disbursals]
+INFO  29-09 12:17:24,257 - Load Fact Tables - Launched job entry [Load fact_loan_disbursals] in parallel.
+INFO  29-09 12:17:24,257 - Load fact_loan_disbursals - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_LoanDisbursals.ktr]
+INFO  29-09 12:17:24,263 - Load Fact Tables - Starting entry [Load fact_client_attendances]
+INFO  29-09 12:17:24,266 - Load Fact Tables - Launched job entry [Load fact_client_attendances] in parallel.
+INFO  29-09 12:17:24,271 - Load Fact Tables - Starting entry [Load fact_loan_repayments]
+INFO  29-09 12:17:24,273 - Load Fact Tables - Launched job entry [Load fact_loan_repayments] in parallel.
+INFO  29-09 12:17:24,274 - Load fact_loan_repayments - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_LoanRepayments.ktr]
+INFO  29-09 12:17:24,278 - Load fact_client_attendances - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_ClientAttendances.ktr]
+INFO  29-09 12:17:24,323 - Load Fact Tables - Starting entry [Load dw_loan_schedules]
+INFO  29-09 12:17:24,339 - Load Fact Tables - Launched job entry [Load dw_loan_schedules] in parallel.
+INFO  29-09 12:17:24,344 - Load Fact Tables - Starting entry [Load fact_savings_transactions]
+INFO  29-09 12:17:24,350 - Load Fact Tables - Launched job entry [Load fact_savings_transactions] in parallel.
+INFO  29-09 12:17:24,356 - Load fact_savings_transactions - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_SavingsTransactions.ktr]
+INFO  29-09 12:17:24,415 - Load dw_loan_schedules - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/PractiseMifosDWETL/Load_DW_Loan_Schedules.ktr]
+INFO  29-09 12:17:25,741 - Load_DW_Loan_Schedules - Dispatching started for transformation [Load_DW_Loan_Schedules]
+INFO  29-09 12:17:25,760 - Load_DW_Loan_Schedules - This transformation can be replayed with replay date: 2010/09/29 12:17:25
+INFO  29-09 12:17:25,803 - Create dw_loan_schedules - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:17:26,031 - Load_ClientAttendances - Dispatching started for transformation [Load_ClientAttendances]
+INFO  29-09 12:17:26,091 - Load_ClientAttendances - This transformation can be replayed with replay date: 2010/09/29 12:17:26
+INFO  29-09 12:17:26,238 - Load_SavingsTransactions - Dispatching started for transformation [Load_SavingsTransactions]
+INFO  29-09 12:17:26,262 - Load_SavingsTransactions - This transformation can be replayed with replay date: 2010/09/29 12:17:26
+INFO  29-09 12:17:26,302 - Create fact_client_attendances - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:17:26,354 - Create Savings Transactions - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:17:26,773 - Load_LoanDisbursals - Dispatching started for transformation [Load_LoanDisbursals]
+INFO  29-09 12:17:26,799 - Load_LoanDisbursals - This transformation can be replayed with replay date: 2010/09/29 12:17:26
+INFO  29-09 12:17:26,836 - Create Loan Disbursals - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:17:26,877 - Load_LoanRepayments - Dispatching started for transformation [Load_LoanRepayments]
+INFO  29-09 12:17:26,922 - Load_LoanRepayments - This transformation can be replayed with replay date: 2010/09/29 12:17:26
+INFO  29-09 12:17:26,947 - Create Loan Repayments - Connected to database [DestinationDB] (commit=1000)
+INFO  29-09 12:17:31,865 - Read account_trxn for Savings Transactions - linenr 50000
+INFO  29-09 12:17:31,967 - Read account_trxn - linenr 50000
+INFO  29-09 12:17:44,430 - Read account_trxn - Finished reading query, closing connection.
+INFO  29-09 12:17:44,443 - Read account_trxn - Finished processing (I=21512, O=0, R=0, W=21512, U=0, E=0)
+INFO  29-09 12:17:44,445 - Disbursal Date Lookup - Finished processing (I=210, O=0, R=21512, W=21512, U=0, E=0)
+INFO  29-09 12:17:44,569 - Create Date Lookup - Finished processing (I=201, O=0, R=21512, W=21512, U=0, E=0)
+INFO  29-09 12:17:44,619 - Account Action lookup - Finished processing (I=21, O=0, R=21512, W=21512, U=0, E=0)
+INFO  29-09 12:17:45,781 - Action Date Lookup - linenr 50000
+INFO  29-09 12:17:46,070 - Action Date Lookup - linenr 50000
+INFO  29-09 12:17:49,961 - Read loan_schedule - linenr 50000
+INFO  29-09 12:17:54,912 - Due Date Lookup - linenr 50000
+INFO  29-09 12:18:00,698 - Create dw_loan_schedules - linenr 50000
+INFO  29-09 12:18:03,498 - Read customer_attendance - linenr 50000
+INFO  29-09 12:18:04,478 - Due Date Lookup - linenr 50000
+INFO  29-09 12:18:06,531 - Loan Account lookup - Finished processing (I=21512, O=0, R=21512, W=21512, U=0, E=0)
+INFO  29-09 12:18:07,134 - Due Date Lookup - linenr 50000
+INFO  29-09 12:18:11,684 - Meeting Date Lookup - linenr 50000
+INFO  29-09 12:18:16,730 - Read loan_schedule - linenr 100000
+INFO  29-09 12:18:20,328 - Customer lookup - linenr 50000
+INFO  29-09 12:18:21,102 - Due Date Lookup - linenr 100000
+INFO  29-09 12:18:25,389 - Create Date Lookup - linenr 50000
+INFO  29-09 12:18:25,669 - Create dw_loan_schedules - linenr 100000
+INFO  29-09 12:18:27,284 - Create Date Lookup - linenr 50000
+INFO  29-09 12:18:27,717 - Create Loan Disbursals - Finished processing (I=0, O=21512, R=21512, W=21512, U=0, E=0)
+INFO  29-09 12:18:40,926 - Account Action lookup - linenr 50000
+INFO  29-09 12:18:42,618 - Read loan_schedule - linenr 150000
+INFO  29-09 12:18:43,943 - Account Action lookup - linenr 50000
+INFO  29-09 12:18:47,146 - Due Date Lookup - linenr 150000
+INFO  29-09 12:18:48,107 - Read customer_attendance - linenr 100000
+INFO  29-09 12:18:50,543 - Create dw_loan_schedules - linenr 150000
+INFO  29-09 12:18:53,440 - Loan Account lookup - linenr 50000
+INFO  29-09 12:18:53,751 - Read account_trxn - linenr 100000
+INFO  29-09 12:18:56,015 - Savings Account lookup - linenr 50000
+INFO  29-09 12:18:56,145 - Read account_trxn for Savings Transactions - linenr 100000
+INFO  29-09 12:18:58,918 - Read loan_schedule - linenr 200000
+INFO  29-09 12:19:00,781 - Meeting Date Lookup - linenr 100000
+INFO  29-09 12:19:04,041 - Due Date Lookup - linenr 200000
+INFO  29-09 12:19:07,158 - Create dw_loan_schedules - linenr 200000
+INFO  29-09 12:19:08,210 - Customer lookup - linenr 100000
+INFO  29-09 12:19:09,060 - Action Date Lookup - linenr 100000
+INFO  29-09 12:19:09,172 - Create Loan Repayments - linenr 50000
+INFO  29-09 12:19:09,676 - Create fact_client_attendances - linenr 50000
+INFO  29-09 12:19:11,341 - Action Date Lookup - linenr 100000
+INFO  29-09 12:19:11,996 - Create Savings Transactions - linenr 50000
+INFO  29-09 12:19:22,658 - Due Date Lookup - linenr 100000
+INFO  29-09 12:19:25,368 - Read loan_schedule - linenr 250000
+INFO  29-09 12:19:27,981 - Due Date Lookup - linenr 100000
+INFO  29-09 12:19:32,742 - Due Date Lookup - linenr 250000
+INFO  29-09 12:19:37,811 - Create Date Lookup - linenr 100000
+INFO  29-09 12:19:39,349 - Create dw_loan_schedules - linenr 250000
+INFO  29-09 12:19:43,453 - Create Date Lookup - linenr 100000
+INFO  29-09 12:19:55,900 - Read loan_schedule - linenr 300000
+INFO  29-09 12:19:56,464 - Account Action lookup - linenr 100000
+INFO  29-09 12:19:58,893 - Read customer_attendance - linenr 150000
+INFO  29-09 12:19:59,740 - Due Date Lookup - linenr 300000
+INFO  29-09 12:20:03,511 - Account Action lookup - linenr 100000
+INFO  29-09 12:20:04,549 - Create dw_loan_schedules - linenr 300000
+INFO  29-09 12:20:08,491 - Loan Account lookup - linenr 100000
+INFO  29-09 12:20:08,895 - Read account_trxn - linenr 150000
+INFO  29-09 12:20:16,948 - Meeting Date Lookup - linenr 150000
+INFO  29-09 12:20:17,465 - Savings Account lookup - linenr 100000
+INFO  29-09 12:20:17,939 - Read account_trxn for Savings Transactions - linenr 150000
+INFO  29-09 12:20:19,195 - Read loan_schedule - linenr 350000
+INFO  29-09 12:20:23,901 - Due Date Lookup - linenr 350000
+INFO  29-09 12:20:25,221 - Action Date Lookup - linenr 150000
+INFO  29-09 12:20:25,870 - Create Loan Repayments - linenr 100000
+INFO  29-09 12:20:30,216 - Create dw_loan_schedules - linenr 350000
+INFO  29-09 12:20:33,787 - Create fact_client_attendances - linenr 100000
+INFO  29-09 12:20:33,977 - Customer lookup - linenr 150000
+INFO  29-09 12:20:36,367 - Action Date Lookup - linenr 150000
+INFO  29-09 12:20:41,775 - Create Savings Transactions - linenr 100000
+INFO  29-09 12:20:42,543 - Due Date Lookup - linenr 150000
+INFO  29-09 12:20:47,652 - Read loan_schedule - linenr 400000
+INFO  29-09 12:20:49,956 - Due Date Lookup - linenr 400000
+INFO  29-09 12:20:54,148 - Create dw_loan_schedules - linenr 400000
+INFO  29-09 12:20:55,044 - Due Date Lookup - linenr 150000
+INFO  29-09 12:20:55,599 - Read loan_schedule - Finished reading query, closing connection.
+INFO  29-09 12:20:55,604 - Read loan_schedule - Finished processing (I=426370, O=0, R=0, W=426370, U=0, E=0)
+INFO  29-09 12:20:58,898 - Create Date Lookup - linenr 150000
+INFO  29-09 12:21:00,505 - Due Date Lookup - Finished processing (I=567, O=0, R=426370, W=426370, U=0, E=0)
+INFO  29-09 12:21:05,914 - Create dw_loan_schedules - Finished processing (I=0, O=426370, R=426370, W=426370, U=0, E=0)
+INFO  29-09 12:21:06,943 - Read customer_attendance - linenr 200000
+INFO  29-09 12:21:09,755 - Account Action lookup - linenr 150000
+INFO  29-09 12:21:10,232 - Create Date Lookup - linenr 150000
+INFO  29-09 12:21:15,200 - Meeting Date Lookup - linenr 200000
+INFO  29-09 12:21:19,922 - Account Action lookup - linenr 150000
+INFO  29-09 12:21:20,144 - Loan Account lookup - linenr 150000
+INFO  29-09 12:21:21,053 - Read account_trxn - linenr 200000
+INFO  29-09 12:21:28,965 - Customer lookup - linenr 200000
+INFO  29-09 12:21:29,741 - Create fact_client_attendances - linenr 150000
+INFO  29-09 12:21:32,282 - Savings Account lookup - linenr 150000
+INFO  29-09 12:21:32,550 - Read account_trxn for Savings Transactions - linenr 200000
+INFO  29-09 12:21:33,109 - Create Loan Repayments - linenr 150000
+INFO  29-09 12:21:33,577 - Action Date Lookup - linenr 200000
+INFO  29-09 12:21:42,785 - Due Date Lookup - linenr 200000
+INFO  29-09 12:21:45,028 - Action Date Lookup - linenr 200000
+INFO  29-09 12:21:45,602 - Create Savings Transactions - linenr 150000
+INFO  29-09 12:21:53,487 - Due Date Lookup - linenr 200000
+INFO  29-09 12:21:54,251 - Create Date Lookup - linenr 200000
+INFO  29-09 12:22:02,335 - Read customer_attendance - linenr 250000
+INFO  29-09 12:22:04,444 - Create Date Lookup - linenr 200000
+INFO  29-09 12:22:05,207 - Account Action lookup - linenr 200000
+INFO  29-09 12:22:11,974 - Meeting Date Lookup - linenr 250000
+INFO  29-09 12:22:16,047 - Loan Account lookup - linenr 200000
+INFO  29-09 12:22:16,312 - Read account_trxn - linenr 250000
+INFO  29-09 12:22:16,356 - Account Action lookup - linenr 200000
+INFO  29-09 12:22:22,846 - Customer lookup - linenr 250000
+INFO  29-09 12:22:22,969 - Create fact_client_attendances - linenr 200000
+INFO  29-09 12:22:26,443 - Savings Account lookup - linenr 200000
+INFO  29-09 12:22:26,837 - Read account_trxn for Savings Transactions - linenr 250000
+INFO  29-09 12:22:27,769 - Create Loan Repayments - linenr 200000
+INFO  29-09 12:22:27,990 - Action Date Lookup - linenr 250000
+INFO  29-09 12:22:39,509 - Action Date Lookup - linenr 250000
+INFO  29-09 12:22:39,681 - Due Date Lookup - linenr 250000
+INFO  29-09 12:22:40,049 - Create Savings Transactions - linenr 200000
+INFO  29-09 12:22:51,906 - Due Date Lookup - linenr 250000
+INFO  29-09 12:22:53,108 - Read customer_attendance - linenr 300000
+INFO  29-09 12:22:54,442 - Create Date Lookup - linenr 250000
+INFO  29-09 12:23:03,725 - Meeting Date Lookup - linenr 300000
+INFO  29-09 12:23:03,758 - Read customer_attendance - Finished reading query, closing connection.
+INFO  29-09 12:23:03,763 - Read customer_attendance - Finished processing (I=309985, O=0, R=0, W=309985, U=0, E=0)
+INFO  29-09 12:23:04,222 - Create Date Lookup - linenr 250000
+INFO  29-09 12:23:08,388 - Account Action lookup - linenr 250000
+INFO  29-09 12:23:14,696 - Account Action lookup - linenr 250000
+INFO  29-09 12:23:15,561 - Customer lookup - linenr 300000
+INFO  29-09 12:23:15,636 - Meeting Date Lookup - Finished processing (I=197, O=0, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:23:16,784 - Create fact_client_attendances - linenr 250000
+INFO  29-09 12:23:18,101 - Loan Account lookup - linenr 250000
+INFO  29-09 12:23:18,962 - Read account_trxn - linenr 300000
+INFO  29-09 12:23:27,614 - Read account_trxn - Finished reading query, closing connection.
+INFO  29-09 12:23:27,618 - Read account_trxn - Finished processing (I=306777, O=0, R=0, W=306777, U=0, E=0)
+INFO  29-09 12:23:28,194 - Customer lookup - Finished processing (I=309985, O=0, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:23:28,363 - Savings Account lookup - linenr 250000
+INFO  29-09 12:23:28,781 - Read account_trxn for Savings Transactions - linenr 300000
+INFO  29-09 12:23:31,112 - Create Loan Repayments - linenr 250000
+INFO  29-09 12:23:31,294 - Action Date Lookup - linenr 300000
+INFO  29-09 12:23:37,000 - Calculate present Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:23:38,689 - Create Savings Transactions - linenr 250000
+INFO  29-09 12:23:38,942 - Action Date Lookup - linenr 300000
+INFO  29-09 12:23:40,531 - Action Date Lookup - Finished processing (I=222, O=0, R=306777, W=306777, U=0, E=0)
+INFO  29-09 12:23:44,764 - Due Date Lookup - linenr 300000
+INFO  29-09 12:23:48,458 - Calculate absent Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:23:48,886 - Due Date Lookup - linenr 300000
+INFO  29-09 12:23:52,800 - Due Date Lookup - Finished processing (I=250, O=0, R=306777, W=306777, U=0, E=0)
+INFO  29-09 12:23:56,666 - Create Date Lookup - linenr 300000
+INFO  29-09 12:23:58,366 - Calculate approved_leave Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:24:05,251 - Create Date Lookup - Finished processing (I=213, O=0, R=306777, W=306777, U=0, E=0)
+INFO  29-09 12:24:05,321 - Create Date Lookup - linenr 300000
+INFO  29-09 12:24:09,606 - Account Action lookup - linenr 300000
+INFO  29-09 12:24:10,935 - Calculate late Column - Finished processing (I=0, O=0, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:24:12,149 - Create fact_client_attendances - linenr 300000
+INFO  29-09 12:24:16,157 - Account Action lookup - linenr 300000
+INFO  29-09 12:24:17,134 - Account Action lookup - Finished processing (I=21, O=0, R=306777, W=306777, U=0, E=0)
+INFO  29-09 12:24:19,417 - Loan Account lookup - linenr 300000
+INFO  29-09 12:24:23,832 - Create fact_client_attendances - Finished processing (I=0, O=309985, R=309985, W=309985, U=0, E=0)
+INFO  29-09 12:24:26,490 - Savings Account lookup - linenr 300000
+INFO  29-09 12:24:26,835 - Read account_trxn for Savings Transactions - linenr 350000
+INFO  29-09 12:24:28,042 - Loan Account lookup - Finished processing (I=306777, O=0, R=306777, W=306777, U=0, E=0)
+INFO  29-09 12:24:29,388 - Create Loan Repayments - linenr 300000
+INFO  29-09 12:24:34,020 - Action Date Lookup - linenr 350000
+INFO  29-09 12:24:34,625 - Create Savings Transactions - linenr 300000
+INFO  29-09 12:24:34,632 - Create Loan Repayments - Finished processing (I=0, O=306777, R=306777, W=306777, U=0, E=0)
+INFO  29-09 12:24:41,540 - Due Date Lookup - linenr 350000
+INFO  29-09 12:24:47,976 - Create Date Lookup - linenr 350000
+INFO  29-09 12:24:54,711 - Account Action lookup - linenr 350000
+INFO  29-09 12:25:03,046 - Savings Account lookup - linenr 350000
+INFO  29-09 12:25:03,553 - Read account_trxn for Savings Transactions - linenr 400000
+INFO  29-09 12:25:11,058 - Create Savings Transactions - linenr 350000
+INFO  29-09 12:25:11,548 - Action Date Lookup - linenr 400000
+INFO  29-09 12:25:16,267 - Due Date Lookup - linenr 400000
+INFO  29-09 12:25:22,418 - Create Date Lookup - linenr 400000
+INFO  29-09 12:25:26,335 - Account Action lookup - linenr 400000
+INFO  29-09 12:25:31,323 - Savings Account lookup - linenr 400000
+INFO  29-09 12:25:31,950 - Read account_trxn for Savings Transactions - linenr 450000
+INFO  29-09 12:25:36,767 - Create Savings Transactions - linenr 400000
+INFO  29-09 12:25:37,496 - Action Date Lookup - linenr 450000
+INFO  29-09 12:25:42,844 - Due Date Lookup - linenr 450000
+INFO  29-09 12:25:47,720 - Create Date Lookup - linenr 450000
+INFO  29-09 12:25:52,377 - Account Action lookup - linenr 450000
+INFO  29-09 12:25:56,102 - Savings Account lookup - linenr 450000
+INFO  29-09 12:25:56,267 - Read account_trxn for Savings Transactions - linenr 500000
+INFO  29-09 12:26:01,618 - Create Savings Transactions - linenr 450000
+INFO  29-09 12:26:01,946 - Action Date Lookup - linenr 500000
+INFO  29-09 12:26:05,666 - Due Date Lookup - linenr 500000
+INFO  29-09 12:26:10,182 - Create Date Lookup - linenr 500000
+INFO  29-09 12:26:14,766 - Account Action lookup - linenr 500000
+INFO  29-09 12:26:19,494 - Savings Account lookup - linenr 500000
+INFO  29-09 12:26:21,501 - Read account_trxn for Savings Transactions - linenr 550000
+INFO  29-09 12:26:23,964 - Create Savings Transactions - linenr 500000
+INFO  29-09 12:26:25,407 - Action Date Lookup - linenr 550000
+INFO  29-09 12:26:30,320 - Read account_trxn for Savings Transactions - Finished reading query, closing connection.
+INFO  29-09 12:26:30,323 - Read account_trxn for Savings Transactions - Finished processing (I=567106, O=0, R=0, W=567106, U=0, E=0)
+INFO  29-09 12:26:31,137 - Due Date Lookup - linenr 550000
+INFO  29-09 12:26:35,445 - Action Date Lookup - Finished processing (I=232, O=0, R=567106, W=567106, U=0, E=0)
+INFO  29-09 12:26:37,300 - Create Date Lookup - linenr 550000
+INFO  29-09 12:26:40,234 - Due Date Lookup - Finished processing (I=245, O=0, R=567106, W=567106, U=0, E=0)
+INFO  29-09 12:26:41,285 - Account Action lookup - linenr 550000
+INFO  29-09 12:26:44,591 - Create Date Lookup - Finished processing (I=225, O=0, R=567106, W=567106, U=0, E=0)
+INFO  29-09 12:26:48,023 - Savings Account lookup - linenr 550000
+INFO  29-09 12:26:50,718 - Create Savings Transactions - linenr 550000
+INFO  29-09 12:26:51,288 - Account Action lookup - Finished processing (I=21, O=0, R=567106, W=567106, U=0, E=0)
+INFO  29-09 12:26:55,776 - Savings Account lookup - Finished processing (I=567106, O=0, R=567106, W=567106, U=0, E=0)
+INFO  29-09 12:26:57,914 - Create Savings Transactions - Finished processing (I=0, O=567106, R=567106, W=567106, U=0, E=0)
+INFO  29-09 12:26:57,930 - Load Fact Tables - Job execution finished
+INFO  29-09 12:26:57,970 - Create Data Warehouse - Starting entry [Adjust Customer Status Values]
+INFO  29-09 12:26:58,530 - Adjust Customer Status Values - Start of job execution
+INFO  29-09 12:26:58,571 - Adjust Customer Status Values - Starting entry [SQL]
+INFO  29-09 12:27:15,672 - Adjust Customer Status Values - Finished job entry [SQL] (result=[true])
+INFO  29-09 12:27:15,679 - Adjust Customer Status Values - Job execution finished
+INFO  29-09 12:27:15,690 - Create Data Warehouse - Starting entry [Mail Success]
+INFO  29-09 12:27:23,608 - Create Data Warehouse - Finished job entry [Mail Success] (result=[true])
+INFO  29-09 12:27:23,613 - Create Data Warehouse - Finished job entry [Adjust Customer Status Values] (result=[true])
+INFO  29-09 12:27:23,616 - Create Data Warehouse - Finished job entry [Load Fact Tables] (result=[true])
+INFO  29-09 12:27:23,619 - Create Data Warehouse - Finished job entry [Load Customer And Loan And Savings Dimensions] (result=[true])
+INFO  29-09 12:27:23,621 - Create Data Warehouse - Finished job entry [Load Staging Tables] (result=[true])
+INFO  29-09 12:27:23,626 - Create Data Warehouse - Finished job entry [Load Personnel Dimension] (result=[true])
+INFO  29-09 12:27:23,629 - Create Data Warehouse - Finished job entry [Load Simple High Level Dimensions] (result=[true])
+INFO  29-09 12:27:23,637 - Create Data Warehouse - Job execution finished
+INFO  29-09 12:27:23,640 - Kitchen - Kitchen
+INFO  29-09 12:27:23,643 - Kitchen - Kitchen
+INFO  29-09 12:27:23,646 - Kitchen - Kitchen

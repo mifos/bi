@@ -589,46 +589,6 @@ LOCK TABLES `fact_loan_disbursals` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `fact_loan_fee_schedules`
---
-
-DROP TABLE IF EXISTS `fact_loan_fee_schedules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fact_loan_fee_schedules` (
-  `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `branch_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `customer_formedby_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `installment_id` smallint(6) NOT NULL,
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `fee_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  PRIMARY KEY (`loan_account_key`,`installment_id`,`fee_key`),
-  KEY `product_key` (`product_key`),
-  KEY `branch_key` (`branch_key`),
-  KEY `loan_officer_key` (`loan_officer_key`),
-  KEY `customer_formedby_key` (`customer_formedby_key`),
-  KEY `customer_key` (`customer_key`),
-  KEY `currency_key` (`currency_key`),
-  KEY `due_date_key` (`due_date_key`),
-  KEY `fee_key` (`fee_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fact_loan_fee_schedules`
---
-
-LOCK TABLES `fact_loan_fee_schedules` WRITE;
-/*!40000 ALTER TABLE `fact_loan_fee_schedules` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fact_loan_fee_schedules` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `fact_loan_repayments`
 --
 
@@ -649,9 +609,11 @@ CREATE TABLE `fact_loan_repayments` (
   `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `action_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `loan_account_id` int(11) NOT NULL,
   `payment_id` int(11) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
   `installment_id` smallint(6) NOT NULL,
+  `action_date` date NOT NULL,
   `principal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
@@ -670,6 +632,7 @@ CREATE TABLE `fact_loan_repayments` (
   KEY `due_date_key` (`due_date_key`),
   KEY `action_date_key` (`action_date_key`),
   KEY `created_date_key` (`created_date_key`),
+  KEY `loan_account_id` (`loan_account_id`),
   KEY `payment_id` (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -684,48 +647,35 @@ LOCK TABLES `fact_loan_repayments` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `fact_loan_schedules`
+-- Table structure for table `dw_loan_schedules`
 --
 
-DROP TABLE IF EXISTS `fact_loan_schedules`;
+DROP TABLE IF EXISTS `dw_loan_schedules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fact_loan_schedules` (
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `group_key` int(10) unsigned NOT NULL,
-  `center_key` int(10) unsigned NOT NULL,
-  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `branch_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+CREATE TABLE `dw_loan_schedules` (
+  `id` int(11) NOT NULL,
+  `loan_account_id` int(11) NOT NULL,
   `installment_id` smallint(6) NOT NULL,
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `due_date` date NOT NULL,
   `principal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  PRIMARY KEY (`loan_account_key`,`installment_id`),
-  KEY `currency_key` (`currency_key`),
-  KEY `product_key` (`product_key`),
-  KEY `customer_key` (`customer_key`),
-  KEY `group_key` (`group_key`),
-  KEY `center_key` (`center_key`),
-  KEY `loan_officer_key` (`loan_officer_key`),
-  KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
-  KEY `due_date_key` (`due_date_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  PRIMARY KEY (`id`),
+  KEY `due_date_key` (`due_date_key`),
+  KEY `loan_account_id` (`loan_account_id`,`due_date_key`),
+  KEY `loan_and_due_date` (`loan_account_id`, `due_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `fact_loan_schedules`
+-- Dumping data for table `dw_loan_schedules`
 --
 
-LOCK TABLES `fact_loan_schedules` WRITE;
-/*!40000 ALTER TABLE `fact_loan_schedules` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fact_loan_schedules` ENABLE KEYS */;
+LOCK TABLES `dw_loan_schedules` WRITE;
+/*!40000 ALTER TABLE `dw_loan_schedules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dw_loan_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -749,6 +699,7 @@ CREATE TABLE `fact_savings_transactions` (
   `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `action_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `savings_account_id` int(11) NOT NULL,
   `payment_id` int(11) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
   `installment_id` smallint(6) DEFAULT '0',
@@ -770,6 +721,7 @@ CREATE TABLE `fact_savings_transactions` (
   KEY `due_date_key` (`due_date_key`),
   KEY `action_date_key` (`action_date_key`),
   KEY `created_date_key` (`created_date_key`),
+  KEY `savings_account_id` (`savings_account_id`),
   KEY `payment_id` (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
