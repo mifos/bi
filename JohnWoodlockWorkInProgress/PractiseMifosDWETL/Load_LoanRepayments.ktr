@@ -66,12 +66,28 @@
   </info>
   <notepads>
     <notepad>
-      <note>some repayments before account created
- (probably problem with account creation at secdep)</note>
-      <xloc>230</xloc>
-      <yloc>105</yloc>
-      <width>262</width>
-      <heigth>35</heigth>
+      <note>Loading Repayment Transactions (account action ids are in brackets)
+-------------------------------------------------------------------------------------------------------------
+
+&apos;Active&apos; Repayment Entries (1, 9, 18)
+---------------------------------------------------------
+These transactions need to be linked into a loan entry with an active status (active or on-hold). When a loan is paid off (early or 
+otherwise) then the loan entry status that matches the transaction action_date will be &apos;AccountState-ClosedObligationMet&apos; (unless
+the payment is entered into the system after the &apos;action_date&apos; as mifos currently changes the loan status based on created_date
+rather than action date).  We don&apos;t want to link to that closed status so, instead, the latest active entry for the action_date is used.
+I say latest rather that &apos;THE&apos; because you can get multiple entries that were active for a particular day due to overlapping caused 
+by a hierarchy change or just because the user has a number of status changes on the same day.  The most likely is where an 
+account is in bad standing and gets changed by a repayment into good standing but it can also happen if a closed loan is re-opened 
+on the same day as it was closed.
+
+Written Off (15) and Rescheduled (20) &apos;Repayments&apos;
+--------------------------------------------------------------------
+The expectation is that there will be a single loan entry status of &apos;AccountAction-LoanWrittenOff&apos; or &apos;AccountAction-LoanRescheduled&apos;
+to match to the transaction action_date.  This process will fall over with a &apos;null&apos; value if this isn&apos;t true.</note>
+      <xloc>6</xloc>
+      <yloc>243</yloc>
+      <width>662</width>
+      <heigth>234</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -164,7 +180,28 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Switch &#47; Case</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Active Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Abort Repayments Transformation</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <row_threshold>0</row_threshold>
+      <message/>
+      <always_log_rows>Y</always_log_rows>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>179</xloc>
+      <yloc>153</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Account Action lookup</name>
     <type>DBLookup</type>
@@ -200,8 +237,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>334</xloc>
-      <yloc>219</yloc>
+      <xloc>553</xloc>
+      <yloc>19</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -241,8 +278,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>180</xloc>
-      <yloc>27</yloc>
+      <xloc>183</xloc>
+      <yloc>21</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -282,8 +319,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>184</xloc>
-      <yloc>216</yloc>
+      <xloc>430</xloc>
+      <yloc>19</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -407,8 +444,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>613</xloc>
-      <yloc>24</yloc>
+      <xloc>791</xloc>
+      <yloc>251</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -448,15 +485,15 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>181</xloc>
-      <yloc>126</yloc>
+      <xloc>293</xloc>
+      <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Loan Account lookup</name>
-    <type>DBLookup</type>
+    <name>Lookup Latest Active Loan Account Entry</name>
+    <type>DBJoin</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -465,92 +502,117 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>100</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_loan</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
+    <rowlimit>1</rowlimit>
+    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+from dim_loan
+where loan_account_id = ?
+&#47;*and valid_from &lt;= always link repayments to the earliest of the status&apos;s below...  to cater for redo historical entries.*&#47;
+and valid_to &gt;= ?
+and loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
+order by loan_account_key </sql>
+    <outer_join>Y</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
         <name>loan_account_id</name>
-        <field>loan_account_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
+        <type>Integer</type>
+      </field>
+      <field>
         <name>action_date</name>
-        <field>valid_from</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>action_date</name>
-        <field>valid_to</field>
-        <condition>&gt;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>loan_account_key</name>
-        <rename>loan_account_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>product_key</name>
-        <rename>product_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>group_key</name>
-        <rename>group_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>center_key</name>
-        <rename>center_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>loan_officer_key</name>
-        <rename>loan_officer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>branch_key</name>
-        <rename>branch_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>formed_by_loan_officer_key</name>
-        <rename>formed_by_loan_officer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>currency_key</name>
-        <rename>currency_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
+        <type>Date</type>
+      </field>
+    </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>513</xloc>
-      <yloc>216</yloc>
+      <xloc>855</xloc>
+      <yloc>124</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Lookup Rescheduled Loan Account Entry</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+from dim_loan
+where loan_account_id = ?
+and valid_from &lt;= ?
+and valid_to &gt; ?
+and loan_status = &apos;AccountState-ClosedRescheduled&apos;</sql>
+    <outer_join>Y</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>loan_account_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+      </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>399</xloc>
+      <yloc>145</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Lookup Written Off Loan Account Entry</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+from dim_loan
+where loan_account_id = ?
+and valid_from &lt;= ?
+and valid_to &gt; ?
+and loan_status = &apos;AccountState-ClosedWrittenOff&apos;</sql>
+    <outer_join>Y</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>loan_account_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+      </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>634</xloc>
+      <yloc>133</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -574,7 +636,7 @@ ltxn.principal_amount, ltxn.interest_amount, ltxn.misc_fee_amount,
 ltxn.misc_penalty_amount
 from account_trxn atxn
 inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
-where atxn.account_action_id in (1,9,15,18,20)
+where atxn.account_action_id in (1, 9, 15, 18, 20)
 &#47;* 
 1  - &apos;AccountAction-LoanRepayment&apos;
 9  - &apos;AccountAction-Adjustment&apos;
@@ -589,8 +651,43 @@ where atxn.account_action_id in (1,9,15,18,20)
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>56</xloc>
-      <yloc>24</yloc>
+      <xloc>50</xloc>
+      <yloc>19</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Switch &#47; Case</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>account_action_id</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>Integer</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Abort Repayments Transformation</default_target_step>
+<cases><case><value>1</value>
+<target_step>Lookup Latest Active Loan Account Entry</target_step>
+</case><case><value>9</value>
+<target_step>Lookup Latest Active Loan Account Entry</target_step>
+</case><case><value>18</value>
+<target_step>Lookup Latest Active Loan Account Entry</target_step>
+</case><case><value>15</value>
+<target_step>Lookup Written Off Loan Account Entry</target_step>
+</case><case><value>20</value>
+<target_step>Lookup Rescheduled Loan Account Entry</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>708</xloc>
+      <yloc>20</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

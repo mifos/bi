@@ -194,18 +194,51 @@
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>Y</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>182</xloc>
+      <yloc>200</yloc>
+      </entry>
+    <entry>
+      <name>Load stg_customer_type1_columns</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;load_stg_customer_type1_columns.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>183</xloc>
-      <yloc>206</yloc>
+      <xloc>140</xloc>
+      <yloc>360</yloc>
       </entry>
     <entry>
-      <name>SQL</name>
+      <name>Clear Down Staging Tables</name>
       <description/>
       <type>SQL</type>
-      <sql>truncate table stg_customer_and_account_updates;
-truncate table stg_personnel_names_and_name_changes;</sql>
+      <sql>truncate table stg_personnel_names_and_name_changes;
+truncate table stg_customer_and_account_updates;
+truncate table stg_customer_type1_columns;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -214,29 +247,43 @@ truncate table stg_personnel_names_and_name_changes;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>431</xloc>
-      <yloc>52</yloc>
+      <xloc>410</xloc>
+      <yloc>50</yloc>
+      </entry>
+    <entry>
+      <name>Load stg_customer_type1_columns 2</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;load_stg_loan_type1_columns.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>387</xloc>
+      <yloc>349</yloc>
       </entry>
   </entries>
   <hops>
-    <hop>
-      <from>START</from>
-      <to>SQL</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>SQL</from>
-      <to>Load stg_personnel_names_and_name_changes</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
     <hop>
       <from>Load stg_personnel_names_and_name_changes</from>
       <to>Load stg_customer_and_account_updates For Customers</to>
@@ -249,6 +296,42 @@ truncate table stg_personnel_names_and_name_changes;</sql>
     <hop>
       <from>Load stg_customer_and_account_updates For Customers</from>
       <to>Load stg_customer_and_account_updates For Accounts</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load stg_customer_and_account_updates For Accounts</from>
+      <to>Load stg_customer_type1_columns</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Clear Down Staging Tables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Clear Down Staging Tables</from>
+      <to>Load stg_personnel_names_and_name_changes</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load stg_customer_and_account_updates For Accounts</from>
+      <to>Load stg_customer_type1_columns 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

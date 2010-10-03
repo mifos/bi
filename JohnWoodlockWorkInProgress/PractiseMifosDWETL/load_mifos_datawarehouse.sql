@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.45, for Win32 (ia32)
 --
--- Host: localhost    Database: secdep_prod_dwh
+-- Host: localhost    Database: mifos_dwh
 -- ------------------------------------------------------
 -- Server version	5.1.45-community
 
@@ -144,11 +144,10 @@ DROP TABLE IF EXISTS `dim_customer`;
 CREATE TABLE `dim_customer` (
   `customer_key` int(10) unsigned NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `display_name` varchar(200) NOT NULL,
+  `display_name` varchar(200) DEFAULT NULL,
   `customer_status` varchar(100) NOT NULL,
   `customer_level_id` smallint(6) NOT NULL,
-  `gender` varchar(100) NOT NULL,
-  `top_of_hierarchy` tinyint(1) NOT NULL,
+  `gender` varchar(100) DEFAULT NULL,
   `group_key` int(10) unsigned NOT NULL,
   `center_key` int(10) unsigned NOT NULL,
   `loan_officer_key` smallint(5) unsigned NOT NULL,
@@ -165,7 +164,7 @@ CREATE TABLE `dim_customer` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`,`customer_status`,`valid_from`)
+  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -175,7 +174,7 @@ CREATE TABLE `dim_customer` (
 
 LOCK TABLES `dim_customer` WRITE;
 /*!40000 ALTER TABLE `dim_customer` DISABLE KEYS */;
-INSERT INTO `dim_customer` VALUES (0,0,'Unknown','Unknown',0,'Unknown',0,0,0,0,0,0,'1900-01-01','2199-12-31',0,0,'2010-09-20 06:16:07');
+INSERT INTO `dim_customer` VALUES (0,0,'Unknown','Unknown',0,'Unknown',0,0,0,0,0,'1900-01-01','2199-12-31',0,0,'2010-10-01 02:44:42');
 /*!40000 ALTER TABLE `dim_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,9 +281,9 @@ CREATE TABLE `dim_loan` (
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
   `loan_account_id` int(11) NOT NULL,
   `loan_status` varchar(100) NOT NULL,
-  `funder_name` varchar(100) NOT NULL,
-  `loan_amount` decimal(21,4) NOT NULL,
-  `original_principal` decimal(21,4) NOT NULL,
+  `funder_name` varchar(100) DEFAULT NULL,
+  `loan_amount` decimal(21,4) DEFAULT '0.0000',
+  `original_principal` decimal(21,4) DEFAULT '0.0000',
   `original_interest` decimal(21,4) DEFAULT '0.0000',
   `original_fees` decimal(21,4) DEFAULT '0.0000',
   `original_penalty` decimal(21,4) DEFAULT '0.0000',
@@ -312,7 +311,7 @@ CREATE TABLE `dim_loan` (
 
 LOCK TABLES `dim_loan` WRITE;
 /*!40000 ALTER TABLE `dim_loan` DISABLE KEYS */;
-INSERT INTO `dim_loan` VALUES (0,0,0,0,0,0,0,0,0,0,'Unknown','Unknown','0.0000','0.0000','0.0000','0.0000','0.0000','1900-01-01','2199-12-31',0,0,'2010-09-18 04:40:22');
+INSERT INTO `dim_loan` VALUES (0,0,0,0,0,0,0,0,0,0,'Unknown','Unknown','0.0000','0.0000','0.0000','0.0000','0.0000','1900-01-01','2199-12-31',0,0,'2010-10-01 03:54:17');
 /*!40000 ALTER TABLE `dim_loan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,6 +471,39 @@ LOCK TABLES `dim_savings` WRITE;
 /*!40000 ALTER TABLE `dim_savings` DISABLE KEYS */;
 INSERT INTO `dim_savings` VALUES (0,0,0,0,0,0,0,0,0,'Unknown',0,'1900-01-01','2199-12-31',0,0,'2010-09-13 05:53:30');
 /*!40000 ALTER TABLE `dim_savings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_loan_schedules`
+--
+
+DROP TABLE IF EXISTS `dw_loan_schedules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_loan_schedules` (
+  `id` int(11) NOT NULL,
+  `loan_account_id` int(11) NOT NULL,
+  `installment_id` smallint(6) NOT NULL,
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `due_date` date NOT NULL,
+  `principal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`id`),
+  KEY `due_date_key` (`due_date_key`),
+  KEY `loan_account_id` (`loan_account_id`,`due_date_key`),
+  KEY `loan_and_due_date` (`loan_account_id`,`due_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_loan_schedules`
+--
+
+LOCK TABLES `dw_loan_schedules` WRITE;
+/*!40000 ALTER TABLE `dw_loan_schedules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dw_loan_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -647,38 +679,6 @@ LOCK TABLES `fact_loan_repayments` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `dw_loan_schedules`
---
-
-DROP TABLE IF EXISTS `dw_loan_schedules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dw_loan_schedules` (
-  `id` int(11) NOT NULL,
-  `loan_account_id` int(11) NOT NULL,
-  `installment_id` smallint(6) NOT NULL,
-  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `due_date` date NOT NULL,
-  `principal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  PRIMARY KEY (`id`),
-  KEY `due_date_key` (`due_date_key`),
-  KEY `loan_account_id` (`loan_account_id`,`due_date_key`),
-  KEY `loan_and_due_date` (`loan_account_id`, `due_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dw_loan_schedules`
---
-
-LOCK TABLES `dw_loan_schedules` WRITE;
-/*!40000 ALTER TABLE `dw_loan_schedules` DISABLE KEYS */;
-/*!40000 ALTER TABLE `dw_loan_schedules` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `fact_savings_transactions`
 --
 
@@ -803,19 +803,10 @@ CREATE TABLE `stg_customer_and_account_updates` (
   `updated_parent_id` int(11) DEFAULT NULL,
   `updated_loan_officer_id` smallint(6) DEFAULT NULL,
   `updated_branch_id` smallint(6) DEFAULT NULL,
-  `customer_display_name` varchar(200) DEFAULT NULL,
   `customer_formedby_id` smallint(6) DEFAULT NULL,
-  `customer_gender` varchar(100) DEFAULT NULL,
-  `customer_top_of_hierarchy` tinyint(1) DEFAULT NULL,
   `account_type` varchar(10) DEFAULT 'n/a',
   `account_prd_offering_id` smallint(6) DEFAULT NULL,
   `account_currency_id` smallint(6) DEFAULT NULL,
-  `funder_name` varchar(100) DEFAULT NULL,
-  `loan_amount` decimal(21,4) DEFAULT NULL,
-  `loan_original_principal` decimal(21,4) DEFAULT NULL,
-  `loan_original_interest` decimal(21,4) DEFAULT NULL,
-  `loan_original_fees` decimal(21,4) DEFAULT NULL,
-  `loan_original_penalty` decimal(21,4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -827,6 +818,58 @@ CREATE TABLE `stg_customer_and_account_updates` (
 LOCK TABLES `stg_customer_and_account_updates` WRITE;
 /*!40000 ALTER TABLE `stg_customer_and_account_updates` DISABLE KEYS */;
 /*!40000 ALTER TABLE `stg_customer_and_account_updates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stg_customer_type1_columns`
+--
+
+DROP TABLE IF EXISTS `stg_customer_type1_columns`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stg_customer_type1_columns` (
+  `customer_id` int(11) NOT NULL,
+  `display_name` varchar(200) NOT NULL,
+  `gender` varchar(100) NOT NULL,
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stg_customer_type1_columns`
+--
+
+LOCK TABLES `stg_customer_type1_columns` WRITE;
+/*!40000 ALTER TABLE `stg_customer_type1_columns` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stg_customer_type1_columns` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stg_loan_type1_columns`
+--
+
+DROP TABLE IF EXISTS `stg_loan_type1_columns`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stg_loan_type1_columns` (
+  `loan_account_id` int(11) NOT NULL,
+  `funder_name` varchar(100) DEFAULT NULL,
+  `loan_amount` decimal(21,4) DEFAULT NULL,
+  `loan_original_principal` decimal(21,4) DEFAULT NULL,
+  `loan_original_interest` decimal(21,4) DEFAULT NULL,
+  `loan_original_fees` decimal(21,4) DEFAULT NULL,
+  `loan_original_penalty` decimal(21,4) DEFAULT NULL,
+  PRIMARY KEY (`loan_account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stg_loan_type1_columns`
+--
+
+LOCK TABLES `stg_loan_type1_columns` WRITE;
+/*!40000 ALTER TABLE `stg_loan_type1_columns` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stg_loan_type1_columns` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -855,9 +898,9 @@ LOCK TABLES `stg_personnel_names_and_name_changes` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'secdep_prod_dwh'
+-- Dumping routines for database 'mifos_dwh'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `SPcenter_cascade_change` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPcascade_change_to_accounts` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -867,86 +910,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcenter_cascade_change`(IN current_center_key int, IN date_param date, IN new_center_key int,
-IN new_loan_officer_key int, IN new_branch_key int)
-BEGIN
-declare done int default 0;
-
-declare customer_id_var int;
-declare customer_key_var int;
-declare display_name_var varchar(200);
-declare customer_status_var varchar(100);
-declare customer_level_id_var smallint;
-declare gender_var varchar(100);
-declare customer_top_of_hierarchy_var tinyint;
-declare group_key_var int;
-declare formed_by_loan_officer_key_var int;
-
-declare groups_referenced_cursor cursor for 
-select customer_key, customer_id, display_name, customer_status, customer_level_id, gender, top_of_hierarchy, group_key, formed_by_loan_officer_key 
-from dim_customer
-where center_key = current_center_key
-and customer_level_id = 2
-and valid_from <= date_param
-and valid_to > date_param;
-
-declare continue handler for not found set done = 1;
-
-
-open groups_referenced_cursor;
-repeat
-    fetch groups_referenced_cursor into customer_key_var, customer_id_var, display_name_var, customer_status_var, customer_level_id_var, gender_var, customer_top_of_hierarchy_var,
-                            group_key_var, formed_by_loan_officer_key_var;
-                            
-    if not done then
-        
-        call SPcustomer_insert(customer_id_var, display_name_var, customer_status_var, customer_level_id_var, gender_var, customer_top_of_hierarchy_var, 
-                                    group_key_var, new_center_key, new_loan_officer_key, new_branch_key,
-                                    formed_by_loan_officer_key_var,
-                                    date_param,
-                                    @new_group_key);       
-        
-        
-        call SPgroup_cascade_change(customer_key_var, date_param, @new_group_key, new_center_key, new_loan_officer_key, new_branch_key);
-
-    end if;
-until done end repeat;
-
-close groups_referenced_cursor;
-
-commit;
-
-
-update dim_customer
-set valid_to = date_param, `version` = `version` + 1
-where center_key = current_center_key
-and customer_level_id = 2
-and valid_from <= date_param
-and valid_to > date_param;
-
-
-commit;
-
-
-
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPclient_cascade_change` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPclient_cascade_change`(IN current_client_key int, IN effective_date_param date, IN new_client_key int, 
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcascade_change_to_accounts`(IN current_customer_key int, IN effective_date_param date, IN new_customer_key int, 
 IN new_group_key int, IN new_center_key int, IN new_loan_officer_key int, IN new_branch_key int, 
 IN new_formed_by_loan_officer_key int)
 BEGIN
@@ -957,28 +921,21 @@ declare loan_account_key_var int;
 declare loan_status_var varchar(100);
 declare product_key_var int;
 declare currency_key_var int;
-declare loan_funder_name_var varchar(100);
-declare loan_amount_var decimal(21,4);
-declare original_principal_var decimal(21,4);
-declare original_interest_var decimal(21,4);
-declare original_fees_var decimal(21,4);
-declare original_penalty_var decimal(21,4);
 declare savings_account_id_var int;
 declare savings_account_key_var int;
 declare savings_status_var varchar(100);
 
 declare loan_accounts_referenced_cursor cursor for 
-select loan_account_key, loan_account_id, loan_status, product_key, currency_key, 
-            funder_name, loan_amount, original_principal, original_interest, original_fees, original_penalty
+select loan_account_key, loan_account_id, loan_status, product_key, currency_key
 from dim_loan
-where customer_key = current_client_key
+where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
 declare savings_accounts_referenced_cursor cursor for 
 select savings_account_key, savings_account_id, savings_status, product_key, currency_key
 from dim_savings
-where customer_key = current_client_key
+where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
@@ -986,19 +943,15 @@ declare continue handler for not found set done = 1;
 
 open loan_accounts_referenced_cursor;
 repeat
-    fetch loan_accounts_referenced_cursor into loan_account_key_var, loan_account_id_var, loan_status_var, product_key_var, currency_key_var,
-                                loan_funder_name_var, loan_amount_var, original_principal_var, original_interest_var, original_fees_var, original_penalty_var;
+    fetch loan_accounts_referenced_cursor into loan_account_key_var, loan_account_id_var, loan_status_var, product_key_var, currency_key_var;
                             
     if not done then
                                     
-        call SPloan_account_insert(loan_account_id_var, new_client_key, product_key_var, 
+        call SPloan_account_insert(loan_account_id_var, new_customer_key, product_key_var, 
                                             new_group_key, new_center_key, new_loan_officer_key,
                                             new_formed_by_loan_officer_key, new_branch_key,
                                             currency_key_var,
                                             loan_status_var, 
-                                            loan_funder_name_var, loan_amount_var, 
-                                            original_principal_var, original_interest_var, 
-                                            original_fees_var, original_penalty_var, 
                                             effective_date_param,
                                             @new_loan_account_key);   
  
@@ -1011,7 +964,7 @@ commit;
 
 update dim_loan
 set valid_to = effective_date_param, `version` = `version` + 1
-where customer_key = current_client_key
+where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
@@ -1025,7 +978,7 @@ repeat
                             
     if not done then
                                     
-        call SPsavings_account_insert(savings_account_id_var, new_client_key, product_key_var, 
+        call SPsavings_account_insert(savings_account_id_var, new_customer_key, product_key_var, 
                                             new_group_key, new_center_key, new_loan_officer_key,
                                             new_formed_by_loan_officer_key, new_branch_key,
                                             currency_key_var,
@@ -1042,7 +995,7 @@ commit;
 
 update dim_savings
 set valid_to = effective_date_param, `version` = `version` + 1
-where customer_key = current_client_key
+where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
@@ -1055,7 +1008,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPcreate_new_center` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPcascade_change_to_clients` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1065,32 +1018,62 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcreate_new_center`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_status_param varchar(100), IN customer_level_id_param int, IN gender_param varchar(100),  IN customer_top_of_hierarchy_param tinyint,
-IN loan_officer_id_param int, IN customer_formedby_id_param int, IN created_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcascade_change_to_clients`(IN current_group_key int, IN effective_date_param date, IN new_group_key int, IN new_center_key int,
+IN new_loan_officer_key int, IN new_branch_key int)
 BEGIN
+declare done int default 0;
 
-declare entry_found int;
+declare customer_id_var int;
+declare customer_key_var int;
+declare customer_status_var varchar(100);
+declare customer_level_id_var smallint;
+declare formed_by_loan_officer_key_var int;
 
-select count(*) into entry_found
+declare clients_referenced_cursor cursor for 
+select customer_key, customer_id, customer_status, customer_level_id, formed_by_loan_officer_key 
 from dim_customer
-where customer_id = customer_id_param;
+where group_key = current_group_key
+and customer_level_id = 1
+and valid_from <= effective_date_param
+and valid_to > effective_date_param;
+
+declare continue handler for not found set done = 1;
 
 
-if entry_found = 0 then 
-    call SPpersonnel_return_current_key_values(loan_officer_id_param, created_date_param, @loan_officer_key_latest, @branch_key_latest);
-    
-    call SPpersonnel_return_current_key_values(customer_formedby_id_param, created_date_param, @fb_loan_officer_key_latest, @fb_branch_key_latest);
-                        
-    call SPcustomer_insert(customer_id_param, display_name_param, customer_status_param, customer_level_id_param, gender_param, customer_top_of_hierarchy_param, 
-                                    0, 0, @loan_officer_key_latest, @branch_key_latest,
-                                    @fb_loan_officer_key_latest,
-                                    created_date_param,
-                                    @new_customer_key);                                        
-else
-    select concat('SPcreate_new_center for customer id: ', customer_id_param, ' - ', entry_found, 
-    ' entries already exist(s)', ' - put error handling/notification in here') as error_message; 
-end if;
+open clients_referenced_cursor;
+repeat
+    fetch clients_referenced_cursor into customer_key_var, customer_id_var, customer_status_var, customer_level_id_var, formed_by_loan_officer_key_var;
+                            
+    if not done then
+        
+        call SPcustomer_insert(customer_id_var, customer_status_var, customer_level_id_var,  
+                                    new_group_key, new_center_key, new_loan_officer_key, new_branch_key,
+                                    formed_by_loan_officer_key_var,
+                                    effective_date_param,
+                                    @new_client_key);       
+        
+        call SPcascade_change_to_accounts(customer_key_var, effective_date_param, @new_client_key, 
+                    new_group_key, new_center_key, new_loan_officer_key, new_branch_key,
+                    formed_by_loan_officer_key_var);
+ 
+    end if;
+until done end repeat;
+
+close clients_referenced_cursor;
+
+commit;
+
+/*update valid_to for dim_customers referencing the previous group entry*/
+update dim_customer
+set valid_to = effective_date_param, `version` = `version` + 1
+where group_key = current_group_key
+and customer_level_id = 1
+and valid_from <= effective_date_param
+and valid_to > effective_date_param;
+
+commit;
+
+
 
 
 END */;;
@@ -1099,7 +1082,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPcreate_new_group` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPcascade_change_to_groups` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1109,39 +1092,62 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcreate_new_group`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_status_param varchar(100), IN customer_level_id_param int, IN gender_param varchar(100), 
-IN parent_id_param int, IN customer_formedby_id_param int, IN created_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcascade_change_to_groups`(IN current_center_key int, IN date_param date, IN new_center_key int,
+IN new_loan_officer_key int, IN new_branch_key int)
 BEGIN
+declare done int default 0;
 
-declare entry_found int;
+declare customer_id_var int;
+declare customer_key_var int;
+declare customer_status_var varchar(100);
+declare customer_level_id_var smallint;
+declare group_key_var int;
+declare formed_by_loan_officer_key_var int;
 
-select count(*) into entry_found
+declare groups_referenced_cursor cursor for 
+select customer_key, customer_id, customer_status, customer_level_id, group_key, formed_by_loan_officer_key 
 from dim_customer
-where customer_id = customer_id_param;
+where center_key = current_center_key
+and customer_level_id = 2
+and valid_from <= date_param
+and valid_to > date_param;
+
+declare continue handler for not found set done = 1;
 
 
-if entry_found = 0 then 
-    
-    
-    call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
-                                                                    @parent_customer_key,
-                                                                    @parent_customer_status,
-                                                                    @parent_group_key, @parent_center_key, 
-                                                                    @parent_loan_officer_key, @parent_branch_key, 
-                                                                    @parent_formed_by_loan_officer_key);
-                                                                    
-    call SPpersonnel_return_current_key_values(customer_formedby_id_param, created_date_param, @fb_loan_officer_key_latest, @fb_branch_key_latest);
-                        
-    call SPcustomer_insert(customer_id_param, display_name_param, customer_status_param, customer_level_id_param, gender_param, 
-                                    0, @parent_customer_key, @parent_loan_officer_key, @parent_branch_key,
-                                    @fb_loan_officer_key_latest,
-                                    created_date_param,
-                                    @new_customer_key);                                        
-else
-    select concat('SPcreate_new_group for customer id: ', customer_id_param, ' - ', entry_found, 
-    ' entries already exist(s)', ' - put error handling/notification in here') as error_message; 
-end if;
+open groups_referenced_cursor;
+repeat
+    fetch groups_referenced_cursor into customer_key_var, customer_id_var, customer_status_var, customer_level_id_var, 
+                            group_key_var, formed_by_loan_officer_key_var;
+                            
+    if not done then
+        
+        call SPcustomer_insert(customer_id_var, customer_status_var, customer_level_id_var, 
+                                    group_key_var, new_center_key, new_loan_officer_key, new_branch_key,
+                                    formed_by_loan_officer_key_var,
+                                    date_param,
+                                    @new_group_key);       
+        
+        call SPcascade_change_to_clients(customer_key_var, date_param, @new_group_key, new_center_key, new_loan_officer_key, new_branch_key);
+
+    end if;
+until done end repeat;
+
+close groups_referenced_cursor;
+
+commit;
+
+/*update valid_to for dim_customers referencing the previous center entry*/
+update dim_customer
+set valid_to = date_param, `version` = `version` + 1
+where center_key = current_center_key
+and customer_level_id = 2
+and valid_from <= date_param
+and valid_to > date_param;
+
+commit;
+
+
 
 
 END */;;
@@ -1150,7 +1156,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPcreate_new_group_or_client` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPcreate_new_customer` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1160,17 +1166,14 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcreate_new_group_or_client`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_status_param varchar(100), IN customer_level_id_param int, IN gender_param varchar(100), IN customer_top_of_hierarchy_param tinyint, 
-IN parent_id_param int, IN customer_formedby_id_param int, IN created_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcreate_new_customer`(IN customer_id_param int, IN customer_status_param varchar(100), IN customer_level_id_param int,  
+IN parent_id_param int, IN loan_officer_id_param int, IN customer_formedby_id_param int, IN created_date_param date)
 BEGIN
 
 declare entry_found int;
 declare group_key_var int;
 declare center_key_var int;
 
-
-
 select count(*) into entry_found
 from dim_customer
 where customer_id = customer_id_param;
@@ -1178,32 +1181,39 @@ where customer_id = customer_id_param;
 
 if entry_found = 0 then 
     
+    if parent_id_param is null then 
+        set group_key_var = 0;
+        set center_key_var = 0;
+        
+        
+        call SPpersonnel_return_current_key_values(loan_officer_id_param, created_date_param, @parent_loan_officer_key, @parent_branch_key);
+    else
     
-    call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
+        call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
                                                                     @parent_customer_key,
                                                                     @parent_customer_status,
                                                                     @parent_group_key, @parent_center_key, 
                                                                     @parent_loan_officer_key, @parent_branch_key, 
                                                                     @parent_formed_by_loan_officer_key);
                                                                     
-    call SPpersonnel_return_current_key_values(customer_formedby_id_param, created_date_param, @fb_loan_officer_key_latest, @fb_branch_key_latest);
-    
-    
-    if customer_level_id_param = 2 then
-        set group_key_var = 0;
-        set center_key_var = @parent_customer_key;
-    else
-        set group_key_var = @parent_customer_key;
-        set center_key_var = @parent_center_key;
+        if customer_level_id_param = 2 then
+            set group_key_var = 0;
+            set center_key_var = @parent_customer_key;
+        else
+            set group_key_var = @parent_customer_key;
+            set center_key_var = @parent_center_key;
+        end if;
     end if;
     
-    call SPcustomer_insert(customer_id_param, display_name_param, customer_status_param, customer_level_id_param, gender_param, customer_top_of_hierarchy_param, 
+    call SPpersonnel_return_current_key_values(customer_formedby_id_param, created_date_param, @fb_loan_officer_key_latest, @fb_branch_key_latest);
+    
+    call SPcustomer_insert(customer_id_param, customer_status_param, customer_level_id_param,  
                                     group_key_var, center_key_var, @parent_loan_officer_key, @parent_branch_key,
                                     @fb_loan_officer_key_latest,
                                     created_date_param,
                                     @new_customer_key);                                        
 else
-    select concat('SPcreate_new_group_or_client for customer id: ', customer_id_param, ' - ', entry_found, 
+    select concat('SPcreate_new_customer for customer id: ', customer_id_param, ' - ', entry_found, 
     ' entries already exist(s)', ' - put error handling/notification in here') as error_message; 
 end if;
 
@@ -1226,9 +1236,6 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcreate_new_loan_account`(IN entity_id_param int, IN updated_status_param varchar(100), IN updated_parent_id_param int,
                                                         IN account_prd_offering_id_param smallint, IN account_currency_id_param smallint, 
-                                                        IN loan_funder_name_param varchar(100), IN loan_amount_param decimal(21,4), 
-                                                        IN loan_original_principal_param decimal(21,4), IN loan_original_interest_param decimal(21,4), 
-                                                        IN loan_original_fees_param decimal(21,4), IN loan_original_penalty_param decimal(21,4), 
                                                         IN effective_date_param date)
 BEGIN
 
@@ -1258,9 +1265,6 @@ if entry_found = 0 then
                                             @parent_formed_by_loan_officer_key, @parent_branch_key,
                                             @currency_key,
                                             updated_status_param, 
-                                            loan_funder_name_param, loan_amount_param, 
-                                            loan_original_principal_param, loan_original_interest_param, 
-                                            loan_original_fees_param, loan_original_penalty_param, 
                                             effective_date_param,
                                             @new_loan_account_key);                                   
                                                                         
@@ -1364,214 +1368,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPcustomer_etl_new_and_changes` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcustomer_etl_new_and_changes`()
-BEGIN
-declare done int default 0;
-
-declare start_customer_key int;
-declare start_loan_account_key int;
-declare start_savings_account_key int;
-declare centers_new int default 0;
-declare centers_hierarchy_changes int default 0;
-declare centers_status_changes int default 0;
-declare groups_new int default 0;
-declare groups_hierarchy_changes int default 0;
-declare groups_status_changes int default 0;
-declare clients_new int default 0;
-declare clients_hierarchy_changes int default 0;
-declare clients_status_changes int default 0;
-declare loan_accounts_new int default 0;
-declare loan_accounts_status_changes int default 0;
-declare savings_accounts_new int default 0;
-declare savings_accounts_status_changes int default 0;
-
-
-declare effective_date_var date;
-declare level_id_var smallint;
-declare entity_id_var int;
-declare change_type_var varchar(1);
-declare change_order_var int;
-
-declare updated_status_var varchar(100);
-declare updated_parent_id_var int;
-declare updated_loan_officer_id_var int;
-declare updated_branch_id_var int;
-
-declare customer_display_name_var varchar(200);
-declare customer_formedby_id_var int;
-declare customer_gender_var varchar(100);
-declare customer_top_of_hierarchy_var tinyint;
-
-declare account_type_var varchar(10);
-declare account_prd_offering_id_var smallint;
-declare account_currency_id_var smallint;
-
-declare loan_funder_name_var varchar(100);
-declare loan_amount_var decimal(21,4);
-declare loan_original_principal_var decimal(21,4);
-declare loan_original_interest_var decimal(21,4);
-declare loan_original_fees_var decimal(21,4);
-declare loan_original_penalty_var decimal(21,4);
-
-
-declare customer_and_account_changes_cursor cursor for 
-select effective_date, level_id, entity_id, change_type, change_order, 
-        updated_status, updated_parent_id, updated_loan_officer_id, updated_branch_id,
-        customer_display_name, customer_formedby_id, customer_gender, customer_top_of_hierarchy,
-        account_type, account_prd_offering_id, account_currency_id, 
-        funder_name, loan_amount, loan_original_principal, loan_original_interest, loan_original_fees, loan_original_penalty
-from stg_customer_and_account_updates
-order by effective_date, level_id desc, entity_id, change_type, change_order;
-
-declare continue handler for not found set done = 1;
-
-
-select ifnull(max(customer_key), 0) into @insert_customer_key
-from dim_customer;
-set start_customer_key = @insert_customer_key; 
-
-select ifnull(max(loan_account_key), 0) into @insert_loan_account_key
-from dim_loan;
-set start_loan_account_key = @insert_loan_account_key; 
-select ifnull(max(savings_account_key), 0) into @insert_savings_account_key
-from dim_savings;
-set start_savings_account_key = @insert_savings_account_key; 
-
-
-open customer_and_account_changes_cursor;
-repeat
-    fetch customer_and_account_changes_cursor into effective_date_var, level_id_var, entity_id_var, change_type_var, change_order_var, 
-        updated_status_var, updated_parent_id_var, updated_loan_officer_id_var, updated_branch_id_var,
-        customer_display_name_var, customer_formedby_id_var, customer_gender_var, customer_top_of_hierarchy_var,
-        account_type_var, account_prd_offering_id_var, account_currency_id_var, 
-        loan_funder_name_var, loan_amount_var, loan_original_principal_var, loan_original_interest_var, loan_original_fees_var, loan_original_penalty_var;
-    
-    if not done then
-    
-        CASE change_type_var
-        WHEN 'A' THEN 
-                    CASE level_id_var
-                    WHEN 3 THEN 
-                            set centers_new = centers_new + 1;
-                            call SPcreate_new_center(entity_id_var, customer_display_name_var, updated_status_var, level_id_var, 
-                                    customer_gender_var, customer_top_of_hierarchy_var, updated_loan_officer_id_var, customer_formedby_id_var, effective_date_var);
-                    WHEN 2 THEN 
-                            set groups_new = groups_new + 1;
-                            call SPcreate_new_group_or_client(entity_id_var, customer_display_name_var, updated_status_var, level_id_var, 
-                                    customer_gender_var, customer_top_of_hierarchy_var, updated_parent_id_var, customer_formedby_id_var, effective_date_var);
-                    WHEN 1 THEN 
-                            set clients_new = clients_new + 1;
-                            call SPcreate_new_group_or_client(entity_id_var, customer_display_name_var, updated_status_var, level_id_var, 
-                                    customer_gender_var, customer_top_of_hierarchy_var, updated_parent_id_var, customer_formedby_id_var, effective_date_var);
-                    WHEN -5 THEN                           
-                            CASE account_type_var
-                            WHEN 'loan' THEN 
-                                    set loan_accounts_new = loan_accounts_new + 1;
-                                    call SPcreate_new_loan_account(entity_id_var, updated_status_var, updated_parent_id_var,
-                                            account_prd_offering_id_var, account_currency_id_var,
-                                            loan_funder_name_var, loan_amount_var, loan_original_principal_var, loan_original_interest_var, loan_original_fees_var, loan_original_penalty_var,
-                                            effective_date_var);
-                            WHEN 'savings' THEN 
-                                    set savings_accounts_new = savings_accounts_new + 1;
-                                    call SPcreate_new_savings_account(entity_id_var, updated_status_var, updated_parent_id_var,
-                                            account_prd_offering_id_var, account_currency_id_var,
-                                            effective_date_var);
-                            ELSE select concat('account_type_var value: ', account_type_var, ' is invalid', ' - put error handling/notification in here') as error_message;
-                            END CASE;                            
-                            
-                    ELSE select concat('level_id_var value: ', level_id_var, ' is invalid', ' - put error handling/notification in here') as error_message;
-                    END CASE;
-                    
-        WHEN 'H'  THEN 
-                    CASE level_id_var
-                    WHEN 3 THEN 
-                            set centers_hierarchy_changes = centers_hierarchy_changes + 1;
-                            call SPhierarchy_change_center(entity_id_var, customer_display_name_var, level_id_var, 
-                                    customer_gender_var, customer_top_of_hierarchy_var, updated_loan_officer_id_var, effective_date_var);
-                    WHEN 2 THEN 
-                            set groups_hierarchy_changes = groups_hierarchy_changes + 1;
-                            call SPhierarchy_change_group_or_client(entity_id_var, customer_display_name_var, level_id_var, 
-                                    customer_gender_var, customer_top_of_hierarchy_var, updated_parent_id_var, effective_date_var);
-                    WHEN 1 THEN 
-                            set clients_hierarchy_changes = clients_hierarchy_changes + 1;
-                            call SPhierarchy_change_group_or_client(entity_id_var, customer_display_name_var, level_id_var, 
-                                    customer_gender_var, customer_top_of_hierarchy_var, updated_parent_id_var, effective_date_var);
-                    ELSE select concat('level_id_var value: ', level_id_var, ' is invalid', ' - put error handling/notification in here') as error_message;
-                    END CASE;
-        WHEN 'S'  THEN 
-                    CASE level_id_var
-                    WHEN 3 THEN 
-                            set centers_status_changes = centers_status_changes + 1;
-                            call SPcustomer_status_change(entity_id_var, customer_display_name_var, level_id_var, 
-                                                                            customer_gender_var, customer_top_of_hierarchy_var, updated_status_var, effective_date_var);
-                    WHEN 2 THEN 
-                            set groups_status_changes = groups_status_changes + 1;
-                            call SPcustomer_status_change(entity_id_var, customer_display_name_var, level_id_var, 
-                                                                            customer_gender_var, customer_top_of_hierarchy_var, updated_status_var, effective_date_var);
-                    WHEN 1 THEN 
-                            set clients_status_changes = clients_status_changes + 1;
-                            call SPcustomer_status_change(entity_id_var, customer_display_name_var, level_id_var, 
-                                                                            customer_gender_var, customer_top_of_hierarchy_var, updated_status_var, effective_date_var);
-                    WHEN -5 THEN                           
-                            CASE account_type_var
-                            WHEN 'loan' THEN 
-                                    set loan_accounts_status_changes = loan_accounts_status_changes + 1;
-                                    call SPloan_status_change(entity_id_var, 
-                                            loan_funder_name_var, loan_amount_var, loan_original_principal_var, loan_original_interest_var, 
-                                            loan_original_fees_var, loan_original_penalty_var,
-                                            updated_status_var, effective_date_var);
-                            WHEN 'savings' THEN 
-                                    set savings_accounts_status_changes = savings_accounts_status_changes + 1;
-                                    call SPsavings_status_change(entity_id_var, updated_status_var, effective_date_var);
-                            ELSE select concat('account_type_var value: ', account_type_var, ' is invalid', ' - put error handling/notification in here') as error_message;
-                            END CASE;                            
-                    ELSE select concat('level_id_var value: ', level_id_var, ' is invalid', ' - put error handling/notification in here') as error_message;
-                    END CASE;
-                    
-        ELSE select concat('change_type_var value: ', change_type_var, ' is invalid', ' - put error handling/notification in here') as error_message;
-        END CASE;
-        
-        
-    end if;
-until done end repeat;
-
-close customer_and_account_changes_cursor;
-
-commit;
-
-
-select (ifnull(max(customer_key), 0) - start_customer_key) as customers_added
-from dim_customer;
-
-select centers_new as centers, centers_hierarchy_changes as centers_h, centers_status_changes as centers_s;
-select groups_new as groups, groups_hierarchy_changes as groups_h, groups_status_changes as groups_s;
-select clients_new as clients, clients_hierarchy_changes as clients_h, clients_status_changes as clients_s;
-
-select (ifnull(max(loan_account_key), 0) - start_loan_account_key) as loans_added, 
-loan_accounts_new loans, loan_accounts_status_changes loans_s
-from dim_loan;
-
-select (ifnull(max(savings_account_key), 0) - start_savings_account_key) as savings_added, 
-savings_accounts_new savings, savings_accounts_status_changes savings_s
-from dim_savings;
-
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `SPcustomer_insert` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1582,18 +1378,15 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcustomer_insert`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_status_param varchar(100), IN customer_level_id_param smallint, IN gender_param varchar(100), IN customer_top_of_hierarchy_param tinyint, 
-IN group_key_param int, IN center_key_param int, IN loan_officer_key_param int, IN branch_key_param int,
-IN formed_by_loan_officer_key_param int,
-IN created_date_param date,
-OUT new_customer_key int)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcustomer_insert`(IN customer_id_param int,  IN customer_status_param varchar(100), IN customer_level_id_param smallint,  
+IN group_key_param int, IN center_key_param int, IN loan_officer_key_param int, IN branch_key_param int, IN formed_by_loan_officer_key_param int,
+IN created_date_param date, OUT new_customer_key int)
 BEGIN
 
-/*insert new dim_customer*/
+
 set @insert_customer_key = @insert_customer_key + 1;
 
-/* for groups and centers - update the relevant key to the customer_key*/
+
 if customer_level_id_param = 3 then 
     set center_key_param = @insert_customer_key;
 end if;
@@ -1601,18 +1394,17 @@ end if;
 if customer_level_id_param = 2 then 
     set group_key_param = @insert_customer_key;
 end if;
+
+insert into dim_customer(customer_key, customer_id, 
+    customer_status, customer_level_id,  group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key, valid_from)
+values (@insert_customer_key, customer_id_param, 
+    customer_status_param, customer_level_id_param, group_key_param, center_key_param, loan_officer_key_param, branch_key_param, 
+    formed_by_loan_officer_key_param, created_date_param);
     
-                        
-insert into dim_customer(customer_key, 
-    customer_id, display_name, customer_status, customer_level_id, gender, top_of_hierarchy, 
-    group_key, center_key, loan_officer_key, branch_key,
-    formed_by_loan_officer_key,
-    valid_from)
-values (@insert_customer_key, 
-    customer_id_param, display_name_param, customer_status_param, customer_level_id_param, gender_param, customer_top_of_hierarchy_param, 
-    group_key_param, center_key_param, loan_officer_key_param, branch_key_param, 
-    formed_by_loan_officer_key_param, 
-    created_date_param);
+if row_count() <> 1 then
+    select concat('SPcustomer_insert for customer id: ', customer_id_param, 
+    ' - expected one customer entry but found ', row_count(), ' - put error handling/notification in here') as error_message; 
+end if;
             
 select @insert_customer_key into new_customer_key;
 
@@ -1672,10 +1464,8 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcustomer_status_change`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_level_id_param int, IN gender_param varchar(100), IN customer_top_of_hierarchy_param tinyint, 
-IN customer_status_param varchar(100), 
-IN effective_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcustomer_status_change`(IN customer_id_param int,  IN customer_level_id_param int, 
+IN customer_status_param varchar(100), IN effective_date_param date)
 BEGIN
 
 call SPcustomer_return_current_key_values(customer_id_param, effective_date_param,
@@ -1687,9 +1477,7 @@ call SPcustomer_return_current_key_values(customer_id_param, effective_date_para
                                                                                             
 call SPcustomer_update_validto(@current_customer_key, effective_date_param);
 
-call SPcustomer_update_type1_columns(customer_id_param, display_name_param, gender_param);
-
-call SPcustomer_insert(customer_id_param, display_name_param, customer_status_param, customer_level_id_param, gender_param, customer_top_of_hierarchy_param, 
+call SPcustomer_insert(customer_id_param, customer_status_param, customer_level_id_param, 
                                 @current_group_key, @current_center_key, @current_loan_officer_key, @current_branch_key,
                                 @current_formed_by_loan_officer_key,
                                 effective_date_param,
@@ -1697,43 +1485,22 @@ call SPcustomer_insert(customer_id_param, display_name_param, customer_status_pa
                                 
 CASE customer_level_id_param
 WHEN 3 THEN 
-    call SPcenter_cascade_change(@current_customer_key, effective_date_param, @new_customer_key, 
+    call SPcascade_change_to_groups(@current_customer_key, effective_date_param, @new_customer_key, 
                     @current_loan_officer_key, @current_branch_key);
-WHEN 2 THEN  
-    call SPgroup_cascade_change(@current_customer_key, effective_date_param, @new_customer_key, 
-                    @current_center_key, @current_loan_officer_key, @current_branch_key);
-WHEN 1 THEN  
-    call SPclient_cascade_change(@current_customer_key, effective_date_param, @new_customer_key, 
+    call SPcascade_change_to_accounts(@current_customer_key, effective_date_param, @new_customer_key, 
                     @current_group_key, @current_center_key, @current_loan_officer_key, @current_branch_key,
                     @current_formed_by_loan_officer_key);
-ELSE select concat('SPcustomer_status_change customer_level_id_var value: ', customer_level_id_param, ' is invalid', ' - put error handling/notification in here') as error_message;
+WHEN 2 THEN  
+    call SPcascade_change_to_clients(@current_customer_key, effective_date_param, @new_customer_key, 
+                    @current_center_key, @current_loan_officer_key, @current_branch_key);
+    call SPcascade_change_to_accounts(@current_customer_key, effective_date_param, @new_customer_key, 
+                    @current_group_key, @current_center_key, @current_loan_officer_key, @current_branch_key,
+                    @current_formed_by_loan_officer_key);
+WHEN 1 THEN  
+    call SPcascade_change_to_accounts(@current_customer_key, effective_date_param, @new_customer_key, 
+                    @current_group_key, @current_center_key, @current_loan_officer_key, @current_branch_key,
+                    @current_formed_by_loan_officer_key);
 END CASE;
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPcustomer_update_type1_columns` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcustomer_update_type1_columns`(IN customer_id_param int, IN display_name_param varchar(200), IN gender_param varchar(100))
-BEGIN
-
-
-update dim_customer
-set display_name = display_name_param, gender = gender_param, `version` = `version` + 1
-where customer_id = customer_id_param
-and (display_name <> display_name_param or gender <> gender_param);
-
 
 END */;;
 DELIMITER ;
@@ -1771,7 +1538,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPgroup_cascade_change` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPetl_customers_and_accounts` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1781,69 +1548,106 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPgroup_cascade_change`(IN current_group_key int, IN effective_date_param date, IN new_group_key int, IN new_center_key int,
-IN new_loan_officer_key int, IN new_branch_key int)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPetl_customers_and_accounts`()
 BEGIN
 declare done int default 0;
+ 
+/*order of processing variables */
+declare effective_date_var date;
+declare level_id_var smallint;
+declare entity_id_var int;
+declare change_type_var varchar(1);
+declare change_order_var int;
+/*status and hierarchy change variables */
+declare updated_status_var varchar(100);
+declare updated_parent_id_var int;
+declare updated_loan_officer_id_var int;
+declare updated_branch_id_var int;
+/*customer specific variables */
+declare customer_formedby_id_var int;
+/*account specific variables */
+declare account_type_var varchar(10);
+declare account_prd_offering_id_var smallint;
+declare account_currency_id_var smallint;
 
-declare customer_id_var int;
-declare customer_key_var int;
-declare display_name_var varchar(200);
-declare customer_status_var varchar(100);
-declare customer_level_id_var smallint;
-declare gender_var varchar(100);
-declare customer_top_of_hierarchy_var tinyint;
-declare formed_by_loan_officer_key_var int;
 
-declare clients_referenced_cursor cursor for 
-select customer_key, customer_id, display_name, customer_status, customer_level_id, gender, top_of_hierarchy, formed_by_loan_officer_key 
-from dim_customer
-where group_key = current_group_key
-and customer_level_id = 1
-and valid_from <= effective_date_param
-and valid_to > effective_date_param;
+declare customer_and_account_changes_cursor cursor for 
+select effective_date, level_id, entity_id, change_type, change_order, 
+        updated_status, updated_parent_id, updated_loan_officer_id, updated_branch_id, customer_formedby_id, 
+        account_type, account_prd_offering_id, account_currency_id
+from stg_customer_and_account_updates
+order by effective_date, level_id desc, entity_id, change_type, change_order;
 
 declare continue handler for not found set done = 1;
 
+/*set user variable to highest customer_key value*/
+select ifnull(max(customer_key), 0) into @insert_customer_key
+from dim_customer;
+set @start_customer_key = @insert_customer_key; /* to see at the end how many dim_customers have been added */
+/*and same for loan and savings account keys*/
+select ifnull(max(loan_account_key), 0) into @insert_loan_account_key
+from dim_loan;
+set @start_loan_account_key = @insert_loan_account_key; 
+select ifnull(max(savings_account_key), 0) into @insert_savings_account_key
+from dim_savings;
+set @start_savings_account_key = @insert_savings_account_key; 
 
-open clients_referenced_cursor;
+call SPshow_stats(1);
+
+open customer_and_account_changes_cursor;
 repeat
-    fetch clients_referenced_cursor into customer_key_var, customer_id_var, display_name_var, customer_status_var, customer_level_id_var, gender_var,  customer_top_of_hierarchy_var, 
-                            formed_by_loan_officer_key_var;
-                            
+    fetch customer_and_account_changes_cursor into effective_date_var, level_id_var, entity_id_var, change_type_var, change_order_var, 
+        updated_status_var, updated_parent_id_var, updated_loan_officer_id_var, updated_branch_id_var, customer_formedby_id_var, 
+        account_type_var, account_prd_offering_id_var, account_currency_id_var;
+        
     if not done then
+        call SPvalidate_input_collect_stats(entity_id_var, level_id_var, change_type_var, updated_status_var, updated_parent_id_var,
+                    updated_loan_officer_id_var, updated_branch_id_var, account_type_var);
+    
+        if level_id_var = -5 then /* accounts */
+            CASE change_type_var
+            WHEN 'A' THEN                      
+                            if account_type_var = 'loan' THEN 
+                                    call SPcreate_new_loan_account(entity_id_var, updated_status_var, updated_parent_id_var,
+                                            account_prd_offering_id_var, account_currency_id_var, effective_date_var);
+                            else 
+                                    call SPcreate_new_savings_account(entity_id_var, updated_status_var, updated_parent_id_var,
+                                            account_prd_offering_id_var, account_currency_id_var, effective_date_var);
+                            end if;
+                            
+            WHEN 'S'  THEN           
+                            if account_type_var = 'loan' THEN 
+                                    call SPloan_status_change(entity_id_var, updated_status_var, effective_date_var);
+                            else 
+                                    call SPsavings_status_change(entity_id_var, updated_status_var, effective_date_var);
+                            end if;
+            END CASE;
         
-        call SPcustomer_insert(customer_id_var, display_name_var, customer_status_var, customer_level_id_var, gender_var, customer_top_of_hierarchy_var, 
-                                    new_group_key, new_center_key, new_loan_officer_key, new_branch_key,
-                                    formed_by_loan_officer_key_var,
-                                    effective_date_param,
-                                    @new_client_key);       
-       
+        else /* customers */        
+            CASE change_type_var
+            WHEN 'A' THEN                     
+                    call SPcreate_new_customer(entity_id_var, updated_status_var, level_id_var, 
+                                updated_parent_id_var, updated_loan_officer_id_var, customer_formedby_id_var, effective_date_var);
+                    
+            WHEN 'H'  THEN 
+                    call SPhierarchy_change(entity_id_var, level_id_var, 
+                            updated_parent_id_var, updated_loan_officer_id_var, updated_branch_id_var, effective_date_var);
+                    
+            WHEN 'S'  THEN 
+                    call SPcustomer_status_change(entity_id_var, level_id_var, updated_status_var, effective_date_var);
+                    
+            END CASE;
         
-        call SPclient_cascade_change(customer_key_var, effective_date_param, @new_client_key, 
-                    new_group_key, new_center_key, new_loan_officer_key, new_branch_key,
-                    formed_by_loan_officer_key_var);
- 
+        end if;
+    
     end if;
 until done end repeat;
 
-close clients_referenced_cursor;
+close customer_and_account_changes_cursor;
 
 commit;
 
-
-update dim_customer
-set valid_to = effective_date_param, `version` = `version` + 1
-where group_key = current_group_key
-and customer_level_id = 1
-and valid_from <= effective_date_param
-and valid_to > effective_date_param;
-
-
-commit;
-
-
-
+call SPshow_stats(0);
 
 END */;;
 DELIMITER ;
@@ -1851,7 +1655,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPhierarchy_change_center` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPfallover` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1861,32 +1665,12 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPhierarchy_change_center`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_level_id_param int, IN gender_param varchar(100), IN customer_top_of_hierarchy_param tinyint, 
-IN loan_officer_id_param int, IN created_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPfallover`(IN errormsg varchar(300))
 BEGIN
 
-call SPcustomer_return_current_key_values(customer_id_param, created_date_param,
-                                                                @current_customer_key,
-                                                                @current_customer_status,
-                                                                @current_group_key, @current_center_key, 
-                                                                @current_loan_officer_key, @current_branch_key, 
-                                                                @current_formed_by_loan_officer_key);
+select errormsg as "Error Message";
 
-call SPcustomer_update_validto(@current_customer_key, created_date_param);
-
-call SPcustomer_update_type1_columns(customer_id_param, display_name_param, gender_param);
-
-call SPpersonnel_return_current_key_values(loan_officer_id_param, created_date_param, @loan_officer_key_latest, @branch_key_latest);
-
-call SPcustomer_insert(customer_id_param, display_name_param, @current_customer_status, customer_level_id_param, gender_param, customer_top_of_hierarchy_param, 
-                                @current_group_key, @current_center_key, @loan_officer_key_latest, @branch_key_latest,
-                                @current_formed_by_loan_officer_key,
-                                created_date_param,
-                                @new_customer_key);
-
-call SPcenter_cascade_change(@current_customer_key, created_date_param, @new_customer_key, @loan_officer_key_latest, @branch_key_latest);
-
+select fallover from fallover;
 
 END */;;
 DELIMITER ;
@@ -1894,7 +1678,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPhierarchy_change_group_or_client` */;
+/*!50003 DROP PROCEDURE IF EXISTS `SPhierarchy_change` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1904,15 +1688,16 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPhierarchy_change_group_or_client`(IN customer_id_param int, IN display_name_param varchar(200), 
-IN customer_level_id_param int, IN gender_param varchar(100), IN customer_top_of_hierarchy_param tinyint, 
-IN parent_id_param int, IN created_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPhierarchy_change`(IN customer_id_param int, IN customer_level_id_param int, 
+IN parent_id_param int, IN loan_officer_id_param int, IN branch_id_param int, IN created_date_param date)
 BEGIN
-
 declare group_key_var int;
 declare center_key_var int;
+declare loan_officer_key_var int;
+declare branch_key_var int;
 
-    
+
+
 call SPcustomer_return_current_key_values(customer_id_param, created_date_param,
                                                                 @current_customer_key,
                                                                 @current_customer_status,
@@ -1922,38 +1707,64 @@ call SPcustomer_return_current_key_values(customer_id_param, created_date_param,
 
 call SPcustomer_update_validto(@current_customer_key, created_date_param);
 
-call SPcustomer_update_type1_columns(customer_id_param, display_name_param, gender_param);
 
-
-call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
+if parent_id_param is not null then /*either a client or a group has a parent change*/
+    call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
                                                                 @parent_customer_key,
                                                                 @parent_customer_status,
                                                                 @parent_group_key, @parent_center_key, 
                                                                 @parent_loan_officer_key, @parent_branch_key, 
                                                                 @parent_formed_by_loan_officer_key);
-
-
-if customer_level_id_param = 2 then
-    set group_key_var = 0;
-    set center_key_var = @parent_customer_key;
-else
-    set group_key_var = @parent_customer_key;
+                                                                
+    if customer_level_id_param = 2 then
+        set group_key_var = @current_group_key;
+    else
+        set group_key_var = @parent_customer_key;
+    end if;               
     set center_key_var = @parent_center_key;
+    set loan_officer_key_var = @parent_loan_officer_key;
+    set branch_key_var = @parent_branch_key;
+    
 end if;
-                                
-call SPcustomer_insert(customer_id_param, display_name_param, @current_customer_status, customer_level_id_param, gender_param, customer_top_of_hierarchy_param, 
-                                group_key_var, center_key_var, @parent_loan_officer_key, @parent_branch_key,
+
+if loan_officer_id_param is not null then
+    call SPpersonnel_return_current_key_values(loan_officer_id_param, created_date_param, @loan_officer_key_latest, @branch_key_latest);
+    
+    set group_key_var = @current_group_key;
+    set center_key_var = @current_center_key;   
+    set loan_officer_key_var = @loan_officer_key_latest;
+    set branch_key_var = @branch_key_latest; 
+
+end if;
+
+if branch_id_param is not null then    
+    call SPfallover(concat('Customer: ', customer_id_param, ' SPhierarchy_change - branch_id_param invalid: ' , branch_id_param, ' hadnt even coded it'));
+end if;
+
+
+call SPcustomer_insert(customer_id_param, @current_customer_status, customer_level_id_param, 
+                                group_key_var, center_key_var, loan_officer_key_var, branch_key_var,                    
                                 @current_formed_by_loan_officer_key,
                                 created_date_param,
                                 @new_customer_key);
 
 CASE customer_level_id_param
-WHEN 2 THEN  
-    call SPgroup_cascade_change(@current_customer_key, created_date_param, @new_customer_key, 
-                    center_key_var, @parent_loan_officer_key, @parent_branch_key);
-WHEN 1 THEN  
-    set @ii = 0;
-ELSE select concat('SPhierarchy_change_group_or_client customer_level_id_var value: ', customer_level_id_param, ' is invalid', ' - put error handling/notification in here') as error_message;
+WHEN 3 THEN                     
+    call SPcascade_change_to_groups(@current_customer_key, created_date_param, @new_customer_key, 
+                loan_officer_key_var, branch_key_var);
+    call SPcascade_change_to_accounts(@current_customer_key, created_date_param, @new_customer_key, 
+                    group_key_var, center_key_var, loan_officer_key_var, branch_key_var,
+                    @current_formed_by_loan_officer_key);
+WHEN 2 THEN 
+    call SPcascade_change_to_clients(@current_customer_key, created_date_param, @new_customer_key, 
+                center_key_var, loan_officer_key_var, branch_key_var);
+    call SPcascade_change_to_accounts(@current_customer_key, created_date_param, @new_customer_key, 
+                    group_key_var, center_key_var, loan_officer_key_var, branch_key_var,
+                    @current_formed_by_loan_officer_key);
+WHEN 1  THEN 
+    call SPcascade_change_to_accounts(@current_customer_key, created_date_param, @new_customer_key, 
+                    group_key_var, center_key_var, loan_officer_key_var, branch_key_var,
+                    @current_formed_by_loan_officer_key);
 END CASE;
 
 END */;;
@@ -1976,23 +1787,16 @@ DELIMITER ;;
                 IN group_key_param int, IN center_key_param int, IN loan_officer_key_param int,
                 IN formed_by_loan_officer_key_param int, IN branch_key_param int,
                 IN currency_key_param int, IN loan_status_param varchar(100), 
-                IN loan_funder_name_param varchar(100), IN loan_amount_param decimal(21,4), 
-                IN loan_original_principal_param decimal(21,4), loan_original_interest_param decimal(21,4), 
-                IN loan_original_fees_param decimal(21,4), loan_original_penalty_param decimal(21,4), 
                 IN effective_date_param date,
                 OUT new_loan_account_key int)
 BEGIN                              
 
 set @insert_loan_account_key = @insert_loan_account_key + 1;
 
-insert into dim_loan(loan_account_key, loan_account_id, loan_status, 
-funder_name, loan_amount, original_principal, original_interest, original_fees, original_penalty, 
-currency_key, customer_key, product_key,
+insert into dim_loan(loan_account_key, loan_account_id, loan_status, currency_key, customer_key, product_key,
 group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key,
 valid_from)
-values (@insert_loan_account_key, loan_account_id_param, loan_status_param, loan_funder_name_param,
-loan_amount_param, loan_original_principal_param, loan_original_interest_param, loan_original_fees_param, loan_original_penalty_param,
-currency_key_param, customer_key_param, product_key_param,
+values (@insert_loan_account_key, loan_account_id_param, loan_status_param, currency_key_param, customer_key_param, product_key_param,
 group_key_param, center_key_param, loan_officer_key_param, branch_key_param, formed_by_loan_officer_key_param,
 effective_date_param);
             
@@ -2085,12 +1889,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPloan_status_change`(IN entity_id_param int,  
-IN funder_name_param varchar(100), IN loan_amount_param decimal(21,4), 
-IN loan_original_principal_param decimal(21,4), IN loan_original_interest_param decimal(21,4), 
-IN loan_original_fees_param  decimal(21,4), IN loan_original_penalty_param  decimal(21,4),
-IN updated_status_param varchar(100), 
-IN effective_date_param date)
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPloan_status_change`(IN entity_id_param int,  IN updated_status_param varchar(100), IN effective_date_param date)
 BEGIN
 
 call SPloan_account_return_current_key_values(entity_id_param, effective_date_param,
@@ -2108,9 +1907,6 @@ call SPloan_account_insert(entity_id_param, @current_customer_key, @current_prod
                                 @current_formed_by_loan_officer_key, @current_branch_key,
                                 @current_currency_key,
                                 updated_status_param, 
-                                funder_name_param, loan_amount_param, 
-                                loan_original_principal_param, loan_original_interest_param, 
-                                loan_original_fees_param, loan_original_penalty_param, 
                                 effective_date_param,
                                 @new_loan_account_key);                                   
                                 
@@ -2133,13 +1929,14 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPpersonnel_return_current_key_values`(IN personnel_id_param smallint, IN date_param date, 
 OUT current_personnel_key smallint, OUT current_office_key smallint)
-BEGIN 
+BEGIN
+    
 select p.personnel_key, p.office_key into current_personnel_key, current_office_key
 from dim_personnel p 
 where p.personnel_id = personnel_id_param
 and p.valid_from <= date_param
 and p.valid_to > date_param;
- 
+
 
 if current_personnel_key is null then
     select concat('SPpersonnel_return_current_key_values for personnel id: ', personnel_id_param, ' - expected one current dim_personnel entry but found none', ' - put error handling/notification in here') as error_message; 
@@ -2204,12 +2001,10 @@ BEGIN
 
 set @insert_savings_account_key = @insert_savings_account_key + 1;
 
-insert into dim_savings(savings_account_key, savings_account_id, savings_status, 
-currency_key, customer_key, product_key,
+insert into dim_savings(savings_account_key, savings_account_id, savings_status, currency_key, customer_key, product_key,
 group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key,
 valid_from)
-values (@insert_savings_account_key, savings_account_id_param, savings_status_param, 
-currency_key_param, customer_key_param, product_key_param,
+values (@insert_savings_account_key, savings_account_id_param, savings_status_param, currency_key_param, customer_key_param, product_key_param,
 group_key_param, center_key_param, loan_officer_key_param, branch_key_param, formed_by_loan_officer_key_param,
 effective_date_param);
             
@@ -2330,6 +2125,208 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SPshow_stats` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPshow_stats`(IN initialise_params int)
+BEGIN
+
+if initialise_params = 1 then
+    set @centers_new = 0;
+    set @centers_hierarchy_changes = 0;
+    set @centers_status_changes = 0;
+    set @groups_new = 0;
+    set @groups_hierarchy_changes = 0;
+    set @groups_status_changes = 0;
+    set @groups_np_new = 0;
+    set @groups_np_hierarchy_changes = 0;
+    set @clients_new = 0;
+    set @clients_hierarchy_changes = 0;
+    set @clients_status_changes = 0;
+    set @clients_np_new = 0;
+    set @clients_np_hierarchy_changes = 0;
+    set @loan_accounts_new = 0;
+    set @loan_accounts_status_changes = 0;
+    set @savings_accounts_new = 0;
+    set @savings_accounts_status_changes = 0;
+else
+/* write out stats */
+    select round((ifnull(max(customer_key), 0) - @start_customer_key), 0) as customers_added
+    from dim_customer;
+
+    select @centers_new as centers, 
+        @centers_hierarchy_changes as centers_h, 
+        @centers_status_changes as centers_s;
+    select @groups_new as groups, 
+        @groups_hierarchy_changes as groups_h, 
+        @groups_status_changes as groups_s;
+    select @groups_np_new as groups_without_center, 
+        @groups_np_hierarchy_changes as groups_without_center_h;
+    select @clients_new as clients, 
+        @clients_hierarchy_changes as clients_h, 
+        @clients_status_changes as clients_s;
+    select @clients_np_new as clients_without_group, 
+        @clients_np_hierarchy_changes as clients_without_group_h;
+
+    select round((ifnull(max(loan_account_key), 0) - @start_loan_account_key), 0) as loans_added, 
+        @loan_accounts_new loans, 
+        @loan_accounts_status_changes loans_s
+    from dim_loan;
+
+    select round((ifnull(max(savings_account_key), 0) - @start_savings_account_key), 0) as savings_added, 
+        @savings_accounts_new savings, 
+        @savings_accounts_status_changes savings_s
+    from dim_savings;
+
+end if;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SPvalidate_input_collect_stats` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPvalidate_input_collect_stats`(IN entity_id_param int, IN level_id_param smallint, IN change_type_param varchar(1), 
+    IN  updated_status_param varchar(100), IN updated_parent_id_param int, IN updated_loan_officer_id_param int, IN updated_branch_id_param int, 
+    IN account_type_param varchar(10))
+BEGIN
+declare hierarchy_check int;
+
+if (level_id_param <> -5 and level_id_param <> 1 and level_id_param <> 2 and level_id_param <> 3) then
+    call SPfallover(concat('ID: ', entity_id_param, ' SPvalidate_input_collect_stats - level_id_param invalid: ' , level_id_param));
+end if;
+
+if (level_id_param = -5) then /* account */
+    if (change_type_param <> 'A' and change_type_param <> 'S') then
+        call SPfallover(concat('Account: ', entity_id_param, ' SPvalidate_input_collect_stats - change_type_param invalid: ' , change_type_param));
+    end if;
+    if (account_type_param <> 'loan' and account_type_param <> 'savings') then
+        call SPfallover(concat('Account: ', entity_id_param, ' SPvalidate_input_collect_stats - account_type_param invalid: ' , account_type_param));
+    end if;
+    
+end if;
+
+
+if (level_id_param <> -5) then /* customer */
+    if (change_type_param <> 'A' and change_type_param <> 'S' and change_type_param <> 'H') then
+        call SPfallover(concat('Customer: ', entity_id_param, ' SPvalidate_input_collect_stats - change_type_param invalid: ' , change_type_param));
+    end if;
+    if (account_type_param <> 'n/a') then
+        call SPfallover(concat('Customer: ', entity_id_param, ' SPvalidate_input_collect_stats - account_type_param invalid: ' , account_type_param));
+    end if;
+    
+    set hierarchy_check = 0;
+    if (updated_parent_id_param is not null) then
+        set hierarchy_check = hierarchy_check + 1;
+    end if;
+    if (updated_loan_officer_id_param is not null) then
+        set hierarchy_check = hierarchy_check + 1;
+    end if;
+    if (updated_branch_id_param is not null) then
+        set hierarchy_check = hierarchy_check + 1;
+    end if;
+    if (change_type_param <> 'S' and hierarchy_check <> 1) then
+        call SPfallover(concat('Customer: ', entity_id_param, ' SPvalidate_input_collect_stats: one and only one of the hierarchy fields can be populated for a hierarchy change: ', 
+                ' updated_parent_id_param: ', ifnull(updated_parent_id_param, 'null'),' updated_loan_officer_id_param: ', ifnull(updated_loan_officer_id_param, 'null'),
+                ' updated_branch_id_param: ', ifnull(updated_branch_id_param, 'null')));
+     end if;
+    if (change_type_param = 'S' and hierarchy_check <> 0) then
+        call SPfallover(concat('Customer: ', entity_id_param, ' SPvalidate_input_collect_stats: none of the hierarchy fields can be populated for a non-hierarchy change: change_type_param - ', 
+                change_type_param, ' : updated_parent_id_param: ', ifnull(updated_parent_id_param, 'null'),' updated_loan_officer_id_param: ', ifnull(updated_loan_officer_id_param, 'null'),
+                ' updated_branch_id_param: ', ifnull(updated_branch_id_param, 'null')));
+     end if;
+end if;
+
+/*stats*/
+if level_id_param = -5 then /* accounts */ 
+    CASE change_type_param
+    WHEN 'A' THEN                      
+        if account_type_param = 'loan' THEN 
+            set @loan_accounts_new = @loan_accounts_new + 1;
+        else 
+            set @savings_accounts_new = @savings_accounts_new + 1;
+        end if;
+    WHEN 'S'  THEN           
+        if account_type_param = 'loan' THEN 
+            set @loan_accounts_status_changes = @loan_accounts_status_changes + 1;
+        else 
+            set @savings_accounts_status_changes = @savings_accounts_status_changes + 1;
+        end if;
+    END CASE;
+        
+else /* customers */        
+        
+    CASE change_type_param
+    WHEN 'A' THEN 
+        CASE level_id_param
+            WHEN 3 THEN 
+                set @centers_new = @centers_new + 1;
+            WHEN 2 THEN 
+                if updated_parent_id_param is not null then
+                    set @groups_new = @groups_new + 1;
+                else
+                    set @groups_np_new = @groups_np_new + 1;
+                end if;                                
+            WHEN 1 THEN 
+                if updated_parent_id_param is not null then
+                    set @clients_new = @clients_new + 1;
+                else
+                    set @clients_np_new = @clients_np_new + 1;
+                end if;                                
+            END CASE;
+    WHEN 'H'  THEN 
+            CASE level_id_param
+            WHEN 3 THEN 
+                set @centers_hierarchy_changes = @centers_hierarchy_changes + 1; 
+            WHEN 2 THEN 
+                if updated_parent_id_param is not null then
+                    set @groups_hierarchy_changes = @groups_hierarchy_changes + 1;
+                else
+                    set @groups_np_hierarchy_changes = @groups_np_hierarchy_changes + 1;
+                end if;                                 
+            WHEN 1 THEN 
+                if updated_parent_id_param is not null then
+                    set @clients_hierarchy_changes = @clients_hierarchy_changes + 1;
+                else
+                    set @clients_np_hierarchy_changes = @clients_np_hierarchy_changes + 1;
+                end if;                                 
+            END CASE;
+        WHEN 'S'  THEN 
+            CASE level_id_param
+            WHEN 3 THEN 
+                            set @centers_status_changes = @centers_status_changes + 1;
+            WHEN 2 THEN 
+                            set @groups_status_changes = @groups_status_changes + 1;
+            WHEN 1 THEN 
+                            set @clients_status_changes = @clients_status_changes + 1;
+            END CASE;
+                                        
+        END CASE;
+end if;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2340,4 +2337,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-09-22 12:07:16
+-- Dump completed on 2010-10-02 23:11:01

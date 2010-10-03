@@ -73,11 +73,13 @@ If client is updated... could get the meetings again and update if necessary.
 or update all regardless (can be a lot)
 
 in secdep, are some meeting dates that are before the clients created_date
-and there can be duplicate meeting_id&#47;customer_id entries.</note>
+and there can be duplicate meeting_id&#47;customer_id entries.
+
+Note: this information might not be used in the standard DW reports</note>
       <xloc>20</xloc>
       <yloc>124</yloc>
       <width>380</width>
-      <heigth>110</heigth>
+      <heigth>135</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -171,6 +173,114 @@ and there can be duplicate meeting_id&#47;customer_id entries.</note>
   </connection>
   <order>
   <hop> <from>Read customer_attendance</from><to>Meeting Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Meeting Date Lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Calculate present Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate present Column</from><to>Calculate absent Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate absent Column</from><to>Calculate approved_leave Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate approved_leave Column</from><to>Calculate late Column</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate late Column</from><to>Create fact_client_attendances</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Calculate absent Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>absent</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>2</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>692</xloc>
+      <yloc>63</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate approved_leave Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>approved_leave</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>3</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>700</xloc>
+      <yloc>218</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate late Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>late</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>4</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>524</xloc>
+      <yloc>222</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate present Column</name>
+    <type>ValueMapper</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <field_to_use>attendance</field_to_use>
+    <target_field>present</target_field>
+    <non_match_default>0</non_match_default>
+    <fields>
+      <field>
+        <source_value>1</source_value>
+        <target_value>1</target_value>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>553</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Create fact_client_attendances</name>
     <type>TableOutput</type>
@@ -398,114 +508,6 @@ from customer_attendance </sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>69</xloc>
       <yloc>64</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Calculate present Column</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <field_to_use>attendance</field_to_use>
-    <target_field>present</target_field>
-    <non_match_default>0</non_match_default>
-    <fields>
-      <field>
-        <source_value>1</source_value>
-        <target_value>1</target_value>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>553</xloc>
-      <yloc>64</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Calculate absent Column</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <field_to_use>attendance</field_to_use>
-    <target_field>absent</target_field>
-    <non_match_default>0</non_match_default>
-    <fields>
-      <field>
-        <source_value>2</source_value>
-        <target_value>1</target_value>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>692</xloc>
-      <yloc>63</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Calculate approved_leave Column</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <field_to_use>attendance</field_to_use>
-    <target_field>approved_leave</target_field>
-    <non_match_default>0</non_match_default>
-    <fields>
-      <field>
-        <source_value>3</source_value>
-        <target_value>1</target_value>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>700</xloc>
-      <yloc>218</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Calculate late Column</name>
-    <type>ValueMapper</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <field_to_use>attendance</field_to_use>
-    <target_field>late</target_field>
-    <non_match_default>0</non_match_default>
-    <fields>
-      <field>
-        <source_value>4</source_value>
-        <target_value>1</target_value>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>524</xloc>
-      <yloc>222</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

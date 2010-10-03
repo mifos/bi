@@ -1,2 +1,2 @@
-DROP DATABASE secdep_prod_dwh;
-CREATE DATABASE secdep_prod_dwh;
+DROP DATABASE mifos_dwh;
+CREATE DATABASE mifos_dwh;

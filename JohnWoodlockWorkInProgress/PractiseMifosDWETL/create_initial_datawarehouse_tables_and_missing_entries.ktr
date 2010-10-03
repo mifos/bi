@@ -280,15 +280,14 @@ values (0,0,&apos;Unknown&apos;, 0.0, &apos;Unk&apos;);
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
-    <sql>DROP TABLE IF EXISTS dim_customer;
+    <sql>DROP TABLE `dim_customer`;
 CREATE TABLE `dim_customer` (
   `customer_key` int(10) unsigned NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `display_name` varchar(200) NOT NULL,
+  `display_name` varchar(200) NULL,
   `customer_status` varchar(100) NOT NULL,
   `customer_level_id` smallint(6) NOT NULL,
-  `gender` varchar(100) NOT NULL,
-  `top_of_hierarchy` tinyint(1) NOT NULL,
+  `gender` varchar(100) NULL,
   `group_key` int(10) unsigned NOT NULL,
   `center_key` int(10) unsigned NOT NULL,
   `loan_officer_key` smallint(5) unsigned NOT NULL,
@@ -305,12 +304,13 @@ CREATE TABLE `dim_customer` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`,`customer_status`,`valid_from`)
+  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO dim_customer(customer_key, customer_id, display_name, customer_status, customer_level_id,
-gender, top_of_hierarchy, group_key,  center_key,  loan_officer_key, formed_by_loan_officer_key, branch_key)
-VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, 0, 0, 0, 0, 0);</sql>
+gender, group_key,  center_key,  loan_officer_key, formed_by_loan_officer_key, branch_key)
+VALUES (0, 0, &apos;Unknown&apos;, &apos;Unknown&apos;, 0, &apos;Unknown&apos;, 0, 0, 0, 0, 0);
+</sql>
     <insert_field/>
     <update_field/>
     <delete_field/>
@@ -395,7 +395,7 @@ insert into dim_fee (
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
-    <sql>DROP TABLE IF EXISTS dim_loan;
+    <sql>drop TABLE `dim_loan`;
 CREATE TABLE `dim_loan` (
   `loan_account_key` int(10) unsigned NOT NULL,
   `currency_key` smallint(5) unsigned NOT NULL,
@@ -408,9 +408,9 @@ CREATE TABLE `dim_loan` (
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
   `loan_account_id` int(11) NOT NULL,
   `loan_status` varchar(100) NOT NULL,
-  `funder_name` varchar(100) NOT NULL,
-  `loan_amount` decimal(21,4) NOT NULL,
-  `original_principal` decimal(21,4) NOT NULL,
+  `funder_name` varchar(100) DEFAULT NULL,
+  `loan_amount` decimal(21,4) DEFAULT &apos;0.0000&apos;,
+  `original_principal` decimal(21,4) DEFAULT &apos;0.0000&apos;,
   `original_interest` decimal(21,4) DEFAULT &apos;0.0000&apos;,
   `original_fees` decimal(21,4) DEFAULT &apos;0.0000&apos;,
   `original_penalty` decimal(21,4) DEFAULT &apos;0.0000&apos;,
