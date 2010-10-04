@@ -1130,6 +1130,10 @@ repeat
         
         call SPcascade_change_to_clients(customer_key_var, date_param, @new_group_key, new_center_key, new_loan_officer_key, new_branch_key);
 
+        call SPcascade_change_to_accounts(customer_key_var, date_param, @new_group_key, 
+                    @new_group_key, new_center_key, new_loan_officer_key, new_branch_key,
+                    formed_by_loan_officer_key_var);
+                    
     end if;
 until done end repeat;
 
@@ -1181,9 +1185,9 @@ where customer_id = customer_id_param;
 
 if entry_found = 0 then 
     
-    if parent_id_param is null then /* top of hierarchy customer */
+    if parent_id_param is null then 
         set group_key_var = 0;
-        set center_key_var = 0;/* if customer is a group or center then its value is set in customer_insert when it is known*/
+        set center_key_var = 0;
         
         
         call SPpersonnel_return_current_key_values(loan_officer_id_param, created_date_param, @parent_loan_officer_key, @parent_branch_key);
@@ -1247,7 +1251,7 @@ where loan_account_id = entity_id_param;
 
 if entry_found = 0 then 
     
-    /*get key values for parent*/
+    
     call SPcustomer_return_current_key_values(updated_parent_id_param, effective_date_param,
                                                                     @parent_customer_key,
                                                                     @parent_customer_status,
@@ -1302,7 +1306,7 @@ where savings_account_id = entity_id_param;
 
 if entry_found = 0 then 
     
-    /*get key values for parent*/
+    
     call SPcustomer_return_current_key_values(updated_parent_id_param, effective_date_param,
                                                                     @parent_customer_key,
                                                                     @parent_customer_status,
@@ -1380,10 +1384,10 @@ IN group_key_param int, IN center_key_param int, IN loan_officer_key_param int, 
 IN created_date_param date, OUT new_customer_key int)
 BEGIN
 
-/*insert new dim_customer*/
+
 set @insert_customer_key = @insert_customer_key + 1;
 
-/* for groups and centers - update the relevant key to the customer_key*/
+
 if customer_level_id_param = 3 then 
     set center_key_param = @insert_customer_key;
 end if;
@@ -1428,8 +1432,7 @@ OUT current_loan_officer_key int, OUT current_branch_key int,
 OUT current_formed_by_loan_officer_key int)
 BEGIN
 
-/*get key fields and customer_status from current dim_customer 
-- not all columns will be needed by caller - depends on level of customer and type of change */
+
 select customer_key, customer_status, group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key 
 into current_customer_key, current_customer_status, 
 current_group_key, current_center_key, 
@@ -1519,7 +1522,7 @@ DELIMITER ;;
 BEGIN
 
 
-/*update valid_to for the current dim_customer*/
+
 update dim_customer
 set valid_to = effective_date_param, `version` = `version` + 1
 where customer_key = customer_key_param;
@@ -1704,7 +1707,7 @@ call SPcustomer_return_current_key_values(customer_id_param, created_date_param,
 call SPcustomer_update_validto(@current_customer_key, created_date_param);
 
 
-if parent_id_param is not null then 
+if parent_id_param is not null then /*either a client or a group has a parent change*/
     call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
                                                                 @parent_customer_key,
                                                                 @parent_customer_status,
@@ -1749,7 +1752,7 @@ WHEN 3 THEN
     call SPcascade_change_to_groups(@current_customer_key, created_date_param, @new_customer_key, 
                 loan_officer_key_var, branch_key_var);
     call SPcascade_change_to_accounts(@current_customer_key, created_date_param, @new_customer_key, 
-                    group_key_var, center_key_var, loan_officer_key_var, branch_key_var,
+                    group_key_var, @new_customer_key, loan_officer_key_var, branch_key_var,
                     @current_formed_by_loan_officer_key);
 WHEN 2 THEN 
     call SPcascade_change_to_clients(@current_customer_key, created_date_param, @new_customer_key, 
@@ -2331,4 +2334,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-10-04  1:52:15
+-- Dump completed on 2010-07-29  0:31:31
