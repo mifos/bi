@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI India 01</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>Survey Administration</name>
+        <question order="1">
+            <title>Date Survey Was Taken</title>
+            <type>DATE</type>
+        </question>
+    </section>
+    <section order="2">
+        <name>PPI Questions</name>
+        <question order="1">
+            <title>How many people aged 0 to 17 are in the household?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Five or more</value>
+            </choice>
+            <choice order="2">
+                <value>Four</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Two</value>
+            </choice>
+            <choice order="5">
+                <value>One</value>
+            </choice>
+            <choice order="6">
+                <value>None</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <title>What is the household’s principal occupation?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Labourers (agricultural, plantation, other farm), hunters, tobacco preparers and tobacco product makers, and other labourers</value>
+            </choice>
+            <choice order="2">
+                <value>Others</value>
+            </choice>
+            <choice order="3">
+                <value>Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <title>Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard/cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <title>What is the household’s primary source of energy for cooking?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Firewood and chips, charcoal, or none</value>
+            </choice>
+            <choice order="2">
+                <value>Others</value>
+            </choice>
+            <choice order="3">
+                <value>LPG</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <title>Does the household own a television?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <title>Does the household own a bicycle, scooter, or motor cycle?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <title>Does the household own an almirah/dressing table?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <title>Does the household own a sewing machine?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <title>How many pressure cookers or pressure pans does the household own?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <title>How many electric fans does the household own?</title>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+            <mandatory>true</mandatory>
+        </question>
+    </section>
+</QuestionGroup>
+
