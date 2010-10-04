@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_SavingsTransactions</name>
+    <name>LoadLoanFeeSchedules</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,48 +65,16 @@
   <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Loading Savings Transactions (deposits, withdrawals, adjustments and interest postings)
------------------------------------------------------------------------------------------------------------------------------------------
-
-These transactions need to be linked into a savings entry with an &apos;open&apos; status (active or on-hold). When a savings account is 
-closed then the savings entry status that matches the transaction action_date will be &apos;SavingsStatus-Closed&apos;.  We don&apos;t want to 
-link to that closed status so, instead, the latest active entry for the action_date is used.
-I say latest rather than &apos;THE&apos; because you can get multiple entries that were open for a particular day due to overlapping caused 
-by a hierarchy change or just someone was playing silly beggars with the account &apos;edit status&apos;  functionality.
-
-Some transactions might occur earlier (up to 6 days for one MFI) than the first time a savings account was created.  Don&apos;t know why.
-In this case, the transaction is attached to the earliest open status entry.
-</note>
-      <xloc>11</xloc>
-      <yloc>294</yloc>
-      <width>657</width>
-      <heigth>147</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
-    <name>DestinationDB</name>
-    <server/>
+    <name>mifos</name>
+    <server>localhost</server>
     <type>MYSQL</type>
-    <access>JNDI</access>
-    <database>DestinationDB</database>
-    <port>1521</port>
-    <username/>
-    <password>Encrypted </password>
+    <access>Native</access>
+    <database>mifos</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -116,7 +84,7 @@ In this case, the transaction is attached to the earliest open status entry.
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
@@ -124,14 +92,14 @@ In this case, the transaction is attached to the earliest open status entry.
     </attributes>
   </connection>
   <connection>
-    <name>SourceDB</name>
-    <server/>
+    <name>mifos_dwh</name>
+    <server>localhost</server>
     <type>MYSQL</type>
-    <access>JNDI</access>
-    <database>SourceDB</database>
-    <port>1521</port>
-    <username/>
-    <password>Encrypted </password>
+    <access>Native</access>
+    <database>mifos_dwh</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -141,7 +109,7 @@ In this case, the transaction is attached to the earliest open status entry.
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
@@ -174,9 +142,9 @@ In this case, the transaction is attached to the earliest open status entry.
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Product Lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Branch lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Branch lookup</from><to>Loan Officer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Officer lookup</from><to>Customer Formed By lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer lookup</from><to>Loan Account lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read loan_fee_schedule</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Product Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Formed By lookup</from><to>Customer lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Account lookup</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Table output</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Account Action lookup</name>
+    <name>Branch lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -185,39 +153,39 @@ In this case, the transaction is attached to the earliest open status entry.
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
+    <connection>mifos_dwh</connection>
     <cache>Y</cache>
     <cache_load_all>Y</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>dim_account_action</table>
+      <table>dim_office</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>account_action_id</name>
-        <field>account_action_id</field>
+        <name>branch_id</name>
+        <field>office_id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>account_action_key</name>
-        <rename>account_action_key</rename>
+        <name>office_key</name>
+        <rename>branch_key</rename>
         <default/>
         <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>411</xloc>
-      <yloc>13</yloc>
+      <xloc>393</xloc>
+      <yloc>14</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Action Date Lookup</name>
+    <name>Currency lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -226,39 +194,39 @@ In this case, the transaction is attached to the earliest open status entry.
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
+    <connection>mifos_dwh</connection>
     <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>dim_date</table>
+      <table>dim_currency</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>action_date</name>
-        <field>date_value</field>
+        <name>principal_currency_id</name>
+        <field>CURRENCY_ID</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>date_key</name>
-        <rename>action_date_key</rename>
+        <name>currency_key</name>
+        <rename>currency_key</rename>
         <default/>
         <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>91</xloc>
-      <yloc>137</yloc>
+      <xloc>392</xloc>
+      <yloc>87</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Create Date Lookup</name>
+    <name>Customer Formed By lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -267,154 +235,33 @@ In this case, the transaction is attached to the earliest open status entry.
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
+    <connection>mifos_dwh</connection>
     <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>dim_date</table>
+      <table>dim_personnel</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>created_date</name>
-        <field>date_value</field>
+        <name>customer_formedby_id</name>
+        <field>personnel_id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>date_key</name>
-        <rename>created_date_key</rename>
+        <name>personnel_key</name>
+        <rename>customer_formedby_key</rename>
         <default/>
         <type>Integer</type>
       </value>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>269</xloc>
-      <yloc>136</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create Savings Transactions</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <schema/>
-    <table>fact_savings_transactions</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>account_trxn_id</column_name>
-          <stream_name>account_trxn_id</stream_name>
-        </field>
-        <field>
-          <column_name>payment_id</column_name>
-          <stream_name>payment_id</stream_name>
-        </field>
-        <field>
-          <column_name>installment_id</column_name>
-          <stream_name>installment_id</stream_name>
-        </field>
-        <field>
-          <column_name>deposit_amount</column_name>
-          <stream_name>deposit_amount</stream_name>
-        </field>
-        <field>
-          <column_name>withdrawal_amount</column_name>
-          <stream_name>withdrawal_amount</stream_name>
-        </field>
-        <field>
-          <column_name>interest_amount</column_name>
-          <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>balance_amount</column_name>
-          <stream_name>balance_amount</stream_name>
-        </field>
-        <field>
-          <column_name>action_date_key</column_name>
-          <stream_name>action_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>due_date_key</column_name>
-          <stream_name>due_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>created_date_key</column_name>
-          <stream_name>created_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>account_action_key</column_name>
-          <stream_name>account_action_key</stream_name>
-        </field>
-        <field>
-          <column_name>savings_account_key</column_name>
-          <stream_name>savings_account_key</stream_name>
-        </field>
-        <field>
-          <column_name>customer_key</column_name>
-          <stream_name>customer_key</stream_name>
-        </field>
-        <field>
-          <column_name>product_key</column_name>
-          <stream_name>product_key</stream_name>
-        </field>
-        <field>
-          <column_name>group_key</column_name>
-          <stream_name>group_key</stream_name>
-        </field>
-        <field>
-          <column_name>center_key</column_name>
-          <stream_name>center_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_officer_key</column_name>
-          <stream_name>loan_officer_key</stream_name>
-        </field>
-        <field>
-          <column_name>branch_key</column_name>
-          <stream_name>branch_key</stream_name>
-        </field>
-        <field>
-          <column_name>formed_by_loan_officer_key</column_name>
-          <stream_name>formed_by_loan_officer_key</stream_name>
-        </field>
-        <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
-        </field>
-        <field>
-          <column_name>savings_account_id</column_name>
-          <stream_name>savings_account_id</stream_name>
-        </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>719</xloc>
-      <yloc>223</yloc>
+      <xloc>498</xloc>
+      <yloc>168</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -429,10 +276,10 @@ In this case, the transaction is attached to the earliest open status entry.
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
+    <connection>mifos_dwh</connection>
     <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
     <lookup>
       <schema/>
       <table>dim_date</table>
@@ -454,14 +301,96 @@ In this case, the transaction is attached to the earliest open status entry.
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
-      <yloc>38</yloc>
+      <xloc>290</xloc>
+      <yloc>169</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Read account_trxn for Savings Transactions</name>
+    <name>Loan Officer lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>mifos_dwh</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_personnel</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>loan_officer_id</name>
+        <field>personnel_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>personnel_key</name>
+        <rename>loan_officer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>494</xloc>
+      <yloc>14</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Product Lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>mifos_dwh</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_product</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>prd_offering_id</name>
+        <field>prd_offering_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>product_key</name>
+        <rename>product_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>178</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Read loan_fee_schedule</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -470,20 +399,19 @@ In this case, the transaction is attached to the earliest open status entry.
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select atxn.account_action_id, 
-atxn.account_trxn_id, atxn.account_id as savings_account_id, atxn.payment_id, atxn.installment_id, 
-ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, atxn.action_date, date(atxn.created_date) created_date, 
-stxn.deposit_amount, stxn.withdrawal_amount, stxn.interest_amount, stxn.balance as balance_amount
-from account_trxn atxn
-inner join  savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
-where atxn.account_action_id in (6,7, 11, 14)
-&#47;* 
-6 Deposit
-7 Withdrawal
-11 Interest_posting
-14 SavingsAdjustment - but covers deposits and withdrawals
-*&#47;</sql>
+    <connection>mifos</connection>
+    <sql>select c.customer_id, c.branch_id, 
+c.loan_officer_id, c.customer_formedby_id, la.prd_offering_id,
+ls.account_id, ls.installment_id,ls.principal_currency_id, 
+ls.action_date as due_date, 
+lfs.fee_id,
+lfs.amount as fee_amount
+from loan_fee_schedule lfs
+inner join fees f on f.fee_id = lfs.fee_id
+inner join loan_schedule ls on ls.id = lfs.id
+inner join loan_account la on la.account_id = ls.account_id
+inner join account a on a.account_id = la.account_id
+inner join customer c on c.customer_id = a.customer_id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -491,15 +419,15 @@ where atxn.account_action_id in (6,7, 11, 14)
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>91</xloc>
-      <yloc>40</yloc>
+      <xloc>101</xloc>
+      <yloc>96</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Savings Account - get latest open entry</name>
-    <type>DBJoin</type>
+    <name>Table output</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -507,44 +435,121 @@ where atxn.account_action_id in (6,7, 11, 14)
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select savings_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_savings
-where savings_account_id = ?
-&#47;*always try to link savings transactions to the latest of the status&apos;s below*&#47;
-and valid_from &lt;= ?
-and valid_to &gt;= ?
-and savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
-order by savings_account_key desc</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>savings_account_id</name>
+    <connection>mifos_dwh</connection>
+    <schema/>
+    <table>fact_loan_fee_schedules</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>installment_id</column_name>
+          <stream_name>installment_id</stream_name>
+        </field>
+        <field>
+          <column_name>fee_amount</column_name>
+          <stream_name>fee_amount</stream_name>
+        </field>
+        <field>
+          <column_name>due_date_key</column_name>
+          <stream_name>due_date_key</stream_name>
+        </field>
+        <field>
+          <column_name>product_key</column_name>
+          <stream_name>product_key</stream_name>
+        </field>
+        <field>
+          <column_name>currency_key</column_name>
+          <stream_name>currency_key</stream_name>
+        </field>
+        <field>
+          <column_name>branch_key</column_name>
+          <stream_name>branch_key</stream_name>
+        </field>
+        <field>
+          <column_name>loan_officer_key</column_name>
+          <stream_name>loan_officer_key</stream_name>
+        </field>
+        <field>
+          <column_name>customer_formedby_key</column_name>
+          <stream_name>customer_formedby_key</stream_name>
+        </field>
+        <field>
+          <column_name>customer_key</column_name>
+          <stream_name>customer_key</stream_name>
+        </field>
+        <field>
+          <column_name>loan_account_key</column_name>
+          <stream_name>loan_account_key</stream_name>
+        </field>
+        <field>
+          <column_name>fee_key</column_name>
+          <stream_name>fee_key</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>799</xloc>
+      <yloc>47</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Customer lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>mifos_dwh</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>customer_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
         <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>720</xloc>
-      <yloc>15</yloc>
+      <xloc>642</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
+    <name>Loan Account lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -552,89 +557,74 @@ order by savings_account_key desc</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Create Savings Transactions</send_true_to>
-<send_false_to>Remove null Key Columns</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>savings_account_key</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>719</xloc>
-      <yloc>118</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Remove null Key Columns</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <remove>        <name>savings_account_key</name>
-      </remove>      <remove>        <name>customer_key</name>
-      </remove>      <remove>        <name>product_key</name>
-      </remove>      <remove>        <name>group_key</name>
-      </remove>      <remove>        <name>center_key</name>
-      </remove>      <remove>        <name>loan_officer_key</name>
-      </remove>      <remove>        <name>branch_key</name>
-      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
-      </remove>      <remove>        <name>currency_key</name>
-      </remove>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>498</xloc>
-      <yloc>117</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Savings Account - get earliest open entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select savings_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_savings
-where savings_account_id = ?
-&#47;*link savings to the earliest of the status&apos;s below... (only for rare situations where the &apos;action date&apos; was
-up to 6 days prior to account activation ... although the system entered date was not before that date*&#47;
-and valid_to &gt;= ?
-and savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
-order by savings_account_key</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>savings_account_id</name>
+    <connection>mifos_dwh</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_loan_account</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>account_id</name>
+        <field>account_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>loan_account_key</name>
+        <rename>loan_account_key</rename>
+        <default/>
         <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>499</xloc>
-      <yloc>225</yloc>
+      <xloc>635</xloc>
+      <yloc>88</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Fee lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>mifos_dwh</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_fee</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>fee_id</name>
+        <field>fee_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>fee_key</name>
+        <rename>fee_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>634</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
