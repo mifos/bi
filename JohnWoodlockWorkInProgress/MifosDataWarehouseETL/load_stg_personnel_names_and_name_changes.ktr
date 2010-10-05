@@ -189,7 +189,12 @@ and cld.field_name =  &apos;name&apos;)
 union all
 
 (select personnel_id, display_name
-from personnel)) p
+from personnel)
+
+union
+(select 0 as personnel, &apos;Unknown&apos; as display_name)
+
+) p
 
 order by p.display_name;
 </sql>
