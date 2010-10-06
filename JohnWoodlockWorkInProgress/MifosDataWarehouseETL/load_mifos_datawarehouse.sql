@@ -1731,13 +1731,27 @@ if loan_officer_id_param is not null then
     
     set group_key_var = @current_group_key;
     set center_key_var = @current_center_key;   
-    set loan_officer_key_var = @loan_officer_key_latest;
-    set branch_key_var = @branch_key_latest; 
+        set loan_officer_key_var = @loan_officer_key_latest;
+    if @loan_officer_key_latest > 0 then
+        set branch_key_var = @branch_key_latest; 
+    else /* 0 is an for a null loan officer so use current value */
+        set branch_key_var = @current_branch_key; 
+    end if;
 
 end if;
 
 if branch_id_param is not null then    
-    call SPfallover(concat('Customer: ', customer_id_param, ' SPhierarchy_change - branch_id_param invalid: ' , branch_id_param, ' hadnt even coded it'));
+/* branch membership change for 
+1/ client w/o group membership
+2/ group w/o center hierarchy
+*/
+    call SPoffice_return_current_key_values(branch_id_param, created_date_param, @branch_key_latest);
+    
+    set group_key_var = @current_group_key;
+    set center_key_var = @current_center_key;   
+    set loan_officer_key_var = 0; /* loan officer has to be reassigned*/
+    set branch_key_var = @branch_key_latest; 
+    
 end if;
 
 
@@ -1909,6 +1923,37 @@ call SPloan_account_insert(entity_id_param, @current_customer_key, @current_prod
                                 @new_loan_account_key);                                   
                                 
 
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `SPoffice_return_current_key_values` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPoffice_return_current_key_values`(IN office_id_param smallint, IN date_param date, OUT current_office_key smallint)
+BEGIN
+    
+select o.office_key into current_office_key
+from dim_office o 
+where o.office_id = office_id_param
+and o.valid_from <= date_param
+and o.valid_to > date_param;
+
+
+if current_office_key is null then
+    call SPfallover(concat('SPoffice_return_current_key_values for officie id: ', office_id_param, ' date: ', date_param, 
+            ' - expected one current dim_office entry but found none')); 
+end if;
+                                                                
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -2334,4 +2379,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-07-29  0:31:31
+-- Dump completed on 2010-07-31 18:52:26

@@ -67,8 +67,8 @@
   <notepads>
     <notepad>
       <note>Also can be branch reassignments in some cases.</note>
-      <xloc>256</xloc>
-      <yloc>453</yloc>
+      <xloc>26</xloc>
+      <yloc>383</yloc>
       <width>254</width>
       <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -163,7 +163,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Lookup Loan Officer Id</from><to>Remove Loan Officer Name</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Loan Officer Name</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Center Hierarchy Changes - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Center Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Centers</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Group Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Groups (within center hierarchy)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Group Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Clients (with group membership)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Client Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Client Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Clients (without group membership)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Groups (without center hierarchy)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (without center hierarchy) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Client (without grouop membership) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Lookup Loan Officer Id</from><to>Remove Loan Officer Name</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Loan Officer Name</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Center Hierarchy Changes - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Center Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Centers</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Group Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Groups (within center hierarchy)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Group Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Clients (with group membership)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Client Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Client Status Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Clients (without group membership)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify New Groups (without center hierarchy)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (without center hierarchy) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Client (without group membership) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Client(w&#47;o group membership) Branch Changes</from><to>Lookup Branch Id</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Branch Name</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Branch Id</from><to>Remove Branch Name</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (w&#47;o center hierarchy) Branch Changes</from><to>Lookup Branch Id</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get Center Hierarchy Changes - Loan Officer Reassignments</name>
     <type>TableInput</type>
@@ -195,8 +195,84 @@ where c.customer_level_id = 3
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>143</xloc>
-      <yloc>76</yloc>
+      <xloc>148</xloc>
+      <yloc>42</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Client (without group membership) - Loan Officer Reassignments</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>
+select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
+&apos;H&apos; as change_type, cl.change_log_id as change_order, 
+null as updated_status, null as updated_parent_id, 
+if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_officer_name, 
+null as updated_branch_id,
+ifnull(c.customer_formedby_id, 0) as customer_formedby_id
+from customer c
+join change_log cl on c.customer_id = cl.entity_id
+                        and cl.entity_type = 1                      
+join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
+
+where c.customer_level_id = 1
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>165</xloc>
+      <yloc>315</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Group (without center hierarchy) - Loan Officer Reassignments</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>
+select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
+&apos;H&apos; as change_type, cl.change_log_id as change_order, 
+null as updated_status, null as updated_parent_id, cld.new_value as loan_officer_name, null as updated_branch_id,
+ifnull(c.customer_formedby_id, 0) as customer_formedby_id
+from customer c
+join change_log cl on c.customer_id = cl.entity_id
+                        and cl.entity_type = 12                      
+join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
+
+where c.customer_level_id = 2
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>164</xloc>
+      <yloc>254</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -231,8 +307,8 @@ where c.customer_level_id = 3</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>669</xloc>
-      <yloc>13</yloc>
+      <xloc>546</xloc>
+      <yloc>5</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -270,8 +346,8 @@ where c.customer_level_id = 1
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>474</xloc>
-      <yloc>371</yloc>
+      <xloc>487</xloc>
+      <yloc>317</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -309,8 +385,8 @@ where c.customer_level_id = 1
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>755</xloc>
-      <yloc>366</yloc>
+      <xloc>613</xloc>
+      <yloc>349</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -348,8 +424,8 @@ where c.customer_level_id = 2
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>789</xloc>
-      <yloc>299</yloc>
+      <xloc>782</xloc>
+      <yloc>363</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -388,8 +464,8 @@ where c.customer_level_id = 2
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>845</xloc>
-      <yloc>155</yloc>
+      <xloc>792</xloc>
+      <yloc>245</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -449,8 +525,8 @@ where c.customer_level_id = 3
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>91</xloc>
-      <yloc>17</yloc>
+      <xloc>239</xloc>
+      <yloc>9</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -515,8 +591,8 @@ where c.customer_level_id = 1 and c.parent_customer_id is not null
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>415</xloc>
-      <yloc>292</yloc>
+      <xloc>440</xloc>
+      <yloc>261</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -557,7 +633,7 @@ left join change_log_detail cld on cld.change_log_id = cl.change_log_id
                         and cld.field_name =  &apos;Status&apos;
 
 &#47;* clients without group membership that are transferred to another branch are set to on-hold and have their loan officer nulled out *&#47;
-join personnel p on p.personnel_id = c.loan_officer_id
+left join personnel p on p.personnel_id = c.loan_officer_id
 left join change_log cllo on c.customer_id = cllo.entity_id
                         and cllo.entity_type = 1
                         and cllo.change_log_id = 
@@ -579,8 +655,8 @@ where c.customer_level_id = 1 and c.parent_customer_id is null
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>114</xloc>
-      <yloc>137</yloc>
+      <xloc>110</xloc>
+      <yloc>107</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -646,8 +722,8 @@ where c.customer_level_id = 2 and c.parent_customer_id is not null
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>828</xloc>
-      <yloc>231</yloc>
+      <xloc>770</xloc>
+      <yloc>306</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -709,8 +785,8 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>121</xloc>
-      <yloc>237</yloc>
+      <xloc>117</xloc>
+      <yloc>193</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -750,8 +826,8 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>372</xloc>
-      <yloc>72</yloc>
+      <xloc>343</xloc>
+      <yloc>139</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -809,8 +885,8 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>467</xloc>
-      <yloc>7</yloc>
+      <xloc>404</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -893,7 +969,7 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
     </step>
 
   <step>
-    <name>Get Group (without center hierarchy) - Loan Officer Reassignments</name>
+    <name>Get Client(w&#47;o group membership) Branch Changes</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -906,52 +982,14 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
     <sql>
 select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;H&apos; as change_type, cl.change_log_id as change_order, 
-null as updated_status, null as updated_parent_id, cld.new_value as loan_officer_name, null as updated_branch_id,
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-from customer c
-join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 12                      
-join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
-
-where c.customer_level_id = 2
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>161</xloc>
-      <yloc>319</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Client (without grouop membership) - Loan Officer Reassignments</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>
-select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;H&apos; as change_type, cl.change_log_id as change_order, 
-null as updated_status, null as updated_parent_id, 
-if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_officer_name, 
-null as updated_branch_id,
+null as updated_status, null as updated_parent_id, null as updated_loan_officer_id, 
+cld.new_value as branch_name, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
                         and cl.entity_type = 1                      
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
+                        and cld.field_name like   &apos;Branch membership&apos;
 
 where c.customer_level_id = 1
 </sql>
@@ -962,8 +1000,146 @@ where c.customer_level_id = 1
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>164</xloc>
-      <yloc>388</yloc>
+      <xloc>823</xloc>
+      <yloc>135</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Lookup Branch Id</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_office</table>
+      <orderby/>
+      <fail_on_multiple>Y</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>branch_name</name>
+        <field>DISPLAY_NAME</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>office_id</name>
+        <rename>updated_branch_id</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>710</xloc>
+      <yloc>109</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove Branch Name</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>effective_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>level_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>entity_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>change_type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>change_order</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>updated_status</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>updated_parent_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>updated_loan_officer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>updated_branch_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>customer_formedby_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>599</xloc>
+      <yloc>87</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Group (w&#47;o center hierarchy) Branch Changes</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>&#47;*not currently audit in mifos so won&apos;t pick up anything 2010-07-31*&#47;
+select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
+&apos;H&apos; as change_type, cl.change_log_id as change_order, 
+null as updated_status, null as updated_parent_id, null as updated_loan_officer_id, 
+cld.new_value as branch_name, 
+ifnull(c.customer_formedby_id, 0) as customer_formedby_id
+from customer c
+join change_log cl on c.customer_id = cl.entity_id
+                        and cl.entity_type = 12                      
+join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                        and cld.field_name like   &apos;Branch membership&apos;
+
+where c.customer_level_id = 2
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>776</xloc>
+      <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
