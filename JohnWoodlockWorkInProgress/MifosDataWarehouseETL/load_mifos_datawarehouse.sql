@@ -1708,21 +1708,32 @@ call SPcustomer_update_validto(@current_customer_key, created_date_param);
 
 
 if parent_id_param is not null then /*either a client or a group has a parent change*/
-    call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
+    if parent_id_param = 0 then 
+        if customer_level_id_param = 1 then /* client exiting group membership */
+            set group_key_var = 0;
+            set center_key_var = @current_center_key;
+            set loan_officer_key_var = @current_loan_officer_key;
+            set branch_key_var = @current_branch_key;
+        else 
+            call SPfallover(concat('Customer: ', customer_id_param, ' SPhierarchy_change - parent_id_param of 0 invalid for customer_level_id : ' , customer_level_id_param));
+        end if;               
+    else
+        call SPcustomer_return_current_key_values(parent_id_param, created_date_param,
                                                                 @parent_customer_key,
                                                                 @parent_customer_status,
                                                                 @parent_group_key, @parent_center_key, 
                                                                 @parent_loan_officer_key, @parent_branch_key, 
                                                                 @parent_formed_by_loan_officer_key);
-                                                                
-    if customer_level_id_param = 2 then
-        set group_key_var = @current_group_key;
-    else
-        set group_key_var = @parent_customer_key;
-    end if;               
-    set center_key_var = @parent_center_key;
-    set loan_officer_key_var = @parent_loan_officer_key;
-    set branch_key_var = @parent_branch_key;
+    
+        if customer_level_id_param = 2 then
+            set group_key_var = @current_group_key;
+        else
+            set group_key_var = @parent_customer_key;
+        end if;               
+        set center_key_var = @parent_center_key;
+        set loan_officer_key_var = @parent_loan_officer_key;
+        set branch_key_var = @parent_branch_key;
+    end if;
     
 end if;
 
@@ -1772,7 +1783,7 @@ WHEN 2 THEN
     call SPcascade_change_to_clients(@current_customer_key, created_date_param, @new_customer_key, 
                 center_key_var, loan_officer_key_var, branch_key_var);
     call SPcascade_change_to_accounts(@current_customer_key, created_date_param, @new_customer_key, 
-                    group_key_var, center_key_var, loan_officer_key_var, branch_key_var,
+                    @new_customer_key, center_key_var, loan_officer_key_var, branch_key_var,
                     @current_formed_by_loan_officer_key);
 WHEN 1  THEN 
     call SPcascade_change_to_accounts(@current_customer_key, created_date_param, @new_customer_key, 
@@ -2379,4 +2390,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-07-31 18:52:26
+-- Dump completed on 2010-08-10  1:54:34
