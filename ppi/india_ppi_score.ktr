@@ -178,7 +178,7 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select answers.ppi_survey_name, answers.date_survey_taken, answers.client_id, 
+    <sql>select answers.ppi_survey_name, 1 as points_version, answers.date_survey_taken, answers.client_id, 
 (
 case
 when answers.Q1=&apos;Five or more&apos; then 0
