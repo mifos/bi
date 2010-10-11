@@ -1,223 +1,286 @@
-INFO  07-10 12:51:52,741 - Using "C:\Users\Keith\AppData\Local\Temp\vfs_cache" as temporary files store.
-INFO  07-10 12:51:54,131 - Kitchen - Kitchen
-INFO  07-10 12:51:54,134 - Kitchen - Kitchen
-INFO  07-10 12:51:54,998 - Create Data Warehouse - Start of job execution
-INFO  07-10 12:51:55,019 - Create Data Warehouse - Starting entry [Load Simple High Level Dimensions]
-INFO  07-10 12:51:55,501 - Load Simple High Level Dimensions - Start of job execution
-INFO  07-10 12:51:55,520 - Load Simple High Level Dimensions - Starting entry [Load dim_account_action]
-INFO  07-10 12:51:55,524 - Load Simple High Level Dimensions - Launched job entry [Load dim_account_action] in parallel.
-INFO  07-10 12:51:55,530 - Load Simple High Level Dimensions - Starting entry [Load dim_currency]
-INFO  07-10 12:51:55,537 - Load dim_currency - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_currency_dim.ktr]
-INFO  07-10 12:51:55,617 - Load Simple High Level Dimensions - Launched job entry [Load dim_currency] in parallel.
-INFO  07-10 12:51:55,621 - Load Simple High Level Dimensions - Starting entry [Load dim_fee]
-INFO  07-10 12:51:55,625 - Load dim_account_action - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_account_action_dim.ktr]
-INFO  07-10 12:51:55,626 - Load Simple High Level Dimensions - Launched job entry [Load dim_fee] in parallel.
-INFO  07-10 12:51:55,628 - Load dim_fee - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_fees_dim.ktr]
-INFO  07-10 12:51:55,631 - Load Simple High Level Dimensions - Starting entry [Load dim_product]
-INFO  07-10 12:51:55,636 - Load Simple High Level Dimensions - Launched job entry [Load dim_product] in parallel.
-INFO  07-10 12:51:55,640 - Load Simple High Level Dimensions - Starting entry [Load dim_office]
-INFO  07-10 12:51:55,643 - Load Simple High Level Dimensions - Launched job entry [Load dim_office] in parallel.
-INFO  07-10 12:51:55,660 - Load dim_product - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_product_dim.ktr]
-INFO  07-10 12:51:55,663 - Load dim_office - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_office_dim.ktr]
-INFO  07-10 12:51:58,232 - load_currency_dim - Dispatching started for transformation [load_currency_dim]
-INFO  07-10 12:51:58,369 - load_currency_dim - This transformation can be replayed with replay date: 2010/10/07 12:51:58
-INFO  07-10 12:51:58,401 - load_product_dim - Dispatching started for transformation [load_product_dim]
-INFO  07-10 12:51:58,427 - load_product_dim - This transformation can be replayed with replay date: 2010/10/07 12:51:58
-INFO  07-10 12:51:58,777 - load_office_dim - Dispatching started for transformation [load_office_dim]
-INFO  07-10 12:51:58,785 - load_office_dim - This transformation can be replayed with replay date: 2010/10/07 12:51:58
-INFO  07-10 12:51:58,835 - load_fees_dim - Dispatching started for transformation [load_fees_dim]
-INFO  07-10 12:51:58,846 - load_fees_dim - This transformation can be replayed with replay date: 2010/10/07 12:51:58
-INFO  07-10 12:51:59,007 - load_account_action_dim - Dispatching started for transformation [load_account_action_dim]
-INFO  07-10 12:51:59,018 - load_account_action_dim - This transformation can be replayed with replay date: 2010/10/07 12:51:59
-INFO  07-10 12:51:59,165 - Extract Currency Data - Finished reading query, closing connection.
-INFO  07-10 12:51:59,165 - Extract Account Action Data - Finished reading query, closing connection.
-INFO  07-10 12:51:59,166 - Extract Product Data - Finished reading query, closing connection.
-INFO  07-10 12:51:59,168 - Extract Office Data - Finished reading query, closing connection.
-INFO  07-10 12:51:59,168 - Extract Fee Data - Finished reading query, closing connection.
-INFO  07-10 12:51:59,177 - Extract Currency Data - Finished processing (I=178, O=0, R=0, W=178, U=0, E=0)
-INFO  07-10 12:51:59,181 - Extract Product Data - Finished processing (I=9, O=0, R=0, W=9, U=0, E=0)
-INFO  07-10 12:51:59,181 - Extract Account Action Data - Finished processing (I=20, O=0, R=0, W=20, U=0, E=0)
-INFO  07-10 12:51:59,183 - Extract Office Data - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
-INFO  07-10 12:51:59,183 - Extract Fee Data - Finished processing (I=8, O=0, R=0, W=8, U=0, E=0)
-INFO  07-10 12:51:59,248 - Office Dimension lookup/update - Finished processing (I=6, O=6, R=6, W=6, U=0, E=0)
-INFO  07-10 12:51:59,262 - Fee Dimension lookup/update - Finished processing (I=8, O=8, R=8, W=8, U=0, E=0)
-INFO  07-10 12:51:59,271 - Product Dimension lookup/update - Finished processing (I=9, O=9, R=9, W=9, U=0, E=0)
-INFO  07-10 12:51:59,281 - Account Action Dimension lookup/update - Finished processing (I=20, O=20, R=20, W=20, U=0, E=0)
-INFO  07-10 12:51:59,435 - Currency Dimension lookup/update - Finished processing (I=178, O=178, R=178, W=178, U=0, E=0)
-INFO  07-10 12:51:59,446 - Load Simple High Level Dimensions - Job execution finished
-INFO  07-10 12:51:59,462 - Create Data Warehouse - Starting entry [Load Personnel Dimension]
-INFO  07-10 12:51:59,917 - Load Personnel Dimension - Start of job execution
-INFO  07-10 12:51:59,934 - Load Personnel Dimension - Starting entry [Load dim_personnel]
-INFO  07-10 12:51:59,938 - Load dim_personnel - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_personnel_dim.ktr]
-INFO  07-10 12:52:00,510 - Load dim_personnel - Dispatching started for transformation [Load dim_personnel]
-INFO  07-10 12:52:00,524 - Load dim_personnel - This transformation can be replayed with replay date: 2010/10/07 12:52:00
-INFO  07-10 12:52:00,564 - Extract Personnel Data - Finished reading query, closing connection.
-INFO  07-10 12:52:00,568 - Extract Personnel Data - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
-INFO  07-10 12:52:00,574 - Office lookup - Finished processing (I=7, O=0, R=6, W=6, U=0, E=0)
-INFO  07-10 12:52:00,587 - Personnel Dimension lookup/update - Finished processing (I=6, O=6, R=6, W=6, U=0, E=0)
-INFO  07-10 12:52:00,594 - Load Personnel Dimension - Finished job entry [Load dim_personnel] (result=[true])
-INFO  07-10 12:52:00,601 - Load Personnel Dimension - Job execution finished
-INFO  07-10 12:52:00,611 - Create Data Warehouse - Starting entry [Load Staging Tables]
-INFO  07-10 12:52:01,104 - Load Staging Tables - Start of job execution
-INFO  07-10 12:52:01,125 - Load Staging Tables - Starting entry [Clear Down Staging Tables]
-INFO  07-10 12:52:01,150 - Load Staging Tables - Starting entry [Load stg_personnel_names_and_name_changes]
-INFO  07-10 12:52:01,154 - Load stg_personnel_names_and_name_changes - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_personnel_names_and_name_changes.ktr]
-INFO  07-10 12:52:01,727 - Load stg_personnel_names_and_name_changes - Dispatching started for transformation [Load stg_personnel_names_and_name_changes]
-INFO  07-10 12:52:01,738 - Load stg_personnel_names_and_name_changes - This transformation can be replayed with replay date: 2010/10/07 12:52:01
-INFO  07-10 12:52:01,750 - Write stg_personnel_names_and_name_changes - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:01,756 - Read Personnel Names (and name changes) - Finished reading query, closing connection.
-INFO  07-10 12:52:01,761 - Read Personnel Names (and name changes) - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
-INFO  07-10 12:52:01,768 - Write stg_personnel_names_and_name_changes - Finished processing (I=0, O=7, R=7, W=7, U=0, E=0)
-INFO  07-10 12:52:01,777 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Customers]
-INFO  07-10 12:52:01,780 - Load stg_customer_and_account_updates For Customers - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_customer_and_account_updates_For_Customers.ktr]
-INFO  07-10 12:52:02,350 - Load stg_customer_and_account_updates For Customers - Dispatching started for transformation [Load stg_customer_and_account_updates For Customers]
-INFO  07-10 12:52:02,418 - Load stg_customer_and_account_updates For Customers - This transformation can be replayed with replay date: 2010/10/07 12:52:02
-INFO  07-10 12:52:02,481 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:02,654 - Get Group (without center hierarchy) - Loan Officer Reassignments - Finished reading query, closing connection.
-INFO  07-10 12:52:02,655 - New Groups (within center hierarchy) - Finished reading query, closing connection.
-INFO  07-10 12:52:02,656 - Center Status Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,656 - New Centers - Finished reading query, closing connection.
-INFO  07-10 12:52:02,657 - Group Status Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,657 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished reading query, closing connection.
-INFO  07-10 12:52:02,660 - New Groups (within center hierarchy) - Finished processing (I=11, O=0, R=0, W=11, U=0, E=0)
-INFO  07-10 12:52:02,662 - Group Hierarchy Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,664 - Clients Group Membership Removed - Finished reading query, closing connection.
-INFO  07-10 12:52:02,664 - New Clients (with group membership) - Finished reading query, closing connection.
-INFO  07-10 12:52:02,669 - New Centers - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
-INFO  07-10 12:52:02,669 - Get Group (w/o center hierarchy) Branch Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,670 - New Groups (w/o center hierarchy) - Finished reading query, closing connection.
-INFO  07-10 12:52:02,672 - Get Client(w/o group membership) Branch Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,675 - New Clients (with group membership) - Finished processing (I=40, O=0, R=0, W=40, U=0, E=0)
-INFO  07-10 12:52:02,684 - Get Client (without group membership) - Loan Officer Reassignments - Finished reading query, closing connection.
-INFO  07-10 12:52:02,686 - Group Status Changes - Finished processing (I=11, O=0, R=0, W=11, U=0, E=0)
-INFO  07-10 12:52:02,687 - Client Hierarchy Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,687 - New Clients (w/o group membership) - Finished reading query, closing connection.
-INFO  07-10 12:52:02,691 - Client Status Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:02,694 - Client Status Changes - Finished processing (I=40, O=0, R=0, W=40, U=0, E=0)
-INFO  07-10 12:52:02,721 - Lookup Loan Officer Id - Finished processing (I=6, O=0, R=6, W=6, U=0, E=0)
-INFO  07-10 12:52:02,723 - Remove Loan Officer Name - Finished processing (I=0, O=0, R=6, W=6, U=0, E=0)
-INFO  07-10 12:52:02,755 - Write stg_customer_and_account_updates - Finished processing (I=0, O=108, R=108, W=108, U=0, E=0)
-INFO  07-10 12:52:02,805 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Accounts]
-INFO  07-10 12:52:02,807 - Load stg_customer_and_account_updates For Accounts - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_customer_and_account_updates_For_Accounts.ktr]
-INFO  07-10 12:52:03,379 - Load stg_customer_and_account_updates For Accounts - Dispatching started for transformation [Load stg_customer_and_account_updates For Accounts]
-INFO  07-10 12:52:03,395 - Load stg_customer_and_account_updates For Accounts - This transformation can be replayed with replay date: 2010/10/07 12:52:03
-INFO  07-10 12:52:03,404 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:03,439 - Identify Savings Account Status Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:03,444 - Identify Savings Account Status Changes - Finished processing (I=36, O=0, R=0, W=36, U=0, E=0)
-INFO  07-10 12:52:03,446 - Identify New Savings Accounts - Finished reading query, closing connection.
-INFO  07-10 12:52:03,450 - Identify New Savings Accounts - Finished processing (I=36, O=0, R=0, W=36, U=0, E=0)
-INFO  07-10 12:52:03,458 - Identify New Loan Accounts - Finished reading query, closing connection.
-INFO  07-10 12:52:03,463 - Identify New Loan Accounts - Finished processing (I=118, O=0, R=0, W=118, U=0, E=0)
-INFO  07-10 12:52:03,488 - Identify Loan Account Status Changes - Finished reading query, closing connection.
-INFO  07-10 12:52:03,492 - Identify Loan Account Status Changes - Finished processing (I=343, O=0, R=0, W=343, U=0, E=0)
-INFO  07-10 12:52:03,601 - Write stg_customer_and_account_updates - Finished processing (I=0, O=533, R=533, W=533, U=0, E=0)
-INFO  07-10 12:52:03,610 - Load Staging Tables - Starting entry [Load stg_customer_type1_columns]
-INFO  07-10 12:52:03,613 - Load Staging Tables - Launched job entry [Load stg_customer_type1_columns] in parallel.
-INFO  07-10 12:52:03,613 - Load stg_customer_type1_columns - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_customer_type1_columns.ktr]
-INFO  07-10 12:52:03,618 - Load Staging Tables - Starting entry [Load stg_customer_type1_columns 2]
-INFO  07-10 12:52:03,625 - Load Staging Tables - Launched job entry [Load stg_customer_type1_columns 2] in parallel.
-INFO  07-10 12:52:03,629 - Load stg_customer_type1_columns 2 - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_loan_type1_columns.ktr]
-INFO  07-10 12:52:04,272 - Loan stg_loan_type1_columns - Dispatching started for transformation [Loan stg_loan_type1_columns]
-INFO  07-10 12:52:04,285 - Loan stg_loan_type1_columns - This transformation can be replayed with replay date: 2010/10/07 12:52:04
-INFO  07-10 12:52:04,297 - Write stg_loan_type1_columns - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:04,323 - Identify Staged Loans - Finished reading query, closing connection.
-INFO  07-10 12:52:04,326 - Identify Staged Loans - Finished processing (I=118, O=0, R=0, W=118, U=0, E=0)
-INFO  07-10 12:52:04,351 - Load stg_customer_type1_columns - Dispatching started for transformation [Load stg_customer_type1_columns]
-INFO  07-10 12:52:04,363 - Load stg_customer_type1_columns - This transformation can be replayed with replay date: 2010/10/07 12:52:04
-INFO  07-10 12:52:04,401 - Write stg_customer_type1_columns - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:04,429 - Database join - Finished processing (I=236, O=0, R=118, W=118, U=0, E=0)
-INFO  07-10 12:52:04,434 - Identify Staged Customers - Finished reading query, closing connection.
-INFO  07-10 12:52:04,437 - Identify Staged Customers - Finished processing (I=57, O=0, R=0, W=57, U=0, E=0)
-INFO  07-10 12:52:04,473 - Write stg_loan_type1_columns - Finished processing (I=0, O=118, R=118, W=118, U=0, E=0)
-INFO  07-10 12:52:04,473 - Database join - Finished processing (I=114, O=0, R=57, W=57, U=0, E=0)
-INFO  07-10 12:52:04,492 - Write stg_customer_type1_columns - Finished processing (I=0, O=57, R=57, W=57, U=0, E=0)
-INFO  07-10 12:52:04,498 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Accounts] (result=[true])
-INFO  07-10 12:52:04,501 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Customers] (result=[true])
-INFO  07-10 12:52:04,503 - Load Staging Tables - Finished job entry [Load stg_personnel_names_and_name_changes] (result=[true])
-INFO  07-10 12:52:04,506 - Load Staging Tables - Finished job entry [Clear Down Staging Tables] (result=[true])
-INFO  07-10 12:52:04,513 - Load Staging Tables - Job execution finished
-INFO  07-10 12:52:04,531 - Create Data Warehouse - Starting entry [Load Customer And Loan And Savings Dimensions]
-INFO  07-10 12:52:05,037 - Load Customer And Loan And Savings Dimensions - Start of job execution
-INFO  07-10 12:52:05,056 - Load Customer And Loan And Savings Dimensions - Starting entry [Load dim_customer, dim_loan and dim_savings]
-INFO  07-10 12:52:05,059 - Load dim_customer, dim_loan and dim_savings - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_customer_loan_savings_dim.ktr]
-INFO  07-10 12:52:05,668 - load_customer_loan_savings_dim - Dispatching started for transformation [load_customer_loan_savings_dim]
-INFO  07-10 12:52:05,676 - load_customer_loan_savings_dim - This transformation can be replayed with replay date: 2010/10/07 12:52:05
-INFO  07-10 12:52:06,199 - Load Customers, Loans and Savings - Finished reading query, closing connection.
-INFO  07-10 12:52:06,201 - Load Customers, Loans and Savings - Finished processing (I=0, O=0, R=0, W=1, U=0, E=0)
-INFO  07-10 12:52:06,207 - Load Customer And Loan And Savings Dimensions - Finished job entry [Load dim_customer, dim_loan and dim_savings] (result=[true])
-INFO  07-10 12:52:06,214 - Load Customer And Loan And Savings Dimensions - Job execution finished
-INFO  07-10 12:52:06,225 - Create Data Warehouse - Starting entry [Load Fact Tables]
-INFO  07-10 12:52:06,685 - Load Fact Tables - Start of job execution
-INFO  07-10 12:52:06,702 - Load Fact Tables - Starting entry [Load fact_loan_disbursals]
-INFO  07-10 12:52:06,704 - Load Fact Tables - Launched job entry [Load fact_loan_disbursals] in parallel.
-INFO  07-10 12:52:06,709 - Load Fact Tables - Starting entry [Load fact_client_attendances]
-INFO  07-10 12:52:06,712 - Load Fact Tables - Launched job entry [Load fact_client_attendances] in parallel.
-INFO  07-10 12:52:06,717 - Load fact_loan_disbursals - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_LoanDisbursals.ktr]
-INFO  07-10 12:52:06,730 - Load fact_client_attendances - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_ClientAttendances.ktr]
-INFO  07-10 12:52:06,772 - Load Fact Tables - Starting entry [Load fact_loan_repayments]
-INFO  07-10 12:52:06,775 - Load Fact Tables - Launched job entry [Load fact_loan_repayments] in parallel.
-INFO  07-10 12:52:06,780 - Load Fact Tables - Starting entry [Load dw_loan_schedules]
-INFO  07-10 12:52:06,782 - Load Fact Tables - Launched job entry [Load dw_loan_schedules] in parallel.
-INFO  07-10 12:52:06,813 - Load fact_loan_repayments - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_LoanRepayments.ktr]
-INFO  07-10 12:52:06,840 - Load Fact Tables - Starting entry [Load fact_savings_transactions]
-INFO  07-10 12:52:06,842 - Load dw_loan_schedules - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_DW_Loan_Schedules.ktr]
-INFO  07-10 12:52:06,846 - Load Fact Tables - Launched job entry [Load fact_savings_transactions] in parallel.
-INFO  07-10 12:52:06,858 - Load fact_savings_transactions - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_SavingsTransactions.ktr]
-INFO  07-10 12:52:07,792 - Load_ClientAttendances - Dispatching started for transformation [Load_ClientAttendances]
-INFO  07-10 12:52:07,840 - Load_ClientAttendances - This transformation can be replayed with replay date: 2010/10/07 12:52:07
-INFO  07-10 12:52:07,984 - Create fact_client_attendances - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:08,003 - Read customer_attendance - Finished reading query, closing connection.
-INFO  07-10 12:52:08,064 - Load_DW_Loan_Schedules - Dispatching started for transformation [Load_DW_Loan_Schedules]
-INFO  07-10 12:52:08,079 - Load_DW_Loan_Schedules - This transformation can be replayed with replay date: 2010/10/07 12:52:08
-INFO  07-10 12:52:08,137 - Create dw_loan_schedules - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:08,385 - Read loan_schedule - Finished reading query, closing connection.
-INFO  07-10 12:52:08,583 - Read loan_schedule - Finished processing (I=1462, O=0, R=0, W=1462, U=0, E=0)
-INFO  07-10 12:52:08,602 - Due Date Lookup - Finished processing (I=75, O=0, R=1462, W=1462, U=0, E=0)
-INFO  07-10 12:52:08,624 - Load_SavingsTransactions - Dispatching started for transformation [Load_SavingsTransactions]
-INFO  07-10 12:52:08,664 - Load_LoanRepayments - Dispatching started for transformation [Load_LoanRepayments]
-INFO  07-10 12:52:08,699 - Load_SavingsTransactions - This transformation can be replayed with replay date: 2010/10/07 12:52:08
-INFO  07-10 12:52:08,719 - Load_LoanDisbursals - Dispatching started for transformation [Load_LoanDisbursals]
-INFO  07-10 12:52:08,733 - Load_LoanRepayments - This transformation can be replayed with replay date: 2010/10/07 12:52:08
-INFO  07-10 12:52:08,802 - Load_LoanDisbursals - This transformation can be replayed with replay date: 2010/10/07 12:52:08
-INFO  07-10 12:52:08,841 - Create Savings Transactions - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:08,957 - Create Loan Disbursals - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:08,969 - Create Loan Repayments - Connected to database [DestinationDB] (commit=1000)
-INFO  07-10 12:52:08,989 - Read account_trxn for Savings Transactions - Finished reading query, closing connection.
-INFO  07-10 12:52:08,997 - Read account_trxn - Finished reading query, closing connection.
-INFO  07-10 12:52:09,013 - Read account_trxn - Finished processing (I=113, O=0, R=0, W=113, U=0, E=0)
-INFO  07-10 12:52:09,020 - Read account_trxn for Savings Transactions - Finished processing (I=36, O=0, R=0, W=36, U=0, E=0)
-INFO  07-10 12:52:09,026 - Read account_trxn - Finished reading query, closing connection.
-INFO  07-10 12:52:09,033 - Action Date Lookup - Finished processing (I=1, O=0, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,047 - Disbursal Date Lookup - Finished processing (I=2, O=0, R=113, W=113, U=0, E=0)
-INFO  07-10 12:52:09,052 - Due Date Lookup - Finished processing (I=1, O=0, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,061 - Create Date Lookup - Finished processing (I=2, O=0, R=113, W=113, U=0, E=0)
-INFO  07-10 12:52:09,072 - Create Date Lookup - Finished processing (I=1, O=0, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,072 - Account Action lookup - Finished processing (I=21, O=0, R=113, W=113, U=0, E=0)
-INFO  07-10 12:52:09,248 - Create dw_loan_schedules - Finished processing (I=0, O=1462, R=1462, W=1462, U=0, E=0)
-INFO  07-10 12:52:09,257 - Filter rows - Finished processing (I=0, O=0, R=113, W=113, U=0, E=0)
-INFO  07-10 12:52:09,264 - Lookup Latest Pre Active Loan Account Entry - Finished processing (I=113, O=0, R=113, W=113, U=0, E=0)
-INFO  07-10 12:52:09,264 - Remove null Key Columns - Finished processing (I=0, O=0, R=39, W=39, U=0, E=0)
-INFO  07-10 12:52:09,267 - Account Action lookup - Finished processing (I=21, O=0, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,317 - Savings Account - get latest open entry - Finished processing (I=36, O=0, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,321 - Lookup Earliest Pre Active Loan Account Entry 2 - Finished processing (I=39, O=0, R=39, W=39, U=0, E=0)
-INFO  07-10 12:52:09,325 - Filter rows - Finished processing (I=0, O=0, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,364 - Create Loan Disbursals - Finished processing (I=0, O=113, R=113, W=113, U=0, E=0)
-INFO  07-10 12:52:09,385 - Create Savings Transactions - Finished processing (I=0, O=36, R=36, W=36, U=0, E=0)
-INFO  07-10 12:52:09,410 - Load Fact Tables - Job execution finished
-INFO  07-10 12:52:09,432 - Create Data Warehouse - Starting entry [Adjust Customer Status Values]
-INFO  07-10 12:52:09,883 - Adjust Customer Status Values - Start of job execution
-INFO  07-10 12:52:09,900 - Adjust Customer Status Values - Starting entry [SQL]
-INFO  07-10 12:52:10,138 - Adjust Customer Status Values - Finished job entry [SQL] (result=[true])
-INFO  07-10 12:52:10,145 - Adjust Customer Status Values - Job execution finished
-INFO  07-10 12:52:10,155 - Create Data Warehouse - Starting entry [Mail Success]
-INFO  07-10 12:52:16,965 - Create Data Warehouse - Finished job entry [Mail Success] (result=[true])
-INFO  07-10 12:52:16,970 - Create Data Warehouse - Finished job entry [Adjust Customer Status Values] (result=[true])
-INFO  07-10 12:52:16,973 - Create Data Warehouse - Finished job entry [Load Fact Tables] (result=[true])
-INFO  07-10 12:52:16,976 - Create Data Warehouse - Finished job entry [Load Customer And Loan And Savings Dimensions] (result=[true])
-INFO  07-10 12:52:16,978 - Create Data Warehouse - Finished job entry [Load Staging Tables] (result=[true])
-INFO  07-10 12:52:16,983 - Create Data Warehouse - Finished job entry [Load Personnel Dimension] (result=[true])
-INFO  07-10 12:52:16,985 - Create Data Warehouse - Finished job entry [Load Simple High Level Dimensions] (result=[true])
-INFO  07-10 12:52:16,993 - Create Data Warehouse - Job execution finished
-INFO  07-10 12:52:16,996 - Kitchen - Kitchen
-INFO  07-10 12:52:16,998 - Kitchen - Kitchen
-INFO  07-10 12:52:17,001 - Kitchen - Kitchen
+INFO  11-10 19:40:35,145 - Using "C:\Users\Keith\AppData\Local\Temp\vfs_cache" as temporary files store.
+INFO  11-10 19:40:36,778 - Kitchen - Kitchen
+INFO  11-10 19:40:36,782 - Kitchen - Kitchen
+INFO  11-10 19:40:38,355 - Create Data Warehouse - Start of job execution
+INFO  11-10 19:40:38,375 - Create Data Warehouse - Starting entry [Load Simple High Level Dimensions]
+INFO  11-10 19:40:38,865 - Load Simple High Level Dimensions - Start of job execution
+INFO  11-10 19:40:38,886 - Load Simple High Level Dimensions - Starting entry [Load dim_account_action]
+INFO  11-10 19:40:38,890 - Load Simple High Level Dimensions - Launched job entry [Load dim_account_action] in parallel.
+INFO  11-10 19:40:38,892 - Load dim_account_action - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_account_action_dim.ktr]
+INFO  11-10 19:40:38,896 - Load Simple High Level Dimensions - Starting entry [Load dim_currency]
+INFO  11-10 19:40:38,898 - Load Simple High Level Dimensions - Launched job entry [Load dim_currency] in parallel.
+INFO  11-10 19:40:38,903 - Load Simple High Level Dimensions - Starting entry [Load dim_fee]
+INFO  11-10 19:40:38,906 - Load Simple High Level Dimensions - Launched job entry [Load dim_fee] in parallel.
+INFO  11-10 19:40:38,910 - Load dim_currency - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_currency_dim.ktr]
+INFO  11-10 19:40:38,913 - Load dim_fee - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_fees_dim.ktr]
+INFO  11-10 19:40:38,915 - Load Simple High Level Dimensions - Starting entry [Load dim_product]
+INFO  11-10 19:40:38,929 - Load Simple High Level Dimensions - Launched job entry [Load dim_product] in parallel.
+INFO  11-10 19:40:38,934 - Load Simple High Level Dimensions - Starting entry [Load dim_office]
+INFO  11-10 19:40:38,937 - Load Simple High Level Dimensions - Launched job entry [Load dim_office] in parallel.
+INFO  11-10 19:40:38,942 - Load dim_product - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_product_dim.ktr]
+INFO  11-10 19:40:38,946 - Load dim_office - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_office_dim.ktr]
+INFO  11-10 19:40:41,736 - load_currency_dim - Dispatching started for transformation [load_currency_dim]
+INFO  11-10 19:40:41,837 - load_currency_dim - This transformation can be replayed with replay date: 2010/10/11 19:40:41
+INFO  11-10 19:40:42,162 - load_product_dim - Dispatching started for transformation [load_product_dim]
+INFO  11-10 19:40:42,195 - load_product_dim - This transformation can be replayed with replay date: 2010/10/11 19:40:42
+INFO  11-10 19:40:42,585 - load_fees_dim - Dispatching started for transformation [load_fees_dim]
+INFO  11-10 19:40:42,594 - load_fees_dim - This transformation can be replayed with replay date: 2010/10/11 19:40:42
+INFO  11-10 19:40:42,596 - load_office_dim - Dispatching started for transformation [load_office_dim]
+INFO  11-10 19:40:42,595 - load_account_action_dim - Dispatching started for transformation [load_account_action_dim]
+INFO  11-10 19:40:42,617 - load_office_dim - This transformation can be replayed with replay date: 2010/10/11 19:40:42
+INFO  11-10 19:40:42,620 - load_account_action_dim - This transformation can be replayed with replay date: 2010/10/11 19:40:42
+INFO  11-10 19:40:45,308 - Extract Currency Data - Finished reading query, closing connection.
+INFO  11-10 19:40:45,443 - Extract Office Data - Finished reading query, closing connection.
+INFO  11-10 19:40:45,596 - Extract Account Action Data - Finished reading query, closing connection.
+INFO  11-10 19:40:45,710 - Extract Fee Data - Finished reading query, closing connection.
+INFO  11-10 19:40:45,716 - Extract Office Data - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
+INFO  11-10 19:40:45,906 - Extract Product Data - Finished reading query, closing connection.
+INFO  11-10 19:40:45,909 - Extract Account Action Data - Finished processing (I=20, O=0, R=0, W=20, U=0, E=0)
+INFO  11-10 19:40:45,913 - Extract Product Data - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
+INFO  11-10 19:40:45,917 - Extract Currency Data - Finished processing (I=178, O=0, R=0, W=178, U=0, E=0)
+INFO  11-10 19:40:45,936 - Office Dimension lookup/update - Finished processing (I=6, O=6, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:45,990 - Account Action Dimension lookup/update - Finished processing (I=20, O=20, R=20, W=20, U=0, E=0)
+INFO  11-10 19:40:46,017 - Product Dimension lookup/update - Finished processing (I=7, O=7, R=7, W=7, U=0, E=0)
+INFO  11-10 19:40:46,145 - Currency Dimension lookup/update - Finished processing (I=178, O=178, R=178, W=178, U=0, E=0)
+INFO  11-10 19:40:46,156 - Load Simple High Level Dimensions - Job execution finished
+INFO  11-10 19:40:46,172 - Create Data Warehouse - Starting entry [Load Personnel Dimension]
+INFO  11-10 19:40:46,649 - Load Personnel Dimension - Start of job execution
+INFO  11-10 19:40:46,667 - Load Personnel Dimension - Starting entry [Load dim_personnel]
+INFO  11-10 19:40:46,670 - Load dim_personnel - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_personnel_dim.ktr]
+INFO  11-10 19:40:47,291 - Load dim_personnel - Dispatching started for transformation [Load dim_personnel]
+INFO  11-10 19:40:47,305 - Load dim_personnel - This transformation can be replayed with replay date: 2010/10/11 19:40:47
+INFO  11-10 19:40:47,612 - Extract Personnel Data - Finished reading query, closing connection.
+INFO  11-10 19:40:47,616 - Extract Personnel Data - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
+INFO  11-10 19:40:47,621 - Office lookup - Finished processing (I=7, O=0, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:47,637 - Personnel Dimension lookup/update - Finished processing (I=6, O=6, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:47,643 - Load Personnel Dimension - Finished job entry [Load dim_personnel] (result=[true])
+INFO  11-10 19:40:47,650 - Load Personnel Dimension - Job execution finished
+INFO  11-10 19:40:47,660 - Create Data Warehouse - Starting entry [Load Staging Tables]
+INFO  11-10 19:40:48,123 - Load Staging Tables - Start of job execution
+INFO  11-10 19:40:48,140 - Load Staging Tables - Starting entry [Clear Down Staging Tables]
+INFO  11-10 19:40:48,253 - Load Staging Tables - Starting entry [Load stg_personnel_names_and_name_changes]
+INFO  11-10 19:40:48,255 - Load stg_personnel_names_and_name_changes - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_personnel_names_and_name_changes.ktr]
+INFO  11-10 19:40:48,850 - Load stg_personnel_names_and_name_changes - Dispatching started for transformation [Load stg_personnel_names_and_name_changes]
+INFO  11-10 19:40:48,864 - Load stg_personnel_names_and_name_changes - This transformation can be replayed with replay date: 2010/10/11 19:40:48
+INFO  11-10 19:40:48,884 - Write stg_personnel_names_and_name_changes - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:48,893 - Read Personnel Names (and name changes) - Finished reading query, closing connection.
+INFO  11-10 19:40:48,899 - Read Personnel Names (and name changes) - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
+INFO  11-10 19:40:48,904 - Write stg_personnel_names_and_name_changes - Finished processing (I=0, O=7, R=7, W=7, U=0, E=0)
+INFO  11-10 19:40:48,914 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Customers]
+INFO  11-10 19:40:48,916 - Load stg_customer_and_account_updates For Customers - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_customer_and_account_updates_For_Customers.ktr]
+INFO  11-10 19:40:49,561 - Load stg_customer_and_account_updates For Customers - Dispatching started for transformation [Load stg_customer_and_account_updates For Customers]
+INFO  11-10 19:40:49,629 - Load stg_customer_and_account_updates For Customers - This transformation can be replayed with replay date: 2010/10/11 19:40:49
+INFO  11-10 19:40:49,691 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:49,877 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished reading query, closing connection.
+INFO  11-10 19:40:49,878 - Group Status Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:49,881 - Get Center Hierarchy Changes - Loan Officer Reassignments - Finished processing (I=2, O=0, R=0, W=2, U=0, E=0)
+INFO  11-10 19:40:49,930 - New Centers - Finished reading query, closing connection.
+INFO  11-10 19:40:50,003 - Client Hierarchy Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:50,004 - Get Group (without center hierarchy) - Loan Officer Reassignments - Finished reading query, closing connection.
+INFO  11-10 19:40:50,009 - Clients Group Membership Removed - Finished reading query, closing connection.
+INFO  11-10 19:40:50,011 - Get Client (without group membership) - Loan Officer Reassignments - Finished reading query, closing connection.
+INFO  11-10 19:40:50,012 - Client Status Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:50,012 - Get Group (w/o center hierarchy) Branch Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:50,013 - New Groups (w/o center hierarchy) - Finished reading query, closing connection.
+INFO  11-10 19:40:50,017 - Get Client (without group membership) - Loan Officer Reassignments - Finished processing (I=8, O=0, R=0, W=8, U=0, E=0)
+INFO  11-10 19:40:50,019 - Get Client(w/o group membership) Branch Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:50,020 - Center Status Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:50,020 - Group Hierarchy Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:50,025 - Group Status Changes - Finished processing (I=24, O=0, R=0, W=24, U=0, E=0)
+INFO  11-10 19:40:50,026 - New Centers - Finished processing (I=7, O=0, R=0, W=7, U=0, E=0)
+INFO  11-10 19:40:50,029 - New Groups (within center hierarchy) - Finished reading query, closing connection.
+INFO  11-10 19:40:50,030 - New Clients (w/o group membership) - Finished reading query, closing connection.
+INFO  11-10 19:40:50,033 - New Clients (with group membership) - Finished reading query, closing connection.
+INFO  11-10 19:40:50,041 - Client Status Changes - Finished processing (I=30, O=0, R=0, W=30, U=0, E=0)
+INFO  11-10 19:40:50,044 - New Groups (within center hierarchy) - Finished processing (I=15, O=0, R=0, W=15, U=0, E=0)
+INFO  11-10 19:40:50,044 - Group Hierarchy Changes - Finished processing (I=2, O=0, R=0, W=2, U=0, E=0)
+INFO  11-10 19:40:50,045 - New Clients (with group membership) - Finished processing (I=21, O=0, R=0, W=21, U=0, E=0)
+INFO  11-10 19:40:50,045 - Clients Group Membership Removed - Finished processing (I=5, O=0, R=0, W=5, U=0, E=0)
+INFO  11-10 19:40:50,046 - New Groups (w/o center hierarchy) - Finished processing (I=10, O=0, R=0, W=10, U=0, E=0)
+INFO  11-10 19:40:50,047 - Client Hierarchy Changes - Finished processing (I=8, O=0, R=0, W=8, U=0, E=0)
+INFO  11-10 19:40:50,048 - Get Client(w/o group membership) Branch Changes - Finished processing (I=2, O=0, R=0, W=2, U=0, E=0)
+INFO  11-10 19:40:50,049 - New Clients (w/o group membership) - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
+INFO  11-10 19:40:50,049 - Lookup Branch Id - Finished processing (I=2, O=0, R=2, W=2, U=0, E=0)
+INFO  11-10 19:40:50,050 - Get Group (without center hierarchy) - Loan Officer Reassignments - Finished processing (I=2, O=0, R=0, W=2, U=0, E=0)
+INFO  11-10 19:40:50,056 - Remove Branch Name - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+INFO  11-10 19:40:50,073 - Lookup Loan Officer Id - Finished processing (I=35, O=0, R=35, W=35, U=0, E=0)
+INFO  11-10 19:40:50,076 - Remove Loan Officer Name - Finished processing (I=0, O=0, R=35, W=35, U=0, E=0)
+INFO  11-10 19:40:50,132 - Write stg_customer_and_account_updates - Finished processing (I=0, O=142, R=142, W=142, U=0, E=0)
+INFO  11-10 19:40:50,150 - Load Staging Tables - Starting entry [Load stg_customer_and_account_updates For Accounts]
+INFO  11-10 19:40:50,154 - Load stg_customer_and_account_updates For Accounts - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_customer_and_account_updates_For_Accounts.ktr]
+INFO  11-10 19:40:50,859 - Load stg_customer_and_account_updates For Accounts - Dispatching started for transformation [Load stg_customer_and_account_updates For Accounts]
+INFO  11-10 19:40:50,877 - Load stg_customer_and_account_updates For Accounts - This transformation can be replayed with replay date: 2010/10/11 19:40:50
+INFO  11-10 19:40:50,894 - Write stg_customer_and_account_updates - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:51,199 - Identify Loan Account Status Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:51,241 - Identify New Loan Accounts - Finished reading query, closing connection.
+INFO  11-10 19:40:51,245 - Identify New Loan Accounts - Finished processing (I=16, O=0, R=0, W=16, U=0, E=0)
+INFO  11-10 19:40:51,247 - Identify New Savings Accounts - Finished reading query, closing connection.
+INFO  11-10 19:40:51,251 - Identify New Savings Accounts - Finished processing (I=29, O=0, R=0, W=29, U=0, E=0)
+INFO  11-10 19:40:51,252 - Identify Savings Account Status Changes - Finished reading query, closing connection.
+INFO  11-10 19:40:51,253 - Identify Loan Account Status Changes - Finished processing (I=27, O=0, R=0, W=27, U=0, E=0)
+INFO  11-10 19:40:51,256 - Identify Savings Account Status Changes - Finished processing (I=42, O=0, R=0, W=42, U=0, E=0)
+INFO  11-10 19:40:51,294 - Write stg_customer_and_account_updates - Finished processing (I=0, O=114, R=114, W=114, U=0, E=0)
+INFO  11-10 19:40:51,304 - Load Staging Tables - Starting entry [Load stg_customer_type1_columns]
+INFO  11-10 19:40:51,307 - Load Staging Tables - Launched job entry [Load stg_customer_type1_columns] in parallel.
+INFO  11-10 19:40:51,307 - Load stg_customer_type1_columns - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_customer_type1_columns.ktr]
+INFO  11-10 19:40:51,322 - Load Staging Tables - Starting entry [Load stg_customer_type1_columns 2]
+INFO  11-10 19:40:51,348 - Load Staging Tables - Launched job entry [Load stg_customer_type1_columns 2] in parallel.
+INFO  11-10 19:40:51,350 - Load stg_customer_type1_columns 2 - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_stg_loan_type1_columns.ktr]
+INFO  11-10 19:40:52,047 - Loan stg_loan_type1_columns - Dispatching started for transformation [Loan stg_loan_type1_columns]
+INFO  11-10 19:40:52,061 - Loan stg_loan_type1_columns - This transformation can be replayed with replay date: 2010/10/11 19:40:52
+INFO  11-10 19:40:52,078 - Write stg_loan_type1_columns - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:52,142 - Load stg_customer_type1_columns - Dispatching started for transformation [Load stg_customer_type1_columns]
+INFO  11-10 19:40:52,155 - Load stg_customer_type1_columns - This transformation can be replayed with replay date: 2010/10/11 19:40:52
+INFO  11-10 19:40:52,170 - Write stg_customer_type1_columns - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:52,280 - Identify Staged Loans - Finished reading query, closing connection.
+INFO  11-10 19:40:52,285 - Identify Staged Loans - Finished processing (I=16, O=0, R=0, W=16, U=0, E=0)
+INFO  11-10 19:40:52,286 - Identify Staged Customers - Finished reading query, closing connection.
+INFO  11-10 19:40:52,305 - Identify Staged Customers - Finished processing (I=59, O=0, R=0, W=59, U=0, E=0)
+INFO  11-10 19:40:52,337 - Database join - Finished processing (I=32, O=0, R=16, W=16, U=0, E=0)
+INFO  11-10 19:40:52,351 - Write stg_loan_type1_columns - Finished processing (I=0, O=16, R=16, W=16, U=0, E=0)
+INFO  11-10 19:40:52,370 - Database join - Finished processing (I=118, O=0, R=59, W=59, U=0, E=0)
+INFO  11-10 19:40:52,387 - Write stg_customer_type1_columns - Finished processing (I=0, O=59, R=59, W=59, U=0, E=0)
+INFO  11-10 19:40:52,394 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Accounts] (result=[true])
+INFO  11-10 19:40:52,396 - Load Staging Tables - Finished job entry [Load stg_customer_and_account_updates For Customers] (result=[true])
+INFO  11-10 19:40:52,398 - Load Staging Tables - Finished job entry [Load stg_personnel_names_and_name_changes] (result=[true])
+INFO  11-10 19:40:52,401 - Load Staging Tables - Finished job entry [Clear Down Staging Tables] (result=[true])
+INFO  11-10 19:40:52,408 - Load Staging Tables - Job execution finished
+INFO  11-10 19:40:52,427 - Create Data Warehouse - Starting entry [Load Customer And Loan And Savings Dimensions]
+INFO  11-10 19:40:52,977 - Load Customer And Loan And Savings Dimensions - Start of job execution
+INFO  11-10 19:40:52,995 - Load Customer And Loan And Savings Dimensions - Starting entry [Load dim_customer, dim_loan and dim_savings]
+INFO  11-10 19:40:52,998 - Load dim_customer, dim_loan and dim_savings - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_customer_loan_savings_dim.ktr]
+INFO  11-10 19:40:53,597 - load_customer_loan_savings_dim - Dispatching started for transformation [load_customer_loan_savings_dim]
+INFO  11-10 19:40:53,605 - load_customer_loan_savings_dim - This transformation can be replayed with replay date: 2010/10/11 19:40:53
+INFO  11-10 19:40:53,935 - Load Customers, Loans and Savings - Finished reading query, closing connection.
+INFO  11-10 19:40:53,938 - Load Customers, Loans and Savings - Finished processing (I=0, O=0, R=0, W=1, U=0, E=0)
+INFO  11-10 19:40:53,944 - Load Customer And Loan And Savings Dimensions - Finished job entry [Load dim_customer, dim_loan and dim_savings] (result=[true])
+INFO  11-10 19:40:53,951 - Load Customer And Loan And Savings Dimensions - Job execution finished
+INFO  11-10 19:40:53,963 - Create Data Warehouse - Starting entry [Load Fact Tables]
+INFO  11-10 19:40:54,434 - Load Fact Tables - Start of job execution
+INFO  11-10 19:40:54,452 - Load Fact Tables - Starting entry [Load fact_loan_disbursals]
+INFO  11-10 19:40:54,455 - Load Fact Tables - Launched job entry [Load fact_loan_disbursals] in parallel.
+INFO  11-10 19:40:54,455 - Load fact_loan_disbursals - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_LoanDisbursals.ktr]
+INFO  11-10 19:40:54,460 - Load Fact Tables - Starting entry [Load fact_client_attendances]
+INFO  11-10 19:40:54,463 - Load Fact Tables - Launched job entry [Load fact_client_attendances] in parallel.
+INFO  11-10 19:40:54,464 - Load fact_client_attendances - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_ClientAttendances.ktr]
+INFO  11-10 19:40:54,469 - Load Fact Tables - Starting entry [Load fact_loan_repayments]
+INFO  11-10 19:40:54,472 - Load Fact Tables - Launched job entry [Load fact_loan_repayments] in parallel.
+INFO  11-10 19:40:54,472 - Load fact_loan_repayments - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_LoanRepayments.ktr]
+INFO  11-10 19:40:54,477 - Load Fact Tables - Starting entry [Load dw_loan_schedules]
+INFO  11-10 19:40:54,479 - Load Fact Tables - Launched job entry [Load dw_loan_schedules] in parallel.
+INFO  11-10 19:40:54,484 - Load Fact Tables - Starting entry [Load fact_savings_transactions]
+INFO  11-10 19:40:54,487 - Load Fact Tables - Launched job entry [Load fact_savings_transactions] in parallel.
+INFO  11-10 19:40:54,490 - Load dw_loan_schedules - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_DW_Loan_Schedules.ktr]
+INFO  11-10 19:40:54,517 - Load fact_savings_transactions - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_SavingsTransactions.ktr]
+INFO  11-10 19:40:55,648 - Load_ClientAttendances - Dispatching started for transformation [Load_ClientAttendances]
+INFO  11-10 19:40:55,758 - Load_ClientAttendances - This transformation can be replayed with replay date: 2010/10/11 19:40:55
+INFO  11-10 19:40:55,784 - Create fact_client_attendances - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:55,885 - Read customer_attendance - Finished reading query, closing connection.
+INFO  11-10 19:40:55,982 - Load_DW_Loan_Schedules - Dispatching started for transformation [Load_DW_Loan_Schedules]
+INFO  11-10 19:40:55,997 - Load_DW_Loan_Schedules - This transformation can be replayed with replay date: 2010/10/11 19:40:55
+INFO  11-10 19:40:56,014 - Create dw_loan_schedules - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:56,166 - Load_LoanDisbursals - Dispatching started for transformation [Load_LoanDisbursals]
+INFO  11-10 19:40:56,226 - Load_LoanDisbursals - This transformation can be replayed with replay date: 2010/10/11 19:40:56
+INFO  11-10 19:40:56,232 - Load_SavingsTransactions - Dispatching started for transformation [Load_SavingsTransactions]
+INFO  11-10 19:40:56,288 - Create Loan Disbursals - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:56,302 - Load_SavingsTransactions - This transformation can be replayed with replay date: 2010/10/11 19:40:56
+INFO  11-10 19:40:56,305 - Read loan_schedule - Finished reading query, closing connection.
+INFO  11-10 19:40:56,334 - Read loan_schedule - Finished processing (I=121, O=0, R=0, W=121, U=0, E=0)
+INFO  11-10 19:40:56,370 - Create Savings Transactions - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:56,493 - Load_LoanRepayments - Dispatching started for transformation [Load_LoanRepayments]
+INFO  11-10 19:40:56,544 - Load_LoanRepayments - This transformation can be replayed with replay date: 2010/10/11 19:40:56
+INFO  11-10 19:40:56,553 - Read account_trxn - Finished reading query, closing connection.
+INFO  11-10 19:40:56,631 - Read account_trxn for Savings Transactions - Finished reading query, closing connection.
+INFO  11-10 19:40:56,666 - Read account_trxn - Finished processing (I=6, O=0, R=0, W=6, U=0, E=0)
+INFO  11-10 19:40:56,671 - Read account_trxn for Savings Transactions - Finished processing (I=28, O=0, R=0, W=28, U=0, E=0)
+INFO  11-10 19:40:56,678 - Create Loan Repayments - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:56,686 - Due Date Lookup - Finished processing (I=42, O=0, R=121, W=121, U=0, E=0)
+INFO  11-10 19:40:56,689 - Disbursal Date Lookup - Finished processing (I=4, O=0, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:56,703 - Account Action lookup - Finished processing (I=21, O=0, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:56,711 - Create Date Lookup - Finished processing (I=3, O=0, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:56,725 - Read account_trxn - Finished reading query, closing connection.
+INFO  11-10 19:40:56,757 - Action Date Lookup - Finished processing (I=8, O=0, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,765 - Read account_trxn - Finished processing (I=37, O=0, R=0, W=37, U=0, E=0)
+INFO  11-10 19:40:56,769 - Lookup Latest Pre Active Loan Account Entry - Finished processing (I=6, O=0, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:56,773 - Filter rows - Finished processing (I=0, O=0, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:56,787 - Action Date Lookup - Finished processing (I=4, O=0, R=37, W=37, U=0, E=0)
+INFO  11-10 19:40:56,812 - Due Date Lookup - Finished processing (I=8, O=0, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,824 - Create Date Lookup - Finished processing (I=7, O=0, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,825 - Create Loan Disbursals - Finished processing (I=0, O=6, R=6, W=6, U=0, E=0)
+INFO  11-10 19:40:56,834 - Due Date Lookup - Finished processing (I=10, O=0, R=37, W=37, U=0, E=0)
+INFO  11-10 19:40:56,857 - Account Action lookup - Finished processing (I=21, O=0, R=37, W=37, U=0, E=0)
+INFO  11-10 19:40:56,859 - Create Date Lookup - Finished processing (I=4, O=0, R=37, W=37, U=0, E=0)
+INFO  11-10 19:40:56,860 - Account Action lookup - Finished processing (I=21, O=0, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,877 - Savings Account - get latest open entry - Finished processing (I=28, O=0, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,879 - Determine Account Action Processing - Finished processing (I=0, O=0, R=37, W=37, U=0, E=0)
+INFO  11-10 19:40:56,880 - Lookup Latest Active Loan Account Entry - Finished processing (I=21, O=0, R=21, W=21, U=0, E=0)
+INFO  11-10 19:40:56,884 - Lookup Written Off Loan Account Entry - Finished processing (I=16, O=0, R=16, W=16, U=0, E=0)
+INFO  11-10 19:40:56,887 - Filter rows - Finished processing (I=0, O=0, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,889 - Filter rows - Finished processing (I=0, O=0, R=21, W=21, U=0, E=0)
+INFO  11-10 19:40:56,908 - Create dw_loan_schedules - Finished processing (I=0, O=121, R=121, W=121, U=0, E=0)
+INFO  11-10 19:40:56,915 - Create Savings Transactions - Finished processing (I=0, O=28, R=28, W=28, U=0, E=0)
+INFO  11-10 19:40:56,920 - Create Loan Repayments - Finished processing (I=0, O=37, R=37, W=37, U=0, E=0)
+INFO  11-10 19:40:56,931 - Load Fact Tables - Job execution finished
+INFO  11-10 19:40:56,951 - Create Data Warehouse - Starting entry [Adjust/Reverse Repayments]
+INFO  11-10 19:40:56,954 - Adjust/Reverse Repayments - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_LoanRepayments_Adjustments_Reversals.ktr]
+INFO  11-10 19:40:57,564 - Load_LoanRepayments_Adjustments_Reversals - Dispatching started for transformation [Load_LoanRepayments_Adjustments_Reversals]
+INFO  11-10 19:40:57,603 - Load_LoanRepayments_Adjustments_Reversals - This transformation can be replayed with replay date: 2010/10/11 19:40:57
+INFO  11-10 19:40:57,632 - Create Loan Repayments - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:57,648 - Read account_trxn - Finished reading query, closing connection.
+INFO  11-10 19:40:57,652 - Read account_trxn - Finished processing (I=11, O=0, R=0, W=11, U=0, E=0)
+INFO  11-10 19:40:57,655 - Action Date Lookup - Finished processing (I=1, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,669 - Due Date Lookup - Finished processing (I=7, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,680 - Create Date Lookup - Finished processing (I=1, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,685 - Account Action lookup - Finished processing (I=21, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,688 - Determine Account Action Processing - Finished processing (I=0, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,696 - Update Repayment Adjusted Flag - Finished reading query, closing connection.
+INFO  11-10 19:40:57,700 - Update Repayment Adjusted Flag - Finished processing (I=0, O=0, R=9, W=9, U=0, E=0)
+INFO  11-10 19:40:57,704 - Update Repayment Reversed Flag - Finished reading query, closing connection.
+INFO  11-10 19:40:57,707 - Lookup Latest Active Loan Account Entry - Finished processing (I=11, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,707 - Update Repayment Reversed Flag - Finished processing (I=0, O=0, R=2, W=2, U=0, E=0)
+INFO  11-10 19:40:57,711 - Filter rows - Finished processing (I=0, O=0, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,725 - Create Loan Repayments - Finished processing (I=0, O=11, R=11, W=11, U=0, E=0)
+INFO  11-10 19:40:57,734 - Create Data Warehouse - Starting entry [Adjust Customer Status Values]
+INFO  11-10 19:40:58,210 - Adjust Customer Status Values - Start of job execution
+INFO  11-10 19:40:58,227 - Adjust Customer Status Values - Starting entry [SQL]
+INFO  11-10 19:40:58,261 - Adjust Customer Status Values - Finished job entry [SQL] (result=[true])
+INFO  11-10 19:40:58,269 - Adjust Customer Status Values - Job execution finished
+INFO  11-10 19:40:58,281 - Create Data Warehouse - Starting entry [Derive Loan Arrears]
+INFO  11-10 19:40:58,284 - Derive Loan Arrears - Loading transformation from XML file [file:///C:/dev/businessIntelligenceRepo/bi/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/Load_hist_loan_arrears.ktr]
+INFO  11-10 19:40:58,862 - Load_hist_loan_arrears - Dispatching started for transformation [Load_hist_loan_arrears]
+INFO  11-10 19:40:58,876 - Load_hist_loan_arrears - This transformation can be replayed with replay date: 2010/10/11 19:40:58
+INFO  11-10 19:40:58,892 - Write hist_loan_arrears - Connected to database [DestinationDB] (commit=1000)
+INFO  11-10 19:40:59,676 - process_loan_arrears - Dispatching started for transformation [process_loan_arrears]
+INFO  11-10 19:40:59,719 - process_loan_arrears - This transformation can be replayed with replay date: 2010/10/11 19:40:59
+INFO  11-10 19:40:59,783 - Identify Dates to Process - Finished reading query, closing connection.
+INFO  11-10 19:40:59,786 - Identify Dates to Process - Finished processing (I=101, O=0, R=0, W=101, U=0, E=0)
+INFO  11-10 19:41:00,292 - Get Loan Accounts In Arrears As Of Date - Finished reading query, closing connection.
+INFO  11-10 19:41:00,297 - Get Loan Accounts In Arrears As Of Date - Finished processing (I=69, O=0, R=101, W=69, U=0, E=0)
+INFO  11-10 19:41:00,305 - Loan Arrears Mapping input specification - Finished processing (I=0, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,311 - Get Last Installment that had a Payment - Finished processing (I=69, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,317 - Get Last Installment Due - Finished processing (I=69, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,321 - Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment - Finished processing (I=69, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,334 - Calculate Installment Due and In Arrears Values - Finished processing (I=0, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,338 - Calculate Outstanding Amounts - Finished processing (I=0, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,346 - Calculate days_in_arrears - Finished processing (I=138, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,357 - Identify Loan Account Key - Finished processing (I=69, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,371 - Identify As Of Date Key - Finished processing (I=69, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,375 - Identify Weekly Band Key - Finished processing (I=13, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,378 - Identify Monthly Band Key - Finished processing (I=5, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,381 - Mapping output specification - Finished processing (I=0, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,384 - Build Loan Arrears Entry for a Date - Finished processing (I=0, O=0, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,404 - Write hist_loan_arrears - Finished processing (I=0, O=69, R=69, W=69, U=0, E=0)
+INFO  11-10 19:41:00,415 - Create Data Warehouse - Starting entry [Mail Success]
+INFO  11-10 19:41:06,306 - Create Data Warehouse - Finished job entry [Mail Success] (result=[true])
+INFO  11-10 19:41:06,312 - Create Data Warehouse - Finished job entry [Derive Loan Arrears] (result=[true])
+INFO  11-10 19:41:06,314 - Create Data Warehouse - Finished job entry [Adjust Customer Status Values] (result=[true])
+INFO  11-10 19:41:06,319 - Create Data Warehouse - Finished job entry [Adjust/Reverse Repayments] (result=[true])
+INFO  11-10 19:41:06,322 - Create Data Warehouse - Finished job entry [Load Fact Tables] (result=[true])
+INFO  11-10 19:41:06,325 - Create Data Warehouse - Finished job entry [Load Customer And Loan And Savings Dimensions] (result=[true])
+INFO  11-10 19:41:06,327 - Create Data Warehouse - Finished job entry [Load Staging Tables] (result=[true])
+INFO  11-10 19:41:06,335 - Create Data Warehouse - Finished job entry [Load Personnel Dimension] (result=[true])
+INFO  11-10 19:41:06,337 - Create Data Warehouse - Finished job entry [Load Simple High Level Dimensions] (result=[true])
+INFO  11-10 19:41:06,345 - Create Data Warehouse - Job execution finished
+INFO  11-10 19:41:06,348 - Kitchen - Kitchen
+INFO  11-10 19:41:06,351 - Kitchen - Kitchen
+INFO  11-10 19:41:06,354 - Kitchen - Kitchen

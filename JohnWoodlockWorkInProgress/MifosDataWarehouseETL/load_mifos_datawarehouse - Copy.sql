@@ -650,8 +650,6 @@ CREATE TABLE `fact_loan_repayments` (
   `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `reversed` tinyint(4) NOT NULL DEFAULT '0',
-  `adjusted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_trxn_id`),
   KEY `account_action_key` (`account_action_key`),
   KEY `currency_key` (`currency_key`),
@@ -756,21 +754,17 @@ CREATE TABLE `hist_loan_arrears` (
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
   `arrears_band_weekly_key` tinyint(3) unsigned DEFAULT '0',
   `arrears_band_monthly_key` tinyint(3) unsigned DEFAULT '0',
-  `days_in_arrears` int(11) NOT NULL,
-  `installments_in_arrears` int(11) NOT NULL,
+  `days_in_arrears` int(10) unsigned NOT NULL,
+  `installments_in_arrears` int(10) unsigned NOT NULL,
   `principal_in_arrears` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_in_arrears` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `total_in_arrears` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `principal_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `total_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `loan_account_id` int(11) NOT NULL,
-  `as_of_date` date NOT NULL,
   PRIMARY KEY (`as_of_date_key`,`loan_account_key`),
   KEY `product_key` (`product_key`),
   KEY `loan_account_key` (`loan_account_key`),
-  KEY `loan_account_id` (`loan_account_id`),
-  KEY `as_of_date` (`as_of_date`),
   KEY `customer_key` (`customer_key`),
   KEY `group_key` (`group_key`),
   KEY `center_key` (`center_key`),
@@ -1713,9 +1707,9 @@ call SPcustomer_return_current_key_values(customer_id_param, created_date_param,
 call SPcustomer_update_validto(@current_customer_key, created_date_param);
 
 
-if parent_id_param is not null then 
+if parent_id_param is not null then /*either a client or a group has a parent change*/
     if parent_id_param = 0 then 
-        if customer_level_id_param = 1 then 
+        if customer_level_id_param = 1 then /* client exiting group membership */
             set group_key_var = 0;
             set center_key_var = @current_center_key;
             set loan_officer_key_var = @current_loan_officer_key;
@@ -1751,19 +1745,22 @@ if loan_officer_id_param is not null then
         set loan_officer_key_var = @loan_officer_key_latest;
     if @loan_officer_key_latest > 0 then
         set branch_key_var = @branch_key_latest; 
-    else 
+    else /* 0 is an for a null loan officer so use current value */
         set branch_key_var = @current_branch_key; 
     end if;
 
 end if;
 
 if branch_id_param is not null then    
-
+/* branch membership change for 
+1/ client w/o group membership
+2/ group w/o center hierarchy
+*/
     call SPoffice_return_current_key_values(branch_id_param, created_date_param, @branch_key_latest);
     
     set group_key_var = @current_group_key;
     set center_key_var = @current_center_key;   
-    set loan_officer_key_var = 0; 
+    set loan_officer_key_var = 0; /* loan officer has to be reassigned*/
     set branch_key_var = @branch_key_latest; 
     
 end if;
@@ -2393,4 +2390,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-10-11 14:49:18
+-- Dump completed on 2010-08-10  1:54:34

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_LoanRepayments</name>
+    <name>Load_LoanRepayments_Adjustments_Reversals</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -69,7 +69,10 @@
       <note>Loading Repayment Transactions (account action ids are in brackets)
 -------------------------------------------------------------------------------------------------------------
 
-&apos;Active&apos; Repayment Entries (1)
+Reversals (9) is a cancelling of a loan.
+Adjustments (18)
+
+&apos;Active&apos; Repayment Entries (9, 18)
 ---------------------------------------------------------
 These transactions need to be linked into a loan entry with an active status (active or on-hold). When a loan is paid off (early or 
 otherwise) then the loan entry status that matches the transaction action_date will be &apos;AccountState-ClosedObligationMet&apos; (unless
@@ -82,15 +85,11 @@ on the same day as it was closed.
 
 In some cases loan repayments occur earlier than the first time a loan became active (or was created).  This is due to input of historical
 information.  In this case, the repayment is attached to the earliest active status entry for the loan.
-
-Written Off (15) and Rescheduled (20) &apos;Repayments&apos;
---------------------------------------------------------------------
-The expectation is that there will be a single loan entry status of &apos;AccountAction-LoanWrittenOff&apos; or &apos;AccountAction-LoanRescheduled&apos;
-to match to the transaction action_date.  This process will fall over with a &apos;null&apos; value if this isn&apos;t true.</note>
+</note>
       <xloc>6</xloc>
       <yloc>243</yloc>
       <width>669</width>
-      <heigth>271</heigth>
+      <heigth>247</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -183,7 +182,7 @@ to match to the transaction action_date.  This process will fall over with a &ap
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Active Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Active Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Update Repayment Reversed Flag</to><enabled>Y</enabled> </hop>  <hop> <from>Update Repayment Reversed Flag</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Update Repayment Adjusted Flag</to><enabled>Y</enabled> </hop>  <hop> <from>Update Repayment Adjusted Flag</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Abort Repayments Transformation</name>
     <type>Abort</type>
@@ -447,8 +446,8 @@ to match to the transaction action_date.  This process will fall over with a &ap
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>673</xloc>
-      <yloc>176</yloc>
+      <xloc>726</xloc>
+      <yloc>152</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -470,12 +469,10 @@ to match to the transaction action_date.  This process will fall over with a &ap
 <case_value_decimal/>
 <case_value_group/>
 <default_target_step>Abort Repayments Transformation</default_target_step>
-<cases><case><value>1</value>
-<target_step>Lookup Latest Active Loan Account Entry</target_step>
-</case><case><value>15</value>
-<target_step>Lookup Written Off Loan Account Entry</target_step>
-</case><case><value>20</value>
-<target_step>Lookup Rescheduled Loan Account Entry</target_step>
+<cases><case><value>9</value>
+<target_step>Update Repayment Adjusted Flag</target_step>
+</case><case><value>18</value>
+<target_step>Update Repayment Reversed Flag</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>264</xloc>
@@ -587,8 +584,8 @@ order by loan_account_key </sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>796</xloc>
-      <yloc>246</yloc>
+      <xloc>886</xloc>
+      <yloc>245</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -632,94 +629,8 @@ order by loan_account_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>683</xloc>
-      <yloc>4</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Lookup Rescheduled Loan Account Entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_loan
-where loan_account_id = ?
-and valid_from &lt;= ?
-and valid_to &gt; ?
-and loan_status = &apos;AccountState-ClosedRescheduled&apos;</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>loan_account_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>520</xloc>
-      <yloc>150</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Lookup Written Off Loan Account Entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_loan
-where loan_account_id = ?
-and valid_from &lt;= ?
-and valid_to &gt; ?
-and loan_status = &apos;AccountState-ClosedWrittenOff&apos;</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>loan_account_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>625</xloc>
-      <yloc>79</yloc>
+      <xloc>675</xloc>
+      <yloc>50</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -740,14 +651,13 @@ select atxn.account_action_id,
 atxn.account_trxn_id, atxn.account_id as loan_account_id, atxn.payment_id, atxn.installment_id, 
 atxn.due_date, atxn.action_date, date(atxn.created_date) created_date, 
 ltxn.principal_amount, ltxn.interest_amount, ltxn.misc_fee_amount, 
-ltxn.misc_penalty_amount
+ltxn.misc_penalty_amount, atxn.related_trxn_id
 from account_trxn atxn
 inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
-where atxn.account_action_id in (1, 15, 20)
+where atxn.account_action_id in (9, 18)
 &#47;* 
-1  - &apos;AccountAction-LoanRepayment&apos;
-15 - &apos;AccountAction-LoanWrittenOff&apos;
-20 - &apos;AccountAction-LoanRescheduled&apos;
+9  - &apos;AccountAction-Adjustment&apos;
+18 - &apos;AccountAction-LoanReversal&apos;
 *&#47;</sql>
     <limit>0</limit>
     <lookup/>
@@ -784,8 +694,72 @@ where atxn.account_action_id in (1, 15, 20)
       </remove>      <remove>        <name>currency_key</name>
       </remove>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>833</xloc>
-      <yloc>153</yloc>
+      <xloc>924</xloc>
+      <yloc>158</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Update Repayment Adjusted Flag</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>Y</single_statement>
+    <replace_variables>Y</replace_variables>
+    <sql>update fact_loan_repayments
+set adjusted = true
+where fact_loan_repayments.account_trxn_id = ?;</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>related_trxn_id</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>512</xloc>
+      <yloc>173</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Update Repayment Reversed Flag</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>Y</single_statement>
+    <replace_variables>Y</replace_variables>
+    <sql>update fact_loan_repayments
+set reversed = true
+where fact_loan_repayments.account_trxn_id = ?;</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>related_trxn_id</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>487</xloc>
+      <yloc>81</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -136,8 +136,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>366</xloc>
-      <yloc>370</yloc>
+      <xloc>254</xloc>
+      <yloc>367</yloc>
       </entry>
     <entry>
       <name>START</name>
@@ -306,8 +306,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>617</xloc>
-      <yloc>189</yloc>
+      <xloc>677</xloc>
+      <yloc>128</yloc>
       </entry>
     <entry>
       <name>Adjust Customer Status Values</name>
@@ -338,6 +338,70 @@ But we love you anyway.</comment>
       <nr>0</nr>
       <xloc>619</xloc>
       <yloc>371</yloc>
+      </entry>
+    <entry>
+      <name>Adjust&#47;Reverse Repayments</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanRepayments_Adjustments_Reversals.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>679</xloc>
+      <yloc>245</yloc>
+      </entry>
+    <entry>
+      <name>Derive Loan Arrears</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_hist_loan_arrears.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>434</xloc>
+      <yloc>367</yloc>
       </entry>
   </entries>
   <hops>
@@ -432,7 +496,25 @@ But we love you anyway.</comment>
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>Adjust Customer Status Values</from>
+      <to>Mail Failure</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Load Fact Tables</from>
+      <to>Adjust&#47;Reverse Repayments</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Adjust&#47;Reverse Repayments</from>
       <to>Adjust Customer Status Values</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -441,7 +523,25 @@ But we love you anyway.</comment>
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>Adjust&#47;Reverse Repayments</from>
+      <to>Mail Failure</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Adjust Customer Status Values</from>
+      <to>Derive Loan Arrears</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Derive Loan Arrears</from>
       <to>Mail Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -450,7 +550,7 @@ But we love you anyway.</comment>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Adjust Customer Status Values</from>
+      <from>Derive Loan Arrears</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
