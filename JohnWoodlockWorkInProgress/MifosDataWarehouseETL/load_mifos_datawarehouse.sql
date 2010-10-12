@@ -527,7 +527,7 @@ CREATE TABLE `dw_mfi_configuration` (
 
 LOCK TABLES `dw_mfi_configuration` WRITE;
 /*!40000 ALTER TABLE `dw_mfi_configuration` DISABLE KEYS */;
-INSERT INTO `dw_mfi_configuration` VALUES (1,10,30);
+INSERT INTO `dw_mfi_configuration` VALUES (1,0,0);
 /*!40000 ALTER TABLE `dw_mfi_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 

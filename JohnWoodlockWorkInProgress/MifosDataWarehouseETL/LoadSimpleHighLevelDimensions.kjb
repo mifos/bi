@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>541</xloc>
-      <yloc>197</yloc>
+      <xloc>532</xloc>
+      <yloc>214</yloc>
       </entry>
     <entry>
       <name>Load dim_currency</name>
@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>214</xloc>
-      <yloc>206</yloc>
+      <xloc>232</xloc>
+      <yloc>226</yloc>
       </entry>
     <entry>
       <name>Load dim_fee</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>263</xloc>
-      <yloc>20</yloc>
+      <xloc>367</xloc>
+      <yloc>16</yloc>
       </entry>
     <entry>
       <name>Load dim_product</name>
@@ -204,8 +204,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>381</xloc>
-      <yloc>281</yloc>
+      <xloc>383</xloc>
+      <yloc>284</yloc>
       </entry>
     <entry>
       <name>Load dim_office</name>
@@ -236,8 +236,40 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>483</xloc>
-      <yloc>17</yloc>
+      <xloc>536</xloc>
+      <yloc>66</yloc>
+      </entry>
+    <entry>
+      <name>Load dw_mfi_configuration</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_dw_mfi_configuration.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>197</xloc>
+      <yloc>98</yloc>
       </entry>
   </entries>
   <hops>
@@ -280,6 +312,15 @@
     <hop>
       <from>START</from>
       <to>Load dim_office</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Load dw_mfi_configuration</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
