@@ -96,13 +96,13 @@
       <yloc>141</yloc>
       </entry>
     <entry>
-      <name>create ppi_category_likelihoods table</name>
+      <name>create ppi_category_likelihood_bands table</name>
       <description/>
       <type>SQL</type>
       <sql/>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>T</sqlfromfile>
-      <sqlfilename>${Internal.Job.Filename.Directory}&#47;create_ppi_category_likelihoods.sql</sqlfilename>
+      <sqlfilename>${Internal.Job.Filename.Directory}&#47;create_ppi_category_likelihood_bands.sql</sqlfilename>
       <sendOneStatement>F</sendOneStatement>
       <connection>DestinationDB</connection>
       <parallel>N</parallel>
@@ -150,7 +150,7 @@
       <sql/>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>T</sqlfromfile>
-      <sqlfilename>${Internal.Job.Filename.Directory}&#47;povertyBands.sql</sqlfilename>
+      <sqlfilename>${Internal.Job.Filename.Directory}&#47;povertyBandsByColumn.sql</sqlfilename>
       <sendOneStatement>F</sendOneStatement>
       <connection>DestinationDB</connection>
       <parallel>N</parallel>
@@ -172,7 +172,7 @@
     </hop>
     <hop>
       <from>create ppi_survey_results table</from>
-      <to>create ppi_category_likelihoods table</to>
+      <to>create ppi_category_likelihood_bands table</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -180,7 +180,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>create ppi_category_likelihoods table</from>
+      <from>create ppi_category_likelihood_bands table</from>
       <to>load poverty bands</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
