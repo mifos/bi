@@ -54,7 +54,7 @@ as ppi_score
 from
 (SELECT
 qg.title as ppi_survey_name,
-GROUP_CONCAT(if(q.short_name = 'Date Survey Was Taken', qgr.response, NULL)) AS 'date_survey_taken',
+GROUP_CONCAT(if(q.short_name = 'Date Survey Was Taken', date(qgr.response), NULL)) AS 'date_survey_taken',
 qgi.entity_id as 'client_id',
 GROUP_CONCAT(if(q.short_name = 'How many people aged 0 to 17 are in the household?', qgr.response, NULL)) AS 'Q1',
 GROUP_CONCAT(if(q.short_name = 'What is the household’s principal occupation?', qgr.response, NULL)) AS 'Q2',
