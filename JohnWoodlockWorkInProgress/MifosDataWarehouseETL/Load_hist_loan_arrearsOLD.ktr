@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_hist_loan_arrears_v4</name>
+    <name>Load_hist_loan_arrears</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -257,7 +257,7 @@ and d.date_value &gt;=
     where loan_account_key &gt; 0) 
 
 order by d.date_value</sql>
-    <limit>20</limit>
+    <limit/>
     <lookup/>
     <execute_each_row>N</execute_each_row>
     <variables_active>N</variables_active>
@@ -385,8 +385,8 @@ order by d.date_value</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>733</xloc>
-      <yloc>34</yloc>
+      <xloc>747</xloc>
+      <yloc>35</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
