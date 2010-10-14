@@ -166,7 +166,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Table input</from><to>Table output</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Table input</from><to>Database lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Database lookup</from><to>Table output</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Table input</name>
     <type>TableInput</type>
@@ -178,7 +178,7 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select answers.ppi_survey_name, 1 as points_version, answers.date_survey_taken, answers.client_id, 
+    <sql>select answers.survey_id, 1 as points_version, date(answers.date_survey_taken) as date_survey_taken, answers.client_id, 
 (
 case
 when answers.Q1=&apos;Five or more&apos; then 0
@@ -232,7 +232,7 @@ end
 as ppi_score
 from
 (SELECT
-qg.title as ppi_survey_name,
+qg.id as survey_id,
 GROUP_CONCAT(if(q.short_name = &apos;Date Survey Was Taken&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
 qgi.entity_id as &apos;client_id&apos;,
 GROUP_CONCAT(if(q.short_name = &apos;How many people aged 0 to 17 are in the household?&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
@@ -274,12 +274,12 @@ group by client_id</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <schema/>
-    <table>ppi_survey_results</table>
+    <table>fact_ppi_survey_results</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
-    <specify_fields>N</specify_fields>
+    <specify_fields>Y</specify_fields>
     <partitioning_enabled>N</partitioning_enabled>
     <partitioning_field/>
     <partitioning_daily>N</partitioning_daily>
@@ -291,25 +291,92 @@ group by client_id</sql>
     <return_field/>
     <fields>
         <field>
-          <column_name>ppi_survey_name</column_name>
-          <stream_name>ppi_survey_name</stream_name>
+          <column_name>survey_id</column_name>
+          <stream_name>survey_id</stream_name>
+        </field>
+        <field>
+          <column_name>points_version</column_name>
+          <stream_name>points_version</stream_name>
         </field>
         <field>
           <column_name>date_survey_taken</column_name>
           <stream_name>date_survey_taken</stream_name>
         </field>
         <field>
-          <column_name>client_id</column_name>
-          <stream_name>client_id</stream_name>
-        </field>
-        <field>
           <column_name>ppi_score</column_name>
           <stream_name>ppi_score</stream_name>
+        </field>
+        <field>
+          <column_name>customer_key</column_name>
+          <stream_name>customer_key</stream_name>
+        </field>
+        <field>
+          <column_name>branch_key</column_name>
+          <stream_name>branch_key</stream_name>
         </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>322</xloc>
+      <yloc>140</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Database lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>client_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>209</xloc>
       <yloc>140</yloc>
       <draw>Y</draw>
       </GUI>

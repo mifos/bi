@@ -6,7 +6,9 @@ CREATE TABLE `fact_ppi_survey_results` (
   `customer_key` int(11) NOT NULL,
   `branch_key` int(11) NOT NULL,
   `ppi_score` int(11) NOT NULL,
-  PRIMARY KEY (`ppi_results_id`)
+  PRIMARY KEY (`ppi_results_id`),
+  KEY `branch_key` (`branch_key`),
+  KEY `customer_key` (`customer_key`)
 ) ENGINE=InnoDB
 
 

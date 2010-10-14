@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Transformation 1</name>
+    <name>ppi_survey</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -116,7 +116,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get PPI surveys</from><to>Table output</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get PPI surveys</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get PPI surveys</name>
     <type>TableInput</type>
@@ -128,7 +128,7 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>SELECT id as question_group_id, title as survey_name FROM question_group where is_ppi = 1;</sql>
+    <sql>SELECT id as survey_id, title as survey_name FROM question_group where is_ppi = 1;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -143,8 +143,8 @@
     </step>
 
   <step>
-    <name>Table output</name>
-    <type>TableOutput</type>
+    <name>Insert &#47; Update</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -153,28 +153,32 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <schema/>
-    <table>dim_ppi_survey</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>N</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-    </fields>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dw_ppi_survey</table>
+      <key>
+        <name>survey_id</name>
+        <field>survey_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>survey_name</name>
+        <rename>survey_name</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>survey_id</name>
+        <rename>survey_id</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>165</xloc>
-      <yloc>230</yloc>
+      <xloc>169</xloc>
+      <yloc>220</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
