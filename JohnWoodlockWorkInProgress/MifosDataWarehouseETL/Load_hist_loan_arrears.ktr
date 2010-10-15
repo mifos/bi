@@ -131,7 +131,7 @@
     <specification_method>filename</specification_method>
     <trans_object_id/>
     <trans_name/>
-    <filename>&#47;&#47;&#47;C:&#47;dev&#47;businessIntelligenceRepo&#47;bi&#47;JohnWoodlockWorkInProgress&#47;MifosDataWarehouseETL&#47;process_loan_arrears.ktr</filename>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;process_loan_arrears.ktr</filename>
     <directory_path/>
     <mappings>
       <input>
