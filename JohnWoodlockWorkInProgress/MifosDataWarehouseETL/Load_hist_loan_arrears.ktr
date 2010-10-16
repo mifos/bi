@@ -318,7 +318,7 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select l.loan_account_id, ? as as_of_date,
+    <sql>select ? as as_of_date, l.loan_account_id,
 ifnull(sum(ls.principal_amount), 0.0)  as principal_due,
 ifnull(sum(ls.interest_amount), 0.0)  as interest_due
 from dim_loan l
@@ -326,8 +326,8 @@ join dw_loan_schedules ls on ls.loan_account_id = l.loan_account_id and ls.due_d
 where l.valid_from &lt;= ?
 and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-group by l.loan_account_id, as_of_date
-order by l.loan_account_id, as_of_date</sql>
+group by as_of_date,l.loan_account_id
+order by as_of_date, l.loan_account_id</sql>
     <limit>0</limit>
     <lookup>Identify Dates to Process</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -352,7 +352,7 @@ order by l.loan_account_id, as_of_date</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select l.loan_account_id, ? as as_of_date,
+    <sql>select ? as as_of_date, l.loan_account_id,
 ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
 ifnull(sum(lr.interest_amount), 0.0)  as interest_paid
 from dim_loan l
@@ -362,8 +362,8 @@ where l.valid_from &lt;= ?
 and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 and lr.adjusted is false
-group by l.loan_account_id
-order by l.loan_account_id
+group by as_of_date,l.loan_account_id
+order by as_of_date, l.loan_account_id
 
 &#47;* only pick up unadjusted repayments. i.e. adjustments (even though perhaps entered in the system after the arrears date being processed) are taken into account.
 Reversals are ignored.  Although the reversal (aka cancel) transaction is backdated to the date of each entry it reverses... it doesn&apos;t come into play
@@ -429,12 +429,12 @@ order by d.date_value</sql>
 <step1>Get Loan Amounts Due</step1>
 <step2>Get Loan Repayments</step2>
     <keys_1>
-      <key>loan_account_id</key>
       <key>as_of_date</key>
+      <key>loan_account_id</key>
     </keys_1>
     <keys_2>
-      <key>loan_account_id</key>
       <key>as_of_date</key>
+      <key>loan_account_id</key>
     </keys_2>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -454,11 +454,11 @@ order by d.date_value</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>loan_account_id</name>
+    <fields>      <field>        <name>as_of_date</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>as_of_date</name>
+      </field>      <field>        <name>loan_account_id</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>

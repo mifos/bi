@@ -119,6 +119,123 @@
   <order>
   <hop> <from>Get Last Installment that had a Payment</from><to>Get Last Installment Due</to><enabled>Y</enabled> </hop>  <hop> <from>Get Last Installment Due</from><to>Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Weekly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Weekly Band Key</from><to>Identify Monthly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate days_in_arrears</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Arrears Mapping input specification</from><to>Get Last Installment that had a Payment</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Monthly Band Key</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment</from><to>Calculate Installment Due and In Arrears Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate Installment Due and In Arrears Values</from><to>Calculate Outstanding Amounts</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate Outstanding Amounts</from><to>Calculate days_in_arrears</to><enabled>Y</enabled> </hop>  </order>
   <step>
+    <name>Calculate Installment Due and In Arrears Values</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+var installments_in_arrears;
+var installment_id_due;
+
+
+var outstanding_amount;
+
+outstanding_amount = total_amount_expected - (principal_paid + interest_paid);
+
+if (outstanding_amount &gt; 0.0)
+{
+	installment_id_due = last_installment_having_payment;
+}
+if (outstanding_amount == 0.0)
+{
+	installment_id_due = last_installment_having_payment + 1;
+}
+if (outstanding_amount &lt; 0.0)
+{
+	trans_Status = ERROR_TRANSFORMATION;
+}
+
+installments_in_arrears = (last_installment_due - installment_id_due) + 1;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>installments_in_arrears</name>
+        <rename>installments_in_arrears</rename>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>installment_id_due</name>
+        <rename>installment_id_due</rename>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>477</xloc>
+      <yloc>133</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Calculate Outstanding Amounts</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>principal_outstanding</field_name>
+<calc_type>SUBTRACT</calc_type>
+<field_a>principal_scheduled</field_a>
+<field_b>principal_paid</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>interest_outstanding</field_name>
+<calc_type>SUBTRACT</calc_type>
+<field_a>interest_scheduled</field_a>
+<field_b>interest_paid</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>total_outstanding</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_outstanding</field_a>
+<field_b>interest_outstanding</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>258</xloc>
+      <yloc>134</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Calculate days_in_arrears</name>
     <type>DBJoin</type>
     <description/>
@@ -517,16 +634,16 @@ and adjusted is false</sql>
            </partitioning>
     <fields>
       <field>
-        <name>loan_account_id</name>
-        <type>Integer</type>
-        <length>9</length>
-        <precision>0</precision>
-      </field>
-      <field>
         <name>as_of_date</name>
         <type>Date</type>
         <length>-1</length>
         <precision>-1</precision>
+      </field>
+      <field>
+        <name>loan_account_id</name>
+        <type>Integer</type>
+        <length>9</length>
+        <precision>0</precision>
       </field>
       <field>
         <name>principal_paid</name>
@@ -564,123 +681,6 @@ and adjusted is false</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>740</xloc>
       <yloc>239</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Calculate Installment Due and In Arrears Values</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
-var installments_in_arrears;
-var installment_id_due;
-
-
-var outstanding_amount;
-
-outstanding_amount = total_amount_expected - (principal_paid + interest_paid);
-
-if (outstanding_amount &gt; 0.0)
-{
-	installment_id_due = last_installment_having_payment;
-}
-if (outstanding_amount == 0.0)
-{
-	installment_id_due = last_installment_having_payment + 1;
-}
-if (outstanding_amount &lt; 0.0)
-{
-	trans_Status = ERROR_TRANSFORMATION;
-}
-
-installments_in_arrears = (last_installment_due - installment_id_due) + 1;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>installments_in_arrears</name>
-        <rename>installments_in_arrears</rename>
-        <type>Integer</type>
-        <length>4</length>
-        <precision>0</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>installment_id_due</name>
-        <rename>installment_id_due</rename>
-        <type>Integer</type>
-        <length>4</length>
-        <precision>0</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>477</xloc>
-      <yloc>133</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Calculate Outstanding Amounts</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>principal_outstanding</field_name>
-<calc_type>SUBTRACT</calc_type>
-<field_a>principal_scheduled</field_a>
-<field_b>principal_paid</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>43</value_length>
-<value_precision>4</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>interest_outstanding</field_name>
-<calc_type>SUBTRACT</calc_type>
-<field_a>interest_scheduled</field_a>
-<field_b>interest_paid</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>43</value_length>
-<value_precision>4</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>total_outstanding</field_name>
-<calc_type>ADD</calc_type>
-<field_a>principal_outstanding</field_a>
-<field_b>interest_outstanding</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>43</value_length>
-<value_precision>4</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>258</xloc>
-      <yloc>134</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
