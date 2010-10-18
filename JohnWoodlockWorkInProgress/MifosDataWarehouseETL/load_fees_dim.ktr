@@ -154,10 +154,20 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select f.fee_id, f.fee_name, lv.lookup_name category_type
+    <sql>select f.fee_id, f.fee_name, 
+ifnull(ctlv.lookup_name, &apos;n&#47;a&apos;) as category_type, 
+ifnull(ftlv.lookup_name, &apos;n&#47;a&apos;) as fee_frequency_type, 
+ifnull(fplv.lookup_name, &apos;n&#47;a&apos;) as fee_payment
 from fees f
-join category_type ct on ct.category_id = f.category_id
-join lookup_value lv on lv.lookup_id = ct.category_lookup_id</sql>
+left join category_type ct on ct.category_id = f.category_id
+left join lookup_value ctlv on ctlv.lookup_id = ct.category_lookup_id
+
+join fee_frequency fq on fq.fee_id = f.fee_id
+left join fee_frequency_type ft on ft.fee_frequency_id = fq.fee_frequencytype_id
+left join lookup_value ftlv on ftlv.lookup_id = ft.lookup_id
+
+left join fee_payment fp on fp.fee_payment_id = fq.frequency_payment_id
+left join lookup_value fplv on fplv.lookup_id = fp.fee_payment_lookup_Id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -204,6 +214,16 @@ join lookup_value lv on lv.lookup_id = ct.category_lookup_id</sql>
         <field>
           <name>category_type</name>
           <lookup>category_type</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>fee_frequency_type</name>
+          <lookup>fee_frequency_type</lookup>
+          <update>Punch through</update>
+        </field>
+        <field>
+          <name>fee_payment</name>
+          <lookup>fee_payment</lookup>
           <update>Punch through</update>
         </field>
         <return>

@@ -76,8 +76,8 @@
       <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>335</xloc>
-      <yloc>152</yloc>
+      <xloc>337</xloc>
+      <yloc>153</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_disbursals</name>
@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>496</xloc>
-      <yloc>88</yloc>
+      <xloc>486</xloc>
+      <yloc>49</yloc>
       </entry>
     <entry>
       <name>Load fact_client_attendances</name>
@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>426</xloc>
-      <yloc>231</yloc>
+      <xloc>305</xloc>
+      <yloc>261</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_repayments</name>
@@ -236,8 +236,40 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>257</xloc>
-      <yloc>229</yloc>
+      <xloc>178</xloc>
+      <yloc>199</yloc>
+      </entry>
+    <entry>
+      <name>Load fact_customer_fees_and_charges</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_CustomerFeesChargesPenalties.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>517</xloc>
+      <yloc>168</yloc>
       </entry>
   </entries>
   <hops>
@@ -280,6 +312,15 @@
     <hop>
       <from>START</from>
       <to>Load fact_savings_transactions</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Load fact_customer_fees_and_charges</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

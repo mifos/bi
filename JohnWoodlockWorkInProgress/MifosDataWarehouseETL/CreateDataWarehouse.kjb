@@ -136,8 +136,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>254</xloc>
-      <yloc>367</yloc>
+      <xloc>225</xloc>
+      <yloc>491</yloc>
       </entry>
     <entry>
       <name>START</name>
@@ -306,8 +306,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>677</xloc>
-      <yloc>128</yloc>
+      <xloc>669</xloc>
+      <yloc>354</yloc>
       </entry>
     <entry>
       <name>Adjust Customer Status Values</name>
@@ -336,8 +336,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>619</xloc>
-      <yloc>371</yloc>
+      <xloc>724</xloc>
+      <yloc>130</yloc>
       </entry>
     <entry>
       <name>Adjust&#47;Reverse Repayments</name>
@@ -368,8 +368,8 @@ But we love you anyway.</comment>
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>679</xloc>
-      <yloc>245</yloc>
+      <xloc>478</xloc>
+      <yloc>359</yloc>
       </entry>
     <entry>
       <name>Derive Loan Arrears</name>
@@ -400,8 +400,8 @@ But we love you anyway.</comment>
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>434</xloc>
-      <yloc>367</yloc>
+      <xloc>220</xloc>
+      <yloc>361</yloc>
       </entry>
   </entries>
   <hops>
@@ -478,25 +478,7 @@ But we love you anyway.</comment>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Customer And Loan And Savings Dimensions</from>
-      <to>Load Fact Tables</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Load Fact Tables</from>
-      <to>Mail Failure</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Adjust Customer Status Values</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -515,29 +497,11 @@ But we love you anyway.</comment>
     </hop>
     <hop>
       <from>Adjust&#47;Reverse Repayments</from>
-      <to>Adjust Customer Status Values</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Adjust&#47;Reverse Repayments</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Adjust Customer Status Values</from>
-      <to>Derive Loan Arrears</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
@@ -551,6 +515,42 @@ But we love you anyway.</comment>
     </hop>
     <hop>
       <from>Derive Loan Arrears</from>
+      <to>Mail Failure</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Adjust&#47;Reverse Repayments</from>
+      <to>Derive Loan Arrears</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Customer And Loan And Savings Dimensions</from>
+      <to>Adjust Customer Status Values</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Adjust Customer Status Values</from>
+      <to>Load Fact Tables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Adjust Customer Status Values</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

@@ -240,15 +240,16 @@ CREATE TABLE `dim_fee` (
   `fee_key` smallint(5) unsigned NOT NULL,
   `fee_id` smallint(6) NOT NULL,
   `fee_name` varchar(50) NOT NULL,
-  `category_type` varchar(100) NOT NULL,
+  `category_type` varchar(30) NOT NULL,
+  `fee_frequency_type` varchar(30) NOT NULL,
+  `fee_payment` varchar(30) NOT NULL,
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
   `version` int(11) NOT NULL DEFAULT '0',
   `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`fee_key`),
-  KEY `fee_name` (`fee_name`),
-  KEY `category_type` (`category_type`)
+  UNIQUE KEY `fee_name` (`fee_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -258,7 +259,7 @@ CREATE TABLE `dim_fee` (
 
 LOCK TABLES `dim_fee` WRITE;
 /*!40000 ALTER TABLE `dim_fee` DISABLE KEYS */;
-INSERT INTO `dim_fee` VALUES (0,0,'Unknown','Unknown','1900-01-01','2199-12-31',0,0,'2010-09-18 08:49:00');
+INSERT INTO `dim_fee` VALUES (0,0,'Unknown','Unknown','Unknown','Unknown','1900-01-01','2199-12-31',0,0,'2010-10-18 09:54:48');
 /*!40000 ALTER TABLE `dim_fee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -474,6 +475,31 @@ INSERT INTO `dim_savings` VALUES (0,0,0,0,0,0,0,0,0,'Unknown',0,'1900-01-01','21
 UNLOCK TABLES;
 
 --
+-- Table structure for table `dw_account_charge_type`
+--
+
+DROP TABLE IF EXISTS `dw_account_charge_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_account_charge_type` (
+  `account_charge_type_id` tinyint(4) NOT NULL,
+  `account_charge_type` varchar(30) NOT NULL,
+  PRIMARY KEY (`account_charge_type_id`),
+  UNIQUE KEY `account_charge_type` (`account_charge_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_account_charge_type`
+--
+
+LOCK TABLES `dw_account_charge_type` WRITE;
+/*!40000 ALTER TABLE `dw_account_charge_type` DISABLE KEYS */;
+INSERT INTO `dw_account_charge_type` VALUES (2,'Misc. Fees/Charges'),(3,'Misc. Penalties'),(1,'Periodic and Upfront Fees');
+/*!40000 ALTER TABLE `dw_account_charge_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `dw_loan_schedules`
 --
 
@@ -527,7 +553,7 @@ CREATE TABLE `dw_mfi_configuration` (
 
 LOCK TABLES `dw_mfi_configuration` WRITE;
 /*!40000 ALTER TABLE `dw_mfi_configuration` DISABLE KEYS */;
-INSERT INTO `dw_mfi_configuration` VALUES (1,0,0);
+INSERT INTO `dw_mfi_configuration` VALUES (1,10,30);
 /*!40000 ALTER TABLE `dw_mfi_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -568,6 +594,62 @@ CREATE TABLE `fact_client_attendances` (
 LOCK TABLES `fact_client_attendances` WRITE;
 /*!40000 ALTER TABLE `fact_client_attendances` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fact_client_attendances` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fact_customer_fees_and_charges`
+--
+
+DROP TABLE IF EXISTS `fact_customer_fees_and_charges`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fact_customer_fees_and_charges` (
+  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `fee_key` smallint(5) unsigned NOT NULL,
+  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `group_key` int(10) unsigned NOT NULL,
+  `center_key` int(10) unsigned NOT NULL,
+  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `branch_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `action_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `customer_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `payment_type_id` smallint(6) NOT NULL,
+  `account_trxn_id` int(11) NOT NULL,
+  `installment_id` smallint(6) NOT NULL,
+  `action_date` date NOT NULL,
+  `account_charge_type_id` tinyint(4) NOT NULL,
+  `amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  KEY `account_trxn_id` (`account_trxn_id`),
+  KEY `fee_key` (`account_action_key`),
+  KEY `account_action_key` (`account_action_key`),
+  KEY `currency_key` (`currency_key`),
+  KEY `customer_key` (`customer_key`),
+  KEY `group_key` (`group_key`),
+  KEY `center_key` (`center_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
+  KEY `due_date_key` (`due_date_key`),
+  KEY `action_date_key` (`action_date_key`),
+  KEY `created_date_key` (`created_date_key`),
+  KEY `customer_id` (`customer_id`),
+  KEY `payment_id` (`payment_id`),
+  KEY `account_charge_type_id` (`account_charge_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fact_customer_fees_and_charges`
+--
+
+LOCK TABLES `fact_customer_fees_and_charges` WRITE;
+/*!40000 ALTER TABLE `fact_customer_fees_and_charges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fact_customer_fees_and_charges` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2393,4 +2475,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-10-11 14:49:18
+-- Dump completed on 2010-10-18 20:55:50
