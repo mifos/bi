@@ -227,6 +227,79 @@
     </step>
 
   <step>
+    <name>Insert &#47; Update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>fact_ppi_survey_results</table>
+      <key>
+        <name>survey_id</name>
+        <field>survey_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>customer_key</name>
+        <field>customer_key</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>date_survey_taken</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>survey_id</name>
+        <rename>survey_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>points_version</name>
+        <rename>points_version</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>date_survey_taken</name>
+        <rename>date_survey_taken</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ppi_score</name>
+        <rename>ppi_score</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>230</xloc>
+      <yloc>248</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Table input</name>
     <type>TableInput</type>
     <description/>
@@ -306,8 +379,7 @@ GROUP_CONCAT(if(q.short_name = &apos;How many pressure cookers or pressure pans 
 GROUP_CONCAT(if(q.short_name = &apos;How many electric fans does the household own?&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q
 WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id
-GROUP BY question_group_instance_id) as answers
-group by client_id</sql>
+GROUP BY question_group_instance_id) as answers</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -322,8 +394,8 @@ group by client_id</sql>
     </step>
 
   <step>
-    <name>Insert &#47; Update</name>
-    <type>InsertUpdate</type>
+    <name>Table output</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -332,64 +404,52 @@ group by client_id</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>fact_ppi_survey_results</table>
-      <key>
-        <name>survey_id</name>
-        <field>survey_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>customer_key</name>
-        <field>customer_key</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>date_survey_taken</name>
-        <field>date_survey_taken</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>survey_id</name>
-        <rename>survey_id</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>points_version</name>
-        <rename>points_version</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>date_survey_taken</name>
-        <rename>date_survey_taken</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ppi_score</name>
-        <rename>ppi_score</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>branch_key</name>
-        <rename>branch_key</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
+    <schema/>
+    <table>fact_ppi_survey_results</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>survey_id</column_name>
+          <stream_name>survey_id</stream_name>
+        </field>
+        <field>
+          <column_name>points_version</column_name>
+          <stream_name>points_version</stream_name>
+        </field>
+        <field>
+          <column_name>date_survey_taken</column_name>
+          <stream_name>date_survey_taken</stream_name>
+        </field>
+        <field>
+          <column_name>ppi_score</column_name>
+          <stream_name>ppi_score</stream_name>
+        </field>
+        <field>
+          <column_name>customer_key</column_name>
+          <stream_name>customer_key</stream_name>
+        </field>
+        <field>
+          <column_name>branch_key</column_name>
+          <stream_name>branch_key</stream_name>
+        </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>230</xloc>
-      <yloc>248</yloc>
+      <xloc>392</xloc>
+      <yloc>146</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
