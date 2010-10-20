@@ -66,31 +66,14 @@
   </info>
   <notepads>
     <notepad>
-      <note>Loading Repayment Transactions (account action ids are in brackets)
--------------------------------------------------------------------------------------------------------------
-
-&apos;Active&apos; Repayment Entries (1)
----------------------------------------------------------
-These transactions need to be linked into a loan entry with an active status (active or on-hold). When a loan is paid off (early or 
-otherwise) then the loan entry status that matches the transaction action_date will be &apos;AccountState-ClosedObligationMet&apos; (unless
-the payment is entered into the system after the &apos;action_date&apos; as mifos currently changes the loan status based on created_date
-rather than action date).  We don&apos;t want to link to that closed status so, instead, the latest active entry for the action_date is used.
-I say latest rather than &apos;THE&apos; because you can get multiple entries that were active for a particular day due to overlapping caused 
-by a hierarchy change or just because the user has a number of status changes on the same day.  The most likely is where an 
-account is in bad standing and gets changed by a repayment into good standing but it can also happen if a closed loan is re-opened 
-on the same day as it was closed.
-
-In some cases loan repayments occur earlier than the first time a loan became active (or was created).  This is due to input of historical
-information.  In this case, the repayment is attached to the earliest active status entry for the loan.
-
-Written Off (15) and Rescheduled (20) &apos;Repayments&apos;
---------------------------------------------------------------------
+      <note>Written Off (15) and Rescheduled (20) &apos;Repayments&apos;
+----------------------------------------------------------------------------------
 The expectation is that there will be a single loan entry status of &apos;AccountAction-LoanWrittenOff&apos; or &apos;AccountAction-LoanRescheduled&apos;
 to match to the transaction action_date.  This process will fall over with a &apos;null&apos; value if this isn&apos;t true.</note>
-      <xloc>6</xloc>
-      <yloc>243</yloc>
-      <width>669</width>
-      <heigth>271</heigth>
+      <xloc>13</xloc>
+      <yloc>277</yloc>
+      <width>662</width>
+      <heigth>60</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -183,7 +166,7 @@ to match to the transaction action_date.  This process will fall over with a &ap
     </attributes>
   </connection>
   <order>
-  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Active Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Link to Applicable Active Loan Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Select Mapping Fields and Order Unspecified Fields by name</to><enabled>Y</enabled> </hop>  <hop> <from>Select Mapping Fields and Order Unspecified Fields by name</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Link to Applicable Active Loan Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Abort Repayments Transformation</name>
     <type>Abort</type>
@@ -234,24 +217,36 @@ to match to the transaction action_date.  This process will fall over with a &ap
     <return_field/>
     <fields>
         <field>
-          <column_name>account_trxn_id</column_name>
-          <stream_name>account_trxn_id</stream_name>
+          <column_name>action_date</column_name>
+          <stream_name>action_date</stream_name>
         </field>
         <field>
-          <column_name>payment_id</column_name>
-          <stream_name>payment_id</stream_name>
+          <column_name>account_trxn_id</column_name>
+          <stream_name>account_trxn_id</stream_name>
         </field>
         <field>
           <column_name>installment_id</column_name>
           <stream_name>installment_id</stream_name>
         </field>
         <field>
-          <column_name>principal_amount</column_name>
-          <stream_name>principal_amount</stream_name>
-        </field>
-        <field>
           <column_name>interest_amount</column_name>
           <stream_name>interest_amount</stream_name>
+        </field>
+        <field>
+          <column_name>loan_account_id</column_name>
+          <stream_name>loan_account_id</stream_name>
+        </field>
+        <field>
+          <column_name>payment_id</column_name>
+          <stream_name>payment_id</stream_name>
+        </field>
+        <field>
+          <column_name>payment_type_id</column_name>
+          <stream_name>payment_type_id</stream_name>
+        </field>
+        <field>
+          <column_name>principal_amount</column_name>
+          <stream_name>principal_amount</stream_name>
         </field>
         <field>
           <column_name>action_date_key</column_name>
@@ -305,23 +300,11 @@ to match to the transaction action_date.  This process will fall over with a &ap
           <column_name>currency_key</column_name>
           <stream_name>currency_key</stream_name>
         </field>
-        <field>
-          <column_name>loan_account_id</column_name>
-          <stream_name>loan_account_id</stream_name>
-        </field>
-        <field>
-          <column_name>action_date</column_name>
-          <stream_name>action_date</stream_name>
-        </field>
-        <field>
-          <column_name>payment_type_id</column_name>
-          <stream_name>payment_type_id</stream_name>
-        </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>638</xloc>
-      <yloc>140</yloc>
+      <xloc>825</xloc>
+      <yloc>109</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -344,22 +327,22 @@ to match to the transaction action_date.  This process will fall over with a &ap
 <case_value_group/>
 <default_target_step>Abort Repayments Transformation</default_target_step>
 <cases><case><value>1</value>
-<target_step>Lookup Latest Active Loan Account Entry</target_step>
+<target_step>Link to Applicable Active Loan Entry</target_step>
 </case><case><value>15</value>
 <target_step>Lookup Written Off Loan Account Entry</target_step>
 </case><case><value>20</value>
 <target_step>Lookup Rescheduled Loan Account Entry</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>127</xloc>
-      <yloc>145</yloc>
+      <xloc>323</xloc>
+      <yloc>193</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
+    <name>Do Transaction Lookups</name>
+    <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -367,27 +350,40 @@ to match to the transaction action_date.  This process will fall over with a &ap
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Create Loan Repayments</send_true_to>
-<send_false_to>Remove null Key Columns</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>loan_account_key</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_transaction_lookups.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>773</xloc>
-      <yloc>8</yloc>
+      <xloc>217</xloc>
+      <yloc>18</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Lookup Earliest Active Loan Account Entry</name>
-    <type>DBJoin</type>
+    <name>Link to Applicable Active Loan Entry</name>
+    <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -395,77 +391,33 @@ to match to the transaction action_date.  This process will fall over with a &ap
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_loan
-where loan_account_id = ?
-&#47;*link repayments to the earliest of the status&apos;s below...  to cater for redo historical entries.*&#47;
-and valid_to &gt;= ?
-and loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-order by loan_account_key </sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>loan_account_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>796</xloc>
-      <yloc>246</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Lookup Latest Active Loan Account Entry</name>
-    <type>DBJoin</type>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_link_to_applicable_active_loan_entry.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
     <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_loan
-where loan_account_id = ?
-&#47;*always try to link repayments to the latest of the status&apos;s below*&#47;
-and valid_from &lt;= ?
-and valid_to &gt;= ?
-and loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-order by loan_account_key desc</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>loan_account_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>603</xloc>
-      <yloc>20</yloc>
+      <xloc>588</xloc>
+      <yloc>11</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -507,8 +459,8 @@ and loan_status = &apos;AccountState-ClosedRescheduled&apos;</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>367</xloc>
-      <yloc>162</yloc>
+      <xloc>587</xloc>
+      <yloc>199</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -550,8 +502,8 @@ and loan_status = &apos;AccountState-ClosedWrittenOff&apos;</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>473</xloc>
-      <yloc>94</yloc>
+      <xloc>588</xloc>
+      <yloc>110</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -595,7 +547,7 @@ and not (ltxn.principal_amount = 0 and ltxn.interest_amount = 0)
     </step>
 
   <step>
-    <name>Remove null Key Columns</name>
+    <name>Select Mapping Fields and Order Unspecified Fields by name</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -604,61 +556,19 @@ and not (ltxn.principal_amount = 0 and ltxn.interest_amount = 0)
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <remove>        <name>loan_account_key</name>
-      </remove>      <remove>        <name>customer_key</name>
-      </remove>      <remove>        <name>product_key</name>
-      </remove>      <remove>        <name>group_key</name>
-      </remove>      <remove>        <name>center_key</name>
-      </remove>      <remove>        <name>loan_officer_key</name>
-      </remove>      <remove>        <name>branch_key</name>
-      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
-      </remove>      <remove>        <name>currency_key</name>
-      </remove>    </fields>     <cluster_schema/>
+    <fields>      <field>        <name>loan_account_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>action_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>Y</select_unspecified>
+    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>833</xloc>
-      <yloc>153</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Do Transaction Lookups</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_transaction_lookups.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>217</xloc>
-      <yloc>18</yloc>
+      <xloc>156</xloc>
+      <yloc>105</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
