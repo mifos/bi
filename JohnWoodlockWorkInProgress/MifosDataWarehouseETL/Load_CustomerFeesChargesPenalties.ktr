@@ -65,27 +65,6 @@
   <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Note to be added</note>
-      <xloc>150</xloc>
-      <yloc>449</yloc>
-      <width>94</width>
-      <heigth>22</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -163,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Filter Misc Charges</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Filter Misc Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Charges</from><to>Set Misc Charge Constants</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Charges</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Penalties</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Penalties</from><to>Set Misc Penalty Constants</to><enabled>Y</enabled> </hop>  <hop> <from>Set Misc Penalty Constants</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Set Misc Charge Constants</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get latest open entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Currency lookup</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get latest open entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create fact_customer_fees_and_charges</name>
     <type>TableOutput</type>
@@ -279,8 +258,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>616</xloc>
-      <yloc>229</yloc>
+      <xloc>268</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -320,8 +299,8 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>444</xloc>
-      <yloc>207</yloc>
+      <xloc>588</xloc>
+      <yloc>116</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -364,15 +343,15 @@ order by customer_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>616</xloc>
-      <yloc>93</yloc>
+      <xloc>267</xloc>
+      <yloc>115</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Dummy (do nothing)</name>
-    <type>Dummy</type>
+    <name>Do Transaction Lookups</name>
+    <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -380,10 +359,33 @@ order by customer_key desc</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_transaction_lookups.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>171</xloc>
-      <yloc>106</yloc>
+      <xloc>764</xloc>
+      <yloc>118</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -423,64 +425,8 @@ order by customer_key desc</sql>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>445</xloc>
-      <yloc>93</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter Misc Charges</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Set Misc Charge Constants</send_true_to>
-<send_false_to>Dummy (do nothing)</send_false_to>
-    <compare>
-<condition>
- <negated>Y</negated>
- <leftvalue>misc_fee_amount</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>BigNumber</type><text>0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>#.###############################################;-#.###############################################</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>295</xloc>
-      <yloc>107</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter Misc Penalties</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Set Misc Penalty Constants</send_true_to>
-<send_false_to>Dummy (do nothing)</send_false_to>
-    <compare>
-<condition>
- <negated>Y</negated>
- <leftvalue>misc_penalty_amount</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>BigNumber</type><text>0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>#.###############################################;-#.###############################################</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>58</xloc>
-      <yloc>109</yloc>
+      <xloc>417</xloc>
+      <yloc>117</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -519,8 +465,8 @@ and fee_amount &lt;&gt; 0
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>180</xloc>
-      <yloc>382</yloc>
+      <xloc>764</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -529,16 +475,16 @@ and fee_amount &lt;&gt; 0
     <name>Read account_trxn for Customer Misc. Charges and Misc. Penalties</name>
     <type>TableInput</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select atxn.action_date, ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, date(atxn.created_date) created_date, atxn.account_action_id, 
-atxn.account_trxn_id, a.customer_id as customer_id, atxn.amount_currency_id as currency_id, atxn.payment_id, atxn.installment_id, ap.payment_type_id,
-ctxn.misc_fee_amount, ctxn.misc_penalty_amount
+    <sql>select ctxn.misc_fee_amount, ctxn.misc_penalty_amount,
+atxn.action_date, ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, date(atxn.created_date) created_date, atxn.account_action_id, 
+atxn.account_trxn_id, a.customer_id as customer_id, atxn.amount_currency_id as currency_id, atxn.payment_id, atxn.installment_id, ap.payment_type_id
 from account_trxn atxn
 inner join customer_trxn_detail ctxn on atxn.account_trxn_id = ctxn.account_trxn_id
 inner join account_payment ap on ap.payment_id = atxn.payment_id
@@ -557,8 +503,8 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>175</xloc>
-      <yloc>9</yloc>
+      <xloc>174</xloc>
+      <yloc>16</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -632,162 +578,14 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>178</xloc>
-      <yloc>293</yloc>
+      <xloc>760</xloc>
+      <yloc>12</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Set Misc Charge Constants</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>amount</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>misc_fee_amount</field_a>
-<field_b/>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>21</value_length>
-<value_precision>4</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>account_charge_type_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>2</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>fee_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>fee_trxn_detail_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>-1</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>294</xloc>
-      <yloc>214</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set Misc Penalty Constants</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>amount</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>misc_penalty_amount</field_a>
-<field_b/>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>21</value_length>
-<value_precision>4</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>account_charge_type_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>3</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>fee_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>fee_trxn_detail_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>-2</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>60</xloc>
-      <yloc>221</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Do Transaction Lookups</name>
+    <name>Split misc fees and penalties</name>
     <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
@@ -799,7 +597,7 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
     <specification_method>filename</specification_method>
     <trans_object_id/>
     <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_transaction_lookups.ktr</filename>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_split_misc_fees_and_penalties.ktr</filename>
     <directory_path/>
     <mappings>
       <input>
@@ -821,8 +619,8 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>444</xloc>
-      <yloc>339</yloc>
+      <xloc>484</xloc>
+      <yloc>12</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
