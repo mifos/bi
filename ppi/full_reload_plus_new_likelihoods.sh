@@ -5,6 +5,7 @@
 #usage: full_reload <DB_NAME> <PENTAHO_HOME> <BI_HOME>
 #example: full_reload mifos_ppi_dw ~/pentaho ~/reportingWorkspace/bi
 
+set -o errexit
 DB_NAME=$1
 PENTAHO_HOME=$2
 PDI_HOME=${PENTAHO_HOME}/data-integration
