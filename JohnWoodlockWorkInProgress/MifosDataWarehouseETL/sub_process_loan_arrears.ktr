@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>process_loan_arrears</name>
+    <name>sub_process_loan_arrears</name>
     <description/>
     <extended_description/>
     <trans_version/>

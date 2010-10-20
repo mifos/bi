@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_CustomerFeesChargesPenalties_IdentifyDataProblemsTemporary_Not_production</name>
+    <name>Load_CustomerFeesChargesPenaltiesOLD</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,11 +66,10 @@
   </info>
   <notepads>
     <notepad>
-      <note>Note to be added.
-</note>
+      <note>Note to be added</note>
       <xloc>150</xloc>
       <yloc>449</yloc>
-      <width>103</width>
+      <width>94</width>
       <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
@@ -164,7 +163,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Customer - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Filter Misc Charges</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Filter Misc Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Charges</from><to>Set Misc Charge Constants</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Charges</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Penalties</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Penalties</from><to>Set Misc Penalty Constants</to><enabled>Y</enabled> </hop>  <hop> <from>Set Misc Penalty Constants</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Set Misc Charge Constants</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get earliest open entry</from><to>Customer Key Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Key Found?</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Key Found?</from><to>Set Customer Key to 0</to><enabled>Y</enabled> </hop>  <hop> <from>Set Customer Key to 0</from><to>Remove null key columns and rename zero replacements</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null key columns and rename zero replacements</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Filter Misc Charges</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Filter Misc Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Charges</from><to>Set Misc Charge Constants</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Charges</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Penalties</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Misc Penalties</from><to>Set Misc Penalty Constants</to><enabled>Y</enabled> </hop>  <hop> <from>Set Misc Penalty Constants</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Set Misc Charge Constants</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Currency lookup</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get latest open entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Account Action lookup</name>
     <type>DBLookup</type>
@@ -321,6 +320,10 @@
           <stream_name>account_trxn_id</stream_name>
         </field>
         <field>
+          <column_name>fee_trxn_detail_id</column_name>
+          <stream_name>fee_trxn_detail_id</stream_name>
+        </field>
+        <field>
           <column_name>customer_id</column_name>
           <stream_name>customer_id</stream_name>
         </field>
@@ -399,8 +402,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>798</xloc>
-      <yloc>144</yloc>
+      <xloc>680</xloc>
+      <yloc>215</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -447,44 +450,6 @@
     </step>
 
   <step>
-    <name>Customer - get earliest open entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select customer_key, group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key
-from dim_customer
-where customer_id = ?
-and valid_to &gt;= ?
-and customer_status in (&apos;ClientStatus-Active&apos;, &apos;GroupStatus-Active&apos;, &apos;CenterStatus-Active&apos;, &apos;ClientStatus-OnHold&apos;, &apos;GroupStatus-OnHold&apos;)
-order by customer_key </sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>customer_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>646</xloc>
-      <yloc>204</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Customer - get latest open entry</name>
     <type>DBJoin</type>
     <description/>
@@ -522,36 +487,8 @@ order by customer_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>510</xloc>
-      <yloc>3</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Customer Key Found?</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Create fact_customer_fees_and_charges</send_true_to>
-<send_false_to>Set Customer Key to 0</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>customer_key</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>671</xloc>
-      <yloc>276</yloc>
+      <xloc>680</xloc>
+      <yloc>78</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -713,34 +650,6 @@ order by customer_key desc</sql>
     </step>
 
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Create fact_customer_fees_and_charges</send_true_to>
-<send_false_to>Remove null Key Columns</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>customer_key</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>700</xloc>
-      <yloc>4</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Read account_trxn for Customer Fees</name>
     <type>TableInput</type>
     <description/>
@@ -752,7 +661,7 @@ order by customer_key desc</sql>
            </partitioning>
     <connection>SourceDB</connection>
     <sql>select atxn.account_action_id, 
-atxn.account_trxn_id, a.customer_id as customer_id, atxn.amount_currency_id as currency_id, atxn.payment_id, atxn.installment_id, 
+atxn.account_trxn_id, ftxn.fee_trxn_detail_id, a.customer_id as customer_id, atxn.amount_currency_id as currency_id, atxn.payment_id, atxn.installment_id, 
 ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, atxn.action_date, date(atxn.created_date) created_date, ap.payment_type_id,
 ftxn.fee_amount as amount, 1 as account_charge_type_id, af.fee_id
 from account_trxn atxn
@@ -820,150 +729,6 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
     </step>
 
   <step>
-    <name>Remove null Key Columns</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <remove>        <name>customer_key</name>
-      </remove>      <remove>        <name>group_key</name>
-      </remove>      <remove>        <name>center_key</name>
-      </remove>      <remove>        <name>loan_officer_key</name>
-      </remove>      <remove>        <name>branch_key</name>
-      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
-      </remove>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>598</xloc>
-      <yloc>136</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Remove null key columns and rename zero replacements</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>account_action_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>account_trxn_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>customer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>currency_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>payment_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>installment_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>due_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>action_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>created_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>payment_type_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>amount</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>account_charge_type_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>fee_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>action_date_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>due_date_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>created_date_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>account_action_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>currency_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>fee_key</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>customer_key2</name>
-        <rename>customer_key</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>group_key2</name>
-        <rename>group_key</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>center_key2</name>
-        <rename>center_key</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>loan_officer_key2</name>
-        <rename>loan_officer_key</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>branch_key2</name>
-        <rename>branch_key</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>formed_by_loan_officer_key2</name>
-        <rename>formed_by_loan_officer_key</rename>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>726</xloc>
-      <yloc>314</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Remove old amount Columns</name>
     <type>SelectValues</type>
     <description/>
@@ -978,6 +743,10 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
         <length>-2</length>
         <precision>-2</precision>
       </field>      <field>        <name>account_trxn_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fee_trxn_detail_id</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
@@ -1035,108 +804,6 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
     </step>
 
   <step>
-    <name>Set Customer Key to 0</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>customer_key2</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>9</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>group_key2</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>9</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>center_key2</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>9</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>loan_officer_key2</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>4</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>branch_key2</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>4</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>formed_by_loan_officer_key2</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>4</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>596</xloc>
-      <yloc>375</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Set Misc Charge Constants</name>
     <type>Calculator</type>
     <description/>
@@ -1177,6 +844,20 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
        <calculation><field_name>fee_id</field_name>
 <calc_type>CONSTANT</calc_type>
 <field_a>0</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>fee_trxn_detail_id</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>-1</field_a>
 <field_b/>
 <field_c/>
 <value_type>Integer</value_type>
@@ -1237,6 +918,20 @@ and not (ctxn.misc_fee_amount = 0 and ctxn.misc_penalty_amount = 0)
        <calculation><field_name>fee_id</field_name>
 <calc_type>CONSTANT</calc_type>
 <field_a>0</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>fee_trxn_detail_id</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>-2</field_a>
 <field_b/>
 <field_c/>
 <value_type>Integer</value_type>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_hist_loan_arrears</name>
+    <name>sub_transaction_lookups</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -62,7 +62,7 @@
     <clusterschemas>
     </clusterschemas>
   <modified_user>-</modified_user>
-  <modified_date>2010&#47;10&#47;09 02:25:25.522</modified_date>
+  <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
   </info>
   <notepads>
   </notepads>
@@ -72,6 +72,31 @@
     <type>MYSQL</type>
     <access>JNDI</access>
     <database>DestinationDB</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>SourceDB</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>SourceDB</database>
     <port>1521</port>
     <username/>
     <password>Encrypted </password>
@@ -117,51 +142,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Loan Accounts In Arrears As Of Date</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Accounts In Arrears As Of Date</to><enabled>Y</enabled> </hop>  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Transaction Mapping input specification</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Build Loan Arrears Entry for a Date</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>&#47;&#47;&#47;C:&#47;dev&#47;businessIntelligenceRepo&#47;bi&#47;JohnWoodlockWorkInProgress&#47;MifosDataWarehouseETL&#47;process_loan_arrears.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>509</xloc>
-      <yloc>35</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Loan Accounts In Arrears As Of Date</name>
-    <type>TableInput</type>
+    <name>Account Action lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -170,75 +154,39 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select loan.loan_account_id, paydate.date_value as as_of_date,
-
-ifnull(due.principal_due, 0.0) as principal_due,
-ifnull(due.interest_due, 0.0) as interest_due,
-ifnull(paid.principal_paid, 0.0) as principal_paid,
-ifnull(paid.interest_paid, 0.0) as interest_paid,
-
-(ifnull(due.principal_due, 0.0) - ifnull(paid.principal_paid, 0.0)) as principal_in_arrears,
-(ifnull(due.interest_due, 0.0) - ifnull(paid.interest_paid, 0.0)) as interest_in_arrears,
-(ifnull(due.principal_due, 0.0) - ifnull(paid.principal_paid, 0.0)) + (ifnull(due.interest_due, 0.0) - ifnull(paid.interest_paid, 0.0)) as total_in_arrears
-from dim_loan loan
-join dim_date paydate on paydate.date_value = ? 
-
-left join
-    (select l.loan_account_id, paydate.date_value,
-    ifnull(sum(ls.principal_amount), 0.0)  as principal_due,
-    ifnull(sum(ls.interest_amount), 0.0)  as interest_due
-    from dim_loan l
-    join dim_date paydate on paydate.date_value = ? 
-    join dw_loan_schedules ls on ls.loan_account_id = l.loan_account_id and ls.due_date &lt;= paydate.date_value
-    where l.valid_from &lt;= paydate.date_value
-    and l.valid_to &gt; paydate.date_value    
-    and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-    group by l.loan_account_id, paydate.date_value) due on due.loan_account_id = loan.loan_account_id
-                                                 and due.date_value = paydate.date_value 
-
-
-left join
-    (select l.loan_account_id, paydate.date_value,
-    ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
-    ifnull(sum(lr.interest_amount), 0.0)  as interest_paid
-    from dim_loan l
-    join dim_date paydate on paydate.date_value = ?
-    join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.action_date &lt;= paydate.date_value
-&#47;* only pick up unadjusted repayments. i.e. adjustments (even though perhaps entered in the system after the arrears date being processed) are taken into account.
-Reversals are ignored.  Although the reversal (aka cancel) transaction is backdated to the date of each entry it reverses... it doesn&apos;t come into play
-until the day the reversal is entered on the system (indicated by a cancel loan account status).*&#47;
-    join dim_account_action aa on aa.account_action_key = lr.account_action_key and aa.account_action_id = 1
-      
-    where l.valid_from &lt;= paydate.date_value 
-    and l.valid_to &gt; paydate.date_value    
-    and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-	and lr.adjusted is false
-    group by l.loan_account_id, paydate.date_value) paid on paid.loan_account_id = loan.loan_account_id
-                                                  and paid.date_value = paydate.date_value 
-
-    where loan.valid_from &lt;= paydate.date_value
-    and loan.valid_to &gt; paydate.date_value    
-    and loan.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-
-    group by loan.loan_account_id, paydate.date_value 
-    having (((principal_due + interest_due) - (principal_paid + interest_paid)) &gt; 0.0)
-    order by loan.loan_account_id </sql>
-    <limit>0</limit>
-    <lookup>Identify Dates to Process</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_account_action</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>account_action_id</name>
+        <field>account_action_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>account_action_key</name>
+        <rename>account_action_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>268</xloc>
-      <yloc>34</yloc>
+      <xloc>523</xloc>
+      <yloc>130</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Identify Dates to Process</name>
-    <type>TableInput</type>
+    <name>Action Date Lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -247,32 +195,39 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>SELECT d.date_value as d1, d.date_value as d2, d.date_value as d3
-from dim_date d
-where d.date_value &lt; curdate()
-and d.date_value &gt;=
-
-    (select ifnull(min(valid_from), date(&apos;2199-12-31&apos;))
-    from dim_loan 
-    where loan_account_key &gt; 0) 
-
-order by d.date_value</sql>
-    <limit/>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_date</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>action_date</name>
+        <field>date_value</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>date_key</name>
+        <rename>action_date_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>59</xloc>
-      <yloc>35</yloc>
+      <xloc>260</xloc>
+      <yloc>17</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Write hist_loan_arrears</name>
-    <type>TableOutput</type>
+    <name>Create Date Lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -281,112 +236,136 @@ order by d.date_value</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <schema/>
-    <table>hist_loan_arrears</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_date</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>created_date</name>
+        <field>date_value</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>date_key</name>
+        <rename>created_date_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>522</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Due Date Lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>Y</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>400</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_date</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>due_date</name>
+        <field>date_value</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>date_key</name>
+        <rename>due_date_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>398</xloc>
+      <yloc>17</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Transaction Mapping input specification</name>
+    <type>MappingInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
     <fields>
-        <field>
-          <column_name>as_of_date_key</column_name>
-          <stream_name>as_of_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>product_key</column_name>
-          <stream_name>product_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_account_key</column_name>
-          <stream_name>loan_account_key</stream_name>
-        </field>
-        <field>
-          <column_name>customer_key</column_name>
-          <stream_name>customer_key</stream_name>
-        </field>
-        <field>
-          <column_name>group_key</column_name>
-          <stream_name>group_key</stream_name>
-        </field>
-        <field>
-          <column_name>center_key</column_name>
-          <stream_name>center_key</stream_name>
-        </field>
-        <field>
-          <column_name>branch_key</column_name>
-          <stream_name>branch_key</stream_name>
-        </field>
-        <field>
-          <column_name>formed_by_loan_officer_key</column_name>
-          <stream_name>formed_by_loan_officer_key</stream_name>
-        </field>
-        <field>
-          <column_name>loan_officer_key</column_name>
-          <stream_name>loan_officer_key</stream_name>
-        </field>
-        <field>
-          <column_name>arrears_band_weekly_key</column_name>
-          <stream_name>arrears_band_weekly_key</stream_name>
-        </field>
-        <field>
-          <column_name>arrears_band_monthly_key</column_name>
-          <stream_name>arrears_band_monthly_key</stream_name>
-        </field>
-        <field>
-          <column_name>days_in_arrears</column_name>
-          <stream_name>days_in_arrears</stream_name>
-        </field>
-        <field>
-          <column_name>installments_in_arrears</column_name>
-          <stream_name>installments_in_arrears</stream_name>
-        </field>
-        <field>
-          <column_name>principal_in_arrears</column_name>
-          <stream_name>principal_in_arrears</stream_name>
-        </field>
-        <field>
-          <column_name>interest_in_arrears</column_name>
-          <stream_name>interest_in_arrears</stream_name>
-        </field>
-        <field>
-          <column_name>total_in_arrears</column_name>
-          <stream_name>total_in_arrears</stream_name>
-        </field>
-        <field>
-          <column_name>principal_outstanding</column_name>
-          <stream_name>principal_outstanding</stream_name>
-        </field>
-        <field>
-          <column_name>interest_outstanding</column_name>
-          <stream_name>interest_outstanding</stream_name>
-        </field>
-        <field>
-          <column_name>total_outstanding</column_name>
-          <stream_name>total_outstanding</stream_name>
-        </field>
-        <field>
-          <column_name>loan_account_id</column_name>
-          <stream_name>loan_account_id</stream_name>
-        </field>
-        <field>
-          <column_name>as_of_date</column_name>
-          <stream_name>as_of_date</stream_name>
-        </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>due_date</name>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>created_date</name>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>account_action_id</name>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>0</precision>
+      </field>
+        <select_unspecified>Y</select_unspecified>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>747</xloc>
-      <yloc>35</yloc>
+      <xloc>90</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Mapping output specification</name>
+    <type>MappingOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>260</xloc>
+      <yloc>129</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

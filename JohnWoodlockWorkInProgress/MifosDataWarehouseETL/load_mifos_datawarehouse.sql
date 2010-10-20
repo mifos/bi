@@ -242,7 +242,7 @@ CREATE TABLE `dim_fee` (
   `fee_name` varchar(50) NOT NULL,
   `category_type` varchar(30) NOT NULL,
   `fee_frequency_type` varchar(30) NOT NULL,
-  `fee_payment` varchar(30) NOT NULL,
+  `fee_payment` varchar(40) NOT NULL,
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
   `version` int(11) NOT NULL DEFAULT '0',
@@ -495,7 +495,7 @@ CREATE TABLE `dw_account_charge_type` (
 
 LOCK TABLES `dw_account_charge_type` WRITE;
 /*!40000 ALTER TABLE `dw_account_charge_type` DISABLE KEYS */;
-INSERT INTO `dw_account_charge_type` VALUES (2,'Misc. Fees/Charges'),(3,'Misc. Penalties'),(1,'Periodic and Upfront Fees');
+INSERT INTO `dw_account_charge_type` VALUES (2,'Misc. Fees/Charges'),(3,'Misc. Penalties'),(1,'Periodic and One-time Fees');
 /*!40000 ALTER TABLE `dw_account_charge_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -620,11 +620,12 @@ CREATE TABLE `fact_customer_fees_and_charges` (
   `payment_id` int(11) NOT NULL,
   `payment_type_id` smallint(6) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
+  `fee_trxn_detail_id` int(11) NOT NULL,
   `installment_id` smallint(6) NOT NULL,
   `action_date` date NOT NULL,
   `account_charge_type_id` tinyint(4) NOT NULL,
   `amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  KEY `account_trxn_id` (`account_trxn_id`),
+  PRIMARY KEY (`account_trxn_id`,`fee_trxn_detail_id`),
   KEY `fee_key` (`account_action_key`),
   KEY `account_action_key` (`account_action_key`),
   KEY `currency_key` (`currency_key`),
@@ -673,6 +674,7 @@ CREATE TABLE `fact_loan_disbursals` (
   `disbursal_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `payment_id` int(11) NOT NULL,
+  `payment_type_id` smallint(6) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
   `disbursal_count` tinyint(4) NOT NULL,
   `disbursal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
@@ -703,6 +705,69 @@ LOCK TABLES `fact_loan_disbursals` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fact_loan_fees_and_charges`
+--
+
+DROP TABLE IF EXISTS `fact_loan_fees_and_charges`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fact_loan_fees_and_charges` (
+  `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `fee_key` smallint(5) unsigned NOT NULL,
+  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `group_key` int(10) unsigned NOT NULL,
+  `center_key` int(10) unsigned NOT NULL,
+  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `branch_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `action_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `loan_account_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `payment_type_id` smallint(6) NOT NULL,
+  `account_trxn_id` int(11) NOT NULL,
+  `fee_trxn_detail_id` int(11) NOT NULL,
+  `installment_id` smallint(6) NOT NULL,
+  `action_date` date NOT NULL,
+  `account_charge_type_id` tinyint(4) NOT NULL,
+  `amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `reversed` tinyint(4) NOT NULL DEFAULT '0',
+  `adjusted` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`account_trxn_id`,`fee_trxn_detail_id`),
+  KEY `loan_account_key` (`loan_account_key`),
+  KEY `fee_key` (`account_action_key`),
+  KEY `account_action_key` (`account_action_key`),
+  KEY `currency_key` (`currency_key`),
+  KEY `product_key` (`product_key`),
+  KEY `customer_key` (`customer_key`),
+  KEY `group_key` (`group_key`),
+  KEY `center_key` (`center_key`),
+  KEY `loan_officer_key` (`loan_officer_key`),
+  KEY `branch_key` (`branch_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
+  KEY `due_date_key` (`due_date_key`),
+  KEY `action_date_key` (`action_date_key`),
+  KEY `created_date_key` (`created_date_key`),
+  KEY `loan_account_id` (`loan_account_id`),
+  KEY `payment_id` (`payment_id`),
+  KEY `account_charge_type_id` (`account_charge_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fact_loan_fees_and_charges`
+--
+
+LOCK TABLES `fact_loan_fees_and_charges` WRITE;
+/*!40000 ALTER TABLE `fact_loan_fees_and_charges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fact_loan_fees_and_charges` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fact_loan_repayments`
 --
 
@@ -725,13 +790,12 @@ CREATE TABLE `fact_loan_repayments` (
   `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `loan_account_id` int(11) NOT NULL,
   `payment_id` int(11) NOT NULL,
+  `payment_type_id` smallint(6) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
   `installment_id` smallint(6) NOT NULL,
   `action_date` date NOT NULL,
   `principal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `misc_fee_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `misc_penalty_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `reversed` tinyint(4) NOT NULL DEFAULT '0',
   `adjusted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_trxn_id`),
@@ -785,12 +849,12 @@ CREATE TABLE `fact_savings_transactions` (
   `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `savings_account_id` int(11) NOT NULL,
   `payment_id` int(11) NOT NULL,
+  `payment_type_id` smallint(6) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
   `installment_id` smallint(6) DEFAULT '0',
   `deposit_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `withdrawal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `balance_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`account_trxn_id`),
   KEY `account_action_key` (`account_action_key`),
   KEY `currency_key` (`currency_key`),
@@ -2475,4 +2539,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-10-18 20:55:50
+-- Dump completed on 2010-10-20 10:28:52

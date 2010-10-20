@@ -183,7 +183,7 @@ to match to the transaction action_date.  This process will fall over with a &ap
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Active Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Latest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Active Loan Account Entry</from><to>Create Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Abort Repayments Transformation</name>
     <type>Abort</type>
@@ -199,131 +199,8 @@ to match to the transaction action_date.  This process will fall over with a &ap
       <always_log_rows>Y</always_log_rows>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>461</xloc>
-      <yloc>5</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Account Action lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_account_action</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>account_action_id</name>
-        <field>account_action_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>account_action_key</name>
-        <rename>account_action_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>281</xloc>
-      <yloc>12</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Action Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>action_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>action_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>52</xloc>
-      <yloc>114</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>created_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>created_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>173</xloc>
-      <yloc>116</yloc>
+      <xloc>384</xloc>
+      <yloc>19</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -375,14 +252,6 @@ to match to the transaction action_date.  This process will fall over with a &ap
         <field>
           <column_name>interest_amount</column_name>
           <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_fee_amount</column_name>
-          <stream_name>misc_fee_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty_amount</column_name>
-          <stream_name>misc_penalty_amount</stream_name>
         </field>
         <field>
           <column_name>action_date_key</column_name>
@@ -444,11 +313,15 @@ to match to the transaction action_date.  This process will fall over with a &ap
           <column_name>action_date</column_name>
           <stream_name>action_date</stream_name>
         </field>
+        <field>
+          <column_name>payment_type_id</column_name>
+          <stream_name>payment_type_id</stream_name>
+        </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>673</xloc>
-      <yloc>176</yloc>
+      <xloc>638</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -478,49 +351,8 @@ to match to the transaction action_date.  This process will fall over with a &ap
 <target_step>Lookup Rescheduled Loan Account Entry</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>264</xloc>
-      <yloc>154</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Due Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>due_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>due_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>166</xloc>
-      <yloc>16</yloc>
+      <xloc>127</xloc>
+      <yloc>145</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -547,8 +379,8 @@ to match to the transaction action_date.  This process will fall over with a &ap
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>855</xloc>
-      <yloc>21</yloc>
+      <xloc>773</xloc>
+      <yloc>8</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -632,8 +464,8 @@ order by loan_account_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>683</xloc>
-      <yloc>4</yloc>
+      <xloc>603</xloc>
+      <yloc>20</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -675,8 +507,8 @@ and loan_status = &apos;AccountState-ClosedRescheduled&apos;</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>520</xloc>
-      <yloc>150</yloc>
+      <xloc>367</xloc>
+      <yloc>162</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -718,8 +550,8 @@ and loan_status = &apos;AccountState-ClosedWrittenOff&apos;</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>625</xloc>
-      <yloc>79</yloc>
+      <xloc>473</xloc>
+      <yloc>94</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -736,14 +568,14 @@ and loan_status = &apos;AccountState-ClosedWrittenOff&apos;</sql>
            </partitioning>
     <connection>SourceDB</connection>
     <sql>
-select atxn.account_action_id, 
-atxn.account_trxn_id, atxn.account_id as loan_account_id, atxn.payment_id, atxn.installment_id, 
-atxn.due_date, atxn.action_date, date(atxn.created_date) created_date, 
-ltxn.principal_amount, ltxn.interest_amount, ltxn.misc_fee_amount, 
-ltxn.misc_penalty_amount
+select atxn.action_date, atxn.due_date, date(atxn.created_date) created_date, atxn.account_action_id, 
+atxn.account_trxn_id, atxn.account_id as loan_account_id, atxn.payment_id, atxn.installment_id, ap.payment_type_id, 
+ltxn.principal_amount, ltxn.interest_amount
 from account_trxn atxn
 inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
+inner join account_payment ap on ap.payment_id = atxn.payment_id
 where atxn.account_action_id in (1, 15, 20)
+and not (ltxn.principal_amount = 0 and ltxn.interest_amount = 0)
 &#47;* 
 1  - &apos;AccountAction-LoanRepayment&apos;
 15 - &apos;AccountAction-LoanWrittenOff&apos;
@@ -786,6 +618,47 @@ where atxn.account_action_id in (1, 15, 20)
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>833</xloc>
       <yloc>153</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Do Transaction Lookups</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_transaction_lookups.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>217</xloc>
+      <yloc>18</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

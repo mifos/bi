@@ -174,130 +174,7 @@ In this case, the transaction is attached to the earliest open status entry.
     </attributes>
   </connection>
   <order>
-  <hop> <from>Action Date Lookup</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Action Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Account Action lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_account_action</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>account_action_id</name>
-        <field>account_action_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>account_action_key</name>
-        <rename>account_action_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>411</xloc>
-      <yloc>13</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Action Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>action_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>action_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>91</xloc>
-      <yloc>137</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>created_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>created_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>269</xloc>
-      <yloc>136</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create Savings Transactions</name>
     <type>TableOutput</type>
@@ -349,10 +226,6 @@ In this case, the transaction is attached to the earliest open status entry.
         <field>
           <column_name>interest_amount</column_name>
           <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>balance_amount</column_name>
-          <stream_name>balance_amount</stream_name>
         </field>
         <field>
           <column_name>action_date_key</column_name>
@@ -410,18 +283,22 @@ In this case, the transaction is attached to the earliest open status entry.
           <column_name>savings_account_id</column_name>
           <stream_name>savings_account_id</stream_name>
         </field>
+        <field>
+          <column_name>payment_type_id</column_name>
+          <stream_name>payment_type_id</stream_name>
+        </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>719</xloc>
-      <yloc>223</yloc>
+      <xloc>712</xloc>
+      <yloc>214</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Due Date Lookup</name>
-    <type>DBLookup</type>
+    <name>Do Transaction Lookups</name>
+    <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -429,33 +306,61 @@ In this case, the transaction is attached to the earliest open status entry.
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>due_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>due_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_transaction_lookups.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
-      <yloc>38</yloc>
+      <xloc>403</xloc>
+      <yloc>34</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Create Savings Transactions</send_true_to>
+<send_false_to>Remove null Key Columns</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>savings_account_key</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>709</xloc>
+      <yloc>118</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -471,12 +376,12 @@ In this case, the transaction is attached to the earliest open status entry.
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select atxn.account_action_id, 
-atxn.account_trxn_id, atxn.account_id as savings_account_id, atxn.payment_id, atxn.installment_id, 
-ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, atxn.action_date, date(atxn.created_date) created_date, 
-stxn.deposit_amount, stxn.withdrawal_amount, stxn.interest_amount, stxn.balance as balance_amount
+    <sql>select atxn.action_date, ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, date(atxn.created_date) created_date, atxn.account_action_id, 
+atxn.account_trxn_id, atxn.account_id as savings_account_id, atxn.payment_id, atxn.installment_id, ap.payment_type_id,
+stxn.deposit_amount, stxn.withdrawal_amount, stxn.interest_amount
 from account_trxn atxn
 inner join  savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
+inner join account_payment ap on ap.payment_id = atxn.payment_id
 where atxn.account_action_id in (6,7, 11, 14)
 &#47;* 
 6 Deposit
@@ -491,8 +396,77 @@ where atxn.account_action_id in (6,7, 11, 14)
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>91</xloc>
-      <yloc>40</yloc>
+      <xloc>110</xloc>
+      <yloc>35</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove null Key Columns</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>savings_account_key</name>
+      </remove>      <remove>        <name>customer_key</name>
+      </remove>      <remove>        <name>product_key</name>
+      </remove>      <remove>        <name>group_key</name>
+      </remove>      <remove>        <name>center_key</name>
+      </remove>      <remove>        <name>loan_officer_key</name>
+      </remove>      <remove>        <name>branch_key</name>
+      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
+      </remove>      <remove>        <name>currency_key</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>248</xloc>
+      <yloc>116</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Savings Account - get earliest open entry</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select savings_account_key, customer_key, product_key, group_key, center_key,
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+from dim_savings
+where savings_account_id = ?
+&#47;*link savings to the earliest of the status&apos;s below... (only for rare situations where the &apos;action date&apos; was
+up to 6 days prior to account activation ... although the system entered date was not before that date*&#47;
+and valid_to &gt;= ?
+and savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
+order by savings_account_key</sql>
+    <outer_join>Y</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>savings_account_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>248</xloc>
+      <yloc>216</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -536,105 +510,8 @@ order by savings_account_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>720</xloc>
-      <yloc>15</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Create Savings Transactions</send_true_to>
-<send_false_to>Remove null Key Columns</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>savings_account_key</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>719</xloc>
-      <yloc>118</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Remove null Key Columns</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <remove>        <name>savings_account_key</name>
-      </remove>      <remove>        <name>customer_key</name>
-      </remove>      <remove>        <name>product_key</name>
-      </remove>      <remove>        <name>group_key</name>
-      </remove>      <remove>        <name>center_key</name>
-      </remove>      <remove>        <name>loan_officer_key</name>
-      </remove>      <remove>        <name>branch_key</name>
-      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
-      </remove>      <remove>        <name>currency_key</name>
-      </remove>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>498</xloc>
-      <yloc>117</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Savings Account - get earliest open entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select savings_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
-from dim_savings
-where savings_account_id = ?
-&#47;*link savings to the earliest of the status&apos;s below... (only for rare situations where the &apos;action date&apos; was
-up to 6 days prior to account activation ... although the system entered date was not before that date*&#47;
-and valid_to &gt;= ?
-and savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
-order by savings_account_key</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>savings_account_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>action_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>499</xloc>
-      <yloc>225</yloc>
+      <xloc>708</xloc>
+      <yloc>37</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
