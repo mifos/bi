@@ -273,8 +273,8 @@
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>180</xloc>
-      <yloc>178</yloc>
+      <xloc>127</xloc>
+      <yloc>201</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

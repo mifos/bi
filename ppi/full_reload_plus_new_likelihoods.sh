@@ -12,10 +12,10 @@ BI_HOME=$3
 echo $DB_NAME
 echo "drop database ${DB_NAME}" | mysql -u root
 echo "create database ${DB_NAME}" | mysql -u root
-mysql -u root ${DB_NAME} < load_mifos_datawarehouse.sql
+mysql -u root ${DB_NAME} < ../JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
 
 # while there is work in progress, load new category likelihoods here
-mysql -u root ${DB_NAME} < categoryLikelihoodsIndia.sql
+mysql -u root ${DB_NAME} < categoryLikelihoodsIndia02.sql
 
 
 ${PDI_HOME}/kitchen.sh /file:${BI_HOME}/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb
