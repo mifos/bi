@@ -11,5 +11,5 @@ BI_HOME=$3
 echo $DB_NAME
 echo "drop database ${DB_NAME}" | mysql -u root
 echo "create database ${DB_NAME}" | mysql -u root
-mysql -u root ${DB_NAME} < load_mifos_datawarehouse.sql
+mysql -u root ${DB_NAME} < $BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
 ${PDI_HOME}/kitchen.sh /file:${BI_HOME}/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb
