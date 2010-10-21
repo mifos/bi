@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.45, for Win32 (ia32)
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
 --
--- Host: localhost    Database: mifos_dwh
+-- Host: localhost    Database: mifos_ppi_dw
 -- ------------------------------------------------------
--- Server version	5.1.45-community
+-- Server version	5.1.41-3ubuntu12.6
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -558,6 +558,29 @@ INSERT INTO `dw_mfi_configuration` VALUES (1,10,30);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `dw_ppi_survey`
+--
+
+DROP TABLE IF EXISTS `dw_ppi_survey`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_ppi_survey` (
+  `survey_id` int(11) NOT NULL,
+  `survey_name` varchar(200) NOT NULL,
+  PRIMARY KEY (`survey_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_ppi_survey`
+--
+
+LOCK TABLES `dw_ppi_survey` WRITE;
+/*!40000 ALTER TABLE `dw_ppi_survey` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dw_ppi_survey` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fact_client_attendances`
 --
 
@@ -827,6 +850,36 @@ LOCK TABLES `fact_loan_repayments` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fact_ppi_survey_results`
+--
+
+DROP TABLE IF EXISTS `fact_ppi_survey_results`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fact_ppi_survey_results` (
+  `ppi_results_id` int(11) NOT NULL AUTO_INCREMENT,
+  `survey_id` int(11) DEFAULT NULL,
+  `points_version` int(11) NOT NULL,
+  `date_survey_taken` date NOT NULL,
+  `customer_key` int(11) NOT NULL,
+  `branch_key` int(11) NOT NULL,
+  `ppi_score` int(11) NOT NULL,
+  PRIMARY KEY (`ppi_results_id`),
+  KEY `branch_key` (`branch_key`),
+  KEY `customer_key` (`customer_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fact_ppi_survey_results`
+--
+
+LOCK TABLES `fact_ppi_survey_results` WRITE;
+/*!40000 ALTER TABLE `fact_ppi_survey_results` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fact_ppi_survey_results` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fact_savings_transactions`
 --
 
@@ -935,6 +988,80 @@ CREATE TABLE `hist_loan_arrears` (
 LOCK TABLES `hist_loan_arrears` WRITE;
 /*!40000 ALTER TABLE `hist_loan_arrears` DISABLE KEYS */;
 /*!40000 ALTER TABLE `hist_loan_arrears` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ppi_category_likelihood_bands`
+--
+
+DROP TABLE IF EXISTS `ppi_category_likelihood_bands`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ppi_category_likelihood_bands` (
+  `ppi_category_likelihoods_id` int(11) NOT NULL AUTO_INCREMENT,
+  `ppi_survey` varchar(45) NOT NULL,
+  `likelihoods_version` int(11) NOT NULL,
+  `lower_bound` int(11) NOT NULL,
+  `upper_bound` int(11) NOT NULL,
+  `below_national` decimal(4,1) DEFAULT NULL,
+  `bottom_half_below_national` decimal(4,1) DEFAULT NULL,
+  `top_half_below_national` decimal(4,1) DEFAULT NULL,
+  `below_50_percent_of_national` decimal(4,1) DEFAULT NULL,
+  `below_75_percent_of_national` decimal(4,1) DEFAULT NULL,
+  `below_125_percent_of_national` decimal(4,1) DEFAULT NULL,
+  `below_150_percent_of_national` decimal(4,1) DEFAULT NULL,
+  `below_200_percent_of_national` decimal(4,1) DEFAULT NULL,
+  `below_300_percent_of_national` decimal(4,1) DEFAULT NULL,
+  `below_upper_national` decimal(4,1) DEFAULT NULL,
+  `below_lower_national` decimal(4,1) DEFAULT NULL,
+  `below_upper_` decimal(4,1) DEFAULT NULL,
+  `below_national_food` decimal(4,1) DEFAULT NULL,
+  `below_food` decimal(4,1) DEFAULT NULL,
+  `below_subsistence` decimal(4,1) DEFAULT NULL,
+  `below_national_capacity` decimal(4,1) DEFAULT NULL,
+  `below_national_asset` decimal(4,1) DEFAULT NULL,
+  `below_125_percent_of_national_asset` decimal(4,1) DEFAULT NULL,
+  `below_150_percent_of_national_asset` decimal(4,1) DEFAULT NULL,
+  `below_quarter_minimum_wage` decimal(4,1) DEFAULT NULL,
+  `below_half_minimum_wage` decimal(4,1) DEFAULT NULL,
+  `below_one_minimum_wage` decimal(4,1) DEFAULT NULL,
+  `below_two_minimum_wage` decimal(4,1) DEFAULT NULL,
+  `below_usaid_extreme` decimal(4,1) DEFAULT NULL,
+  `below_laeken` decimal(4,1) DEFAULT NULL,
+  `below_molisa` decimal(4,1) DEFAULT NULL,
+  `bottom_half_below_1_00_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `top_half_below_1_00_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_0_25_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_0_50_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_0_75_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_1_00_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_1_25_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_1_50_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_1_75_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_2_00_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_2_50_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_3_75_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_4_00_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_5_00_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_6_25_per_day_2005_ppp` decimal(4,1) DEFAULT NULL,
+  `below_1_00_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
+  `below_1_08_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
+  `below_2_00_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
+  `below_2_16_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
+  `below_3_24_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
+  `below_4_32_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
+  PRIMARY KEY (`ppi_category_likelihoods_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ppi_category_likelihood_bands`
+--
+
+LOCK TABLES `ppi_category_likelihood_bands` WRITE;
+/*!40000 ALTER TABLE `ppi_category_likelihood_bands` DISABLE KEYS */;
+INSERT INTO `ppi_category_likelihood_bands` VALUES (1,'PPI India 01',1,0,4,'77.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'41.7',NULL,NULL,NULL,NULL,NULL,NULL,'54.3','93.7','98.5','100.0',NULL,'100.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'PPI India 01',1,5,9,'58.5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'34.3',NULL,NULL,NULL,NULL,NULL,NULL,'43.5','78.8','92.7','95.5',NULL,'99.1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'PPI India 01',1,10,14,'51.2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'24.7',NULL,NULL,NULL,NULL,NULL,NULL,'32.2','68.4','88.1','95.3',NULL,'97.1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,'PPI India 01',1,15,19,'35.5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'21.0',NULL,NULL,NULL,NULL,NULL,NULL,'20.8','58.0','82.0','95.3',NULL,'98.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'PPI India 01',1,20,24,'28.7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'14.0',NULL,NULL,NULL,NULL,NULL,NULL,'18.0','53.3','78.7','90.2',NULL,'98.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'PPI India 01',1,25,29,'21.3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'9.2',NULL,NULL,NULL,NULL,NULL,NULL,'11.8','37.5','65.2','84.4',NULL,'94.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'PPI India 01',1,30,34,'18.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'9.2',NULL,NULL,NULL,NULL,NULL,NULL,'9.3','29.7','55.8','74.3',NULL,'93.7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'PPI India 01',1,35,39,'14.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'7.6',NULL,NULL,NULL,NULL,NULL,NULL,'7.9','23.1','45.4','62.8',NULL,'84.7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'PPI India 01',1,40,44,'10.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'4.5',NULL,NULL,NULL,NULL,NULL,NULL,'4.0','14.8','32.8','50.5',NULL,'77.8',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,'PPI India 01',1,45,49,'4.5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'1.3',NULL,NULL,NULL,NULL,NULL,NULL,'1.0','5.8','24.0','48.0',NULL,'79.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,'PPI India 01',1,50,54,'5.1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'1.3',NULL,NULL,NULL,NULL,NULL,NULL,'1.0','5.0','17.4','34.5',NULL,'64.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,'PPI India 01',1,55,59,'5.7',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'1.3',NULL,NULL,NULL,NULL,NULL,NULL,'1.0','3.0','16.0','38.7',NULL,'69.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,'PPI India 01',1,60,64,'18.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2.2',NULL,NULL,NULL,NULL,NULL,NULL,'1.2','3.3','12.2','22.7',NULL,'55.2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(14,'PPI India 01',1,65,69,'21.3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.7',NULL,NULL,NULL,NULL,NULL,NULL,'0.0','0.8','8.5','21.8',NULL,'50.0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,'PPI India 01',1,70,74,'18.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.2',NULL,NULL,NULL,NULL,NULL,NULL,'0.1','0.3','6.4','16.3',NULL,'42.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,'PPI India 01',1,75,79,'21.3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.4',NULL,NULL,NULL,NULL,NULL,NULL,'0.0','1.1','2.1','7.9',NULL,'27.3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,'PPI India 01',1,80,84,'18.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.2',NULL,NULL,NULL,NULL,NULL,NULL,'0.0','0.2','0.7','3.6',NULL,'15.5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,'PPI India 01',1,85,89,'21.3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.5',NULL,NULL,NULL,NULL,NULL,NULL,'0.0','0.0','1.9','4.0',NULL,'12.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,'PPI India 01',1,90,94,'18.9',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.0',NULL,NULL,NULL,NULL,NULL,NULL,'0.0','0.0','0.1','1.7',NULL,'8.3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,'PPI India 01',1,95,100,'4.5',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0.0',NULL,NULL,NULL,NULL,NULL,NULL,'0.0','0.0','0.0','0.7',NULL,'4.4',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `ppi_category_likelihood_bands` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1050,7 +1177,7 @@ LOCK TABLES `stg_personnel_names_and_name_changes` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'mifos_dwh'
+-- Dumping routines for database 'mifos_ppi_dw'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `SPcascade_change_to_accounts` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -2539,4 +2666,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-10-20 10:28:52
+-- Dump completed on 2010-10-20 21:18:34
