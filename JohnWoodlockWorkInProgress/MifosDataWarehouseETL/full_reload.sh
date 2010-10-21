@@ -10,7 +10,7 @@ PDI_HOME=$2
 BI_HOME=$3
 MYSQL_ARGS="-u root"
 echo $DB_NAME
-echo "drop database ${DB_NAME}" | mysql $MYSQL_ARGS
-echo "create database ${DB_NAME}" | mysql $MYSQL_ARGS
-mysql $MYSQL_ARGS ${DB_NAME} < $BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
-${PDI_HOME}/kitchen.sh /file:${BI_HOME}/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb
+echo "drop database $DB_NAME" | mysql $MYSQL_ARGS
+echo "create database $DB_NAME" | mysql $MYSQL_ARGS
+mysql $MYSQL_ARGS $DB_NAME < $BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
+$PDI_HOME/kitchen.sh /file:$BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb
