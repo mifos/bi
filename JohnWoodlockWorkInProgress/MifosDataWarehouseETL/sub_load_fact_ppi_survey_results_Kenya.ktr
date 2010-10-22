@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load fact_ppi_survey_results</name>
+    <name>sub_load_fact_ppi_survey_results_India</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -167,28 +167,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read Surveys</from><to>Switch &#47; Case</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>sub_load_fact_ppi_survey_India</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>sub_load_fact_ppi_survey_Kenya</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>PPI Kenya 01</from><to>Database lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Database lookup</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>PPI Kenya 01</to><enabled>Y</enabled> </hop>  <hop> <from>Insert &#47; Update</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Matching survey wasn&apos;t found</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>387</xloc>
-      <yloc>48</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Read Surveys</name>
-    <type>TableInput</type>
+    <name>Database lookup</name>
+    <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -197,7 +179,240 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select survey_name from dw_ppi_survey</sql>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>Y</eat_row_on_failure>
+      <key>
+        <name>client_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>valid_from</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>valid_to</field>
+        <condition>&gt;</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>340</xloc>
+      <yloc>143</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Insert &#47; Update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>fact_ppi_survey_results</table>
+      <key>
+        <name>survey_id</name>
+        <field>survey_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>customer_key</name>
+        <field>customer_key</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>date_survey_taken</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>survey_id</name>
+        <rename>survey_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>points_version</name>
+        <rename>points_version</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>date_survey_taken</name>
+        <rename>date_survey_taken</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ppi_score</name>
+        <rename>ppi_score</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>166</xloc>
+      <yloc>152</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Mapping input specification</name>
+    <type>MappingInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+        <select_unspecified>N</select_unspecified>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>163</xloc>
+      <yloc>41</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Mapping output specification</name>
+    <type>MappingOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>164</xloc>
+      <yloc>267</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Kenya 01</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.client_id, 
+(
+case
+when answers.Q1=&apos;3 or more&apos; then 0
+when answers.Q1=&apos;0, 1 or 2&apos; then 8
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;All&apos; then 8
+when answers.Q2=&apos;No children aged 6 to 17&apos; then 21
+end +
+case
+when answers.Q3=&apos;Mud&#47;cow dung; grass&#47;sticks&#47;makuti; or no data&apos; then 0
+when answers.Q3=&apos;Other&apos; then 5
+end +
+case
+when answers.Q4=&apos;Other&apos; then 0
+when answers.Q4=&apos;Flush to sewer; flush to septic tank; pan&#47;bucket; covered pit latrine; or ventilation improved pit latrine&apos; then 2
+end +
+case
+when answers.Q5=&apos;No&apos;then 0
+when answers.Q5=&apos;Yes&apos; then 16
+end +
+case
+when answers.Q6=&apos;No&apos;then 0
+when answers.Q6=&apos;Yes&apos; then 14
+end +
+case
+when answers.Q7=&apos;No&apos;then 0
+when answers.Q7=&apos;Yes&apos; then 12
+end +
+case
+when answers.Q8=&apos;No&apos;then 0
+when answers.Q8=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;None or unknown&apos; then 0
+when answers.Q10=&apos;1 or more&apos; then 9
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.short_name = &apos;Date Survey Was Taken&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as &apos;client_id&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;How many household members are aged 25 or younger?&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;How many household members aged 6 to 17 are currently attending school?&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;What is the material of the walls of the house?&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;What kind of toilet facility does your household use?&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;Does the household own a TV?&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;Does the household own a sofa?&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;Does the household own a stove?&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;Does the household own a radio?&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;Does the household own a bicycle?&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.short_name = &apos;How many head of cattle are owned by the household currently?&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id
+GROUP BY question_group_instance_id) as answers</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -205,119 +420,8 @@
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>82</xloc>
-      <yloc>51</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Switch &#47; Case</name>
-    <type>SwitchCase</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<fieldname>survey_name</fieldname>
-<use_contains>N</use_contains>
-<case_value_type>String</case_value_type>
-<case_value_format/>
-<case_value_decimal/>
-<case_value_group/>
-<default_target_step>Matching survey wasn&apos;t found</default_target_step>
-<cases><case><value>PPI India 01</value>
-<target_step>sub_load_fact_ppi_survey_India</target_step>
-</case><case><value>PPI Kenya 01</value>
-<target_step>sub_load_fact_ppi_survey_Kenya</target_step>
-</case></cases>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>211</xloc>
-      <yloc>53</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>sub_load_fact_ppi_survey_India</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_load_fact_ppi_survey_results_India.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>180</xloc>
-      <yloc>178</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>sub_load_fact_ppi_survey_Kenya</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_load_fact_ppi_survey_results_Kenya.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>224</xloc>
-      <yloc>241</yloc>
+      <xloc>345</xloc>
+      <yloc>44</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
