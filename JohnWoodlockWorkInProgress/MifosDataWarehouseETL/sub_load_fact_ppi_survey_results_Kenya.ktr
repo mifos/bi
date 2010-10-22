@@ -354,7 +354,7 @@
 (
 case
 when answers.Q1=&apos;3 or more&apos; then 0
-when answers.Q1=&apos;0, 1 or 2&apos; then 8
+when answers.Q1=&apos;0, 1, or 2&apos; then 8
 end +
 case
 when answers.Q2=&apos;Not all&apos; then 0
