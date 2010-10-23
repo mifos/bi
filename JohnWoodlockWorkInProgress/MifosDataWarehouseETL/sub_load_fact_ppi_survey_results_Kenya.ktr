@@ -411,7 +411,7 @@ GROUP_CONCAT(if(q.short_name = &apos;Does the household own a radio?&apos;, qgr.
 GROUP_CONCAT(if(q.short_name = &apos;Does the household own a bicycle?&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
 GROUP_CONCAT(if(q.short_name = &apos;How many head of cattle are owned by the household currently?&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q
-WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Kenya 01&quot;
 GROUP BY question_group_instance_id) as answers</sql>
     <limit>0</limit>
     <lookup/>
