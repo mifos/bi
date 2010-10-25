@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_dw_mfi_configuration</name>
+    <name>TestFeeCount</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#47;</directory>
     <parameters>
     </parameters>
@@ -16,7 +17,7 @@
 <size_limit_lines/>
 <interval/>
 <timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></trans-log-table>
 <perf-log-table><connection/>
 <schema/>
 <table/>
@@ -41,17 +42,17 @@
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
-    <size_rowset>10000</size_rowset>
-    <sleep_time_empty>50</sleep_time_empty>
-    <sleep_time_full>50</sleep_time_full>
+    <size_rowset>1000</size_rowset>
+    <sleep_time_empty>1</sleep_time_empty>
+    <sleep_time_full>1</sleep_time_full>
     <unique_connections>N</unique_connections>
     <feedback_shown>Y</feedback_shown>
-    <feedback_size>50000</feedback_size>
-    <using_thread_priorities>Y</using_thread_priorities>
+    <feedback_size>5000</feedback_size>
+    <using_thread_priorities>N</using_thread_priorities>
     <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
-    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <step_performance_capturing_size_limit/>
     <dependencies>
     </dependencies>
     <partitionschemas>
@@ -61,9 +62,32 @@
     <clusterschemas>
     </clusterschemas>
   <modified_user>-</modified_user>
-  <modified_date>2010&#47;10&#47;12 13:52:52.746</modified_date>
+  <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Number of fees in the source  should equal the number in the destination
+
+Although the table structure of dim_fee has fields for managing type 2 changes... none are applied.</note>
+      <xloc>299</xloc>
+      <yloc>113</yloc>
+      <width>489</width>
+      <heigth>47</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -141,9 +165,75 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Latness and Dormancy Info</from><to>Insert &#47; Update dw_mfi_configuration</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Fee Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Fee Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Test Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Test Counts</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Test Counts</from><to>Abort</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Get Latness and Dormancy Info</name>
+    <name>Abort</name>
+    <type>Abort</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <row_threshold>0</row_threshold>
+      <message/>
+      <always_log_rows>Y</always_log_rows>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>71</xloc>
+      <yloc>324</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy (do nothing)</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>252</xloc>
+      <yloc>324</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Fee Destination Count</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select 1 as the_join, count(*) as destination_count
+from dim_fee
+where fee_key &gt; 0</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>267</xloc>
+      <yloc>20</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Fee Source Count</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -153,12 +243,8 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>
-select 1 as mfi_configuration_key, l.lateness_days as loan_lateness_days, s.dormancy_days as savings_dormancy_days
-from prd_type l
-join prd_type s
-where l.prd_type_id = 1
-and s.prd_type_id = 2</sql>
+    <sql>select 1 as the_join, count(*) as source_count
+from fees</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -166,15 +252,15 @@ and s.prd_type_id = 2</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>104</xloc>
-      <yloc>37</yloc>
+      <xloc>52</xloc>
+      <yloc>20</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Insert &#47; Update dw_mfi_configuration</name>
-    <type>InsertUpdate</type>
+    <name>Join Source and Destination Counts</name>
+    <type>MergeJoin</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -182,33 +268,47 @@ and s.prd_type_id = 2</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <commit>1</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>dw_mfi_configuration</table>
-      <key>
-        <name>mfi_configuration_key</name>
-        <field>mfi_configuration_key</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>loan_lateness_days</name>
-        <rename>loan_lateness_days</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>savings_dormancy_days</name>
-        <rename>savings_dormancy_days</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
+<join_type>INNER</join_type>
+<step1>Fee Source Count</step1>
+<step2>Fee Destination Count</step2>
+    <keys_1>
+      <key>the_join</key>
+    </keys_1>
+    <keys_2>
+      <key>the_join</key>
+    </keys_2>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>352</xloc>
-      <yloc>37</yloc>
+      <xloc>156</xloc>
+      <yloc>116</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Test Counts</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Dummy (do nothing)</send_true_to>
+<send_false_to>Abort</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>source_count</leftvalue>
+ <function>=</function>
+ <rightvalue>destination_count</rightvalue>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>156</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
