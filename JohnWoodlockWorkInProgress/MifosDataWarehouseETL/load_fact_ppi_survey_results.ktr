@@ -445,19 +445,19 @@ as ppi_score
 from
 (SELECT
 qg.id as survey_id,
-GROUP_CONCAT(if(q.short_name = &apos;Date Survey Was Taken&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
 qgi.entity_id as entity_id,
-es.entity_type_id as entity_type_id,
-GROUP_CONCAT(if(q.short_name = &apos;How many people aged 0 to 17 are in the household?&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;What is the household’s principal occupation?&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard&#47;cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)?&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;What is the household’s primary source of energy for cooking?&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a television?&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a bicycle, scooter, or motor cycle?&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own an almirah&#47;dressing table?&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a sewing machine?&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;How many pressure cookers or pressure pans does the household own?&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;How many electric fans does the household own?&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+es.entity_type_id entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_family_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_principal_occupation&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_home_construction&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_cooking_energy&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_bicycle_scooter_motorcycle&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_almirah&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_sewing_machine&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_pressure_cookers&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_electric_fans&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
 WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI India 01&quot; and qgi.event_source_id = es.id
 GROUP BY question_group_instance_id) as answers</sql>
@@ -533,19 +533,19 @@ as ppi_score
 from
 (SELECT
 qg.id as survey_id,
-GROUP_CONCAT(if(q.short_name = &apos;Date Survey Was Taken&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
 qgi.entity_id as entity_id,
-es.entity_type_id as entity_type_id,
-GROUP_CONCAT(if(q.short_name = &apos;How many household members are aged 25 or younger?&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;How many household members aged 6 to 17 are currently attending school?&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;What is the material of the walls of the house?&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;What kind of toilet facility does your household use?&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a TV?&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a sofa?&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a stove?&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a radio?&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;Does the household own a bicycle?&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
-GROUP_CONCAT(if(q.short_name = &apos;How many head of cattle are owned by the household currently?&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+es.entity_type_id entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_family_0_to_25&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_school_6_to_17&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_house_walls&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_toilet&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_sofa&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_stove&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_bicycle&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_cattle&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
 WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Kenya 01&quot; and qgi.event_source_id = es.id
 GROUP BY question_group_instance_id) as answers
