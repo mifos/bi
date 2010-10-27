@@ -13,6 +13,7 @@
         <name>Survey Administration</name>
         <question order="1">
             <title>Date Survey Was Taken</title>
+            <nickname>PPI_Kenya_01_survey_date</nickname>
             <type>DATE</type>
         </question>
     </section>
@@ -20,6 +21,7 @@
         <name>PPI Questions</name>
         <question order="1">
             <title>How many household members are aged 25 or younger?</title>
+            <nickname>PPI_Kenya_01_family_0_to_25</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>3 or more</value>
@@ -31,6 +33,7 @@
         </question>
         <question order="2">
             <title>How many household members aged 6 to 17 are currently attending school?</title>
+            <nickname>PPI_Kenya_01_school_6_to_17</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Not all</value>
@@ -45,6 +48,7 @@
         </question>
         <question order="3">
             <title>What is the material of the walls of the house?</title>
+            <nickname>PPI_Kenya_01_house_walls</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Mud/cow dung; grass/sticks/makuti; or no data</value>
@@ -56,6 +60,7 @@
         </question>
         <question order="4">
             <title>What kind of toilet facility does your household use?</title>
+            <nickname>PPI_Kenya_01_toilet</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Other</value>
@@ -67,6 +72,7 @@
         </question>
         <question order="5">
             <title>Does the household own a TV?</title>
+            <nickname>PPI_Kenya_01_television</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -78,6 +84,7 @@
         </question>
         <question order="6">
             <title>Does the household own a sofa?</title>
+            <nickname>PPI_Kenya_01_sofa</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -89,6 +96,7 @@
         </question>
         <question order="7">
             <title>Does the household own a stove?</title>
+            <nickname>PPI_Kenya_01_stove</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -100,6 +108,7 @@
         </question>
         <question order="8">
             <title>Does the household own a radio?</title>
+            <nickname>PPI_Kenya_01_radio</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -111,6 +120,7 @@
         </question>
         <question order="9">
             <title>Does the household own a bicycle?</title>
+            <nickname>PPI_Kenya_01_bicycle</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -122,6 +132,7 @@
         </question>
         <question order="10">
             <title>How many head of cattle are owned by the household currently?</title>
+            <nickname>PPI_Kenya_01_cattle</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None or unknown</value>
