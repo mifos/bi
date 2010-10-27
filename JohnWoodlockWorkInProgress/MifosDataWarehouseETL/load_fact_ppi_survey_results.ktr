@@ -65,27 +65,6 @@
   <modified_date>2010&#47;10&#47;04 08:52:42.339</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Here&apos;s a note</note>
-      <xloc>534</xloc>
-      <yloc>231</yloc>
-      <width>97</width>
-      <heigth>27</heigth>
-      <fontname>Ariel</fontname>
-      <fontsize>10</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -190,6 +169,199 @@
   <order>
   <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 01</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 01</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  </order>
   <step>
+    <name>Account flow (loan or savings)</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>account</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>entity_id</name>
+        <field>account_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_id</name>
+        <rename>client_id</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>409</xloc>
+      <yloc>311</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Client flow (create, close, attach survey)</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>client_id</field_name>
+<calc_type>COPY_FIELD</calc_type>
+<field_a>entity_id</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>211</xloc>
+      <yloc>338</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Insert &#47; Update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>fact_ppi_survey_results</table>
+      <key>
+        <name>survey_id</name>
+        <field>survey_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>customer_key</name>
+        <field>customer_key</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>date_survey_taken</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>survey_id</name>
+        <rename>survey_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>points_version</name>
+        <rename>points_version</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>date_survey_taken</name>
+        <rename>date_survey_taken</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ppi_score</name>
+        <rename>ppi_score</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>176</xloc>
+      <yloc>441</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Map to dimensions</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby>customer_key</orderby>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>client_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>364</xloc>
+      <yloc>449</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Matching survey wasn&apos;t found</name>
     <type>Dummy</type>
     <description/>
@@ -203,60 +375,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>387</xloc>
       <yloc>48</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Read Surveys</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select survey_name from dw_ppi_survey</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>82</xloc>
-      <yloc>51</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Which survey?</name>
-    <type>SwitchCase</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<fieldname>survey_name</fieldname>
-<use_contains>N</use_contains>
-<case_value_type>String</case_value_type>
-<case_value_format/>
-<case_value_decimal/>
-<case_value_group/>
-<default_target_step>Matching survey wasn&apos;t found</default_target_step>
-<cases><case><value>PPI India 01</value>
-<target_step>PPI India 01</target_step>
-</case><case><value>PPI Kenya 01</value>
-<target_step>PPI Kenya 01</target_step>
-</case></cases>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>211</xloc>
-      <yloc>53</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -357,230 +475,6 @@ GROUP BY question_group_instance_id) as answers</sql>
     </step>
 
   <step>
-    <name>Map to dimensions</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_customer</table>
-      <orderby>customer_key</orderby>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>client_id</name>
-        <field>customer_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>branch_key</name>
-        <rename>branch_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>364</xloc>
-      <yloc>449</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Insert &#47; Update</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>fact_ppi_survey_results</table>
-      <key>
-        <name>survey_id</name>
-        <field>survey_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>customer_key</name>
-        <field>customer_key</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>date_survey_taken</name>
-        <field>date_survey_taken</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>survey_id</name>
-        <rename>survey_id</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>points_version</name>
-        <rename>points_version</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>date_survey_taken</name>
-        <rename>date_survey_taken</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ppi_score</name>
-        <rename>ppi_score</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>branch_key</name>
-        <rename>branch_key</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>176</xloc>
-      <yloc>441</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>What flow was the survey attached to?</name>
-    <type>SwitchCase</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<fieldname>entity_type_id</fieldname>
-<use_contains>N</use_contains>
-<case_value_type>Integer</case_value_type>
-<case_value_format/>
-<case_value_decimal/>
-<case_value_group/>
-<default_target_step/>
-<cases><case><value>1</value>
-<target_step>Client flow (create, close, attach survey)</target_step>
-</case><case><value>22</value>
-<target_step>Account flow (loan or savings)</target_step>
-</case><case><value>21</value>
-<target_step>Account flow (loan or savings)</target_step>
-</case></cases>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>261</xloc>
-      <yloc>247</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Account flow (loan or savings)</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>account</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>entity_id</name>
-        <field>account_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>customer_id</name>
-        <rename>client_id</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>409</xloc>
-      <yloc>311</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Client flow (create, close, attach survey)</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>client_id</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>entity_id</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>211</xloc>
-      <yloc>338</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>PPI Kenya 01</name>
     <type>TableInput</type>
     <description/>
@@ -665,6 +559,91 @@ GROUP BY question_group_instance_id) as answers
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>280</xloc>
       <yloc>151</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Read Surveys</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select survey_name from dw_ppi_survey</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>82</xloc>
+      <yloc>51</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>What flow was the survey attached to?</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>entity_type_id</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>Integer</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step/>
+<cases><case><value>1</value>
+<target_step>Client flow (create, close, attach survey)</target_step>
+</case><case><value>22</value>
+<target_step>Account flow (loan or savings)</target_step>
+</case><case><value>21</value>
+<target_step>Account flow (loan or savings)</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>261</xloc>
+      <yloc>247</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Which survey?</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>survey_name</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>String</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Matching survey wasn&apos;t found</default_target_step>
+<cases><case><value>PPI India 01</value>
+<target_step>PPI India 01</target_step>
+</case><case><value>PPI Kenya 01</value>
+<target_step>PPI Kenya 01</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>211</xloc>
+      <yloc>53</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
