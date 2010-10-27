@@ -65,6 +65,27 @@
   <modified_date>2010&#47;10&#47;04 08:52:42.339</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Here&apos;s a note</note>
+      <xloc>534</xloc>
+      <yloc>231</yloc>
+      <width>97</width>
+      <heigth>27</heigth>
+      <fontname>Ariel</fontname>
+      <fontsize>10</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -167,7 +188,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read Surveys</from><to>Switch &#47; Case</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>PPI India 01</to><enabled>Y</enabled> </hop>  <hop> <from>Database lookup</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case 2</from><to>Lookup client_id from account</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case 2</from><to>entity_id to client_id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup client_id from account</from><to>Database lookup</to><enabled>Y</enabled> </hop>  <hop> <from>entity_id to client_id</from><to>Database lookup</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 01</from><to>Switch &#47; Case 2</to><enabled>Y</enabled> </hop>  <hop> <from>Switch &#47; Case</from><to>PPI Kenya 01</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 01</from><to>Switch &#47; Case 2</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 01</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 01</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Matching survey wasn&apos;t found</name>
     <type>Dummy</type>
@@ -212,7 +233,7 @@
     </step>
 
   <step>
-    <name>Switch &#47; Case</name>
+    <name>Which survey?</name>
     <type>SwitchCase</type>
     <description/>
     <distribute>Y</distribute>
@@ -336,7 +357,7 @@ GROUP BY question_group_instance_id) as answers</sql>
     </step>
 
   <step>
-    <name>Database lookup</name>
+    <name>Map to dimensions</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -376,8 +397,8 @@ GROUP BY question_group_instance_id) as answers</sql>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>308</xloc>
-      <yloc>444</yloc>
+      <xloc>364</xloc>
+      <yloc>449</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -456,7 +477,7 @@ GROUP BY question_group_instance_id) as answers</sql>
     </step>
 
   <step>
-    <name>Switch &#47; Case 2</name>
+    <name>What flow was the survey attached to?</name>
     <type>SwitchCase</type>
     <description/>
     <distribute>Y</distribute>
@@ -473,21 +494,21 @@ GROUP BY question_group_instance_id) as answers</sql>
 <case_value_group/>
 <default_target_step/>
 <cases><case><value>1</value>
-<target_step>entity_id to client_id</target_step>
+<target_step>Client flow (create, close, attach survey)</target_step>
 </case><case><value>22</value>
-<target_step>Lookup client_id from account</target_step>
+<target_step>Account flow (loan or savings)</target_step>
 </case><case><value>21</value>
-<target_step>Lookup client_id from account</target_step>
+<target_step>Account flow (loan or savings)</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
-      <yloc>278</yloc>
+      <xloc>261</xloc>
+      <yloc>247</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Lookup client_id from account</name>
+    <name>Account flow (loan or savings)</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -521,14 +542,14 @@ GROUP BY question_group_instance_id) as answers</sql>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>412</xloc>
-      <yloc>324</yloc>
+      <xloc>409</xloc>
+      <yloc>311</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>entity_id to client_id</name>
+    <name>Client flow (create, close, attach survey)</name>
     <type>Calculator</type>
     <description/>
     <distribute>Y</distribute>

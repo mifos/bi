@@ -1,4 +1,4 @@
-select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.client_id, 
+select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.entity_id, answers.entity_type_id, 
 (
 case
 when answers.Q1='Five or more' then 0
@@ -54,7 +54,8 @@ from
 (SELECT
 qg.id as survey_id,
 GROUP_CONCAT(if(q.short_name = 'Date Survey Was Taken', qgr.response, NULL)) AS 'date_survey_taken',
-qgi.entity_id as 'client_id',
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
 GROUP_CONCAT(if(q.short_name = 'How many people aged 0 to 17 are in the household?', qgr.response, NULL)) AS 'Q1',
 GROUP_CONCAT(if(q.short_name = 'What is the household’s principal occupation?', qgr.response, NULL)) AS 'Q2',
 GROUP_CONCAT(if(q.short_name = 'Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard/cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)?', qgr.response, NULL)) AS 'Q3',
@@ -65,6 +66,6 @@ GROUP_CONCAT(if(q.short_name = 'Does the household own an almirah/dressing table
 GROUP_CONCAT(if(q.short_name = 'Does the household own a sewing machine?', qgr.response, NULL)) AS 'Q8',
 GROUP_CONCAT(if(q.short_name = 'How many pressure cookers or pressure pans does the household own?', qgr.response, NULL)) AS 'Q9',
 GROUP_CONCAT(if(q.short_name = 'How many electric fans does the household own?', qgr.response, NULL)) AS 'Q10'
-FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q
-WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title="PPI India 01"
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title="PPI India 01" and qgi.event_source_id = es.id
 GROUP BY question_group_instance_id) as answers
