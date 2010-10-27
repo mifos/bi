@@ -72,7 +72,7 @@
         </question>
         <question order="5">
             <title>Does the household own a TV?</title>
-            <nickname>PPI_Kenya_01_television</nickname>
+            <nickname>PPI_Kenya_01_owns_television</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -84,7 +84,7 @@
         </question>
         <question order="6">
             <title>Does the household own a sofa?</title>
-            <nickname>PPI_Kenya_01_sofa</nickname>
+            <nickname>PPI_Kenya_01_owns_sofa</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -96,7 +96,7 @@
         </question>
         <question order="7">
             <title>Does the household own a stove?</title>
-            <nickname>PPI_Kenya_01_stove</nickname>
+            <nickname>PPI_Kenya_01_owns_stove</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -108,7 +108,7 @@
         </question>
         <question order="8">
             <title>Does the household own a radio?</title>
-            <nickname>PPI_Kenya_01_radio</nickname>
+            <nickname>PPI_Kenya_01_owns_radio</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -120,7 +120,7 @@
         </question>
         <question order="9">
             <title>Does the household own a bicycle?</title>
-            <nickname>PPI_Kenya_01_bicycle</nickname>
+            <nickname>PPI_Kenya_01_owns_bicycle</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -132,7 +132,7 @@
         </question>
         <question order="10">
             <title>How many head of cattle are owned by the household currently?</title>
-            <nickname>PPI_Kenya_01_cattle</nickname>
+            <nickname>PPI_Kenya_01_owns_cattle</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None or unknown</value>

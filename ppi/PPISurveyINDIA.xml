@@ -72,7 +72,7 @@
         </question>
         <question order="4">
             <title>What is the household’s primary source of energy for cooking?</title>
-            <nickname>PPI_India_01_principal_occupation</nickname>
+            <nickname>PPI_India_01_cooking_energy</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Firewood and chips, charcoal, or none</value>
@@ -87,7 +87,7 @@
         </question>
         <question order="5">
             <title>Does the household own a television?</title>
-            <nickname>PPI_India_01_television</nickname>
+            <nickname>PPI_India_01_owns_television</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -99,7 +99,7 @@
         </question>
         <question order="6">
             <title>Does the household own a bicycle, scooter, or motor cycle?</title>
-            <nickname>PPI_India_01_bicycle</nickname>
+            <nickname>PPI_India_01_owns_bicycle_scooter_motorcycle</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -111,7 +111,7 @@
         </question>
         <question order="7">
             <title>Does the household own an almirah/dressing table?</title>
-            <nickname>PPI_India_01_almirah</nickname>
+            <nickname>PPI_India_01_owns_almirah</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -123,7 +123,7 @@
         </question>
         <question order="8">
             <title>Does the household own a sewing machine?</title>
-            <nickname>PPI_India_01_sewing_machines</nickname>
+            <nickname>PPI_India_01_owns_sewing_machine</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -135,7 +135,7 @@
         </question>
         <question order="9">
             <title>How many pressure cookers or pressure pans does the household own?</title>
-            <nickname>PPI_India_01_pressure_cookers</nickname>
+            <nickname>PPI_India_01_owns_pressure_cookers</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
@@ -150,7 +150,7 @@
         </question>
         <question order="10">
             <title>How many electric fans does the household own?</title>
-            <nickname>PPI_India_01_electric_fans</nickname>
+            <nickname>PPI_India_01_owns_electric_fans</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
