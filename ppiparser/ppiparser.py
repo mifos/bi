@@ -55,7 +55,7 @@ end'''
 
 SQL_CASE_WHEN_TEMPLATE = '''when answers.Q{NUMBER}='{ANSWER}' then {VALUE}'''
 
-GROUP_CONCAT_TEMPLATE = "GROUP_CONCAT(if(q.short_name = '{QUESTION}', qgr.response, NULL)) AS 'Q{NUMBER}'"
+GROUP_CONCAT_TEMPLATE = "GROUP_CONCAT(if(q.nickname = '{NICKNAME}', qgr.response, NULL)) AS 'Q{NUMBER}'"
 
 SQL_TEMPLATE = '''select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.entity_id, answers.entity_type_id,
 
@@ -77,11 +77,12 @@ GROUP BY question_group_instance_id) as answers
 
 def sql(qs, country_name, title='Unknown'):
     cases = []
+    nicks = Nicknames()
     for (qnum, q) in enumerate(qs):
         whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=x[0], VALUE=x[1]) for x in q[1]]
         case = SQL_CASE_TEMPLATE.format(WHENS='\n'.join(whens))
         cases.append(case)
-    group_concats = [GROUP_CONCAT_TEMPLATE.format(QUESTION=q[0], NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
+    group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
     return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title)
 
 
