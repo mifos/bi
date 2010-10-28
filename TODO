@@ -1,0 +1,2 @@
+[_] use JNDI for etl_build.sh db connect params
+	we've already specified db connection settings in /opt/pentaho/data-integration/simple-jndi/jdbc.properties
