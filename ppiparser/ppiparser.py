@@ -76,9 +76,8 @@ WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq
 GROUP BY question_group_instance_id) as answers
 '''
 
-def sql(qs, country_name, title='Unknown'):
+def sql(qs, country_name, nicks, title='Unknown'):
     cases = []
-    nicks = Nicknames()
     for (qnum, q) in enumerate(qs):
         whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=x[0], VALUE=x[1]) for x in q[1]]
         case = SQL_CASE_TEMPLATE.format(WHENS='\n'.join(whens))
@@ -88,9 +87,8 @@ def sql(qs, country_name, title='Unknown'):
             DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)))
 
 
-def xml(qs, country_name, title='Unknown'):
+def xml(qs, country_name, nicks, title='Unknown'):
     questions = []
-    nicks = Nicknames()
     for (qnum, q) in enumerate(qs):
         choices = [CHOICE_TEMPLATE.format(ORDER=i+1, VALUE=val) for (i, val) in enumerate(map(lambda x:x[0], q[1]))]
         question = SINGLE_QUESTION_TEMPLATE.format(ORDER=qnum+1, TITLE=q[0],
@@ -159,12 +157,16 @@ if __name__ == '__main__':
     country_name = filename.split()[0]
     if '.' in country_name:
         country_name = country_name.split('.')[0]
-    title = 'PPI Survey %s' % country_name.capitalize()
+    nicks = Nicknames()
+    year = nicks.year(country_name)
+    title = 'PPI %s %s' % (country_name.capitalize(), year)
     qs = list(parse_questions(filename))
-    sql_out = sql(qs, country_name, title)
-    xml_out = xml(qs, country_name, title)
-    with open(country_name.capitalize() + 'PPIScore.sql', 'w') as sql_f:
+    sql_out = sql(qs, country_name, nicks, title)
+    xml_out = xml(qs, country_name, nicks, title)
+    tmp_sql_filename = '/tmp/%s%sPPIScore.sql' % (country_name.capitalize(), year)
+    with open(tmp_sql_filename, 'w') as sql_f:
         sql_f.write(sql_out)
-    with open('PPISurvey' + country_name.upper() + '.xml', 'w') as xml_f:
+    print 'SQL written to ' + tmp_sql_filename
+    with open('PPISurvey%s%s.xml' % (country_name.upper(), year), 'w') as xml_f:
         xml_f.write(xml_out)
 
