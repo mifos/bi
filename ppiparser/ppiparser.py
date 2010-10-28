@@ -20,7 +20,8 @@ XML_TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
     <section order="1">
         <name>Survey Administration</name>
         <question order="1">
-            <title>Date Survey Was Taken</title>
+            <text>Date Survey Was Taken</text>
+            <nickname>{DATE_NICKNAME}</nickname>
             <type>DATE</type>
         </question>
     </section>
@@ -39,7 +40,7 @@ CHOICE_TEMPLATE = \
 
 SINGLE_QUESTION_TEMPLATE = \
 '''        <question order="{ORDER}">
-            <title>{TITLE}</title>
+            <text>{TITLE}</text>
             <nickname>{NICKNAME}</nickname>
             <type>SINGLE_SELECT</type>
 {CHOICES}
@@ -66,7 +67,7 @@ as ppi_score
 from
 (SELECT
 qg.id as survey_id,
-GROUP_CONCAT(if(q.short_name = 'Date Survey Was Taken', qgr.response, NULL)) AS 'date_survey_taken',
+GROUP_CONCAT(if(q.nickname = '{DATE_NICKNAME}', qgr.response, NULL)) AS 'date_survey_taken',
 qgi.entity_id as entity_id,
 es.entity_type_id as entity_type_id,
 {CONCATS}
@@ -83,7 +84,8 @@ def sql(qs, country_name, title='Unknown'):
         case = SQL_CASE_TEMPLATE.format(WHENS='\n'.join(whens))
         cases.append(case)
     group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
-    return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title)
+    return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title,
+            DATE_NICKNAME='PPI_%s_01_survey_date' % country_name.capitalize())
 
 
 def xml(qs, country_name, title='Unknown'):
@@ -94,7 +96,8 @@ def xml(qs, country_name, title='Unknown'):
         question = SINGLE_QUESTION_TEMPLATE.format(ORDER=qnum+1, TITLE=q[0],
                 NICKNAME=nicks.nickname(country_name, qnum), CHOICES=''.join(choices))
         questions.append(question)
-    return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions))
+    return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions),
+            DATE_NICKNAME='PPI_%s_01_survey_date' % country_name.capitalize())
 
 
 NickRow = namedtuple('NickRow', 'country year nicknames')
