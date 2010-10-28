@@ -85,7 +85,7 @@ def sql(qs, country_name, title='Unknown'):
         cases.append(case)
     group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
     return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title,
-            DATE_NICKNAME='PPI_%s_01_survey_date' % country_name.capitalize())
+            DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)))
 
 
 def xml(qs, country_name, title='Unknown'):
@@ -97,7 +97,7 @@ def xml(qs, country_name, title='Unknown'):
                 NICKNAME=nicks.nickname(country_name, qnum), CHOICES=''.join(choices))
         questions.append(question)
     return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions),
-            DATE_NICKNAME='PPI_%s_01_survey_date' % country_name.capitalize())
+            DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)) )
 
 
 NickRow = namedtuple('NickRow', 'country year nicknames')
@@ -116,9 +116,13 @@ class Nicknames(object):
     def _clean_country(self, country):
         return country.strip().lower().replace(' ', '').replace('_', '')
 
+    def year(self, country):
+        row = self.data[self._clean_country(country)]
+        return row.year
+
     def nickname(self, country, qnum):
         row = self.data[self._clean_country(country)]
-        return '{0}_{1}_{2}'.format(row.country, row.year, row.nicknames[qnum])
+        return 'ppi_{0}_{1}_{2}'.format(row.country, row.year, row.nicknames[qnum])
 
 
 def parse_questions(f):
