@@ -1,0 +1,869 @@
+         Indice de Passage du Seuil de Pauvrete (PPI(TM)) du Sénégal
+                                   Organisme
+                                Nom et Prénoms
+                                       
+                      Référence d'Identité Nationale
+                                       
+                              Date de: (JJ/MM/AA)
+Client: 
+
+
+
+
+Adhésion:
+
+Agent:
+
+
+
+
+Notation:
+
+Agence:
+
+
+
+
+Taille du ménage:
+
+                                       
+                                       
+                                  Indicateurs
+                                  Modalités
+                                     Notes
+                                     Score
+1. Quel est le matériau des murs de la maison?
+A. Autre
+                                       0
+                                       
+
+B. Briques en banco ou en ciment
+                                      11
+                                       
+
+2. Quelle est la principale source utilisée pour l'élairage?
+A. Lampe tempête ou lampe a pétrole artisanale
+                                       0
+                                       
+
+B. Bougie, bois ou autre
+                                       3
+                                       
+
+C. Groupe électrogene, solaire, lampe à gaz ou électricité (SENELEC)
+                                       8
+                                       
+
+3. Quelle est la principale source utilisée pour faire la cuisine?
+A. Autre
+                                       0
+                                       
+
+B. Gaz
+                                       7
+                                       
+
+4. Quel est la principale source d'approvisionnement en eau utilisée pour boire?
+A. Autre
+                                       0
+                                       
+
+B. Robinet interieur
+                                       7
+                                       
+
+5. Quel type de toilettes utilise le ménage?
+
+A. Latrines non couvertes, cuvette/seau, aucun ou autre
+                                       0
+                                       
+
+B. Latrines couvertes, latrines ventilées améliorées ou chasse d'eau avec fosse septique
+                                       8
+                                       
+
+C. Chasse d'eau avec égout
+                                      19
+                                       
+
+6. Votre ménage possède-t-il un refrigerateur/congelateur?
+A. Non
+                                       0
+                                       
+
+B. Oui
+                                      19
+                                       
+
+7. Votre ménage possède-t-il une télévision?
+A. Non
+                                       0
+                                       
+
+B. Oui
+                                       2
+                                       
+
+8. Votre ménage possède-t-il un ventilateur?
+A. Non
+                                       0
+                                       
+
+B. Oui
+                                      15
+                                       
+
+9. Votre ménage possède-t-il un fer à repasser électronique?
+A. Non
+                                       0
+                                       
+
+B. Oui
+                                       5
+                                       
+
+10. Est-ce que la chef de famille féminin sait lire et écrire dans une langue quelconque?
+A. Il n'y a pas chef de famille féminin
+                                       0
+                                       
+
+B. Non
+                                       2
+                                       
+
+C. Oui
+                                       7
+                                       
+Microfinance Risk Management, L.L.C.,                                                                                         Total score
+
+                                       
+           Intervalles de Probabilité de Pauvreté PPI(TM) Sénégal
+
+                          Seuil national de Pauvreté
+
+                    Seuil National de Pauvreté Alimentaire
+
+                   L'USAID << Extreme >> seuil de pauvreté
+                                   Score PPI
+                 Total dessous du seuil national de pauvreté
+                Total au-dessus du seuil national de pauvreté
+                                       
+           Total dessous du seuil national de pauvreté alimentaire
+          Total au-dessus du seuil national de pauvreté alimentaire
+                                       
+          Total dessous du l'USAID << Extreme >> seuil de pauvreté
+         Total au-dessus du l'USAID << Extreme >> seuil de pauvreté
+
+
+
+                                       
+
+
+                                       
+
+
+                                      0-4
+                                     58.2%
+                                    41.8% 
+                                       
+                                    24.2% 
+                                    75.8% 
+                                       
+                                    28.5% 
+                                    71.5% 
+                                      5-9
+                                     65.0%
+                                    35.0% 
+                                       
+                                    24.9% 
+                                    75.1% 
+                                       
+                                    28.5% 
+                                    71.5% 
+                                     10-14
+                                     68.3%
+                                    31.7% 
+                                       
+                                    30.8% 
+                                    69.2% 
+                                       
+                                    37.7% 
+                                    62.3% 
+                                     15-19
+                                     58.6%
+                                    41.4% 
+                                       
+                                    23.6% 
+                                    76.4% 
+                                       
+                                    28.9% 
+                                    71.1% 
+                                     20-24
+                                     56.0%
+                                    44.0% 
+                                       
+                                    16.4% 
+                                    83.6% 
+                                       
+                                    26.2% 
+                                    73.8% 
+                                     25-29
+                                     46.9%
+                                    53.1% 
+                                       
+                                    15.5% 
+                                    84.5% 
+                                       
+                                    25.2% 
+                                    74.8% 
+                                     30-34
+                                     51.3%
+                                    48.7% 
+                                       
+                                     7.8% 
+                                    92.2% 
+                                       
+                                    21.4% 
+                                    78.6% 
+                                     35-39
+                                     42.3%
+                                    57.7% 
+                                       
+                                     7.7% 
+                                    92.3% 
+                                       
+                                    16.9% 
+                                    83.1% 
+                                     40-44
+                                     34.8%
+                                    65.2% 
+                                       
+                                     1.5% 
+                                    98.5% 
+                                       
+                                    18.5% 
+                                    81.5% 
+                                     45-49
+                                     27.9%
+                                    72.1% 
+                                       
+                                     1.5% 
+                                    98.5% 
+                                       
+                                    12.0% 
+                                    88.0% 
+                                     50-54
+                                     37.4%
+                                    62.6% 
+                                       
+                                     1.1% 
+                                    98.9% 
+                                       
+                                    12.9% 
+                                    87.1% 
+                                     55-59
+                                     22.2%
+                                    77.8% 
+                                       
+                                     0.2% 
+                                    99.8% 
+                                       
+                                     9.2% 
+                                    90.8% 
+                                     60-64
+                                     21.9%
+                                    78.1% 
+                                       
+                                     0.1% 
+                                    99.9% 
+                                       
+                                    10.8% 
+                                    89.2% 
+                                     65-69
+                                     19.9%
+                                    80.1% 
+                                       
+                                     0.7% 
+                                    99.3% 
+                                       
+                                     7.6% 
+                                    92.4% 
+                                     70-74
+                                     20.3%
+                                    79.7% 
+                                       
+                                     0.6% 
+                                    99.4% 
+                                       
+                                    13.5% 
+                                    86.5% 
+                                     75-79
+                                     17.7%
+                                    82.3% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     5.5% 
+                                    94.5% 
+                                     80-84
+                                     8.6%
+                                    91.4% 
+                                       
+                                     3.4% 
+                                    96.6% 
+                                       
+                                     5.6% 
+                                    94.4% 
+                                     85-89
+                                     4.3%
+                                    95.7% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     90-94
+                                     12.2%
+                                    87.8% 
+                                       
+                                     0.2% 
+                                    99.8% 
+                                       
+                                     0.4% 
+                                    99.6% 
+                                    95-100
+                                     1.9%
+                                    98.1% 
+                                       
+                                     0.0%
+                                    100.0% 
+                                       
+                                     1.9%
+                                    98.1% 
+
+
+
+
+
+
+
+
+
+Origine: Microfinance Risk Management, L.L.C. Tirés des données de 2005/6 Enquête de Suivi de la Pauvreté au Sénégal (ESPS).
+
+
+
+
+
+           Intervalles de Probabilité de Pauvreté PPI(TM) Sénégal
+
+                      75% du Seuil national de Pauvreté
+
+                      125% du Seuil national de Pauvreté
+                                   Score PPI
+               Total dessous 75% du seuil national de pauvreté 
+              Total au-dessus 75% du seuil national de pauvreté
+                                       
+              Total dessous 125% du seuil national de pauvreté 
+              Total au-dessus 125% du seuil national de pauvreté
+
+
+
+                                       
+
+
+                                      0-4
+                                    38.8% 
+                                    61.2% 
+                                       
+                                    77.1% 
+                                    22.9% 
+                                      5-9
+                                    35.0% 
+                                    65.0% 
+                                       
+                                    79.1% 
+                                    20.9% 
+                                     10-14
+                                    45.3% 
+                                    54.7% 
+                                       
+                                    81.2% 
+                                    18.8% 
+                                     15-19
+                                    35.0% 
+                                    65.0% 
+                                       
+                                    75.3% 
+                                    24.7% 
+                                     20-24
+                                    29.9% 
+                                    70.1% 
+                                       
+                                    74.3% 
+                                    25.7% 
+                                     25-29
+                                    29.7% 
+                                    70.3% 
+                                       
+                                    57.0% 
+                                    43.0% 
+                                     30-34
+                                    28.2% 
+                                    71.8% 
+                                       
+                                    72.1% 
+                                    27.9% 
+                                     35-39
+                                    18.5% 
+                                    81.5% 
+                                       
+                                    65.3% 
+                                    34.7% 
+                                     40-44
+                                    15.1% 
+                                    84.9% 
+                                       
+                                    58.4% 
+                                    41.6% 
+                                     45-49
+                                    12.4% 
+                                    87.6% 
+                                       
+                                    56.0% 
+                                    44.0% 
+                                     50-54
+                                    15.7% 
+                                    84.3% 
+                                       
+                                    46.2% 
+                                    53.8% 
+                                     55-59
+                                     8.2% 
+                                    91.8% 
+                                       
+                                    46.3% 
+                                    53.7% 
+                                     60-64
+                                     8.8% 
+                                    91.2% 
+                                       
+                                    46.9% 
+                                    53.1% 
+                                     65-69
+                                     8.4% 
+                                    91.6% 
+                                       
+                                    40.0% 
+                                    60.0% 
+                                     70-74
+                                    16.3% 
+                                    83.7% 
+                                       
+                                    33.0% 
+                                    67.0% 
+                                     75-79
+                                     3.8% 
+                                    96.2% 
+                                       
+                                    32.2% 
+                                    67.8% 
+                                     80-84
+                                     4.1% 
+                                    95.9% 
+                                       
+                                    13.5% 
+                                    86.5% 
+                                     85-89
+                                     0.0% 
+                                    100.0% 
+                                       
+                                    16.6% 
+                                    83.4% 
+                                     90-94
+                                     0.4% 
+                                    99.6% 
+                                       
+                                    17.5% 
+                                    82.5% 
+                                    95-100
+                                     1.9%
+                                    98.1% 
+                                       
+                                     11.4%
+                                    88.6% 
+
+
+
+
+
+
+Origine: Microfinance Risk Management, L.L.C. Tirés des données de 2005/6 Enquête de Suivi de la Pauvreté au Sénégal (ESPS).
+
+
+
+           Intervalles de Probabilité de Pauvreté PPI(TM) Sénégal
+
+                      150% du Seuil national de Pauvreté
+
+                      200% du Seuil national de Pauvreté
+                                   Score PPI
+              Total dessous 150% du seuil national de pauvreté 
+              Total au-dessus 150% du seuil national de pauvreté
+                                       
+              Total dessous 200% du seuil national de pauvreté 
+              Total au-dessus 200% du seuil national de pauvreté
+
+
+
+                                       
+
+
+                                      0-4
+                                    89.0% 
+                                    11.0% 
+                                       
+                                    95.7% 
+                                     4.3% 
+                                      5-9
+                                    82.8% 
+                                    17.2% 
+                                       
+                                    96.4% 
+                                     3.6% 
+                                     10-14
+                                    88.6% 
+                                    11.4% 
+                                       
+                                    96.0% 
+                                     4.0% 
+                                     15-19
+                                    83.2% 
+                                    16.8% 
+                                       
+                                    92.3% 
+                                     7.7% 
+                                     20-24
+                                    82.8% 
+                                    17.2% 
+                                       
+                                    91.2% 
+                                     8.8% 
+                                     25-29
+                                    69.8% 
+                                    30.2% 
+                                       
+                                    81.1% 
+                                    18.9% 
+                                     30-34
+                                    78.5% 
+                                    21.5% 
+                                       
+                                    95.5% 
+                                     4.5% 
+                                     35-39
+                                    72.8% 
+                                    27.2% 
+                                       
+                                    89.8% 
+                                    10.2% 
+                                     40-44
+                                    72.6% 
+                                    27.4% 
+                                       
+                                    85.1% 
+                                    14.9% 
+                                     45-49
+                                    79.5% 
+                                    20.5% 
+                                       
+                                    90.9% 
+                                     9.1% 
+                                     50-54
+                                    61.2% 
+                                    38.8% 
+                                       
+                                    80.3% 
+                                    19.7% 
+                                     55-59
+                                    62.4% 
+                                    37.6% 
+                                       
+                                    89.9% 
+                                    10.1% 
+                                     60-64
+                                    62.4% 
+                                    37.6% 
+                                       
+                                    79.5% 
+                                    20.5% 
+                                     65-69
+                                    54.3% 
+                                    45.7% 
+                                       
+                                    74.8% 
+                                    25.2% 
+                                     70-74
+                                    40.9% 
+                                    59.1% 
+                                       
+                                    74.0% 
+                                    26.0% 
+                                     75-79
+                                    44.6% 
+                                    55.4% 
+                                       
+                                    67.1% 
+                                    32.9% 
+                                     80-84
+                                    25.3% 
+                                    74.7% 
+                                       
+                                    54.2% 
+                                    45.8% 
+                                     85-89
+                                    43.0% 
+                                    57.0% 
+                                       
+                                    54.7% 
+                                    45.3% 
+                                     90-94
+                                    24.2% 
+                                    75.8% 
+                                       
+                                    35.1% 
+                                    64.9% 
+                                    95-100
+                                     21.4%
+                                    78.6% 
+                                       
+                                     48.7%
+                                    51.3% 
+
+
+
+
+
+
+Origine: Microfinance Risk Management, L.L.C. Tirés des données de 2005/6 Enquête de Suivi de la Pauvreté au Sénégal (ESPS).
+           Intervalles de Probabilité de Pauvreté PPI(TM) Sénégal
+                                       
+                     $1.25/Day/2005 PPP Seuil de Pauvreté
+                                       
+                     $2.50/Day/2005 PPP Seuil de Pauvreté
+                                       
+                     $3.75/Day/2005 PPP Seuil de Pauvreté
+                                   Score PPI
+            Total dessous du seuil $1.25/Day/ 2005 PPP de pauvreté
+           Total au-dessus du seuil $1.25/Day/2005 PPP de pauvreté
+                                       
+            Total dessous du seuil $2.50/Day/ 2005 PPP de pauvreté
+           Total au-dessus du seuil $2.50/Day/2005 PPP de pauvreté
+                                       
+            Total dessous du seuil $3.75/Day/ 2005 PPP de pauvreté
+           Total au-dessus du seuil $3.75/Day/ 2005 PPP de pauvreté
+
+
+
+
+
+
+
+
+
+0-4
+36.4% 
+63.6% 
+ 
+83.9% 
+16.1% 
+ 
+97.8% 
+2.2% 
+5-9
+39.8% 
+60.2% 
+ 
+85.6% 
+14.4% 
+ 
+95.4% 
+4.6% 
+10-14
+43.9% 
+56.1% 
+ 
+88.3% 
+11.7% 
+ 
+96.6% 
+3.4% 
+15-19
+33.5% 
+66.5% 
+ 
+82.7% 
+17.3% 
+ 
+93.5% 
+6.5% 
+20-24
+30.4% 
+69.6% 
+ 
+80.0% 
+20.0% 
+ 
+91.7% 
+8.3% 
+25-29
+27.6% 
+72.4% 
+ 
+63.4% 
+36.6% 
+ 
+82.5% 
+17.5% 
+30-34
+19.3% 
+80.7% 
+ 
+77.2% 
+22.8% 
+ 
+97.2% 
+2.8% 
+35-39
+16.1% 
+83.9% 
+ 
+72.1% 
+27.9% 
+ 
+89.2% 
+10.8% 
+40-44
+14.5% 
+85.5% 
+ 
+61.9% 
+38.1% 
+ 
+88.1% 
+11.9% 
+45-49
+6.5% 
+93.5% 
+ 
+67.7% 
+32.3% 
+ 
+91.7% 
+8.3% 
+50-54
+12.3% 
+87.7% 
+ 
+57.7% 
+42.3% 
+ 
+82.0% 
+18.0% 
+55-59
+5.5% 
+94.5% 
+ 
+56.4% 
+43.6% 
+ 
+88.5% 
+11.5% 
+60-64
+4.9% 
+95.1% 
+ 
+55.3% 
+44.7% 
+ 
+80.8% 
+19.2% 
+65-69
+3.5% 
+96.5% 
+ 
+48.8% 
+51.2% 
+ 
+78.5% 
+21.5% 
+70-74
+5.3% 
+94.7% 
+ 
+34.5% 
+65.5% 
+ 
+72.3% 
+27.7% 
+75-79
+2.0% 
+98.0% 
+ 
+34.6% 
+65.4% 
+ 
+70.4% 
+29.6% 
+80-84
+3.4% 
+96.6% 
+ 
+17.6% 
+82.4% 
+ 
+68.0% 
+32.0% 
+85-89
+0.0% 
+100.0% 
+ 
+42.4% 
+57.6% 
+ 
+63.8% 
+36.2% 
+90-94
+0.4% 
+99.6% 
+ 
+18.3% 
+81.7% 
+ 
+35.9% 
+64.1% 
+95-100
+1.9%
+98.1% 
+ 
+11.4%
+88.6% 
+ 
+40.1%
+59.9% 
+
+
+
+
+
+
+
+
+
+Origine: Microfinance Risk Management, L.L.C. Tirés des données de 2005/6 Enquête de Suivi de la Pauvreté au Sénégal (ESPS).
+
+
+
+

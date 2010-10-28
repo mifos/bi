@@ -1,0 +1,767 @@
+
+                  Progress out of Poverty Index™ for Mali
+
+                                   Entity
+
+                                    Name
+
+                                     ID
+
+                               Date (DD/MM/YY)
+
+   Member:
+
+   Joined:
+
+   Loan officer:
+
+   Today:
+
+   Branch:
+
+   Household size:
+
+
+                                  Indicator
+
+                                    Value
+
+                                   Points
+
+                                    Score
+
+   1. How many household members are 11 years old or younger?
+
+   A. Five or more
+
+                                      0
+
+   B. Four
+
+                                     10
+
+   C. Three
+
+                                     13
+
+   D. Two
+
+                                     15
+
+   E. One
+
+                                     17
+
+   F. None
+
+                                     25
+
+   2. How many members of the household usually work as their main occupation in agriculture, animal husbandry, fishing, or forestry?
+
+   A. Three or more
+
+                                      0
+
+   B. Two
+
+                                      7
+
+   C. One or none
+
+                                     14
+
+   3. What is the main construction material of the roof of the residence?
+
+   A. Tile or thatch
+
+                                      0
+
+   B. Mud, corrugated metal sheets, concrete, or other
+
+                                     12
+
+   4. What is the main construction material of the walls of the residence?
+
+   A. Partly cement or others
+
+                                      0
+
+   B. Cement
+
+                                      7
+
+   5. What is the household's main source of drinking water?
+
+   A. Surface water, non-modern well, drilled well, or others
+
+                                      0
+
+   B. Modern well
+
+                                      3
+
+   C. Public pump
+
+                                      6
+
+   D. Faucet tap
+
+                                     11
+
+   6. What toilet arrangements does the household have?
+
+   A. Others
+
+                                      0
+
+   B. Latrine (private or shared with other households) or flush toilet (private inside, private outside, or shared with other households)
+
+                                      7
+
+   7. Does the household own any television sets?
+
+   A. No
+
+                                      0
+
+   B. Yes
+
+                                      6
+
+   8. Does the household own any radios?
+
+   A. No
+
+                                      0
+
+   B. Yes
+
+                                      7
+
+   9. Does the household own any irons?
+
+   A. No
+
+                                      0
+
+   B. Yes
+
+                                      5
+
+   10. Does the household own any motorbikes?
+
+   A. No
+
+                                      0
+
+   B. Yes
+
+                                      6
+
+   Microfinance Risk Management, L.L.C., http://www.microfinance.com Total score
+
+             Category Likelihoods according to Mali PPI™ Score
+
+                            National Poverty Line
+
+                         National Food Poverty Line
+
+                        USAID "Extreme" Poverty Line
+
+                                  PPI Score
+
+                    Total Below the National Poverty Line
+
+                    Total Above the National Poverty Line
+
+                 Total Below the National Food Poverty Line
+
+                 Total Above the National Food Poverty Line
+
+                Total Below the USAID "Extreme" Poverty Line
+
+                Total Above the USAID "Extreme" Poverty Line
+
+                                     0-4
+
+                                   100.0%
+
+                                    0.0%
+
+
+                                    72.8%
+
+                                    27.2%
+
+
+                                    72.8%
+
+                                    27.2%
+
+                                     5-9
+
+                                    86.9%
+
+                                    13.1%
+
+
+                                    86.9%
+
+                                    13.1%
+
+
+                                    86.9%
+
+                                    13.1%
+
+                                    10-14
+
+                                    98.4%
+
+                                    1.6%
+
+
+                                    81.0%
+
+                                    19.0%
+
+
+                                    74.7%
+
+                                    25.3%
+
+                                    15-19
+
+                                    94.2%
+
+                                    5.8%
+
+
+                                    76.8%
+
+                                    23.2%
+
+
+                                    72.1%
+
+                                    27.9%
+
+                                    20-24
+
+                                    94.1%
+
+                                    5.9%
+
+
+                                    77.8%
+
+                                    22.2%
+
+
+                                    70.3%
+
+                                    29.7%
+
+                                    25-29
+
+                                    89.4%
+
+                                    10.6%
+
+
+                                    71.7%
+
+                                    28.3%
+
+
+                                    59.7%
+
+                                    40.3%
+
+                                    30-34
+
+                                    86.3%
+
+                                    13.7%
+
+
+                                    75.0%
+
+                                    25.0%
+
+
+                                    61.4%
+
+                                    38.6%
+
+                                    35-39
+
+                                    76.4%
+
+                                    23.6%
+
+
+                                    45.1%
+
+                                    54.9%
+
+
+                                    26.7%
+
+                                    73.3%
+
+                                    40-44
+
+                                    81.5%
+
+                                    18.5%
+
+
+                                    45.8%
+
+                                    54.2%
+
+
+                                    30.6%
+
+                                    69.4%
+
+                                    45-49
+
+                                    63.9%
+
+                                    36.1%
+
+
+                                    36.0%
+
+                                    64.0%
+
+
+                                    18.1%
+
+                                    81.9%
+
+                                    50-54
+
+                                    47.4%
+
+                                    52.6%
+
+
+                                    19.0%
+
+                                    81.0%
+
+
+                                    11.2%
+
+                                    88.8%
+
+                                    55-59
+
+                                    24.9%
+
+                                    75.1%
+
+
+                                    8.5%
+
+                                    91.5%
+
+
+                                    4.0%
+
+                                    96.0%
+
+                                    60-64
+
+                                    21.3%
+
+                                    78.7%
+
+
+                                    5.0%
+
+                                    95.0%
+
+
+                                    2.2%
+
+                                    97.8%
+
+                                    65-69
+
+                                    7.2%
+
+                                    92.8%
+
+
+                                    0.9%
+
+                                    99.1%
+
+
+                                    0.5%
+
+                                    99.5%
+
+                                    70-74
+
+                                    5.6%
+
+                                    94.4%
+
+
+                                    0.4%
+
+                                    99.6%
+
+
+                                    0.4%
+
+                                    99.6%
+
+                                    75-79
+
+                                    6.7%
+
+                                    93.3%
+
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+                                    80-84
+
+                                    0.8%
+
+                                    99.2%
+
+
+                                    0.8%
+
+                                    99.2%
+
+
+                                    0.0%
+
+                                   100.0%
+
+                                    85-89
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+                                    90-94
+
+                                    5.9%
+
+                                    94.1%
+
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+                                   95-100
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+   Source: Microfinance Risk Management, L.L.C. based on the 2001 EMEP
+
+             Category Likelihoods according to Mali PPI™ Score
+
+                       $1.25/Day/2005 PPP Poverty Line
+
+                       $2.50/Day/2005 PPP Poverty Line
+
+                                  PPI Score
+
+                   Total Below the $1.25/Day/2005 PPP Line
+
+                   Total Above the $1.25/Day/2005 PPP Line
+
+                   Total Below the $2.50/Day/2005 PPP Line
+
+                   Total Above the $2.50/Day/2005 PPP Line
+
+                                     0-4
+
+                                    72.8%
+
+                                    27.2%
+
+
+                                   100.0%
+
+                                    0.0%
+
+                                     5-9
+
+                                    86.9%
+
+                                    13.1%
+
+
+                                   100.0%
+
+                                    0.0%
+
+                                    10-14
+
+                                    84.7%
+
+                                    15.3%
+
+
+                                   100.0%
+
+                                    0.0%
+
+                                    15-19
+
+                                    83.4%
+
+                                    16.6%
+
+
+                                   100.0%
+
+                                    0.0%
+
+                                    20-24
+
+                                    87.8%
+
+                                    12.2%
+
+
+                                    99.6%
+
+                                    0.4%
+
+                                    25-29
+
+                                    81.9%
+
+                                    18.1%
+
+
+                                    97.9%
+
+                                    2.1%
+
+                                    30-34
+
+                                    82.6%
+
+                                    17.4%
+
+
+                                    98.5%
+
+                                    1.5%
+
+                                    35-39
+
+                                    64.3%
+
+                                    35.7%
+
+
+                                    90.6%
+
+                                    9.4%
+
+                                    40-44
+
+                                    67.5%
+
+                                    32.5%
+
+
+                                    95.9%
+
+                                    4.1%
+
+                                    45-49
+
+                                    49.5%
+
+                                    50.5%
+
+
+                                    91.5%
+
+                                    8.5%
+
+                                    50-54
+
+                                    32.0%
+
+                                    68.0%
+
+
+                                    88.7%
+
+                                    11.3%
+
+                                    55-59
+
+                                    13.8%
+
+                                    86.2%
+
+
+                                    67.4%
+
+                                    32.6%
+
+                                    60-64
+
+                                    7.5%
+
+                                    92.5%
+
+
+                                    55.1%
+
+                                    44.9%
+
+                                    65-69
+
+                                    3.9%
+
+                                    96.1%
+
+
+                                    58.8%
+
+                                    41.2%
+
+                                    70-74
+
+                                    0.4%
+
+                                    99.6%
+
+
+                                    42.0%
+
+                                    58.0%
+
+                                    75-79
+
+                                    0.6%
+
+                                    99.4%
+
+
+                                    26.4%
+
+                                    73.6%
+
+                                    80-84
+
+                                    0.8%
+
+                                    99.2%
+
+
+                                    38.2%
+
+                                    61.8%
+
+                                    85-89
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    39.0%
+
+                                    61.0%
+
+                                    90-94
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    10.0%
+
+                                    90.0%
+
+                                   95-100
+
+                                    0.0%
+
+                                   100.0%
+
+
+                                    0.0%
+
+                                   100.0%
+
+   Source: Microfinance Risk Management, L.L.C. based on the 2001 EMEP
+
+    This PPI was updated in January, 2010. For up-to-date PPIs and other
+                             information on the
+
+     Progress out of Poverty Index™ for Mali and other countries go to
+                        www.progressoutofpoverty.org
+
+    This PPI was updated in January, 2010. For up-to-date PPIs and other
+                             information on the
+
+     Progress out of Poverty Index™ for Mali and other countries go to
+                        www.progressoutofpoverty.org
+
+    This PPI was updated in January, 2010. For up-to-date PPIs and other
+                             information on the
+
+     Progress out of Poverty Index™ for Mali and other countries go to
+                        www.progressoutofpoverty.org
+
+    This PPI was updated in January, 2010. For up-to-date PPIs and other
+                             information on the
+
+     Progress out of Poverty Index™ for Mali and other countries go to
+                        www.progressoutofpoverty.org

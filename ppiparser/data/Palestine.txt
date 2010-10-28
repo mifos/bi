@@ -1,0 +1,656 @@
+                Progress out of Poverty Index(TM) for Palestine
+                                    Entity
+                                     Name
+                                       
+                                      ID
+                                       
+                                Date (DD/MM/YY)
+Member:       
+
+
+
+
+Joined:
+
+Loan officer:  
+
+
+
+
+Today:
+
+Branch:        
+
+
+
+
+Household size: 
+
+                                       
+                                       
+                                   Indicator
+                                     Value
+                                    Points
+                                     Score
+1. How many members does the household have?
+A. Ten or more
+                                       0
+                                       
+
+B. Nine
+                                       1
+                                       
+
+C. Eight
+                                       6
+                                       
+
+D. Five, six, or seven
+                                       9
+                                       
+
+E. Four
+                                      21
+                                       
+
+F. One, two, or three
+                                      32
+                                       
+                                       
+2. What is the main building material used in the exterior walls of the residence?
+A. Cement cob, mud, or other
+                                       0
+                                       
+
+B. Cleaned stone, stone and cement, old stone, or concrete
+                                       8
+                                       
+                                       
+3. Does the household have a solar water heater?
+A. No
+                                       0
+                                       
+
+B. Yes
+                                       2
+                                       
+                                       
+4. Does the household have a vacuum cleaner?
+A. No
+                                       0
+                                       
+
+B. Yes
+                                      10
+                                       
+                                       
+5. Does the household have a land-line and/or cellular telephone?
+A. None
+                                       0
+                                       
+
+B. Only cellular
+                                       7
+                                       
+
+C. Land-line (regardless of cellular)
+                                       9
+                                       
+                                       
+6. Does the household have a T.V. and a VCR and/or DVD?
+A. None
+                                       0
+                                       
+
+B. Only T.V.
+                                       2
+                                       
+
+C. T.V. and VCR and/or DVD
+                                       6
+                                       
+                                       
+7. Does the household have a satellite dish?
+A. No
+                                       0
+                                       
+
+B. Yes
+                                       5
+                                       
+                                       
+8. Does the household have a computer?
+A. No
+                                       0
+                                       
+
+B. Yes
+                                      10
+                                       
+                                       
+9. Does the household have a bookcase?
+A. No
+                                       0
+                                       
+
+B. Yes
+                                       7
+                                       
+                                       
+10. How many household members are employed?
+A. None
+                                       0
+                                       
+
+B. One
+                                       5
+                                       
+
+C. Two or more
+                                      11
+                                       
+Microfinance Risk Management, L.L.C.,                                                                             Total score
+
+           Category Likelihoods according to Palestine PPI(TM) Score
+
+                             National Poverty Line
+
+                           Subsistence Poverty Line
+
+                       150% of the National Poverty Line
+                                   PPI Score
+                     Total Below the National Poverty Line
+                     Total Above the National Poverty Line
+                                       
+                   Total Below the Subsistence Poverty Line
+                   Total Above the Subsistence Poverty Line
+                                       
+               Total Below the 150% of the National Poverty Line
+               Total Above the 150% of the National Poverty Line
+
+
+
+                                       
+
+
+                                       
+
+
+                                      0-4
+                                    100.0%
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                      5-9
+                                    100.0%
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                     10-14
+                                    100.0%
+                                     0.0% 
+                                       
+                                    86.8% 
+                                    13.2% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                     15-19
+                                     81.7%
+                                    18.3% 
+                                       
+                                    57.2% 
+                                    42.8% 
+                                       
+                                    95.1% 
+                                     4.9% 
+                                     20-24
+                                     82.2%
+                                    17.8% 
+                                       
+                                    70.6% 
+                                    29.4% 
+                                       
+                                    91.6% 
+                                     8.4% 
+                                     25-29
+                                     63.1%
+                                    36.9% 
+                                       
+                                    37.4% 
+                                    62.6% 
+                                       
+                                    96.8% 
+                                     3.2% 
+                                     30-34
+                                     43.1%
+                                    56.9% 
+                                       
+                                    28.5% 
+                                    71.5% 
+                                       
+                                    82.0% 
+                                    18.0% 
+                                     35-39
+                                     41.6%
+                                    58.4% 
+                                       
+                                    20.6% 
+                                    79.4% 
+                                       
+                                    72.9% 
+                                    27.1% 
+                                     40-44
+                                     30.2%
+                                    69.8% 
+                                       
+                                    10.9% 
+                                    89.1% 
+                                       
+                                    61.8% 
+                                    38.2% 
+                                     45-49
+                                     8.3%
+                                    91.7% 
+                                       
+                                     1.8% 
+                                    98.2% 
+                                       
+                                    38.4% 
+                                    61.6% 
+                                     50-54
+                                     14.4%
+                                    85.6% 
+                                       
+                                     5.2% 
+                                    94.8% 
+                                       
+                                    31.9% 
+                                    68.1% 
+                                     55-59
+                                     6.0%
+                                    94.0% 
+                                       
+                                     6.0% 
+                                    94.0% 
+                                       
+                                    29.4% 
+                                    70.6% 
+                                     60-64
+                                     4.8%
+                                    95.2% 
+                                       
+                                     4.8% 
+                                    95.2% 
+                                       
+                                    26.9% 
+                                    73.1% 
+                                     65-69
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                    20.1% 
+                                    79.9% 
+                                     70-74
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                    12.6% 
+                                    87.4% 
+                                     75-79
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     80-84
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     85-89
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     90-94
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                    95-100
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0%
+                                    100.0% 
+Source: Microfinance Risk Management, L.L.C. based on the 2007 PECS
+
+
+
+
+                                       
+                                       
+           Category Likelihoods according to Palestine PPI(TM) Score
+
+                       200% of the National Poverty Line
+
+                         USAID "Extreme" Poverty Line
+                                   PPI Score
+               Total Below the 200% of the National Poverty Line
+               Total Above the 200% of the National Poverty Line
+                                       
+                 Total Below the USAID "Extreme" Poverty Line
+                 Total Above the USAID "Extreme" Poverty Line
+
+
+
+                                       
+
+
+                                      0-4
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                      5-9
+                                    100.0% 
+                                     0.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     10-14
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    73.7% 
+                                    26.3% 
+                                     15-19
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    50.6% 
+                                    49.4% 
+                                     20-24
+                                    95.6% 
+                                     4.4% 
+                                       
+                                    65.5% 
+                                    34.5% 
+                                     25-29
+                                    96.8% 
+                                     3.2% 
+                                       
+                                    23.5% 
+                                    76.5% 
+                                     30-34
+                                    90.3% 
+                                     9.7% 
+                                       
+                                    22.7% 
+                                    77.3% 
+                                     35-39
+                                    88.3% 
+                                    11.7% 
+                                       
+                                     5.1% 
+                                    94.9% 
+                                     40-44
+                                    82.0% 
+                                    18.0% 
+                                       
+                                     8.3% 
+                                    91.7% 
+                                     45-49
+                                    73.5% 
+                                    26.5% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     50-54
+                                    57.4% 
+                                    42.6% 
+                                       
+                                     5.2% 
+                                    94.8% 
+                                     55-59
+                                    58.2% 
+                                    41.8% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     60-64
+                                    46.4% 
+                                    53.6% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     65-69
+                                    33.7% 
+                                    66.3% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     70-74
+                                    20.2% 
+                                    79.8% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     75-79
+                                    21.4% 
+                                    78.6% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     80-84
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     85-89
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     90-94
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                    95-100
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0%
+                                    100.0% 
+
+
+
+
+
+
+Source: Microfinance Risk Management, L.L.C. based on the 2007 PECS
+                                       
+                                       
+           Category Likelihoods according to Palestine PPI(TM) Score
+                                       
+                        $3.75/Day/2005 PPP Poverty Line
+
+                        $5.00/Day/2005 PPP Poverty Line
+                                   PPI Score
+                    Total Below the $3.75/Day/2005 PPP Line
+                    Total Above the $3.75/Day/2005 PPP Line
+                                       
+                    Total Below the $5.00/Day/2005 PPP Line
+                    Total Above the $5.00/Day/2005 PPP Line
+
+
+
+                                       
+
+
+                                      0-4
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                      5-9
+                                    100.0% 
+                                     0.0% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                     10-14
+                                    73.7% 
+                                    26.3% 
+                                       
+                                    100.0% 
+                                     0.0% 
+                                     15-19
+                                    50.6% 
+                                    49.4% 
+                                       
+                                    75.4% 
+                                    24.6% 
+                                     20-24
+                                    65.5% 
+                                    34.5% 
+                                       
+                                    79.3% 
+                                    20.7% 
+                                     25-29
+                                    23.9% 
+                                    76.1% 
+                                       
+                                    59.5% 
+                                    40.5% 
+                                     30-34
+                                    22.7% 
+                                    77.3% 
+                                       
+                                    39.6% 
+                                    60.4% 
+                                     35-39
+                                    10.3% 
+                                    89.7% 
+                                       
+                                    38.8% 
+                                    61.2% 
+                                     40-44
+                                     8.3% 
+                                    91.7% 
+                                       
+                                    27.1% 
+                                    72.9% 
+                                     45-49
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     8.3% 
+                                    91.7% 
+                                     50-54
+                                     5.2% 
+                                    94.8% 
+                                       
+                                    11.6% 
+                                    88.4% 
+                                     55-59
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     6.0% 
+                                    94.0% 
+                                     60-64
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     4.8% 
+                                    95.2% 
+                                     65-69
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     70-74
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     75-79
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     80-84
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     85-89
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                     90-94
+                                     0.0% 
+                                    100.0% 
+                                       
+                                     0.0% 
+                                    100.0% 
+                                    95-100
+                                     0.0%
+                                    100.0% 
+                                       
+                                     0.0%
+                                    100.0% 
+
+
+
+
+
+
+Source: Microfinance Risk Management, L.L.C. based on the 2007 PECS
+

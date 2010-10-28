@@ -2,6 +2,8 @@
 
 import string
 import sys
+import csv
+from collections import namedtuple
 
 
 XML_TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
@@ -38,6 +40,7 @@ CHOICE_TEMPLATE = \
 SINGLE_QUESTION_TEMPLATE = \
 '''        <question order="{ORDER}">
             <title>{TITLE}</title>
+            <nickname>{NICKNAME}</nickname>
             <type>SINGLE_SELECT</type>
 {CHOICES}
             <mandatory>true</mandatory>
@@ -72,7 +75,7 @@ WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq
 GROUP BY question_group_instance_id) as answers
 '''
 
-def sql(qs, title='Unknown'):
+def sql(qs, country_name, title='Unknown'):
     cases = []
     for (qnum, q) in enumerate(qs):
         whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=x[0], VALUE=x[1]) for x in q[1]]
@@ -82,13 +85,37 @@ def sql(qs, title='Unknown'):
     return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title)
 
 
-def xml(qs, title='Unknown'):
+def xml(qs, country_name, title='Unknown'):
     questions = []
+    nicks = Nicknames()
     for (qnum, q) in enumerate(qs):
         choices = [CHOICE_TEMPLATE.format(ORDER=i+1, VALUE=val) for (i, val) in enumerate(map(lambda x:x[0], q[1]))]
-        question = SINGLE_QUESTION_TEMPLATE.format(ORDER=qnum+1, TITLE=q[0], CHOICES=''.join(choices))
+        question = SINGLE_QUESTION_TEMPLATE.format(ORDER=qnum+1, TITLE=q[0],
+                NICKNAME=nicks.nickname(country_name, qnum), CHOICES=''.join(choices))
         questions.append(question)
     return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions))
+
+
+NickRow = namedtuple('NickRow', 'country year nicknames')
+
+class Nicknames(object):
+
+    def __init__(self, filename='nicknames.csv'):
+        reader = csv.reader(open(filename))
+        self.data = {}
+        for row in reader:
+            country = self._clean_country(row[0])
+            year = int(row[1])
+            nicknames = row[2:]
+            self.data[country] = NickRow(country, year, nicknames)
+
+    def _clean_country(self, country):
+        return country.strip().lower().replace(' ', '').replace('_', '')
+
+    def nickname(self, country, qnum):
+        row = self.data[self._clean_country(country)]
+        return '{0}_{1}_{2}'.format(row.country, row.year, row.nicknames[qnum])
+
 
 def parse_questions(f):
     #import ipdb; ipdb.set_trace()
@@ -112,7 +139,7 @@ def parse_questions(f):
             letter = letter_it.next()
         if '.' not in line.strip() and line.strip().isdigit():
             answers[-1] = (answers[-1], int(line.strip()))
-        if 'Total score:' in line:
+        if 'Total score' in line:
             yield (question, answers)
             return
 
@@ -126,8 +153,8 @@ if __name__ == '__main__':
         country_name = country_name.split('.')[0]
     title = 'PPI Survey %s' % country_name.capitalize()
     qs = list(parse_questions(filename))
-    sql_out = sql(qs, title)
-    xml_out = xml(qs, title)
+    sql_out = sql(qs, country_name, title)
+    xml_out = xml(qs, country_name, title)
     with open(country_name.capitalize() + 'PPIScore.sql', 'w') as sql_f:
         sql_f.write(sql_out)
     with open('PPISurvey' + country_name.upper() + '.xml', 'w') as xml_f:
