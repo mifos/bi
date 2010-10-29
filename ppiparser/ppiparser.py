@@ -167,6 +167,8 @@ if __name__ == '__main__':
     with open(tmp_sql_filename, 'w') as sql_f:
         sql_f.write(sql_out)
     print 'SQL written to ' + tmp_sql_filename
-    with open('PPISurvey%s%s.xml' % (country_name.upper(), year), 'w') as xml_f:
+    tmp_xml_filename = '/tmp/PPISurvey%s%s.xml' % (country_name.upper(), year)
+    with open(tmp_xml_filename, 'w') as xml_f:
         xml_f.write(xml_out)
+    print 'XML written to ' + tmp_xml_filename
 
