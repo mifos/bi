@@ -100,7 +100,9 @@ def inserts(filename):
             raise 'Column not defined in COLUMN_MAP: <%s>' % c
         if COLUMN_MAP[c] is None:
             print 'WARNING: omitting insert to column <%s> because it maps to None' % c
-        to_append = COLUMN_MAP[c] if country.lower() != 'india' else COLUMN_MAP[c].replace('1993', '2005')
+        to_append = COLUMN_MAP[c]
+        if country.lower() == 'india' and to_append in COLUMNS_2005_VERSION:
+            to_append = to_append.replace('1993', '2005')
         db_columns.append(to_append)
     for row in reader:
         db_data = ['\'' + title + '\'', '1'] + list(row)
