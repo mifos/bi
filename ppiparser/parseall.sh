@@ -1,4 +1,7 @@
 #!/bin/sh
 
-cd data;
-for f in *.txt; do ../ppiparser.py "$f"; done
+cd data
+for f in *.txt; do
+    echo "Processing $f"
+    ../ppiparser.py "$f"
+done

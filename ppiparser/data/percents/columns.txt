@@ -1,0 +1,69 @@
+Bottom Half Below $1/Day/PPP
+Bottom Half Below National Poverty Line
+PPI score lower bound
+PPI score upper bound
+Top Half Below National Poverty Line
+Total Below $1/Day/PPP
+Total Below 150% of National Poverty Line
+Total Below 200% of National Poverty Line
+Total Below Lower National Food Poverty Line
+Total Below National Poverty Line
+Total Below Upper National Poverty Line
+Total Below the $0.25/Day/PPP Line
+Total Below the $0.50/Day/PPP Line
+Total Below the $0.75/Day/PPP Line
+Total Below the $1.08/Day/1993 PPP Line
+Total Below the $1.25/Day/2005 PPP Line
+Total Below the $1.25/Day/PPP Line
+Total Below the $1.50/Day/PPP Line
+Total Below the $1.75/Day/2005 PPP Line
+Total Below the $1/Day/1993 PPP Line
+Total Below the $1/Day/2005 PPP Line
+Total Below the $1/Day/PPP Line
+Total Below the $2.16/Day/1993 PPP Line
+Total Below the $2.50/Day/2005 PPP Line
+Total Below the $2.50/Day/PPP Line
+Total Below the $2/Day/1993 PPP Line
+Total Below the $2/Day/PPP Line
+Total Below the $3.00/Day/2005 PPP Line
+Total Below the $3.24/Day/1993 PPP Line
+Total Below the $3.75/Day/2005 PPP Line
+Total Below the $3.75/Day/PPP Line
+Total Below the $4.00/Day/2005 PPP Line
+Total Below the $4.32/Day/1993 PPP Line
+Total Below the $4/Day/2005 PPP Line
+Total Below the $5.00/Day/2005 PPP Line
+Total Below the $5/Day/2005 PPP Line
+Total Below the $5/Day/PPP Line
+Total Below the $6.25/Day/2005 PPP Line
+Total Below the 100% National Poverty Line
+Total Below the 100% of National Poverty Line
+Total Below the 125% National Poverty Line
+Total Below the 125% of National Asset Poverty Line
+Total Below the 125% of the National Poverty Line
+Total Below the 150% of National Asset Poverty Line
+Total Below the 150% of the National Poverty Line
+Total Below the 150% of the Upper National Poverty Line
+Total Below the 200% National Poverty Line
+Total Below the 200% of the National Poverty Line
+Total Below the 200% of the Upper National Poverty Line
+Total Below the 300% of the National Poverty Line
+Total Below the 50% National Poverty Line
+Total Below the 75% National Poverty Line
+Total Below the 75% of the National Poverty Line
+Total Below the Food Poverty Line
+Total Below the Half Minimum Wage Line
+Total Below the Laeken Poverty Line
+Total Below the Lower National Poverty Line
+Total Below the MOLISA Poverty  Line
+Total Below the National Asset Poverty Line
+Total Below the National Capacity Poverty Line
+Total Below the National Food Poverty Line
+Total Below the National Poverty Line
+Total Below the One-Minimum-Wage Line
+Total Below the Quarter-Minimum-Wage Line
+Total Below the Subsistence Poverty Line
+Total Below the Two-Minimum-Wage Line
+Total Below the USAID Extreme Poverty Line
+Total Below the Upper Line
+Total Below the Upper National Poverty Line
