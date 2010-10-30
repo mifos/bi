@@ -390,7 +390,8 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id, 
+    <sql>select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
 (
 case
 when answers.Q1=&apos;Five or more&apos; then 0
@@ -406,37 +407,37 @@ when answers.Q2=&apos;Others&apos; then 8
 when answers.Q2=&apos;Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers&apos; then 14
 end +
 case
-when answers.Q3=&apos;No&apos;then 0
+when answers.Q3=&apos;No&apos; then 0
 when answers.Q3=&apos;Yes&apos; then 4
 end +
 case
-when answers.Q4=&apos;Firewood and chips, charcoal, or none&apos;then 0
+when answers.Q4=&apos;Firewood and chips, charcoal, or none&apos; then 0
 when answers.Q4=&apos;Others&apos; then 5
 when answers.Q4=&apos;LPG&apos; then 17
 end +
 case
-when answers.Q5=&apos;No&apos;then 0
+when answers.Q5=&apos;No&apos; then 0
 when answers.Q5=&apos;Yes&apos; then 6
 end +
 case
-when answers.Q6=&apos;No&apos;then 0
+when answers.Q6=&apos;No&apos; then 0
 when answers.Q6=&apos;Yes&apos; then 5
 end +
 case
-when answers.Q7=&apos;No&apos;then 0
+when answers.Q7=&apos;No&apos; then 0
 when answers.Q7=&apos;Yes&apos; then 3
 end +
 case
-when answers.Q8=&apos;No&apos;then 0
+when answers.Q8=&apos;No&apos; then 0
 when answers.Q8=&apos;Yes&apos; then 6
 end +
 case
-when answers.Q9=&apos;None&apos;then 0
+when answers.Q9=&apos;None&apos; then 0
 when answers.Q9=&apos;One&apos; then 6
 when answers.Q9=&apos;Two or more&apos; then 9
 end +
 case
-when answers.Q10=&apos;None&apos;then 0
+when answers.Q10=&apos;None&apos; then 0
 when answers.Q10=&apos;One&apos; then 5
 when answers.Q10=&apos;Two or more&apos; then 9
 end
@@ -445,21 +446,21 @@ as ppi_score
 from
 (SELECT
 qg.id as survey_id,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
 qgi.entity_id as entity_id,
-es.entity_type_id entity_type_id,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_family_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_principal_occupation&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_home_construction&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_cooking_energy&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_bicycle_scooter_motorcycle&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_almirah&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_sewing_machine&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_pressure_cookers&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_India_01_owns_electric_fans&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_family_members_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_principal_occupation&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_has_pucca_home&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_bicycle_scooter_motorcycle&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_almirah&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_sewing_machine&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_pressure_cookers&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_electric_fans&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
-WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI India 01&quot; and qgi.event_source_id = es.id
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI India 2008&quot; and qgi.event_source_id = es.id
 GROUP BY question_group_instance_id) as answers</sql>
     <limit>0</limit>
     <lookup/>
@@ -485,7 +486,8 @@ GROUP BY question_group_instance_id) as answers</sql>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id, 
+    <sql>select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
 (
 case
 when answers.Q1=&apos;3 or more&apos; then 0
@@ -497,7 +499,7 @@ when answers.Q2=&apos;All&apos; then 8
 when answers.Q2=&apos;No children aged 6 to 17&apos; then 21
 end +
 case
-when answers.Q3=&apos;Mud&#47;cow dung; grass&#47;sticks&#47;makuti; or no data&apos; then 0
+when answers.Q3=&apos;Mud&#47;cow dung; grass&#47;sticks&#47;makuti;&apos; then 0
 when answers.Q3=&apos;Other&apos; then 5
 end +
 case
@@ -505,19 +507,19 @@ when answers.Q4=&apos;Other&apos; then 0
 when answers.Q4=&apos;Flush to sewer; flush to septic tank; pan&#47;bucket; covered pit latrine; or ventilation improved pit latrine&apos; then 2
 end +
 case
-when answers.Q5=&apos;No&apos;then 0
+when answers.Q5=&apos;No&apos; then 0
 when answers.Q5=&apos;Yes&apos; then 16
 end +
 case
-when answers.Q6=&apos;No&apos;then 0
+when answers.Q6=&apos;No&apos; then 0
 when answers.Q6=&apos;Yes&apos; then 14
 end +
 case
-when answers.Q7=&apos;No&apos;then 0
+when answers.Q7=&apos;No&apos; then 0
 when answers.Q7=&apos;Yes&apos; then 12
 end +
 case
-when answers.Q8=&apos;No&apos;then 0
+when answers.Q8=&apos;No&apos; then 0
 when answers.Q8=&apos;Yes&apos; then 8
 end +
 case
@@ -533,23 +535,22 @@ as ppi_score
 from
 (SELECT
 qg.id as survey_id,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
 qgi.entity_id as entity_id,
-es.entity_type_id entity_type_id,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_family_0_to_25&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_school_6_to_17&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_house_walls&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_toilet&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_sofa&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_stove&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_bicycle&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;PPI_Kenya_01_owns_cattle&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_family_members_0_to_25&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_family_members_6_to_17_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_house_walls&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_sofa&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_stove&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_bicycle&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_cattle_owned&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
-WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Kenya 01&quot; and qgi.event_source_id = es.id
-GROUP BY question_group_instance_id) as answers
-</sql>
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Kenya 2008&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
