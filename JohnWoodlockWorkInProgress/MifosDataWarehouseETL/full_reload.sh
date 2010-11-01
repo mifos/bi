@@ -3,7 +3,7 @@
 #drop and recreate the DW and then recreate and reload PPI tables
 #
 #usage: full_reload <DB_NAME> <PDI_HOME> <BI_HOME>
-#example: full_reload mifos_ppi_dw ~/pentaho ~/reportingWorkspace/bi
+#example: full_reload mifos_ppi_dw ~/pentaho-data-integration ~/reportingWorkspace/bi
 
 DB_NAME=$1
 PDI_HOME=$2
