@@ -131,8 +131,7 @@
     <compatible>N</compatible>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
+        <jsScript_script>
 var installments_in_arrears;
 var installment_id_due;
 

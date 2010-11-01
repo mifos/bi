@@ -117,7 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Build Loan Arrears Entry for a Date</name>
     <type>Mapping</type>
@@ -280,7 +280,7 @@
     </step>
 
   <step>
-    <name>Filter rows</name>
+    <name>Is Loan In Arrears?</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
