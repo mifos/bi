@@ -1,7 +1,8 @@
 #!/bin/sh
 
-cd data
+export PYTHONPATH=$BI_HOME/ppiparser/pylib
+cd $BI_HOME/ppiparser/data
 for f in *.txt; do
     echo "Processing $f"
-    ../ppiparser.py "$f"
+    $BI_HOME/ppiparser/ppiparser.py "$f"
 done

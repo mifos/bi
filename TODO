@@ -1,2 +1,3 @@
+[_] shell scripts: die if BI_HOME isn't set
 [_] use JNDI for etl_build.sh db connect params
 	we've already specified db connection settings in /opt/pentaho/data-integration/simple-jndi/jdbc.properties

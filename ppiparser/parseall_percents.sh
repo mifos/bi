@@ -1,7 +1,8 @@
 #!/bin/sh
 
-cd data/percents
+export PYTHONPATH=$BI_HOME/ppiparser/pylib
+cd $BI_HOME/ppiparser/data/percents
 for f in *.csv; do
     echo "Processing $f"
-    ../../plines_parser.py "$f"
+    $BI_HOME/ppiparser/plines_parser.py "$f"
 done

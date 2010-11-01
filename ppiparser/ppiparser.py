@@ -2,9 +2,8 @@
 
 import string
 import sys
-import csv
-from collections import namedtuple
 
+from mifos.nicknames import Nicknames
 
 XML_TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
 <QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
@@ -96,32 +95,6 @@ def xml(qs, country_name, nicks, title='Unknown'):
         questions.append(question)
     return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions),
             DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)) )
-
-
-NickRow = namedtuple('NickRow', 'country year nicknames')
-
-class Nicknames(object):
-
-    def __init__(self, filename='nicknames.csv'):
-        reader = csv.reader(open(filename))
-        self.data = {}
-        for row in reader:
-            country = self._clean_country(row[0])
-            year = int(row[1])
-            nicknames = row[2:]
-            self.data[country] = NickRow(country, year, nicknames)
-
-    def _clean_country(self, country):
-        return country.strip().lower().replace(' ', '').replace('_', '')
-
-    def year(self, country):
-        row = self.data[self._clean_country(country)]
-        return row.year
-
-    def nickname(self, country, qnum):
-        row = self.data[self._clean_country(country)]
-        return 'ppi_{0}_{1}_{2}'.format(row.country, row.year, row.nicknames[qnum])
-
 
 def parse_questions(f):
     #import ipdb; ipdb.set_trace()
