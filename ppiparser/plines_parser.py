@@ -4,6 +4,8 @@ import csv
 import sys
 import os.path
 
+from mifos.nicknames import Nicknames
+
 
 # Maps columns names in XLSX to column names in the table ppi_category_likelihood_bands
 
@@ -89,8 +91,8 @@ def _country_name(filename):
     return os.path.basename(filename).split('.')[0].capitalize()
 
 def inserts(filename):
+    nicks = Nicknames(filename='../nicknames.csv')
     country = _country_name(filename)
-    title = 'PPI %s 01' % country
     reader = csv.reader(open(filename))
     fst = reader.next()
     read_columns = [c.replace('"', '').strip() for c in fst[2:]]
@@ -104,6 +106,7 @@ def inserts(filename):
         if country.lower() == 'india' and to_append in COLUMNS_2005_VERSION:
             to_append = to_append.replace('1993', '2005')
         db_columns.append(to_append)
+    title = 'PPI %s %s' % (country, nicks.year(country))
     for row in reader:
         db_data = ['\'' + title + '\'', '1'] + list(row)
 
