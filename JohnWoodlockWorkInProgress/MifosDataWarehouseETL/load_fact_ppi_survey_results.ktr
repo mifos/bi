@@ -167,7 +167,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 01</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 01</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 01</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 01</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 01</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Romania 2009</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Romania 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Matching flow wasn&apos;t found</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Account flow (loan or savings)</name>
     <type>DBLookup</type>
@@ -565,6 +565,106 @@ GROUP BY question_group_instance_id) as answers</sql>
     </step>
 
   <step>
+    <name>PPI Romania 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 5
+when answers.Q1=&apos;Three&apos; then 11
+when answers.Q1=&apos;Two&apos; then 18
+when answers.Q1=&apos;One&apos; then 28
+end +
+case
+when answers.Q2=&apos;No formal school, primary (Class 1 - 4), or secondary (Class 5 - 8)&apos; then 0
+when answers.Q2=&apos;Vocational, complementary, apprenticeship, or lower high school (Class 9-10)&apos; then 2
+when answers.Q2=&apos;High school (Class 9-12)&apos; then 4
+when answers.Q2=&apos;Specialty post-high school, technical foreman, or university short-term (college)&apos; then 5
+when answers.Q2=&apos;University long-term&apos; then 10
+end +
+case
+when answers.Q3=&apos;Own system, not available, or no data&apos; then 0
+when answers.Q3=&apos;Public system&apos; then 1
+end +
+case
+when answers.Q4=&apos;No land-line, and no mobile&apos; then 0
+when answers.Q4=&apos;No land-line, but one mobile&apos; then 7
+when answers.Q4=&apos;One or more land-lines, but no mobile&apos; then 9
+when answers.Q4=&apos;No land-line, but two or more mobiles&apos; then 13
+when answers.Q4=&apos;One or more land-lines, and one mobile&apos; then 16
+when answers.Q4=&apos;One or more land-lines, and two or more mobiles&apos; then 18
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 3
+end +
+case
+when answers.Q6=&apos;None&apos; then 0
+when answers.Q6=&apos;Only non-automatic&apos; then 3
+when answers.Q6=&apos;Automatic (regardless of owning non-automatic)&apos; then 5
+end +
+case
+when answers.Q7=&apos;None&apos; then 0
+when answers.Q7=&apos;Refrigerator only or freezer only&apos; then 5
+when answers.Q7=&apos;Refrigerator and freezer, or refrigerating combine&apos; then 10
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 2
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 18
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_education_level&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_sewage_system&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_phones&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_gas_stoves&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_washing_machine_type&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_refrigerator_type&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_owns_color_television&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_owns_car&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Romania 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>403</xloc>
+      <yloc>155</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Read Surveys</name>
     <type>TableInput</type>
     <description/>
@@ -605,7 +705,7 @@ GROUP BY question_group_instance_id) as answers</sql>
 <case_value_format/>
 <case_value_decimal/>
 <case_value_group/>
-<default_target_step/>
+<default_target_step>Matching flow wasn&apos;t found</default_target_step>
 <cases><case><value>1</value>
 <target_step>Client flow (create, close, attach survey)</target_step>
 </case><case><value>22</value>
@@ -641,10 +741,30 @@ GROUP BY question_group_instance_id) as answers</sql>
 <target_step>PPI India 01</target_step>
 </case><case><value>PPI Kenya 01</value>
 <target_step>PPI Kenya 01</target_step>
+</case><case><value>PPI Romania 2009</value>
+<target_step>PPI Romania 2009</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>211</xloc>
       <yloc>53</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Matching flow wasn&apos;t found</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>527</xloc>
+      <yloc>241</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
