@@ -22,6 +22,7 @@ XML_TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
             <text>Date Survey Was Taken</text>
             <nickname>{DATE_NICKNAME}</nickname>
             <type>DATE</type>
+            <mandatory>true</mandatory>
         </question>
     </section>
     <section order="2">
