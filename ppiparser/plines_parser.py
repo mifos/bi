@@ -90,8 +90,8 @@ INSERT_TEMPLATE = 'insert into ppi_category_likelihood_bands ({COLUMNS}) values 
 def _country_name(filename):
     return os.path.basename(filename).split('.')[0].capitalize()
 
-def inserts(filename):
-    nicks = Nicknames(filename='../nicknames.csv')
+def inserts(filename, nicknames_csv):
+    nicks = Nicknames(filename=nicknames_csv)
     country = _country_name(filename)
     reader = csv.reader(open(filename))
     fst = reader.next()
@@ -117,11 +117,12 @@ def inserts(filename):
         yield INSERT_TEMPLATE.format(COLUMNS=', '.join(db_columns), VALUES=', '.join(db_data))
 
 def main():
-    if len(sys.argv) < 2:
-        print 'CSV file needed as first arg'
+    if len(sys.argv) < 3:
+        print 'Usage: %s TXT NICKNAMES' % os.path.basename(sys.argv[0])
+        sys.exit(1)
     filename = sys.argv[1]
     with open('%sPovertyLines.sql' % _country_name(filename).capitalize(), 'w') as f:
-        f.write('\n'.join(inserts(filename)))
+        f.write('\n'.join(inserts(filename, sys.argv[2])))
 
 if __name__ == '__main__':
     main()

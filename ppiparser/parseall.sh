@@ -1,8 +1,22 @@
 #!/bin/sh
 
-export PYTHONPATH=$BI_HOME/ppiparser/pylib
-cd $BI_HOME/ppiparser/data
-for f in *.txt; do
+PRG="$0"
+
+while [ -h "$PRG" ] ; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+
+PRGDIR=`dirname "$PRG"`
+
+export PYTHONPATH=$PRGDIR/pylib
+for f in $PRGDIR/data/*.txt; do
     echo "Processing $f"
-    $BI_HOME/ppiparser/ppiparser.py "$f"
+    echo $PRGDIR/ppiparser.py "$f" $PRGDIR/data/nicknames.csv
+    $PRGDIR/ppiparser.py "$f" $PRGDIR/data/nicknames.csv
 done

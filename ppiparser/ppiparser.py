@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os.path
 import string
 import sys
 
@@ -124,14 +125,14 @@ def parse_questions(f):
             return
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print 'Txt file needed as argument'
+    if len(sys.argv) < 3:
+        print 'Usage: %s TXT NICKNAMES' % os.path.basename(sys.argv[0])
         sys.exit(1)
     filename = sys.argv[1]
-    country_name = filename.split()[0]
+    country_name = os.path.basename(filename.split()[0])
     if '.' in country_name:
         country_name = country_name.split('.')[0]
-    nicks = Nicknames()
+    nicks = Nicknames(sys.argv[2])
     year = nicks.year(country_name)
     title = 'PPI %s %s' % (country_name.capitalize(), year)
     qs = list(parse_questions(filename))

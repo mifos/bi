@@ -1,8 +1,21 @@
 #!/bin/sh
 
-export PYTHONPATH=$BI_HOME/ppiparser/pylib
-cd $BI_HOME/ppiparser/data/percents
-for f in *.csv; do
+PRG="$0"
+
+while [ -h "$PRG" ] ; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+
+PRGDIR=`dirname "$PRG"`
+
+export PYTHONPATH=$PRGDIR/pylib
+for f in $PRGDIR/data/percents/*.csv; do
     echo "Processing $f"
-    $BI_HOME/ppiparser/plines_parser.py "$f"
+    $PRGDIR/plines_parser.py "$f" "$PRGDIR/data/nicknames.csv"
 done
