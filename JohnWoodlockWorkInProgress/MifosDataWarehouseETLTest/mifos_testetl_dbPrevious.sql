@@ -16,576 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `BATCH_JOB_EXECUTION`
---
-
-DROP TABLE IF EXISTS `BATCH_JOB_EXECUTION`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_JOB_EXECUTION` (
-  `job_execution_id` bigint(20) NOT NULL,
-  `version` bigint(20) DEFAULT NULL,
-  `job_instance_id` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL,
-  `exit_code` varchar(20) DEFAULT NULL,
-  `exit_message` varchar(2500) DEFAULT NULL,
-  `last_updated` datetime DEFAULT NULL,
-  PRIMARY KEY (`job_execution_id`),
-  KEY `job_inst_exec_fk` (`job_instance_id`),
-  CONSTRAINT `job_inst_exec_fk` FOREIGN KEY (`job_instance_id`) REFERENCES `batch_job_instance` (`job_instance_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_JOB_EXECUTION`
---
-
-LOCK TABLES `BATCH_JOB_EXECUTION` WRITE;
-/*!40000 ALTER TABLE `BATCH_JOB_EXECUTION` DISABLE KEYS */;
-INSERT INTO `BATCH_JOB_EXECUTION` VALUES (1,0,1,'2010-08-04 00:00:01','2010-08-04 00:00:01','2010-08-04 00:00:01','COMPLETED','COMPLETED','',NULL),(2,0,2,'2010-08-04 00:00:03','2010-08-04 00:00:03','2010-08-04 00:00:03','COMPLETED','COMPLETED','',NULL),(3,0,3,'2010-08-03 00:00:01','2010-08-03 00:00:01','2010-08-03 00:00:01','COMPLETED','COMPLETED','',NULL),(4,0,4,'2010-08-04 00:00:03','2010-08-04 00:00:03','2010-08-04 00:00:03','COMPLETED','COMPLETED','',NULL),(5,0,5,'2010-08-04 00:00:03','2010-08-04 00:00:03','2010-08-04 00:00:03','COMPLETED','COMPLETED','',NULL),(6,0,6,'2010-08-04 00:00:01','2010-08-04 00:00:01','2010-08-04 00:00:01','COMPLETED','COMPLETED','',NULL),(7,0,7,'2010-08-04 00:00:03','2010-08-04 00:00:03','2010-08-04 00:00:03','COMPLETED','COMPLETED','',NULL),(8,0,8,'2010-08-04 00:00:03','2010-08-04 00:00:03','2010-08-04 00:00:03','COMPLETED','COMPLETED','',NULL),(9,0,9,'2010-08-03 00:00:00','2010-08-03 00:00:00','2010-08-03 00:00:00','COMPLETED','COMPLETED','',NULL),(10,0,10,'2010-08-03 00:00:00','2010-08-03 00:00:00','2010-08-03 00:00:00','COMPLETED','COMPLETED','',NULL),(11,0,11,'2010-08-03 00:00:00','2010-08-03 00:00:00','2010-08-03 00:00:00','COMPLETED','COMPLETED','',NULL);
-/*!40000 ALTER TABLE `BATCH_JOB_EXECUTION` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_JOB_EXECUTION_CONTEXT`
---
-
-DROP TABLE IF EXISTS `BATCH_JOB_EXECUTION_CONTEXT`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_JOB_EXECUTION_CONTEXT` (
-  `job_execution_id` bigint(20) NOT NULL,
-  `short_context` varchar(2500) NOT NULL,
-  `serialized_context` text,
-  PRIMARY KEY (`job_execution_id`),
-  CONSTRAINT `job_exec_ctx_fk` FOREIGN KEY (`job_execution_id`) REFERENCES `batch_job_execution` (`job_execution_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_JOB_EXECUTION_CONTEXT`
---
-
-LOCK TABLES `BATCH_JOB_EXECUTION_CONTEXT` WRITE;
-/*!40000 ALTER TABLE `BATCH_JOB_EXECUTION_CONTEXT` DISABLE KEYS */;
-/*!40000 ALTER TABLE `BATCH_JOB_EXECUTION_CONTEXT` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_JOB_EXECUTION_SEQ`
---
-
-DROP TABLE IF EXISTS `BATCH_JOB_EXECUTION_SEQ`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_JOB_EXECUTION_SEQ` (
-  `id` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_JOB_EXECUTION_SEQ`
---
-
-LOCK TABLES `BATCH_JOB_EXECUTION_SEQ` WRITE;
-/*!40000 ALTER TABLE `BATCH_JOB_EXECUTION_SEQ` DISABLE KEYS */;
-INSERT INTO `BATCH_JOB_EXECUTION_SEQ` VALUES (11);
-/*!40000 ALTER TABLE `BATCH_JOB_EXECUTION_SEQ` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_JOB_INSTANCE`
---
-
-DROP TABLE IF EXISTS `BATCH_JOB_INSTANCE`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_JOB_INSTANCE` (
-  `job_instance_id` bigint(20) NOT NULL,
-  `version` bigint(20) DEFAULT NULL,
-  `job_name` varchar(100) NOT NULL,
-  `job_key` varchar(32) NOT NULL,
-  PRIMARY KEY (`job_instance_id`),
-  UNIQUE KEY `job_inst_un` (`job_name`,`job_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_JOB_INSTANCE`
---
-
-LOCK TABLES `BATCH_JOB_INSTANCE` WRITE;
-/*!40000 ALTER TABLE `BATCH_JOB_INSTANCE` DISABLE KEYS */;
-INSERT INTO `BATCH_JOB_INSTANCE` VALUES (1,0,'ApplyCustomerFeeChangesTaskJob','e7d9055ca9c36d95cc137479b00dea92'),(2,0,'ApplyHolidayChangesTaskJob','f2e8e93738407cea88a1644a43143929'),(3,0,'BranchReportTaskJob','e43a44f44ee326ed7d57e29edaa5df85'),(4,0,'GenerateMeetingsForCustomerAndSavingsTaskJob','f2e8e93738407cea88a1644a43143929'),(5,0,'LoanArrearsAgingTaskJob','f2e8e93738407cea88a1644a43143929'),(6,0,'LoanArrearsTaskJob','e7d9055ca9c36d95cc137479b00dea92'),(7,0,'LoanArrearsAndPortfolioAtRiskTaskJob','f2e8e93738407cea88a1644a43143929'),(8,0,'PortfolioAtRiskTaskJob','f2e8e93738407cea88a1644a43143929'),(9,0,'ProductStatusJob','2d958f5f905b0c901ae39b091a04e5bd'),(10,0,'SavingsIntCalcTaskJob','2d958f5f905b0c901ae39b091a04e5bd'),(11,0,'SavingsIntPostingTaskJob','2d958f5f905b0c901ae39b091a04e5bd');
-/*!40000 ALTER TABLE `BATCH_JOB_INSTANCE` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_JOB_PARAMS`
---
-
-DROP TABLE IF EXISTS `BATCH_JOB_PARAMS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_JOB_PARAMS` (
-  `job_instance_id` bigint(20) NOT NULL,
-  `type_cd` varchar(6) NOT NULL,
-  `key_name` varchar(100) NOT NULL,
-  `string_val` varchar(250) DEFAULT NULL,
-  `date_val` datetime DEFAULT NULL,
-  `long_val` bigint(20) DEFAULT NULL,
-  `double_val` double DEFAULT NULL,
-  KEY `job_inst_params_fk` (`job_instance_id`),
-  CONSTRAINT `job_inst_params_fk` FOREIGN KEY (`job_instance_id`) REFERENCES `batch_job_instance` (`job_instance_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_JOB_PARAMS`
---
-
-LOCK TABLES `BATCH_JOB_PARAMS` WRITE;
-/*!40000 ALTER TABLE `BATCH_JOB_PARAMS` DISABLE KEYS */;
-INSERT INTO `BATCH_JOB_PARAMS` VALUES (1,'LONG','executionTime','','1970-01-01 10:00:00',1280844001000,0),(2,'LONG','executionTime','','1970-01-01 10:00:00',1280844003000,0),(3,'LONG','executionTime','','1970-01-01 10:00:00',1280757601000,0),(4,'LONG','executionTime','','1970-01-01 10:00:00',1280844003000,0),(5,'LONG','executionTime','','1970-01-01 10:00:00',1280844003000,0),(6,'LONG','executionTime','','1970-01-01 10:00:00',1280844001000,0),(7,'LONG','executionTime','','1970-01-01 10:00:00',1280844003000,0),(8,'LONG','executionTime','','1970-01-01 10:00:00',1280844003000,0),(9,'LONG','executionTime','','1970-01-01 10:00:00',1280757600000,0),(10,'LONG','executionTime','','1970-01-01 10:00:00',1280757600000,0),(11,'LONG','executionTime','','1970-01-01 10:00:00',1280757600000,0);
-/*!40000 ALTER TABLE `BATCH_JOB_PARAMS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_JOB_SEQ`
---
-
-DROP TABLE IF EXISTS `BATCH_JOB_SEQ`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_JOB_SEQ` (
-  `id` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_JOB_SEQ`
---
-
-LOCK TABLES `BATCH_JOB_SEQ` WRITE;
-/*!40000 ALTER TABLE `BATCH_JOB_SEQ` DISABLE KEYS */;
-INSERT INTO `BATCH_JOB_SEQ` VALUES (11);
-/*!40000 ALTER TABLE `BATCH_JOB_SEQ` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_STEP_EXECUTION`
---
-
-DROP TABLE IF EXISTS `BATCH_STEP_EXECUTION`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_STEP_EXECUTION` (
-  `step_execution_id` bigint(20) NOT NULL,
-  `version` bigint(20) NOT NULL,
-  `step_name` varchar(100) NOT NULL,
-  `job_execution_id` bigint(20) NOT NULL,
-  `start_time` datetime NOT NULL,
-  `end_time` datetime DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL,
-  `commit_count` bigint(20) DEFAULT NULL,
-  `read_count` bigint(20) DEFAULT NULL,
-  `filter_count` bigint(20) DEFAULT NULL,
-  `write_count` bigint(20) DEFAULT NULL,
-  `read_skip_count` bigint(20) DEFAULT NULL,
-  `write_skip_count` bigint(20) DEFAULT NULL,
-  `process_skip_count` bigint(20) DEFAULT NULL,
-  `rollback_count` bigint(20) DEFAULT NULL,
-  `exit_code` varchar(20) DEFAULT NULL,
-  `exit_message` varchar(2500) DEFAULT NULL,
-  `last_updated` datetime DEFAULT NULL,
-  PRIMARY KEY (`step_execution_id`),
-  KEY `job_exec_step_fk` (`job_execution_id`),
-  CONSTRAINT `job_exec_step_fk` FOREIGN KEY (`job_execution_id`) REFERENCES `batch_job_execution` (`job_execution_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_STEP_EXECUTION`
---
-
-LOCK TABLES `BATCH_STEP_EXECUTION` WRITE;
-/*!40000 ALTER TABLE `BATCH_STEP_EXECUTION` DISABLE KEYS */;
-/*!40000 ALTER TABLE `BATCH_STEP_EXECUTION` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_STEP_EXECUTION_CONTEXT`
---
-
-DROP TABLE IF EXISTS `BATCH_STEP_EXECUTION_CONTEXT`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_STEP_EXECUTION_CONTEXT` (
-  `step_execution_id` bigint(20) NOT NULL,
-  `short_context` varchar(2500) NOT NULL,
-  `serialized_context` text,
-  PRIMARY KEY (`step_execution_id`),
-  CONSTRAINT `step_exec_ctx_fk` FOREIGN KEY (`step_execution_id`) REFERENCES `batch_step_execution` (`step_execution_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_STEP_EXECUTION_CONTEXT`
---
-
-LOCK TABLES `BATCH_STEP_EXECUTION_CONTEXT` WRITE;
-/*!40000 ALTER TABLE `BATCH_STEP_EXECUTION_CONTEXT` DISABLE KEYS */;
-/*!40000 ALTER TABLE `BATCH_STEP_EXECUTION_CONTEXT` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `BATCH_STEP_EXECUTION_SEQ`
---
-
-DROP TABLE IF EXISTS `BATCH_STEP_EXECUTION_SEQ`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BATCH_STEP_EXECUTION_SEQ` (
-  `id` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `BATCH_STEP_EXECUTION_SEQ`
---
-
-LOCK TABLES `BATCH_STEP_EXECUTION_SEQ` WRITE;
-/*!40000 ALTER TABLE `BATCH_STEP_EXECUTION_SEQ` DISABLE KEYS */;
-INSERT INTO `BATCH_STEP_EXECUTION_SEQ` VALUES (0);
-/*!40000 ALTER TABLE `BATCH_STEP_EXECUTION_SEQ` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_BLOB_TRIGGERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_BLOB_TRIGGERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_BLOB_TRIGGERS` (
-  `trigger_name` varchar(200) NOT NULL,
-  `trigger_group` varchar(200) NOT NULL,
-  `blob_data` blob,
-  PRIMARY KEY (`trigger_name`,`trigger_group`),
-  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`trigger_name`, `trigger_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_BLOB_TRIGGERS`
---
-
-LOCK TABLES `QRTZ_BLOB_TRIGGERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_BLOB_TRIGGERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_BLOB_TRIGGERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_CALENDARS`
---
-
-DROP TABLE IF EXISTS `QRTZ_CALENDARS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_CALENDARS` (
-  `calendar_name` varchar(200) NOT NULL,
-  `calendar` blob NOT NULL,
-  PRIMARY KEY (`calendar_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_CALENDARS`
---
-
-LOCK TABLES `QRTZ_CALENDARS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_CALENDARS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_CALENDARS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_CRON_TRIGGERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_CRON_TRIGGERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_CRON_TRIGGERS` (
-  `trigger_name` varchar(200) NOT NULL,
-  `trigger_group` varchar(200) NOT NULL,
-  `cron_expression` varchar(200) NOT NULL,
-  `time_zone_id` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`trigger_name`,`trigger_group`),
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`trigger_name`, `trigger_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_CRON_TRIGGERS`
---
-
-LOCK TABLES `QRTZ_CRON_TRIGGERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_CRON_TRIGGERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_CRON_TRIGGERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_FIRED_TRIGGERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_FIRED_TRIGGERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_FIRED_TRIGGERS` (
-  `entry_id` varchar(95) NOT NULL,
-  `trigger_name` varchar(200) NOT NULL,
-  `trigger_group` varchar(200) NOT NULL,
-  `is_volatile` varchar(1) NOT NULL,
-  `instance_name` varchar(200) NOT NULL,
-  `fired_time` bigint(13) NOT NULL,
-  `priority` int(11) NOT NULL,
-  `state` varchar(16) NOT NULL,
-  `job_name` varchar(200) DEFAULT NULL,
-  `job_group` varchar(200) DEFAULT NULL,
-  `is_stateful` varchar(1) DEFAULT NULL,
-  `requests_recovery` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`entry_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_FIRED_TRIGGERS`
---
-
-LOCK TABLES `QRTZ_FIRED_TRIGGERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_FIRED_TRIGGERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_FIRED_TRIGGERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_JOB_DETAILS`
---
-
-DROP TABLE IF EXISTS `QRTZ_JOB_DETAILS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_JOB_DETAILS` (
-  `job_name` varchar(200) NOT NULL,
-  `job_group` varchar(200) NOT NULL,
-  `description` varchar(250) DEFAULT NULL,
-  `job_class_name` varchar(250) NOT NULL,
-  `is_durable` varchar(1) NOT NULL,
-  `is_volatile` varchar(1) NOT NULL,
-  `is_stateful` varchar(1) NOT NULL,
-  `requests_recovery` varchar(1) NOT NULL,
-  `job_data` blob,
-  PRIMARY KEY (`job_name`,`job_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_JOB_DETAILS`
---
-
-LOCK TABLES `QRTZ_JOB_DETAILS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_JOB_DETAILS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_JOB_DETAILS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_JOB_LISTENERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_JOB_LISTENERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_JOB_LISTENERS` (
-  `job_name` varchar(200) NOT NULL,
-  `job_group` varchar(200) NOT NULL,
-  `job_listener` varchar(200) NOT NULL,
-  PRIMARY KEY (`job_name`,`job_group`,`job_listener`),
-  CONSTRAINT `qrtz_job_listeners_ibfk_1` FOREIGN KEY (`job_name`, `job_group`) REFERENCES `qrtz_job_details` (`job_name`, `job_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_JOB_LISTENERS`
---
-
-LOCK TABLES `QRTZ_JOB_LISTENERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_JOB_LISTENERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_JOB_LISTENERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_LOCKS`
---
-
-DROP TABLE IF EXISTS `QRTZ_LOCKS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_LOCKS` (
-  `lock_name` varchar(40) NOT NULL,
-  PRIMARY KEY (`lock_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_LOCKS`
---
-
-LOCK TABLES `QRTZ_LOCKS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_LOCKS` DISABLE KEYS */;
-INSERT INTO `QRTZ_LOCKS` VALUES ('CALENDAR_ACCESS'),('JOB_ACCESS'),('MISFIRE_ACCESS'),('STATE_ACCESS'),('TRIGGER_ACCESS');
-/*!40000 ALTER TABLE `QRTZ_LOCKS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_PAUSED_TRIGGER_GRPS`
---
-
-DROP TABLE IF EXISTS `QRTZ_PAUSED_TRIGGER_GRPS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_PAUSED_TRIGGER_GRPS` (
-  `trigger_group` varchar(200) NOT NULL,
-  PRIMARY KEY (`trigger_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_PAUSED_TRIGGER_GRPS`
---
-
-LOCK TABLES `QRTZ_PAUSED_TRIGGER_GRPS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_PAUSED_TRIGGER_GRPS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_PAUSED_TRIGGER_GRPS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_SCHEDULER_STATE`
---
-
-DROP TABLE IF EXISTS `QRTZ_SCHEDULER_STATE`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_SCHEDULER_STATE` (
-  `instance_name` varchar(200) NOT NULL,
-  `last_checkin_time` bigint(13) NOT NULL,
-  `checkin_interval` bigint(13) NOT NULL,
-  PRIMARY KEY (`instance_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_SCHEDULER_STATE`
---
-
-LOCK TABLES `QRTZ_SCHEDULER_STATE` WRITE;
-/*!40000 ALTER TABLE `QRTZ_SCHEDULER_STATE` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_SCHEDULER_STATE` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_SIMPLE_TRIGGERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_SIMPLE_TRIGGERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_SIMPLE_TRIGGERS` (
-  `trigger_name` varchar(200) NOT NULL,
-  `trigger_group` varchar(200) NOT NULL,
-  `repeat_count` bigint(7) NOT NULL,
-  `repeat_interval` bigint(12) NOT NULL,
-  `times_triggered` bigint(10) NOT NULL,
-  PRIMARY KEY (`trigger_name`,`trigger_group`),
-  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`trigger_name`, `trigger_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_SIMPLE_TRIGGERS`
---
-
-LOCK TABLES `QRTZ_SIMPLE_TRIGGERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_SIMPLE_TRIGGERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_SIMPLE_TRIGGERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_TRIGGERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_TRIGGERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_TRIGGERS` (
-  `trigger_name` varchar(200) NOT NULL,
-  `trigger_group` varchar(200) NOT NULL,
-  `job_name` varchar(200) NOT NULL,
-  `job_group` varchar(200) NOT NULL,
-  `is_volatile` varchar(1) NOT NULL,
-  `description` varchar(250) DEFAULT NULL,
-  `next_fire_time` bigint(13) DEFAULT NULL,
-  `prev_fire_time` bigint(13) DEFAULT NULL,
-  `priority` int(11) DEFAULT NULL,
-  `trigger_state` varchar(16) NOT NULL,
-  `trigger_type` varchar(8) NOT NULL,
-  `start_time` bigint(13) NOT NULL,
-  `end_time` bigint(13) DEFAULT NULL,
-  `calendar_name` varchar(200) DEFAULT NULL,
-  `misfire_instr` smallint(2) DEFAULT NULL,
-  `job_data` blob,
-  PRIMARY KEY (`trigger_name`,`trigger_group`),
-  KEY `job_name` (`job_name`,`job_group`),
-  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`job_name`, `job_group`) REFERENCES `qrtz_job_details` (`job_name`, `job_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_TRIGGERS`
---
-
-LOCK TABLES `QRTZ_TRIGGERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_TRIGGERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_TRIGGERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `QRTZ_TRIGGER_LISTENERS`
---
-
-DROP TABLE IF EXISTS `QRTZ_TRIGGER_LISTENERS`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `QRTZ_TRIGGER_LISTENERS` (
-  `trigger_name` varchar(200) NOT NULL,
-  `trigger_group` varchar(200) NOT NULL,
-  `trigger_listener` varchar(200) NOT NULL,
-  PRIMARY KEY (`trigger_name`,`trigger_group`,`trigger_listener`),
-  CONSTRAINT `qrtz_trigger_listeners_ibfk_1` FOREIGN KEY (`trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`trigger_name`, `trigger_group`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `QRTZ_TRIGGER_LISTENERS`
---
-
-LOCK TABLES `QRTZ_TRIGGER_LISTENERS` WRITE;
-/*!40000 ALTER TABLE `QRTZ_TRIGGER_LISTENERS` DISABLE KEYS */;
-/*!40000 ALTER TABLE `QRTZ_TRIGGER_LISTENERS` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `accepted_payment_type`
 --
 
@@ -1116,7 +546,7 @@ CREATE TABLE `activity` (
   CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `activity` (`activity_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `activity_ibfk_2` FOREIGN KEY (`activity_name_lookup_id`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `activity_ibfk_3` FOREIGN KEY (`description_lookup_id`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=243 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1125,7 +555,7 @@ CREATE TABLE `activity` (
 
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
-INSERT INTO `activity` VALUES (1,NULL,371,371),(2,1,372,372),(3,2,373,373),(4,2,374,374),(5,1,375,375),(6,5,376,376),(7,5,377,377),(8,1,378,378),(9,8,379,379),(10,8,380,380),(13,NULL,381,381),(14,13,382,382),(15,14,383,383),(16,14,384,384),(17,NULL,385,385),(18,17,386,386),(19,18,387,387),(20,18,388,388),(21,18,389,389),(22,17,390,390),(23,22,391,391),(24,22,392,392),(25,22,393,393),(33,NULL,394,394),(34,33,395,395),(35,34,396,396),(36,34,397,397),(37,34,398,398),(38,34,399,399),(39,34,400,400),(40,34,401,401),(41,34,402,402),(42,34,403,403),(43,34,404,404),(44,34,405,405),(46,34,407,407),(47,34,408,408),(48,34,409,409),(49,34,410,410),(50,34,411,411),(51,34,412,412),(52,34,413,413),(53,34,414,414),(54,34,415,415),(55,34,416,416),(56,33,417,417),(57,56,418,418),(58,56,419,419),(59,56,420,420),(60,56,421,421),(61,56,422,422),(62,56,423,423),(63,56,424,424),(64,56,425,425),(65,56,426,426),(66,56,427,427),(68,56,429,429),(69,56,430,430),(70,56,431,431),(71,56,432,432),(72,56,433,433),(73,56,434,434),(74,56,435,435),(75,56,436,436),(76,56,437,437),(77,56,438,438),(78,33,439,439),(79,78,440,440),(80,78,441,441),(81,78,442,442),(82,78,443,443),(83,78,444,444),(85,78,446,446),(86,78,447,447),(87,78,448,438),(88,78,449,449),(89,NULL,450,450),(90,89,451,451),(91,90,452,452),(92,90,453,453),(93,89,454,454),(94,93,455,455),(95,93,456,456),(96,89,457,457),(97,96,458,458),(98,96,459,459),(99,NULL,460,460),(100,99,461,461),(101,100,462,462),(102,100,463,463),(103,100,464,464),(104,100,465,465),(105,100,466,466),(106,100,467,467),(108,100,469,469),(109,100,470,470),(110,100,471,471),(113,99,474,474),(115,113,475,475),(116,113,476,476),(118,113,478,478),(119,113,479,479),(120,113,480,480),(121,34,481,481),(122,56,482,482),(126,34,483,483),(127,78,484,484),(128,78,485,485),(129,100,486,486),(131,113,487,487),(135,18,488,488),(136,NULL,489,489),(137,136,490,490),(138,136,491,491),(139,136,492,492),(140,136,493,493),(141,NULL,494,494),(145,141,498,498),(146,141,499,499),(147,141,500,500),(148,141,501,501),(149,141,502,502),(150,141,503,503),(151,141,504,504),(178,113,531,531),(179,100,532,532),(180,136,533,533),(181,136,534,534),(182,136,535,535),(183,136,536,536),(184,136,537,537),(185,136,538,538),(186,136,546,546),(187,136,551,551),(188,136,552,552),(189,113,553,553),(190,136,554,554),(191,136,555,555),(192,196,560,560),(193,13,562,562),(194,18,563,563),(195,90,561,561),(196,NULL,564,564),(197,196,565,565),(198,34,566,566),(199,56,567,567),(200,78,568,568),(201,196,569,569),(202,99,570,570),(203,NULL,574,574),(204,203,575,575),(205,203,579,579),(206,34,580,580),(208,34,582,582),(209,89,583,583),(210,209,584,584),(211,209,585,585),(213,203,587,587),(214,141,588,588),(215,141,589,589),(216,141,590,590),(217,113,591,591),(218,99,592,592),(219,1,593,593),(220,141,594,594),(221,141,595,595),(222,141,596,596),(223,141,597,597),(224,203,598,598),(225,141,602,602),(226,141,603,603),(227,NULL,605,605),(228,227,606,606),(229,145,607,607),(230,203,608,608),(231,150,611,611),(232,150,612,612),(233,196,619,619),(234,227,625,625),(235,1,627,627),(236,150,628,628),(237,150,629,629),(238,227,635,635),(239,227,636,636),(240,203,637,637),(241,227,638,638),(242,227,639,639);
+INSERT INTO `activity` VALUES (1,NULL,371,371),(2,1,372,372),(3,2,373,373),(4,2,374,374),(5,1,375,375),(6,5,376,376),(7,5,377,377),(8,1,378,378),(9,8,379,379),(10,8,380,380),(13,NULL,381,381),(14,13,382,382),(15,14,383,383),(16,14,384,384),(17,NULL,385,385),(18,17,386,386),(19,18,387,387),(20,18,388,388),(21,18,389,389),(22,17,390,390),(23,22,391,391),(24,22,392,392),(25,22,393,393),(33,NULL,394,394),(34,33,395,395),(35,34,396,396),(36,34,397,397),(37,34,398,398),(38,34,399,399),(39,34,400,400),(40,34,401,401),(41,34,402,402),(42,34,403,403),(43,34,404,404),(44,34,405,405),(46,34,407,407),(47,34,408,408),(48,34,409,409),(49,34,410,410),(50,34,411,411),(51,34,412,412),(52,34,413,413),(53,34,414,414),(54,34,415,415),(55,34,416,416),(56,33,417,417),(57,56,418,418),(58,56,419,419),(59,56,420,420),(60,56,421,421),(61,56,422,422),(62,56,423,423),(63,56,424,424),(64,56,425,425),(65,56,426,426),(66,56,427,427),(68,56,429,429),(69,56,430,430),(70,56,431,431),(71,56,432,432),(72,56,433,433),(73,56,434,434),(74,56,435,435),(75,56,436,436),(76,56,437,437),(77,56,438,438),(78,33,439,439),(79,78,440,440),(80,78,441,441),(81,78,442,442),(82,78,443,443),(83,78,444,444),(85,78,446,446),(86,78,447,447),(87,78,448,438),(88,78,449,449),(89,NULL,450,450),(90,89,451,451),(91,90,452,452),(92,90,453,453),(93,89,454,454),(94,93,455,455),(95,93,456,456),(96,89,457,457),(97,96,458,458),(98,96,459,459),(99,NULL,460,460),(100,99,461,461),(101,100,462,462),(102,100,463,463),(103,100,464,464),(104,100,465,465),(105,100,466,466),(106,100,467,467),(108,100,469,469),(109,100,470,470),(110,100,471,471),(113,99,474,474),(115,113,475,475),(116,113,476,476),(118,113,478,478),(119,113,479,479),(120,113,480,480),(121,34,481,481),(122,56,482,482),(126,34,483,483),(127,78,484,484),(128,78,485,485),(129,100,486,486),(131,113,487,487),(135,18,488,488),(136,NULL,489,489),(137,136,490,490),(138,136,491,491),(139,136,492,492),(140,136,493,493),(141,NULL,494,494),(145,141,498,498),(146,141,499,499),(147,141,500,500),(148,141,501,501),(149,141,502,502),(150,141,503,503),(151,141,504,504),(178,113,531,531),(179,100,532,532),(180,136,533,533),(181,136,534,534),(182,136,535,535),(183,136,536,536),(184,136,537,537),(185,136,538,538),(186,136,546,546),(187,136,551,551),(188,136,552,552),(189,113,553,553),(190,136,554,554),(191,136,555,555),(192,196,560,560),(193,13,562,562),(194,18,563,563),(195,90,561,561),(196,NULL,564,564),(197,196,565,565),(198,34,566,566),(199,56,567,567),(200,78,568,568),(201,196,569,569),(202,99,570,570),(203,NULL,574,574),(204,203,575,575),(205,203,579,579),(206,34,580,580),(208,34,582,582),(209,89,583,583),(210,209,584,584),(211,209,585,585),(213,203,587,587),(214,141,588,588),(215,141,589,589),(216,141,590,590),(217,113,591,591),(218,99,592,592),(219,1,593,593),(220,141,594,594),(221,141,595,595),(222,141,596,596),(223,141,597,597),(224,203,598,598),(225,141,602,602),(226,141,603,603),(227,NULL,605,605),(228,227,606,606),(229,145,607,607),(230,203,608,608),(231,150,611,611),(232,150,612,612),(233,196,619,619),(234,227,625,625),(235,1,627,627),(236,150,628,628),(237,150,629,629);
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1190,29 +620,6 @@ CREATE TABLE `admin_document_acc_state_mix` (
 LOCK TABLES `admin_document_acc_state_mix` WRITE;
 /*!40000 ALTER TABLE `admin_document_acc_state_mix` DISABLE KEYS */;
 /*!40000 ALTER TABLE `admin_document_acc_state_mix` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `applied_upgrades`
---
-
-DROP TABLE IF EXISTS `applied_upgrades`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `applied_upgrades` (
-  `upgrade_id` int(11) NOT NULL,
-  PRIMARY KEY (`upgrade_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `applied_upgrades`
---
-
-LOCK TABLES `applied_upgrades` WRITE;
-/*!40000 ALTER TABLE `applied_upgrades` DISABLE KEYS */;
-INSERT INTO `applied_upgrades` VALUES (1277565300),(1277565388),(1277565389),(1277567194),(1277567768),(1277567885),(1277567949),(1277568944),(1277569001),(1277571296),(1277571560),(1277571792),(1277571837),(1277586926),(1277587117),(1277587199),(1277587465),(1277587818),(1277587878),(1277587947),(1277588038),(1277588072),(1277588240),(1277588373),(1277588885),(1277588973),(1277589055),(1277589236),(1277589321),(1277589383),(1278540763),(1278540832),(1278542100),(1278542119),(1278542138),(1278542152),(1278542171),(1279140399),(1279272090),(1280719328),(1280719447),(1280719676),(1280721170),(1280793109),(1282247229),(1282389745),(1282814250),(1283237728),(1283320210),(1283416834),(1283765911),(1284365506),(1284977483),(1284986654),(1285046834),(1285177663),(1285651956),(1285812348),(1286195484),(1286529235),(1286780611),(1287934290),(1288013750),(1288349766);
-/*!40000 ALTER TABLE `applied_upgrades` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1610,30 +1017,6 @@ CREATE TABLE `branch_ho_update` (
 LOCK TABLES `branch_ho_update` WRITE;
 /*!40000 ALTER TABLE `branch_ho_update` DISABLE KEYS */;
 /*!40000 ALTER TABLE `branch_ho_update` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `cash_flow`
---
-
-DROP TABLE IF EXISTS `cash_flow`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cash_flow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `capital` decimal(13,10) DEFAULT NULL,
-  `liability` decimal(13,10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cash_flow`
---
-
-LOCK TABLES `cash_flow` WRITE;
-/*!40000 ALTER TABLE `cash_flow` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cash_flow` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2221,7 +1604,6 @@ CREATE TABLE `customer_address_detail` (
   `zip` varchar(20) DEFAULT NULL,
   `address_status` smallint(6) DEFAULT NULL,
   `phone_number` varchar(20) DEFAULT NULL,
-  `phone_number_stripped` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`customer_address_id`),
   KEY `locale_id` (`locale_id`),
   KEY `cust_address_idx` (`customer_id`),
@@ -2236,7 +1618,7 @@ CREATE TABLE `customer_address_detail` (
 
 LOCK TABLES `customer_address_detail` WRITE;
 /*!40000 ALTER TABLE `customer_address_detail` DISABLE KEYS */;
-INSERT INTO `customer_address_detail` VALUES (1,1,NULL,NULL,'center road','','','','','','',NULL,'',NULL),(2,2,NULL,NULL,'','','','','','','',NULL,'',NULL),(3,3,NULL,NULL,'','','','','','','',NULL,'',NULL),(4,4,NULL,NULL,'','','','','','','',NULL,'',NULL),(5,5,NULL,NULL,'','','','','','','',NULL,'',NULL),(6,6,NULL,NULL,'','','','','','','',NULL,'',NULL),(7,7,NULL,NULL,'','','','','','','',NULL,'',NULL),(8,8,NULL,NULL,'','','','','','','',NULL,'',NULL),(9,9,NULL,NULL,'','','','','','','',NULL,'',NULL),(10,10,NULL,NULL,'','','','','','','',NULL,'',NULL),(11,11,NULL,NULL,'','','','','','','',NULL,'',NULL),(12,12,NULL,NULL,'','','','','','','',NULL,'',NULL),(13,13,NULL,NULL,'','','','','','','',NULL,'',NULL),(14,14,NULL,NULL,'','','','','','','',NULL,'',NULL),(15,15,NULL,NULL,'','','','','','','',NULL,'',NULL),(16,16,NULL,NULL,'','','','','','','',NULL,'',NULL),(17,17,NULL,NULL,'','','','','','','',NULL,'',NULL),(18,18,NULL,NULL,'','','','','','','',NULL,'',NULL),(19,19,NULL,NULL,'','','','','','','',NULL,'',NULL),(20,20,NULL,NULL,'','','','','','','',NULL,'',NULL),(21,21,NULL,NULL,'','','','','','','',NULL,'',NULL),(22,22,NULL,NULL,'','','','','','','',NULL,'',NULL),(23,23,NULL,NULL,'','','','','','','',NULL,'',NULL),(24,24,NULL,NULL,'','','','','','','',NULL,'',NULL),(25,25,NULL,NULL,'','','','','','','',NULL,'',NULL),(26,26,NULL,NULL,'','','','','','','',NULL,'',NULL),(27,27,NULL,NULL,'','','','','','','',NULL,'',NULL),(28,28,NULL,NULL,'','','','','','','',NULL,'',NULL),(29,29,NULL,NULL,'','','','','','','',NULL,'',NULL),(30,30,NULL,NULL,'','','','','','','',NULL,'',NULL),(31,31,NULL,NULL,'','','','','','','',NULL,'',NULL),(32,32,NULL,NULL,'','','','','','','',NULL,'',NULL),(33,33,NULL,NULL,'','','','','','','',NULL,'',NULL),(34,34,NULL,NULL,'','','','','','','',NULL,'',NULL),(35,35,NULL,NULL,'','','','','','','',NULL,'',NULL),(36,36,NULL,NULL,'','','','','','','',NULL,'',NULL),(37,37,NULL,NULL,'','','','','','','',NULL,'',NULL),(38,38,NULL,NULL,'','','','','','','',NULL,'',NULL),(39,39,NULL,NULL,'','','','','','','',NULL,'',NULL),(40,40,NULL,NULL,'','','','','','','',NULL,'',NULL),(41,41,NULL,NULL,'','','','','','','',NULL,'',NULL),(42,42,NULL,NULL,'','','','','','','',NULL,'',NULL),(43,43,NULL,NULL,'','','','','','','',NULL,'',NULL),(44,44,NULL,NULL,'','','','','','','',NULL,'',NULL),(45,45,NULL,NULL,'','','','','','','',NULL,'',NULL),(46,46,NULL,NULL,'','','','','','','',NULL,'',NULL),(47,47,NULL,NULL,'','','','','','','',NULL,'',NULL),(48,48,NULL,NULL,'','','','','','','',NULL,'',NULL),(49,49,NULL,NULL,'','','','','','','',NULL,'',NULL),(50,50,NULL,NULL,'','','','','','','',NULL,'',NULL),(51,51,NULL,NULL,'','','','','','','',NULL,'',NULL),(52,52,NULL,NULL,'','','','','','','',NULL,'',NULL),(53,53,NULL,NULL,'','','','','','','',NULL,'',NULL),(54,54,NULL,NULL,'','','','','','','',NULL,'',NULL),(55,55,NULL,NULL,'','','','','','','',NULL,'',NULL),(56,56,NULL,NULL,'','','','','','','',NULL,'',NULL),(57,57,NULL,NULL,'','','','','','','',NULL,'',NULL),(58,58,NULL,NULL,'','','','','','','',NULL,'',NULL),(59,59,NULL,NULL,'','','','','','','',NULL,'',NULL),(60,60,NULL,NULL,'','','','','','','',NULL,'',NULL),(61,61,NULL,NULL,'','','','','','','',NULL,'',NULL),(62,62,NULL,NULL,'','','','','','','',NULL,'',NULL),(63,63,NULL,NULL,'','','','','','','',NULL,'',NULL),(64,64,NULL,NULL,'','','','','','','',NULL,'',NULL),(65,65,NULL,NULL,'','','','','','','',NULL,'',NULL);
+INSERT INTO `customer_address_detail` VALUES (1,1,NULL,NULL,'center road','','','','','','',NULL,''),(2,2,NULL,NULL,'','','','','','','',NULL,''),(3,3,NULL,NULL,'','','','','','','',NULL,''),(4,4,NULL,NULL,'','','','','','','',NULL,''),(5,5,NULL,NULL,'','','','','','','',NULL,''),(6,6,NULL,NULL,'','','','','','','',NULL,''),(7,7,NULL,NULL,'','','','','','','',NULL,''),(8,8,NULL,NULL,'','','','','','','',NULL,''),(9,9,NULL,NULL,'','','','','','','',NULL,''),(10,10,NULL,NULL,'','','','','','','',NULL,''),(11,11,NULL,NULL,'','','','','','','',NULL,''),(12,12,NULL,NULL,'','','','','','','',NULL,''),(13,13,NULL,NULL,'','','','','','','',NULL,''),(14,14,NULL,NULL,'','','','','','','',NULL,''),(15,15,NULL,NULL,'','','','','','','',NULL,''),(16,16,NULL,NULL,'','','','','','','',NULL,''),(17,17,NULL,NULL,'','','','','','','',NULL,''),(18,18,NULL,NULL,'','','','','','','',NULL,''),(19,19,NULL,NULL,'','','','','','','',NULL,''),(20,20,NULL,NULL,'','','','','','','',NULL,''),(21,21,NULL,NULL,'','','','','','','',NULL,''),(22,22,NULL,NULL,'','','','','','','',NULL,''),(23,23,NULL,NULL,'','','','','','','',NULL,''),(24,24,NULL,NULL,'','','','','','','',NULL,''),(25,25,NULL,NULL,'','','','','','','',NULL,''),(26,26,NULL,NULL,'','','','','','','',NULL,''),(27,27,NULL,NULL,'','','','','','','',NULL,''),(28,28,NULL,NULL,'','','','','','','',NULL,''),(29,29,NULL,NULL,'','','','','','','',NULL,''),(30,30,NULL,NULL,'','','','','','','',NULL,''),(31,31,NULL,NULL,'','','','','','','',NULL,''),(32,32,NULL,NULL,'','','','','','','',NULL,''),(33,33,NULL,NULL,'','','','','','','',NULL,''),(34,34,NULL,NULL,'','','','','','','',NULL,''),(35,35,NULL,NULL,'','','','','','','',NULL,''),(36,36,NULL,NULL,'','','','','','','',NULL,''),(37,37,NULL,NULL,'','','','','','','',NULL,''),(38,38,NULL,NULL,'','','','','','','',NULL,''),(39,39,NULL,NULL,'','','','','','','',NULL,''),(40,40,NULL,NULL,'','','','','','','',NULL,''),(41,41,NULL,NULL,'','','','','','','',NULL,''),(42,42,NULL,NULL,'','','','','','','',NULL,''),(43,43,NULL,NULL,'','','','','','','',NULL,''),(44,44,NULL,NULL,'','','','','','','',NULL,''),(45,45,NULL,NULL,'','','','','','','',NULL,''),(46,46,NULL,NULL,'','','','','','','',NULL,''),(47,47,NULL,NULL,'','','','','','','',NULL,''),(48,48,NULL,NULL,'','','','','','','',NULL,''),(49,49,NULL,NULL,'','','','','','','',NULL,''),(50,50,NULL,NULL,'','','','','','','',NULL,''),(51,51,NULL,NULL,'','','','','','','',NULL,''),(52,52,NULL,NULL,'','','','','','','',NULL,''),(53,53,NULL,NULL,'','','','','','','',NULL,''),(54,54,NULL,NULL,'','','','','','','',NULL,''),(55,55,NULL,NULL,'','','','','','','',NULL,''),(56,56,NULL,NULL,'','','','','','','',NULL,''),(57,57,NULL,NULL,'','','','','','','',NULL,''),(58,58,NULL,NULL,'','','','','','','',NULL,''),(59,59,NULL,NULL,'','','','','','','',NULL,''),(60,60,NULL,NULL,'','','','','','','',NULL,''),(61,61,NULL,NULL,'','','','','','','',NULL,''),(62,62,NULL,NULL,'','','','','','','',NULL,''),(63,63,NULL,NULL,'','','','','','','',NULL,''),(64,64,NULL,NULL,'','','','','','','',NULL,''),(65,65,NULL,NULL,'','','','','','','',NULL,'');
 /*!40000 ALTER TABLE `customer_address_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3055,6 +2437,28 @@ INSERT INTO `customer_trxn_detail` VALUES (83,'0.0000',2,'0.0000',2,'0.0000',2),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `database_version`
+--
+
+DROP TABLE IF EXISTS `database_version`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `database_version` (
+  `database_version` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `database_version`
+--
+
+LOCK TABLES `database_version` WRITE;
+/*!40000 ALTER TABLE `database_version` DISABLE KEYS */;
+INSERT INTO `database_version` VALUES (257);
+/*!40000 ALTER TABLE `database_version` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `entity_master`
 --
 
@@ -3076,60 +2480,6 @@ LOCK TABLES `entity_master` WRITE;
 /*!40000 ALTER TABLE `entity_master` DISABLE KEYS */;
 INSERT INTO `entity_master` VALUES (1,'Client'),(2,'LoanProduct'),(3,'SavingsProduct'),(4,'ProductCategory'),(5,'ProductConfiguration'),(6,'Fees'),(7,'Accounts'),(8,'Admin'),(9,'Checklist'),(10,'Configuration'),(11,'Customer'),(12,'Group'),(13,'Login'),(14,'Meeting'),(15,'Office'),(16,'Penalty'),(17,'Personnel'),(19,'Roleandpermission'),(20,'Center'),(21,'Savings'),(22,'Loan'),(23,'BulkEntry');
 /*!40000 ALTER TABLE `entity_master` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `event_sources`
---
-
-DROP TABLE IF EXISTS `event_sources`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `event_sources` (
-  `id` int(11) NOT NULL,
-  `entity_type_id` smallint(6) NOT NULL,
-  `event_id` int(11) NOT NULL,
-  `description` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `entity_type_id` (`entity_type_id`),
-  KEY `event_id` (`event_id`),
-  CONSTRAINT `event_sources_ibfk_1` FOREIGN KEY (`entity_type_id`) REFERENCES `entity_master` (`entity_type_id`),
-  CONSTRAINT `event_sources_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `event_sources`
---
-
-LOCK TABLES `event_sources` WRITE;
-/*!40000 ALTER TABLE `event_sources` DISABLE KEYS */;
-INSERT INTO `event_sources` VALUES (1,1,1,'Create Client'),(2,22,1,'Create Loan'),(3,1,2,'View Client'),(4,12,1,'Create Group'),(5,22,3,'Approve Loan'),(6,1,4,'Close Client'),(7,22,2,'View Loan'),(8,12,2,'View Group'),(9,20,1,'Create Center'),(10,20,2,'View Center'),(11,22,5,'Disburse Loan'),(12,21,1,'Create Savings'),(13,21,2,'View Savings'),(14,15,1,'Create Office'),(15,17,1,'Create Personnel');
-/*!40000 ALTER TABLE `event_sources` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `events`
---
-
-DROP TABLE IF EXISTS `events`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `events` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `events`
---
-
-LOCK TABLES `events` WRITE;
-/*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,'Create'),(2,'View'),(3,'Approve'),(4,'Close'),(5,'Disburse');
-/*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -4287,32 +3637,6 @@ LOCK TABLES `loan_arrears_aging` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `loan_cash_flow`
---
-
-DROP TABLE IF EXISTS `loan_cash_flow`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `loan_cash_flow` (
-  `loan_id` int(11) NOT NULL,
-  `cash_flow_id` int(11) NOT NULL,
-  KEY `loan_id` (`loan_id`),
-  KEY `cash_flow_id` (`cash_flow_id`),
-  CONSTRAINT `loan_cash_flow_ibfk_1` FOREIGN KEY (`loan_id`) REFERENCES `loan_account` (`account_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `loan_cash_flow_ibfk_2` FOREIGN KEY (`cash_flow_id`) REFERENCES `cash_flow` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `loan_cash_flow`
---
-
-LOCK TABLES `loan_cash_flow` WRITE;
-/*!40000 ALTER TABLE `loan_cash_flow` DISABLE KEYS */;
-/*!40000 ALTER TABLE `loan_cash_flow` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `loan_counter`
 --
 
@@ -4415,11 +3739,6 @@ CREATE TABLE `loan_offering` (
   `principal_glcode_id` smallint(6) NOT NULL,
   `interest_glcode_id` smallint(6) NOT NULL,
   `penalties_glcode_id` smallint(6) DEFAULT NULL,
-  `interest_waiver_flag` smallint(6) DEFAULT '0',
-  `variable_installment_flag` smallint(6) DEFAULT '0',
-  `variable_installment_details_id` smallint(6) DEFAULT NULL,
-  `cashflow_comparison_flag` smallint(6) DEFAULT '0',
-  `cashflow_threshold` decimal(13,10) DEFAULT NULL,
   PRIMARY KEY (`prd_offering_id`),
   KEY `principal_glcode_id` (`principal_glcode_id`),
   KEY `interest_glcode_id` (`interest_glcode_id`),
@@ -4431,7 +3750,6 @@ CREATE TABLE `loan_offering` (
   KEY `min_loan_amount_currency_id` (`min_loan_amount_currency_id`),
   KEY `max_loan_amnt_currency_id` (`max_loan_amnt_currency_id`),
   KEY `default_loan_amount_currency_id` (`default_loan_amount_currency_id`),
-  KEY `variable_installment_details_id` (`variable_installment_details_id`),
   CONSTRAINT `loan_offering_ibfk_1` FOREIGN KEY (`principal_glcode_id`) REFERENCES `gl_code` (`glcode_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_ibfk_2` FOREIGN KEY (`interest_glcode_id`) REFERENCES `gl_code` (`glcode_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_ibfk_3` FOREIGN KEY (`graceperiod_type_id`) REFERENCES `grace_period_type` (`grace_period_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -4440,7 +3758,6 @@ CREATE TABLE `loan_offering` (
   CONSTRAINT `loan_offering_ibfk_6` FOREIGN KEY (`min_loan_amount_currency_id`) REFERENCES `currency` (`currency_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_ibfk_7` FOREIGN KEY (`max_loan_amnt_currency_id`) REFERENCES `currency` (`currency_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_ibfk_8` FOREIGN KEY (`default_loan_amount_currency_id`) REFERENCES `currency` (`currency_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `loan_offering_ibfk_9` FOREIGN KEY (`variable_installment_details_id`) REFERENCES `variable_installment_details` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_interest_calc_rule` FOREIGN KEY (`interest_calc_rule_id`) REFERENCES `interest_calc_rule` (`interest_calc_rule_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_penalty` FOREIGN KEY (`penalty_id`) REFERENCES `penalty` (`penalty_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `loan_offering_penalty_glcode` FOREIGN KEY (`penalties_glcode_id`) REFERENCES `gl_code` (`glcode_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -4453,7 +3770,7 @@ CREATE TABLE `loan_offering` (
 
 LOCK TABLES `loan_offering` WRITE;
 /*!40000 ALTER TABLE `loan_offering` DISABLE KEYS */;
-INSERT INTO `loan_offering` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'8.0000000000','3.0000000000','5.0000000000',NULL,NULL,NULL,NULL,1,0,0,NULL,0,19,40,NULL,0,0,NULL,0,NULL),(4,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'9.0000000000','5.0000000000','5.0000000000',NULL,NULL,NULL,NULL,1,0,0,NULL,0,19,40,NULL,0,0,NULL,0,NULL),(5,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'9.0000000000','7.0000000000','8.0000000000',NULL,NULL,NULL,NULL,1,0,0,NULL,0,13,40,NULL,0,0,NULL,0,NULL);
+INSERT INTO `loan_offering` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'8.0000000000','3.0000000000','5.0000000000',NULL,NULL,NULL,NULL,1,0,0,NULL,0,19,40,NULL),(4,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'9.0000000000','5.0000000000','5.0000000000',NULL,NULL,NULL,NULL,1,0,0,NULL,0,19,40,NULL),(5,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'9.0000000000','7.0000000000','8.0000000000',NULL,NULL,NULL,NULL,1,0,0,NULL,0,13,40,NULL);
 /*!40000 ALTER TABLE `loan_offering` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4802,7 +4119,7 @@ CREATE TABLE `lookup_value` (
   UNIQUE KEY `lookup_name_idx` (`lookup_name`),
   KEY `lookup_value_idx` (`entity_id`),
   CONSTRAINT `lookup_value_ibfk_1` FOREIGN KEY (`entity_id`) REFERENCES `lookup_entity` (`entity_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=640 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=635 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -4811,7 +4128,7 @@ CREATE TABLE `lookup_value` (
 
 LOCK TABLES `lookup_value` WRITE;
 /*!40000 ALTER TABLE `lookup_value` DISABLE KEYS */;
-INSERT INTO `lookup_value` VALUES (1,1,'ClientStatus-PartialApplication'),(2,1,'ClientStatus-ApplicationPendingApproval'),(3,1,'ClientStatus-Active'),(4,1,'ClientStatus-OnHold'),(5,1,'ClientStatus-Cancelled'),(6,1,'ClientStatus-Closed'),(7,2,'GroupStatus-PartialApplication'),(8,2,'GroupStatus-ApplicationPendingApproval'),(9,2,'GroupStatus-Active'),(10,2,'GroupStatus-OnHold'),(11,2,'GroupStatus-Cancelled'),(12,2,'GroupStatus-Closed'),(13,3,'CenterStatus-Active'),(14,3,'CenterStatus-Inactive'),(15,4,'OfficeStatus-Active'),(16,4,'OfficeStatus-Inactive'),(17,5,'AccountState-PartialApplication'),(18,5,'AccountState-ApplicationPendingApproval'),(19,5,'AccountState-ApplicationApproved'),(20,5,'AccountState-DisbursedToLo'),(21,5,'AccountState-ActiveInGoodStanding'),(22,5,'AccountState-ClosedObligationMet'),(23,5,'AccountState-ClosedWrittenOff'),(24,5,'AccountState-ClosedRescheduled'),(25,5,'AccountState-ActiveInBadStanding'),(26,6,'PersonnelStatusUnused-Active'),(27,6,'PersonnelStatusUnused-Inactive'),(28,7,'GroupFlag-Withdraw'),(29,7,'GroupFlag-Rejected'),(30,7,'GroupFlag-Blacklisted'),(31,7,'GroupFlag-Duplicate'),(32,7,'GroupFlag-Transferred'),(33,7,'GroupFlag-LeftProgram'),(34,7,'GroupFlag-Other'),(35,8,'FeeType-MaintenanceFee'),(36,8,'FeeType-ConsultancyFee'),(37,8,'FeeType-TrainingFee'),(38,8,'FeeType-MeetingCharges'),(41,10,'PovertyStatus-VeryPoor'),(42,10,'PovertyStatus-Poor'),(43,10,'PovertyStatus-NonPoor'),(49,16,'Gender-Male'),(50,16,'Gender-Female'),(51,25,'ProductState-Active'),(52,25,'ProductState-Inactive'),(53,25,'ProductState-Close'),(54,26,'Loan-Loan'),(55,27,'Savings-Savings'),(60,30,'PersonnelLevels-LoanOfficer'),(61,30,'PersonnelLevels-NonLoanOfficer'),(68,35,'PrdApplicableMaster-Clients'),(69,35,'PrdApplicableMaster-Groups'),(70,35,'PrdApplicableMaster-Centers'),(79,37,'InterestTypes-Flat'),(80,37,'InterestTypes-DecliningBalance'),(81,38,'CategoryType-AllCustomers'),(82,38,'CategoryType-Client'),(83,38,'CategoryType-Group'),(84,38,'CategoryType-Center'),(85,38,'CategoryType-AllProductTypes'),(86,38,'CategoryType-Loans'),(87,38,'CategoryType-Savings'),(88,39,'InterestCalcRule-AlwaysRecalculate'),(89,39,'InterestCalcRule-NeverRecalculate'),(96,41,'GracePeriodTypes-None'),(97,41,'GracePeriodTypes-GraceOnAllRepayments'),(98,41,'GracePeriodTypes-PrincipalOnlyGrace'),(104,34,'OfficeLevels-HeadOffice'),(105,34,'OfficeLevels-RegionalOffice'),(106,34,'OfficeLevels-DivisionalOffice'),(107,34,'OfficeLevels-AreaOffice'),(108,34,'OfficeLevels-BranchOffice'),(111,44,'OfficeCode-Code1'),(112,44,'OfficeCode-Code2'),(113,45,'ProductCategoryStatus-Inactive'),(114,45,'ProductCategoryStatus-Active'),(115,46,'ProductStatus-Active'),(116,46,'ProductStatus-Inactive'),(117,46,'ProductStatus-Closed'),(118,47,'SavingsType-Mandatory'),(119,47,'SavingsType-Voluntary'),(120,48,'RecommendedAmtUnit-PerIndividual'),(121,48,'RecommendedAmtUnit-CompleteGroup'),(122,49,'IntCalTypes-MinimumBalance'),(123,49,'IntCalTypes-AverageBalance'),(124,50,'YESNO-Yes'),(125,50,'YESNO-No'),(126,51,'AccountType-Loan'),(127,51,'AccountType-Saving'),(128,52,'SpouseFather-Spouse'),(129,52,'SpouseFather-Father'),(140,51,'AccountType-Customer'),(141,5,'AccountState-Cancel'),(142,53,'CustomerStatus-CustomerAccountActive'),(143,53,'CustomerStatus-CustomerAccountInactive'),(146,54,'FeePayment-Upfront'),(147,54,'FeePayment-TimeOfDisburstment'),(148,54,'FeePayment-TimeOfFirstLoanRepayment'),(149,55,'FeeFormulaMaster-LoanAmount'),(150,55,'FeeFormulaMaster-LoanAmountInterest'),(151,55,'FeeFormulaMaster-Interest'),(152,56,'PersonnelStatus-Active'),(153,56,'PersonnelStatus-Inactive'),(154,57,'Personnel-Personnel'),(165,68,'FeeStatus-Active'),(166,68,'FeeStatus-Inactive'),(167,69,'AccountAction-LoanRepayment'),(168,69,'AccountAction-Penalty'),(169,69,'AccountAction-MiscellenousPenalty'),(170,69,'AccountAction-Fee'),(171,69,'AccountAction-MiscellenousFee'),(172,69,'AccountAction-Deposit'),(173,69,'AccountAction-Withdrawal'),(174,70,'AccountFlags-Withdraw'),(175,70,'AccountFlags-Rejected'),(176,70,'AccountFlags-Other'),(177,71,'PaymentType-Cash'),(179,71,'PaymentType-Voucher'),(180,71,'PaymentType-Cheque'),(181,72,'SavingsStatus-PartialApplication'),(182,72,'SavingsStatus-ApplicationPendingApproval'),(183,72,'SavingsStatus-Cancelled'),(184,72,'SavingsStatus-Active'),(185,72,'SavingsStatus-Closed'),(186,73,'Position-CenterLeader'),(187,73,'Position-CenterSecretary'),(188,73,'Position-GroupLeader'),(189,74,'Language-English'),(191,69,'AccountAction-Payment'),(192,69,'AccountAction-Adjustment'),(193,69,'AccountAction-Disbursal'),(194,75,'CustomerAttendance-P'),(195,75,'CustomerAttendance-Ab'),(196,75,'CustomerAttendance-Al'),(197,75,'CustomerAttendance-L'),(198,76,'FinancialAction-Principal'),(199,76,'FinancialAction-Interest'),(200,76,'FinancialAction-Fees'),(201,76,'FinancialAction-Penalty'),(202,76,'FinancialAction-RoundingAdjustments'),(203,76,'FinancialAction-MandatoryDeposit'),(204,76,'FinancialAction-VoluntoryDeposit'),(205,76,'FinancialAction-MandatoryWithdrawal'),(206,76,'FinancialAction-VoluntoryWithdrawal'),(207,76,'FinancialAction-ReversalAdjustment'),(208,76,'FinancialAction-SavingsInterestPosting'),(209,76,'FinancialAction-Interest_posting'),(210,72,'SavingsStatus-Inactive'),(211,78,'SavingsAccountFlag-Withdraw'),(212,78,'SavingsAccountFlag-Rejected'),(213,78,'SavingsAccountFlag-Blacklisted'),(214,69,'AccountAction-Interest_posting'),(215,76,'FinancialAction-LoanDisbursement'),(216,73,'Position-GroupSecretary'),(229,76,'FinancialAction-MiscFee'),(361,76,'FinancialAction-MiscPenalty'),(362,69,'AccountAction-CustomerAccountRepayment'),(363,76,'FinancialAction-CustomerAccountFeesPosting'),(364,69,'AccountAction-CustomerAdjustment'),(365,76,'FinancialAction-CustomerAdjustment'),(366,69,'AccountAction-SavingsAdjustment'),(367,76,'FinancialAction-MandatoryDepositAdjustment'),(368,76,'FinancialAction-VoluntoryDepositAdjustment'),(369,76,'FinancialAction-MandatoryWithdrawalAdjustment'),(370,76,'FinancialAction-VoluntoryWithdrawalAdjustment'),(371,87,'Permissions-OrganizationManagement'),(372,87,'Permissions-Funds'),(373,87,'Permissions-CanCreateFunds'),(374,87,'Permissions-CanModifyFunds'),(375,87,'Permissions-Fees'),(376,87,'Permissions-CanDefineNewFeeType'),(377,87,'Permissions-CanModifyFeeInformation'),(378,87,'Permissions-Checklists'),(379,87,'Permissions-CanDefineNewChecklistType'),(380,87,'Permissions-CanModifyChecklistInformation'),(381,87,'Permissions-OfficeManagement'),(382,87,'Permissions-Offices'),(383,87,'Permissions-CanCreateNewOffice'),(384,87,'Permissions-CanModifyOfficeInformation'),(385,87,'Permissions-UserManagement'),(386,87,'Permissions-Personnel'),(387,87,'Permissions-CanCreateNewSystemUsers'),(388,87,'Permissions-CanModifyUserInformation'),(389,87,'Permissions-CanUnlockAUser'),(390,87,'Permissions-Roles'),(391,87,'Permissions-CanCreateNewRole'),(392,87,'Permissions-CanModifyARole'),(393,87,'Permissions-CanDeleteARole'),(394,87,'Permissions-ClientManagement'),(395,87,'Permissions-Clients'),(396,87,'Permissions-Clients-CanCreateNewClientInSaveForLaterState'),(397,87,'Permissions-Clients-CanCreateNewClientInSubmitForApprovalState'),(398,87,'Permissions-Clients-CanChangeStateToPartialApplication'),(399,87,'Permissions-Clients-CanChangeStateToActive'),(400,87,'Permissions-Clients-CanChangeStateToCancelled'),(401,87,'Permissions-Clients-CanChangeStateToOnHold'),(402,87,'Permissions-Clients-CanChangeStateToClosed'),(403,87,'Permissions-Clients-CanChangeStateToApplicationPendingApproval'),(404,87,'Permissions-Clients-CanMakePaymentsToClientAccounts'),(405,87,'Permissions-Clients-CanMakeAdjustmentEntriesToClientAccount'),(407,87,'Permissions-Clients-CanWaiveADueAmount'),(408,87,'Permissions-Clients-CanRemoveFeeTypesFromClientAccount'),(409,87,'Permissions-Clients-CanAddNotesToClient'),(410,87,'Permissions-Clients-CanEditMfiInformation'),(411,87,'Permissions-Clients-CanEditGroupMembership'),(412,87,'Permissions-Clients-CanEditOfficeMembership'),(413,87,'Permissions-Clients-CanEditMeetingSchedule'),(414,87,'Permissions-Clients-CanAddEditHistoricalData'),(415,87,'Permissions-Clients-CanEditFeeAmountAttachedToTheAccount'),(416,87,'Permissions-Clients-CanBlacklistAClient'),(417,87,'Permissions-Groups'),(418,87,'Permissions-Groups-CanCreateNewGroupInSaveForLaterState'),(419,87,'Permissions-Groups-CanCreateNewGroupInSubmitForApprovalState'),(420,87,'Permissions-Groups-CanChangeStateToPartialApplication'),(421,87,'Permissions-Groups-CanChangeStateToActive'),(422,87,'Permissions-Groups-CanChangeStateToCancelled'),(423,87,'Permissions-Groups-CanChangeStateToOnHold'),(424,87,'Permissions-Groups-CanChangeStateToClosed'),(425,87,'Permissions-Groups-CanChangeStateToApplicationPendingApproval'),(426,87,'Permissions-Groups-CanMakePaymentsToGroupAccounts'),(427,87,'Permissions-Groups-CanMakeAdjustmentEntriesToGroupAccount'),(429,87,'Permissions-Groups-CanWaiveADueAmount'),(430,87,'Permissions-Groups-CanRemoveFeeTypesFromGroupAccount'),(431,87,'Permissions-Groups-CanAddNotesToGroup'),(432,87,'Permissions-Groups-CanEditGroupInformation'),(433,87,'Permissions-Groups-CanEditCenterMembership'),(434,87,'Permissions-Groups-CanEditOfficeMembership'),(435,87,'Permissions-Groups-CanEditMeetingSchedule'),(436,87,'Permissions-Groups-CanAddEditHistoricalData'),(437,87,'Permissions-Groups-CanEditFeeAmountAttachedToTheAccount'),(438,87,'Permissions-Groups-CanBlacklistAGroup'),(439,87,'Permissions-Centers'),(440,87,'Permissions-Centers-CanCreateNewCenter'),(441,87,'Permissions-Centers-CanModifyCenterInformation'),(442,87,'Permissions-Centers-CanEditCenterStatus'),(443,87,'Permissions-Centers-CanMakePaymentsToCenterAccounts'),(444,87,'Permissions-Centers-CanMakeAdjustmentEntriesToCenterAccount'),(446,87,'Permissions-Centers-CanWaiveADueAmount'),(447,87,'Permissions-Centers-CanRemoveFeeTypesFromCenterAccount'),(448,87,'Permissions-Centers-CanAddNotesToCenterRecords'),(449,87,'Permissions-Centers-CanEditFeeAmountAttachedToTheAccount'),(450,87,'Permissions-ProductDefinition'),(451,87,'Permissions-ProductCategories'),(452,87,'Permissions-CanDefineNewProductCategories'),(453,87,'Permissions-CanEditProductCategoryInformation'),(454,87,'Permissions-LoanProducts'),(455,87,'Permissions-CanDefineNewLoanProductInstance'),(456,87,'Permissions-CanEditLoanProductInstances'),(457,87,'Permissions-SavingsProducts'),(458,87,'Permissions-CanDefineNewSavingsProductInstance'),(459,87,'Permissions-CanEditSavingsProductInstances'),(460,87,'Permissions-LoanManagement'),(461,87,'Permissions-LoanProcessing'),(462,87,'Permissions-CanCreateNewLoanAccountInSaveForLaterState'),(463,87,'Permissions-CanCreateNewLoanAccountInSubmitForApprovalState'),(464,87,'Permissions-LoanProcessing-CanChangeStateToPartialApplication'),(465,87,'Permissions-LoanProcessing-CanChangeStateToApproved'),(466,87,'Permissions-LoanProcessing-CanChangeStateToCancelled'),(467,87,'Permissions-LoanProcessing-CanChangeStateToDisbursedToLo'),(469,87,'Permissions-LoanProcessing-CanChangeStateToPendingApproval'),(470,87,'Permissions-LoanProcessing-CanChangeStateToClosedWrittenOff'),(471,87,'Permissions-LoanProcessing-CanChangeStateToClosedRescheduled'),(474,87,'Permissions-LoanTransactions'),(475,87,'Permissions-CanMakePaymentToTheAccount'),(476,87,'Permissions-CanMakeAdjustmentEntryToTheAccount'),(478,87,'Permissions-CanWaivePenalty'),(479,87,'Permissions-CanWaiveAFeeInstallment'),(480,87,'Permissions-CanRemoveFeeTypesAttachedToTheAccount'),(481,87,'Permissions-Clients-CanSpecifyMeetingSchedule'),(482,87,'Permissions-Groups-CanSpecifyMeetingSchedule'),(483,87,'Permissions-Clients-CanEditPersonalInformation'),(484,87,'Permissions-Centers-CanEditMeetingSchedule'),(485,87,'Permissions-Centers-CanSpecifyMeetingSchedule'),(486,87,'Permissions-CanEditLoanAccountInformation'),(487,87,'Permissions-CanApplyChargesToLoans'),(488,87,'Permissions-CanEditSelfInformation'),(489,87,'Permissions-SavingsManagement'),(490,87,'Permissions-CanCreateNewSavingsAccountInSaveForLaterState'),(491,87,'Permissions-CanUpdateSavingsAccount'),(492,87,'Permissions-CanCloseSavingsAccount'),(493,87,'Permissions-SavingsManagement-CanChangeStateToPartialApplication'),(494,87,'Permissions-ReportsManagement'),(495,87,'Permissions-CanAdministerReports'),(496,87,'Permissions-CanPreviewReports'),(497,87,'Permissions-CanUploadNewReports'),(498,87,'Permissions-ClientDetail'),(499,87,'Permissions-Center'),(500,87,'Permissions-Status'),(501,87,'Permissions-Performance'),(502,87,'Permissions-LoanProductDetail'),(503,87,'Permissions-Analysis'),(504,87,'Permissions-Miscellaneous'),(531,87,'Permissions-CanRepayLoan'),(532,87,'Permissions-CanAddNotesToLoanAccount'),(533,87,'Permissions-SavingsManagement-CanChangeStateToPendingApproval'),(534,87,'Permissions-SavingsManagement-CanChangeStateToCancel'),(535,87,'Permissions-SavingsManagement-CanChangeStateToActive'),(536,87,'Permissions-SavingsManagement-CanChangeStateToInactive'),(537,87,'Permissions-CanBlacklistSavingsAccount'),(538,87,'Permissions-CanCreateNewSavingsAccountInSubmitForApprovalState'),(539,87,'Permissions-NotImplemented'),(546,87,'Permissions-CanDoAdjustmentsForSavingsAccount'),(547,69,'AccountAction-LoanWrittenOff'),(548,69,'AccountAction-WaiveOffDue'),(549,69,'AccountAction-WaiveOffOverDue'),(550,76,'FinancialAction-LoanWrittenOff'),(551,87,'Permissions-CanWaiveDueDepositsForSavingsAccount'),(552,87,'Permissions-CanWaiveOverDueDepositsForSavingsAccount'),(553,87,'Permissions-CanDisburseLoan'),(554,87,'Permissions-CanMakeDepositWithdrawalToSavingsAccount'),(555,87,'Permissions-CanAddNotesToSavingsAccount'),(556,89,'feeUpdationType-AppliesToExistingFutureAccounts'),(557,89,'feeUpdationType-AppliesToFutureAccounts'),(558,90,'FeeFrequency-Periodic'),(559,90,'FeeFrequency-OneTime'),(560,87,'Permissions-CanApproveLoansInBulk'),(561,87,'Permissions-CanModifyLatenessDormancyDefinition'),(562,87,'Permissions-CanModifyOfficeHierarchy'),(563,87,'Permissions-CanAddNotesToPersonnel'),(564,87,'Permissions-Bulk'),(565,87,'Permissions-CanEnterCollectionSheetData'),(566,87,'Permissions-Clients-CanApplyChargesToClientAccounts'),(567,87,'Permissions-Groups-CanApplyChargesToGroupAccounts'),(568,87,'Permissions-Centers-CanApplyChargesToCenterAccounts'),(569,87,'Permissions-CanCreateMultipleLoanAccounts'),(570,87,'Permissions-CanReverseLoanDisbursals'),(571,70,'AccountFlags-LoanReversal'),(572,69,'AccountAction-LoanReversal'),(573,69,'AccountAction-DisrbursalAmountReversal'),(574,87,'Permissions-ConfigurationManagement'),(575,87,'Permissions-CanDefineLabels'),(576,91,'RepaymentRule-SameDay'),(577,91,'RepaymentRule-NextMeetingRepayment'),(578,91,'RepaymentRule-NextWorkingDay'),(579,87,'Permissions-CanDefineHiddenMandatoryFields'),(580,87,'Permissions-Clients-CanRemoveClientsFromGroups'),(581,87,'Permissions-CanViewDetailedAgingOfPortfolioAtRisk'),(582,87,'Permissions-Clients-CanAddAnExistingClientToAGroup'),(583,87,'Permissions-ProductMix'),(584,87,'Permissions-CanDefineProductMix'),(585,87,'Permissions-CanEditProductMix'),(586,87,'Permissions-CanViewActiveLoansByLoanOfficer'),(587,87,'Permissions-CanDefineLookupValues'),(588,87,'Permissions-CanUploadReportTemplate'),(589,87,'Permissions-CanViewReports'),(590,87,'Permissions-CanEditReportInformation'),(591,87,'Permissions-CanAdjustPaymentWhenAccountStatusIsClosedObligationMet'),(592,87,'Permissions-CanRedoLoanDisbursals'),(593,87,'Permissions-CanDefineAcceptedPaymentType'),(594,87,'Permissions-CanDefineNewReportCategory'),(595,87,'Permissions-CanViewReportCategory'),(596,87,'Permissions-CanDeleteReportCategory'),(597,87,'Permissions-CanDownloadReportTemplate'),(598,87,'Permissions-CanDefineCustomFields'),(599,74,'Language-Icelandic'),(600,74,'Language-Spanish'),(601,74,'Language-French'),(602,87,'Permissions-CanUploadAdminDocuments'),(603,87,'Permissions-CanViewAdminDocuments'),(604,37,'InterestTypes-DecliningBalance-EqualPrincipalInstallment'),(605,87,'Permissions-SystemInformation'),(606,87,'Permissions-CanViewSystemInformation'),(607,87,'Permissions-CanViewCollectionSheetReport'),(608,87,'Permissions-CanViewOrganizationSettings'),(609,76,'FinancialAction-LoanRescheduled'),(610,69,'AccountAction-LoanRescheduled'),(611,87,'Permissions-CanViewBranchCashConfirmationReport'),(612,87,'Permissions-CanViewBranchProgressReport'),(613,74,'Language-Chinese'),(614,74,'Language-Swahili'),(615,74,'Language-Arabic'),(616,74,'Language-Portuguese'),(617,74,'Language-Khmer'),(618,74,'Language-Lao'),(619,87,'Permissions-CanImportTransactions'),(620,92,'Together'),(621,92,'NotTogether'),(622,52,'Mother'),(623,52,'Child'),(624,74,'Language-Hungarian'),(625,87,'Permissions-CanShutdownMifos'),(626,91,'RepaymentRule-RepaymentMoratorium'),(627,87,'Permissions-CanDefineHoliday'),(628,87,'Permissions.CanViewDetailedAgingOfPortfolioAtRiskReport'),(629,87,'Permissions.CanViewGeneralLedgerReport'),(630,15,'LookUpOption.Mr.1277994941878'),(631,15,'LookUpOption.Mrs.1277994946980'),(632,29,'LookUpOption.BigUser.1277994955809'),(633,17,'LookUpOption.Married.1277994974233'),(634,17,'LookUpOption.Single.1277994980488'),(635,87,'Permissions-CanViewActiveSessions'),(636,87,'Permissions-CanStartMifosShutDown'),(637,87,'Permissions-CanManageQuestionGroups'),(638,87,'Permissions-CanRunBatchJobsOnDemand'),(639,87,'Permissions-CanUpdateBatchJobsConfiguration');
+INSERT INTO `lookup_value` VALUES (1,1,'ClientStatus-PartialApplication'),(2,1,'ClientStatus-ApplicationPendingApproval'),(3,1,'ClientStatus-Active'),(4,1,'ClientStatus-OnHold'),(5,1,'ClientStatus-Cancelled'),(6,1,'ClientStatus-Closed'),(7,2,'GroupStatus-PartialApplication'),(8,2,'GroupStatus-ApplicationPendingApproval'),(9,2,'GroupStatus-Active'),(10,2,'GroupStatus-OnHold'),(11,2,'GroupStatus-Cancelled'),(12,2,'GroupStatus-Closed'),(13,3,'CenterStatus-Active'),(14,3,'CenterStatus-Inactive'),(15,4,'OfficeStatus-Active'),(16,4,'OfficeStatus-Inactive'),(17,5,'AccountState-PartialApplication'),(18,5,'AccountState-ApplicationPendingApproval'),(19,5,'AccountState-ApplicationApproved'),(20,5,'AccountState-DisbursedToLo'),(21,5,'AccountState-ActiveInGoodStanding'),(22,5,'AccountState-ClosedObligationMet'),(23,5,'AccountState-ClosedWrittenOff'),(24,5,'AccountState-ClosedRescheduled'),(25,5,'AccountState-ActiveInBadStanding'),(26,6,'PersonnelStatusUnused-Active'),(27,6,'PersonnelStatusUnused-Inactive'),(28,7,'GroupFlag-Withdraw'),(29,7,'GroupFlag-Rejected'),(30,7,'GroupFlag-Blacklisted'),(31,7,'GroupFlag-Duplicate'),(32,7,'GroupFlag-Transferred'),(33,7,'GroupFlag-LeftProgram'),(34,7,'GroupFlag-Other'),(35,8,'FeeType-MaintenanceFee'),(36,8,'FeeType-ConsultancyFee'),(37,8,'FeeType-TrainingFee'),(38,8,'FeeType-MeetingCharges'),(41,10,'PovertyStatus-VeryPoor'),(42,10,'PovertyStatus-Poor'),(43,10,'PovertyStatus-NonPoor'),(49,16,'Gender-Male'),(50,16,'Gender-Female'),(51,25,'ProductState-Active'),(52,25,'ProductState-Inactive'),(53,25,'ProductState-Close'),(54,26,'Loan-Loan'),(55,27,'Savings-Savings'),(60,30,'PersonnelLevels-LoanOfficer'),(61,30,'PersonnelLevels-NonLoanOfficer'),(68,35,'PrdApplicableMaster-Clients'),(69,35,'PrdApplicableMaster-Groups'),(70,35,'PrdApplicableMaster-Centers'),(79,37,'InterestTypes-Flat'),(80,37,'InterestTypes-DecliningBalance'),(81,38,'CategoryType-AllCustomers'),(82,38,'CategoryType-Client'),(83,38,'CategoryType-Group'),(84,38,'CategoryType-Center'),(85,38,'CategoryType-AllProductTypes'),(86,38,'CategoryType-Loans'),(87,38,'CategoryType-Savings'),(88,39,'InterestCalcRule-AlwaysRecalculate'),(89,39,'InterestCalcRule-NeverRecalculate'),(96,41,'GracePeriodTypes-None'),(97,41,'GracePeriodTypes-GraceOnAllRepayments'),(98,41,'GracePeriodTypes-PrincipalOnlyGrace'),(104,34,'OfficeLevels-HeadOffice'),(105,34,'OfficeLevels-RegionalOffice'),(106,34,'OfficeLevels-DivisionalOffice'),(107,34,'OfficeLevels-AreaOffice'),(108,34,'OfficeLevels-BranchOffice'),(111,44,'OfficeCode-Code1'),(112,44,'OfficeCode-Code2'),(113,45,'ProductCategoryStatus-Inactive'),(114,45,'ProductCategoryStatus-Active'),(115,46,'ProductStatus-Active'),(116,46,'ProductStatus-Inactive'),(117,46,'ProductStatus-Closed'),(118,47,'SavingsType-Mandatory'),(119,47,'SavingsType-Voluntary'),(120,48,'RecommendedAmtUnit-PerIndividual'),(121,48,'RecommendedAmtUnit-CompleteGroup'),(122,49,'IntCalTypes-MinimumBalance'),(123,49,'IntCalTypes-AverageBalance'),(124,50,'YESNO-Yes'),(125,50,'YESNO-No'),(126,51,'AccountType-Loan'),(127,51,'AccountType-Saving'),(128,52,'SpouseFather-Spouse'),(129,52,'SpouseFather-Father'),(140,51,'AccountType-Customer'),(141,5,'AccountState-Cancel'),(142,53,'CustomerStatus-CustomerAccountActive'),(143,53,'CustomerStatus-CustomerAccountInactive'),(146,54,'FeePayment-Upfront'),(147,54,'FeePayment-TimeOfDisburstment'),(148,54,'FeePayment-TimeOfFirstLoanRepayment'),(149,55,'FeeFormulaMaster-LoanAmount'),(150,55,'FeeFormulaMaster-LoanAmountInterest'),(151,55,'FeeFormulaMaster-Interest'),(152,56,'PersonnelStatus-Active'),(153,56,'PersonnelStatus-Inactive'),(154,57,'Personnel-Personnel'),(165,68,'FeeStatus-Active'),(166,68,'FeeStatus-Inactive'),(167,69,'AccountAction-LoanRepayment'),(168,69,'AccountAction-Penalty'),(169,69,'AccountAction-MiscellenousPenalty'),(170,69,'AccountAction-Fee'),(171,69,'AccountAction-MiscellenousFee'),(172,69,'AccountAction-Deposit'),(173,69,'AccountAction-Withdrawal'),(174,70,'AccountFlags-Withdraw'),(175,70,'AccountFlags-Rejected'),(176,70,'AccountFlags-Other'),(177,71,'PaymentType-Cash'),(179,71,'PaymentType-Voucher'),(180,71,'PaymentType-Cheque'),(181,72,'SavingsStatus-PartialApplication'),(182,72,'SavingsStatus-ApplicationPendingApproval'),(183,72,'SavingsStatus-Cancelled'),(184,72,'SavingsStatus-Active'),(185,72,'SavingsStatus-Closed'),(186,73,'Position-CenterLeader'),(187,73,'Position-CenterSecretary'),(188,73,'Position-GroupLeader'),(189,74,'Language-English'),(191,69,'AccountAction-Payment'),(192,69,'AccountAction-Adjustment'),(193,69,'AccountAction-Disbursal'),(194,75,'CustomerAttendance-P'),(195,75,'CustomerAttendance-Ab'),(196,75,'CustomerAttendance-Al'),(197,75,'CustomerAttendance-L'),(198,76,'FinancialAction-Principal'),(199,76,'FinancialAction-Interest'),(200,76,'FinancialAction-Fees'),(201,76,'FinancialAction-Penalty'),(202,76,'FinancialAction-RoundingAdjustments'),(203,76,'FinancialAction-MandatoryDeposit'),(204,76,'FinancialAction-VoluntoryDeposit'),(205,76,'FinancialAction-MandatoryWithdrawal'),(206,76,'FinancialAction-VoluntoryWithdrawal'),(207,76,'FinancialAction-ReversalAdjustment'),(208,76,'FinancialAction-SavingsInterestPosting'),(209,76,'FinancialAction-Interest_posting'),(210,72,'SavingsStatus-Inactive'),(211,78,'SavingsAccountFlag-Withdraw'),(212,78,'SavingsAccountFlag-Rejected'),(213,78,'SavingsAccountFlag-Blacklisted'),(214,69,'AccountAction-Interest_posting'),(215,76,'FinancialAction-LoanDisbursement'),(216,73,'Position-GroupSecretary'),(229,76,'FinancialAction-MiscFee'),(361,76,'FinancialAction-MiscPenalty'),(362,69,'AccountAction-CustomerAccountRepayment'),(363,76,'FinancialAction-CustomerAccountFeesPosting'),(364,69,'AccountAction-CustomerAdjustment'),(365,76,'FinancialAction-CustomerAdjustment'),(366,69,'AccountAction-SavingsAdjustment'),(367,76,'FinancialAction-MandatoryDepositAdjustment'),(368,76,'FinancialAction-VoluntoryDepositAdjustment'),(369,76,'FinancialAction-MandatoryWithdrawalAdjustment'),(370,76,'FinancialAction-VoluntoryWithdrawalAdjustment'),(371,87,'Permissions-OrganizationManagement'),(372,87,'Permissions-Funds'),(373,87,'Permissions-CanCreateFunds'),(374,87,'Permissions-CanModifyFunds'),(375,87,'Permissions-Fees'),(376,87,'Permissions-CanDefineNewFeeType'),(377,87,'Permissions-CanModifyFeeInformation'),(378,87,'Permissions-Checklists'),(379,87,'Permissions-CanDefineNewChecklistType'),(380,87,'Permissions-CanModifyChecklistInformation'),(381,87,'Permissions-OfficeManagement'),(382,87,'Permissions-Offices'),(383,87,'Permissions-CanCreateNewOffice'),(384,87,'Permissions-CanModifyOfficeInformation'),(385,87,'Permissions-UserManagement'),(386,87,'Permissions-Personnel'),(387,87,'Permissions-CanCreateNewSystemUsers'),(388,87,'Permissions-CanModifyUserInformation'),(389,87,'Permissions-CanUnlockAUser'),(390,87,'Permissions-Roles'),(391,87,'Permissions-CanCreateNewRole'),(392,87,'Permissions-CanModifyARole'),(393,87,'Permissions-CanDeleteARole'),(394,87,'Permissions-ClientManagement'),(395,87,'Permissions-Clients'),(396,87,'Permissions-Clients-CanCreateNewClientInSaveForLaterState'),(397,87,'Permissions-Clients-CanCreateNewClientInSubmitForApprovalState'),(398,87,'Permissions-Clients-CanChangeStateToPartialApplication'),(399,87,'Permissions-Clients-CanChangeStateToActive'),(400,87,'Permissions-Clients-CanChangeStateToCancelled'),(401,87,'Permissions-Clients-CanChangeStateToOnHold'),(402,87,'Permissions-Clients-CanChangeStateToClosed'),(403,87,'Permissions-Clients-CanChangeStateToApplicationPendingApproval'),(404,87,'Permissions-Clients-CanMakePaymentsToClientAccounts'),(405,87,'Permissions-Clients-CanMakeAdjustmentEntriesToClientAccount'),(407,87,'Permissions-Clients-CanWaiveADueAmount'),(408,87,'Permissions-Clients-CanRemoveFeeTypesFromClientAccount'),(409,87,'Permissions-Clients-CanAddNotesToClient'),(410,87,'Permissions-Clients-CanEditMfiInformation'),(411,87,'Permissions-Clients-CanEditGroupMembership'),(412,87,'Permissions-Clients-CanEditOfficeMembership'),(413,87,'Permissions-Clients-CanEditMeetingSchedule'),(414,87,'Permissions-Clients-CanAddEditHistoricalData'),(415,87,'Permissions-Clients-CanEditFeeAmountAttachedToTheAccount'),(416,87,'Permissions-Clients-CanBlacklistAClient'),(417,87,'Permissions-Groups'),(418,87,'Permissions-Groups-CanCreateNewGroupInSaveForLaterState'),(419,87,'Permissions-Groups-CanCreateNewGroupInSubmitForApprovalState'),(420,87,'Permissions-Groups-CanChangeStateToPartialApplication'),(421,87,'Permissions-Groups-CanChangeStateToActive'),(422,87,'Permissions-Groups-CanChangeStateToCancelled'),(423,87,'Permissions-Groups-CanChangeStateToOnHold'),(424,87,'Permissions-Groups-CanChangeStateToClosed'),(425,87,'Permissions-Groups-CanChangeStateToApplicationPendingApproval'),(426,87,'Permissions-Groups-CanMakePaymentsToGroupAccounts'),(427,87,'Permissions-Groups-CanMakeAdjustmentEntriesToGroupAccount'),(429,87,'Permissions-Groups-CanWaiveADueAmount'),(430,87,'Permissions-Groups-CanRemoveFeeTypesFromGroupAccount'),(431,87,'Permissions-Groups-CanAddNotesToGroup'),(432,87,'Permissions-Groups-CanEditGroupInformation'),(433,87,'Permissions-Groups-CanEditCenterClientship'),(434,87,'Permissions-Groups-CanEditOfficeMembership'),(435,87,'Permissions-Groups-CanEditMeetingSchedule'),(436,87,'Permissions-Groups-CanAddEditHistoricalData'),(437,87,'Permissions-Groups-CanEditFeeAmountAttachedToTheAccount'),(438,87,'Permissions-Groups-CanBlacklistAGroup'),(439,87,'Permissions-Centers'),(440,87,'Permissions-Centers-CanCreateNewCenter'),(441,87,'Permissions-Centers-CanModifyCenterInformation'),(442,87,'Permissions-Centers-CanEditCenterStatus'),(443,87,'Permissions-Centers-CanMakePaymentsToCenterAccounts'),(444,87,'Permissions-Centers-CanMakeAdjustmentEntriesToCenterAccount'),(446,87,'Permissions-Centers-CanWaiveADueAmount'),(447,87,'Permissions-Centers-CanRemoveFeeTypesFromCenterAccount'),(448,87,'Permissions-Centers-CanAddNotesToCenterRecords'),(449,87,'Permissions-Centers-CanEditFeeAmountAttachedToTheAccount'),(450,87,'Permissions-ProductDefinition'),(451,87,'Permissions-ProductCategories'),(452,87,'Permissions-CanDefineNewProductCategories'),(453,87,'Permissions-CanEditProductCategoryInformation'),(454,87,'Permissions-LoanProducts'),(455,87,'Permissions-CanDefineNewLoanProductInstance'),(456,87,'Permissions-CanEditLoanProductInstances'),(457,87,'Permissions-SavingsProducts'),(458,87,'Permissions-CanDefineNewSavingsProductInstance'),(459,87,'Permissions-CanEditSavingsProductInstances'),(460,87,'Permissions-LoanManagement'),(461,87,'Permissions-LoanProcessing'),(462,87,'Permissions-CanCreateNewLoanAccountInSaveForLaterState'),(463,87,'Permissions-CanCreateNewLoanAccountInSubmitForApprovalState'),(464,87,'Permissions-LoanProcessing-CanChangeStateToPartialApplication'),(465,87,'Permissions-LoanProcessing-CanChangeStateToApproved'),(466,87,'Permissions-LoanProcessing-CanChangeStateToCancelled'),(467,87,'Permissions-LoanProcessing-CanChangeStateToDisbursedToLo'),(469,87,'Permissions-LoanProcessing-CanChangeStateToPendingApproval'),(470,87,'Permissions-LoanProcessing-CanChangeStateToClosedWrittenOff'),(471,87,'Permissions-LoanProcessing-CanChangeStateToClosedRescheduled'),(474,87,'Permissions-LoanTransactions'),(475,87,'Permissions-CanMakePaymentToTheAccount'),(476,87,'Permissions-CanMakeAdjustmentEntryToTheAccount'),(478,87,'Permissions-CanWaivePenalty'),(479,87,'Permissions-CanWaiveAFeeInstallment'),(480,87,'Permissions-CanRemoveFeeTypesAttachedToTheAccount'),(481,87,'Permissions-Clients-CanSpecifyMeetingSchedule'),(482,87,'Permissions-Groups-CanSpecifyMeetingSchedule'),(483,87,'Permissions-Clients-CanEditPersonalInformation'),(484,87,'Permissions-Centers-CanEditMeetingSchedule'),(485,87,'Permissions-Centers-CanSpecifyMeetingSchedule'),(486,87,'Permissions-CanEditLoanAccountInformation'),(487,87,'Permissions-CanApplyChargesToLoans'),(488,87,'Permissions-CanEditSelfInformation'),(489,87,'Permissions-SavingsManagement'),(490,87,'Permissions-CanCreateNewSavingsAccountInSaveForLaterState'),(491,87,'Permissions-CanUpdateSavingsAccount'),(492,87,'Permissions-CanCloseSavingsAccount'),(493,87,'Permissions-SavingsManagement-CanChangeStateToPartialApplication'),(494,87,'Permissions-ReportsManagement'),(495,87,'Permissions-CanAdministerReports'),(496,87,'Permissions-CanPreviewReports'),(497,87,'Permissions-CanUploadNewReports'),(498,87,'Permissions-ClientDetail'),(499,87,'Permissions-Center'),(500,87,'Permissions-Status'),(501,87,'Permissions-Performance'),(502,87,'Permissions-LoanProductDetail'),(503,87,'Permissions-Analysis'),(504,87,'Permissions-Miscellaneous'),(531,87,'Permissions-CanRepayLoan'),(532,87,'Permissions-CanAddNotesToLoanAccount'),(533,87,'Permissions-SavingsManagement-CanChangeStateToPendingApproval'),(534,87,'Permissions-SavingsManagement-CanChangeStateToCancel'),(535,87,'Permissions-SavingsManagement-CanChangeStateToActive'),(536,87,'Permissions-SavingsManagement-CanChangeStateToInactive'),(537,87,'Permissions-CanBlacklistSavingsAccount'),(538,87,'Permissions-CanCreateNewSavingsAccountInSubmitForApprovalState'),(539,87,'Permissions-NotImplemented'),(546,87,'Permissions-CanDoAdjustmentsForSavingsAccount'),(547,69,'AccountAction-LoanWrittenOff'),(548,69,'AccountAction-WaiveOffDue'),(549,69,'AccountAction-WaiveOffOverDue'),(550,76,'FinancialAction-LoanWrittenOff'),(551,87,'Permissions-CanWaiveDueDepositsForSavingsAccount'),(552,87,'Permissions-CanWaiveOverDueDepositsForSavingsAccount'),(553,87,'Permissions-CanDisburseLoan'),(554,87,'Permissions-CanMakeDepositWithdrawalToSavingsAccount'),(555,87,'Permissions-CanAddNotesToSavingsAccount'),(556,89,'feeUpdationType-AppliesToExistingFutureAccounts'),(557,89,'feeUpdationType-AppliesToFutureAccounts'),(558,90,'FeeFrequency-Periodic'),(559,90,'FeeFrequency-OneTime'),(560,87,'Permissions-CanApproveLoansInBulk'),(561,87,'Permissions-CanModifyLatenessDormancyDefinition'),(562,87,'Permissions-CanModifyOfficeHierarchy'),(563,87,'Permissions-CanAddNotesToPersonnel'),(564,87,'Permissions-Bulk'),(565,87,'Permissions-CanEnterCollectionSheetData'),(566,87,'Permissions-Clients-CanApplyChargesToClientAccounts'),(567,87,'Permissions-Groups-CanApplyChargesToGroupAccounts'),(568,87,'Permissions-Centers-CanApplyChargesToCenterAccounts'),(569,87,'Permissions-CanCreateMultipleLoanAccounts'),(570,87,'Permissions-CanReverseLoanDisbursals'),(571,70,'AccountFlags-LoanReversal'),(572,69,'AccountAction-LoanReversal'),(573,69,'AccountAction-DisrbursalAmountReversal'),(574,87,'Permissions-ConfigurationManagement'),(575,87,'Permissions-CanDefineLabels'),(576,91,'RepaymentRule-SameDay'),(577,91,'RepaymentRule-NextMeetingRepayment'),(578,91,'RepaymentRule-NextWorkingDay'),(579,87,'Permissions-CanDefineHiddenMandatoryFields'),(580,87,'Permissions-Clients-CanRemoveClientsFromGroups'),(581,87,'Permissions-CanViewDetailedAgingOfPortfolioAtRisk'),(582,87,'Permissions-Clients-CanAddAnExistingClientToAGroup'),(583,87,'Permissions-ProductMix'),(584,87,'Permissions-CanDefineProductMix'),(585,87,'Permissions-CanEditProductMix'),(586,87,'Permissions-CanViewActiveLoansByLoanOfficer'),(587,87,'Permissions-CanDefineLookupValues'),(588,87,'Permissions-CanUploadReportTemplate'),(589,87,'Permissions-CanViewReports'),(590,87,'Permissions-CanEditReportInformation'),(591,87,'Permissions-CanAdjustPaymentWhenAccountStatusIsClosedObligationMet'),(592,87,'Permissions-CanRedoLoanDisbursals'),(593,87,'Permissions-CanDefineAcceptedPaymentType'),(594,87,'Permissions-CanDefineNewReportCategory'),(595,87,'Permissions-CanViewReportCategory'),(596,87,'Permissions-CanDeleteReportCategory'),(597,87,'Permissions-CanDownloadReportTemplate'),(598,87,'Permissions-CanDefineCustomFields'),(599,74,'Language-Icelandic'),(600,74,'Language-Spanish'),(601,74,'Language-French'),(602,87,'Permissions-CanUploadAdminDocuments'),(603,87,'Permissions-CanViewAdminDocuments'),(604,37,'InterestTypes-DecliningBalance-EqualPrincipalInstallment'),(605,87,'Permissions-SystemInformation'),(606,87,'Permissions-CanViewSystemInformation'),(607,87,'Permissions-CanViewCollectionSheetReport'),(608,87,'Permissions-CanViewOrganizationSettings'),(609,76,'FinancialAction-LoanRescheduled'),(610,69,'AccountAction-LoanRescheduled'),(611,87,'Permissions-CanViewBranchCashConfirmationReport'),(612,87,'Permissions-CanViewBranchProgressReport'),(613,74,'Language-Chinese'),(614,74,'Language-Swahili'),(615,74,'Language-Arabic'),(616,74,'Language-Portuguese'),(617,74,'Language-Khmer'),(618,74,'Language-Lao'),(619,87,'Permissions-CanImportTransactions'),(620,92,'Together'),(621,92,'NotTogether'),(622,52,'Mother'),(623,52,'Child'),(624,74,'Language-Hungarian'),(625,87,'Permissions-CanShutdownMifos'),(626,91,'RepaymentRule-RepaymentMoratorium'),(627,87,'Permissions-CanDefineHoliday'),(628,87,'Permissions.CanViewDetailedAgingOfPortfolioAtRiskReport'),(629,87,'Permissions.CanViewGeneralLedgerReport'),(630,15,'LookUpOption.Mr.1277994941878'),(631,15,'LookUpOption.Mrs.1277994946980'),(632,29,'LookUpOption.BigUser.1277994955809'),(633,17,'LookUpOption.Married.1277994974233'),(634,17,'LookUpOption.Single.1277994980488');
 /*!40000 ALTER TABLE `lookup_value` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4832,7 +4149,7 @@ CREATE TABLE `lookup_value_locale` (
   KEY `locale_id` (`locale_id`),
   CONSTRAINT `lookup_value_locale_ibfk_1` FOREIGN KEY (`lookup_id`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `lookup_value_locale_ibfk_2` FOREIGN KEY (`locale_id`) REFERENCES `supported_locale` (`locale_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=970 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=965 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -4841,7 +4158,7 @@ CREATE TABLE `lookup_value_locale` (
 
 LOCK TABLES `lookup_value_locale` WRITE;
 /*!40000 ALTER TABLE `lookup_value_locale` DISABLE KEYS */;
-INSERT INTO `lookup_value_locale` VALUES (1,1,1,NULL),(3,1,2,NULL),(5,1,3,NULL),(7,1,4,NULL),(9,1,5,NULL),(11,1,6,NULL),(13,1,7,NULL),(15,1,8,NULL),(17,1,9,NULL),(19,1,10,NULL),(21,1,11,NULL),(23,1,12,NULL),(25,1,13,NULL),(27,1,14,NULL),(29,1,15,NULL),(31,1,16,NULL),(33,1,17,NULL),(35,1,18,NULL),(37,1,19,NULL),(39,1,20,NULL),(41,1,21,NULL),(43,1,22,NULL),(45,1,23,NULL),(47,1,24,NULL),(49,1,25,NULL),(51,1,26,NULL),(53,1,27,NULL),(55,1,28,NULL),(57,1,29,NULL),(59,1,30,NULL),(61,1,31,NULL),(63,1,32,NULL),(65,1,33,NULL),(67,1,34,NULL),(69,1,35,NULL),(71,1,36,NULL),(73,1,37,NULL),(75,1,38,NULL),(81,1,41,NULL),(83,1,42,NULL),(85,1,43,NULL),(97,1,49,NULL),(99,1,50,NULL),(101,1,51,NULL),(103,1,52,NULL),(105,1,53,NULL),(107,1,54,NULL),(109,1,55,NULL),(119,1,60,NULL),(120,1,61,NULL),(135,1,68,NULL),(136,1,69,NULL),(137,1,70,NULL),(157,1,79,NULL),(158,1,80,NULL),(161,1,81,NULL),(162,1,82,NULL),(163,1,83,NULL),(164,1,84,NULL),(165,1,85,NULL),(166,1,86,NULL),(167,1,87,NULL),(168,1,88,NULL),(169,1,89,NULL),(176,1,96,NULL),(177,1,97,NULL),(178,1,98,NULL),(189,1,104,NULL),(191,1,105,NULL),(193,1,106,NULL),(195,1,107,NULL),(197,1,108,NULL),(201,1,111,NULL),(203,1,112,NULL),(205,1,113,NULL),(207,1,114,NULL),(209,1,115,NULL),(211,1,116,NULL),(213,1,117,NULL),(215,1,118,NULL),(217,1,119,NULL),(219,1,120,NULL),(221,1,121,NULL),(223,1,122,NULL),(225,1,123,NULL),(227,1,124,NULL),(229,1,125,NULL),(231,1,126,NULL),(233,1,127,NULL),(235,1,128,NULL),(237,1,129,NULL),(259,1,140,NULL),(261,1,141,NULL),(263,1,142,NULL),(264,1,143,NULL),(267,1,146,NULL),(269,1,147,NULL),(271,1,148,NULL),(273,1,149,NULL),(275,1,150,NULL),(277,1,151,NULL),(279,1,152,NULL),(281,1,153,NULL),(283,1,154,NULL),(305,1,165,NULL),(307,1,166,NULL),(309,1,167,NULL),(311,1,168,NULL),(313,1,169,NULL),(315,1,170,NULL),(317,1,171,NULL),(319,1,172,NULL),(321,1,173,NULL),(323,1,174,NULL),(325,1,175,NULL),(327,1,176,NULL),(329,1,177,NULL),(337,1,181,NULL),(339,1,182,NULL),(341,1,183,NULL),(343,1,184,NULL),(345,1,185,NULL),(347,1,186,NULL),(349,1,187,NULL),(351,1,188,NULL),(376,1,189,NULL),(380,1,191,NULL),(382,1,192,NULL),(384,1,193,NULL),(386,1,194,NULL),(388,1,195,NULL),(390,1,196,NULL),(392,1,197,NULL),(394,1,198,NULL),(395,1,199,NULL),(396,1,200,NULL),(397,1,201,NULL),(398,1,202,NULL),(399,1,203,NULL),(400,1,204,NULL),(401,1,205,NULL),(402,1,206,NULL),(403,1,207,NULL),(404,1,208,NULL),(405,1,209,NULL),(407,1,210,NULL),(409,1,211,NULL),(411,1,212,NULL),(413,1,213,NULL),(415,1,214,NULL),(417,1,215,NULL),(418,1,216,NULL),(440,1,229,NULL),(699,1,361,NULL),(700,1,362,NULL),(701,1,363,NULL),(702,1,364,NULL),(703,1,365,NULL),(704,1,366,NULL),(705,1,367,NULL),(706,1,368,NULL),(707,1,369,NULL),(708,1,370,NULL),(709,1,371,NULL),(710,1,372,NULL),(711,1,373,NULL),(712,1,374,NULL),(713,1,375,NULL),(714,1,376,NULL),(715,1,377,NULL),(716,1,378,NULL),(717,1,379,NULL),(718,1,380,NULL),(719,1,381,NULL),(720,1,382,NULL),(721,1,383,NULL),(722,1,384,NULL),(723,1,385,NULL),(724,1,386,NULL),(725,1,387,NULL),(726,1,388,NULL),(727,1,389,NULL),(728,1,390,NULL),(729,1,391,NULL),(730,1,392,NULL),(731,1,393,NULL),(732,1,394,NULL),(733,1,395,NULL),(734,1,396,NULL),(735,1,397,NULL),(736,1,398,NULL),(737,1,399,NULL),(738,1,400,NULL),(739,1,401,NULL),(740,1,402,NULL),(741,1,403,NULL),(742,1,404,NULL),(743,1,405,NULL),(745,1,407,NULL),(746,1,408,NULL),(747,1,409,NULL),(748,1,410,NULL),(749,1,411,NULL),(750,1,412,NULL),(751,1,413,NULL),(752,1,414,NULL),(753,1,415,NULL),(754,1,416,NULL),(755,1,417,NULL),(756,1,418,NULL),(757,1,419,NULL),(758,1,420,NULL),(759,1,421,NULL),(760,1,422,NULL),(761,1,423,NULL),(762,1,424,NULL),(763,1,425,NULL),(764,1,426,NULL),(765,1,427,NULL),(767,1,429,NULL),(768,1,430,NULL),(769,1,431,NULL),(770,1,432,NULL),(771,1,433,NULL),(772,1,434,NULL),(773,1,435,NULL),(774,1,436,NULL),(775,1,437,NULL),(776,1,438,NULL),(777,1,439,NULL),(778,1,440,NULL),(779,1,441,NULL),(780,1,442,NULL),(781,1,443,NULL),(782,1,444,NULL),(784,1,446,NULL),(785,1,447,NULL),(786,1,448,NULL),(787,1,449,NULL),(788,1,450,NULL),(789,1,451,NULL),(790,1,452,NULL),(791,1,453,NULL),(792,1,454,NULL),(793,1,455,NULL),(794,1,456,NULL),(795,1,457,NULL),(796,1,458,NULL),(797,1,459,NULL),(798,1,460,NULL),(799,1,461,NULL),(800,1,462,NULL),(801,1,463,NULL),(802,1,464,NULL),(803,1,465,NULL),(804,1,466,NULL),(805,1,467,NULL),(807,1,469,NULL),(808,1,470,NULL),(809,1,471,NULL),(812,1,474,NULL),(813,1,475,NULL),(814,1,476,NULL),(816,1,478,NULL),(817,1,479,NULL),(818,1,480,NULL),(819,1,481,NULL),(820,1,482,NULL),(821,1,483,NULL),(822,1,484,NULL),(823,1,485,NULL),(824,1,486,NULL),(825,1,487,NULL),(826,1,488,NULL),(827,1,489,NULL),(828,1,490,NULL),(829,1,491,NULL),(830,1,492,NULL),(831,1,493,NULL),(832,1,494,NULL),(833,1,495,NULL),(834,1,496,NULL),(835,1,497,NULL),(836,1,498,NULL),(837,1,499,NULL),(838,1,500,NULL),(839,1,501,NULL),(840,1,502,NULL),(841,1,503,NULL),(842,1,504,NULL),(869,1,531,NULL),(870,1,532,NULL),(871,1,533,NULL),(872,1,534,NULL),(873,1,535,NULL),(874,1,536,NULL),(875,1,537,NULL),(876,1,538,NULL),(877,1,539,NULL),(884,1,546,NULL),(885,1,547,NULL),(886,1,548,NULL),(887,1,549,NULL),(888,1,550,NULL),(889,1,551,NULL),(890,1,552,NULL),(891,1,553,NULL),(892,1,554,NULL),(893,1,555,NULL),(894,1,556,NULL),(895,1,557,NULL),(896,1,558,NULL),(897,1,559,NULL),(898,1,560,NULL),(899,1,561,NULL),(900,1,562,NULL),(901,1,563,NULL),(902,1,564,NULL),(903,1,565,NULL),(904,1,566,NULL),(905,1,567,NULL),(906,1,568,NULL),(912,1,179,NULL),(913,1,180,NULL),(914,1,569,NULL),(915,1,570,NULL),(916,1,571,NULL),(917,1,572,NULL),(918,1,573,NULL),(919,1,574,NULL),(920,1,575,NULL),(921,1,576,NULL),(922,1,577,NULL),(923,1,578,NULL),(924,1,579,NULL),(925,1,580,NULL),(926,1,581,NULL),(927,1,582,NULL),(928,1,583,NULL),(929,1,584,NULL),(930,1,585,NULL),(931,1,586,NULL),(932,1,587,NULL),(933,1,588,NULL),(934,1,589,NULL),(935,1,590,NULL),(936,1,591,NULL),(937,1,592,NULL),(938,1,593,NULL),(939,1,594,NULL),(940,1,595,NULL),(941,1,596,NULL),(942,1,597,NULL),(943,1,598,NULL),(944,1,602,NULL),(945,1,603,NULL),(946,1,604,NULL),(947,1,605,NULL),(948,1,606,NULL),(949,1,607,NULL),(950,1,608,NULL),(951,1,609,NULL),(952,1,610,NULL),(953,1,611,NULL),(954,1,612,NULL),(955,1,619,NULL),(956,1,625,NULL),(957,1,627,NULL),(958,1,628,'Can View Detailed Aging Of Portfolio At Risk Report'),(959,1,629,'Can View General Ledger Report'),(960,1,630,'Mr'),(961,1,631,'Mrs'),(962,1,632,'big user'),(963,1,633,'married'),(964,1,634,'single'),(965,1,635,NULL),(966,1,636,NULL),(967,1,637,NULL),(968,1,638,NULL),(969,1,639,NULL);
+INSERT INTO `lookup_value_locale` VALUES (1,1,1,NULL),(3,1,2,NULL),(5,1,3,NULL),(7,1,4,NULL),(9,1,5,NULL),(11,1,6,NULL),(13,1,7,NULL),(15,1,8,NULL),(17,1,9,NULL),(19,1,10,NULL),(21,1,11,NULL),(23,1,12,NULL),(25,1,13,NULL),(27,1,14,NULL),(29,1,15,NULL),(31,1,16,NULL),(33,1,17,NULL),(35,1,18,NULL),(37,1,19,NULL),(39,1,20,NULL),(41,1,21,NULL),(43,1,22,NULL),(45,1,23,NULL),(47,1,24,NULL),(49,1,25,NULL),(51,1,26,NULL),(53,1,27,NULL),(55,1,28,NULL),(57,1,29,NULL),(59,1,30,NULL),(61,1,31,NULL),(63,1,32,NULL),(65,1,33,NULL),(67,1,34,NULL),(69,1,35,NULL),(71,1,36,NULL),(73,1,37,NULL),(75,1,38,NULL),(81,1,41,NULL),(83,1,42,NULL),(85,1,43,NULL),(97,1,49,NULL),(99,1,50,NULL),(101,1,51,NULL),(103,1,52,NULL),(105,1,53,NULL),(107,1,54,NULL),(109,1,55,NULL),(119,1,60,NULL),(120,1,61,NULL),(135,1,68,NULL),(136,1,69,NULL),(137,1,70,NULL),(157,1,79,NULL),(158,1,80,NULL),(161,1,81,NULL),(162,1,82,NULL),(163,1,83,NULL),(164,1,84,NULL),(165,1,85,NULL),(166,1,86,NULL),(167,1,87,NULL),(168,1,88,NULL),(169,1,89,NULL),(176,1,96,NULL),(177,1,97,NULL),(178,1,98,NULL),(189,1,104,NULL),(191,1,105,NULL),(193,1,106,NULL),(195,1,107,NULL),(197,1,108,NULL),(201,1,111,NULL),(203,1,112,NULL),(205,1,113,NULL),(207,1,114,NULL),(209,1,115,NULL),(211,1,116,NULL),(213,1,117,NULL),(215,1,118,NULL),(217,1,119,NULL),(219,1,120,NULL),(221,1,121,NULL),(223,1,122,NULL),(225,1,123,NULL),(227,1,124,NULL),(229,1,125,NULL),(231,1,126,NULL),(233,1,127,NULL),(235,1,128,NULL),(237,1,129,NULL),(259,1,140,NULL),(261,1,141,NULL),(263,1,142,NULL),(264,1,143,NULL),(267,1,146,NULL),(269,1,147,NULL),(271,1,148,NULL),(273,1,149,NULL),(275,1,150,NULL),(277,1,151,NULL),(279,1,152,NULL),(281,1,153,NULL),(283,1,154,NULL),(305,1,165,NULL),(307,1,166,NULL),(309,1,167,NULL),(311,1,168,NULL),(313,1,169,NULL),(315,1,170,NULL),(317,1,171,NULL),(319,1,172,NULL),(321,1,173,NULL),(323,1,174,NULL),(325,1,175,NULL),(327,1,176,NULL),(329,1,177,NULL),(337,1,181,NULL),(339,1,182,NULL),(341,1,183,NULL),(343,1,184,NULL),(345,1,185,NULL),(347,1,186,NULL),(349,1,187,NULL),(351,1,188,NULL),(376,1,189,NULL),(380,1,191,NULL),(382,1,192,NULL),(384,1,193,NULL),(386,1,194,NULL),(388,1,195,NULL),(390,1,196,NULL),(392,1,197,NULL),(394,1,198,NULL),(395,1,199,NULL),(396,1,200,NULL),(397,1,201,NULL),(398,1,202,NULL),(399,1,203,NULL),(400,1,204,NULL),(401,1,205,NULL),(402,1,206,NULL),(403,1,207,NULL),(404,1,208,NULL),(405,1,209,NULL),(407,1,210,NULL),(409,1,211,NULL),(411,1,212,NULL),(413,1,213,NULL),(415,1,214,NULL),(417,1,215,NULL),(418,1,216,NULL),(440,1,229,NULL),(699,1,361,NULL),(700,1,362,NULL),(701,1,363,NULL),(702,1,364,NULL),(703,1,365,NULL),(704,1,366,NULL),(705,1,367,NULL),(706,1,368,NULL),(707,1,369,NULL),(708,1,370,NULL),(709,1,371,NULL),(710,1,372,NULL),(711,1,373,NULL),(712,1,374,NULL),(713,1,375,NULL),(714,1,376,NULL),(715,1,377,NULL),(716,1,378,NULL),(717,1,379,NULL),(718,1,380,NULL),(719,1,381,NULL),(720,1,382,NULL),(721,1,383,NULL),(722,1,384,NULL),(723,1,385,NULL),(724,1,386,NULL),(725,1,387,NULL),(726,1,388,NULL),(727,1,389,NULL),(728,1,390,NULL),(729,1,391,NULL),(730,1,392,NULL),(731,1,393,NULL),(732,1,394,NULL),(733,1,395,NULL),(734,1,396,NULL),(735,1,397,NULL),(736,1,398,NULL),(737,1,399,NULL),(738,1,400,NULL),(739,1,401,NULL),(740,1,402,NULL),(741,1,403,NULL),(742,1,404,NULL),(743,1,405,NULL),(745,1,407,NULL),(746,1,408,NULL),(747,1,409,NULL),(748,1,410,NULL),(749,1,411,NULL),(750,1,412,NULL),(751,1,413,NULL),(752,1,414,NULL),(753,1,415,NULL),(754,1,416,NULL),(755,1,417,NULL),(756,1,418,NULL),(757,1,419,NULL),(758,1,420,NULL),(759,1,421,NULL),(760,1,422,NULL),(761,1,423,NULL),(762,1,424,NULL),(763,1,425,NULL),(764,1,426,NULL),(765,1,427,NULL),(767,1,429,NULL),(768,1,430,NULL),(769,1,431,NULL),(770,1,432,NULL),(771,1,433,NULL),(772,1,434,NULL),(773,1,435,NULL),(774,1,436,NULL),(775,1,437,NULL),(776,1,438,NULL),(777,1,439,NULL),(778,1,440,NULL),(779,1,441,NULL),(780,1,442,NULL),(781,1,443,NULL),(782,1,444,NULL),(784,1,446,NULL),(785,1,447,NULL),(786,1,448,NULL),(787,1,449,NULL),(788,1,450,NULL),(789,1,451,NULL),(790,1,452,NULL),(791,1,453,NULL),(792,1,454,NULL),(793,1,455,NULL),(794,1,456,NULL),(795,1,457,NULL),(796,1,458,NULL),(797,1,459,NULL),(798,1,460,NULL),(799,1,461,NULL),(800,1,462,NULL),(801,1,463,NULL),(802,1,464,NULL),(803,1,465,NULL),(804,1,466,NULL),(805,1,467,NULL),(807,1,469,NULL),(808,1,470,NULL),(809,1,471,NULL),(812,1,474,NULL),(813,1,475,NULL),(814,1,476,NULL),(816,1,478,NULL),(817,1,479,NULL),(818,1,480,NULL),(819,1,481,NULL),(820,1,482,NULL),(821,1,483,NULL),(822,1,484,NULL),(823,1,485,NULL),(824,1,486,NULL),(825,1,487,NULL),(826,1,488,NULL),(827,1,489,NULL),(828,1,490,NULL),(829,1,491,NULL),(830,1,492,NULL),(831,1,493,NULL),(832,1,494,NULL),(833,1,495,NULL),(834,1,496,NULL),(835,1,497,NULL),(836,1,498,NULL),(837,1,499,NULL),(838,1,500,NULL),(839,1,501,NULL),(840,1,502,NULL),(841,1,503,NULL),(842,1,504,NULL),(869,1,531,NULL),(870,1,532,NULL),(871,1,533,NULL),(872,1,534,NULL),(873,1,535,NULL),(874,1,536,NULL),(875,1,537,NULL),(876,1,538,NULL),(877,1,539,NULL),(884,1,546,NULL),(885,1,547,NULL),(886,1,548,NULL),(887,1,549,NULL),(888,1,550,NULL),(889,1,551,NULL),(890,1,552,NULL),(891,1,553,NULL),(892,1,554,NULL),(893,1,555,NULL),(894,1,556,NULL),(895,1,557,NULL),(896,1,558,NULL),(897,1,559,NULL),(898,1,560,NULL),(899,1,561,NULL),(900,1,562,NULL),(901,1,563,NULL),(902,1,564,NULL),(903,1,565,NULL),(904,1,566,NULL),(905,1,567,NULL),(906,1,568,NULL),(912,1,179,NULL),(913,1,180,NULL),(914,1,569,NULL),(915,1,570,NULL),(916,1,571,NULL),(917,1,572,NULL),(918,1,573,NULL),(919,1,574,NULL),(920,1,575,NULL),(921,1,576,NULL),(922,1,577,NULL),(923,1,578,NULL),(924,1,579,NULL),(925,1,580,NULL),(926,1,581,NULL),(927,1,582,NULL),(928,1,583,NULL),(929,1,584,NULL),(930,1,585,NULL),(931,1,586,NULL),(932,1,587,NULL),(933,1,588,NULL),(934,1,589,NULL),(935,1,590,NULL),(936,1,591,NULL),(937,1,592,NULL),(938,1,593,NULL),(939,1,594,NULL),(940,1,595,NULL),(941,1,596,NULL),(942,1,597,NULL),(943,1,598,NULL),(944,1,602,NULL),(945,1,603,NULL),(946,1,604,NULL),(947,1,605,NULL),(948,1,606,NULL),(949,1,607,NULL),(950,1,608,NULL),(951,1,609,NULL),(952,1,610,NULL),(953,1,611,NULL),(954,1,612,NULL),(955,1,619,NULL),(956,1,625,NULL),(957,1,627,NULL),(958,1,628,'Can View Detailed Aging Of Portfolio At Risk Report'),(959,1,629,'Can View General Ledger Report'),(960,1,630,'Mr'),(961,1,631,'Mrs'),(962,1,632,'big user'),(963,1,633,'married'),(964,1,634,'single');
 /*!40000 ALTER TABLE `lookup_value_locale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -5006,35 +4323,6 @@ LOCK TABLES `mfi_attribute` WRITE;
 /*!40000 ALTER TABLE `mfi_attribute` DISABLE KEYS */;
 INSERT INTO `mfi_attribute` VALUES (1,1,'CENTER','GROUP'),(2,1,'CENTER','GROUP'),(3,1,'CENTER','GROUP'),(4,1,'CENTER','GROUP'),(5,1,'CENTER','GROUP');
 /*!40000 ALTER TABLE `mfi_attribute` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `monthly_cash_flow_details`
---
-
-DROP TABLE IF EXISTS `monthly_cash_flow_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `monthly_cash_flow_details` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cash_flow_id` int(11) DEFAULT NULL,
-  `month_year` date DEFAULT NULL,
-  `revenue` decimal(21,4) NOT NULL,
-  `expenses` decimal(21,4) NOT NULL,
-  `notes` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cash_flow_id` (`cash_flow_id`),
-  CONSTRAINT `monthly_cash_flow_details_ibfk_1` FOREIGN KEY (`cash_flow_id`) REFERENCES `cash_flow` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `monthly_cash_flow_details`
---
-
-LOCK TABLES `monthly_cash_flow_details` WRITE;
-/*!40000 ALTER TABLE `monthly_cash_flow_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `monthly_cash_flow_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -6235,32 +5523,6 @@ LOCK TABLES `prd_offering_mix` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `prd_offering_question_group`
---
-
-DROP TABLE IF EXISTS `prd_offering_question_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `prd_offering_question_group` (
-  `prd_offering_id` smallint(6) NOT NULL,
-  `question_group_id` int(11) NOT NULL,
-  KEY `prd_offering_id` (`prd_offering_id`),
-  KEY `question_group_id` (`question_group_id`),
-  CONSTRAINT `prd_offering_question_group_ibfk_1` FOREIGN KEY (`prd_offering_id`) REFERENCES `prd_offering` (`prd_offering_id`),
-  CONSTRAINT `prd_offering_question_group_ibfk_2` FOREIGN KEY (`question_group_id`) REFERENCES `question_group` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `prd_offering_question_group`
---
-
-LOCK TABLES `prd_offering_question_group` WRITE;
-/*!40000 ALTER TABLE `prd_offering_question_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prd_offering_question_group` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `prd_state`
 --
 
@@ -6438,32 +5700,6 @@ LOCK TABLES `program_fund` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `question_choice_tags`
---
-
-DROP TABLE IF EXISTS `question_choice_tags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `question_choice_tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `choice_id` int(11) NOT NULL,
-  `tag_text` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `choice_id` (`choice_id`,`tag_text`),
-  CONSTRAINT `question_choice_tags_ibfk_1` FOREIGN KEY (`choice_id`) REFERENCES `question_choices` (`choice_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question_choice_tags`
---
-
-LOCK TABLES `question_choice_tags` WRITE;
-/*!40000 ALTER TABLE `question_choice_tags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `question_choice_tags` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `question_choices`
 --
 
@@ -6520,34 +5756,6 @@ LOCK TABLES `question_group` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `question_group_event_sources`
---
-
-DROP TABLE IF EXISTS `question_group_event_sources`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `question_group_event_sources` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `question_group_id` int(11) NOT NULL,
-  `event_source_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `question_group_id` (`question_group_id`),
-  KEY `event_source_id` (`event_source_id`),
-  CONSTRAINT `question_group_event_sources_ibfk_1` FOREIGN KEY (`question_group_id`) REFERENCES `question_group` (`id`),
-  CONSTRAINT `question_group_event_sources_ibfk_2` FOREIGN KEY (`event_source_id`) REFERENCES `event_sources` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question_group_event_sources`
---
-
-LOCK TABLES `question_group_event_sources` WRITE;
-/*!40000 ALTER TABLE `question_group_event_sources` DISABLE KEYS */;
-/*!40000 ALTER TABLE `question_group_event_sources` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `question_group_instance`
 --
 
@@ -6562,7 +5770,6 @@ CREATE TABLE `question_group_instance` (
   `completed_status` smallint(6) NOT NULL,
   `created_by` int(11) NOT NULL,
   `version_id` int(11) NOT NULL,
-  `event_source_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `question_group_id` (`question_group_id`),
   CONSTRAINT `question_group_instance_ibfk_1` FOREIGN KEY (`question_group_id`) REFERENCES `question_group` (`id`)
@@ -6622,9 +5829,9 @@ CREATE TABLE `questions` (
   `question_text` varchar(1000) NOT NULL,
   `numeric_min` int(11) DEFAULT NULL,
   `numeric_max` int(11) DEFAULT NULL,
-  `nickname` varchar(64) NOT NULL,
+  `short_name` varchar(50) NOT NULL,
   PRIMARY KEY (`question_id`),
-  UNIQUE KEY `nickname` (`nickname`)
+  UNIQUE KEY `short_name` (`short_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -7013,7 +6220,7 @@ CREATE TABLE `roles_activity` (
 
 LOCK TABLES `roles_activity` WRITE;
 /*!40000 ALTER TABLE `roles_activity` DISABLE KEYS */;
-INSERT INTO `roles_activity` VALUES (3,1),(4,1),(6,1),(7,1),(9,1),(10,1),(15,1),(16,1),(19,1),(20,1),(21,1),(23,1),(24,1),(25,1),(35,1),(36,1),(37,1),(38,1),(39,1),(40,1),(41,1),(42,1),(43,1),(44,1),(46,1),(47,1),(48,1),(49,1),(50,1),(51,1),(52,1),(53,1),(54,1),(55,1),(57,1),(58,1),(59,1),(60,1),(61,1),(62,1),(63,1),(64,1),(65,1),(66,1),(68,1),(69,1),(70,1),(71,1),(72,1),(73,1),(74,1),(75,1),(76,1),(77,1),(79,1),(80,1),(81,1),(82,1),(83,1),(85,1),(86,1),(87,1),(88,1),(91,1),(92,1),(94,1),(95,1),(97,1),(98,1),(101,1),(102,1),(103,1),(104,1),(105,1),(106,1),(108,1),(109,1),(110,1),(115,1),(116,1),(118,1),(119,1),(120,1),(121,1),(122,1),(126,1),(127,1),(128,1),(129,1),(131,1),(135,1),(136,1),(137,1),(138,1),(139,1),(140,1),(141,1),(145,1),(146,1),(147,1),(148,1),(149,1),(150,1),(151,1),(178,1),(179,1),(180,1),(181,1),(182,1),(183,1),(184,1),(185,1),(186,1),(187,1),(188,1),(189,1),(190,1),(191,1),(192,1),(193,1),(194,1),(195,1),(197,1),(198,1),(199,1),(200,1),(201,1),(202,1),(203,1),(204,1),(205,1),(206,1),(208,1),(209,1),(210,1),(211,1),(213,1),(214,1),(215,1),(216,1),(217,1),(218,1),(219,1),(220,1),(221,1),(222,1),(223,1),(224,1),(225,1),(226,1),(227,1),(228,1),(229,1),(230,1),(231,1),(232,1),(233,1),(234,1),(235,1),(236,1),(237,1),(238,1),(239,1),(240,1),(241,1),(242,1);
+INSERT INTO `roles_activity` VALUES (3,1),(4,1),(6,1),(7,1),(9,1),(10,1),(15,1),(16,1),(19,1),(20,1),(21,1),(23,1),(24,1),(25,1),(35,1),(36,1),(37,1),(38,1),(39,1),(40,1),(41,1),(42,1),(43,1),(44,1),(46,1),(47,1),(48,1),(49,1),(50,1),(51,1),(52,1),(53,1),(54,1),(55,1),(57,1),(58,1),(59,1),(60,1),(61,1),(62,1),(63,1),(64,1),(65,1),(66,1),(68,1),(69,1),(70,1),(71,1),(72,1),(73,1),(74,1),(75,1),(76,1),(77,1),(79,1),(80,1),(81,1),(82,1),(83,1),(85,1),(86,1),(87,1),(88,1),(91,1),(92,1),(94,1),(95,1),(97,1),(98,1),(101,1),(102,1),(103,1),(104,1),(105,1),(106,1),(108,1),(109,1),(110,1),(115,1),(116,1),(118,1),(119,1),(120,1),(121,1),(122,1),(126,1),(127,1),(128,1),(129,1),(131,1),(135,1),(136,1),(137,1),(138,1),(139,1),(140,1),(141,1),(145,1),(146,1),(147,1),(148,1),(149,1),(150,1),(151,1),(178,1),(179,1),(180,1),(181,1),(182,1),(183,1),(184,1),(185,1),(186,1),(187,1),(188,1),(189,1),(190,1),(191,1),(192,1),(193,1),(194,1),(195,1),(197,1),(198,1),(199,1),(200,1),(201,1),(202,1),(203,1),(204,1),(205,1),(206,1),(208,1),(209,1),(210,1),(211,1),(213,1),(214,1),(215,1),(216,1),(217,1),(218,1),(219,1),(220,1),(221,1),(222,1),(223,1),(224,1),(225,1),(226,1),(227,1),(228,1),(229,1),(230,1),(231,1),(232,1),(233,1),(234,1),(235,1),(236,1),(237,1);
 /*!40000 ALTER TABLE `roles_activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -7219,36 +6426,6 @@ INSERT INTO `savings_offering` VALUES (2,1,1,NULL,'20.0000',2,'4.0000000000','0.
 UNLOCK TABLES;
 
 --
--- Table structure for table `savings_offering_historical_interest_detail`
---
-
-DROP TABLE IF EXISTS `savings_offering_historical_interest_detail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `savings_offering_historical_interest_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `period_start_date` date NOT NULL,
-  `period_end_date` date NOT NULL,
-  `interest_rate` decimal(13,10) NOT NULL,
-  `min_amnt_for_int` decimal(21,4) NOT NULL,
-  `min_amnt_for_int_currency_id` smallint(6) NOT NULL,
-  `product_id` smallint(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `savings_offering_historical_interest_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `savings_offering` (`prd_offering_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `savings_offering_historical_interest_detail`
---
-
-LOCK TABLES `savings_offering_historical_interest_detail` WRITE;
-/*!40000 ALTER TABLE `savings_offering_historical_interest_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `savings_offering_historical_interest_detail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `savings_performance`
 --
 
@@ -7351,6 +6528,34 @@ LOCK TABLES `savings_type` WRITE;
 /*!40000 ALTER TABLE `savings_type` DISABLE KEYS */;
 INSERT INTO `savings_type` VALUES (1,118),(2,119);
 /*!40000 ALTER TABLE `savings_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `scheduled_tasks`
+--
+
+DROP TABLE IF EXISTS `scheduled_tasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `scheduled_tasks` (
+  `taskid` int(11) NOT NULL AUTO_INCREMENT,
+  `taskname` varchar(200) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `starttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `endtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `status` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`taskid`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scheduled_tasks`
+--
+
+LOCK TABLES `scheduled_tasks` WRITE;
+/*!40000 ALTER TABLE `scheduled_tasks` DISABLE KEYS */;
+INSERT INTO `scheduled_tasks` VALUES (1,'ProductStatus','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(2,'LoanArrearsTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(3,'SavingsIntCalcTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(4,'SavingsIntPostingTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(5,'ApplyCustomerFeeChangesTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(6,'LoanArrearsAgingTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(7,'GenerateMeetingsForCustomerAndSavingsTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(8,'ApplyHolidayChangesTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:00',1),(9,'PortfolioAtRiskTask','Finished Successfully','2010-07-27 14:00:00','2010-07-27 14:00:01',1),(10,'BranchReportTask','Finished Successfully','2010-07-27 14:00:01','2010-07-27 14:00:01',1),(11,'ProductStatus','Finished Successfully','2010-07-28 14:00:00','2010-08-03 14:00:00',1),(12,'ProductStatus','Finished Successfully','2010-07-29 14:00:00','2010-08-03 14:00:00',1),(13,'ProductStatus','Finished Successfully','2010-07-30 14:00:00','2010-08-03 14:00:00',1),(14,'ProductStatus','Finished Successfully','2010-07-31 14:00:00','2010-08-03 14:00:01',1),(15,'ProductStatus','Finished Successfully','2010-08-01 14:00:00','2010-08-03 14:00:01',1),(16,'ProductStatus','Finished Successfully','2010-08-02 14:00:00','2010-08-03 14:00:01',1),(17,'LoanArrearsTask','Finished Successfully','2010-08-03 14:00:01','2010-08-03 14:00:01',1),(18,'SavingsIntPostingTask','Finished Successfully','2010-07-28 14:00:00','2010-08-03 14:00:01',1),(19,'SavingsIntPostingTask','Finished Successfully','2010-07-29 14:00:00','2010-08-03 14:00:01',1),(20,'SavingsIntPostingTask','Finished Successfully','2010-07-30 14:00:00','2010-08-03 14:00:01',1),(21,'SavingsIntPostingTask','Finished Successfully','2010-07-31 14:00:00','2010-08-03 14:00:01',1),(22,'SavingsIntPostingTask','Finished Successfully','2010-08-01 14:00:00','2010-08-03 14:00:01',1),(23,'SavingsIntPostingTask','Finished Successfully','2010-08-02 14:00:00','2010-08-03 14:00:01',1),(24,'ApplyCustomerFeeChangesTask','Finished Successfully','2010-08-03 14:00:01','2010-08-03 14:00:01',1),(25,'SavingsIntCalcTask','Finished Successfully','2010-07-28 14:00:00','2010-08-03 14:00:02',1),(26,'SavingsIntCalcTask','Finished Successfully','2010-07-29 14:00:00','2010-08-03 14:00:02',1),(27,'SavingsIntCalcTask','Finished Successfully','2010-07-30 14:00:00','2010-08-03 14:00:02',1),(28,'SavingsIntCalcTask','Finished Successfully','2010-07-31 14:00:00','2010-08-03 14:00:02',1),(29,'SavingsIntCalcTask','Finished Successfully','2010-08-01 14:00:00','2010-08-03 14:00:02',1),(30,'SavingsIntCalcTask','Finished Successfully','2010-08-02 14:00:00','2010-08-03 14:00:03',1),(31,'LoanArrearsAgingTask','Finished Successfully','2010-08-03 14:00:03','2010-08-03 14:00:03',1),(32,'GenerateMeetingsForCustomerAndSavingsTask','Finished Successfully','2010-08-03 14:00:03','2010-08-03 14:00:03',1),(33,'ApplyHolidayChangesTask','Finished Successfully','2010-08-03 14:00:03','2010-08-03 14:00:03',1),(34,'PortfolioAtRiskTask','Finished Successfully','2010-08-03 14:00:03','2010-08-03 14:00:03',1),(35,'BranchReportTask','Finished Successfully','2010-07-28 14:00:01','2010-08-03 14:00:04',1),(36,'BranchReportTask','Finished Successfully','2010-07-29 14:00:01','2010-08-03 14:00:04',1),(37,'BranchReportTask','Finished Successfully','2010-07-30 14:00:01','2010-08-03 14:00:04',1),(38,'BranchReportTask','Finished Successfully','2010-07-31 14:00:01','2010-08-03 14:00:04',1),(39,'BranchReportTask','Finished Successfully','2010-08-01 14:00:01','2010-08-03 14:00:04',1),(40,'BranchReportTask','Finished Successfully','2010-08-02 14:00:01','2010-08-03 14:00:04',1);
+/*!40000 ALTER TABLE `scheduled_tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -7645,32 +6850,6 @@ INSERT INTO `transaction_type` VALUES (1,'Loan Disbursement'),(2,'Loan Repayment
 UNLOCK TABLES;
 
 --
--- Table structure for table `variable_installment_details`
---
-
-DROP TABLE IF EXISTS `variable_installment_details`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `variable_installment_details` (
-  `id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `min_gap_in_days` smallint(6) DEFAULT NULL,
-  `max_gap_in_days` smallint(6) DEFAULT NULL,
-  `min_loan_amount` decimal(21,4) DEFAULT NULL,
-  `min_loan_amount_currency_id` smallint(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `variable_installment_details`
---
-
-LOCK TABLES `variable_installment_details` WRITE;
-/*!40000 ALTER TABLE `variable_installment_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `variable_installment_details` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `waive_off_history`
 --
 
@@ -7732,4 +6911,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-02 23:16:31
+-- Dump completed on 2010-10-28 10:45:53
