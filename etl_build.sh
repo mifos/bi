@@ -20,9 +20,12 @@ echo "drop database $DW_DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DW_DB_NAME" | mysql $MYSQL_ARGS
 mysql $MYSQL_ARGS $DW_DB_NAME < $BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
 
-echo "Running tests..."
+echo "Running ETL..."
 log=`mktemp`
-$PDI_HOME/kitchen.sh /file:$BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb | tee $log
+$PDI_HOME/kitchen.sh /file:$BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb | tee $log
+
+echo "Running tests..."
+$PDI_HOME/kitchen.sh /file:$BI_HOME/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb | tee -a $log
 
 exitcode=0
 if grep -q '^ERROR ' $log
