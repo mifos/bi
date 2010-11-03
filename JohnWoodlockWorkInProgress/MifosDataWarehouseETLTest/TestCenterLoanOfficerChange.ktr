@@ -200,8 +200,8 @@
       <always_log_rows>Y</always_log_rows>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>692</xloc>
-      <yloc>34</yloc>
+      <xloc>720</xloc>
+      <yloc>87</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -221,8 +221,8 @@
       <always_log_rows>Y</always_log_rows>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>771</xloc>
-      <yloc>67</yloc>
+      <xloc>820</xloc>
+      <yloc>202</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -411,8 +411,8 @@ and c.customer_key =
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>127</xloc>
-      <yloc>197</yloc>
+      <xloc>122</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

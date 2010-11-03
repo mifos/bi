@@ -42,7 +42,7 @@ then
     echo " "
     echo "ETL TEST ERRORS"
     echo " "
-    grep -q 'ETL Test Failure:' $log >> $log	
+    grep 'ETL Test Failure:' $log >> $log	
 fi
 
 
