@@ -122,7 +122,7 @@ def main():
         sys.exit(1)
     filename = sys.argv[1]
     with open('%sPovertyLines.sql' % _country_name(filename).capitalize(), 'w') as f:
-        f.write('\n'.join(inserts(filename, sys.argv[2])))
+        f.write('\n'.join(inserts(filename, sys.argv[2])) + '\n')
 
 if __name__ == '__main__':
     main()
