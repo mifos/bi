@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>TestTransactionCount</name>
+    <name>sub_test_counts</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -142,10 +142,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Transaction Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Transaction Destination Count</from><to>Set destination_count</to><enabled>Y</enabled> </hop>  <hop> <from>Set destination_count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Transformation Name</from><to>Check Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Get Transformation Name</to><enabled>Y</enabled> </hop>  <hop> <from>Check Counts</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Join Source and Destination Counts</name>
-    <type>MergeJoin</type>
+    <name>Check Counts</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -153,26 +153,28 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<join_type>INNER</join_type>
-<step1>Transaction Source Count</step1>
-<step2>Set destination_count</step2>
-    <keys_1>
-      <key>the_join</key>
-    </keys_1>
-    <keys_2>
-      <key>the_join</key>
-    </keys_2>
-     <cluster_schema/>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+if (source_count.value == destination_count.value)
+{
+
+	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Source Count: &quot; + source_count + &quot; does not match Destination Count: &quot; + destination_count);
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>186</yloc>
+      <xloc>515</xloc>
+      <yloc>28</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
+    <name>Get Transformation Name</name>
+    <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -180,26 +182,31 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>source_count</name>
-        <rename/>
-        <length>-2</length>
-        <precision>15</precision>
-      </field>      <field>        <name>destination_count</name>
-        <rename/>
-        <length>-2</length>
-        <precision>15</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
+    <fields>
+      <field>
+        <name>test_name</name>
+        <variable>${Internal.Transformation.Name}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>393</xloc>
-      <yloc>186</yloc>
+      <xloc>303</xloc>
+      <yloc>29</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Set destination_count</name>
-    <type>Calculator</type>
+    <name>Mapping input specification</name>
+    <type>MappingInput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -207,31 +214,32 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <calculation><field_name>destination_count</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>long_destination_count</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>15</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
+    <fields>
+      <field>
+        <name>source_count</name>
+        <type>Integer</type>
+        <length>15</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>destination_count</name>
+        <type>Integer</type>
+        <length>15</length>
+        <precision>-1</precision>
+      </field>
+        <select_unspecified>Y</select_unspecified>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>311</xloc>
-      <yloc>99</yloc>
+      <xloc>82</xloc>
+      <yloc>29</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Test Counts</name>
-    <type>Mapping</type>
+    <name>Mapping output specification</name>
+    <type>MappingOutput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -239,132 +247,10 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_test_counts.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>601</xloc>
-      <yloc>186</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Transaction Destination Count</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select 1 as the_join, sum(d1.destination_count + d2.destination_count + d3.destination_count + d4.destination_count + d5.destination_count) as long_destination_count
-
-from 
-	(select count(*) as destination_count
-	from fact_savings_transactions) d1
-
-join 
-	(select count(*) as destination_count
-	from fact_loan_disbursals) d2
-
-join 
-	(select count(*) as destination_count
-	from fact_loan_repayments) d3
-
-join &#47;* can have multiple entries per account_trxn_id*&#47;
-	(select count(distinct(account_trxn_id)) as destination_count
-	from fact_customer_fees_and_charges) d4
-
-join &#47;* account_action_id of 4 and entries where no interest or principal was involved will not have been previously counted *&#47;
-	(select count(distinct(f.account_trxn_id)) as destination_count
-	from fact_loan_fees_and_charges f
-	where not exists
-		(select &apos;f&apos; from fact_loan_repayments r 
-		where r.account_trxn_id = f.account_trxn_id)	) d5</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>475</xloc>
-      <yloc>13</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Transaction Source Count</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select 1 as the_join, count(*) as source_count
-from account_trxn atxn
-where not exists
-&#47;* at some past point there seems to have been allowed zero value loan transactions *&#47;
-	(select &apos;f&apos; from loan_trxn_detail ltxn
-	where ltxn.account_trxn_id = atxn.account_trxn_id
-	and ltxn.principal_amount = 0.0
-	and ltxn.interest_amount = 0.0
-	and ltxn.misc_fee_amount = 0.0
-	and ltxn.misc_penalty_amount = 0.0
-    and not exists
-    (select &apos;f&apos; from fee_trxn_detail ftxn 
-    where ftxn.account_trxn_id = ltxn.account_trxn_id
-	and ftxn.fee_amount &lt;&gt; 0.0))
-
-
-
-and not exists
-&#47;* ignore any customer fee records that are zero *&#47;
-	(select &apos;f&apos; from customer_trxn_detail ctxn
-	where ctxn.account_trxn_id = atxn.account_trxn_id
-	and ctxn.misc_fee_amount = 0.0
-	and ctxn.misc_penalty_amount = 0.0
-    and not exists
-    (select &apos;f&apos; from fee_trxn_detail ftxn 
-    where ftxn.account_trxn_id = ctxn.account_trxn_id
-    and ftxn.fee_amount &lt;&gt; 0.0))</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>65</xloc>
-      <yloc>10</yloc>
+      <xloc>735</xloc>
+      <yloc>27</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -439,8 +439,8 @@ and c.customer_key =
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>741</xloc>
-      <yloc>206</yloc>
+      <xloc>602</xloc>
+      <yloc>293</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -615,8 +615,8 @@ if (wasError == &quot;N&quot;)
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>241</xloc>
-      <yloc>283</yloc>
+      <xloc>148</xloc>
+      <yloc>435</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
