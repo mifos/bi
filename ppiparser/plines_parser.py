@@ -108,7 +108,7 @@ def inserts(filename, nicknames_csv):
         db_columns.append(to_append)
     title = 'PPI %s %s' % (country, nicks.year(country))
     for row in reader:
-        db_data = ['\'' + title + '\'', '1'] + list(row)
+        db_data = ['\'' + title + '\'', nicks.povertyLinesVersion(country)] + list(row)
 
         # remove columns which are None
         db_data = [d for (d, c) in zip(db_data, db_columns) if c]

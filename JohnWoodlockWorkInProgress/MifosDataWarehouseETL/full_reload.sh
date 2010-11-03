@@ -30,4 +30,5 @@ MYSQL_ARGS="-u root"
 echo "drop database $DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DB_NAME" | mysql $MYSQL_ARGS
 mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_mifos_datawarehouse.sql
+mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_ppi_poverty_lines.sql
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/CreateDataWarehouse.kjb`

@@ -59,7 +59,7 @@ SQL_CASE_WHEN_TEMPLATE = '''when answers.Q{NUMBER}='{ANSWER}' then {VALUE}'''
 
 GROUP_CONCAT_TEMPLATE = "GROUP_CONCAT(if(q.nickname = '{NICKNAME}', qgr.response, NULL)) AS 'Q{NUMBER}'"
 
-SQL_TEMPLATE = '''select answers.survey_id, 1 as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+SQL_TEMPLATE = '''select answers.survey_id, {POINTS_VERSION} as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.entity_id, answers.entity_type_id,
 
 (
 {CASES}
@@ -85,6 +85,7 @@ def sql(qs, country_name, nicks, title='Unknown'):
         cases.append(case)
     group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
     return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title,
+            POINTS_VERSION= nicks.pointsVersion(country_name), 
             DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)))
 
 

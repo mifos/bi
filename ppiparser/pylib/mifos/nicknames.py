@@ -1,7 +1,7 @@
 from collections import namedtuple
 import csv
 
-NickRow = namedtuple('NickRow', 'country year nicknames')
+NickRow = namedtuple('NickRow', 'country year povertyLinesVersion pointsVersion nicknames')
 
 class Nicknames(object):
 
@@ -11,8 +11,10 @@ class Nicknames(object):
         for row in reader:
             country = self._clean_country(row[0])
             year = int(row[1])
-            nicknames = row[2:]
-            self.data[country] = NickRow(country, year, nicknames)
+            povertyLinesVersion = row[2]
+            pointsVersion = row[3]
+            nicknames = row[4:]
+            self.data[country] = NickRow(country, year, povertyLinesVersion, pointsVersion, nicknames)
 
     def _clean_country(self, country):
         return country.strip().lower().replace(' ', '').replace('_', '')
@@ -20,6 +22,14 @@ class Nicknames(object):
     def year(self, country):
         row = self.data[self._clean_country(country)]
         return row.year
+
+    def povertyLinesVersion(self, country):
+        row = self.data[self._clean_country(country)]
+        return row.povertyLinesVersion
+
+    def pointsVersion(self, country):
+        row = self.data[self._clean_country(country)]
+        return row.pointsVersion
 
     def nickname(self, country, qnum):
         row = self.data[self._clean_country(country)]

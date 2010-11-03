@@ -1025,6 +1025,8 @@ CREATE TABLE `ppi_category_likelihood_bands` (
   `below_national_asset` decimal(4,1) DEFAULT NULL,
   `below_125_percent_of_national_asset` decimal(4,1) DEFAULT NULL,
   `below_150_percent_of_national_asset` decimal(4,1) DEFAULT NULL,
+  `below_150_percent_of_upper_national_asset` decimal(4,1) DEFAULT NULL,
+  `below_200_percent_of_upper_national_asset` decimal(4,1) DEFAULT NULL,
   `below_quarter_minimum_wage` decimal(4,1) DEFAULT NULL,
   `below_half_minimum_wage` decimal(4,1) DEFAULT NULL,
   `below_one_minimum_wage` decimal(4,1) DEFAULT NULL,
