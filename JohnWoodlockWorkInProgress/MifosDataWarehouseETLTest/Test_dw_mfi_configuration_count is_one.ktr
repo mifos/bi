@@ -166,10 +166,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Test Counts</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Test Counts</from><to>Abort</to><enabled>Y</enabled> </hop>  <hop> <from>dw_mfi_configuration Count</from><to>Test Counts</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Transformation Name</from><to>Check Counts</to><enabled>Y</enabled> </hop>  <hop> <from>dw_mfi_configuration Count</from><to>Get Transformation Name</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Abort</name>
-    <type>Abort</type>
+    <name>Check Counts</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -177,20 +177,29 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <row_threshold>0</row_threshold>
-      <message/>
-      <always_log_rows>Y</always_log_rows>
-     <cluster_schema/>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+if (destination_count != 1)
+{
+	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Destination Count should be 1 - It was: &quot; + destination_count);
+}
+
+
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>77</xloc>
-      <yloc>267</yloc>
+      <xloc>152</xloc>
+      <yloc>269</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Dummy (do nothing)</name>
-    <type>Dummy</type>
+    <name>Get Transformation Name</name>
+    <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -198,38 +207,24 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
+    <fields>
+      <field>
+        <name>test_name</name>
+        <variable>${Internal.Transformation.Name}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>239</xloc>
-      <yloc>267</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Test Counts</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Dummy (do nothing)</send_true_to>
-<send_false_to>Abort</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>destination_count</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>1</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>142</yloc>
+      <xloc>156</xloc>
+      <yloc>143</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

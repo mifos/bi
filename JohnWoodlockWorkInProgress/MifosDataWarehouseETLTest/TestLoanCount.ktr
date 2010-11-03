@@ -164,46 +164,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Loan Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Test Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Test Counts</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Test Counts</from><to>Abort</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Abort</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <row_threshold>0</row_threshold>
-      <message/>
-      <always_log_rows>Y</always_log_rows>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>71</xloc>
-      <yloc>324</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy (do nothing)</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>252</xloc>
-      <yloc>324</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Loan Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Select values</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Join Source and Destination Counts</name>
     <type>MergeJoin</type>
@@ -285,8 +246,8 @@ from loan_account</sql>
     </step>
 
   <step>
-    <name>Test Counts</name>
-    <type>FilterRows</type>
+    <name>Select values</name>
+    <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -294,20 +255,60 @@ from loan_account</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Dummy (do nothing)</send_true_to>
-<send_false_to>Abort</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>source_count</leftvalue>
- <function>=</function>
- <rightvalue>destination_count</rightvalue>
- </condition>
-    </compare>
+    <fields>      <field>        <name>source_count</name>
+        <rename/>
+        <length>-2</length>
+        <precision>15</precision>
+      </field>      <field>        <name>destination_count</name>
+        <rename/>
+        <length>-2</length>
+        <precision>15</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>159</xloc>
+      <yloc>216</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Test Counts</name>
+    <type>Mapping</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_test_counts.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>156</xloc>
-      <yloc>227</yloc>
+      <xloc>367</xloc>
+      <yloc>216</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
