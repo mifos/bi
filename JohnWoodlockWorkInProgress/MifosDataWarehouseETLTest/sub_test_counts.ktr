@@ -158,14 +158,17 @@
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>&#47;&#47;Script here
 
-if (source_count.value != destination_count.value)
+var sc = source_count + 0;
+var dc = destination_count + 0;
+
+if (sc == dc){	
+	writeToLog(&quot;m&quot;, &quot;ETL Test Pass: &quot;+ test_name + &quot; : &quot; + source_count + &quot; records&quot;);
+}
+else
 {
 	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Source Count: &quot; + source_count + &quot; does not match Destination Count: &quot; + destination_count);
 }
-else
-{	
-	writeToLog(&quot;m&quot;, &quot;ETL Test Pass: &quot;+ test_name + &quot; : &quot; + source_count + &quot; records&quot;);
-}
+
 
 </jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>

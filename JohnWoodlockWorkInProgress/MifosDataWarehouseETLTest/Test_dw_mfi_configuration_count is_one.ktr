@@ -181,13 +181,14 @@
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>&#47;&#47;Script here
-if (destination_count != 1)
-{
-	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Destination Count should be 1 - It was: &quot; + destination_count);
-}
-else
+var dc = destination_count + 0;
+if (dc == 1)
 {	
 	writeToLog(&quot;m&quot;, &quot;ETL Test Pass: &quot;+ test_name + &quot; : 1 record&quot;);
+}
+else
+{
+	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Destination Count should be 1 - It was: &quot; + destination_count);
 }
 
 

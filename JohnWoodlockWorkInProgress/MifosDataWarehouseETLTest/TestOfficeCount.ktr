@@ -205,7 +205,7 @@ doesn&apos;t track office hierarchy changes... so there should be no type 2 chan
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select 1 as the_join, count(*) as destination_count
+    <sql>select 1 as the_join, count(*) + 1 as destination_count
 from dim_office
 where office_key &gt; 0</sql>
     <limit>0</limit>
