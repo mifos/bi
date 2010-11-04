@@ -239,7 +239,7 @@ Not expecting to do otherwise.</note>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select currency_id, currency_name, jpw, rounding_amount, currency_code
+    <sql>select currency_id, currency_name, rounding_amount, currency_code
 from currency</sql>
     <limit>0</limit>
     <lookup/>
