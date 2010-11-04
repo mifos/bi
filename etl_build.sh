@@ -63,8 +63,10 @@ then
     echo " "
     grep 'ETL Test Failure:' $log | tee -a $log	
 else
+    echo " "
     echo No errors found.
 fi
 
+echo " "
 rm $log
 exit $exitcode
