@@ -1,0 +1,159 @@
+﻿
+The Progress out of Poverty IndexTM for Haiti
+
+Indicator
+Value
+Points
+Total
+1. How many people in the household are 14 years old or younger?
+Four or more
+0
+
+
+Three
+3
+
+
+Two
+8
+
+
+One
+11
+
+
+None
+19
+
+ 
+
+
+ 
+2. Do all children of ages 6–14 attend school?
+No
+0
+
+
+Yes
+3
+
+
+No children ages 6–14
+3
+
+ 
+
+
+ 
+3. Where does the household reside?	
+Not Port-a-Prince
+0
+
+
+Port-a-Prince
+15
+
+ 
+
+
+ 
+4. Does the household own a radio/cassette player?
+No
+0
+
+
+Yes
+7
+
+ 
+
+
+ 
+5. What are the dwelling's floors made of?
+Earth
+0
+
+
+Concrete or other
+4
+
+
+Ceramic or wood planks
+12
+
+ 
+
+
+ 
+6. In the past 12 months, did the household receive any money or gifts remitted from abroad?
+No
+0
+
+
+Yes
+7
+
+ 
+
+
+ 
+7. Does any household member have salaried employment?
+No
+0
+
+
+Yes
+12
+
+ 
+
+
+ 
+8. How many plots of agricultural land, forest land, pasture land, or gardens does the household use?
+None
+2
+
+
+One
+0
+
+
+Two or three
+5
+
+
+Four or more
+11
+
+ 
+
+
+ 
+9. What is the dwelling's roof made of?
+Straw, palm leaves, or other
+0
+
+
+Iron
+4
+
+
+Concrete
+9
+
+ 
+
+
+ 
+10. Does the household own any pigs?
+No
+0
+ 
+
+Yes
+5
+
+Total:
+Category Likelihoods according to Haiti PPITM Score
+
+

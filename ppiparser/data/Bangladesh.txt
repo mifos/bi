@@ -1,0 +1,617 @@
+﻿
+Progress out of Poverty Index™ for Bangladesh
+Entity
+Name
+
+ID
+
+Date (DD/MM/YY)
+Member:       
+
+
+
+
+Joined:
+
+Loan officer:  
+
+
+
+
+Today:
+
+Branch:        
+
+
+
+
+Household size: 
+
+
+ 
+Indicator
+Value
+Points
+Score
+1. How many household members are 11-years-old or younger?
+A. Four or more
+0
+
+
+B. Three
+9
+
+
+C. Two
+12
+
+
+D. One
+19
+
+
+E. None
+31
+
+
+2. Does any household member work for a daily wage?
+A. Yes
+0
+
+
+B. No
+10
+
+
+3. What type of latrine does the household use?
+A. Open field
+0
+
+
+B. Kacha latrine (temporary or permanent), pacca (pit or water seal), or sanitary
+5
+
+
+
+
+
+4. How many rooms does the household occupy (excluding rooms used for business)?
+A. One, two, or three
+0
+
+
+B. Four
+7
+
+
+C. Five or more
+11
+
+
+
+
+
+5. What is the main construction material of the walls?
+A. Mud brick, hemp/hay/ bamboo, or other
+0
+
+
+B. C.I. sheet/wood
+2
+
+
+C. Brick/cement
+8
+
+
+
+
+
+6. What is the main construction material of the roof?
+A. Tile/wood, hemp/hay/ bamboo, or other
+0
+
+
+B. C.I. sheet/wood
+2
+
+
+C. Cement
+13
+
+
+
+
+
+7. What is the total cultivable agricultural land owned by the household?
+A. None, or less than 0.5 acres
+0
+
+
+B. More than 0.5 acres, but less than 1 acre
+4
+
+
+C. More than 1 acre
+6
+
+
+
+
+
+8. Does the household own a television?
+A. No
+0
+
+
+B. Yes
+7
+
+
+
+
+
+9. Does the household own a two-in-one cassette player?
+A. No
+0
+
+
+B. Yes
+5
+
+
+
+
+
+10. Does the household own a wristwatch?
+A. No
+0
+
+
+B. Yes
+4
+
+Microfinance Risk Management, L.L.C.,                                                       Total score
+
+
+Category Likelihoods according to Bangladesh PPI™ Score
+
+
+Upper National Poverty Line
+
+Lower National Poverty Line
+
+USAID "Extreme" Poverty Line
+PPI Score
+Total Below the Upper National Poverty Line
+Total Above the Upper National Poverty Line
+
+Total Below the Lower National Poverty Line
+Total Above the Lower National Poverty Line
+
+Total Below the USAID "Extreme" Poverty Line
+Total Above the USAID "Extreme" Poverty Line
+
+
+
+
+
+
+
+
+
+0-4
+100.0% 
+0.0% 
+ 
+100.0% 
+0.0% 
+ 
+100.0% 
+0.0% 
+5-9
+85.7% 
+14.3% 
+ 
+71.6% 
+28.4% 
+ 
+71.6% 
+28.4% 
+10-14
+88.7% 
+11.3% 
+ 
+74.5% 
+25.5% 
+ 
+57.2% 
+42.8% 
+15-19
+86.9% 
+13.1% 
+ 
+64.3% 
+35.7% 
+ 
+53.8% 
+46.2% 
+20-24
+73.1% 
+26.9% 
+ 
+49.5% 
+50.5% 
+ 
+36.7% 
+63.3% 
+25-29
+63.2% 
+36.8% 
+ 
+37.6% 
+62.4% 
+ 
+27.5% 
+72.5% 
+30-34
+49.7% 
+50.3% 
+ 
+29.7% 
+70.3% 
+ 
+23.3% 
+76.7% 
+35-39
+35.7% 
+64.3% 
+ 
+18.8% 
+81.2% 
+ 
+15.7% 
+84.3% 
+40-44
+27.2% 
+72.8% 
+ 
+9.9% 
+90.1% 
+ 
+6.8% 
+93.2% 
+45-49
+21.6% 
+78.4% 
+ 
+9.6% 
+90.4% 
+ 
+5.9% 
+94.1% 
+50-54
+12.4% 
+87.6% 
+ 
+4.7% 
+95.3% 
+ 
+2.9% 
+97.1% 
+55-59
+8.7% 
+91.3% 
+ 
+4.0% 
+96.0% 
+ 
+2.9% 
+97.1% 
+60-64
+7.3% 
+92.7% 
+ 
+2.8% 
+97.2% 
+ 
+0.3% 
+99.7% 
+65-69
+2.2% 
+97.8% 
+ 
+0.4% 
+99.6% 
+ 
+0.0% 
+100.0% 
+70-74
+1.4% 
+98.6% 
+ 
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+75-79
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+80-84
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+85-89
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+90-94
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+95-100
+0.0%
+100.0% 
+ 
+0.00%
+100.0% 
+ 
+0.00%
+100.0% 
+
+
+
+
+
+
+
+
+
+Source: Microfinance Risk Management, L.L.C. based on the 2005 HIES. 
+
+
+
+
+
+Category Likelihoods according to Bangladesh PPI™ Score
+
+
+
+$1.25/Day/2005 PPP Poverty Line
+
+$1.75/Day/PPP 2005 Poverty Line
+
+$2.50/Day/PPP Poverty Line
+PPI Score
+Total Below the $1.25/Day/2005 PPP Line
+Total Above the $1.25/Day/2005 PPP Line
+
+Total Below the $1.75/Day/2005 PPP Line
+Total Above the $1.75/Day/2005 PPP Line
+
+Total Below the $2.50/Day/PPP Line
+Total Above the $2.50/Day/PPP Line
+
+
+
+
+
+
+
+
+
+0-4
+100.0% 
+0.0% 
+ 
+100.0% 
+0.0% 
+ 
+100.0% 
+0.0% 
+5-9
+94.6% 
+5.4% 
+ 
+100.0% 
+0.0% 
+ 
+100.0% 
+0.0% 
+10-14
+91.7% 
+8.3% 
+ 
+100.0% 
+0.0% 
+ 
+100.0% 
+0.0% 
+15-19
+92.8% 
+7.2% 
+ 
+98.4% 
+1.6% 
+ 
+100.0% 
+0.0% 
+20-24
+85.0% 
+15.0% 
+ 
+98.6% 
+1.4% 
+ 
+100.0% 
+0.0% 
+25-29
+74.7% 
+25.3% 
+ 
+97.1% 
+2.9% 
+ 
+99.6% 
+0.4% 
+30-34
+67.3% 
+32.7% 
+ 
+94.8% 
+5.2% 
+ 
+99.3% 
+0.7% 
+35-39
+49.8% 
+50.2% 
+ 
+85.9% 
+14.1% 
+ 
+96.6% 
+3.4% 
+40-44
+39.9% 
+60.1% 
+ 
+77.3% 
+22.7% 
+ 
+95.1% 
+4.9% 
+45-49
+31.3% 
+68.7% 
+ 
+66.8% 
+33.2% 
+ 
+92.7% 
+7.3% 
+50-54
+19.9% 
+80.1% 
+ 
+59.7% 
+40.3% 
+ 
+85.1% 
+14.9% 
+55-59
+13.9% 
+86.1% 
+ 
+45.5% 
+54.5% 
+ 
+76.6% 
+23.4% 
+60-64
+9.4% 
+90.6% 
+ 
+35.5% 
+64.5% 
+ 
+63.6% 
+36.4% 
+65-69
+4.2% 
+95.8% 
+ 
+32.0% 
+68.0% 
+ 
+64.9% 
+35.1% 
+70-74
+1.4% 
+98.6% 
+ 
+23.5% 
+76.5% 
+ 
+50.0% 
+50.0% 
+75-79
+1.6% 
+98.4% 
+ 
+16.6% 
+83.4% 
+ 
+47.5% 
+52.5% 
+80-84
+0.0% 
+100.0% 
+ 
+5.2% 
+94.8% 
+ 
+30.7% 
+69.3% 
+85-89
+0.0% 
+100.0% 
+ 
+1.8% 
+98.2% 
+ 
+27.1% 
+72.9% 
+90-94
+0.0% 
+100.0% 
+ 
+0.0% 
+100.0% 
+ 
+4.6% 
+95.4% 
+95-100
+0.0%
+100.0%
+ 
+0.0%
+100.0%
+ 
+26.1%
+73.9%
+
+
+
+
+
+
+
+
+
+Source: Microfinance Risk Management, L.L.C. based on the 2005 HIES. 
+
+
+

@@ -18,16 +18,13 @@ XML_TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
         <source>Client</source>
     </eventSource>
     <section order="1">
-        <name>Survey Administration</name>
+        <name>{TITLE}</name>
         <question order="1">
             <text>Date Survey Was Taken</text>
             <nickname>{DATE_NICKNAME}</nickname>
             <type>DATE</type>
             <mandatory>true</mandatory>
         </question>
-    </section>
-    <section order="2">
-        <name>PPI Questions</name>
 {QUESTIONS}
     </section>
 </QuestionGroup>
@@ -93,7 +90,7 @@ def xml(qs, country_name, nicks, title='Unknown'):
     questions = []
     for (qnum, q) in enumerate(qs):
         choices = [CHOICE_TEMPLATE.format(ORDER=i+1, VALUE=val) for (i, val) in enumerate(map(lambda x:x[0], q[1]))]
-        question = SINGLE_QUESTION_TEMPLATE.format(ORDER=qnum+1, TITLE=q[0],
+        question = SINGLE_QUESTION_TEMPLATE.format(ORDER=qnum+2, TITLE=q[0],
                 NICKNAME=nicks.nickname(country_name, qnum), CHOICES=''.join(choices))
         questions.append(question)
     return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions),
