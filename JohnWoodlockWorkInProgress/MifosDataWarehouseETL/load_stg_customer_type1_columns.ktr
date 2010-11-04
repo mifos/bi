@@ -177,11 +177,27 @@ These columns can be added to the dim_customer table with no impact on the curre
            </partitioning>
     <connection>SourceDB</connection>
     <rowlimit>0</rowlimit>
-    <sql>select c.display_name,  
-if(c.customer_level_id = 1, ifnull(cdlv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as gender
+    <sql>
+select c.display_name, 
+c.date_of_birth,
+c.government_id,
+cd.num_children as num_children, 
+&apos;dont know yet&apos; as business_activity,
+if(c.customer_level_id = 1, ifnull(gen_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as gender, 
+if(c.customer_level_id = 1, ifnull(eth_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as ethnicity, 
+if(c.customer_level_id = 1, ifnull(cit_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as citizenship, 
+if(c.customer_level_id = 1, ifnull(hand_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as handicapped, 
+if(c.customer_level_id = 1, ifnull(mar_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as marital_status, 
+if(c.customer_level_id = 1, ifnull(edu_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as education_level
+ 
 from customer c
 left join customer_detail cd on cd.customer_id = c.customer_id
-left join lookup_value cdlv on cdlv.lookup_id = cd.gender
+left join lookup_value gen_lv on gen_lv.lookup_id = cd.gender 
+left join lookup_value eth_lv on eth_lv.lookup_id = cd.ethinicity 
+left join lookup_value cit_lv on cit_lv.lookup_id = cd.citizenship 
+left join lookup_value hand_lv on hand_lv.lookup_id = cd.handicapped 
+left join lookup_value mar_lv on mar_lv.lookup_id = cd.marital_status 
+left join lookup_value edu_lv on edu_lv.lookup_id = cd.education_level   
 where c.customer_id = ?</sql>
     <outer_join>N</outer_join>
     <replace_vars>N</replace_vars>
@@ -263,8 +279,44 @@ where level_id &gt; 0</sql>
           <stream_name>display_name</stream_name>
         </field>
         <field>
+          <column_name>date_of_birth</column_name>
+          <stream_name>date_of_birth</stream_name>
+        </field>
+        <field>
+          <column_name>government_id</column_name>
+          <stream_name>government_id</stream_name>
+        </field>
+        <field>
+          <column_name>num_children</column_name>
+          <stream_name>num_children</stream_name>
+        </field>
+        <field>
+          <column_name>business_activity</column_name>
+          <stream_name>business_activity</stream_name>
+        </field>
+        <field>
           <column_name>gender</column_name>
           <stream_name>gender</stream_name>
+        </field>
+        <field>
+          <column_name>ethnicity</column_name>
+          <stream_name>ethnicity</stream_name>
+        </field>
+        <field>
+          <column_name>citizenship</column_name>
+          <stream_name>citizenship</stream_name>
+        </field>
+        <field>
+          <column_name>handicapped</column_name>
+          <stream_name>handicapped</stream_name>
+        </field>
+        <field>
+          <column_name>marital_status</column_name>
+          <stream_name>marital_status</stream_name>
+        </field>
+        <field>
+          <column_name>education_level</column_name>
+          <stream_name>education_level</stream_name>
         </field>
     </fields>
      <cluster_schema/>

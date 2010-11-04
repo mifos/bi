@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.45, for Win32 (ia32)
 --
--- Host: localhost    Database: mifos_ppi_dw
+-- Host: localhost    Database: mifos_dwh
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.6
+-- Server version	5.1.45-community
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -147,7 +147,16 @@ CREATE TABLE `dim_customer` (
   `display_name` varchar(200) DEFAULT NULL,
   `customer_status` varchar(100) NOT NULL,
   `customer_level_id` smallint(6) NOT NULL,
-  `gender` varchar(100) DEFAULT NULL,
+  `gender` varchar(15) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `government_id` varchar(50) DEFAULT NULL,
+  `num_children` smallint(6) DEFAULT NULL,
+  `business_activity` varchar(60) DEFAULT NULL,
+  `ethnicity` varchar(60) DEFAULT NULL,
+  `citizenship` varchar(60) DEFAULT NULL,
+  `handicapped` varchar(60) DEFAULT NULL,
+  `marital_status` varchar(60) DEFAULT NULL,
+  `education_level` varchar(60) DEFAULT NULL,
   `group_key` int(10) unsigned NOT NULL,
   `center_key` int(10) unsigned NOT NULL,
   `loan_officer_key` smallint(5) unsigned NOT NULL,
@@ -174,7 +183,6 @@ CREATE TABLE `dim_customer` (
 
 LOCK TABLES `dim_customer` WRITE;
 /*!40000 ALTER TABLE `dim_customer` DISABLE KEYS */;
-INSERT INTO `dim_customer` VALUES (0,0,'Unknown','Unknown',0,'Unknown',0,0,0,0,0,'1900-01-01','2199-12-31',0,0,'2010-10-01 02:44:42');
 /*!40000 ALTER TABLE `dim_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1063,9 +1071,16 @@ CREATE TABLE `ppi_category_likelihood_bands` (
   `below_5_00_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
   PRIMARY KEY (`ppi_category_likelihoods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `ppi_category_likelihood_bands`
+--
+
+LOCK TABLES `ppi_category_likelihood_bands` WRITE;
+/*!40000 ALTER TABLE `ppi_category_likelihood_bands` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ppi_category_likelihood_bands` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `stg_customer_and_account_updates`
@@ -1112,7 +1127,16 @@ DROP TABLE IF EXISTS `stg_customer_type1_columns`;
 CREATE TABLE `stg_customer_type1_columns` (
   `customer_id` int(11) NOT NULL,
   `display_name` varchar(200) NOT NULL,
-  `gender` varchar(100) NOT NULL,
+  `gender` varchar(15) NOT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `government_id` varchar(50) DEFAULT NULL,
+  `num_children` smallint(6) DEFAULT NULL,
+  `business_activity` varchar(60) DEFAULT NULL,
+  `ethnicity` varchar(60) DEFAULT NULL,
+  `citizenship` varchar(60) DEFAULT NULL,
+  `handicapped` varchar(60) DEFAULT NULL,
+  `marital_status` varchar(60) DEFAULT NULL,
+  `education_level` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1180,7 +1204,7 @@ LOCK TABLES `stg_personnel_names_and_name_changes` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'mifos_ppi_dw'
+-- Dumping routines for database 'mifos_dwh'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `SPcascade_change_to_accounts` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -2669,4 +2693,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-10-20 21:18:34
+-- Dump completed on 2010-11-05  0:24:04

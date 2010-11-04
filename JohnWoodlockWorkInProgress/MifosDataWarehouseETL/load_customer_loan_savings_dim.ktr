@@ -162,11 +162,17 @@
 &#47;*update type1 columns on dim_customer to have the latest values*&#47;
 update dim_customer c
 join stg_customer_type1_columns c1 on c1.customer_id = c.customer_id
-set c.display_name = c1.display_name, c.gender = c1.gender, c.`version` = c.`version` + 1
-where (ifnull(c.display_name, &apos;!null&apos;) &lt;&gt; c1.display_name or ifnull(c.gender, &apos;!null&apos;) &lt;&gt; c1.gender);
+set c.display_name = c1.display_name, c.gender = c1.gender, c.date_of_birth = c1.date_of_birth, c.government_id = c1.government_id,
+		c.num_children = c1.num_children, c.business_activity = c1.business_activity, c.ethnicity = c1.ethnicity, c.citizenship = c1.citizenship,
+		c.handicapped = c1.handicapped, c.marital_status = c1.marital_status, c.education_level = c1.education_level;
+
+&#47;*c.`version` = c.`version` + 1
+where (ifnull(c.display_name, &apos;!null&apos;) &lt;&gt; c1.display_name 
+	or ifnull(c.gender, &apos;!null&apos;) &lt;&gt; c1.gender)
+leave out for now cos getting too complex for more than a few fields - means will leave off updating version as well
 
 
-&#47;*update type1 columns on dim_loan to have the latest values*&#47;
+update type1 columns on dim_loan to have the latest values*&#47;
 update dim_loan l
 join stg_loan_type1_columns l1 on l1.loan_account_id = l.loan_account_id
 set l.funder_name = l1.funder_name, l.loan_amount = l1.loan_amount,
