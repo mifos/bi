@@ -35,22 +35,25 @@ echo "Running ETL..."
 log=`mktemp`
 $PDI_HOME/kitchen.sh /file:$PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb | tee $log
 
+exitcode=0
+if grep -q '^ERROR ' $log
+then
+    echo ETL Has Errors
+    exitcode=1
+    rm $log
+    exit $exitcode
+fi
+
+
 echo "Running tests..."
 $PDI_HOME/kitchen.sh /file:$PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb | tee -a $log
 if grep -q 'ETL Test Failure:' $log
 then
+    exitcode=1
     echo " "
     echo "ETL TEST ERRORS"
     echo " "
     grep 'ETL Test Failure:' $log | tee -a $log	
-fi
-
-
-exitcode=0
-if grep -q '^ERROR ' $log
-then
-    echo Errors found.
-    exitcode=1
 else
     echo No errors found.
 fi
