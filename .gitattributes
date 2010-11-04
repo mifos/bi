@@ -1,0 +1,2 @@
+# allows diffing Pentaho report zip archives (see http://the-gay-bar.com/2010/06/23/managing-zip-based-file-formats-in-git/ )
+*.prpt diff=zip
