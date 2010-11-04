@@ -51,13 +51,13 @@ COLUMN_MAP = {
 'Total Below the 100% of National Poverty Line': 'below_national', # !!! no column below_100_percent_of_national *fixed*
 'Total Below the 125% National Poverty Line': 'below_125_percent_of_national',
 'Total Below the 125% of National Asset Poverty Line': 'below_125_percent_of_national_asset',
-'Total Below the 125% of the National Poverty Line': 'below_125_percent_of_national_asset',
+'Total Below the 125% of the National Poverty Line': 'below_125_percent_of_national',
 'Total Below the 150% of National Asset Poverty Line': 'below_150_percent_of_national_asset',
 'Total Below the 150% of the National Poverty Line': 'below_150_percent_of_national',
-'Total Below the 150% of the Upper National Poverty Line': 'below_150_percent_of_upper_national_asset', # !!! no column, *fixed*
+'Total Below the 150% of the Upper National Poverty Line': 'below_150_percent_of_upper_national', # !!! no column, *fixed*
 'Total Below the 200% National Poverty Line': 'below_200_percent_of_national',
 'Total Below the 200% of the National Poverty Line': 'below_200_percent_of_national',
-'Total Below the 200% of the Upper National Poverty Line': 'below_200_percent_of_upper_national_asset', # !!! no column *fixed*
+'Total Below the 200% of the Upper National Poverty Line': 'below_200_percent_of_upper_national', # !!! no column *fixed*
 'Total Below the 300% of the National Poverty Line': 'below_300_percent_of_national',
 'Total Below the 50% National Poverty Line': 'below_50_percent_of_national',
 'Total Below the 75% National Poverty Line': 'below_75_percent_of_national',
