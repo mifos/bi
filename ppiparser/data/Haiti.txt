@@ -6,23 +6,23 @@ Value
 Points
 Total
 1. How many people in the household are 14 years old or younger?
-Four or more
+A. Four or more
 0
 
 
-Three
+B. Three
 3
 
 
-Two
+C. Two
 8
 
 
-One
+D. One
 11
 
 
-None
+E. None
 19
 
  
@@ -30,15 +30,15 @@ None
 
  
 2. Do all children of ages 6–14 attend school?
-No
+A. No
 0
 
 
-Yes
+B. Yes
 3
 
 
-No children ages 6–14
+C. No children ages 6–14
 3
 
  
@@ -46,11 +46,11 @@ No children ages 6–14
 
  
 3. Where does the household reside?	
-Not Port-a-Prince
+A. Not Port-a-Prince
 0
 
 
-Port-a-Prince
+B. Port-a-Prince
 15
 
  
@@ -58,11 +58,11 @@ Port-a-Prince
 
  
 4. Does the household own a radio/cassette player?
-No
+A. No
 0
 
 
-Yes
+B. Yes
 7
 
  
@@ -70,15 +70,15 @@ Yes
 
  
 5. What are the dwelling's floors made of?
-Earth
+A. Earth
 0
 
 
-Concrete or other
+B. Concrete or other
 4
 
 
-Ceramic or wood planks
+C. Ceramic or wood planks
 12
 
  
@@ -86,11 +86,11 @@ Ceramic or wood planks
 
  
 6. In the past 12 months, did the household receive any money or gifts remitted from abroad?
-No
+A. No
 0
 
 
-Yes
+B. Yes
 7
 
  
@@ -98,11 +98,11 @@ Yes
 
  
 7. Does any household member have salaried employment?
-No
+A. No
 0
 
 
-Yes
+B. Yes
 12
 
  
@@ -110,19 +110,19 @@ Yes
 
  
 8. How many plots of agricultural land, forest land, pasture land, or gardens does the household use?
-None
+A. None
 2
 
 
-One
+B. One
 0
 
 
-Two or three
+C. Two or three
 5
 
 
-Four or more
+D. Four or more
 11
 
  
@@ -130,15 +130,15 @@ Four or more
 
  
 9. What is the dwelling's roof made of?
-Straw, palm leaves, or other
+A. Straw, palm leaves, or other
 0
 
 
-Iron
+B. Iron
 4
 
 
-Concrete
+C. Concrete
 9
 
  
@@ -146,11 +146,11 @@ Concrete
 
  
 10. Does the household own any pigs?
-No
+A. No
 0
  
 
-Yes
+B. Yes
 5
 
 Total:
