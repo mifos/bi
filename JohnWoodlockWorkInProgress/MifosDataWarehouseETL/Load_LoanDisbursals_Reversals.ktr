@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_LoanDisbursals</name>
+    <name>Load_LoanDisbursals_Reversals</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -73,10 +73,10 @@
 In some cases loan disbursals occur earlier than the first time a loan  was created.  This is due to input of historical
 information.  In this case, the disbursal is attached to the earliest appropriate status entry for the loan.
 
-Disbursal transactions are account_action_id: 10 (disbursal)
+Disbursal reversal transactions are account_action_id: 19
 </note>
-      <xloc>12</xloc>
-      <yloc>190</yloc>
+      <xloc>337</xloc>
+      <yloc>306</yloc>
       <width>571</width>
       <heigth>110</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -171,7 +171,7 @@ Disbursal transactions are account_action_id: 10 (disbursal)
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read account_trxn</from><to>Disbursal Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Disbursal Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Lookup Latest Pre Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Pre Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Disbursals</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Pre Active Loan Account Entry 2</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Pre Active Loan Account Entry 2</from><to>Create Loan Disbursals</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Read account_trxn</from><to>Disbursal Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Disbursal Date Lookup</from><to>Create Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Create Date Lookup</from><to>Account Action lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Account Action lookup</from><to>Lookup Latest Pre Active Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Pre Active Loan Account Entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Loan Disbursals</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Pre Active Loan Account Entry 2</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Pre Active Loan Account Entry 2</from><to>Create Loan Disbursals</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn</from><to>Update Reversed Flag</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Account Action lookup</name>
     <type>DBLookup</type>
@@ -207,8 +207,8 @@ Disbursal transactions are account_action_id: 10 (disbursal)
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>183</xloc>
-      <yloc>110</yloc>
+      <xloc>268</xloc>
+      <yloc>123</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -248,8 +248,8 @@ Disbursal transactions are account_action_id: 10 (disbursal)
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>181</xloc>
-      <yloc>24</yloc>
+      <xloc>256</xloc>
+      <yloc>11</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -394,8 +394,8 @@ Disbursal transactions are account_action_id: 10 (disbursal)
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>58</xloc>
-      <yloc>107</yloc>
+      <xloc>151</xloc>
+      <yloc>97</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -507,8 +507,8 @@ order by loan_account_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>406</xloc>
-      <yloc>17</yloc>
+      <xloc>435</xloc>
+      <yloc>12</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -517,7 +517,7 @@ order by loan_account_key desc</sql>
     <name>Read account_trxn</name>
     <type>TableInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -528,13 +528,13 @@ order by loan_account_key desc</sql>
 atxn.account_trxn_id, atxn.account_id as loan_account_id, atxn.payment_id, 
 atxn.action_date as disbursal_date, date(atxn.created_date) created_date, ap.payment_type_id,
 ltxn.principal_amount as disbursal_amount,
-1 as disbursal_count
+-1 as disbursal_count, atxn.related_trxn_id
 from account_trxn atxn
 inner join  loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
 inner join account_payment ap on ap.payment_id = atxn.payment_id
-where atxn.account_action_id = 10 
+where atxn.account_action_id = 19 
 &#47;* 
-10  - &apos;AccountAction-Disbursal&apos;
+19  - &apos;AccountAction-DisrbursalAmountReversal&apos;
 *&#47;</sql>
     <limit>0</limit>
     <lookup/>
@@ -573,6 +573,38 @@ where atxn.account_action_id = 10
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>592</xloc>
       <yloc>139</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Update Reversed Flag</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>Y</single_statement>
+    <replace_variables>Y</replace_variables>
+    <sql>update fact_loan_disbursals
+set reversed = true
+where account_trxn_id = ?;</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>related_trxn_id</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>56</xloc>
+      <yloc>200</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

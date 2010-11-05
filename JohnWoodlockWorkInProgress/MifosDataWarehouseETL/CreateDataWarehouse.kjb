@@ -372,7 +372,7 @@ But we love you anyway.</comment>
       <yloc>361</yloc>
       </entry>
     <entry>
-      <name>Adjust and Reverse - Repayments and Fees</name>
+      <name>Apply Loan Adjustments and Reversals</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -531,7 +531,7 @@ But we love you anyway.</comment>
     </hop>
     <hop>
       <from>Load Fact Tables</from>
-      <to>Adjust and Reverse - Repayments and Fees</to>
+      <to>Apply Loan Adjustments and Reversals</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -539,7 +539,7 @@ But we love you anyway.</comment>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Adjust and Reverse - Repayments and Fees</from>
+      <from>Apply Loan Adjustments and Reversals</from>
       <to>Derive Loan Arrears</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -548,7 +548,7 @@ But we love you anyway.</comment>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Adjust and Reverse - Repayments and Fees</from>
+      <from>Apply Loan Adjustments and Reversals</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

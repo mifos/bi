@@ -709,6 +709,7 @@ CREATE TABLE `fact_loan_disbursals` (
   `account_trxn_id` int(11) NOT NULL,
   `disbursal_count` tinyint(4) NOT NULL,
   `disbursal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `reversed` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_trxn_id`),
   KEY `account_action_key` (`account_action_key`),
   KEY `currency_key` (`currency_key`),
@@ -1070,7 +1071,7 @@ CREATE TABLE `ppi_category_likelihood_bands` (
   `below_4_32_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
   `below_5_00_per_day_1993_ppp` decimal(4,1) DEFAULT NULL,
   PRIMARY KEY (`ppi_category_likelihoods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2693,4 +2694,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-05  0:24:04
+-- Dump completed on 2010-11-05 14:53:10
