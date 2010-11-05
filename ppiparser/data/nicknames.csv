@@ -8,7 +8,7 @@
 "Ethiopia",2009,0,0,"family_members","all_family_members_6_to_12_in_school","rooms_in_house","house_walls","toilet_type","cooking_fuel","owns_mattress_or_bed","owns_radio","owns_watches_or_clocks","owns_cattle_sheep_goats","owns_jewelry"
 "Ghana",2010,0,0,"family_members","all_family_members_5_to_12_in_school","female_head_highest_grade","male_head_agriculture_job","house_roof","house_lighting","water_source","owns_stove","owns_iron","owns_radio",
 "Guatemala",2010,0,0,"family_members_0_to_13","all_family_members_7_to_13_in_school","female_head_literate","empoyed_as_casual_labor","house_floors","has_refrigerator","has_gas_electric_stove","has_stone_mill","has_electric_iron","enmployed_in_agriculature_or_animals",
-"Haiti",2006,0,0,,,,,,,,,,,
+"Haiti",2006,0,0,"family_members_0_to_14","all_family_members_6_to_14_in_school","household_location","owns_radio","house_floors","money_from_abroad","salaried_employment","how_many_plots","house_roof","owns_pigs",
 "Honduras",2010,0,0,"family_members_0_to_14","female_head_education_level","male_head_occupation","family_members_salaried","house_bedrooms","house_floors","water_source","has_refrigerator","has_stove","has_television",
 "India",2008,0,0,"family_members_0_to_17","principal_occupation","has_pucca_home","cooking_fuel","owns_television","owns_bicycle_scooter_motorcycle","owns_almirah","owns_sewing_machine","pressure_cookers","electric_fans",
 "Indonesia",2009,0,0,"family_members","family_members_5_to_18_in_school","11_and_up_worked_last_week","water_source","toilet_type","house_floors","house_ceiling","owns_refrigerator","owns_motorcycle","owns_television",
