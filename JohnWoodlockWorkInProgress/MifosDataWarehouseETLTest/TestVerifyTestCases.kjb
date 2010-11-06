@@ -80,7 +80,7 @@
       <yloc>24</yloc>
       </entry>
     <entry>
-      <name>Test Center Loan Officer Change</name>
+      <name>Center Loan Officer Change</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -115,7 +115,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Test Center Loan Officer Change</to>
+      <to>Center Loan Officer Change</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

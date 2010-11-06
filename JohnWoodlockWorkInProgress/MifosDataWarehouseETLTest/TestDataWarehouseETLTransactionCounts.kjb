@@ -80,7 +80,7 @@
       <yloc>14</yloc>
       </entry>
     <entry>
-      <name>Test Transaction Count ETL</name>
+      <name>Transaction Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -115,7 +115,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Test Transaction Count ETL</to>
+      <to>Transaction Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

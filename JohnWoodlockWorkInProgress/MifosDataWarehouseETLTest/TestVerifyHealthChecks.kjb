@@ -80,7 +80,7 @@
       <yloc>77</yloc>
       </entry>
     <entry>
-      <name>Test Simple Dimension Counts</name>
+      <name>Simple Dimension Counts</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -110,7 +110,7 @@
       <yloc>76</yloc>
       </entry>
     <entry>
-      <name>Test Customer and Accounts Dimension Counts</name>
+      <name>Customer and Accounts Dimension Counts</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -140,7 +140,7 @@
       <yloc>77</yloc>
       </entry>
     <entry>
-      <name>Test Transaction Counts</name>
+      <name>Transaction Counts</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -173,7 +173,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Test Simple Dimension Counts</to>
+      <to>Simple Dimension Counts</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -181,8 +181,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Test Simple Dimension Counts</from>
-      <to>Test Customer and Accounts Dimension Counts</to>
+      <from>Simple Dimension Counts</from>
+      <to>Customer and Accounts Dimension Counts</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -190,8 +190,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Test Customer and Accounts Dimension Counts</from>
-      <to>Test Transaction Counts</to>
+      <from>Customer and Accounts Dimension Counts</from>
+      <to>Transaction Counts</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

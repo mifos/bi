@@ -120,7 +120,7 @@
       <yloc>69</yloc>
       </entry>
     <entry>
-      <name>Verify Health Checks</name>
+      <name>Run Health Checks</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -150,7 +150,7 @@
       <yloc>70</yloc>
       </entry>
     <entry>
-      <name>Verify Test Cases</name>
+      <name>Run Test Cases</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -183,7 +183,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Verify Health Checks</to>
+      <to>Run Health Checks</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -191,7 +191,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Verify Health Checks</from>
+      <from>Run Health Checks</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -200,7 +200,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verify Test Cases</from>
+      <from>Run Test Cases</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -209,8 +209,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verify Health Checks</from>
-      <to>Verify Test Cases</to>
+      <from>Run Health Checks</from>
+      <to>Run Test Cases</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

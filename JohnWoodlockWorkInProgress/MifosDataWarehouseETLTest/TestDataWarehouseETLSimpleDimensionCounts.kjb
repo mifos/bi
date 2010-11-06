@@ -80,7 +80,7 @@
       <yloc>24</yloc>
       </entry>
     <entry>
-      <name>Test Office Count ETL</name>
+      <name>Office Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -112,7 +112,7 @@
       <yloc>23</yloc>
       </entry>
     <entry>
-      <name>Test Personnel Count ETL</name>
+      <name>Personnel Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -144,7 +144,7 @@
       <yloc>97</yloc>
       </entry>
     <entry>
-      <name>Test Fee Count ETL</name>
+      <name>Fee Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -176,7 +176,7 @@
       <yloc>158</yloc>
       </entry>
     <entry>
-      <name>Test Currency Count ETL</name>
+      <name>Currency Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -208,7 +208,7 @@
       <yloc>233</yloc>
       </entry>
     <entry>
-      <name>Test Product Count ETL</name>
+      <name>Product Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -240,7 +240,7 @@
       <yloc>287</yloc>
       </entry>
     <entry>
-      <name>Test Account Action Count ETL</name>
+      <name>Account Action Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -272,7 +272,7 @@
       <yloc>210</yloc>
       </entry>
     <entry>
-      <name>Test PPI Survey Count ETL</name>
+      <name>PPI Survey Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -304,7 +304,7 @@
       <yloc>98</yloc>
       </entry>
     <entry>
-      <name>Test dw_mfi_configuration ETL</name>
+      <name>MFI Configuration</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -339,7 +339,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Test Office Count ETL</to>
+      <to>Office Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -348,7 +348,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Personnel Count ETL</to>
+      <to>Personnel Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -357,7 +357,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Fee Count ETL</to>
+      <to>Fee Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -366,7 +366,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Currency Count ETL</to>
+      <to>Currency Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -375,7 +375,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Product Count ETL</to>
+      <to>Product Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -384,7 +384,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Account Action Count ETL</to>
+      <to>Account Action Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -393,7 +393,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test PPI Survey Count ETL</to>
+      <to>PPI Survey Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -402,7 +402,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test dw_mfi_configuration ETL</to>
+      <to>MFI Configuration</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

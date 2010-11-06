@@ -80,7 +80,7 @@
       <yloc>14</yloc>
       </entry>
     <entry>
-      <name>Test Customer Count ETL</name>
+      <name>Customer Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -112,7 +112,7 @@
       <yloc>12</yloc>
       </entry>
     <entry>
-      <name>Test Loan Count ETL</name>
+      <name>Loan Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -144,7 +144,7 @@
       <yloc>144</yloc>
       </entry>
     <entry>
-      <name>Test Savings Count ETL</name>
+      <name>Savings Count</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -179,7 +179,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Test Customer Count ETL</to>
+      <to>Customer Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -188,7 +188,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Loan Count ETL</to>
+      <to>Loan Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -197,7 +197,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Test Savings Count ETL</to>
+      <to>Savings Count</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
