@@ -66,11 +66,14 @@
   </info>
   <notepads>
     <notepad>
-      <note> </note>
-      <xloc>841</xloc>
-      <yloc>13</yloc>
-      <width>20</width>
-      <heigth>22</heigth>
+      <note>Identifies the1st entry for the test customer 
+that matches the test date and test change.
+
+ </note>
+      <xloc>17</xloc>
+      <yloc>85</yloc>
+      <width>226</width>
+      <heigth>60</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -163,377 +166,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Filter rows</from><to>Abort</to><enabled>Y</enabled> </hop>  <hop> <from>Get Previous Customer Entry</from><to>Is there a Previous Customer Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Is there a Previous Customer Entry</from><to>Abort 2</to><enabled>Y</enabled> </hop>  <hop> <from>Is there a Previous Customer Entry</from><to>Add Change Type</to><enabled>Y</enabled> </hop>  <hop> <from>Is Change Type Correct</from><to>Abort 3</to><enabled>Y</enabled> </hop>  <hop> <from>Add Change Type</from><to>Is Change Type Correct</to><enabled>Y</enabled> </hop>  <hop> <from>Get Center With Loan Officer Change Entry Count</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Set Test Variables</from><to>Get Center With Loan Officer Change Entry Count</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Get Center With Loan Officer Change Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Get Center With Loan Officer Change Entry</from><to>Get Previous Customer Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Is Change Type Correct</from><to>Verify Cascade</to><enabled>Y</enabled> </hop>  <hop> <from>Verify Cascade</from><to>Test Case</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Set Test Variables</from><to>Get Customer Entries for Change Type</to><enabled>Y</enabled> </hop>  <hop> <from>Get Customer Entries for Change Type</from><to>Failed?</to><enabled>Y</enabled> </hop>  <hop> <from>Failed?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Case</to><enabled>Y</enabled> </hop>  <hop> <from>Cascade Check</from><to>Select values 2</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 2</from><to>Test Case</to><enabled>Y</enabled> </hop>  <hop> <from>Failed?</from><to>Remove Test pass&#47;fail info</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Test pass&#47;fail info</from><to>Cascade Check</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Abort</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <row_threshold>0</row_threshold>
-      <message/>
-      <always_log_rows>Y</always_log_rows>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>547</xloc>
-      <yloc>73</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Abort 2</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <row_threshold>0</row_threshold>
-      <message/>
-      <always_log_rows>Y</always_log_rows>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>720</xloc>
-      <yloc>87</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Abort 3</name>
-    <type>Abort</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <row_threshold>0</row_threshold>
-      <message/>
-      <always_log_rows>Y</always_log_rows>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>820</xloc>
-      <yloc>202</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Add Change Type</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
-
-var change_type;
-
-change_type = &apos;none&apos;;
-if (customer_status != customer_status_prev)
-{
-	change_type = &apos;status&apos;;
-}
-
-if (branch_key != branch_key_prev)
-{
-	change_type = &apos;branch&apos;;
-}
-
-if (loan_officer_key != loan_officer_key_prev)
-{
-	change_type = &apos;loan officer&apos;;
-}</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>change_type</name>
-        <rename>change_type</rename>
-        <type>String</type>
-        <length>20</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>596</xloc>
-      <yloc>177</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Get Center With Loan Officer Change Entry</send_true_to>
-<send_false_to>Abort</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>the_count</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>1</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>367</xloc>
-      <yloc>102</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Center With Loan Officer Change Entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select customer_key, customer_id, customer_status, customer_level_id, group_key, center_key, loan_officer_key, formed_by_loan_officer_key, branch_key
-from dim_customer
-where display_name = ?
-and valid_from = ?</sql>
-    <outer_join>N</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>test_customer</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>test_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>127</xloc>
-      <yloc>91</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Center With Loan Officer Change Entry Count</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select count(*) as the_count
-from dim_customer
-where display_name = ?
-and valid_from = ?</sql>
-    <outer_join>N</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>test_customer</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>test_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>400</xloc>
-      <yloc>19</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Previous Customer Entry</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select customer_key as customer_key_prev, customer_id as customer_id_prev, customer_status as customer_status_prev, 
-customer_level_id as customer_level_id_prev, group_key as group_key_prev, center_key as center_key_prev, 
-loan_officer_key as loan_officer_key_prev, formed_by_loan_officer_key as formed_by_loan_officer_key_prev, 
-branch_key as branch_key_prev
-from dim_customer c
-where c.customer_id = ?
-and c.customer_key = 
-		(select max(customer_key)
-		from dim_customer prev
-		where prev.customer_id = c.customer_id
-		and prev.customer_key &lt; ?)</sql>
-    <outer_join>Y</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>customer_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>customer_key</name>
-        <type>Integer</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>122</xloc>
-      <yloc>207</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Is Change Type Correct</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Verify Cascade</send_true_to>
-<send_false_to>Abort 3</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>change_type</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>String</type><text>loan officer</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>602</xloc>
-      <yloc>293</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Is there a Previous Customer Entry</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Add Change Type</send_true_to>
-<send_false_to>Abort 2</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>customer_key_prev</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>1</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>314</xloc>
-      <yloc>200</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set Test Variables</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select &apos;center with a LO change&apos; as test_customer, date(&apos;2010-07-27&apos;) as test_date, &apos;center loan officer change&apos; as test_name</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>125</xloc>
-      <yloc>18</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Test Case</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
-
-if (test_result == &quot;Pass&quot;){	
-	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name);
-}
-else
-{
-	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ test_name + &quot;: &quot; + fail_reason);
-}
-
-
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>390</xloc>
-      <yloc>399</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Verify Cascade</name>
+    <name>Cascade Check</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -596,21 +231,39 @@ function test_results(dim_type)
 	}
 }
 
-var test_result;
+var test_result = &quot;Pass&quot;;
 var fail_reason = &quot;&quot;;
 
 
 var DBConnection = &quot;DestinationDB&quot;;
 var wasError = &quot;N&quot;;
 
-var sqlCustomerChanged = &quot;select customer_id, customer_key from dim_customer where center_key = &quot; + center_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; order by customer_id, customer_key;&quot;;
-var sqlCustomerPrevious = &quot;select customer_id, customer_key from dim_customer where center_key = &quot; + center_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by customer_id, customer_key;&quot;;
+integer_customer_level_id = customer_level_id + 0;
 
-var sqlLoanChanged = &quot;select loan_account_id, loan_account_key from dim_loan where center_key = &quot; + center_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; order by loan_account_id, loan_account_key;&quot;;
-var sqlLoanPrevious = &quot;select loan_account_id, loan_account_key from dim_loan where center_key = &quot; + center_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by loan_account_id, loan_account_key;&quot;;
+switch(integer_customer_level_id)
+{
+case 1:
+  level_key_name = &quot;customer_key&quot;;
+  break;
+case 2:
+  level_key_name = &quot;group_key&quot;;
+  break;
+case 3:
+  level_key_name = &quot;center_key&quot;;
+  break;
+default:
+  level_key_name = &quot;Unknown customer level: &quot; + customer_level_id;
+}
+
+
+var sqlCustomerChanged = &quot;select customer_id, customer_key from dim_customer where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; order by customer_id, customer_key;&quot;;
+var sqlCustomerPrevious = &quot;select customer_id, customer_key from dim_customer where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by customer_id, customer_key;&quot;;
+
+var sqlLoanChanged = &quot;select loan_account_id, loan_account_key from dim_loan where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; order by loan_account_id, loan_account_key;&quot;;
+var sqlLoanPrevious = &quot;select loan_account_id, loan_account_key from dim_loan where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by loan_account_id, loan_account_key;&quot;;
  
-var sqlSavingsChanged = &quot;select savings_account_id, savings_account_key from dim_savings where center_key = &quot; + center_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key;&quot;;
-var sqlSavingsPrevious = &quot;select savings_account_id, savings_account_key from dim_savings where center_key = &quot; + center_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key;&quot;;
+var sqlSavingsChanged = &quot;select savings_account_id, savings_account_key from dim_savings where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key;&quot;;
+var sqlSavingsPrevious = &quot;select savings_account_id, savings_account_key from dim_savings where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key;&quot;;
 
 var changedResults = fireToDB(DBConnection, sqlCustomerChanged);
 var previousResults = fireToDB(DBConnection, sqlCustomerPrevious);
@@ -630,10 +283,6 @@ if (wasError == &quot;N&quot;)
 	test_results(&quot;Savings Account&quot;);
 }
 
-if (wasError == &quot;N&quot;)
-{
-	test_result = &quot;Pass&quot;;
-}
 </jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>test_result</name>
         <rename>test_result</rename>
@@ -649,8 +298,363 @@ if (wasError == &quot;N&quot;)
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>165</xloc>
-      <yloc>328</yloc>
+      <xloc>380</xloc>
+      <yloc>217</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Failed?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Select values</send_true_to>
+<send_false_to>Remove Test pass&#47;fail info</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>test_result</leftvalue>
+ <function>=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>Fail</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>469</xloc>
+      <yloc>21</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Customer Entries for Change Type</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+function fail_test(msg)
+{
+	test_result = &quot;Fail&quot;;
+	fail_reason = msg;
+}
+
+function customer_change_identified(row_num, customer_status, group_key, center_key, loan_officer_key, branch_key, prev_customer_status, prev_group_key, prev_center_key, prev_loan_officer_key, prev_branch_key)
+{
+
+	if ((customer_status == prev_customer_status) &amp;&amp; (group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
+	{
+		fail_test(&quot;System Error - No Change found for entry: &quot; + row_num);
+		return false;
+	}
+
+
+	change_is = &quot;none&quot;;
+	if (customer_status != prev_customer_status)
+	{
+		change_is = &quot;status&quot;;
+	}
+
+	if (branch_key != prev_branch_key)
+	{
+		change_is = &quot;branch&quot;;
+	}
+
+	if (loan_officer_key != prev_loan_officer_key)
+	{
+		change_is = &quot;loan officer&quot;;
+	}
+
+
+	if (change_is == &quot;none&quot;)
+	{
+		fail_test(&quot;System Error - Was a Change but not picked up for entry: &quot; + row_num);
+		return false;
+	}
+
+	if (change_is == test_change_type)
+	{
+		return true;
+	}
+
+}
+
+function getCustomerValues()
+{
+	for (var i in sqlResults)
+	{
+&#47;&#47;check from 2nd entry onwards to identify the 1st entry that matches change type.
+    	if (i &gt; 0)
+		{
+&#47;&#47;convert db date to string
+			db_date = sqlResults[i][8] + &quot;&quot;;
+			if (db_date == test_date)
+			{
+				if (customer_change_identified(i, sqlResults[i][2], sqlResults[i][3], sqlResults[i][4], sqlResults[i][5], sqlResults[i][6], sqlResults[i - 1][2], sqlResults[i - 1][3], sqlResults[i - 1][4], sqlResults[i - 1][5], sqlResults[i - 1][6]))
+				{
+					customer_key = sqlResults[i][0];
+					customer_level_id = sqlResults[i][1];
+					customer_key_prev = sqlResults[i - 1][0];
+					return;
+				}
+				&#47;&#47;might have come back from customer_change_identified false and with a failure
+				if (test_result == &quot;Fail&quot;)
+				{
+					return;
+				}
+			}
+		}
+	}
+	fail_test(&quot;Change not found&quot;);
+}
+
+
+var test_result = &quot;Pass&quot;;
+var fail_reason = &quot;&quot;;
+
+var customer_key;
+var customer_level_id;
+var customer_key_prev;
+
+var DBConnection = &quot;DestinationDB&quot;;
+var sqlCustomer; 
+sqlCustomer = &quot;select customer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
+sqlCustomer = sqlCustomer + &quot; , display_name, valid_from &quot;;
+sqlCustomer = sqlCustomer + &quot; from dim_customer where customer_id = &quot; + test_customer_id;
+sqlCustomer = sqlCustomer + &quot; order by customer_key&quot;;
+
+var sqlResults = fireToDB(DBConnection, sqlCustomer);
+
+getCustomerValues();
+
+
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>test_result</name>
+        <rename>test_result</rename>
+        <type>String</type>
+        <length>4</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>fail_reason</name>
+        <rename>fail_reason</rename>
+        <type>String</type>
+        <length>100</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <type>Integer</type>
+        <length>9</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>customer_level_id</name>
+        <rename>customer_level_id</rename>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>customer_key_prev</name>
+        <rename>customer_key_prev</rename>
+        <type>Integer</type>
+        <length>9</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>303</xloc>
+      <yloc>22</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove Test pass&#47;fail info</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>test_result</name>
+      </remove>      <remove>        <name>fail_reason</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>376</xloc>
+      <yloc>107</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>test_name</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_change_type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_result</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fail_reason</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>589</xloc>
+      <yloc>94</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>test_name</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_change_type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_result</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fail_reason</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>589</xloc>
+      <yloc>217</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set Test Variables</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select 
+&apos;center loan officer change&apos; as test_name,
+32 as test_customer_id,
+&apos;center with a LO change&apos; as test_customer, 
+&apos;2010-07-27&apos; as test_date,
+&apos;loan officer&apos; as test_change_type</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>90</xloc>
+      <yloc>18</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Test Case</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+if (test_result == &quot;Pass&quot;){	
+	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name);
+}
+else
+{
+	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ &quot;TEST NAME: &quot; + test_name + &quot; CUSTOMER ID&#47;NAME&#47;DATE: &quot; + test_customer_id + &apos;&#47;&apos; + test_customer + &apos;&#47;&apos; + test_date + &quot; CHANGE: &quot; + test_change_type  + &quot;: -&quot; + fail_reason);
+
+}
+
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>798</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
