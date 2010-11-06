@@ -182,7 +182,7 @@
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>&#47;&#47;Script here
 var dc = destination_count + 0;
-if (dc == 11)
+if (dc == 1)
 {	
 	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name + &quot; : 1 record&quot;);
 }
