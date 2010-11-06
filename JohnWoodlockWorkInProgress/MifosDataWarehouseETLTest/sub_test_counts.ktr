@@ -142,9 +142,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Transformation Name</from><to>Check Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Get Transformation Name</to><enabled>Y</enabled> </hop>  <hop> <from>Check Counts</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Transformation Name</from><to>Health Check</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Get Transformation Name</to><enabled>Y</enabled> </hop>  <hop> <from>Health Check</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Check Counts</name>
+    <name>Health Check</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -162,11 +162,11 @@ var sc = source_count + 0;
 var dc = destination_count + 0;
 
 if (sc == dc){	
-	writeToLog(&quot;m&quot;, &quot;ETL Test Pass: &quot;+ test_name + &quot; : &quot; + source_count + &quot; records&quot;);
+	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name + &quot; : &quot; + source_count + &quot; records&quot;);
 }
 else
 {
-	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Source Count: &quot; + source_count + &quot; does not match Destination Count: &quot; + destination_count);
+	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ test_name + &quot;: Source Count: &quot; + source_count + &quot; does not match Destination Count: &quot; + destination_count);
 }
 
 

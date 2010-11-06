@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>TestDataWarehouseETL</name>
+  <name>TestVerifyHealthChecks</name>
     <description/>
     <extended_description/>
     <job_version/>
@@ -60,46 +60,6 @@
    <shared_objects_file/>
   <entries>
     <entry>
-      <name>Mail Failure</name>
-      <description>Mail</description>
-      <type>MAIL</type>
-      <server>smtp.gmail.com</server>
-      <port>465</port>
-      <destination>john.woodlock@gmail.com</destination>
-      <destinationCc/>
-      <destinationBCc/>
-      <replyto>john@nassles.com</replyto>
-      <replytoname>Alert Test User</replytoname>
-      <subject>${Internal.Job.Filename.Name} Failed!</subject>
-      <include_date>Y</include_date>
-      <contact_person/>
-      <contact_phone/>
-      <comment>${Internal.Job.Filename.Name} - test did not complete successfully.
-</comment>
-      <include_files>N</include_files>
-      <zip_files>N</zip_files>
-      <zip_name/>
-      <use_auth>Y</use_auth>
-      <use_secure_auth>Y</use_secure_auth>
-      <auth_user>john.woodlock</auth_user>
-      <auth_password>Encrypted 2be98afc86aa7f2e49811fe77d69bee9b</auth_password>
-      <only_comment>N</only_comment>
-      <use_HTML>N</use_HTML>
-      <use_Priority>N</use_Priority>
-      <encoding>UTF-8</encoding>
-      <priority>normal</priority>
-      <importance>normal</importance>
-      <secureconnectiontype>SSL</secureconnectiontype>
-      <replyToAddresses/>
-      <filetypes>      </filetypes>      <embeddedimages>
-      </embeddedimages>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>349</xloc>
-      <yloc>207</yloc>
-      </entry>
-    <entry>
       <name>START</name>
       <description/>
       <type>SPECIAL</type>
@@ -116,16 +76,16 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>37</xloc>
-      <yloc>69</yloc>
+      <xloc>48</xloc>
+      <yloc>77</yloc>
       </entry>
     <entry>
-      <name>Verify Health Checks</name>
+      <name>Test Simple Dimension Counts</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;TestVerifyHealthChecks.kjb</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;TestDataWarehouseETLSimpleDimensionCounts.kjb</filename>
       <jobname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -146,16 +106,16 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>243</xloc>
-      <yloc>70</yloc>
+      <xloc>267</xloc>
+      <yloc>76</yloc>
       </entry>
     <entry>
-      <name>Verify Test Cases</name>
+      <name>Test Customer and Accounts Dimension Counts</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;TestVerifyTestCases.kjb</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;TestDataWarehouseETLCustomer_and_AccountsDimensionCounts.kjb</filename>
       <jobname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -176,14 +136,44 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>468</xloc>
-      <yloc>67</yloc>
+      <xloc>484</xloc>
+      <yloc>77</yloc>
+      </entry>
+    <entry>
+      <name>Test Transaction Counts</name>
+      <description/>
+      <type>JOB</type>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;TestDataWarehouseETLTransactionCounts.kjb</filename>
+      <jobname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>708</xloc>
+      <yloc>78</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>Verify Health Checks</to>
+      <to>Test Simple Dimension Counts</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -191,31 +181,22 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Verify Health Checks</from>
-      <to>Mail Failure</to>
+      <from>Test Simple Dimension Counts</from>
+      <to>Test Customer and Accounts Dimension Counts</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Verify Test Cases</from>
-      <to>Mail Failure</to>
+      <from>Test Customer and Accounts Dimension Counts</from>
+      <to>Test Transaction Counts</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Verify Health Checks</from>
-      <to>Verify Test Cases</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
   </hops>
   <notepads>

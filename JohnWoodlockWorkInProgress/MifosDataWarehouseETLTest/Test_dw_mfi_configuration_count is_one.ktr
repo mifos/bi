@@ -166,9 +166,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Transformation Name</from><to>Check Counts</to><enabled>Y</enabled> </hop>  <hop> <from>dw_mfi_configuration Count</from><to>Get Transformation Name</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Transformation Name</from><to>Health Check</to><enabled>Y</enabled> </hop>  <hop> <from>dw_mfi_configuration Count</from><to>Get Transformation Name</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Check Counts</name>
+    <name>Health Check</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -182,13 +182,13 @@
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>&#47;&#47;Script here
 var dc = destination_count + 0;
-if (dc == 1)
+if (dc == 11)
 {	
-	writeToLog(&quot;m&quot;, &quot;ETL Test Pass: &quot;+ test_name + &quot; : 1 record&quot;);
+	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name + &quot; : 1 record&quot;);
 }
 else
 {
-	writeToLog(&quot;e&quot;, &quot;ETL Test Failure: &quot;+ test_name + &quot;: Destination Count should be 1 - It was: &quot; + destination_count);
+	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ test_name + &quot;: Destination Count should be 1 - It was: &quot; + destination_count);
 }
 
 
