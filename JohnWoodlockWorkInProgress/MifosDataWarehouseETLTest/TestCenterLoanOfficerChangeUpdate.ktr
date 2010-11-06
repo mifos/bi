@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>TestCaseGroupLoanOfficerChange</name>
+    <name>TestCenterLoanOfficerChangeUpdate</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -484,7 +484,7 @@ and c.customer_key =
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select &apos;client w&#47;o grp memb hier LO change xxx&apos; as test_customer, date(&apos;2010-07-29&apos;) as test_date, &apos;center loan officer change&apos; as test_change</sql>
+    <sql>select &apos;center with a LO change&apos; as test_customer, date(&apos;2010-07-27&apos;) as test_date, &apos;center loan officer change&apos; as test_change</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -615,8 +615,8 @@ if (wasError == &quot;N&quot;)
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>161</xloc>
-      <yloc>286</yloc>
+      <xloc>148</xloc>
+      <yloc>435</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
