@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Nicaragua 2010</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Nicaragua 2010</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_nicaragua_2010_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are there?</text>
+            <nickname>ppi_nicaragua_2010_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Eight or more</value>
+            </choice>
+            <choice order="2">
+                <value>Seven</value>
+            </choice>
+            <choice order="3">
+                <value>Six</value>
+            </choice>
+            <choice order="4">
+                <value>Five</value>
+            </choice>
+            <choice order="5">
+                <value>Four</value>
+            </choice>
+            <choice order="6">
+                <value>Three</value>
+            </choice>
+            <choice order="7">
+                <value>One or two</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many household members ages 7 to 12 are enrolled this year in the formal education system?</text>
+            <nickname>ppi_nicaragua_2010_family_members_7_to_12_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not all</value>
+            </choice>
+            <choice order="2">
+                <value>All, and all are in a non-autonomous public school, community school, or other</value>
+            </choice>
+            <choice order="3">
+                <value>All, and one is in autonomous or private school</value>
+            </choice>
+            <choice order="4">
+                <value>No children ages 7 to 12</value>
+            </choice>
+            <choice order="5">
+                <value>All, and two or more in autonomous or private school</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Can the female head/spouse read and write?</text>
+            <nickname>ppi_nicaragua_2010_female_head_literate</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, or no female head/spouse</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main material of the floor of the residence?</text>
+            <nickname>ppi_nicaragua_2010_house_floor</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Earth, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Wooded planks, tiles or concrete, mud bricks, or cement bricks or tile (mosaic, ceramic, or glazed)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What type of toilet arrangement does the household have?</text>
+            <nickname>ppi_nicaragua_2010_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Outhouse or latrine (with or without treatment), or flush toilet connected to cesspool, septic tank, river, or stream</value>
+            </choice>
+            <choice order="3">
+                <value>Flush toilet connected to sewer</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What fuel does the household usually use for cooking?</text>
+            <nickname>ppi_nicaragua_2010_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Non-purchased firewood</value>
+            </choice>
+            <choice order="2">
+                <value>Purchased firewood</value>
+            </choice>
+            <choice order="3">
+                <value>Charcoal, butane or propane gas, kerosene, electricity, other, or does not cook</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household have a refrigerator?</text>
+            <nickname>ppi_nicaragua_2010_has_refrigerator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household have a blender?</text>
+            <nickname>ppi_nicaragua_2010_has_blender</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household have an iron?</text>
+            <nickname>ppi_nicaragua_2010_has_iron</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household have a radio, radio/tape player, or stereo system?</text>
+            <nickname>ppi_nicaragua_2010_has_stereo</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Only radio</value>
+            </choice>
+            <choice order="3">
+                <value>Radio/tape player, regardless of radio, and no stereo</value>
+            </choice>
+            <choice order="4">
+                <value>Stereo, regardless of radio and radio/tape player</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Mali 2010</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Mali 2010</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_mali_2010_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 11 years old or younger?</text>
+            <nickname>ppi_mali_2010_family_members_0_to_11</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Five or more</value>
+            </choice>
+            <choice order="2">
+                <value>Four</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Two</value>
+            </choice>
+            <choice order="5">
+                <value>One</value>
+            </choice>
+            <choice order="6">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many members of the household usually work as their main occupation in agriculture, animal husbandry, fishing, or forestry?</text>
+            <nickname>ppi_mali_2010_employed_in_agricuture_animals</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Three or more</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>One or none</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the main construction material of the roof of the residence?</text>
+            <nickname>ppi_mali_2010_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Tile or thatch</value>
+            </choice>
+            <choice order="2">
+                <value>Mud, corrugated metal sheets, concrete, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main construction material of the walls of the residence?</text>
+            <nickname>ppi_mali_2010_house_walls</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Partly cement or others</value>
+            </choice>
+            <choice order="2">
+                <value>Cement</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the household's main source of drinking water?</text>
+            <nickname>ppi_mali_2010_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Surface water, non-modern well, drilled well, or others</value>
+            </choice>
+            <choice order="2">
+                <value>Modern well</value>
+            </choice>
+            <choice order="3">
+                <value>Public pump</value>
+            </choice>
+            <choice order="4">
+                <value>Faucet tap</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What toilet arrangements does the household have?</text>
+            <nickname>ppi_mali_2010_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Others</value>
+            </choice>
+            <choice order="2">
+                <value>Latrine (private or shared with other households) or flush toilet (private inside, private outside, or shared with other households)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household own any television sets?</text>
+            <nickname>ppi_mali_2010_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household own any radios?</text>
+            <nickname>ppi_mali_2010_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household own any irons?</text>
+            <nickname>ppi_mali_2010_owns_iron</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own any motorbikes?</text>
+            <nickname>ppi_mali_2010_owns_motorbike</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

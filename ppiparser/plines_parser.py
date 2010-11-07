@@ -90,8 +90,7 @@ INSERT_TEMPLATE = 'insert into ppi_category_likelihood_bands ({COLUMNS}) values 
 def _country_name(filename):
     return os.path.basename(filename).split('.')[0].capitalize()
 
-def inserts(filename, nicknames_csv):
-    nicks = Nicknames(filename=nicknames_csv)
+def inserts(filename, nicks):
     country = _country_name(filename)
     reader = csv.reader(open(filename))
     fst = reader.next()
@@ -106,7 +105,7 @@ def inserts(filename, nicknames_csv):
         if country.lower() == 'india' and to_append in COLUMNS_2005_VERSION:
             to_append = to_append.replace('1993', '2005')
         db_columns.append(to_append)
-    title = 'PPI %s %s' % (country, nicks.year(country))
+    title = nicks.questionsTitle(country)
     for row in reader:
         db_data = ['\'' + title + '\'', nicks.povertyLinesVersion(country)] + list(row)
 
@@ -121,8 +120,11 @@ def main():
         print 'Usage: %s TXT NICKNAMES' % os.path.basename(sys.argv[0])
         sys.exit(1)
     filename = sys.argv[1]
-    with open('%sPovertyLines.sql' % _country_name(filename).capitalize(), 'w') as f:
-        f.write('\n'.join(inserts(filename, sys.argv[2])) + '\n')
+    nicks = Nicknames(sys.argv[2])
+    country = _country_name(filename)
+    outfilename = '%s%s%sPovertyLines.sql' % (country.capitalize(), nicks.year(country), nicks.questionsVersionText(country, ''))
+    with open(outfilename, 'w') as f:
+        f.write('\n'.join(inserts(filename, nicks)) + '\n')
 
 if __name__ == '__main__':
     main()

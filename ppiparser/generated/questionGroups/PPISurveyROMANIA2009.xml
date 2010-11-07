@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Romania 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Romania 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_romania_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many people live in the household?</text>
+            <nickname>ppi_romania_2009_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Five or more</value>
+            </choice>
+            <choice order="2">
+                <value>Four</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Two</value>
+            </choice>
+            <choice order="5">
+                <value>One</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>What is the highest educational level completed by any household member?</text>
+            <nickname>ppi_romania_2009_education_level</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No formal school, primary (Class 1 - 4), or secondary (Class 5 - 8)</value>
+            </choice>
+            <choice order="2">
+                <value>Vocational, complementary, apprenticeship, or lower high school (Class 9-10)</value>
+            </choice>
+            <choice order="3">
+                <value>High school (Class 9-12)</value>
+            </choice>
+            <choice order="4">
+                <value>Specialty post-high school, technical foreman, or university short-term (college)</value>
+            </choice>
+            <choice order="5">
+                <value>University long-term</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What type of sewage system does the residence have?</text>
+            <nickname>ppi_romania_2009_sewage_system</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Own system, not available, or no data</value>
+            </choice>
+            <choice order="2">
+                <value>Public system</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>How many working land-line and/or mobile telephones does the household own?</text>
+            <nickname>ppi_romania_2009_phones</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No land-line, and no mobile</value>
+            </choice>
+            <choice order="2">
+                <value>No land-line, but one mobile</value>
+            </choice>
+            <choice order="3">
+                <value>One or more land-lines, but no mobile</value>
+            </choice>
+            <choice order="4">
+                <value>No land-line, but two or more mobiles</value>
+            </choice>
+            <choice order="5">
+                <value>One or more land-lines, and one mobile</value>
+            </choice>
+            <choice order="6">
+                <value>One or more land-lines, and two or more mobiles</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>Does the household own any working gas stoves?</text>
+            <nickname>ppi_romania_2009_gas_stoves</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What type of working washing machine does the household own?</text>
+            <nickname>ppi_romania_2009_washing_machine_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Only non-automatic</value>
+            </choice>
+            <choice order="3">
+                <value>Automatic (regardless of owning non-automatic)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What type of working refrigerator/freezer does the household own?</text>
+            <nickname>ppi_romania_2009_refrigerator_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Refrigerator only or freezer only</value>
+            </choice>
+            <choice order="3">
+                <value>Refrigerator and freezer, or refrigerating combine</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household own any color TV sets?</text>
+            <nickname>ppi_romania_2009_owns_color_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household own any radios?</text>
+            <nickname>ppi_romania_2009_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own a working car?</text>
+            <nickname>ppi_romania_2009_owns_car</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

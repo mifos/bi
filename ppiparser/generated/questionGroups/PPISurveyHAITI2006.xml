@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Haiti 2006</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Haiti 2006</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_haiti_2006_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many people in the household are 14 years old or younger?</text>
+            <nickname>ppi_haiti_2006_family_members_0_to_14</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Four or more</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>One</value>
+            </choice>
+            <choice order="5">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Do all children of ages 6–14 attend school?</text>
+            <nickname>ppi_haiti_2006_all_family_members_6_to_14_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <choice order="3">
+                <value>No children ages 6–14</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Where does the household reside?</text>
+            <nickname>ppi_haiti_2006_household_location</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not Port-a-Prince</value>
+            </choice>
+            <choice order="2">
+                <value>Port-a-Prince</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>Does the household own a radio/cassette player?</text>
+            <nickname>ppi_haiti_2006_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What are the dwelling's floors made of?</text>
+            <nickname>ppi_haiti_2006_house_floors</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Earth</value>
+            </choice>
+            <choice order="2">
+                <value>Concrete or other</value>
+            </choice>
+            <choice order="3">
+                <value>Ceramic or wood planks</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>In the past 12 months, did the household receive any money or gifts remitted from abroad?</text>
+            <nickname>ppi_haiti_2006_money_from_abroad</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does any household member have salaried employment?</text>
+            <nickname>ppi_haiti_2006_salaried_employment</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>How many plots of agricultural land, forest land, pasture land, or gardens does the household use?</text>
+            <nickname>ppi_haiti_2006_how_many_plots</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or three</value>
+            </choice>
+            <choice order="4">
+                <value>Four or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>What is the dwelling's roof made of?</text>
+            <nickname>ppi_haiti_2006_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Straw, palm leaves, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Iron</value>
+            </choice>
+            <choice order="3">
+                <value>Concrete</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own any pigs?</text>
+            <nickname>ppi_haiti_2006_owns_pigs</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

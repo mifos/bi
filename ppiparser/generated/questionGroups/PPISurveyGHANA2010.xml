@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Ghana 2010</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Ghana 2010</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_ghana_2010_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_ghana_2010_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Seven or more</value>
+            </choice>
+            <choice order="2">
+                <value>Six</value>
+            </choice>
+            <choice order="3">
+                <value>Five</value>
+            </choice>
+            <choice order="4">
+                <value>Four</value>
+            </choice>
+            <choice order="5">
+                <value>Three</value>
+            </choice>
+            <choice order="6">
+                <value>Two</value>
+            </choice>
+            <choice order="7">
+                <value>One</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Are all children ages 5 to 12 in school?</text>
+            <nickname>ppi_ghana_2010_all_family_members_5_to_12_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, or no children ages 5 to 12</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the highest grade completed by the female head/spouse?</text>
+            <nickname>ppi_ghana_2010_female_head_highest_grade</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="2">
+                <value>None or pre-school</value>
+            </choice>
+            <choice order="3">
+                <value>Primary or middle</value>
+            </choice>
+            <choice order="4">
+                <value>Any JSS, SSS, S, L, U, or higher</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>Is the main job of the male head/spouse in agriculture?</text>
+            <nickname>ppi_ghana_2010_male_head_agriculture_job</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Male head/spouse has no job</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, main job is in agriculture</value>
+            </choice>
+            <choice order="3">
+                <value>No, main job is not in agriculture</value>
+            </choice>
+            <choice order="4">
+                <value>No male head/spouse</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the main construction material used for the roof?</text>
+            <nickname>ppi_ghana_2010_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Palm leaves/raffia/thatch, wood, mud bricks/earth, bamboo, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Corrugated iron sheets, cement/concrete, asbestos/slate, or roofing tiles</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What is the main source of lighting for the dwelling?</text>
+            <nickname>ppi_ghana_2010_house_lighting</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not electricity (mains)</value>
+            </choice>
+            <choice order="2">
+                <value>Electricity (mains)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What is the main source of drinking water for the household?</text>
+            <nickname>ppi_ghana_2010_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Borehole, well (with pump or not, protected or not), or other</value>
+            </choice>
+            <choice order="2">
+                <value>River/stream, rain water/spring, or dugout/pond/lake/dam</value>
+            </choice>
+            <choice order="3">
+                <value>Indoor plumbing, inside standpipe, sachet/bottled water,  standpipe/tap (public or private outside), pipe in neighbors, water truck/tanker, or water vendor</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does any household member own a working stove (kerosene, electric, or gas)?</text>
+            <nickname>ppi_ghana_2010_owns_stove</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does any household member own a working iron (box or electric)?</text>
+            <nickname>ppi_ghana_2010_owns_iron</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does any household member own a working radio, radio cassette, record player, or 3-in-1 radio system?</text>
+            <nickname>ppi_ghana_2010_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Only radio</value>
+            </choice>
+            <choice order="3">
+                <value>Radio cassette but no record player nor 3-in-1 (regardless of radio)</value>
+            </choice>
+            <choice order="4">
+                <value>Record player but no 3-in-1 (regardless of radio or cassette)</value>
+            </choice>
+            <choice order="5">
+                <value>3-in-1 radio system (regardless of any others)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Nigeria 2008</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Nigeria 2008</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_nigeria_2008_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_nigeria_2008_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Eight or more</value>
+            </choice>
+            <choice order="2">
+                <value>Six or seven</value>
+            </choice>
+            <choice order="3">
+                <value>Five</value>
+            </choice>
+            <choice order="4">
+                <value>Four</value>
+            </choice>
+            <choice order="5">
+                <value>Three</value>
+            </choice>
+            <choice order="6">
+                <value>Two</value>
+            </choice>
+            <choice order="7">
+                <value>One</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many household members aged 6 to 18 are currently attending school?</text>
+            <nickname>ppi_nigeria_2008_all_family_members_6_to_18_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not all</value>
+            </choice>
+            <choice order="2">
+                <value>No children ages 6 to 18</value>
+            </choice>
+            <choice order="3">
+                <value>All</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the main flooring material of the house?</text>
+            <nickname>ppi_nigeria_2008_house_floors</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Earth/mud, or dirt/straw</value>
+            </choice>
+            <choice order="2">
+                <value>Wood, tile, plank, concrete, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main roofing material of the house?</text>
+            <nickname>ppi_nigeria_2008_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Mud/mud bricks</value>
+            </choice>
+            <choice order="2">
+                <value>Thatch (grass or straw)</value>
+            </choice>
+            <choice order="3">
+                <value>Wood/bamboo, corrugated iron sheets, cement/concrete, roofing tiles, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the main source of drinking water for the household?</text>
+            <nickname>ppi_nigeria_2008_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Unprotected well/rain water, or untreated pipe-borne</value>
+            </choice>
+            <choice order="2">
+                <value>Vendor, truck, protected well, river, lake, or pond</value>
+            </choice>
+            <choice order="3">
+                <value>Treated pipe-borne water, borehole/hand pump, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What type of toilet is used by the household?</text>
+            <nickname>ppi_nigeria_2008_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Pail/bucket, covered or uncovered pit latrine, ventilated improved pit latrine, other, or none</value>
+            </choice>
+            <choice order="2">
+                <value>Toilet on water, or flush to sewer or septic tank</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does any member of the household own a television?</text>
+            <nickname>ppi_nigeria_2008_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does any member of the household own a stove?</text>
+            <nickname>ppi_nigeria_2008_owns_stove</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does any member of the household own a mattress/bed?</text>
+            <nickname>ppi_nigeria_2008_owns_bed</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does any member of the household own a radio?</text>
+            <nickname>ppi_nigeria_2008_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

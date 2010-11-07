@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Egypt 2010</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Egypt 2010</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_egypt_2010_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_egypt_2010_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Seven or more</value>
+            </choice>
+            <choice order="2">
+                <value>Six</value>
+            </choice>
+            <choice order="3">
+                <value>Five</value>
+            </choice>
+            <choice order="4">
+                <value>Four</value>
+            </choice>
+            <choice order="5">
+                <value>Three</value>
+            </choice>
+            <choice order="6">
+                <value>One or two</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Do all children ages 6 to 18 attend school?</text>
+            <nickname>ppi_egypt_2010_all_family_members_6_to_18_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <choice order="3">
+                <value>No children 6 to 18</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Can the female head/spouse read and write?</text>
+            <nickname>ppi_egypt_2010_female_head_literate</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="3">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>In their main line of work, do any family members have non-permanent (temporary, seasonal, or irregular) wage jobs?</text>
+            <nickname>ppi_egypt_2010_has_temporary_wage_job</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Yes</value>
+            </choice>
+            <choice order="2">
+                <value>No</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the material of the walls of the residence?</text>
+            <nickname>ppi_egypt_2010_house_walls</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Stones, mud, wood, tin, asbestos, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Bricks with mortar</value>
+            </choice>
+            <choice order="3">
+                <value>Concrete</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>How many rooms does the residence of the household have (including parlor/reception hall)?</text>
+            <nickname>ppi_egypt_2010_rooms_in_house</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Four or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What is the source of water for the household?</text>
+            <nickname>ppi_egypt_2010_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Well, pump, public network with no connection, public network with tap outside building, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Public network with tap inside building</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>What toilet arrangement does the household have?</text>
+            <nickname>ppi_egypt_2010_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No toilet available, or shared toilet</value>
+            </choice>
+            <choice order="2">
+                <value>Private non-flush toilet</value>
+            </choice>
+            <choice order="3">
+                <value>Private flush toilet</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household own any gas or electric water heaters?</text>
+            <nickname>ppi_egypt_2010_owns_gas_electric_water_heater</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own any clothes-washing machines?</text>
+            <nickname>ppi_egypt_2010_owns_washing_machine</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, only non-automatic</value>
+            </choice>
+            <choice order="3">
+                <value>Yes, automatic</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

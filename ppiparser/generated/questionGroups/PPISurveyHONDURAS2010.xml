@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Honduras 2010</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Honduras 2010</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_honduras_2010_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 14-years-old or younger?</text>
+            <nickname>ppi_honduras_2010_family_members_0_to_14</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Five or more</value>
+            </choice>
+            <choice order="2">
+                <value>Four</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Two</value>
+            </choice>
+            <choice order="5">
+                <value>One</value>
+            </choice>
+            <choice order="6">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>What is the highest educational level that the female head/spouse has reached?</text>
+            <nickname>ppi_honduras_2010_female_head_education_level</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None, pre-school, or literacy program</value>
+            </choice>
+            <choice order="2">
+                <value>Primary school</value>
+            </choice>
+            <choice order="3">
+                <value>No female head/spouse, common cycle, or no data</value>
+            </choice>
+            <choice order="4">
+                <value>Diversified or higher</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the main occupation of the male head/ spouse?</text>
+            <nickname>ppi_honduras_2010_male_head_occupation</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No data or no main occupation</value>
+            </choice>
+            <choice order="2">
+                <value>Farmer, rancher, agricultural worker, or no male head/spouse</value>
+            </choice>
+            <choice order="3">
+                <value>Shop owner, salesperson, service worker, transport and storage operator, or worker in textiles, construction, mechanics, graphics, chemicals, food processing, etc.</value>
+            </choice>
+            <choice order="4">
+                <value>Office worker, transportation operator, professional, technician, director, manager, administrator, or related job</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>How many household members receive a salary in their main occupation?</text>
+            <nickname>ppi_honduras_2010_family_members_salaried</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>How many rooms does the household use as bedrooms?</text>
+            <nickname>ppi_honduras_2010_house_bedrooms</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Four or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What is the main construction material of the floors of the residence?</text>
+            <nickname>ppi_honduras_2010_house_floors</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Dirt, other, or no data</value>
+            </choice>
+            <choice order="2">
+                <value>Mud bricks, poured concrete, or wood</value>
+            </choice>
+            <choice order="3">
+                <value>Cement bricks</value>
+            </choice>
+            <choice order="4">
+                <value>Ceramic tile or granite</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What is the household's source of water?</text>
+            <nickname>ppi_honduras_2010_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not public network</value>
+            </choice>
+            <choice order="2">
+                <value>Public network</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does any household member have a working refrigerator?</text>
+            <nickname>ppi_honduras_2010_has_refrigerator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does any household member have a working stove with four burners?</text>
+            <nickname>ppi_honduras_2010_has_stove</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does any household member have a working television with or without cable?</text>
+            <nickname>ppi_honduras_2010_has_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, without cable</value>
+            </choice>
+            <choice order="3">
+                <value>Yes, with cable</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Nepal 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Nepal 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_nepal_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 12-years-old or younger?</text>
+            <nickname>ppi_nepal_2009_family_members_0_to_12</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Four or more</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>One</value>
+            </choice>
+            <choice order="5">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many children ages 5 to 12 attend school?</text>
+            <nickname>ppi_nepal_2009_family_members_5_to_12_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not all</value>
+            </choice>
+            <choice order="2">
+                <value>No children ages 5 to 12</value>
+            </choice>
+            <choice order="3">
+                <value>All</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Do any household members attend a private school?</text>
+            <nickname>ppi_nepal_2009_family_members_at_private_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>Does the female head/spouse know how to read a letter?</text>
+            <nickname>ppi_nepal_2009_female_head_can_read</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="3">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the main material of the roof?</text>
+            <nickname>ppi_nepal_2009_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Straw/thatch, wood/planks, earth/mud, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Tiles/slate</value>
+            </choice>
+            <choice order="3">
+                <value>Galvanized iron, or concrete/cement</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What type of toilet is used in your household?</text>
+            <nickname>ppi_nepal_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No toilet</value>
+            </choice>
+            <choice order="2">
+                <value>Household non-flush, communal latrine, household flush (connected to municipal sewer), or household flush (connected to septic tank)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What type of stove does your household mainly use for cooking?</text>
+            <nickname>ppi_nepal_2009_stove_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Open fireplace, other, or no data</value>
+            </choice>
+            <choice order="2">
+                <value>Mud stove, smokeless stove, or kerosene/gas stove</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>How many radio/tape/CD players does the household own?</text>
+            <nickname>ppi_nepal_2009_music_players</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household own any bicycles, motorcycles/scooters, motor cars, etc.</text>
+            <nickname>ppi_nepal_2009_owns_transportation</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own any televisions/decks?</text>
+            <nickname>ppi_nepal_2009_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

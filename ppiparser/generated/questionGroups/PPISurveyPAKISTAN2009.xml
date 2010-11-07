@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Pakistan 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Pakistan 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_pakistan_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>In what province does the household live?</text>
+            <nickname>ppi_pakistan_2009_province</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Balochistan</value>
+            </choice>
+            <choice order="2">
+                <value>Northwest Frontier Province</value>
+            </choice>
+            <choice order="3">
+                <value>Sindh</value>
+            </choice>
+            <choice order="4">
+                <value>Punjab or Islamabad</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many household members are 13 years old or younger?</text>
+            <nickname>ppi_pakistan_2009_family_members_0_to_13</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Five or more</value>
+            </choice>
+            <choice order="2">
+                <value>Four</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Two</value>
+            </choice>
+            <choice order="5">
+                <value>One</value>
+            </choice>
+            <choice order="6">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>How many children ages 5 to 13 attend school?</text>
+            <nickname>ppi_pakistan_2009_family_members_5_to_13_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not all</value>
+            </choice>
+            <choice order="2">
+                <value>All, or no children ages 5 to 13</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>How many household members work in elementary occupations (not senior officials, managers, professionals, technicians or associated professionals, clerks, salespeople, service or shop workers, skilled workers in agriculture or fishery, craft or trade workers, or plant/machinery operators)?</text>
+            <nickname>ppi_pakistan_2009_employed_elementary_work</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Two or more</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the highest educational level completed by the female head/spouse?</text>
+            <nickname>ppi_pakistan_2009_female_head_education_level</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Less than Class 1 or no data</value>
+            </choice>
+            <choice order="2">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="3">
+                <value>Class 1 or higher</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What is the main source of drinking water for the household?</text>
+            <nickname>ppi_pakistan_2009_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Others</value>
+            </choice>
+            <choice order="2">
+                <value>Hand pump, covered/closed well, motorized pump/tube well, or piped water</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What type of toilet is used by your household?</text>
+            <nickname>ppi_pakistan_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None or other</value>
+            </choice>
+            <choice order="2">
+                <value>Flush connected to pit/septic tank or open drain</value>
+            </choice>
+            <choice order="3">
+                <value>Flush connected to public sewerage</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household own a refrigerator or freezer?</text>
+            <nickname>ppi_pakistan_2009_owns_refrigerator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household own a television?</text>
+            <nickname>ppi_pakistan_2009_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own a motorcycle, scooter, car, or other vehicle?</text>
+            <nickname>ppi_pakistan_2009_owns_trasportation</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

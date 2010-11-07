@@ -19,3 +19,4 @@ for f in $PRGDIR/data/percents/*.csv; do
     echo "Processing $f"
     $PRGDIR/plines_parser.py "$f" "$PRGDIR/data/nicknames.csv"
 done
+mv *PovertyLines.sql generated/povertyLines

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Senegal 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Senegal 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_senegal_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>Quel est le matériau des murs de la maison?</text>
+            <nickname>ppi_senegal_2009_house_walls</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Autre</value>
+            </choice>
+            <choice order="2">
+                <value>Briques en banco ou en ciment</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Quelle est la principale source utilisée pour l'élairage?</text>
+            <nickname>ppi_senegal_2009_energy_for_lighting</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Lampe tempête ou lampe a pétrole artisanale</value>
+            </choice>
+            <choice order="2">
+                <value>Bougie, bois ou autre</value>
+            </choice>
+            <choice order="3">
+                <value>Groupe électrogene, solaire, lampe à gaz ou électricité (SENELEC)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Quelle est la principale source utilisée pour faire la cuisine?</text>
+            <nickname>ppi_senegal_2009_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Autre</value>
+            </choice>
+            <choice order="2">
+                <value>Gaz</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>Quel est la principale source d'approvisionnement en eau utilisée pour boire?</text>
+            <nickname>ppi_senegal_2009_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Autre</value>
+            </choice>
+            <choice order="2">
+                <value>Robinet interieur</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>Quel type de toilettes utilise le ménage?</text>
+            <nickname>ppi_senegal_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Latrines non couvertes, cuvette/seau, aucun ou autre</value>
+            </choice>
+            <choice order="2">
+                <value>Latrines couvertes, latrines ventilées améliorées ou chasse d'eau avec fosse septique</value>
+            </choice>
+            <choice order="3">
+                <value>Chasse d'eau avec égout</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>Votre ménage possède-t-il un refrigerateur/congelateur?</text>
+            <nickname>ppi_senegal_2009_owns_refrigerator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Non</value>
+            </choice>
+            <choice order="2">
+                <value>Oui</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Votre ménage possède-t-il une télévision?</text>
+            <nickname>ppi_senegal_2009_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Non</value>
+            </choice>
+            <choice order="2">
+                <value>Oui</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Votre ménage possède-t-il un ventilateur?</text>
+            <nickname>ppi_senegal_2009_owns_fan</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Non</value>
+            </choice>
+            <choice order="2">
+                <value>Oui</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Votre ménage possède-t-il un fer à repasser électronique?</text>
+            <nickname>ppi_senegal_2009_owns_iron</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Non</value>
+            </choice>
+            <choice order="2">
+                <value>Oui</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Est-ce que la chef de famille féminin sait lire et écrire dans une langue quelconque?</text>
+            <nickname>ppi_senegal_2009_female_head_literate</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Il n'y a pas chef de famille féminin</value>
+            </choice>
+            <choice order="2">
+                <value>Non</value>
+            </choice>
+            <choice order="3">
+                <value>Oui</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Ethiopia 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Ethiopia 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_ethiopia_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many people are in the household?</text>
+            <nickname>ppi_ethiopia_2009_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Six or more</value>
+            </choice>
+            <choice order="2">
+                <value>Five</value>
+            </choice>
+            <choice order="3">
+                <value>Four</value>
+            </choice>
+            <choice order="4">
+                <value>Three</value>
+            </choice>
+            <choice order="5">
+                <value>Two or one</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Do all children ages 6 to 12 attend school?</text>
+            <nickname>ppi_ethiopia_2009_all_family_members_6_to_12_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <choice order="3">
+                <value>No children ages 6 to 12</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Excluding kitchen and toilets, how many rooms does the dwelling unit have?</text>
+            <nickname>ppi_ethiopia_2009_rooms_in_house</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main construction material of the walls of the dwelling unit?</text>
+            <nickname>ppi_ethiopia_2009_house_walls</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Wood and grass, mud and stone, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Wood and mud, reeds and bamboo, cement and stone, hollow blocks, or bricks</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What type of toilet facility does the household use?</text>
+            <nickname>ppi_ethiopia_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Pit latrine (shared), field/forest, container (household utensils), or other</value>
+            </choice>
+            <choice order="2">
+                <value>Pit latrine (private)</value>
+            </choice>
+            <choice order="3">
+                <value>Flush toilet (private or shared)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What is the main source of cooking fuel?</text>
+            <nickname>ppi_ethiopia_2009_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Mainly firewood (purchase or collected), animal dung, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Crop residue</value>
+            </choice>
+            <choice order="3">
+                <value>Charcoal, kerosene, butane gas, electricity, or does not use fuel</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household currently own any mattresses and/or beds?</text>
+            <nickname>ppi_ethiopia_2009_owns_mattress_or_bed</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household currently own any radios?</text>
+            <nickname>ppi_ethiopia_2009_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household currently own any watches or clocks?</text>
+            <nickname>ppi_ethiopia_2009_owns_watches_or_clocks</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household currently own any cattle, sheep, or goats?</text>
+            <nickname>ppi_ethiopia_2009_owns_cattle_sheep_goats</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="12">
+            <text>Does the household currently own any jewelry (gold/silver)?</text>
+            <nickname>ppi_ethiopia_2009_owns_jewelry</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

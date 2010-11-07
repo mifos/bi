@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Ecuador 2008</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Ecuador 2008</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_ecuador_2008_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 16-years-old or younger?</text>
+            <nickname>ppi_ecuador_2008_family_members_0_to_16</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Four or more</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>One</value>
+            </choice>
+            <choice order="5">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Do all household members ages 5 to 16 attend school?</text>
+            <nickname>ppi_ecuador_2008_all_family_members_5_to_16_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>No one in the age range</value>
+            </choice>
+            <choice order="3">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the main material of the roof of the residence?</text>
+            <nickname>ppi_ecuador_2008_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Tile, palm leaves, straw, or leaves</value>
+            </choice>
+            <choice order="2">
+                <value>Tin, asbestos (Eternit), or other</value>
+            </choice>
+            <choice order="3">
+                <value>Reinforced concrete/flagstone/concrete</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What type of toilet arrangement does the household have?</text>
+            <nickname>ppi_ecuador_2008_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None, latrine, flush toilet and pit, Flush toilet and septic tank not inside the residence</value>
+            </choice>
+            <choice order="2">
+                <value>Flush toilet to sewer system not inside the residence</value>
+            </choice>
+            <choice order="3">
+                <value>Flush toilet and septic tank inside the residence</value>
+            </choice>
+            <choice order="4">
+                <value>Flush toilet to sewer system inside the residence</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>Does the household have a shower?</text>
+            <nickname>ppi_ecuador_2008_has_shower</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What fuel does the household use for cooking?</text>
+            <nickname>ppi_ecuador_2008_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Firewood/charcoal or other</value>
+            </choice>
+            <choice order="2">
+                <value>Gas, electricity, or no one cooks</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household have a car?</text>
+            <nickname>ppi_ecuador_2008_has_car</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household have a refrigerator?</text>
+            <nickname>ppi_ecuador_2008_has_refrigerator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>How many color televisions does the household have?</text>
+            <nickname>ppi_ecuador_2008_color_televisions</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>Three or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household have a blender?</text>
+            <nickname>ppi_ecuador_2008_has_blender</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

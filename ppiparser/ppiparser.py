@@ -83,8 +83,7 @@ def sql(qs, country_name, nicks, title='Unknown'):
     group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
     return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title,
             POINTS_VERSION= nicks.pointsVersion(country_name), 
-            DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)))
-
+            DATE_NICKNAME=nicks.nicknameForSurveyDate(country_name))
 
 def xml(qs, country_name, nicks, title='Unknown'):
     questions = []
@@ -94,7 +93,7 @@ def xml(qs, country_name, nicks, title='Unknown'):
                 NICKNAME=nicks.nickname(country_name, qnum), CHOICES=''.join(choices))
         questions.append(question)
     return XML_TEMPLATE.format(TITLE=title, QUESTIONS=''.join(questions),
-            DATE_NICKNAME='ppi_%s_%s_survey_date' % (country_name.lower(),nicks.year(country_name)) )
+            DATE_NICKNAME=nicks.nicknameForSurveyDate(country_name))
 
 def parse_questions(f):
     #import ipdb; ipdb.set_trace()
@@ -132,15 +131,15 @@ if __name__ == '__main__':
         country_name = country_name.split('.')[0]
     nicks = Nicknames(sys.argv[2])
     year = nicks.year(country_name)
-    title = 'PPI %s %s' % (country_name.capitalize(), year)
+    title = nicks.questionsTitle(country_name)
     qs = list(parse_questions(filename))
     sql_out = sql(qs, country_name, nicks, title)
     xml_out = xml(qs, country_name, nicks, title)
-    tmp_sql_filename = '/tmp/%s%sPPIScore.sql' % (country_name.capitalize(), year)
+    tmp_sql_filename = 'generated/scoringEtl/%s%s%sPPIScore.sql' % (country_name.capitalize(), year, nicks.questionsVersionText(country_name,''))
     with open(tmp_sql_filename, 'w') as sql_f:
         sql_f.write(sql_out)
     print 'SQL written to ' + tmp_sql_filename
-    tmp_xml_filename = '/tmp/PPISurvey%s%s.xml' % (country_name.upper(), year)
+    tmp_xml_filename = 'generated/questionGroups/PPISurvey%s%s%s.xml' % (country_name.upper(), year, nicks.questionsVersionText(country_name,''))
     with open(tmp_xml_filename, 'w') as xml_f:
         xml_f.write(xml_out)
     print 'XML written to ' + tmp_xml_filename

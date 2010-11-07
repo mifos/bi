@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Yemen 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Yemen 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_yemen_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_yemen_2009_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Ten or more</value>
+            </choice>
+            <choice order="2">
+                <value>Eight or nine</value>
+            </choice>
+            <choice order="3">
+                <value>Seven</value>
+            </choice>
+            <choice order="4">
+                <value>Six</value>
+            </choice>
+            <choice order="5">
+                <value>Four or five</value>
+            </choice>
+            <choice order="6">
+                <value>Three</value>
+            </choice>
+            <choice order="7">
+                <value>One or two</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many household members aged 12 to 18 currently attend school?</text>
+            <nickname>ppi_yemen_2009_family_members_12_to_18_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not all</value>
+            </choice>
+            <choice order="2">
+                <value>All</value>
+            </choice>
+            <choice order="3">
+                <value>No children aged 12 to 18</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the main material used for the floor?</text>
+            <nickname>ppi_yemen_2009_house_floors</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Concrete, mud/soil, stone, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Floor tiles or marble</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main material used for the ceiling?</text>
+            <nickname>ppi_yemen_2009_house_ceiling</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Wood and mud, wood, hay, mud and hay, metal sheets and mud, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Reinforced concrete, wood and concrete, or metal sheets</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What type of toilet does the household have?</text>
+            <nickname>ppi_yemen_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Non-flush toilet, other, or no toilet</value>
+            </choice>
+            <choice order="2">
+                <value>Flush toilet</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>How many rooms are there in the house, excluding bathrooms and kitchens?</text>
+            <nickname>ppi_yemen_2009_house_rooms</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Four</value>
+            </choice>
+            <choice order="5">
+                <value>Five</value>
+            </choice>
+            <choice order="6">
+                <value>Six or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household or any of its members own a TV?</text>
+            <nickname>ppi_yemen_2009_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household or any of its members own a gas cylinder?</text>
+            <nickname>ppi_yemen_2009_owns_gas_cylinder</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household or any of its members own a radio/cassette recorder?</text>
+            <nickname>ppi_yemen_2009_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household or any of its members own a washing machine?</text>
+            <nickname>ppi_yemen_2009_owns_washing_machine</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

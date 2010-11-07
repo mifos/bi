@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Vietnam 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Vietnam 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_vietnam_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 14-years-old or younger?</text>
+            <nickname>ppi_vietnam_2009_family_members_0_to_14</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Three or more</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>One</value>
+            </choice>
+            <choice order="4">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>In the past 12 months, how many household members were self-employed in agriculture, forestry, or aquaculture?</text>
+            <nickname>ppi_vietnam_2009_self_employed_agriculture</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Four or more</value>
+            </choice>
+            <choice order="2">
+                <value>Two or three</value>
+            </choice>
+            <choice order="3">
+                <value>One or none</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What type is the household's main residence?</text>
+            <nickname>ppi_vietnam_2009_residence_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Makeshift or other</value>
+            </choice>
+            <choice order="2">
+                <value>Semi-permanent house</value>
+            </choice>
+            <choice order="3">
+                <value>Strong house with a shared kitchen or shared bathroom/toilet</value>
+            </choice>
+            <choice order="4">
+                <value>Villa or strong house with a private kitchen and private</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What type of toilet arrangement does the household have?</text>
+            <nickname>ppi_vietnam_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None or other</value>
+            </choice>
+            <choice order="2">
+                <value>Double-vault compost latrine, or toilet directly over water</value>
+            </choice>
+            <choice order="3">
+                <value>Suilabh, or flush toilet with septic tank or sewage pipes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the household's main source of water for cooking and drinking?</text>
+            <nickname>ppi_vietnam_2009_water_source</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Public tap, deep drilled wells, hand-dug and reinforced/non-reinforced wells, covered wells, protected/unprotected springs, rain, small water tank, water tank, river, lake, pond, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Private tap water inside/outside the house, or purchased water (in tank or bottle)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What kind of cooker does the household have?</text>
+            <nickname>ppi_vietnam_2009_cooker_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Electric cooker, rice cooker, or pressurized cooker (no gas cooker)</value>
+            </choice>
+            <choice order="3">
+                <value>Gas cooker</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household have a motorcycle?</text>
+            <nickname>ppi_vietnam_2009_has_motorcycle</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household have a video player?</text>
+            <nickname>ppi_vietnam_2009_has_video_player</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household have a wardrobe of any kind?</text>
+            <nickname>ppi_vietnam_2009_has_wardrobe</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household have a refrigerator or freezer?</text>
+            <nickname>ppi_vietnam_2009_has_refriderator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>
