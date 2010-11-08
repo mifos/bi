@@ -282,7 +282,7 @@ var sqlLoanPrevious = &quot;select loan_account_id, loan_account_key from dim_lo
  
 var sqlSavingsChanged = &quot;select savings_account_id, savings_account_key from dim_savings where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; &quot; + savingsMin + &quot; order by savings_account_id, savings_account_key;&quot;;
 var sqlSavingsPrevious = &quot;select savings_account_id, savings_account_key from dim_savings where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key;&quot;;
-Alert(sqlCustomerChanged);
+&#47;&#47;Alert(sqlCustomerChanged);
 var changedResults = fireToDB(DBConnection, sqlCustomerChanged);
 var previousResults = fireToDB(DBConnection, sqlCustomerPrevious);
 
@@ -525,6 +525,17 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 	{
 		return &quot;client loan officer&quot;;
 	}
+
+
+	if (branch_change == &quot;Same&quot; &amp;&amp; center_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Version&quot; )
+	{
+		return &quot;center within branch&quot;;
+	}
+	if (branch_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Version&quot; )
+	{
+		return &quot;center outside branch&quot;;
+	}
+
 
 	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; )
 	{
