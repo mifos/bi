@@ -183,6 +183,7 @@ CREATE TABLE `dim_customer` (
 
 LOCK TABLES `dim_customer` WRITE;
 /*!40000 ALTER TABLE `dim_customer` DISABLE KEYS */;
+INSERT INTO `dim_customer` VALUES (0,0,'Unknown','Unknown',0,'Unknown',NULL,'Unknown',NULL,'Unknown','Unknown','Unknown','Unknown','Unknown','Unknown',0,0,0,0,0,'1900-01-01','2199-12-31',0,0,'2010-11-08 12:43:05');
 /*!40000 ALTER TABLE `dim_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2694,4 +2695,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-05 14:53:10
+-- Dump completed on 2010-11-09  0:00:34

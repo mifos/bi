@@ -541,13 +541,25 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 	{
 		return &quot;group membership within center&quot;;
 	}
-	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; )
+	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; prev_group_key != 0 &amp;&amp; center_change == &quot;Changed&quot; )
 	{
 		return &quot;group membership within branch&quot;;
 	}
 	if (branch_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; )
 	{
 		return &quot;group membership outside branch&quot;;
+	}
+
+
+	if (branch_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Same&quot; &amp;&amp; center_change == &quot;Same&quot; )
+	{
+		return &quot;client no group membership outside branch&quot;;
+	}
+
+
+	if (prev_group_key == 0 &amp;&amp; group_change == &quot;Changed&quot;)
+	{
+		return &quot;client no group membership becoming group member&quot;;
 	}
 
 
@@ -667,7 +679,7 @@ Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &q
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>306</xloc>
-      <yloc>22</yloc>
+      <yloc>21</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
