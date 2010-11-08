@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Test Client Change Group Membership Within Center</name>
+    <name>TestClientChangeGroupMembershipOutsideBranch</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,10 +66,10 @@
   </info>
   <notepads>
     <notepad>
-      <note>Tests for group membership change with current center</note>
+      <note>Tests for group membership change within current branch</note>
       <xloc>502</xloc>
       <yloc>16</yloc>
-      <width>279</width>
+      <width>291</width>
       <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
@@ -223,7 +223,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>group membership within center change</nullif>
+        <nullif>group membership outside branch change</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -234,7 +234,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>17</nullif>
+        <nullif>24</nullif>
         <length>15</length>
         <precision>-1</precision>
       </field>
@@ -245,7 +245,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>xfer to gr in center xxx</nullif>
+        <nullif>xfer to gr in different branch xxx</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -256,7 +256,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>2010-07-22</nullif>
+        <nullif>2010-07-24</nullif>
         <length>10</length>
         <precision>-1</precision>
       </field>
@@ -267,7 +267,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>group membership within center</nullif>
+        <nullif>group membership outside branch</nullif>
         <length>50</length>
         <precision>-1</precision>
       </field>

@@ -197,7 +197,8 @@ function test_results(dim_type)
 &#47;&#47;each customer&#47;loan_account&#47;savings_account id only appears once
 &#47;&#47;id must be the same, key must be different
 
-	if (changedResults.length != previousResults.length)
+	&#47;&#47;if (changedResults.length != previousResults.length)
+	if (changedResults.length &lt; previousResults.length)
 	{
 		fail_test(&quot;Number of Changed &quot; + dim_type + &quot; Entries: &quot; +  changedResults.length + &quot; doesn&apos;t match Number of Previous &quot; + dim_type + &quot; Entries: &quot; + previousResults.length);
 		return;
@@ -207,11 +208,12 @@ function test_results(dim_type)
 
     	if (i &gt; 0)
 		{
-    		if (changedResults[i][0] == changedResults[i - 1][0])
-			{
-				fail_test(dim_type + &quot; Id: &quot; + changedResults[i][0] + &quot; In Changed Resultset More than Once&quot;);
-				return;
-			}
+			&#47;&#47;put back in later
+    		&#47;&#47;if (changedResults[i][0] == changedResults[i - 1][0])
+			&#47;&#47;{
+			&#47;&#47;	fail_test(dim_type + &quot; Id: &quot; + changedResults[i][0] + &quot; In Changed Resultset More than Once&quot;);
+			&#47;&#47;	return;
+			&#47;&#47;}
 		}
 
 
@@ -515,6 +517,10 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; )
 	{
 		return &quot;group membership within branch&quot;;
+	}
+	if (branch_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; )
+	{
+		return &quot;group membership outside branch&quot;;
 	}
 
 

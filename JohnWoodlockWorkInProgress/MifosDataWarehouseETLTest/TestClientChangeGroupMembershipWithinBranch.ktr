@@ -66,10 +66,10 @@
   </info>
   <notepads>
     <notepad>
-      <note>Tests for a loan officer change made to a client without group membership.</note>
+      <note>Tests for group membership change within current branch</note>
       <xloc>502</xloc>
       <yloc>16</yloc>
-      <width>373</width>
+      <width>291</width>
       <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
@@ -234,7 +234,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>17</nullif>
+        <nullif>23</nullif>
         <length>15</length>
         <precision>-1</precision>
       </field>
@@ -245,7 +245,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>xfer to gr in same branch xxx - to be done</nullif>
+        <nullif>xfer to gr in same branch xxx</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -256,7 +256,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>2010-07-22</nullif>
+        <nullif>2010-07-23</nullif>
         <length>10</length>
         <precision>-1</precision>
       </field>
