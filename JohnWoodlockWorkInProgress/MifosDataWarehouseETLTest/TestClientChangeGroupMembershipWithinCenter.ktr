@@ -223,7 +223,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>client - group membership within center change</nullif>
+        <nullif>group membership within center change</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -267,7 +267,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>client - group membership within center</nullif>
+        <nullif>group membership within center</nullif>
         <length>50</length>
         <precision>-1</precision>
       </field>

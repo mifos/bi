@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>152</xloc>
-      <yloc>155</yloc>
+      <xloc>117</xloc>
+      <yloc>21</yloc>
       </entry>
     <entry>
       <name>Group Loan Officer Change</name>
@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>384</xloc>
-      <yloc>172</yloc>
+      <xloc>117</xloc>
+      <yloc>90</yloc>
       </entry>
     <entry>
       <name>Client Loan Officer Change</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>602</xloc>
-      <yloc>146</yloc>
+      <xloc>114</xloc>
+      <yloc>175</yloc>
       </entry>
     <entry>
       <name>Client Change Group Membership Within Center</name>
@@ -204,8 +204,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>693</xloc>
-      <yloc>49</yloc>
+      <xloc>735</xloc>
+      <yloc>28</yloc>
       </entry>
   </entries>
   <hops>

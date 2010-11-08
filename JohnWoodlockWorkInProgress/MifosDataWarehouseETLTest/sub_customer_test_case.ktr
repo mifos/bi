@@ -345,135 +345,227 @@ if (wasError == &quot;N&quot;)
     <compatible>N</compatible>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-function fail_test(msg)
+        <jsScript_script>function fail_test(msg)
 {
 	test_result = &quot;Fail&quot;;
 	fail_reason = msg;
 }
 
-function customer_change_identified(row_num, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key, prev_customer_status, prev_group_key, prev_center_key, prev_loan_officer_key, prev_branch_key)
+function getCustomerDataSet()
+{
+	sqlCustomer = &quot;select customer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
+	sqlCustomer = sqlCustomer + &quot; , display_name, valid_from &quot;;
+	sqlCustomer = sqlCustomer + &quot; from dim_customer where customer_id = &quot; + test_customer_id;
+	sqlCustomer = sqlCustomer + &quot; order by customer_key&quot;;
+
+	sqlResults = fireToDB(DBConnection, sqlCustomer);
+}
+
+function doIdsMatch(sqlInput)
+{
+	sqlR = fireToDB(DBConnection, sqlInput);
+
+	if (sqlR.length != 1)
+	{
+			fail_test(&quot;System Error - query expected to return 1 row returned: &quot; + sqlR.length + &quot; rows - Query: &quot; + sqlInput);
+			return &quot;Error&quot;;
+	}
+
+	if (parseInt(sqlR[0][0]) == parseInt(sqlR[0][1]))
+	{
+		return &quot;Y&quot;;
+	}
+	return &quot;N&quot;;
+
+}
+
+
+function getChange(entityType, oldKey, newKey)
+{
+	if (oldKey == newKey)
+	{
+			return &quot;Same&quot;;
+	}
+
+	switch(entityType)
+	{
+	case &quot;branch&quot;:
+		entityTypeSQL = &quot;office&quot;;
+  		break;
+	case &quot;loan officer&quot;:
+		entityTypeSQL = &quot;personnel&quot;;
+  		break;
+	case &quot;center&quot;:
+		entityTypeSQL = &quot;customer&quot;;
+  		break;
+	case &quot;group&quot;:
+		entityTypeSQL = &quot;customer&quot;;
+  		break;
+	default:
+		fail_test(&quot;System Error - Unknown value for entityType: &quot; + entityType);
+		return &quot;Error&quot;;
+	}
+
+	sql = &quot;select old_id, new_id from &quot;
+	sql = sql + &quot;(select &quot; + entityTypeSQL + &quot;_id as old_id from dim_&quot; + entityTypeSQL + &quot; where &quot; + entityTypeSQL +&quot;_key = &quot; + oldKey + &quot; ) a &quot;
+	sql = sql + &quot;join (select &quot; + entityTypeSQL + &quot;_id as new_id from dim_&quot; + entityTypeSQL + &quot; where &quot; + entityTypeSQL + &quot;_key = &quot; + newKey + &quot;) b &quot;
+
+	idsMatch = doIdsMatch(sql);
+	switch(idsMatch)
+	{
+	case &quot;Y&quot;:
+		return &quot;Version&quot;;
+  		break;
+	case &quot;N&quot;:
+		return &quot;Changed&quot;;
+  		break;
+	case &quot;Error&quot;:
+		return &quot;Error&quot;;
+  		break;
+	default:
+		fail_test(&quot;System Error - Unknown return value from doIdsMatch: &quot; + idsMatch);
+		return &quot;Error&quot;;
+	}
+
+}
+
+
+function getChangeType(row_num)
 {
 
 	if ((customer_status == prev_customer_status) &amp;&amp; (group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
 	{
-		fail_test(&quot;System Error - No Change found for entry: &quot; + row_num);
-		return false;
+		fail_test(&quot;System Error - Entry has no change - row index:&quot; + row_num);
+		return &quot;Error&quot;;
 	}
 
-
-	change_is = &quot;none&quot;;
-
-	if (change_is == &quot;none&quot;)
+	if (customer_status != prev_customer_status)
 	{
-		if (customer_status != prev_customer_status)
+		if ((group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
 		{
 			Alert(&quot;status change&quot;);
-			change_is = &quot;status&quot;;
+			return &quot;status&quot;;
 		}
-	}
-
-	if (change_is == &quot;none&quot;)
-	{
-		if (branch_key != prev_branch_key)
+		else
 		{
-			Alert(&quot;branch&quot;);
-			change_is = &quot;branch&quot;;
-		}
-	
-	}
-
-	if (change_is == &quot;none&quot;)
-	{
-		if (loan_officer_key != prev_loan_officer_key)
-		{
-			if (customer_level_id == 3)
-			{
-				change_is = &quot;center loan officer&quot;;
-			}
-			if (customer_level_id == 2 &amp;&amp; parseInt(center_key) == 0)
-			{
-					change_is = &quot;group loan officer&quot;;
-			}
-			if (customer_level_id == 1 &amp;&amp; parseInt(group_key) == 0)
-			{
-					change_is = &quot;client loan officer&quot;;
-			}
+			fail_test(&quot;System Error - Status Change... but other row changes found - row index: &quot; + row_num);
+			return &quot;Error&quot;;
 		}
 	}
 
 
-	if (change_is == &quot;none&quot;)
+&#47;&#47;branch
+	if (branch_key == 0 || prev_branch_key == 0)
 	{
-		if (center_key != prev_center_key)
-		{
-			if (group_key != prev_group_key)
-			{ 
-				change_is = &quot;client - group membership within branch&quot;;
-			}
-		}
-	
+			fail_test(&quot;System Error - branch key is 0 - row index: &quot; + row_num);
+			return &quot;Error&quot;;
+	}
+	branch_change = getChange(&quot;branch&quot;, prev_branch_key, branch_key);
+	if (branch_change == &quot;Version&quot;)
+	{
+		fail_test(&quot;System Error - Branch IDs same but no office versioning supported: old Key: &quot; + prev_branch_key + &quot; new Key &quot; + branch_key);
+		return &quot;Error&quot;;
+	}
+	if (branch_change == &quot;Error&quot;)
+	{
+			return &quot;Error&quot;;
 	}
 
-	if (change_is == &quot;none&quot;)
+&#47;&#47;loan officer
+	loan_officer_change = getChange(&quot;loan officer&quot;, prev_loan_officer_key, loan_officer_key);
+	if (loan_officer_change == &quot;Version&quot;)
 	{
-		if (group_key != prev_group_key)
-		{
-			if (center_key &gt; 0)
-			{
-				change_is = &quot;client - group membership within center&quot;;
-			}
-		}
+		fail_test(&quot;System Error - Loan Officer IDs same - invalid because Loan Officers moving branch don&apos;t bring their customers with them: old Key: &quot; + prev_loan_officer_key + &quot; new Key &quot; + loan_officer_key);
+		return &quot;Error&quot;;
+	}
+	if (loan_officer_change == &quot;Error&quot;)
+	{
+			return &quot;Error&quot;;
+	}
+
+&#47;&#47;center
+	center_change = getChange(&quot;center&quot;, prev_center_key, center_key);
+
+&#47;&#47;group
+	group_change = getChange(&quot;group&quot;, prev_group_key, group_key);
+ 
+Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot; + loan_officer_change + &quot;      Center Change: &quot; + center_change + &quot;      Group Change: &quot; + group_change);
+
+
+
+
+
+	if (branch_change == &quot;Same&quot; &amp;&amp; loan_officer_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Version&quot; &amp;&amp; group_change == &quot;Same&quot;)
+	{
+		return &quot;center loan officer&quot;;
+	}
+	if (branch_change == &quot;Same&quot; &amp;&amp; loan_officer_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Version&quot;)
+	{
+		return &quot;group loan officer&quot;;
+	}
+	if (branch_change == &quot;Same&quot; &amp;&amp; loan_officer_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Same&quot;)
+	{
+		return &quot;client loan officer&quot;;
+	}
+
+	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; )
+	{
+		return &quot;group membership within center&quot;;
+	}
+	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; )
+	{
+		return &quot;group membership within branch&quot;;
 	}
 
 
-	if (change_is == &quot;none&quot;)
-	{
-		fail_test(&quot;System Error - Was a Change but not picked up for entry: &quot; + row_num);
-		return false;
-	}
 
-	if (change_is == test_change_type)
-	{
-		return true;
-	}
-
+	fail_test(&quot;System Error - Was a Change - Branch Change: &quot; + branch_change + &quot;   LO Change: &quot; + loan_officer_change + &quot;   Center Change: &quot; + center_change + &quot;   Group Change: &quot; + group_change + &quot; - but not picked up - row index: &quot; + row_num);
+	return &quot;Error&quot;;
 }
 
 function getCustomerValues()
 {
 	for (var i in sqlResults)
 	{
-&#47;&#47;check from 2nd entry onwards to identify the 1st entry that matches change type.
+&#47;&#47;check from 2nd entry onwards to identify the 1st entry that matches change type on the date specified
     	if (i &gt; 0)
 		{
 &#47;&#47;convert db date to string
 			db_date = sqlResults[i][8] + &quot;&quot;;
 			if (db_date == test_date)
 			{
-				if (customer_change_identified(i, parseInt(sqlResults[i][1]), sqlResults[i][2], parseInt(sqlResults[i][3]), parseInt(sqlResults[i][4]), parseInt(sqlResults[i][5]), parseInt(sqlResults[i][6]), sqlResults[i - 1][2], parseInt(sqlResults[i - 1][3]), parseInt(sqlResults[i - 1][4]), parseInt(sqlResults[i - 1][5]), parseInt(sqlResults[i - 1][6])))
+				the_customer_level_id = parseInt(sqlResults[i][1]);
+				customer_status = sqlResults[i][2];
+				group_key = parseInt(sqlResults[i][3]);
+				center_key = parseInt(sqlResults[i][4]);
+				loan_officer_key = parseInt(sqlResults[i][5]);
+				branch_key = parseInt(sqlResults[i][6]);
+				prev_customer_status = sqlResults[i - 1][2];
+				prev_group_key = parseInt(sqlResults[i - 1][3]);
+				prev_center_key = parseInt(sqlResults[i - 1][4]);
+				prev_loan_officer_key = parseInt(sqlResults[i - 1][5]);
+				prev_branch_key = parseInt(sqlResults[i - 1][6]);
+
+				change_is = getChangeType(i);
+				if (change_is == test_change_type)
 				{
-Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &quot; + test_name + &quot; CUSTOMER ID&#47;NAME&#47;DATE: &quot; + test_customer_id + &apos;&#47;&apos; + test_customer + &apos;&#47;&apos; + test_date);
-
-
-
-					customer_key = sqlResults[i][0];
-					customer_level_id = sqlResults[i][1];
-					customer_key_prev = sqlResults[i - 1][0];
-					return;
+					return i;
 				}
-				&#47;&#47;might have come back from customer_change_identified false and with a failure
-				if (test_result == &quot;Fail&quot;)
+
+				if (change_is == &quot;Error&quot;)
 				{
-					return;
+					return -1;
 				}
 			}
 		}
 	}
+
 	fail_test(&quot;Change not found&quot;);
+	return -1;
 }
 
 
+var DBConnection = &quot;DestinationDB&quot;;
 var test_result = &quot;Pass&quot;;
 var fail_reason = &quot;&quot;;
 
@@ -481,16 +573,30 @@ var customer_key;
 var customer_level_id;
 var customer_key_prev;
 
-var DBConnection = &quot;DestinationDB&quot;;
-var sqlCustomer; 
-sqlCustomer = &quot;select customer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
-sqlCustomer = sqlCustomer + &quot; , display_name, valid_from &quot;;
-sqlCustomer = sqlCustomer + &quot; from dim_customer where customer_id = &quot; + test_customer_id;
-sqlCustomer = sqlCustomer + &quot; order by customer_key&quot;;
+var customer_status;
+var group_key;
+var center_key;
+var loan_officer_key;
+var branch_key;
+var prev_customer_status;
+var prev_group_key;
+var prev_center_key;
+var prev_loan_officer_key;
+var prev_branch_key;
 
-var sqlResults = fireToDB(DBConnection, sqlCustomer);
+var sqlResults;
 
-getCustomerValues();
+getCustomerDataSet();
+changed_row = getCustomerValues();
+if (changed_row != -1)
+{
+	customer_key = sqlResults[changed_row][0];
+	customer_level_id = sqlResults[changed_row][1];
+	customer_key_prev = sqlResults[changed_row - 1][0];
+Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &quot; + test_name + &quot; CUSTOMER ID&#47;NAME&#47;DATE: &quot; + test_customer_id + &apos;&#47;&apos; + test_customer + &apos;&#47;&apos; + test_date);
+
+}
+
 
 
 
@@ -527,7 +633,7 @@ getCustomerValues();
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>304</xloc>
+      <xloc>306</xloc>
       <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
