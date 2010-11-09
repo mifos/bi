@@ -175,9 +175,12 @@
                 <value>None</value>
             </choice>
             <choice order="2">
-                <value>('One', 0)</value>
+                <value>One</value>
             </choice>
             <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
                 <value>Three or more</value>
             </choice>
 

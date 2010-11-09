@@ -20,8 +20,8 @@ when answers.Q4='Robinet interieur' then 7
 end +
 case
 when answers.Q5='Latrines non couvertes, cuvette/seau, aucun ou autre' then 0
-when answers.Q5='Latrines couvertes, latrines ventilées améliorées ou chasse d'eau avec fosse septique' then 8
-when answers.Q5='Chasse d'eau avec égout' then 19
+when answers.Q5='Latrines couvertes, latrines ventilées améliorées ou chasse d\'eau avec fosse septique' then 8
+when answers.Q5='Chasse d\'eau avec égout' then 19
 end +
 case
 when answers.Q6='Non' then 0
@@ -40,7 +40,7 @@ when answers.Q9='Non' then 0
 when answers.Q9='Oui' then 5
 end +
 case
-when answers.Q10='Il n'y a pas chef de famille féminin' then 0
+when answers.Q10='Il n\'y a pas chef de famille féminin' then 0
 when answers.Q10='Non' then 2
 when answers.Q10='Oui' then 7
 end

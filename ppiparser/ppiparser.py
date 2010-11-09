@@ -77,7 +77,7 @@ GROUP BY question_group_instance_id) as answers
 def sql(qs, country_name, nicks, title='Unknown'):
     cases = []
     for (qnum, q) in enumerate(qs):
-        whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=x[0], VALUE=x[1]) for x in q[1]]
+        whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=str(x[0]).replace('\'','\\\''), VALUE=x[1]) for x in q[1]]
         case = SQL_CASE_TEMPLATE.format(WHENS='\n'.join(whens))
         cases.append(case)
     group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]

@@ -14,7 +14,7 @@ when answers.Q2='Up to third grade' then 5
 when answers.Q2='Fourth grade through high school' then 7
 when answers.Q2='College preparatory 1 - 3' then 10
 when answers.Q2='Normal/technical/commercial' then 14
-when answers.Q2='Professional, master's or doctorate' then 20
+when answers.Q2='Professional, master\'s or doctorate' then 20
 when answers.Q2='No female head/spouse' then 14
 end +
 case
@@ -50,7 +50,8 @@ when answers.Q9='Yes' then 4
 end +
 case
 when answers.Q10='None' then 0
-when answers.Q10='('One', 0)' then 5
+when answers.Q10='One' then 0
+when answers.Q10='Two' then 5
 when answers.Q10='Three or more' then 12
 end
 ) 

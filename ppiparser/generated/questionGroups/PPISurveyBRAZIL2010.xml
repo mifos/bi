@@ -142,7 +142,7 @@
                 <value>Septic tank connected to public sewage/rainwater system</value>
             </choice>
             <choice order="5">
-                <value>('Direct connection to public sewage/rainwater system', 5)</value>
+                <value>Direct connection to public sewage/rainwater system</value>
             </choice>
 
             <mandatory>true</mandatory>

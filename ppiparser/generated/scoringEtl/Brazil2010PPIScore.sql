@@ -40,7 +40,7 @@ when answers.Q7='Ditch, other, or no bathroom' then 0
 when answers.Q7='Simple hole, or directly into river, lake, or ocean' then 2
 when answers.Q7='Septic tank not connected to public sewage/rainwater system' then 3
 when answers.Q7='Septic tank connected to public sewage/rainwater system' then 4
-when answers.Q7='('Direct connection to public sewage/rainwater system', 5)' then 5
+when answers.Q7='Direct connection to public sewage/rainwater system' then 5
 end +
 case
 when answers.Q8='No' then 0
