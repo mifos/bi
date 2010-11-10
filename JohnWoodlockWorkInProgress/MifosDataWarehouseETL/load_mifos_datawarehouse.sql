@@ -468,8 +468,8 @@ CREATE TABLE `dim_savings` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`),
-  KEY `currency_key` (`currency_key`)
+  KEY `currency_key` (`currency_key`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2695,4 +2695,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-09  0:00:34
+-- Dump completed on 2010-11-10 14:28:54
