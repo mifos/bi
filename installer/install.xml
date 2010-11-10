@@ -9,12 +9,7 @@
         <langpack iso3="eng"/>
     </locale>
     <guiprefs width="640" height="480" resizable="yes"/>
-    <resources>
-        <res id="LicencePanel.licence" src="LICENSE"/>
-    </resources>
     <panels>
-        <panel classname="HelloPanel"/>
-        <panel classname="LicencePanel"/>
         <panel classname="TargetPanel"/>
         <panel classname="PacksPanel"/>
         <panel classname="InstallPanel"/>
