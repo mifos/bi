@@ -1,7 +1,12 @@
-To create the installer:
+To create the installer jar
 
-1. Install IzPack from http://izpack.org
+    1. Install IzPack from http://izpack.org
 
-2. Run "compile" script
+    2. Run "compile" script
 
-    path/to/izpack/bin/compile install.xml -b ..
+        path/to/izpack/bin/compile install.xml -b ..
+
+See also
+
+    http://mifosforge.jira.com/wiki/display/MIFOS/Mifos+BI+1.0+Beta+Release
+    http://mifosforge.jira.com/wiki/display/MIFOS/Mifos+BI+Deployer+Spec
