@@ -1,0 +1,7 @@
+To create the installer:
+
+1. Install IzPack from http://izpack.org
+
+2. Run "compile" script
+
+    path/to/izpack/bin/compile install.xml -b ..
