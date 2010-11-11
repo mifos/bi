@@ -229,8 +229,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>140</xloc>
-      <yloc>360</yloc>
+      <xloc>98</xloc>
+      <yloc>363</yloc>
       </entry>
     <entry>
       <name>Clear Down Staging Tables</name>
@@ -251,7 +251,7 @@ truncate table stg_customer_type1_columns;</sql>
       <yloc>50</yloc>
       </entry>
     <entry>
-      <name>Load stg_customer_type1_columns 2</name>
+      <name>Load stg_loan_type1_columns</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -279,8 +279,8 @@ truncate table stg_customer_type1_columns;</sql>
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>387</xloc>
-      <yloc>349</yloc>
+      <xloc>339</xloc>
+      <yloc>362</yloc>
       </entry>
   </entries>
   <hops>
@@ -331,7 +331,7 @@ truncate table stg_customer_type1_columns;</sql>
     </hop>
     <hop>
       <from>Load stg_customer_and_account_updates For Accounts</from>
-      <to>Load stg_customer_type1_columns 2</to>
+      <to>Load stg_loan_type1_columns</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
