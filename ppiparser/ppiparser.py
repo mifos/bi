@@ -3,6 +3,7 @@
 import os.path
 import string
 import sys
+import random
 
 from mifos.nicknames import Nicknames
 
@@ -78,30 +79,42 @@ GROUP BY question_group_instance_id) as answers
 PROPERTIES_TOP_TEMPLATE = \
 '''questionGroup.name={TITLE}
 questionGroup.xml.filename={FILENAME}
+survey.count={SURVEY_COUNT}
 '''
 
 PROPERTIES_RESPONSE_TEMPLATE = 'survey.{SURVEY_NUMBER}.question.{QUESTION_NUMBER}.response.text={RESPONSE}\n'
-PROPERTIES_SCORE_TEMPLATE = 'survey.{SURVEY_NUMBER}.ppi.score={SCORE}'
+PROPERTIES_SCORE_TEMPLATE = 'survey.{SURVEY_NUMBER}.ppi.score={SCORE}\n'
 
-def oneSurvey(cases):
+def oneSurvey(cases, survey_num, answer_type):
     score = 0
-    response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=1, QUESTION_NUMBER=1, RESPONSE='11/11/2010')
+    response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=survey_num, QUESTION_NUMBER=1, RESPONSE='11/11/2010')
     cases.append(response)
     for (qnum, q) in enumerate(qs):
-        x = q[1][0]
-        response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=1, QUESTION_NUMBER=qnum+2, RESPONSE=str(x[0]).replace('\'','\\\''))
+        index = 0
+        if answer_type == 'first':
+            index = 0
+        if answer_type == 'last':
+            index = len(q[1])-1
+        if answer_type == 'random':
+            index = random.randint(0,len(q[1])-1)
+
+        x = q[1][index]
+        response_text = x[0].replace('\'','\\\'')
+        response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=survey_num, QUESTION_NUMBER=qnum+2, RESPONSE=response_text)
         score+=x[1]
         cases.append(response)
-    bottom = PROPERTIES_SCORE_TEMPLATE.format(SURVEY_NUMBER=1, SCORE=score)
+    bottom = PROPERTIES_SCORE_TEMPLATE.format(SURVEY_NUMBER=survey_num, SCORE=score)
     cases.append(bottom)
     return cases
 
 def properties(qs, country_name, nicks, title='Unknown', filename='Unknown'):
     cases = []
-    top = PROPERTIES_TOP_TEMPLATE.format(TITLE=title, FILENAME=filename)
+    top = PROPERTIES_TOP_TEMPLATE.format(TITLE=title, FILENAME=filename, SURVEY_COUNT=3)
     cases.append(top)
 
-    cases = oneSurvey(cases)
+    cases = oneSurvey(cases, 1, 'first')
+    cases = oneSurvey(cases, 2, 'last')
+    cases = oneSurvey(cases, 3, 'random')
 
     return string.join(cases, '')
 
