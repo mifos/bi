@@ -73,6 +73,37 @@ FROM question_group_response qgr, question_group_instance qgi, question_group qg
 WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title="{TITLE}" and qgi.event_source_id = es.id
 GROUP BY question_group_instance_id) as answers
 '''
+##############################################################
+
+PROPERTIES_TOP_TEMPLATE = \
+'''questionGroup.name={TITLE}
+questionGroup.xml.filename={FILENAME}
+'''
+
+PROPERTIES_RESPONSE_TEMPLATE = 'survey.{SURVEY_NUMBER}.question.{QUESTION_NUMBER}.response.text={RESPONSE}\n'
+PROPERTIES_SCORE_TEMPLATE = 'survey.{SURVEY_NUMBER}.ppi.score={SCORE}'
+
+def oneSurvey(cases):
+    score = 0
+    response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=1, QUESTION_NUMBER=1, RESPONSE='11/11/2010')
+    cases.append(response)
+    for (qnum, q) in enumerate(qs):
+        x = q[1][0]
+        response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=1, QUESTION_NUMBER=qnum+2, RESPONSE=str(x[0]).replace('\'','\\\''))
+        score+=x[1]
+        cases.append(response)
+    bottom = PROPERTIES_SCORE_TEMPLATE.format(SURVEY_NUMBER=1, SCORE=score)
+    cases.append(bottom)
+    return cases
+
+def properties(qs, country_name, nicks, title='Unknown', filename='Unknown'):
+    cases = []
+    top = PROPERTIES_TOP_TEMPLATE.format(TITLE=title, FILENAME=filename)
+    cases.append(top)
+
+    cases = oneSurvey(cases)
+
+    return string.join(cases, '')
 
 def sql(qs, country_name, nicks, title='Unknown'):
     cases = []
@@ -133,12 +164,23 @@ if __name__ == '__main__':
     year = nicks.year(country_name)
     title = nicks.questionsTitle(country_name)
     qs = list(parse_questions(filename))
+
+    xml_country_version = country_name.upper() + str(year) + nicks.questionsVersionText(country_name,'')
+
+    properties_out = properties(qs, country_name, nicks, title, xml_country_version)
     sql_out = sql(qs, country_name, nicks, title)
     xml_out = xml(qs, country_name, nicks, title)
+
     tmp_sql_filename = 'generated/scoringEtl/%s%s%sPPIScore.sql' % (country_name.capitalize(), year, nicks.questionsVersionText(country_name,''))
     with open(tmp_sql_filename, 'w') as sql_f:
         sql_f.write(sql_out)
     print 'SQL written to ' + tmp_sql_filename
+
+    tmp_properties_filename = 'generated/testData/%s%s%sTesting.properties' % (country_name.capitalize(), year, nicks.questionsVersionText(country_name,''))
+    with open(tmp_properties_filename, 'w') as properties_f:
+        properties_f.write(properties_out)
+    print 'properties written to ' + tmp_properties_filename
+
     tmp_xml_filename = 'generated/questionGroups/PPISurvey%s%s%s.xml' % (country_name.upper(), year, nicks.questionsVersionText(country_name,''))
     with open(tmp_xml_filename, 'w') as xml_f:
         xml_f.write(xml_out)
