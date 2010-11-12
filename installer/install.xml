@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<installation version="1.0">
+    <info>
+        <appname>Mifos BI Software</appname>
+        <appversion>1.0 beta</appversion>
+        <url>http://www.mifos.org</url>
+    </info>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+    <guiprefs width="640" height="480" resizable="yes"/>
+    <panels>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+    <packs>
+        <pack name="Base" required="yes">
+            <description>The base files</description>
+            <file src="LICENSE" targetdir="$INSTALL_PATH"/>
+        </pack>
+    </packs>
+</installation>
