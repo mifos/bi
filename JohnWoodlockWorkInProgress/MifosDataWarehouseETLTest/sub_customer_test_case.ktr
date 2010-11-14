@@ -372,7 +372,7 @@ Alert(msg);
 
 function getCustomerDataSet()
 {
-	sqlCustomer = &quot;select xxxcustomer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
+	sqlCustomer = &quot;select customer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
 	sqlCustomer = sqlCustomer + &quot; , display_name, valid_from &quot;;
 	sqlCustomer = sqlCustomer + &quot; from dim_customer where customer_id = &quot; + test_customer_id;
 	sqlCustomer = sqlCustomer + &quot; order by customer_key&quot;;
@@ -695,7 +695,7 @@ Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &q
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>306</xloc>
-      <yloc>21</yloc>
+      <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

@@ -47,10 +47,9 @@ fi
 
 echo "Running tests..."
 $PDI_HOME/kitchen.sh /file:$PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb | tee -a $log
-
-echo " "
 if grep -q 'ETL Pass:' $log
 then
+    echo " "
     echo "ETL PASSING TESTS"
     echo " "
     grep 'ETL Pass:' $log | tee -a $log
@@ -58,6 +57,7 @@ fi
 
 if grep -q 'ETL Fail:' $log
 then
+    echo " "
     echo "ETL FAILING TESTS"
     echo " "
     grep 'ETL Fail:' $log | tee -a $log	
