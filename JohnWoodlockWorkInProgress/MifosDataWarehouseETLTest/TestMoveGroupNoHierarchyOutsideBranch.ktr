@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>sub_test_valid_from_to_values</name>
+    <name>Test Move Group No Hierarchy Outside Branch</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,6 +65,27 @@
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Tests for center change within current branch</note>
+      <xloc>502</xloc>
+      <yloc>16</yloc>
+      <width>230</width>
+      <heigth>22</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -142,10 +163,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Check Valid From and To Values</from><to>Health Check</to><enabled>Y</enabled> </hop>  <hop> <from>Health Check</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Database join</to><enabled>Y</enabled> </hop>  <hop> <from>Database join</from><to>Check Valid From and To Values</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Set Test Case Values</from><to>Customer Test Case</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Check Valid From and To Values</name>
-    <type>ScriptValueMod</type>
+    <name>Customer Test Case</name>
+    <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -153,171 +174,40 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>function fail_test(msg)
-{
-	error_count = error_count + 1;
-	if (error_count == 1)
-	{
-		test_result = &quot;Fail&quot;;
-		test_msg = &quot;1st Error - &quot; + msg;
-		Alert(msg);
-	}
-}
-
-function process(tbl, id_col, key_col)
-{
-
-	DBConnection = &quot;DestinationDB&quot;;
-	sql = &quot;select &quot; + id_col + &quot;_id, &quot; + key_col + &quot;_key, to_days(valid_from), to_days(valid_to), valid_from, valid_to &quot;;
-	sql = sql + &quot; from dim_&quot; + tbl;
-	sql = sql + &quot; order by 1, 2&quot;;
-	sqlResults = fireToDB(DBConnection, sql);
-
-	idcount = 0;
-	keycount = 0;
-	prev_id = -50;
-
-	for (var i in sqlResults)
-	{
-		keycount = keycount + 1; 	
-
-		curr_id = parseInt(sqlResults[i][0]);
-		curr_key = parseInt(sqlResults[i][1]);
-		curr_valid_from = parseInt(sqlResults[i][2]);
-		curr_valid_to = parseInt(sqlResults[i][3]);
-		curr_valid_from_string = sqlResults[i][4];
-		curr_valid_to_string = sqlResults[i][5];
-
-		if (curr_valid_from &gt; curr_valid_to)
-		{
-			fail_test(&quot;dim_&quot; + tbl + &quot;   id: &quot; + curr_id + &quot;  key: &quot; + curr_key + &quot;  valid_from: &quot; + curr_valid_from_string + &quot;  IS AFTER valid_to: &quot; + curr_valid_to_string);
-		}
-		
-
- 
-    	if (curr_id != prev_id)
-		{ 
-			idcount = idcount + 1;
-			prev_id = curr_id;
-		}
-		else &#47;* can check if previous valid_to = current valid_from*&#47;
-		{ 
-			if (curr_valid_from != parseInt(sqlResults[i-1][3]))
-			{
-				fail_test(&quot;dim_&quot; + tbl + &quot;   id: &quot; + curr_id + &quot;  key: &quot; + curr_key + &quot;  current valid_from: &quot; + curr_valid_from_string + &quot;  DOESNT MATCH previous valid_to: &quot; + sqlResults[i-1][5]);
-			}
-		}
-	}
-
-
-	if (test_result == &quot;Pass&quot;)
-	{
-		test_msg = &quot;dim_&quot; + tbl + &quot;  Id Count: &quot; + idcount + &quot;  Key Count: &quot; + keycount;
-	}
-	else
-	{
-		test_msg = test_msg + &quot; -   Total Error Count: &quot; + error_count;
-	}
-
-
-}
-
-
-var test_result = &quot;Pass&quot;;
-var test_msg = &quot;&quot;;
-var error_count = 0;
-
-process(dim_table_name, id_prefix, key_prefix); 
-
-
-
-
-
-
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>test_result</name>
-        <rename>test_result</rename>
-        <type>String</type>
-        <length>4</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>test_msg</name>
-        <rename>test_msg</rename>
-        <type>String</type>
-        <length>100</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>430</xloc>
-      <yloc>10</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Database join</name>
-    <type>DBJoin</type>
+    <specification_method>filename</specification_method>
+    <trans_object_id/>
+    <trans_name/>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_customer_test_case.ktr</filename>
+    <directory_path/>
+    <mappings>
+      <input>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
     <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>0</rowlimit>
-    <sql>SELECT &apos;ok - just to ensure connection is available for javascript step&apos; as dummy</sql>
-    <outer_join>N</outer_join>
-    <replace_vars>N</replace_vars>
-    <parameter>
-    </parameter>
+    </mapping>      </input>
+      <output>
+    <mapping>    <input_step/>
+    <output_step/>
+    <main_path>N</main_path>
+    <rename_on_output>N</rename_on_output>
+    <description/>
+    </mapping>      </output>
+          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
+    </parameters>
+    </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>270</xloc>
-      <yloc>11</yloc>
+      <xloc>355</xloc>
+      <yloc>52</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Health Check</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>testType = &quot;Valid from&#47;to checks - &quot;;
-if (test_result == &quot;Pass&quot;){	
-	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot; + testType + test_msg);
-}
-else
-{
-	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot; + testType + test_msg);
-}
-
-
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>623</xloc>
-      <yloc>11</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Mapping input specification</name>
-    <type>MappingInput</type>
+    <name>Set Test Case Values</name>
+    <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -327,47 +217,66 @@ else
            </partitioning>
     <fields>
       <field>
-        <name>dim_table_name</name>
+        <name>test_name</name>
         <type>String</type>
-        <length>50</length>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>move group no center hierarchy outside branch change</nullif>
+        <length>100</length>
         <precision>-1</precision>
       </field>
       <field>
-        <name>id_prefix</name>
-        <type>String</type>
-        <length>50</length>
+        <name>test_customer_id</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>46</nullif>
+        <length>15</length>
         <precision>-1</precision>
       </field>
       <field>
-        <name>key_prefix</name>
+        <name>test_customer</name>
         <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>group w&#47;o center hier xfer branch</nullif>
+        <length>100</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>test_date</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>2010-07-29</nullif>
+        <length>10</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>test_change_type</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>move group no center hierarchy outside branch</nullif>
         <length>50</length>
         <precision>-1</precision>
       </field>
-        <select_unspecified>Y</select_unspecified>
     </fields>
+    <limit>1</limit>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>131</xloc>
-      <yloc>12</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Mapping output specification</name>
-    <type>MappingOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>780</xloc>
-      <yloc>10</yloc>
+      <xloc>144</xloc>
+      <yloc>52</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

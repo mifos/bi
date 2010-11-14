@@ -367,6 +367,7 @@ if (wasError == &quot;N&quot;)
 {
 	test_result = &quot;Fail&quot;;
 	fail_reason = msg;
+Alert(msg);
 }
 
 function getCustomerDataSet()
@@ -560,6 +561,21 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 	if (prev_group_key == 0 &amp;&amp; group_change == &quot;Changed&quot;)
 	{
 		return &quot;client no group membership becoming group member&quot;;
+	}
+
+	if (prev_group_key != 0 &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; client_change == &quot;Version&quot;)
+	{
+		return &quot;remove group membership from client&quot;;
+	}
+
+	if (group_change == &quot;Version&quot; &amp;&amp; branch_change == &quot;Changed&quot;)
+	{
+		return &quot;move group no center hierarchy outside branch&quot;;
+	}
+
+	if (prev_center_key == 0 &amp;&amp; group_change == &apos;Version&apos; &amp;&amp; center_change == &quot;Changed&quot;)
+	{
+		return &quot;group add into center hierarchy&quot;;
 	}
 
 
