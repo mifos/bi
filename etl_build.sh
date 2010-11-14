@@ -48,17 +48,9 @@ fi
 echo "Running tests..."
 $PDI_HOME/kitchen.sh /file:$PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb | tee -a $log
 
-if grep -q '^ERROR ' $log
-then
-    echo ETL Test Has Errors
-    exitcode=1
-    rm $log
-    exit $exitcode
-fi
-
+echo " "
 if grep -q 'ETL Pass:' $log
 then
-    echo " "
     echo "ETL PASSING TESTS"
     echo " "
     grep 'ETL Pass:' $log | tee -a $log
@@ -66,13 +58,17 @@ fi
 
 if grep -q 'ETL Fail:' $log
 then
-    exitcode=1
-    echo " "
     echo "ETL FAILING TESTS"
     echo " "
     grep 'ETL Fail:' $log | tee -a $log	
+fi
+
+echo " "
+if grep -q '^ERROR ' $log
+then
+    echo ETL Test Has Errors
+    exitcode=1
 else
-    echo " "
     echo No errors found.
 fi
 
