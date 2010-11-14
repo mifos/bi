@@ -207,7 +207,18 @@
         <precision>-1</precision>
       </field>
       <field>
-        <name>column_prefix</name>
+        <name>id_prefix</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>customer</nullif>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>key_prefix</name>
         <type>String</type>
         <format/>
         <currency/>
