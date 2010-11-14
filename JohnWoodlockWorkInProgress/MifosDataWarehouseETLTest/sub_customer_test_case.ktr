@@ -372,7 +372,7 @@ Alert(msg);
 
 function getCustomerDataSet()
 {
-	sqlCustomer = &quot;select customer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
+	sqlCustomer = &quot;select xxxcustomer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
 	sqlCustomer = sqlCustomer + &quot; , display_name, valid_from &quot;;
 	sqlCustomer = sqlCustomer + &quot; from dim_customer where customer_id = &quot; + test_customer_id;
 	sqlCustomer = sqlCustomer + &quot; order by customer_key&quot;;
