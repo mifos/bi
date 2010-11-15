@@ -183,7 +183,7 @@ c.date_of_birth,
 c.government_id,
 cd.num_children as num_children, 
 bus_lv.lookup_value as business_activity, 
-gen_lv.lookup_value as gender, 
+gen_lv.lookup_name as gender, 
 eth_lv.lookup_value as ethnicity, 
 cit_lv.lookup_value as citizenship, 
 hand_lv.lookup_value as handicapped, 
@@ -193,7 +193,7 @@ edu_lv.lookup_value as education_level
 from customer c
 left join customer_detail cd on cd.customer_id = c.customer_id
 left join lookup_value_locale bus_lv on bus_lv.lookup_id = cd.business_activities 
-left join lookup_value_locale gen_lv on gen_lv.lookup_id = cd.gender 
+left join lookup_value gen_lv on gen_lv.lookup_id = cd.gender 
 left join lookup_value_locale eth_lv on eth_lv.lookup_id = cd.ethinicity 
 left join lookup_value_locale cit_lv on cit_lv.lookup_id = cd.citizenship 
 left join lookup_value_locale hand_lv on hand_lv.lookup_id = cd.handicapped 
