@@ -182,22 +182,24 @@ select c.display_name,
 c.date_of_birth,
 c.government_id,
 cd.num_children as num_children, 
-&apos;dont know yet&apos; as business_activity,
-if(c.customer_level_id = 1, ifnull(gen_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as gender, 
-if(c.customer_level_id = 1, ifnull(eth_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as ethnicity, 
-if(c.customer_level_id = 1, ifnull(cit_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as citizenship, 
-if(c.customer_level_id = 1, ifnull(hand_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as handicapped, 
-if(c.customer_level_id = 1, ifnull(mar_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as marital_status, 
-if(c.customer_level_id = 1, ifnull(edu_lv.lookup_name, &apos;Unknown&apos;), &apos;n&#47;a&apos;) as education_level
+bus_lv.lookup_value as business_activity, 
+gen_lv.lookup_value as gender, 
+eth_lv.lookup_value as ethnicity, 
+cit_lv.lookup_value as citizenship, 
+hand_lv.lookup_value as handicapped, 
+mar_lv.lookup_value as marital_status, 
+edu_lv.lookup_value as education_level
  
 from customer c
 left join customer_detail cd on cd.customer_id = c.customer_id
-left join lookup_value gen_lv on gen_lv.lookup_id = cd.gender 
-left join lookup_value eth_lv on eth_lv.lookup_id = cd.ethinicity 
-left join lookup_value cit_lv on cit_lv.lookup_id = cd.citizenship 
-left join lookup_value hand_lv on hand_lv.lookup_id = cd.handicapped 
-left join lookup_value mar_lv on mar_lv.lookup_id = cd.marital_status 
-left join lookup_value edu_lv on edu_lv.lookup_id = cd.education_level   
+left join lookup_value_locale bus_lv on bus_lv.lookup_id = cd.business_activities 
+left join lookup_value_locale gen_lv on gen_lv.lookup_id = cd.gender 
+left join lookup_value_locale eth_lv on eth_lv.lookup_id = cd.ethinicity 
+left join lookup_value_locale cit_lv on cit_lv.lookup_id = cd.citizenship 
+left join lookup_value_locale hand_lv on hand_lv.lookup_id = cd.handicapped 
+left join lookup_value_locale mar_lv on mar_lv.lookup_id = cd.marital_status 
+left join lookup_value_locale edu_lv on edu_lv.lookup_id = cd.education_level   
+
 where c.customer_id = ?</sql>
     <outer_join>N</outer_join>
     <replace_vars>N</replace_vars>
@@ -321,7 +323,7 @@ where level_id &gt; 0</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>648</xloc>
+      <xloc>662</xloc>
       <yloc>13</yloc>
       <draw>Y</draw>
       </GUI>

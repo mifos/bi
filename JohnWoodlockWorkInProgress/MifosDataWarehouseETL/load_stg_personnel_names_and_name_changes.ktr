@@ -250,8 +250,8 @@ order by p.display_name;
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>188</xloc>
-      <yloc>217</yloc>
+      <xloc>186</xloc>
+      <yloc>218</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
