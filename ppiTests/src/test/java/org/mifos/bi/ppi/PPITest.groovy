@@ -4,7 +4,7 @@ import groovy.sql.Sql
 /**
  * Tests for the {@link Example} class.
  */
-class ExampleTest
+class PPITest
     extends GroovyTestCase
 {
 	void testShow() {
