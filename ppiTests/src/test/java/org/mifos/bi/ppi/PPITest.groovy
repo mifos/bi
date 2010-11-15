@@ -7,11 +7,14 @@ import groovy.sql.Sql
 class PPITest
     extends GroovyTestCase
 {
-	void testShow() {
+	void testPpiScores() {
+		def score_map = ["surveykey":0]
 		def sql = Sql.newInstance("jdbc:mysql://localhost:3306/mifos_ppi_test_dw", "root",
 				"", "com.mysql.jdbc.Driver")
-		sql.eachRow("select * from fact_ppi_survey_results"){ row ->
-			println row.ppi_results_id + " " + row.date_survey_taken + " " + row.ppi_score
+		sql.eachRow("SELECT survey.survey_name, DATE_FORMAT(results.date_survey_taken, '%d/%m/%Y') as date_survey_taken, results.ppi_score FROM fact_ppi_survey_results results JOIN dw_ppi_survey survey ON results.survey_id = survey.survey_id"){ row ->
+			println row.survey_name + " " + row.date_survey_taken + " " + row.ppi_score
+			def score_map_key = row.survey_name + row.date_survey_taken
+			score_map[score_map_key] = row.ppi_score
 		}
 		
 		new File("../ppiparser/generated/testData").eachFile() { file->
@@ -21,7 +24,17 @@ class PPITest
 			   stream -> props.load(stream)
 			 }
 			 // accessing the property from Properties object using Groovy's map notation
-			 println "questionGroup.name=" + props["questionGroup.name"]
+			 def survey_name = props["questionGroup.name"]
+			 println "questionGroup.name=" + survey_name
+			 def num_surveys = props["survey.count"].toInteger()
+			
+			 for (survey_num in 1..num_surveys) {
+				 def survey_date = props["survey." + survey_num + ".question.1.response.text"]
+				 def expected_ppi_score = props["survey." + survey_num + ".ppi.score"]
+				 def actual_ppi_score = score_map[survey_name + survey_date]
+				 println "expected: " + expected_ppi_score + " actual: " + actual_ppi_score
+			 }
+			 	 
 		}
 		
 

@@ -4,6 +4,8 @@ import os.path
 import string
 import sys
 import random
+from datetime import date
+from datetime import timedelta
 
 from mifos.nicknames import Nicknames
 
@@ -87,7 +89,9 @@ PROPERTIES_SCORE_TEMPLATE = 'survey.{SURVEY_NUMBER}.ppi.score={SCORE}\n'
 
 def oneSurvey(cases, survey_num, answer_type):
     score = 0
-    response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=survey_num, QUESTION_NUMBER=1, RESPONSE='11/11/2010')
+    survey_date = date(2010, 11, 1) + timedelta(days=survey_num-1)
+    survey_date_text = survey_date.strftime("%d/%m/%Y")
+    response = PROPERTIES_RESPONSE_TEMPLATE.format(SURVEY_NUMBER=survey_num, QUESTION_NUMBER=1, RESPONSE=survey_date_text)
     cases.append(response)
     for (qnum, q) in enumerate(qs):
         index = 0
