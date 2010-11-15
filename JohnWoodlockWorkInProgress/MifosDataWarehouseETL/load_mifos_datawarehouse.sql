@@ -1129,7 +1129,7 @@ DROP TABLE IF EXISTS `stg_customer_type1_columns`;
 CREATE TABLE `stg_customer_type1_columns` (
   `customer_id` int(11) NOT NULL,
   `display_name` varchar(200) NOT NULL,
-  `gender` varchar(15) NOT NULL,
+  `gender` varchar(15) DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
   `government_id` varchar(50) DEFAULT NULL,
   `num_children` smallint(6) DEFAULT NULL,
@@ -2695,4 +2695,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-10 14:28:54
+-- Dump completed on 2010-11-15 13:46:41

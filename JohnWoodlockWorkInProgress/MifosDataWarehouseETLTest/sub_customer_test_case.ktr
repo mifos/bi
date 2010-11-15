@@ -367,6 +367,7 @@ if (wasError == &quot;N&quot;)
 {
 	test_result = &quot;Fail&quot;;
 	fail_reason = msg;
+Alert(msg);
 }
 
 function getCustomerDataSet()
@@ -562,6 +563,21 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 		return &quot;client no group membership becoming group member&quot;;
 	}
 
+	if (prev_group_key != 0 &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; client_change == &quot;Version&quot;)
+	{
+		return &quot;remove group membership from client&quot;;
+	}
+
+	if (group_change == &quot;Version&quot; &amp;&amp; branch_change == &quot;Changed&quot;)
+	{
+		return &quot;move group no center hierarchy outside branch&quot;;
+	}
+
+	if (prev_center_key == 0 &amp;&amp; group_change == &apos;Version&apos; &amp;&amp; center_change == &quot;Changed&quot;)
+	{
+		return &quot;group add into center hierarchy&quot;;
+	}
+
 
 
 	fail_test(&quot;System Error - Was a Change - Branch Change: &quot; + branch_change + &quot;   LO Change: &quot; + loan_officer_change + &quot;   Center Change: &quot; + center_change + &quot;   Group Change: &quot; + group_change + &quot; - but not picked up - row index: &quot; + row_num);
@@ -679,7 +695,7 @@ Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &q
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>306</xloc>
-      <yloc>21</yloc>
+      <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
