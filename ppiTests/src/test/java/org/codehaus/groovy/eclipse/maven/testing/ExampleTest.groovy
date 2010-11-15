@@ -10,13 +10,19 @@
  *******************************************************************************/
 package org.codehaus.groovy.eclipse.maven.testing
 
+import groovy.sql.Sql
 /**
  * Tests for the {@link Example} class.
  */
 class ExampleTest
     extends GroovyTestCase
 {
-    void testShow() {
-        new Example().show()
+	void testShow() {
+		def sql = Sql.newInstance("jdbc:mysql://localhost:3306/mifos_ppi_test_dw", "root",
+				"", "com.mysql.jdbc.Driver")
+		sql.eachRow("select * from fact_ppi_survey_results"){ row ->
+			println row.ppi_results_id + " " + row.date_survey_taken + " " + row.ppi_score
+		}
+		
     }
 }
