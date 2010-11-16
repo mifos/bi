@@ -387,8 +387,8 @@ where c.customer_level_id = 1
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>165</xloc>
-      <yloc>315</yloc>
+      <xloc>192</xloc>
+      <yloc>328</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -483,7 +483,9 @@ where c.customer_level_id = 2
     <sql>
 select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;H&apos; as change_type, cl.change_log_id as change_order, 
-null as updated_status, null as updated_parent_id, cld.new_value as loan_officer_name, null as updated_branch_id,
+null as updated_status, null as updated_parent_id, 
+if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_officer_name, 
+null as updated_branch_id,
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id

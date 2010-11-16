@@ -234,7 +234,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>46</nullif>
+        <nullif>67</nullif>
         <length>15</length>
         <precision>-1</precision>
       </field>
@@ -245,7 +245,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>group w&#47;o center hier xfer branch</nullif>
+        <nullif>group w&#47;o center hier xfer branch after mifos-3872 -2</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -256,7 +256,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>2010-07-29</nullif>
+        <nullif>2010-09-03</nullif>
         <length>10</length>
         <precision>-1</precision>
       </field>
