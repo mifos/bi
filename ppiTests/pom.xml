@@ -16,22 +16,18 @@
 	</properties>
 
 	<repositories>
-		<repository>
-			<id>springsource</id>
-			<url>http://maven.springframework.org/snapshot</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
+        <repository>
+            <id>maven-repository.mifos.org</id>
+            <name>Mifos Maven Repository</name>
+            <url>http://maven.mifos.org/nexus/content/groups/public/</url>
+        </repository>		
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>springsource</id>
-			<url>http://maven.springframework.org/snapshot</url>
+            <id>maven-repository.mifos.org</id>
+            <name>Mifos Maven Repository</name>
+            <url>http://maven.mifos.org/nexus/content/groups/public/</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
