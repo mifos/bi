@@ -32,7 +32,7 @@ class PPITest
 				 def survey_date = props["survey." + survey_num + ".question.1.response.text"]
 				 def expected_ppi_score = props["survey." + survey_num + ".ppi.score"]
 				 def actual_ppi_score = score_map[survey_name + survey_date]
-				 println "expected: " + expected_ppi_score + " actual: " + actual_ppi_score
+				 assert expected_ppi_score.toInteger() == actual_ppi_score.toInteger()
 			 }
 			 	 
 		}

@@ -242,6 +242,55 @@
     </step>
 
   <step>
+    <name>Got an error on Insert&#47;Update</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_detailed</loglevel>
+      <displayHeader>Y</displayHeader>
+    <fields>
+      <field>
+        <name>survey_id</name>
+        </field>
+      <field>
+        <name>points_version</name>
+        </field>
+      <field>
+        <name>date_survey_taken</name>
+        </field>
+      <field>
+        <name>entity_id</name>
+        </field>
+      <field>
+        <name>entity_type_id</name>
+        </field>
+      <field>
+        <name>ppi_score</name>
+        </field>
+      <field>
+        <name>client_id</name>
+        </field>
+      <field>
+        <name>customer_key</name>
+        </field>
+      <field>
+        <name>branch_key</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>169</xloc>
+      <yloc>1018</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Insert &#47; Update</name>
     <type>InsertUpdate</type>
     <description/>
@@ -3763,58 +3812,6 @@ GROUP BY question_group_instance_id) as answers</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>495</xloc>
       <yloc>9</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Got an error on Insert&#47;Update</name>
-    <type>WriteToLog</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <loglevel>log_level_detailed</loglevel>
-      <displayHeader>Y</displayHeader>
-    <fields>
-      <field>
-        <name>survey_name</name>
-        </field>
-      <field>
-        <name>survey_id</name>
-        </field>
-      <field>
-        <name>points_version</name>
-        </field>
-      <field>
-        <name>date_survey_taken</name>
-        </field>
-      <field>
-        <name>entity_id</name>
-        </field>
-      <field>
-        <name>entity_type_id</name>
-        </field>
-      <field>
-        <name>ppi_score</name>
-        </field>
-      <field>
-        <name>client_id</name>
-        </field>
-      <field>
-        <name>customer_key</name>
-        </field>
-      <field>
-        <name>branch_key</name>
-        </field>
-      </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>169</xloc>
-      <yloc>1018</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
