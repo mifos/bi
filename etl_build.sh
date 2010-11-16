@@ -33,7 +33,7 @@ mysql $MYSQL_ARGS $DW_DB_NAME < $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWare
 
 echo "Running ETL..."
 log=`mktemp`
-$PDI_HOME/kitchen.sh /file:$PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb | tee $log
+$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb` | tee $log
 
 exitcode=0
 if grep -q '^ERROR ' $log
@@ -46,7 +46,7 @@ fi
 
 
 echo "Running tests..."
-$PDI_HOME/kitchen.sh /file:$PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb | tee -a $log
+$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
 if grep -q 'ETL Pass:' $log
 then
     echo " "
