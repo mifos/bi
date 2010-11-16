@@ -9,8 +9,8 @@ class PPITest
 {
 	void testPpiScores() {
 		def score_map = ["surveykey":0]
-		def sql = Sql.newInstance("jdbc:mysql://localhost:3306/mifos_ppi_test_dw", "root",
-				"", "com.mysql.jdbc.Driver")
+		def sql = Sql.newInstance(System.properties['biTestDbUrl'], System.properties['biTestDbUser'],
+				System.properties['biTestDbPassword'], System.properties['biTestDbDriver'])
 		sql.eachRow("SELECT survey.survey_name, DATE_FORMAT(results.date_survey_taken, '%d/%m/%Y') as date_survey_taken, results.ppi_score FROM fact_ppi_survey_results results JOIN dw_ppi_survey survey ON results.survey_id = survey.survey_id"){ row ->
 			println row.survey_name + " " + row.date_survey_taken + " " + row.ppi_score
 			def score_map_key = row.survey_name + row.date_survey_taken
