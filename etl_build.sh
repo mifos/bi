@@ -44,34 +44,16 @@ then
     exit $exitcode
 fi
 
-
 echo "Running tests..."
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
-if grep -q 'ETL Pass:' $log
-then
-    echo " "
-    echo "ETL PASSING TESTS"
-    echo " "
-    grep 'ETL Pass:' $log | tee -a $log
-fi
 
-if grep -q 'ETL Fail:' $log
-then
-    echo " "
-    echo "ETL FAILING TESTS"
-    echo " "
-    grep 'ETL Fail:' $log | tee -a $log	
-fi
+mkdir -p target
+groovy generate_junit_output.groovy < $log > target/junit_output.xml
 
-echo " "
 if grep -q '^ERROR ' $log
 then
-    echo ETL Test Has Errors
     exitcode=1
-else
-    echo No errors found.
 fi
 
-echo " "
 rm $log
 exit $exitcode
