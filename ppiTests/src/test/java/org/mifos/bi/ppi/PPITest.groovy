@@ -20,7 +20,7 @@ class PPITest
 		new File("../ppiparser/generated/testData").eachFile() { file->
 		     println file.getName()
 			 def props = new Properties()
-			 new File("../ppiparser/generated/testData/" + file.getName()).withInputStream {
+			 new File("../ppiparser/generated/testData/" + file.getName()).withReader {
 			   stream -> props.load(stream)
 			 }
 			 // accessing the property from Properties object using Groovy's map notation
@@ -32,6 +32,8 @@ class PPITest
 				 def survey_date = props["survey." + survey_num + ".question.1.response.text"]
 				 def expected_ppi_score = props["survey." + survey_num + ".ppi.score"]
 				 def actual_ppi_score = score_map[survey_name + survey_date]
+				 assert expected_ppi_score != null
+				 assert actual_ppi_score != null
 				 assert expected_ppi_score.toInteger() == actual_ppi_score.toInteger()
 			 }			 	 
 		}		
