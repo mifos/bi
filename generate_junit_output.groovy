@@ -5,6 +5,7 @@ Converts output from ETL tests to JUnit-style XML output.
 import groovy.xml.MarkupBuilder
 
 def tests = []
+def stats = [failures:0]
 def stdin = ""
 System.in.eachLine() { line ->
     stdin += line + '\n'
@@ -18,6 +19,7 @@ System.in.eachLine() { line ->
             test['result'] = 'fail'
             test['name'] = (m[0][3] =~ /TEST NAME: ([^A-Z]*)[A-Z]/)[0][1]
             test['message'] = m[0][3]
+            stats['failed'] += 1
         }
         tests.add(test)
     }
@@ -38,7 +40,7 @@ def testcases(builder, tests) {
 def xml = new MarkupBuilder()
 xml.setDoubleQuotes(true)
 xml.mkp.xmlDeclaration(version:'1.0', encoding:'UTF-8')
-xml.testsuite(failures:0,time:0,errors:0,skipped:0,tests:1,name:'ETL tests') {
+xml.testsuite(failures:stats['failures'],time:0,errors:0,skipped:0,tests:tests.size(),name:'ETL tests') {
     properties() {
         System.properties.each { key, value -> property(name:"${key}", value:"${value}") }
     }
