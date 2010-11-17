@@ -139,8 +139,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>356</xloc>
-      <yloc>296</yloc>
+      <xloc>361</xloc>
+      <yloc>294</yloc>
       </entry>
     <entry>
       <name>Customers Requiring LO Assignments</name>

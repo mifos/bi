@@ -157,7 +157,7 @@
     <sql>
 SELECT cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;S&apos; as change_type, cl.change_log_id as change_order, 
-cld.new_value as updated_status, null as updated_parent_id, null as updated_loan_officer_id, null as updated_branch_id,
+cld.new_value as updated_status, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 FROM customer c
 join change_log cl on c.customer_id = cl.entity_id
@@ -193,7 +193,7 @@ where c.customer_level_id = 3</sql>
     <sql>
 SELECT cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;S&apos; as change_type, cl.change_log_id as change_order, 
-cld.new_value as updated_status, null as updated_parent_id, null as updated_loan_officer_id, null as updated_branch_id,
+cld.new_value as updated_status, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 FROM customer c
 join change_log cl on c.customer_id = cl.entity_id
@@ -232,7 +232,7 @@ where c.customer_level_id = 1
     <sql>
 SELECT cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;S&apos; as change_type, cl.change_log_id as change_order, 
-cld.new_value as updated_status, null as updated_parent_id, null as updated_loan_officer_id, null as updated_branch_id,
+cld.new_value as updated_status, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 
 FROM customer c
@@ -309,18 +309,6 @@ where c.customer_level_id = 2
         <field>
           <column_name>updated_status</column_name>
           <stream_name>updated_status</stream_name>
-        </field>
-        <field>
-          <column_name>updated_parent_id</column_name>
-          <stream_name>updated_parent_id</stream_name>
-        </field>
-        <field>
-          <column_name>updated_loan_officer_id</column_name>
-          <stream_name>updated_loan_officer_id</stream_name>
-        </field>
-        <field>
-          <column_name>updated_branch_id</column_name>
-          <stream_name>updated_branch_id</stream_name>
         </field>
         <field>
           <column_name>customer_formedby_id</column_name>

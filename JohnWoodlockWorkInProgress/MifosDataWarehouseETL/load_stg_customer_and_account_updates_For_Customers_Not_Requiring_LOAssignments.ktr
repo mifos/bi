@@ -157,7 +157,7 @@
     <sql>
 SELECT ch.start_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;H&apos; as change_type, ch.hierarchy_id as change_order, 
-null as updated_status, ch.parent_id as updated_parent_id, null as updated_loan_officer_id, null as updated_branch_id,
+null as updated_status, ch.parent_id as updated_parent_id, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 
 from customer c
@@ -196,7 +196,6 @@ where c.customer_level_id = 1
     <sql>select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;H&apos; as change_type, cl.change_log_id as change_order, 
 null as updated_status, 0 as updated_parent_id, 
-null as updated_loan_officer_id,  null as update_branch_id, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
@@ -235,7 +234,7 @@ where c.customer_level_id = 1
     <sql>
 SELECT ch.start_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
 &apos;H&apos; as change_type, ch.hierarchy_id as change_order, 
-null as updated_status, ch.parent_id as updated_parent_id, null as updated_loan_officer_id, null as updated_branch_id,
+null as updated_status, ch.parent_id as updated_parent_id, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 
 from customer c
@@ -279,8 +278,6 @@ ifnull(cld.old_value, lv.lookup_name) as updated_status,
 &#47;*if a client is not active it won&apos;t be in the hierarchy yet*&#47;
 ifnull(ch.parent_id, c.parent_customer_id) as updated_parent_id,  
 
-null as updated_loan_officer_id, 
-null as updated_branch_id, 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 
 from customer c
@@ -344,9 +341,6 @@ ifnull(cld.old_value, lv.lookup_name) as updated_status,
 
 &#47;*if a group is not active it won&apos;t be in the hierarchy yet*&#47;
 ifnull(ch.parent_id, c.parent_customer_id) as updated_parent_id,  
-
-null as updated_loan_officer_id, &#47;* populate this later if group has no parent*&#47;
-null as updated_branch_id, 
 
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 
@@ -448,14 +442,6 @@ where c.customer_level_id = 2 and c.parent_customer_id is not null
         <field>
           <column_name>updated_parent_id</column_name>
           <stream_name>updated_parent_id</stream_name>
-        </field>
-        <field>
-          <column_name>updated_loan_officer_id</column_name>
-          <stream_name>updated_loan_officer_id</stream_name>
-        </field>
-        <field>
-          <column_name>updated_branch_id</column_name>
-          <stream_name>updated_branch_id</stream_name>
         </field>
         <field>
           <column_name>customer_formedby_id</column_name>
