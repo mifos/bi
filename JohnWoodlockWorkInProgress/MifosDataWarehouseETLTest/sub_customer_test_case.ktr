@@ -538,7 +538,7 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 	}
 
 
-	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; )
+	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; group_key != 0 &amp;&amp; center_change == &quot;Same&quot; )
 	{
 		return &quot;group membership within center&quot;;
 	}
@@ -563,7 +563,7 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 		return &quot;client no group membership becoming group member&quot;;
 	}
 
-	if (prev_group_key != 0 &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; client_change == &quot;Version&quot;)
+	if (group_key == 0 &amp;&amp; group_change == &quot;Changed&quot;)
 	{
 		return &quot;remove group membership from client&quot;;
 	}

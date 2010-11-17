@@ -275,8 +275,8 @@
     <limit>1</limit>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>144</xloc>
-      <yloc>52</yloc>
+      <xloc>142</xloc>
+      <yloc>53</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

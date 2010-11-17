@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_stg_customer_and_account_updates For Customers Needing LO Assignment Lookup</name>
+    <name>load_stg_customer_and_account_updates Group Membership Adjustment</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,6 +65,36 @@
   <modified_date>2010&#47;09&#47;08 14:00:10.943</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Get all group membership removals and additions per client (latest for any particular day)
+
+Needs to know what other changes may have happened in this run.
+
+if latest is removal add removal entry to the end of that days hierarchy movements
+else (addition) 
+
+	if there&apos;s a hierarchy entry - its done
+	if not use 1st hierarchy entry because the 1st hierarchy entry is discounted when getting client hierarchy changes 
+		</note>
+      <xloc>317</xloc>
+      <yloc>184</yloc>
+      <width>590</width>
+      <heigth>135</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -142,9 +172,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Center Hierarchy Changes - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>New Centers</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>New Groups (w&#47;o center hierarchy)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (without center hierarchy) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Client (without group membership) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Loan Officer Id</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Latest Group Membership Entry On a Day</from><to>Membership Removal?</to><enabled>Y</enabled> </hop>  <hop> <from>Membership Removal?</from><to>Set updated_parent_id to 0</to><enabled>Y</enabled> </hop>  <hop> <from>Set updated_parent_id to 0</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Membership Removal?</from><to>Check if Hierarchy Change Found</to><enabled>Y</enabled> </hop>  <hop> <from>Check if Hierarchy Change Found</from><to>Hierarchy Change Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Hierarchy Change Found?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Hierarchy Change Found?</from><to>Set updated_parent_id from 1st hierarchy change</to><enabled>Y</enabled> </hop>  <hop> <from>Set updated_parent_id from 1st hierarchy change</from><to>Remove hierarchyChangeFound</to><enabled>Y</enabled> </hop>  <hop> <from>Remove hierarchyChangeFound</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Get Center Hierarchy Changes - Loan Officer Reassignments</name>
+    <name>Latest Group Membership Entry On a Day</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -154,56 +184,30 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>
-select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;H&apos; as change_type, cl.change_log_id as change_order, 
-null as updated_status, cld.new_value as loan_officer_name, 
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-from customer c
-join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 20                        
-join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
-
-where c.customer_level_id = 3
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>237</xloc>
-      <yloc>33</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Client (without group membership) - Loan Officer Reassignments</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>
-select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;H&apos; as change_type, cl.change_log_id as change_order, 
+    <sql>select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
+&apos;H&apos; as change_type, 999999999 as change_order, 
 null as updated_status,  
-if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_officer_name, 
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
+ifnull(c.customer_formedby_id, 0) as customer_formedby_id,
+cld.new_value
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 1                      
+                        and cl.entity_type = 1     
+						and cl.change_log_id = 
+                            (select max(clmaxGF.change_log_id)
+                            from change_log clmaxGF
+                            join change_log_detail cldmaxGF on cldmaxGF.change_log_id = clmaxGF.change_log_id
+                                                and cldmaxGF.field_name =  &apos;groupFlag&apos;
+                            where clmaxGF.entity_id = c.customer_id
+                            and clmaxGF.entity_type = 1
+							and clmaxGF.changed_date = cl.changed_date)
+
+
+                 
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
+                        and cld.field_name =   &apos;groupFlag&apos;
 
 where c.customer_level_id = 1
+
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -212,211 +216,8 @@ where c.customer_level_id = 1
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>179</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Group (without center hierarchy) - Loan Officer Reassignments</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>
-select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;H&apos; as change_type, cl.change_log_id as change_order, 
-null as updated_status, 
-if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_officer_name, 
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-from customer c
-join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 12                      
-join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Loan Officer Assigned&apos;
-
-where c.customer_level_id = 2
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>193</xloc>
-      <yloc>92</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Lookup Loan Officer Id</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>stg_personnel_names_and_name_changes</table>
-      <orderby/>
-      <fail_on_multiple>Y</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>loan_officer_name</name>
-        <field>DISPLAY_NAME</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>PERSONNEL_ID</name>
-        <rename>updated_loan_officer_id</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>555</xloc>
-      <yloc>138</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>New Centers</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>&#47;* New entries - find first status and first loan officer*&#47;
-select c.created_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;A&apos; as change_type, 1 as change_order, 
-ifnull(cld.old_value, lv.lookup_name) as updated_status,  
-ifnull(cldlo.old_value, p.display_name) as loan_officer_name, 
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-from customer c
-join customer_state cs on cs.status_id = c.status_id
-join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-
-left join change_log cl on c.customer_id = cl.entity_id 
-                        and cl.entity_type = 20
-                        and cl.change_log_id = 
-                            (select min(clmin.change_log_id)
-                            from change_log clmin
-                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
-                                                and cldmin.field_name =  &apos;Status&apos;
-                            where clmin.entity_id = c.customer_id
-                            and clmin.entity_type = 20)
-left join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Status&apos;
-
-join personnel p on p.personnel_id = c.loan_officer_id
-left join change_log cllo on c.customer_id = cllo.entity_id
-                        and cllo.entity_type = 20
-                        and cllo.change_log_id = 
-                            (select min(clmin.change_log_id)
-                            from change_log clmin
-                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
-                                                and cldmin.field_name =  &apos;Loan Officer Assigned&apos;
-                            where clmin.entity_id = c.customer_id
-                            and clmin.entity_type = 20)
-left join change_log_detail cldlo on cldlo.change_log_id = cllo.change_log_id
-                        and cldlo.field_name =  &apos;Loan Officer Assigned&apos;
-
-where c.customer_level_id = 3
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>712</xloc>
-      <yloc>270</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>New Groups (w&#47;o center hierarchy)</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>&#47;* New entries - find first status and first loan officer*&#47;
-select c.created_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;A&apos; as change_type, 1 as change_order, 
-ifnull(cld.old_value, lv.lookup_name) as updated_status,  
-ifnull(ifnull(cldlo.old_value, p.display_name),&apos;Unknown&apos;) as loan_officer_name, 
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-
-
-from customer c
-join customer_state cs on cs.status_id = c.status_id
-join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-
-left join change_log cl on c.customer_id = cl.entity_id 
-                        and cl.entity_type = 12
-                        and cl.change_log_id = 
-                            (select min(clmin.change_log_id)
-                            from change_log clmin
-                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
-                                                and cldmin.field_name =  &apos;Status&apos;
-                            where clmin.entity_id = c.customer_id
-                            and clmin.entity_type = 12)
-left join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Status&apos;
-&#47;* groups without center hierarchy that are transferred to another branch are set to on-hold and have their loan officer nulled out *&#47;
-left join personnel p on p.personnel_id = c.loan_officer_id 
-left join change_log cllo on c.customer_id = cllo.entity_id
-                        and cllo.entity_type = 12
-                        and cllo.change_log_id = 
-                            (select min(clmin.change_log_id)
-                            from change_log clmin
-                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
-                                                and cldmin.field_name =  &apos;Loan Officer Assigned&apos;
-                            where clmin.entity_id = c.customer_id
-                            and clmin.entity_type = 12)
-left join change_log_detail cldlo on cldlo.change_log_id = cllo.change_log_id
-                        and cldlo.field_name =  &apos;Loan Officer Assigned&apos;
-
-where c.customer_level_id = 2 and c.parent_customer_id is null
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>524</xloc>
-      <yloc>282</yloc>
+      <xloc>104</xloc>
+      <yloc>12</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -474,8 +275,8 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
           <stream_name>updated_status</stream_name>
         </field>
         <field>
-          <column_name>updated_loan_officer_id</column_name>
-          <stream_name>updated_loan_officer_id</stream_name>
+          <column_name>updated_parent_id</column_name>
+          <stream_name>updated_parent_id</stream_name>
         </field>
         <field>
           <column_name>customer_formedby_id</column_name>
@@ -484,8 +285,220 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>552</xloc>
-      <yloc>18</yloc>
+      <xloc>803</xloc>
+      <yloc>10</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Membership Removal?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Set updated_parent_id to 0</send_true_to>
+<send_false_to>Check if Hierarchy Change Found</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>new_value</leftvalue>
+ <function>=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>299</xloc>
+      <yloc>12</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set updated_parent_id to 0</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>updated_parent_id</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>0</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>15</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>572</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Check if Hierarchy Change Found</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+var hierarchyChangeFound = false;
+
+
+DBConnection = &quot;DestinationDB&quot;;
+
+sql = &quot;select count(*) from stg_customer_and_account_updates &quot;;
+sql = sql + &quot; where effective_date = &apos;&quot; + effective_date + &quot;&apos;&quot;;
+sql = sql + &quot; and level_id = &quot; + level_id;
+sql = sql + &quot; and entity_id = &quot; + entity_id;
+sql = sql + &quot; and change_type = &apos;&quot; + change_type + &quot;&apos;&quot;;
+
+sqlResults = fireToDB(DBConnection, sql);
+
+if (parseInt(sqlResults[0][0]) &gt; 1)
+{
+	hierarchyChangeFound = true;
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>hierarchyChangeFound</name>
+        <rename>hierarchyChangeFound</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>104</xloc>
+      <yloc>111</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Hierarchy Change Found?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Dummy (do nothing)</send_true_to>
+<send_false_to>Set updated_parent_id from 1st hierarchy change</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>hierarchyChangeFound</leftvalue>
+ <function>=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>320</xloc>
+      <yloc>114</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy (do nothing)</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>228</xloc>
+      <yloc>193</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set updated_parent_id from 1st hierarchy change</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <rowlimit>0</rowlimit>
+    <sql>SELECT ch.parent_id as updated_parent_id
+from customer_hierarchy ch 
+where ch.customer_id = ?
+and ch.hierarchy_id = 
+			(select min(chmin.hierarchy_id)
+             from customer_hierarchy chmin
+             where chmin.customer_id = ?)</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+      <field>
+        <name>entity_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>entity_id</name>
+        <type>Integer</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>540</xloc>
+      <yloc>114</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove hierarchyChangeFound</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>hierarchyChangeFound</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>806</xloc>
+      <yloc>116</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

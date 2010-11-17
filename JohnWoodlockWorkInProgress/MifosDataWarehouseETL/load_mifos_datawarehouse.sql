@@ -1883,7 +1883,7 @@ select effective_date, level_id, entity_id, change_type, change_order,
         updated_status, updated_parent_id, updated_loan_officer_id, updated_branch_id, customer_formedby_id, 
         account_type, account_prd_offering_id, account_currency_id
 from stg_customer_and_account_updates
-order by effective_date, level_id desc, entity_id, change_type, change_order;
+order by effective_date, level_id desc, entity_id, change_type, change_order, updated_parent_id desc, updated_loan_officer_id desc;
 
 declare continue handler for not found set done = 1;
 
@@ -2695,4 +2695,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-15 13:46:41
+-- Dump completed on 2010-11-17 18:30:52

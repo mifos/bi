@@ -492,8 +492,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>385</xloc>
-      <yloc>371</yloc>
+      <xloc>417</xloc>
+      <yloc>374</yloc>
       </entry>
   </entries>
   <hops>
@@ -592,7 +592,7 @@
       <to>Remove Group Membership From Client Change</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
     </hop>

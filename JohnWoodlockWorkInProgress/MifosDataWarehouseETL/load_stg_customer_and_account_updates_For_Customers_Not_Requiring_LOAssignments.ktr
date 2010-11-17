@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>New Groups (within center hierarchy)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Group Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>New Clients (with group membership)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Clients Group Membership Removed</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Client Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>New Groups (within center hierarchy)</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Group Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Client Hierarchy Changes</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Client Hierarchy Changes</name>
     <type>TableInput</type>
@@ -176,46 +176,8 @@ where c.customer_level_id = 1
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>115</xloc>
-      <yloc>123</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Clients Group Membership Removed</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select cl.changed_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;H&apos; as change_type, cl.change_log_id as change_order, 
-null as updated_status, 0 as updated_parent_id, 
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-from customer c
-join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 1                      
-join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =   &apos;groupFlag&apos;
-
-where c.customer_level_id = 1
-
-
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>691</xloc>
-      <yloc>163</yloc>
+      <xloc>102</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -255,70 +217,6 @@ where c.customer_level_id = 2
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>113</xloc>
       <yloc>38</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>New Clients (with group membership)</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>
-select c.created_date as effective_date, c.customer_level_id as level_id, c.customer_id as entity_id, 
-&apos;A&apos; as change_type, 1 as change_order, 
-ifnull(cld.old_value, lv.lookup_name) as updated_status, 
-
-&#47;*if a client is not active it won&apos;t be in the hierarchy yet*&#47;
-ifnull(ch.parent_id, c.parent_customer_id) as updated_parent_id,  
-
-ifnull(c.customer_formedby_id, 0) as customer_formedby_id
-
-from customer c
-join customer_state cs on cs.status_id = c.status_id
-join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-
-
-&#47;* find first status if there has been a status change*&#47;
-left join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 1
-                        and cl.change_log_id = 
-                            (select min(clmin.change_log_id)
-                            from change_log clmin
-                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
-                                                and cldmin.field_name =  &apos;Status&apos;
-                            where clmin.entity_id = c.customer_id
-                            and clmin.entity_type = 1)
-left join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Status&apos;
-                        
-&#47;*get parent from the hierarchy table*&#47;
-left join customer_hierarchy ch on ch.customer_id = c.customer_id
-                and ch.hierarchy_id = 
-                    (select min(hierarchy_id) from customer_hierarchy chmin
-                    where chmin.customer_id = c.customer_id)
-
-
-where c.customer_level_id = 1 and c.parent_customer_id is not null
-
-
-
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>494</xloc>
-      <yloc>17</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -381,8 +279,8 @@ where c.customer_level_id = 2 and c.parent_customer_id is not null
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>716</xloc>
-      <yloc>17</yloc>
+      <xloc>631</xloc>
+      <yloc>119</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
