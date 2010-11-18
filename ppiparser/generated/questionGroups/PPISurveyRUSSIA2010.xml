@@ -108,7 +108,7 @@
         </question>
         <question order="7">
             <text>How many VCRs and DVDs does the household own?</text>
-            <nickname>ppi_russia_2010_VCRs_and_DVDs</nickname>
+            <nickname>ppi_russia_2010_vcrs_and_dvds</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>

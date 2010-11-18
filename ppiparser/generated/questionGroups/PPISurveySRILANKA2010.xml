@@ -41,7 +41,7 @@
         </question>
         <question order="3">
             <text>How many household members are employees of government or semi-government entities?</text>
-            <nickname>ppi_srilanka_2010_female_head_education_level</nickname>
+            <nickname>ppi_srilanka_2010_family_members_employeed_by_government</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
@@ -54,7 +54,7 @@
         </question>
         <question order="4">
             <text>What is the highest educational level that the female head/spouse has passed?</text>
-            <nickname>ppi_srilanka_2010_house_floors</nickname>
+            <nickname>ppi_srilanka_2010_female_head_education_level</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Year 1 or less</value>
@@ -79,7 +79,7 @@
         </question>
         <question order="5">
             <text>What is the principal construction material of the floors?</text>
-            <nickname>ppi_srilanka_2010_house_bedrooms</nickname>
+            <nickname>ppi_srilanka_2010_house_floors</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Mud, or other</value>
@@ -95,7 +95,7 @@
         </question>
         <question order="6">
             <text>How many bedrooms does the household use?</text>
-            <nickname>ppi_srilanka_2010_owns_fan</nickname>
+            <nickname>ppi_srilanka_2010_house_bedrooms</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
@@ -114,7 +114,7 @@
         </question>
         <question order="7">
             <text>Does the household own an electric fan?</text>
-            <nickname>ppi_srilanka_2010_owns_TV_and_DVD</nickname>
+            <nickname>ppi_srilanka_2010_owns_fan</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -127,7 +127,7 @@
         </question>
         <question order="8">
             <text>Does the household own a television and a VCD/DVD?</text>
-            <nickname>ppi_srilanka_2010_owns_cooker</nickname>
+            <nickname>ppi_srilanka_2010_owns_tv_and_dvd</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No television</value>
@@ -143,7 +143,7 @@
         </question>
         <question order="9">
             <text>Does the household own a cooker (gas, kerosene, or electric)?</text>
-            <nickname>ppi_srilanka_2010_owns_refrigerator</nickname>
+            <nickname>ppi_srilanka_2010_owns_cooker</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -156,7 +156,7 @@
         </question>
         <question order="10">
             <text>Does the household own a refrigerator?</text>
-            <nickname>ppi_srilanka_2010_owns_transportation</nickname>
+            <nickname>ppi_srilanka_2010_owns_refrigerator</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -169,7 +169,7 @@
         </question>
         <question order="11">
             <text>Does the household own a bicycle; motorcycle, scooter, or three-wheeler; or motor car, van, bus, lorry, 2-wheel or 4-wheel tractor?</text>
-            <nickname>ppi_srilanka_2010_</nickname>
+            <nickname>ppi_srilanka_2010_owns_transportation</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>

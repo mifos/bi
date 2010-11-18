@@ -57,7 +57,7 @@ GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_survey_date', qgr.response, NULL)) A
 qgi.entity_id as entity_id,
 es.entity_type_id as entity_type_id,
 GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_family_members_0_to_11', qgr.response, NULL)) AS 'Q1',
-GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_employed_in_agricuture_animals', qgr.response, NULL)) AS 'Q2',
+GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_employed_in_agriculture_animals', qgr.response, NULL)) AS 'Q2',
 GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_house_roof', qgr.response, NULL)) AS 'Q3',
 GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_house_walls', qgr.response, NULL)) AS 'Q4',
 GROUP_CONCAT(if(q.nickname = 'ppi_mali_2010_water_source', qgr.response, NULL)) AS 'Q5',

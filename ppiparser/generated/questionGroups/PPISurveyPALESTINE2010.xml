@@ -99,7 +99,7 @@
         </question>
         <question order="7">
             <text>Does the household have a T.V. and a VCR and/or DVD?</text>
-            <nickname>ppi_palestine_2010_has_TV_VCR_DVD</nickname>
+            <nickname>ppi_palestine_2010_has_tv_vcr_dvd</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>

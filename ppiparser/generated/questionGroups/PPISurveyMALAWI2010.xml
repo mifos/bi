@@ -19,7 +19,7 @@
         </question>
         <question order="2">
             <text>How many household members are there?</text>
-            <nickname>ppi_malawi_2010_family_members_0_to_14</nickname>
+            <nickname>ppi_malawi_2010_family_members</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Eight or more</value>
@@ -150,7 +150,7 @@
         </question>
         <question order="10">
             <text>Does your household own a tape or CD player/HiFi?</text>
-            <nickname>ppi_malawi_2010_owns_HiFi</nickname>
+            <nickname>ppi_malawi_2010_owns_hifi</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>

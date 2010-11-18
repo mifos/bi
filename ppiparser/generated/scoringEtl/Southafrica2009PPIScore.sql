@@ -64,7 +64,7 @@ GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_house_roof', qgr.response, NU
 GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_toilet_type', qgr.response, NULL)) AS 'Q5',
 GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_cooking_fuel', qgr.response, NULL)) AS 'Q6',
 GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_owns_washing_machine', qgr.response, NULL)) AS 'Q7',
-GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_owns_VCR_DVD', qgr.response, NULL)) AS 'Q8',
+GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_owns_vcr_dvd', qgr.response, NULL)) AS 'Q8',
 GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_owns_microwave', qgr.response, NULL)) AS 'Q9',
 GROUP_CONCAT(if(q.nickname = 'ppi_southafrica_2009_owns_refrigerator', qgr.response, NULL)) AS 'Q10'
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es

@@ -134,7 +134,7 @@
         </question>
         <question order="9">
             <text>Does the household own a videocassette recorder/DVD?</text>
-            <nickname>ppi_southafrica_2009_owns_VCR_DVD</nickname>
+            <nickname>ppi_southafrica_2009_owns_vcr_dvd</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>

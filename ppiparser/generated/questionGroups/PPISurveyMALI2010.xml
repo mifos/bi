@@ -44,7 +44,7 @@
         </question>
         <question order="3">
             <text>How many members of the household usually work as their main occupation in agriculture, animal husbandry, fishing, or forestry?</text>
-            <nickname>ppi_mali_2010_employed_in_agricuture_animals</nickname>
+            <nickname>ppi_mali_2010_employed_in_agriculture_animals</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Three or more</value>

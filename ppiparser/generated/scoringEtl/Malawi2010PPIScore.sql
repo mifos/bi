@@ -58,7 +58,7 @@ qg.id as survey_id,
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_survey_date', qgr.response, NULL)) AS 'date_survey_taken',
 qgi.entity_id as entity_id,
 es.entity_type_id as entity_type_id,
-GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_family_members_0_to_14', qgr.response, NULL)) AS 'Q1',
+GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_family_members', qgr.response, NULL)) AS 'Q1',
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_family_members_in_agriculture', qgr.response, NULL)) AS 'Q2',
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_water_source', qgr.response, NULL)) AS 'Q3',
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_cooking_fuel', qgr.response, NULL)) AS 'Q4',
@@ -66,7 +66,7 @@ GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_lighting_fuel', qgr.response, NULL
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_owns_lantern', qgr.response, NULL)) AS 'Q6',
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_owns_furnature', qgr.response, NULL)) AS 'Q7',
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_owns_bicycle_scooter_car', qgr.response, NULL)) AS 'Q8',
-GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_owns_HiFi', qgr.response, NULL)) AS 'Q9',
+GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_owns_hifi', qgr.response, NULL)) AS 'Q9',
 GROUP_CONCAT(if(q.nickname = 'ppi_malawi_2010_owns_iron', qgr.response, NULL)) AS 'Q10'
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
 WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title="PPI Malawi 2010" and qgi.event_source_id = es.id
