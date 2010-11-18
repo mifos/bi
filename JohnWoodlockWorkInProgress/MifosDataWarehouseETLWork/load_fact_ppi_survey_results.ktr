@@ -1,0 +1,3836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>load fact_ppi_survey_results</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>&#47;</directory>
+    <parameters>
+    </parameters>
+    <log>
+<trans-log-table><connection/>
+<schema/>
+<table/>
+<size_limit_lines/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<perf-log-table><connection/>
+<schema/>
+<table/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>SEQ_NR</id><enabled>Y</enabled><name>SEQ_NR</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>INPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>INPUT_BUFFER_ROWS</name></field><field><id>OUTPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>OUTPUT_BUFFER_ROWS</name></field></perf-log-table>
+<channel-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>LOGGING_OBJECT_TYPE</id><enabled>Y</enabled><name>LOGGING_OBJECT_TYPE</name></field><field><id>OBJECT_NAME</id><enabled>Y</enabled><name>OBJECT_NAME</name></field><field><id>OBJECT_COPY</id><enabled>Y</enabled><name>OBJECT_COPY</name></field><field><id>REPOSITORY_DIRECTORY</id><enabled>Y</enabled><name>REPOSITORY_DIRECTORY</name></field><field><id>FILENAME</id><enabled>Y</enabled><name>FILENAME</name></field><field><id>OBJECT_ID</id><enabled>Y</enabled><name>OBJECT_ID</name></field><field><id>OBJECT_REVISION</id><enabled>Y</enabled><name>OBJECT_REVISION</name></field><field><id>PARENT_CHANNEL_ID</id><enabled>Y</enabled><name>PARENT_CHANNEL_ID</name></field><field><id>ROOT_CHANNEL_ID</id><enabled>Y</enabled><name>ROOT_CHANNEL_ID</name></field></channel-log-table>
+<step-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+  <modified_user>-</modified_user>
+  <modified_date>2010&#47;10&#47;04 08:52:42.339</modified_date>
+  </info>
+  <notepads>
+  </notepads>
+  <connection>
+    <name>DestinationDB</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>DestinationDB</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>DestinationDB_Native</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>mifos_ppi_dw</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>SourceDB</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>SourceDB</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>SourceDB_Native</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>mifos</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <order>
+  <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Romania 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Matching flow wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Malawi 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Vietnam 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Bangladesh 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Bolivia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Brazil 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Cambodia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ecuador 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Egypt 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Elsalvador 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ethiopia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ghana 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Guatemala 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Haiti 2006</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Honduras 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Indonesia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Malawi 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Mali 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Mexico 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nepal 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nicaragua 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nigeria 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Pakistan 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Palestine 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Peru 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Philippines 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Russia 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Romania 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Senegal 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Southafrica 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Srilanka 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Syria 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Vietnam 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Yemen 2009</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Bangladesh 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Bolivia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Brazil 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ecuador 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Egypt 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Elsalvador 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ethiopia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ghana 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Guatemala 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Haiti 2006</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Honduras 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Indonesia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Mali 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Mexico 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nepal 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nicaragua 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nigeria 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Pakistan 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Palestine 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Peru 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Philippines 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Russia 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Senegal 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Srilanka 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Syria 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Yemen 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Cambodia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Southafrica 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Insert &#47; Update</from><to>Got an error on Insert&#47;Update</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Account flow (loan or savings)</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>account</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>entity_id</name>
+        <field>account_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_id</name>
+        <rename>client_id</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>539</xloc>
+      <yloc>921</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Client flow (create, close, attach survey)</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>client_id</field_name>
+<calc_type>COPY_FIELD</calc_type>
+<field_a>entity_id</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>316</xloc>
+      <yloc>865</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Got an error on Insert&#47;Update</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_detailed</loglevel>
+      <displayHeader>Y</displayHeader>
+    <fields>
+      <field>
+        <name>survey_id</name>
+        </field>
+      <field>
+        <name>points_version</name>
+        </field>
+      <field>
+        <name>date_survey_taken</name>
+        </field>
+      <field>
+        <name>entity_id</name>
+        </field>
+      <field>
+        <name>entity_type_id</name>
+        </field>
+      <field>
+        <name>ppi_score</name>
+        </field>
+      <field>
+        <name>client_id</name>
+        </field>
+      <field>
+        <name>customer_key</name>
+        </field>
+      <field>
+        <name>branch_key</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>169</xloc>
+      <yloc>1018</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Insert &#47; Update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>fact_ppi_survey_results</table>
+      <key>
+        <name>survey_id</name>
+        <field>survey_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>customer_key</name>
+        <field>customer_key</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>date_survey_taken</name>
+        <field>date_survey_taken</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>survey_id</name>
+        <rename>survey_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>points_version</name>
+        <rename>points_version</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>date_survey_taken</name>
+        <rename>date_survey_taken</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ppi_score</name>
+        <rename>ppi_score</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>312</xloc>
+      <yloc>983</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Map to dimensions</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema/>
+      <table>dim_customer</table>
+      <orderby>customer_key</orderby>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>client_id</name>
+        <field>customer_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>branch_key</name>
+        <rename>branch_key</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>485</xloc>
+      <yloc>1012</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Matching flow wasn&apos;t found</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>732</xloc>
+      <yloc>861</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Matching survey wasn&apos;t found</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>671</xloc>
+      <yloc>4</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Bangladesh 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 9
+when answers.Q1=&apos;Two&apos; then 12
+when answers.Q1=&apos;One&apos; then 19
+when answers.Q1=&apos;None&apos; then 31
+end +
+case
+when answers.Q2=&apos;Yes&apos; then 0
+when answers.Q2=&apos;No&apos; then 10
+end +
+case
+when answers.Q3=&apos;Open field&apos; then 0
+when answers.Q3=&apos;Kacha latrine (temporary or permanent), pacca (pit or water seal), or sanitary&apos; then 5
+end +
+case
+when answers.Q4=&apos;One, two, or three&apos; then 0
+when answers.Q4=&apos;Four&apos; then 7
+when answers.Q4=&apos;Five or more&apos; then 11
+end +
+case
+when answers.Q5=&apos;Mud brick, hemp&#47;hay&#47; bamboo, or other&apos; then 0
+when answers.Q5=&apos;C.I. sheet&#47;wood&apos; then 2
+when answers.Q5=&apos;Brick&#47;cement&apos; then 8
+end +
+case
+when answers.Q6=&apos;Tile&#47;wood, hemp&#47;hay&#47; bamboo, or other&apos; then 0
+when answers.Q6=&apos;C.I. sheet&#47;wood&apos; then 2
+when answers.Q6=&apos;Cement&apos; then 13
+end +
+case
+when answers.Q7=&apos;None, or less than 0.5 acres&apos; then 0
+when answers.Q7=&apos;More than 0.5 acres, but less than 1 acre&apos; then 4
+when answers.Q7=&apos;More than 1 acre&apos; then 6
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 4
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_family_members_0_to_11&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_daily_wage_earner&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_latrine_type&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_rooms_for_family&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_house_walls&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_house_roof&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_land_owned&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_owns_cassette_player&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bangladesh_2009_owns_wristwatch&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Bangladesh 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>140</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Bolivia 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Seven or more&apos; then 0
+when answers.Q1=&apos;Six&apos; then 7
+when answers.Q1=&apos;Five&apos; then 11
+when answers.Q1=&apos;Four&apos; then 16
+when answers.Q1=&apos;Three&apos; then 17
+when answers.Q1=&apos;Two&apos; then 26
+when answers.Q1=&apos;One&apos; then 35
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;All&apos; then 2
+when answers.Q2=&apos;No children ages 6 to 17&apos; then 4
+end +
+case
+when answers.Q3=&apos;Earth, bricks, or other&apos; then 0
+when answers.Q3=&apos;Wooden planks, cement, hardwood floors, parquet, rugs or carpets&apos; then 4
+when answers.Q3=&apos;Tile (mosaic, stone, or ceramic)&apos; then 10
+end +
+case
+when answers.Q4=&apos;Firewood, dung&#47;manure, kerosene, LPG in a cylinder, or other&apos; then 0
+when answers.Q4=&apos;Piped-in natural gas, electricity, or does not cook&apos; then 7
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 13
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_family_members_6_10_17_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_house_floors&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_has_refrigerator_or_freezer&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_has_dining_table_and_chairs&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_has_television&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_has_vcr_or_dvd&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_has_stereo&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_bolivia_2009_blue_or_white_collar_job&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Bolivia 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>199</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Brazil 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 6
+when answers.Q1=&apos;Three&apos; then 11
+when answers.Q1=&apos;Two&apos; then 17
+when answers.Q1=&apos;One&apos; then 20
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes&apos; then 5
+when answers.Q2=&apos;No members ages 5 to 18&apos; then 7
+end +
+case
+when answers.Q3=&apos;Three or less&apos; then 0
+when answers.Q3=&apos;Four to eleven&apos; then 2
+when answers.Q3=&apos;Twelve or more&apos; then 8
+when answers.Q3=&apos;No female head&#47;spouse&apos; then 8
+end +
+case
+when answers.Q4=&apos;None&apos; then 0
+when answers.Q4=&apos;One&apos; then 4
+when answers.Q4=&apos;Two or more&apos; then 13
+end +
+case
+when answers.Q5=&apos;None&apos; then 0
+when answers.Q5=&apos;One or more&apos; then 8
+end +
+case
+when answers.Q6=&apos;One to four&apos; then 0
+when answers.Q6=&apos;Five&apos; then 2
+when answers.Q6=&apos;Six&apos; then 5
+when answers.Q6=&apos;Seven&apos; then 7
+when answers.Q6=&apos;Eight or more&apos; then 11
+end +
+case
+when answers.Q7=&apos;Ditch, other, or no bathroom&apos; then 0
+when answers.Q7=&apos;Simple hole, or directly into river, lake, or ocean&apos; then 2
+when answers.Q7=&apos;Septic tank not connected to public sewage&#47;rainwater system&apos; then 3
+when answers.Q7=&apos;Septic tank connected to public sewage&#47;rainwater system&apos; then 4
+when answers.Q7=&apos;Direct connection to public sewage&#47;rainwater system&apos; then 5
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes, with one door&apos; then 5
+when answers.Q8=&apos;Yes, with two doors&apos; then 10
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;Cellular but not land-line&apos; then 5
+when answers.Q10=&apos;Land-line but not cellular&apos; then 6
+when answers.Q10=&apos;Both&apos; then 11
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_family_members_5_to_18_in_private_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_years_of_school_for_female_head&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_empoyed_with_contract&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_employed_at_mid_level&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_rooms_in_house&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_sewage_disposal&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_has_washing_machine&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_brazil_2010_has_phone&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Brazil 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>258</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Cambodia 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Eight or more&apos; then 0
+when answers.Q1=&apos;Seven&apos; then 2
+when answers.Q1=&apos;Six&apos; then 6
+when answers.Q1=&apos;Five&apos; then 10
+when answers.Q1=&apos;Four&apos; then 14
+when answers.Q1=&apos;Three&apos; then 19
+when answers.Q1=&apos;One or two&apos; then 27
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;All, or no children ages 7 to 15&apos; then 4
+end +
+case
+when answers.Q3=&apos;Bamboo or thatch, makeshift, salvaged, or improvised materials, other, or no data&apos; then 0
+when answers.Q3=&apos;Wood or logs, plywood, galvanized iron or aluminum, or fibrous cement&apos; then 2
+when answers.Q3=&apos;Concrete, brick, or stone&apos; then 14
+end +
+case
+when answers.Q4=&apos;Firewood or other&apos; then 0
+when answers.Q4=&apos;Charcoal, firewood and charcoal, liquefied petroleum gas, kerosene, publicly-provided electricity, gas and electricity, privately-generated electricity, or none&#47;does not cook&apos; then 6
+end +
+case
+when answers.Q5=&apos;Open land&apos; then 0
+when answers.Q5=&apos;None&apos; then 4
+when answers.Q5=&apos;Pit latrine, septic tank, other without septic tank, public toilet, shared toilet, or other&apos; then 6
+when answers.Q5=&apos;Connected to sewerage&apos; then 13
+end +
+case
+when answers.Q6=&apos;No bicycles, and no motorcycles&apos; then 0
+when answers.Q6=&apos;One bicycle, and no motorcycles&apos; then 4
+when answers.Q6=&apos;Two bicycles, and no motorcycles&apos; then 7
+when answers.Q6=&apos;Three or more bicycles, and no motorcycles&apos; then 11
+when answers.Q6=&apos;One or more motorcycles (regardless of bicycles)&apos; then 13
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 6
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_family_members_7_to_15_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_house_walls&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_bicycles_and_motorcycles&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_owns_bed_set&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_owns_wardrobe&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_owns_water_pump&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_cambodia_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Cambodia 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>317</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Ecuador 2008</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 10
+when answers.Q1=&apos;Two&apos; then 17
+when answers.Q1=&apos;One&apos; then 21
+when answers.Q1=&apos;None&apos; then 29
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;No one in the age range&apos; then 2
+when answers.Q2=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q3=&apos;Tile, palm leaves, straw, or leaves&apos; then 0
+when answers.Q3=&apos;Tin, asbestos (Eternit), or other&apos; then 4
+when answers.Q3=&apos;Reinforced concrete&#47;flagstone&#47;concrete&apos; then 8
+end +
+case
+when answers.Q4=&apos;None, latrine, flush toilet and pit, Flush toilet and septic tank not inside the residence&apos; then 0
+when answers.Q4=&apos;Flush toilet to sewer system not inside the residence&apos; then 2
+when answers.Q4=&apos;Flush toilet and septic tank inside the residence&apos; then 4
+when answers.Q4=&apos;Flush toilet to sewer system inside the residence&apos; then 7
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q6=&apos;Firewood&#47;charcoal or other&apos; then 0
+when answers.Q6=&apos;Gas, electricity, or no one cooks&apos; then 4
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 18
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q9=&apos;None&apos; then 0
+when answers.Q9=&apos;One&apos; then 4
+when answers.Q9=&apos;Two&apos; then 9
+when answers.Q9=&apos;Three or more&apos; then 14
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 4
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_family_members_0_to_16&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_all_family_members_5_to_16_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_house_roof&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_has_shower&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_has_car&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_color_televisions&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ecuador_2008_has_blender&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Ecuador 2008&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>376</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Egypt 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Seven or more&apos; then 0
+when answers.Q1=&apos;Six&apos; then 5
+when answers.Q1=&apos;Five&apos; then 11
+when answers.Q1=&apos;Four&apos; then 18
+when answers.Q1=&apos;Three&apos; then 19
+when answers.Q1=&apos;One or two&apos; then 36
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes&apos; then 2
+when answers.Q2=&apos;No children 6 to 18&apos; then 4
+end +
+case
+when answers.Q3=&apos;No&apos; then 0
+when answers.Q3=&apos;No female head&#47;spouse&apos; then 4
+when answers.Q3=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q4=&apos;Yes&apos; then 0
+when answers.Q4=&apos;No&apos; then 7
+end +
+case
+when answers.Q5=&apos;Stones, mud, wood, tin, asbestos, or other&apos; then 0
+when answers.Q5=&apos;Bricks with mortar&apos; then 4
+when answers.Q5=&apos;Concrete&apos; then 6
+end +
+case
+when answers.Q6=&apos;One&apos; then 0
+when answers.Q6=&apos;Two&apos; then 1
+when answers.Q6=&apos;Three&apos; then 2
+when answers.Q6=&apos;Four or more&apos; then 8
+end +
+case
+when answers.Q7=&apos;Well, pump, public network with no connection, public network with tap outside building, or other&apos; then 0
+when answers.Q7=&apos;Public network with tap inside building&apos; then 4
+end +
+case
+when answers.Q8=&apos;No toilet available, or shared toilet&apos; then 0
+when answers.Q8=&apos;Private non-flush toilet&apos; then 2
+when answers.Q8=&apos;Private flush toilet&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes, only non-automatic&apos; then 4
+when answers.Q10=&apos;Yes, automatic&apos; then 15
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_all_family_members_6_to_18_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_female_head_literate&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_has_temporary_wage_job&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_house_walls&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_rooms_in_house&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_water_source&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_owns_gas_electric_water_heater&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_egypt_2010_owns_washing_machine&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Egypt 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>435</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Elsalvador 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 5
+when answers.Q1=&apos;Two&apos; then 10
+when answers.Q1=&apos;One&apos; then 19
+when answers.Q1=&apos;None&apos; then 27
+end +
+case
+when answers.Q2=&apos;One&apos; then 0
+when answers.Q2=&apos;Two&apos; then 3
+when answers.Q2=&apos;Three&apos; then 4
+when answers.Q2=&apos;Four&apos; then 12
+when answers.Q2=&apos;Five or more&apos; then 15
+end +
+case
+when answers.Q3=&apos;None&apos; then 0
+when answers.Q3=&apos;One&apos; then 7
+when answers.Q3=&apos;Two or more&apos; then 18
+end +
+case
+when answers.Q4=&apos;No&apos; then 0
+when answers.Q4=&apos;Yes&apos; then 8
+when answers.Q4=&apos;There is no female head&#47;spouse&apos; then 10
+end +
+case
+when answers.Q5=&apos;Firewood, charcoal, kerosene, or other&apos; then 0
+when answers.Q5=&apos;Propane, electricity, or does not cook&apos; then 7
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 3
+end +
+case
+when answers.Q8=&apos;None&apos; then 0
+when answers.Q8=&apos;Only a television&apos; then 1
+when answers.Q8=&apos;Both a television and a VCR or DVD&apos; then 6
+end +
+case
+when answers.Q9=&apos;None&apos; then 0
+when answers.Q9=&apos;Only a radio, or only a stereo system&apos; then 1
+when answers.Q9=&apos;Both a radio and a stereo system&apos; then 4
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 6
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_family_members_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_rooms_in_house&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_salaried_employees&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_female_head_worked_last_week&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_coking_fuel&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_has_blender&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_has_vcr_or_dvd&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_has_stereo&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_elsalvador_2010_has_fan&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Elsalvador 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>494</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Ethiopia 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Six or more&apos; then 0
+when answers.Q1=&apos;Five&apos; then 10
+when answers.Q1=&apos;Four&apos; then 20
+when answers.Q1=&apos;Three&apos; then 28
+when answers.Q1=&apos;Two or one&apos; then 45
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes&apos; then 1
+when answers.Q2=&apos;No children ages 6 to 12&apos; then 3
+end +
+case
+when answers.Q3=&apos;One&apos; then 0
+when answers.Q3=&apos;Two&apos; then 1
+when answers.Q3=&apos;Three or more&apos; then 5
+end +
+case
+when answers.Q4=&apos;Wood and grass, mud and stone, or other&apos; then 0
+when answers.Q4=&apos;Wood and mud, reeds and bamboo, cement and stone, hollow blocks, or bricks&apos; then 5
+end +
+case
+when answers.Q5=&apos;Pit latrine (shared), field&#47;forest, container (household utensils), or other&apos; then 0
+when answers.Q5=&apos;Pit latrine (private)&apos; then 4
+when answers.Q5=&apos;Flush toilet (private or shared)&apos; then 9
+end +
+case
+when answers.Q6=&apos;Mainly firewood (purchase or collected), animal dung, or other&apos; then 0
+when answers.Q6=&apos;Crop residue&apos; then 3
+when answers.Q6=&apos;Charcoal, kerosene, butane gas, electricity, or does not use fuel&apos; then 5
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q11=&apos;No&apos; then 0
+when answers.Q11=&apos;Yes&apos; then 2
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_all_family_members_6_to_12_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_rooms_in_house&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_house_walls&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_owns_mattress_or_bed&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_owns_watches_or_clocks&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_owns_cattle_sheep_goats&apos;, qgr.response, NULL)) AS &apos;Q10&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ethiopia_2009_owns_jewelry&apos;, qgr.response, NULL)) AS &apos;Q11&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Ethiopia 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>70</xloc>
+      <yloc>553</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Ghana 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Seven or more&apos; then 0
+when answers.Q1=&apos;Six&apos; then 6
+when answers.Q1=&apos;Five&apos; then 8
+when answers.Q1=&apos;Four&apos; then 11
+when answers.Q1=&apos;Three&apos; then 15
+when answers.Q1=&apos;Two&apos; then 23
+when answers.Q1=&apos;One&apos; then 31
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes, or no children ages 5 to 12&apos; then 4
+end +
+case
+when answers.Q3=&apos;No female head&#47;spouse&apos; then 0
+when answers.Q3=&apos;None or pre-school&apos; then 4
+when answers.Q3=&apos;Primary or middle&apos; then 7
+when answers.Q3=&apos;Any JSS, SSS, S, L, U, or higher&apos; then 10
+end +
+case
+when answers.Q4=&apos;Male head&#47;spouse has no job&apos; then 0
+when answers.Q4=&apos;Yes, main job is in agriculture&apos; then 8
+when answers.Q4=&apos;No, main job is not in agriculture&apos; then 10
+when answers.Q4=&apos;No male head&#47;spouse&apos; then 10
+end +
+case
+when answers.Q5=&apos;Palm leaves&#47;raffia&#47;thatch, wood, mud bricks&#47;earth, bamboo, or other&apos; then 0
+when answers.Q5=&apos;Corrugated iron sheets, cement&#47;concrete, asbestos&#47;slate, or roofing tiles&apos; then 3
+end +
+case
+when answers.Q6=&apos;Not electricity (mains)&apos; then 0
+when answers.Q6=&apos;Electricity (mains)&apos; then 5
+end +
+case
+when answers.Q7=&apos;Borehole, well (with pump or not, protected or not), or other&apos; then 0
+when answers.Q7=&apos;River&#47;stream, rain water&#47;spring, or dugout&#47;pond&#47;lake&#47;dam&apos; then 5
+when answers.Q7=&apos;Indoor plumbing, inside standpipe, sachet&#47;bottled water,  standpipe&#47;tap (public or private outside), pipe in neighbors, water truck&#47;tanker, or water vendor&apos; then 7
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;Only radio&apos; then 2
+when answers.Q10=&apos;Radio cassette but no record player nor 3-in-1 (regardless of radio)&apos; then 6
+when answers.Q10=&apos;Record player but no 3-in-1 (regardless of radio or cassette)&apos; then 9
+when answers.Q10=&apos;3-in-1 radio system (regardless of any others)&apos; then 14
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_all_family_members_5_to_12_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_female_head_highest_grade&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_male_head_agriculture_job&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_house_roof&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_house_lighting&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_water_source&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_owns_stove&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_ghana_2010_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Ghana 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Guatemala 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 10
+when answers.Q1=&apos;Three&apos; then 12
+when answers.Q1=&apos;Two&apos; then 17
+when answers.Q1=&apos;One&apos; then 23
+when answers.Q1=&apos;None&apos; then 33
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;No children ages 7 to 13&apos; then 2
+when answers.Q2=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q3=&apos;No&apos; then 0
+when answers.Q3=&apos;Yes&apos; then 6
+when answers.Q3=&apos;No female head&#47;spouse&apos; then 9
+end +
+case
+when answers.Q4=&apos;Yes&apos; then 0
+when answers.Q4=&apos;No&apos; then 5
+end +
+case
+when answers.Q5=&apos;Earth, sand, wood, parquet, or other&apos; then 0
+when answers.Q5=&apos;Mud bricks or cement slab&apos; then 3
+when answers.Q5=&apos;Formed cement bricks&apos; then 9
+when answers.Q5=&apos;Granite or ceramic&apos; then 15
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 9
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q8=&apos;Yes&apos; then 0
+when answers.Q8=&apos;No&apos; then 3
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 3
+when answers.Q10=&apos;No one works mainly in agriculture&apos; then 4
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_family_members_0_to_13&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_all_family_members_7_to_13_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_female_head_literate&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_empoyed_as_casual_labor&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_house_floors&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_has_gas_electric_stove&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_has_stone_mill&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_has_electric_iron&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_guatemala_2010_enmployed_in_agriculature_or_animals&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Guatemala 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>250</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Haiti 2006</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 3
+when answers.Q1=&apos;Two&apos; then 8
+when answers.Q1=&apos;One&apos; then 11
+when answers.Q1=&apos;None&apos; then 19
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes&apos; then 3
+when answers.Q2=&apos;No children ages 6–14&apos; then 3
+end +
+case
+when answers.Q3=&apos;Not Port-a-Prince&apos; then 0
+when answers.Q3=&apos;Port-a-Prince&apos; then 15
+end +
+case
+when answers.Q4=&apos;No&apos; then 0
+when answers.Q4=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q5=&apos;Earth&apos; then 0
+when answers.Q5=&apos;Concrete or other&apos; then 4
+when answers.Q5=&apos;Ceramic or wood planks&apos; then 12
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 12
+end +
+case
+when answers.Q8=&apos;None&apos; then 2
+when answers.Q8=&apos;One&apos; then 0
+when answers.Q8=&apos;Two or three&apos; then 5
+when answers.Q8=&apos;Four or more&apos; then 11
+end +
+case
+when answers.Q9=&apos;Straw, palm leaves, or other&apos; then 0
+when answers.Q9=&apos;Iron&apos; then 4
+when answers.Q9=&apos;Concrete&apos; then 9
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 5
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_all_family_members_6_to_14_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_household_location&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_house_floors&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_money_from_abroad&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_salaried_employment&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_how_many_plots&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_house_roof&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_haiti_2006_owns_pigs&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Haiti 2006&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Honduras 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 11
+when answers.Q1=&apos;Three&apos; then 14
+when answers.Q1=&apos;Two&apos; then 16
+when answers.Q1=&apos;One&apos; then 23
+when answers.Q1=&apos;None&apos; then 32
+end +
+case
+when answers.Q2=&apos;None, pre-school, or literacy program&apos; then 0
+when answers.Q2=&apos;Primary school&apos; then 6
+when answers.Q2=&apos;No female head&#47;spouse, common cycle, or no data&apos; then 10
+when answers.Q2=&apos;Diversified or higher&apos; then 14
+end +
+case
+when answers.Q3=&apos;No data or no main occupation&apos; then 0
+when answers.Q3=&apos;Farmer, rancher, agricultural worker, or no male head&#47;spouse&apos; then 9
+when answers.Q3=&apos;Shop owner, salesperson, service worker, transport and storage operator, or worker in textiles, construction, mechanics, graphics, chemicals, food processing, etc.&apos; then 11
+when answers.Q3=&apos;Office worker, transportation operator, professional, technician, director, manager, administrator, or related job&apos; then 16
+end +
+case
+when answers.Q4=&apos;None&apos; then 0
+when answers.Q4=&apos;One&apos; then 3
+when answers.Q4=&apos;Two or more&apos; then 10
+end +
+case
+when answers.Q5=&apos;One&apos; then 0
+when answers.Q5=&apos;Two&apos; then 1
+when answers.Q5=&apos;Three&apos; then 4
+when answers.Q5=&apos;Four or more&apos; then 5
+end +
+case
+when answers.Q6=&apos;Dirt, other, or no data&apos; then 0
+when answers.Q6=&apos;Mud bricks, poured concrete, or wood&apos; then 3
+when answers.Q6=&apos;Cement bricks&apos; then 4
+when answers.Q6=&apos;Ceramic tile or granite&apos; then 7
+end +
+case
+when answers.Q7=&apos;Not public network&apos; then 0
+when answers.Q7=&apos;Public network&apos; then 3
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes, without cable&apos; then 2
+when answers.Q10=&apos;Yes, with cable&apos; then 4
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_female_head_education_level&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_male_head_occupation&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_family_members_salaried&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_house_bedrooms&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_house_floors&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_water_source&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_has_stove&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_honduras_2010_has_television&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Honduras 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>360</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI India 2008</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 4
+when answers.Q1=&apos;Three&apos; then 8
+when answers.Q1=&apos;Two&apos; then 13
+when answers.Q1=&apos;One&apos; then 20
+when answers.Q1=&apos;None&apos; then 27
+end +
+case
+when answers.Q2=&apos;Labourers (agricultural, plantation, other farm), hunters, tobacco preparers and tobacco product makers, and other labourers&apos; then 0
+when answers.Q2=&apos;Others&apos; then 8
+when answers.Q2=&apos;Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers&apos; then 14
+end +
+case
+when answers.Q3=&apos;No&apos; then 0
+when answers.Q3=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q4=&apos;Firewood and chips, charcoal, or none&apos; then 0
+when answers.Q4=&apos;Others&apos; then 5
+when answers.Q4=&apos;LPG&apos; then 17
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 3
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q9=&apos;None&apos; then 0
+when answers.Q9=&apos;One&apos; then 6
+when answers.Q9=&apos;Two or more&apos; then 9
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;One&apos; then 5
+when answers.Q10=&apos;Two or more&apos; then 9
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_family_members_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_principal_occupation&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_has_pucca_home&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_bicycle_scooter_motorcycle&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_almirah&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_owns_sewing_machine&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_pressure_cookers&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_india_2008_electric_fans&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI India 2008&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>419</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Indonesia 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Six or more&apos; then 0
+when answers.Q1=&apos;Five&apos; then 7
+when answers.Q1=&apos;Four&apos; then 13
+when answers.Q1=&apos;Three&apos; then 21
+when answers.Q1=&apos;Two&apos; then 26
+when answers.Q1=&apos;One&apos; then 37
+end +
+case
+when answers.Q2=&apos;Not all, or no children aged 5 to 18&apos; then 0
+when answers.Q2=&apos;All&apos; then 3
+end +
+case
+when answers.Q3=&apos;None&apos; then 0
+when answers.Q3=&apos;One or two&apos; then 6
+when answers.Q3=&apos;Three&apos; then 7
+when answers.Q3=&apos;Four or more&apos; then 10
+end +
+case
+when answers.Q4=&apos;Public utilities retail, safe&#47;unsafe well, safe&#47;unsafe water spring, river, rain water, or other&apos; then 0
+when answers.Q4=&apos;Public utilities (in pipes), or drilled&#47;pumped well&apos; then 4
+when answers.Q4=&apos;From manufacturing&apos; then 9
+end +
+case
+when answers.Q5=&apos;Toilet over water, hole in ground&#47;river, no toilet, or no one uses bathroom facility&apos; then 0
+when answers.Q5=&apos;Flush&#47;sitting toilet&apos; then 5
+end +
+case
+when answers.Q6=&apos;Earth&#47;soil&apos; then 0
+when answers.Q6=&apos;Not earth&#47;soil&apos; then 6
+end +
+case
+when answers.Q7=&apos;Bamboo, other, or does not have&apos; then 0
+when answers.Q7=&apos;Concrete, gypsum, wood, or asbestos&apos; then 4
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 12
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 9
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 5
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_family_members_5_to_18_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_11_and_up_worked_last_week&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_water_source&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_house_floors&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_house_ceiling&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_owns_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_owns_motorcycle&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_indonesia_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Indonesia 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>476</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Kenya 2008</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;3 or more&apos; then 0
+when answers.Q1=&apos;0, 1, or 2&apos; then 8
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;All&apos; then 8
+when answers.Q2=&apos;No children aged 6 to 17&apos; then 21
+end +
+case
+when answers.Q3=&apos;Mud&#47;cow dung; grass&#47;sticks&#47;makuti;&apos; then 0
+when answers.Q3=&apos;Other&apos; then 5
+end +
+case
+when answers.Q4=&apos;Other&apos; then 0
+when answers.Q4=&apos;Flush to sewer; flush to septic tank; pan&#47;bucket; covered pit latrine; or ventilation improved pit latrine&apos; then 2
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 16
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 14
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 12
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;None or unknown&apos; then 0
+when answers.Q10=&apos;1 or more&apos; then 9
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_family_members_0_to_25&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_family_members_6_to_17_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_house_walls&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_television&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_sofa&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_stove&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_owns_bicycle&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_kenya_2008_cattle_owned&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Kenya 2008&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>534</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Malawi 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 2
+when answers.Q1=&apos;Three&apos; then 6
+when answers.Q1=&apos;Two&apos; then 9
+when answers.Q1=&apos;One&apos; then 13
+when answers.Q1=&apos;None&apos; then 21
+end +
+case
+when answers.Q2=&apos;Seven or more&apos; then 0
+when answers.Q2=&apos;Four, five, or six&apos; then 4
+when answers.Q2=&apos;Three&apos; then 8
+when answers.Q2=&apos;Two&apos; then 12
+when answers.Q2=&apos;One&apos; then 23
+when answers.Q2=&apos;None&apos; then 6
+end +
+case
+when answers.Q3=&apos;Communal standpipe; communal open, unprotected well; communal hand pump; lake&#47;reservoir, river&#47;spring, or other&apos; then 0
+when answers.Q3=&apos;Piped into dwelling; piped outside dwelling (personal); personal hand pump; protected spring; or personal open, unprotected well&apos; then 6
+end +
+case
+when answers.Q4=&apos;Collected firewood, crop residue, or animal waste&apos; then 0
+when answers.Q4=&apos;Purchased firewood&apos; then 5
+when answers.Q4=&apos;Paraffin, electricity, gas, charcoal, saw dust, or other&apos; then 8
+end +
+case
+when answers.Q5=&apos;Collected firewood, grass, or other&apos; then 0
+when answers.Q5=&apos;Paraffin&apos; then 6
+when answers.Q5=&apos;Purchased firewood, electricity, gas, battery&#47;dry cell (torch), or candles&apos; then 12
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q7=&apos;None&apos; then 0
+when answers.Q7=&apos;Owns a chair, but not any other items&apos; then 2
+when answers.Q7=&apos;Owns a table, upholstered chair, or sofa set, but not a coffee table (may or may not own a chair)&apos; then 5
+when answers.Q7=&apos;Owns a coffee table (may or may not own other items)&apos; then 10
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 6
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_family_members_in_agriculture&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_water_source&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_lighting_fuel&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_lantern&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_furnature&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_bicycle_scooter_car&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_HiFi&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Malawi 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>390</xloc>
+      <yloc>590</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Mali 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 10
+when answers.Q1=&apos;Three&apos; then 13
+when answers.Q1=&apos;Two&apos; then 15
+when answers.Q1=&apos;One&apos; then 17
+when answers.Q1=&apos;None&apos; then 25
+end +
+case
+when answers.Q2=&apos;Three or more&apos; then 0
+when answers.Q2=&apos;Two&apos; then 7
+when answers.Q2=&apos;One or none&apos; then 14
+end +
+case
+when answers.Q3=&apos;Tile or thatch&apos; then 0
+when answers.Q3=&apos;Mud, corrugated metal sheets, concrete, or other&apos; then 12
+end +
+case
+when answers.Q4=&apos;Partly cement or others&apos; then 0
+when answers.Q4=&apos;Cement&apos; then 7
+end +
+case
+when answers.Q5=&apos;Surface water, non-modern well, drilled well, or others&apos; then 0
+when answers.Q5=&apos;Modern well&apos; then 3
+when answers.Q5=&apos;Public pump&apos; then 6
+when answers.Q5=&apos;Faucet tap&apos; then 11
+end +
+case
+when answers.Q6=&apos;Others&apos; then 0
+when answers.Q6=&apos;Latrine (private or shared with other households) or flush toilet (private inside, private outside, or shared with other households)&apos; then 7
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 6
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_family_members_0_to_11&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_employed_in_agricuture_animals&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_house_roof&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_house_walls&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_water_source&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_owns_television&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mali_2010_owns_motorbike&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Mali 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>664</xloc>
+      <yloc>212</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Mexico 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 7
+when answers.Q1=&apos;Two&apos; then 11
+when answers.Q1=&apos;One&apos; then 20
+when answers.Q1=&apos;None&apos; then 28
+end +
+case
+when answers.Q2=&apos;None&apos; then 0
+when answers.Q2=&apos;Up to third grade&apos; then 5
+when answers.Q2=&apos;Fourth grade through high school&apos; then 7
+when answers.Q2=&apos;College preparatory 1 - 3&apos; then 10
+when answers.Q2=&apos;Normal&#47;technical&#47;commercial&apos; then 14
+when answers.Q2=&apos;Professional, master\&apos;s or doctorate&apos; then 20
+when answers.Q2=&apos;No female head&#47;spouse&apos; then 14
+end +
+case
+when answers.Q3=&apos;None&apos; then 0
+when answers.Q3=&apos;One&apos; then 6
+when answers.Q3=&apos;Two or more&apos; then 16
+end +
+case
+when answers.Q4=&apos;Dirt&apos; then 0
+when answers.Q4=&apos;Cement&#47;concrete&apos; then 2
+when answers.Q4=&apos;Other&apos; then 7
+end +
+case
+when answers.Q5=&apos;No toilet, or no water supply&apos; then 0
+when answers.Q5=&apos;Carried by bucket&apos; then 1
+when answers.Q5=&apos;Piped&apos; then 3
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q7=&apos;Firewood&apos; then 0
+when answers.Q7=&apos;Other&apos; then 2
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;One&apos; then 0
+when answers.Q10=&apos;Two&apos; then 5
+when answers.Q10=&apos;Three or more&apos; then 12
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_family_members_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_female_head_education_level&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_empoyed_with_contract&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_house_floor&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_toilet_water_supply&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_has_sink_for_dishes&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_has_blender&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_has_iron&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_mexico_2009_televisions&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Mexico 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>259</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Nepal 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 6
+when answers.Q1=&apos;Two&apos; then 12
+when answers.Q1=&apos;One&apos; then 16
+when answers.Q1=&apos;None&apos; then 28
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;No children ages 5 to 12&apos; then 2
+when answers.Q2=&apos;All&apos; then 5
+end +
+case
+when answers.Q3=&apos;No&apos; then 0
+when answers.Q3=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q4=&apos;No&apos; then 0
+when answers.Q4=&apos;No female head&#47;spouse&apos; then 5
+when answers.Q4=&apos;Yes&apos; then 8
+end +
+case
+when answers.Q5=&apos;Straw&#47;thatch, wood&#47;planks, earth&#47;mud, or other&apos; then 0
+when answers.Q5=&apos;Tiles&#47;slate&apos; then 4
+when answers.Q5=&apos;Galvanized iron, or concrete&#47;cement&apos; then 10
+end +
+case
+when answers.Q6=&apos;No toilet&apos; then 0
+when answers.Q6=&apos;Household non-flush, communal latrine, household flush (connected to municipal sewer), or household flush (connected to septic tank)&apos; then 7
+end +
+case
+when answers.Q7=&apos;Open fireplace, other, or no data&apos; then 0
+when answers.Q7=&apos;Mud stove, smokeless stove, or kerosene&#47;gas stove&apos; then 5
+end +
+case
+when answers.Q8=&apos;None&apos; then 0
+when answers.Q8=&apos;One&apos; then 6
+when answers.Q8=&apos;Two or more&apos; then 13
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 11
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_family_members_0_to_12&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_family_members_5_to_12_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_family_members_at_private_school&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_female_head_can_read&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_house_roof&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_stove_type&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_music_players&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_owns_transportation&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nepal_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Nepal 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>317</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Nicaragua 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Eight or more&apos; then 0
+when answers.Q1=&apos;Seven&apos; then 10
+when answers.Q1=&apos;Six&apos; then 12
+when answers.Q1=&apos;Five&apos; then 13
+when answers.Q1=&apos;Four&apos; then 19
+when answers.Q1=&apos;Three&apos; then 26
+when answers.Q1=&apos;One or two&apos; then 37
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;All, and all are in a non-autonomous public school, community school, or other&apos; then 1
+when answers.Q2=&apos;All, and one is in autonomous or private school&apos; then 3
+when answers.Q2=&apos;No children ages 7 to 12&apos; then 3
+when answers.Q2=&apos;All, and two or more in autonomous or private school&apos; then 13
+end +
+case
+when answers.Q3=&apos;No&apos; then 0
+when answers.Q3=&apos;Yes, or no female head&#47;spouse&apos; then 3
+end +
+case
+when answers.Q4=&apos;Earth, or other&apos; then 0
+when answers.Q4=&apos;Wooded planks, tiles or concrete, mud bricks, or cement bricks or tile (mosaic, ceramic, or glazed)&apos; then 7
+end +
+case
+when answers.Q5=&apos;None&apos; then 0
+when answers.Q5=&apos;Outhouse or latrine (with or without treatment), or flush toilet connected to cesspool, septic tank, river, or stream&apos; then 3
+when answers.Q5=&apos;Flush toilet connected to sewer&apos; then 7
+end +
+case
+when answers.Q6=&apos;Non-purchased firewood&apos; then 0
+when answers.Q6=&apos;Purchased firewood&apos; then 2
+when answers.Q6=&apos;Charcoal, butane or propane gas, kerosene, electricity, other, or does not cook&apos; then 9
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;Only radio&apos; then 1
+when answers.Q10=&apos;Radio&#47;tape player, regardless of radio, and no stereo&apos; then 5
+when answers.Q10=&apos;Stereo, regardless of radio and radio&#47;tape player&apos; then 10
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_family_members_7_to_12_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_female_head_literate&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_house_floor&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_has_blender&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_has_iron&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nicaragua_2010_has_stereo&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Nicaragua 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>374</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Nigeria 2008</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Eight or more&apos; then 0
+when answers.Q1=&apos;Six or seven&apos; then 6
+when answers.Q1=&apos;Five&apos; then 11
+when answers.Q1=&apos;Four&apos; then 14
+when answers.Q1=&apos;Three&apos; then 19
+when answers.Q1=&apos;Two&apos; then 30
+when answers.Q1=&apos;One&apos; then 38
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;No children ages 6 to 18&apos; then 7
+when answers.Q2=&apos;All&apos; then 9
+end +
+case
+when answers.Q3=&apos;Earth&#47;mud, or dirt&#47;straw&apos; then 0
+when answers.Q3=&apos;Wood, tile, plank, concrete, or other&apos; then 4
+end +
+case
+when answers.Q4=&apos;Mud&#47;mud bricks&apos; then 0
+when answers.Q4=&apos;Thatch (grass or straw)&apos; then 3
+when answers.Q4=&apos;Wood&#47;bamboo, corrugated iron sheets, cement&#47;concrete, roofing tiles, or other&apos; then 6
+end +
+case
+when answers.Q5=&apos;Unprotected well&#47;rain water, or untreated pipe-borne&apos; then 0
+when answers.Q5=&apos;Vendor, truck, protected well, river, lake, or pond&apos; then 4
+when answers.Q5=&apos;Treated pipe-borne water, borehole&#47;hand pump, or other&apos; then 6
+end +
+case
+when answers.Q6=&apos;Pail&#47;bucket, covered or uncovered pit latrine, ventilated improved pit latrine, other, or none&apos; then 0
+when answers.Q6=&apos;Toilet on water, or flush to sewer or septic tank&apos; then 5
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 15
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 5
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_all_family_members_6_to_18_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_house_floors&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_house_roof&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_water_source&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_owns_television&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_owns_stove&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_owns_bed&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_nigeria_2008_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Nigeria 2008&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>431</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Pakistan 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Balochistan&apos; then 0
+when answers.Q1=&apos;Northwest Frontier Province&apos; then 9
+when answers.Q1=&apos;Sindh&apos; then 11
+when answers.Q1=&apos;Punjab or Islamabad&apos; then 12
+end +
+case
+when answers.Q2=&apos;Five or more&apos; then 0
+when answers.Q2=&apos;Four&apos; then 6
+when answers.Q2=&apos;Three&apos; then 11
+when answers.Q2=&apos;Two&apos; then 15
+when answers.Q2=&apos;One&apos; then 22
+when answers.Q2=&apos;None&apos; then 31
+end +
+case
+when answers.Q3=&apos;Not all&apos; then 0
+when answers.Q3=&apos;All, or no children ages 5 to 13&apos; then 5
+end +
+case
+when answers.Q4=&apos;Two or more&apos; then 0
+when answers.Q4=&apos;One&apos; then 5
+when answers.Q4=&apos;None&apos; then 12
+end +
+case
+when answers.Q5=&apos;Less than Class 1 or no data&apos; then 0
+when answers.Q5=&apos;No female head&#47;spouse&apos; then 4
+when answers.Q5=&apos;Class 1 or higher&apos; then 6
+end +
+case
+when answers.Q6=&apos;Others&apos; then 0
+when answers.Q6=&apos;Hand pump, covered&#47;closed well, motorized pump&#47;tube well, or piped water&apos; then 3
+end +
+case
+when answers.Q7=&apos;None or other&apos; then 0
+when answers.Q7=&apos;Flush connected to pit&#47;septic tank or open drain&apos; then 2
+when answers.Q7=&apos;Flush connected to public sewerage&apos; then 4
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 12
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 3
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 12
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_province&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_family_members_0_to_13&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_family_members_5_to_13_in_school&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_employed_elementary_work&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_female_head_education_level&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_water_source&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_owns_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_pakistan_2009_owns_trasportation&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Pakistan 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>488</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Palestine 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Ten or more&apos; then 0
+when answers.Q1=&apos;Nine&apos; then 1
+when answers.Q1=&apos;Eight&apos; then 6
+when answers.Q1=&apos;Five, six, or seven&apos; then 9
+when answers.Q1=&apos;Four&apos; then 21
+when answers.Q1=&apos;One, two, or three&apos; then 32
+end +
+case
+when answers.Q2=&apos;Cement cob, mud, or other&apos; then 0
+when answers.Q2=&apos;Cleaned stone, stone and cement, old stone, or concrete&apos; then 8
+end +
+case
+when answers.Q3=&apos;No&apos; then 0
+when answers.Q3=&apos;Yes&apos; then 2
+end +
+case
+when answers.Q4=&apos;No&apos; then 0
+when answers.Q4=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q5=&apos;None&apos; then 0
+when answers.Q5=&apos;Only cellular&apos; then 7
+when answers.Q5=&apos;Land-line (regardless of cellular)&apos; then 9
+end +
+case
+when answers.Q6=&apos;None&apos; then 0
+when answers.Q6=&apos;Only T.V.&apos; then 2
+when answers.Q6=&apos;T.V. and VCR and&#47;or DVD&apos; then 6
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;One&apos; then 5
+when answers.Q10=&apos;Two or more&apos; then 11
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_house_walls&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_solar_water_heater&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_vacuum&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_phone&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_TV_VCR_DVD&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_satellite_dish&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_computer&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_has_bookcase&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_palestine_2010_family_members_employed&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Palestine 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>545</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Peru 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Four or more&apos; then 0
+when answers.Q1=&apos;Three&apos; then 5
+when answers.Q1=&apos;Two&apos; then 9
+when answers.Q1=&apos;One&apos; then 16
+when answers.Q1=&apos;None&apos; then 24
+end +
+case
+when answers.Q2=&apos;None, pre-school, or kindergarten&apos; then 0
+when answers.Q2=&apos;Grade school (incomplete)&apos; then 5
+when answers.Q2=&apos;Grade school (complete)&apos; then 7
+when answers.Q2=&apos;High school (incomplete)&apos; then 9
+when answers.Q2=&apos;High school (complete), non-university superior (incomplete) or no female head&apos; then 10
+when answers.Q2=&apos;Non-university superior (complete) or higher&apos; then 16
+end +
+case
+when answers.Q3=&apos;Earth, wood planks, other, or no residence&apos; then 0
+when answers.Q3=&apos;Cement&apos; then 2
+when answers.Q3=&apos;Parquet, polished wood, linoleum, vinyl, tile, or similar&apos; then 15
+end +
+case
+when answers.Q4=&apos;Adobe, mud, or matting&apos; then 0
+when answers.Q4=&apos;Wattle and daub, wood, matting, brick or cement blocks, stone blocks with lime or cement, other, or no residence&apos; then 2
+end +
+case
+when answers.Q5=&apos;One&apos; then 0
+when answers.Q5=&apos;Two&apos; then 1
+when answers.Q5=&apos;Three, four, or five&apos; then 5
+when answers.Q5=&apos;Six or more&apos; then 10
+end +
+case
+when answers.Q6=&apos;Other&apos; then 0
+when answers.Q6=&apos;Firewood, charcoal, or kerosene&apos; then 5
+when answers.Q6=&apos;Gas (LPG or natural)&apos; then 9
+when answers.Q6=&apos;Electricity or does not cook&apos; then 16
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q8=&apos;None&apos; then 0
+when answers.Q8=&apos;One&apos; then 3
+when answers.Q8=&apos;Two or more&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 3
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 2
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_family_members_0_to_17&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_female_head_education_level&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_house_floors&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_house_walls&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_house_rooms&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_has_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_color_televisions&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_has_blender&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_peru_2009_has_iron&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Peru 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>663</xloc>
+      <yloc>602</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Philippines 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 4
+when answers.Q1=&apos;Three&apos; then 9
+when answers.Q1=&apos;Two&apos; then 15
+when answers.Q1=&apos;One&apos; then 20
+when answers.Q1=&apos;None&apos; then 26
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes&apos; then 2
+when answers.Q2=&apos;No children ages 6 to 14&apos; then 4
+end +
+case
+when answers.Q3=&apos;Graduate primary or less&apos; then 0
+when answers.Q3=&apos;First- to fourth-year secondary&apos; then 3
+when answers.Q3=&apos;Graduate secondary&apos; then 6
+when answers.Q3=&apos;First-year college or higher, or no female head&#47;spouse&apos; then 11
+end +
+case
+when answers.Q4=&apos;No&apos; then 0
+when answers.Q4=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q5=&apos;Light materials (cogon, nipa, or sawali, bamboo, anahaw)&apos; then 0
+when answers.Q5=&apos;Strong materials (iron, aluminum, tile, concrete, brick, stone, wood, asbestos)&apos; then 4
+end +
+case
+when answers.Q6=&apos;Light materials (Salvaged, makeshift, cogon, nipa, or anahaw)&apos; then 0
+when answers.Q6=&apos;Strong materials (Galvanized iron, aluminum tile, concrete, brick, stone, or asbestos)&apos; then 2
+end +
+case
+when answers.Q7=&apos;None, open pit, closed pit, or other&apos; then 0
+when answers.Q7=&apos;Water sealed&apos; then 7
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q9=&apos;None&apos; then 0
+when answers.Q9=&apos;One&apos; then 6
+when answers.Q9=&apos;Two or more&apos; then 21
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 10
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_all_family_members_6_to_14_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_female_head_education_level&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_salaried_employment&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_house_walls&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_house_roof&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_owns_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_televisions&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_philippines_2009_owns_washing_machine&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Philippines 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>137</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Romania 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 5
+when answers.Q1=&apos;Three&apos; then 11
+when answers.Q1=&apos;Two&apos; then 18
+when answers.Q1=&apos;One&apos; then 28
+end +
+case
+when answers.Q2=&apos;No formal school, primary (Class 1 - 4), or secondary (Class 5 - 8)&apos; then 0
+when answers.Q2=&apos;Vocational, complementary, apprenticeship, or lower high school (Class 9-10)&apos; then 2
+when answers.Q2=&apos;High school (Class 9-12)&apos; then 4
+when answers.Q2=&apos;Specialty post-high school, technical foreman, or university short-term (college)&apos; then 5
+when answers.Q2=&apos;University long-term&apos; then 10
+end +
+case
+when answers.Q3=&apos;Own system, not available, or no data&apos; then 0
+when answers.Q3=&apos;Public system&apos; then 1
+end +
+case
+when answers.Q4=&apos;No land-line, and no mobile&apos; then 0
+when answers.Q4=&apos;No land-line, but one mobile&apos; then 7
+when answers.Q4=&apos;One or more land-lines, but no mobile&apos; then 9
+when answers.Q4=&apos;No land-line, but two or more mobiles&apos; then 13
+when answers.Q4=&apos;One or more land-lines, and one mobile&apos; then 16
+when answers.Q4=&apos;One or more land-lines, and two or more mobiles&apos; then 18
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 3
+end +
+case
+when answers.Q6=&apos;None&apos; then 0
+when answers.Q6=&apos;Only non-automatic&apos; then 3
+when answers.Q6=&apos;Automatic (regardless of owning non-automatic)&apos; then 5
+end +
+case
+when answers.Q7=&apos;None&apos; then 0
+when answers.Q7=&apos;Refrigerator only or freezer only&apos; then 5
+when answers.Q7=&apos;Refrigerator and freezer, or refrigerating combine&apos; then 10
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 2
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 18
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_education_level&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_sewage_system&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_phones&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_gas_stoves&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_washing_machine_type&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_refrigerator_type&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_owns_color_television&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_romania_2009_owns_car&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Romania 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>196</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Russia 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Five or more&apos; then 0
+when answers.Q1=&apos;Four&apos; then 5
+when answers.Q1=&apos;Three&apos; then 11
+when answers.Q1=&apos;Two&apos; then 22
+when answers.Q1=&apos;One&apos; then 35
+end +
+case
+when answers.Q2=&apos;No&apos; then 0
+when answers.Q2=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q3=&apos;24 or less&apos; then 0
+when answers.Q3=&apos;25 to 39&apos; then 3
+when answers.Q3=&apos;40 to 59&apos; then 4
+when answers.Q3=&apos;60 to 99&apos; then 6
+when answers.Q3=&apos;100 or more&apos; then 8
+end +
+case
+when answers.Q4=&apos;None&apos; then 0
+when answers.Q4=&apos;Individual water heater&apos; then 4
+when answers.Q4=&apos;Centralized&apos; then 6
+end +
+case
+when answers.Q5=&apos;None&apos; then 0
+when answers.Q5=&apos;One&apos; then 3
+when answers.Q5=&apos;Two or more&apos; then 7
+end +
+case
+when answers.Q6=&apos;None&apos; then 0
+when answers.Q6=&apos;One&apos; then 3
+when answers.Q6=&apos;Two or more&apos; then 7
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 2
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;None&apos; then 0
+when answers.Q9=&apos;One or more land-lines, and no cellular&apos; then 6
+when answers.Q9=&apos;No land-lines, and one cellular&apos; then 10
+when answers.Q9=&apos;One or more land-lines, and one cellular&apos; then 13
+when answers.Q9=&apos;No land-lines, and two or more cellular&apos; then 15
+when answers.Q9=&apos;One or more land-lines, and two cellular&apos; then 16
+when answers.Q9=&apos;One or more land-lines, and three or more cellular&apos; then 21
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 5
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_employed_in_highly_skilled_work&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_house_area&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_hot_water_source&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_color_televisions&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_VCRs_and_DVDs&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_owns_microwave&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_owns_computer&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_phones&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_russia_2010_owns_car&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Russia 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>251</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Senegal 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Autre&apos; then 0
+when answers.Q1=&apos;Briques en banco ou en ciment&apos; then 11
+end +
+case
+when answers.Q2=&apos;Lampe tempête ou lampe a pétrole artisanale&apos; then 0
+when answers.Q2=&apos;Bougie, bois ou autre&apos; then 3
+when answers.Q2=&apos;Groupe électrogene, solaire, lampe à gaz ou électricité (SENELEC)&apos; then 8
+end +
+case
+when answers.Q3=&apos;Autre&apos; then 0
+when answers.Q3=&apos;Gaz&apos; then 7
+end +
+case
+when answers.Q4=&apos;Autre&apos; then 0
+when answers.Q4=&apos;Robinet interieur&apos; then 7
+end +
+case
+when answers.Q5=&apos;Latrines non couvertes, cuvette&#47;seau, aucun ou autre&apos; then 0
+when answers.Q5=&apos;Latrines couvertes, latrines ventilées améliorées ou chasse d\&apos;eau avec fosse septique&apos; then 8
+when answers.Q5=&apos;Chasse d\&apos;eau avec égout&apos; then 19
+end +
+case
+when answers.Q6=&apos;Non&apos; then 0
+when answers.Q6=&apos;Oui&apos; then 19
+end +
+case
+when answers.Q7=&apos;Non&apos; then 0
+when answers.Q7=&apos;Oui&apos; then 2
+end +
+case
+when answers.Q8=&apos;Non&apos; then 0
+when answers.Q8=&apos;Oui&apos; then 15
+end +
+case
+when answers.Q9=&apos;Non&apos; then 0
+when answers.Q9=&apos;Oui&apos; then 5
+end +
+case
+when answers.Q10=&apos;Il n\&apos;y a pas chef de famille féminin&apos; then 0
+when answers.Q10=&apos;Non&apos; then 2
+when answers.Q10=&apos;Oui&apos; then 7
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_house_walls&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_energy_for_lighting&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_water_source&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_owns_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_owns_fan&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_senegal_2009_female_head_literate&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Senegal 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>311</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Southafrica 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Seven or more&apos; then 0
+when answers.Q1=&apos;Six&apos; then 7
+when answers.Q1=&apos;Five&apos; then 10
+when answers.Q1=&apos;Four&apos; then 14
+when answers.Q1=&apos;Three&apos; then 19
+when answers.Q1=&apos;Two&apos; then 27
+when answers.Q1=&apos;One&apos; then 37
+end +
+case
+when answers.Q2=&apos;None&apos; then 0
+when answers.Q2=&apos;One&apos; then 5
+when answers.Q2=&apos;Two or more&apos; then 10
+end +
+case
+when answers.Q3=&apos;Four or less&apos; then 0
+when answers.Q3=&apos;Five or six&apos; then 4
+when answers.Q3=&apos;Seven or more&apos; then 8
+end +
+case
+when answers.Q4=&apos;Bricks, cement block&#47;concrete, corrugated iron&#47;zinc, wood, plastic, cardboard, mixture of mud and cement, wattle and daub, mud, thatching, asbestos, or other&apos; then 0
+when answers.Q4=&apos;Tile&apos; then 7
+end +
+case
+when answers.Q5=&apos;Pit latrine off-site with or without ventilation pipe, bucket toilet off-site, none, or other&apos; then 0
+when answers.Q5=&apos;Pit latrine on-site with or without ventilation pipe, or bucket toilet on-site&apos; then 4
+when answers.Q5=&apos;Flush toilet in dwelling&#47;on-site&#47;off-site with off-site&#47;on-site disposal (septic tank), or chemical toilet on-site or off-site&apos; then 7
+end +
+case
+when answers.Q6=&apos;Paraffin, coal, wood, animal dung, none, or other&apos; then 0
+when answers.Q6=&apos;Electricity from mains&#47;generator&#47;solar, or gas&apos; then 5
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 9
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 4
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_wage_earners&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_house_rooms&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_house_roof&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_owns_washing_machine&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_owns_VCR_DVD&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_owns_microwave&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_southafrica_2009_owns_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Southafrica 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>371</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Srilanka 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Six or more&apos; then 0
+when answers.Q1=&apos;Five&apos; then 6
+when answers.Q1=&apos;Four&apos; then 10
+when answers.Q1=&apos;Three&apos; then 17
+when answers.Q1=&apos;One or two&apos; then 21
+end +
+case
+when answers.Q2=&apos;None&apos; then 0
+when answers.Q2=&apos;One or more&apos; then 8
+end +
+case
+when answers.Q3=&apos;Year 1 or less&apos; then 0
+when answers.Q3=&apos;Years 2 to 7&apos; then 1
+when answers.Q3=&apos;Years 8 or 9&apos; then 4
+when answers.Q3=&apos;Year 10&apos; then 5
+when answers.Q3=&apos;No female head&#47;spouse&apos; then 5
+when answers.Q3=&apos;G.C.E. (O&#47;L) or equivalent, Year 12, or higher&apos; then 13
+end +
+case
+when answers.Q4=&apos;Mud, or other&apos; then 0
+when answers.Q4=&apos;Cement&apos; then 3
+when answers.Q4=&apos;Terrazzo&#47;tile&apos; then 9
+end +
+case
+when answers.Q5=&apos;None&apos; then 0
+when answers.Q5=&apos;One&apos; then 1
+when answers.Q5=&apos;Two&apos; then 5
+when answers.Q5=&apos;Three or more&apos; then 7
+end +
+case
+when answers.Q6=&apos;No&apos; then 0
+when answers.Q6=&apos;Yes&apos; then 9
+end +
+case
+when answers.Q7=&apos;No television&apos; then 0
+when answers.Q7=&apos;Television, but no VCD&#47;DVD&apos; then 3
+when answers.Q7=&apos;Television and VCD&#47;DVD&apos; then 7
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 7
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q10=&apos;None&apos; then 0
+when answers.Q10=&apos;Bicycle only&apos; then 2
+when answers.Q10=&apos;Motorcycle etc., but no motor car etc. (regardless of bicycle)&apos; then 9
+when answers.Q10=&apos;Motorcycle etc. (regardless of bicycle or motor car etc.)&apos; then 13
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_female_head_education_level&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_house_floors&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_house_bedrooms&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_owns_fan&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_owns_TV_and_DVD&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_owns_cooker&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_owns_refrigerator&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_owns_transportation&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_srilanka_2010_&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Srilanka 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>431</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Syria 2010</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Eight or more&apos; then 0
+when answers.Q1=&apos;Seven&apos; then 4
+when answers.Q1=&apos;Six&apos; then 8
+when answers.Q1=&apos;Five&apos; then 13
+when answers.Q1=&apos;Four&apos; then 19
+when answers.Q1=&apos;Three&apos; then 24
+when answers.Q1=&apos;One or two&apos; then 31
+end +
+case
+when answers.Q2=&apos;Arabic house, or other&apos; then 0
+when answers.Q2=&apos;Villa, or apartment&apos; then 3
+end +
+case
+when answers.Q3=&apos;One&apos; then 0
+when answers.Q3=&apos;Two or three&apos; then 9
+when answers.Q3=&apos;Four&apos; then 12
+when answers.Q3=&apos;Five or more&apos; then 15
+end +
+case
+when answers.Q4=&apos;No&apos; then 0
+when answers.Q4=&apos;Yes&apos; then 9
+end +
+case
+when answers.Q5=&apos;No&apos; then 0
+when answers.Q5=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q6=&apos;None&apos; then 0
+when answers.Q6=&apos;One&apos; then 3
+when answers.Q6=&apos;Two&apos; then 5
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 5
+end +
+case
+when answers.Q8=&apos;None&apos; then 0
+when answers.Q8=&apos;One&apos; then 3
+when answers.Q8=&apos;Two&apos; then 8
+when answers.Q8=&apos;Three or more&apos; then 9
+end +
+case
+when answers.Q9=&apos;None&apos; then 0
+when answers.Q9=&apos;Motorcycle only&apos; then 6
+when answers.Q9=&apos;Car (regardless of motorcycle)&apos; then 12
+end +
+case
+when answers.Q10=&apos;Farm, or does not work&apos; then 0
+when answers.Q10=&apos;No male head&#47;spouse&apos; then 2
+when answers.Q10=&apos;Enterprise, or at home&apos; then 5
+when answers.Q10=&apos;Other&apos; then 7
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_residence_type&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_house_rooms&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_has_refrigerator_freezer&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_has_washing_machine&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_bedroom_sets&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_has_chandelier&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_fans&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_owns_motorcycle_car&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_syria_2010_place_of_work&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Syria 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>491</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Vietnam 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Three or more&apos; then 0
+when answers.Q1=&apos;Two&apos; then 7
+when answers.Q1=&apos;One&apos; then 16
+when answers.Q1=&apos;None&apos; then 23
+end +
+case
+when answers.Q2=&apos;Four or more&apos; then 0
+when answers.Q2=&apos;Two or three&apos; then 6
+when answers.Q2=&apos;One or none&apos; then 9
+end +
+case
+when answers.Q3=&apos;Makeshift or other&apos; then 0
+when answers.Q3=&apos;Semi-permanent house&apos; then 1
+when answers.Q3=&apos;Strong house with a shared kitchen or shared bathroom&#47;toilet&apos; then 2
+when answers.Q3=&apos;Villa or strong house with a private kitchen and private&apos; then 6
+end +
+case
+when answers.Q4=&apos;None or other&apos; then 0
+when answers.Q4=&apos;Double-vault compost latrine, or toilet directly over water&apos; then 2
+when answers.Q4=&apos;Suilabh, or flush toilet with septic tank or sewage pipes&apos; then 7
+end +
+case
+when answers.Q5=&apos;Public tap, deep drilled wells, hand-dug and reinforced&#47;non-reinforced wells, covered wells, protected&#47;unprotected springs, rain, small water tank, water tank, river, lake, pond, or other&apos; then 0
+when answers.Q5=&apos;Private tap water inside&#47;outside the house, or purchased water (in tank or bottle)&apos; then 4
+end +
+case
+when answers.Q6=&apos;None&apos; then 0
+when answers.Q6=&apos;Electric cooker, rice cooker, or pressurized cooker (no gas cooker)&apos; then 5
+when answers.Q6=&apos;Gas cooker&apos; then 16
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 10
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 11
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_self_employed_agriculture&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_residence_type&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_water_source&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_cooker_type&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_has_motorcycle&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_has_video_player&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_has_wardrobe&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_vietnam_2009_has_refriderator&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Vietnam 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>551</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>PPI Yemen 2009</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select answers.survey_id, 0 as points_version, date(str_to_date(answers.date_survey_taken, &apos;%d&#47;%m&#47;%Y&apos;)) as date_survey_taken, answers.entity_id, answers.entity_type_id,
+
+(
+case
+when answers.Q1=&apos;Ten or more&apos; then 0
+when answers.Q1=&apos;Eight or nine&apos; then 8
+when answers.Q1=&apos;Seven&apos; then 11
+when answers.Q1=&apos;Six&apos; then 18
+when answers.Q1=&apos;Four or five&apos; then 21
+when answers.Q1=&apos;Three&apos; then 26
+when answers.Q1=&apos;One or two&apos; then 38
+end +
+case
+when answers.Q2=&apos;Not all&apos; then 0
+when answers.Q2=&apos;All&apos; then 2
+when answers.Q2=&apos;No children aged 12 to 18&apos; then 8
+end +
+case
+when answers.Q3=&apos;Concrete, mud&#47;soil, stone, or other&apos; then 0
+when answers.Q3=&apos;Floor tiles or marble&apos; then 15
+end +
+case
+when answers.Q4=&apos;Wood and mud, wood, hay, mud and hay, metal sheets and mud, or other&apos; then 0
+when answers.Q4=&apos;Reinforced concrete, wood and concrete, or metal sheets&apos; then 4
+end +
+case
+when answers.Q5=&apos;Non-flush toilet, other, or no toilet&apos; then 0
+when answers.Q5=&apos;Flush toilet&apos; then 5
+end +
+case
+when answers.Q6=&apos;One&apos; then 0
+when answers.Q6=&apos;Two&apos; then 2
+when answers.Q6=&apos;Three&apos; then 3
+when answers.Q6=&apos;Four&apos; then 5
+when answers.Q6=&apos;Five&apos; then 7
+when answers.Q6=&apos;Six or more&apos; then 13
+end +
+case
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 6
+end +
+case
+when answers.Q8=&apos;No&apos; then 0
+when answers.Q8=&apos;Yes&apos; then 4
+end +
+case
+when answers.Q9=&apos;No&apos; then 0
+when answers.Q9=&apos;Yes&apos; then 2
+end +
+case
+when answers.Q10=&apos;No&apos; then 0
+when answers.Q10=&apos;Yes&apos; then 5
+end
+) 
+as ppi_score
+from
+(SELECT
+qg.id as survey_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+qgi.entity_id as entity_id,
+es.entity_type_id as entity_type_id,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_family_members&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_family_members_12_to_18_in_school&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_house_floors&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_house_ceiling&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_toilet_type&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_house_rooms&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_owns_television&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_owns_gas_cylinder&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_owns_radio&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_yemen_2009_owns_washing_machine&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Yemen 2009&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1160</xloc>
+      <yloc>611</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Read Surveys</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select survey_name from dw_ppi_survey</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>366</xloc>
+      <yloc>7</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>What flow was the survey attached to?</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>entity_type_id</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>Integer</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Matching flow wasn&apos;t found</default_target_step>
+<cases><case><value>1</value>
+<target_step>Client flow (create, close, attach survey)</target_step>
+</case><case><value>22</value>
+<target_step>Account flow (loan or savings)</target_step>
+</case><case><value>21</value>
+<target_step>Account flow (loan or savings)</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>517</xloc>
+      <yloc>845</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Which survey?</name>
+    <type>SwitchCase</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<fieldname>survey_name</fieldname>
+<use_contains>N</use_contains>
+<case_value_type>String</case_value_type>
+<case_value_format/>
+<case_value_decimal/>
+<case_value_group/>
+<default_target_step>Matching survey wasn&apos;t found</default_target_step>
+<cases><case><value>PPI Bangladesh 2009</value>
+<target_step>PPI Bangladesh 2009</target_step>
+</case><case><value>PPI Bolivia 2009</value>
+<target_step>PPI Bolivia 2009</target_step>
+</case><case><value>PPI Brazil 2010</value>
+<target_step>PPI Brazil 2010</target_step>
+</case><case><value>PPI Cambodia 2009</value>
+<target_step>PPI Cambodia 2009</target_step>
+</case><case><value>PPI Ecuador 2008</value>
+<target_step>PPI Ecuador 2008</target_step>
+</case><case><value>PPI Egypt 2010</value>
+<target_step>PPI Egypt 2010</target_step>
+</case><case><value>PPI Elsalvador 2010</value>
+<target_step>PPI Elsalvador 2010</target_step>
+</case><case><value>PPI Ethiopia 2009</value>
+<target_step>PPI Ethiopia 2009</target_step>
+</case><case><value>PPI Ghana 2010</value>
+<target_step>PPI Ghana 2010</target_step>
+</case><case><value>PPI Guatemala 2010</value>
+<target_step>PPI Guatemala 2010</target_step>
+</case><case><value>PPI Haiti 2006</value>
+<target_step>PPI Haiti 2006</target_step>
+</case><case><value>PPI Honduras 2010</value>
+<target_step>PPI Honduras 2010</target_step>
+</case><case><value>PPI India 2008</value>
+<target_step>PPI India 2008</target_step>
+</case><case><value>PPI Indonesia 2009</value>
+<target_step>PPI Indonesia 2009</target_step>
+</case><case><value>PPI Kenya 2008</value>
+<target_step>PPI Kenya 2008</target_step>
+</case><case><value>PPI Malawi 2009</value>
+<target_step>PPI Malawi 2009</target_step>
+</case><case><value>PPI Mali 2010</value>
+<target_step>PPI Mali 2010</target_step>
+</case><case><value>PPI Mexico 2009</value>
+<target_step>PPI Mexico 2009</target_step>
+</case><case><value>PPI Nepal 2009</value>
+<target_step>PPI Nepal 2009</target_step>
+</case><case><value>PPI Nicaragua 2010</value>
+<target_step>PPI Nicaragua 2010</target_step>
+</case><case><value>PPI Nigeria 2008</value>
+<target_step>PPI Nigeria 2008</target_step>
+</case><case><value>PPI Pakistan 2009</value>
+<target_step>PPI Pakistan 2009</target_step>
+</case><case><value>PPI Palestine 2010</value>
+<target_step>PPI Palestine 2010</target_step>
+</case><case><value>PPI Peru 2009</value>
+<target_step>PPI Peru 2009</target_step>
+</case><case><value>PPI Philippines 2009</value>
+<target_step>PPI Philippines 2009</target_step>
+</case><case><value>PPI Romania 2009</value>
+<target_step>PPI Romania 2009</target_step>
+</case><case><value>PPI Russia 2010</value>
+<target_step>PPI Russia 2010</target_step>
+</case><case><value>PPI Senegal 2009</value>
+<target_step>PPI Senegal 2009</target_step>
+</case><case><value>PPI Southafrica 2009</value>
+<target_step>PPI Southafrica 2009</target_step>
+</case><case><value>PPI Srilanka 2010</value>
+<target_step>PPI Srilanka 2010</target_step>
+</case><case><value>PPI Syria 2010</value>
+<target_step>PPI Syria 2010</target_step>
+</case><case><value>PPI Vietnam 2009</value>
+<target_step>PPI Vietnam 2009</target_step>
+</case><case><value>PPI Yemen 2009</value>
+<target_step>PPI Yemen 2009</target_step>
+</case></cases>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>495</xloc>
+      <yloc>9</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step_error_handling>
+      <error>
+        <source_step>Insert &#47; Update</source_step>
+        <target_step>Got an error on Insert&#47;Update</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors>0</max_errors>
+        <max_pct_errors>0</max_pct_errors>
+        <min_pct_rows>0</min_pct_rows>
+      </error>
+  </step_error_handling>
+   <slave-step-copy-partition-distribution>
+</slave-step-copy-partition-distribution>
+   <slave_transformation>N</slave_transformation>
+</transformation>
