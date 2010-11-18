@@ -167,7 +167,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Romania 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Matching flow wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Malawi 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Vietnam 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Bangladesh 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Bolivia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Brazil 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Cambodia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ecuador 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Egypt 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Elsalvador 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ethiopia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ghana 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Guatemala 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Haiti 2006</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Honduras 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Indonesia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Malawi 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Mali 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Mexico 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nepal 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nicaragua 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nigeria 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Pakistan 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Palestine 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Peru 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Philippines 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Russia 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Romania 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Senegal 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Southafrica 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Srilanka 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Syria 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Vietnam 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Yemen 2009</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Bangladesh 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Bolivia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Brazil 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ecuador 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Egypt 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Elsalvador 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ethiopia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ghana 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Guatemala 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Haiti 2006</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Honduras 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Indonesia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Mali 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Mexico 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nepal 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nicaragua 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nigeria 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Pakistan 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Palestine 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Peru 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Philippines 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Russia 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Senegal 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Srilanka 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Syria 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Yemen 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Cambodia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Southafrica 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Insert &#47; Update</from><to>Got an error on Insert&#47;Update</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Read Surveys</from><to>Which survey?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>Matching survey wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>Map to dimensions</from><to>Insert &#47; Update</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Account flow (loan or savings)</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Client flow (create, close, attach survey)</to><enabled>Y</enabled> </hop>  <hop> <from>Account flow (loan or savings)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>Client flow (create, close, attach survey)</from><to>Map to dimensions</to><enabled>Y</enabled> </hop>  <hop> <from>PPI India 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Kenya 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Romania 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>What flow was the survey attached to?</from><to>Matching flow wasn&apos;t found</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Malawi 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Vietnam 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Bangladesh 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Bolivia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Brazil 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Cambodia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ecuador 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Egypt 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Elsalvador 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ethiopia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Ghana 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Guatemala 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Haiti 2006</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Honduras 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI India 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Indonesia 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Kenya 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Malawi 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Mali 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Mexico 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nepal 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nicaragua 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Nigeria 2008</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Pakistan 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Palestine 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Peru 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Philippines 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Russia 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Romania 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Senegal 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Southafrica 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Srilanka 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Syria 2010</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Vietnam 2009</to><enabled>Y</enabled> </hop>  <hop> <from>Which survey?</from><to>PPI Yemen 2009</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Bangladesh 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Bolivia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Brazil 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ecuador 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Egypt 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Elsalvador 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ethiopia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Ghana 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Guatemala 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Haiti 2006</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Honduras 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Indonesia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Mali 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Mexico 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nepal 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nicaragua 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Nigeria 2008</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Pakistan 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Palestine 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Peru 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Philippines 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Russia 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Senegal 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Srilanka 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Syria 2010</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Yemen 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Cambodia 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>PPI Southafrica 2009</from><to>What flow was the survey attached to?</to><enabled>Y</enabled> </hop>  <hop> <from>Insert &#47; Update</from><to>Got an error on Insert&#47;Update</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Account flow (loan or savings)</name>
     <type>DBLookup</type>
@@ -1910,7 +1910,7 @@ GROUP BY question_group_instance_id) as answers</sql>
     </step>
 
   <step>
-    <name>PPI Malawi 2009</name>
+    <name>PPI Malawi 2010</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1924,29 +1924,28 @@ GROUP BY question_group_instance_id) as answers</sql>
 
 (
 case
-when answers.Q1=&apos;Five or more&apos; then 0
-when answers.Q1=&apos;Four&apos; then 2
-when answers.Q1=&apos;Three&apos; then 6
-when answers.Q1=&apos;Two&apos; then 9
-when answers.Q1=&apos;One&apos; then 13
-when answers.Q1=&apos;None&apos; then 21
+when answers.Q1=&apos;Eight or more&apos; then 0
+when answers.Q1=&apos;Seven&apos; then 4
+when answers.Q1=&apos;Six&apos; then 7
+when answers.Q1=&apos;Five&apos; then 11
+when answers.Q1=&apos;Four&apos; then 14
+when answers.Q1=&apos;Three&apos; then 20
+when answers.Q1=&apos;Two&apos; then 29
+when answers.Q1=&apos;One&apos; then 41
 end +
 case
-when answers.Q2=&apos;Seven or more&apos; then 0
-when answers.Q2=&apos;Four, five, or six&apos; then 4
-when answers.Q2=&apos;Three&apos; then 8
-when answers.Q2=&apos;Two&apos; then 12
-when answers.Q2=&apos;One&apos; then 23
-when answers.Q2=&apos;None&apos; then 6
+when answers.Q2=&apos;Tradition&apos; then 0
+when answers.Q2=&apos;Semi-permanent&apos; then 1
+when answers.Q2=&apos;Permanent&apos; then 4
 end +
 case
 when answers.Q3=&apos;Communal standpipe; communal open, unprotected well; communal hand pump; lake&#47;reservoir, river&#47;spring, or other&apos; then 0
-when answers.Q3=&apos;Piped into dwelling; piped outside dwelling (personal); personal hand pump; protected spring; or personal open, unprotected well&apos; then 6
+when answers.Q3=&apos;Piped into dwelling; piped outside dwelling (personal); personal hand pump; protected spring; or personal open, unprotected well&apos; then 7
 end +
 case
 when answers.Q4=&apos;Collected firewood, crop residue, or animal waste&apos; then 0
-when answers.Q4=&apos;Purchased firewood&apos; then 5
-when answers.Q4=&apos;Paraffin, electricity, gas, charcoal, saw dust, or other&apos; then 8
+when answers.Q4=&apos;Purchased firewood&apos; then 4
+when answers.Q4=&apos;Paraffin, electricity, gas, charcoal, saw dust, or other&apos; then 9
 end +
 case
 when answers.Q5=&apos;Collected firewood, grass, or other&apos; then 0
@@ -1958,44 +1957,43 @@ when answers.Q6=&apos;No&apos; then 0
 when answers.Q6=&apos;Yes&apos; then 4
 end +
 case
-when answers.Q7=&apos;None&apos; then 0
-when answers.Q7=&apos;Owns a chair, but not any other items&apos; then 2
-when answers.Q7=&apos;Owns a table, upholstered chair, or sofa set, but not a coffee table (may or may not own a chair)&apos; then 5
-when answers.Q7=&apos;Owns a coffee table (may or may not own other items)&apos; then 10
+when answers.Q7=&apos;No&apos; then 0
+when answers.Q7=&apos;Yes&apos; then 4
 end +
 case
 when answers.Q8=&apos;No&apos; then 0
-when answers.Q8=&apos;Yes&apos; then 4
+when answers.Q8=&apos;Yes&apos; then 5
 end +
 case
 when answers.Q9=&apos;No&apos; then 0
-when answers.Q9=&apos;Yes&apos; then 6
+when answers.Q9=&apos;Yes&apos; then 7
 end +
 case
 when answers.Q10=&apos;No&apos; then 0
-when answers.Q10=&apos;Yes&apos; then 6
+when answers.Q10=&apos;Yes&apos; then 7
 end
 ) 
 as ppi_score
 from
 (SELECT
 qg.id as survey_id,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_survey_date&apos;, qgr.response, NULL)) AS &apos;date_survey_taken&apos;,
 qgi.entity_id as entity_id,
 es.entity_type_id as entity_type_id,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_family_members_in_agriculture&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_water_source&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_lighting_fuel&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_lantern&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_furnature&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_bicycle_scooter_car&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_HiFi&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
-GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2009_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_family_members_0_to_14&apos;, qgr.response, NULL)) AS &apos;Q1&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_family_members_in_agriculture&apos;, qgr.response, NULL)) AS &apos;Q2&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_water_source&apos;, qgr.response, NULL)) AS &apos;Q3&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_cooking_fuel&apos;, qgr.response, NULL)) AS &apos;Q4&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_lighting_fuel&apos;, qgr.response, NULL)) AS &apos;Q5&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_lantern&apos;, qgr.response, NULL)) AS &apos;Q6&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_furnature&apos;, qgr.response, NULL)) AS &apos;Q7&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_bicycle_scooter_car&apos;, qgr.response, NULL)) AS &apos;Q8&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_HiFi&apos;, qgr.response, NULL)) AS &apos;Q9&apos;,
+GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
-WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Malawi 2009&quot; and qgi.event_source_id = es.id
-GROUP BY question_group_instance_id) as answers</sql>
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Malawi 2010&quot; and qgi.event_source_id = es.id
+GROUP BY question_group_instance_id) as answers
+generated&#47;testData&#47;Malawi2010Testing.properties</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -3773,7 +3771,7 @@ GROUP BY question_group_instance_id) as answers</sql>
 </case><case><value>PPI Kenya 2008</value>
 <target_step>PPI Kenya 2008</target_step>
 </case><case><value>PPI Malawi 2009</value>
-<target_step>PPI Malawi 2009</target_step>
+<target_step>PPI Malawi 2010</target_step>
 </case><case><value>PPI Mali 2010</value>
 <target_step>PPI Mali 2010</target_step>
 </case><case><value>PPI Mexico 2009</value>

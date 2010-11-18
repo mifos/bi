@@ -3,73 +3,70 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
     <ppi>true</ppi>
-    <title>PPI Malawi 2009</title>
+    <title>PPI Malawi 2010</title>
     <editable>false</editable>
     <eventSource>
         <event>Create</event>
         <source>Client</source>
     </eventSource>
     <section order="1">
-        <name>PPI Malawi 2009</name>
+        <name>PPI Malawi 2010</name>
         <question order="1">
             <text>Date Survey Was Taken</text>
-            <nickname>ppi_malawi_2009_survey_date</nickname>
+            <nickname>ppi_malawi_2010_survey_date</nickname>
             <type>DATE</type>
             <mandatory>true</mandatory>
         </question>
         <question order="2">
-            <text>How many household members are 14-years-old or younger?</text>
-            <nickname>ppi_malawi_2009_family_members_0_to_14</nickname>
+            <text>How many household members are there?</text>
+            <nickname>ppi_malawi_2010_family_members_0_to_14</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Five or more</value>
+                <value>Eight or more</value>
             </choice>
             <choice order="2">
-                <value>Four</value>
+                <value>Seven</value>
             </choice>
             <choice order="3">
-                <value>Three</value>
+                <value>Six</value>
             </choice>
             <choice order="4">
-                <value>Two</value>
+                <value>Five</value>
             </choice>
             <choice order="5">
-                <value>One</value>
+                <value>Four</value>
             </choice>
             <choice order="6">
-                <value>None</value>
+                <value>Three</value>
+            </choice>
+            <choice order="7">
+                <value>Two</value>
+            </choice>
+            <choice order="8">
+                <value>One</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="3">
-            <text>How many household members engage in any agricultural activities or own agricultural land of any sort?</text>
-            <nickname>ppi_malawi_2009_family_members_in_agriculture</nickname>
+            <text>What general type of construction materials are used for the dwelling?</text>
+            <nickname>ppi_malawi_2010_family_members_in_agriculture</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Seven or more</value>
+                <value>Tradition</value>
             </choice>
             <choice order="2">
-                <value>Four, five, or six</value>
+                <value>Semi-permanent</value>
             </choice>
             <choice order="3">
-                <value>Three</value>
-            </choice>
-            <choice order="4">
-                <value>Two</value>
-            </choice>
-            <choice order="5">
-                <value>One</value>
-            </choice>
-            <choice order="6">
-                <value>None</value>
+                <value>Permanent</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="4">
             <text>What was your main source of drinking water in the past month?</text>
-            <nickname>ppi_malawi_2009_water_source</nickname>
+            <nickname>ppi_malawi_2010_water_source</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Communal standpipe; communal open, unprotected well; communal hand pump; lake/reservoir, river/spring, or other</value>
@@ -82,7 +79,7 @@
         </question>
         <question order="5">
             <text>What is your main source of cooking fuel?</text>
-            <nickname>ppi_malawi_2009_cooking_fuel</nickname>
+            <nickname>ppi_malawi_2010_cooking_fuel</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Collected firewood, crop residue, or animal waste</value>
@@ -98,7 +95,7 @@
         </question>
         <question order="6">
             <text>What is your main source of lighting fuel?</text>
-            <nickname>ppi_malawi_2009_lighting_fuel</nickname>
+            <nickname>ppi_malawi_2010_lighting_fuel</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Collected firewood, grass, or other</value>
@@ -114,7 +111,7 @@
         </question>
         <question order="7">
             <text>Does your household own a lantern (paraffin)?</text>
-            <nickname>ppi_malawi_2009_owns_lantern</nickname>
+            <nickname>ppi_malawi_2010_owns_lantern</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -127,26 +124,20 @@
         </question>
         <question order="8">
             <text>Does your household own a chair, table, upholstered chair, sofa set, or coffee table?</text>
-            <nickname>ppi_malawi_2009_owns_furnature</nickname>
+            <nickname>ppi_malawi_2010_owns_furnature</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>None</value>
+                <value>No</value>
             </choice>
             <choice order="2">
-                <value>Owns a chair, but not any other items</value>
-            </choice>
-            <choice order="3">
-                <value>Owns a table, upholstered chair, or sofa set, but not a coffee table (may or may not own a chair)</value>
-            </choice>
-            <choice order="4">
-                <value>Owns a coffee table (may or may not own other items)</value>
+                <value>Yes</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="9">
             <text>Does your household own a bicycle, motorcycle/scooter, or car?</text>
-            <nickname>ppi_malawi_2009_owns_bicycle_scooter_car</nickname>
+            <nickname>ppi_malawi_2010_owns_bicycle_scooter_car</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -159,7 +150,7 @@
         </question>
         <question order="10">
             <text>Does your household own a tape or CD player/HiFi?</text>
-            <nickname>ppi_malawi_2009_owns_HiFi</nickname>
+            <nickname>ppi_malawi_2010_owns_HiFi</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -172,7 +163,7 @@
         </question>
         <question order="11">
             <text>Does your household own an iron (for pressing clothes)?</text>
-            <nickname>ppi_malawi_2009_owns_iron</nickname>
+            <nickname>ppi_malawi_2010_owns_iron</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>

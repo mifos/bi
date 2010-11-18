@@ -11,7 +11,7 @@ from mifos.nicknames import Nicknames
 
 COLUMN_MAP = {
 
-'Bottom Half Below $1/Day/PPP': 'bottom_half_below_1_00_per_day_2005_ppp',
+'Bottom Half Below $1/Day/PPP': 'bottom_half_below_1_00_per_day_1993_ppp',
 'Bottom Half Below National Poverty Line': 'bottom_half_below_national',
 'Top Half Below National Poverty Line': 'top_half_below_national',
 'Total Below $1/Day/PPP': 'below_1_00_per_day_1993_ppp',
@@ -26,26 +26,26 @@ COLUMN_MAP = {
 'Total Below the $1.08/Day/1993 PPP Line': 'below_1_08_per_day_1993_ppp',
 'Total Below the $1.25/Day/2005 PPP Line': 'below_1_25_per_day_2005_ppp',
 'Total Below the $1.25/Day/PPP Line': 'below_1_25_per_day_1993_ppp', # !!! uses 2005 like above *fixed*
-'Total Below the $1.50/Day/PPP Line': 'below_1_50_per_day_2005_ppp',
+'Total Below the $1.50/Day/PPP Line': 'below_1_50_per_day_1993_ppp',
 'Total Below the $1.75/Day/2005 PPP Line': 'below_1_75_per_day_2005_ppp',
 'Total Below the $1/Day/1993 PPP Line': 'below_1_00_per_day_1993_ppp',
 'Total Below the $1/Day/2005 PPP Line': 'below_1_00_per_day_2005_ppp',
 'Total Below the $1/Day/PPP Line': 'below_1_00_per_day_1993_ppp',
 'Total Below the $2.16/Day/1993 PPP Line': 'below_2_16_per_day_1993_ppp',
 'Total Below the $2.50/Day/2005 PPP Line': 'below_2_50_per_day_2005_ppp',
-'Total Below the $2.50/Day/PPP Line': 'below_2_50_per_day_1993_ppp', # !!! uses 2005 like above *fixed*
+'Total Below the $2.50/Day/PPP Line': 'below_2_50_per_day_2005_ppp', # !!! uses 2005 like above *fixed*
 'Total Below the $2/Day/1993 PPP Line': 'below_2_00_per_day_1993_ppp',
 'Total Below the $2/Day/PPP Line': 'below_2_00_per_day_1993_ppp', # !!! uses 1993 like above *fixed*
 'Total Below the $3.00/Day/2005 PPP Line': 'below_3_00_per_day_2005_ppp', # !!! no column for $3.00 *fixed*
 'Total Below the $3.24/Day/1993 PPP Line': 'below_3_24_per_day_1993_ppp',
 'Total Below the $3.75/Day/2005 PPP Line': 'below_3_75_per_day_2005_ppp',
-'Total Below the $3.75/Day/PPP Line': 'below_3_75_per_day_1993_ppp', # !!! uses 2005 like above *fixed*
+'Total Below the $3.75/Day/PPP Line': 'below_3_75_per_day_2005_ppp', # !!! uses 2005 like above *fixed*
 'Total Below the $4.00/Day/2005 PPP Line': 'below_4_00_per_day_2005_ppp',
 'Total Below the $4.32/Day/1993 PPP Line': 'below_4_32_per_day_1993_ppp',
 'Total Below the $4/Day/2005 PPP Line': 'below_4_00_per_day_2005_ppp',
 'Total Below the $5.00/Day/2005 PPP Line': 'below_5_00_per_day_2005_ppp',
 'Total Below the $5/Day/2005 PPP Line': 'below_5_00_per_day_2005_ppp',
-'Total Below the $5/Day/PPP Line': 'below_5_00_per_day_1993_ppp', # !!! 3 above use 2005 *fixed*
+'Total Below the $5/Day/PPP Line': 'below_5_00_per_day_2005_ppp', # !!! 3 above use 2005 *fixed*
 'Total Below the $6.25/Day/2005 PPP Line': 'below_6_25_per_day_2005_ppp',
 'Total Below the 100% National Poverty Line': 'below_national',
 'Total Below the 100% of National Poverty Line': 'below_national', # !!! no column below_100_percent_of_national *fixed*
@@ -102,7 +102,7 @@ def inserts(filename, nicks):
         if COLUMN_MAP[c] is None:
             print 'WARNING: omitting insert to column <%s> because it maps to None' % c
         to_append = COLUMN_MAP[c]
-        if country.lower() == 'india' and to_append in COLUMNS_2005_VERSION:
+        if country.lower() in ('ecuador','honduras','indonesia') and to_append in COLUMNS_2005_VERSION:
             to_append = to_append.replace('1993', '2005')
         db_columns.append(to_append)
     title = nicks.questionsTitle(country)
