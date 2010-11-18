@@ -1992,8 +1992,7 @@ GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_HiFi&apos;, qgr.response
 GROUP_CONCAT(if(q.nickname = &apos;ppi_malawi_2010_owns_iron&apos;, qgr.response, NULL)) AS &apos;Q10&apos;
 FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
 WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title=&quot;PPI Malawi 2010&quot; and qgi.event_source_id = es.id
-GROUP BY question_group_instance_id) as answers
-generated&#47;testData&#47;Malawi2010Testing.properties</sql>
+GROUP BY question_group_instance_id) as answers</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
