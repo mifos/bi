@@ -31,5 +31,5 @@ echo "drop database $DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DB_NAME" | mysql $MYSQL_ARGS
 mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_mifos_datawarehouse.sql
 mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_ppi_poverty_lines.sql
-mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_dw_ppi_survey.sql
+mysql $MYSQL_ARGS $DB_NAME --default_character_set utf8 < $PRGDIR/load_dw_ppi_survey.sql
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/CreateDataWarehouse.kjb`
