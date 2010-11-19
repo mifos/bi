@@ -574,10 +574,12 @@ DROP TABLE IF EXISTS `dw_ppi_survey`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dw_ppi_survey` (
-  `survey_id` int(11) NOT NULL,
   `survey_name` varchar(200) NOT NULL,
-  PRIMARY KEY (`survey_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `survey_id` int(11) NULL,
+  `scoring_sql` varchar(6000) NOT NULL,
+  PRIMARY KEY (`survey_name`),
+  KEY survey_id (`survey_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

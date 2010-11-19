@@ -159,16 +159,11 @@
       <schema/>
       <table>dw_ppi_survey</table>
       <key>
-        <name>survey_id</name>
-        <field>survey_id</field>
+        <name>survey_name</name>
+        <field>survey_name</field>
         <condition>=</condition>
         <name2/>
       </key>
-      <value>
-        <name>survey_name</name>
-        <rename>survey_name</rename>
-        <update>Y</update>
-      </value>
       <value>
         <name>survey_id</name>
         <rename>survey_id</rename>

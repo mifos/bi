@@ -51,30 +51,29 @@ SINGLE_QUESTION_TEMPLATE = \
 
 #####################################################################################
 
-SQL_CASE_TEMPLATE = '''case
-{WHENS}
+SQL_CASE_TEMPLATE = '''case \
+{WHENS} \
 end'''
 
 SQL_CASE_WHEN_TEMPLATE = '''when answers.Q{NUMBER}='{ANSWER}' then {VALUE}'''
 
 GROUP_CONCAT_TEMPLATE = "GROUP_CONCAT(if(q.nickname = '{NICKNAME}', qgr.response, NULL)) AS 'Q{NUMBER}'"
 
-SQL_TEMPLATE = '''select answers.survey_id, {POINTS_VERSION} as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.entity_id, answers.entity_type_id,
-
-(
-{CASES}
-) 
-as ppi_score
-from
-(SELECT
-qg.id as survey_id,
-GROUP_CONCAT(if(q.nickname = '{DATE_NICKNAME}', qgr.response, NULL)) AS 'date_survey_taken',
-qgi.entity_id as entity_id,
-es.entity_type_id as entity_type_id,
-{CONCATS}
-FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es
-WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title="{TITLE}" and qgi.event_source_id = es.id
-GROUP BY question_group_instance_id) as answers
+SQL_TEMPLATE = '''insert into dw_ppi_survey (survey_name, scoring_sql) values ('{TITLE}', "select answers.survey_id, {POINTS_VERSION} as points_version, date(str_to_date(answers.date_survey_taken, '%d/%m/%Y')) as date_survey_taken, answers.entity_id, answers.entity_type_id, \
+( \
+{CASES} \
+) \
+as ppi_score \
+from \
+(SELECT \
+qg.id as survey_id, \
+GROUP_CONCAT(if(q.nickname = '{DATE_NICKNAME}', qgr.response, NULL)) AS 'date_survey_taken', \
+qgi.entity_id as entity_id, \
+es.entity_type_id as entity_type_id, \
+{CONCATS} \
+FROM question_group_response qgr, question_group_instance qgi, question_group qg, sections_questions sq, questions q, event_sources es \
+WHERE qgr.question_group_instance_id = qgi.id and qgr.sections_questions_id = sq.id and sq.question_id = q.question_id and qgi.question_group_id = qg.id and qg.title='{TITLE}' and qgi.event_source_id = es.id \
+GROUP BY question_group_instance_id) as answers");
 '''
 ##############################################################
 
@@ -125,11 +124,11 @@ def properties(qs, country_name, nicks, title='Unknown', filename='Unknown'):
 def sql(qs, country_name, nicks, title='Unknown'):
     cases = []
     for (qnum, q) in enumerate(qs):
-        whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=str(x[0]).replace('\'','\\\''), VALUE=x[1]) for x in q[1]]
-        case = SQL_CASE_TEMPLATE.format(WHENS='\n'.join(whens))
+        whens = [SQL_CASE_WHEN_TEMPLATE.format(NUMBER=qnum+1, ANSWER=str(x[0]).replace('\'','\\\\\\\''), VALUE=x[1]) for x in q[1]]
+        case = SQL_CASE_TEMPLATE.format(WHENS=' '.join(whens))
         cases.append(case)
     group_concats = [GROUP_CONCAT_TEMPLATE.format(NICKNAME=nicks.nickname(country_name, qnum), NUMBER=qnum+1) for (qnum, q) in enumerate(qs)]
-    return SQL_TEMPLATE.format(CASES=' +\n'.join(cases), CONCATS=',\n'.join(group_concats), TITLE=title,
+    return SQL_TEMPLATE.format(CASES=' + '.join(cases), CONCATS=', '.join(group_concats), TITLE=title,
             POINTS_VERSION= nicks.pointsVersion(country_name), 
             DATE_NICKNAME=nicks.nicknameForSurveyDate(country_name))
 
