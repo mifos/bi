@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>772</xloc>
-      <yloc>329</yloc>
+      <xloc>640</xloc>
+      <yloc>164</yloc>
       </entry>
     <entry>
       <name>Load fact_client_attendances</name>
@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>133</xloc>
-      <yloc>181</yloc>
+      <xloc>102</xloc>
+      <yloc>95</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_repayments</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>733</xloc>
-      <yloc>18</yloc>
+      <xloc>480</xloc>
+      <yloc>31</yloc>
       </entry>
     <entry>
       <name>Load dw_loan_schedules</name>
@@ -204,8 +204,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>130</xloc>
-      <yloc>86</yloc>
+      <xloc>135</xloc>
+      <yloc>22</yloc>
       </entry>
     <entry>
       <name>Load fact_savings_transactions</name>
@@ -236,8 +236,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>458</xloc>
-      <yloc>389</yloc>
+      <xloc>474</xloc>
+      <yloc>303</yloc>
       </entry>
     <entry>
       <name>Load fact_customer_fees_and_charges</name>
@@ -268,8 +268,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>639</xloc>
-      <yloc>367</yloc>
+      <xloc>606</xloc>
+      <yloc>247</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_fees_and_charges</name>
@@ -300,8 +300,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>738</xloc>
-      <yloc>106</yloc>
+      <xloc>562</xloc>
+      <yloc>92</yloc>
       </entry>
   </entries>
   <hops>
@@ -370,5 +370,26 @@
     </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>Need to think about putting timestamp on fca and dls</note>
+      <xloc>15</xloc>
+      <yloc>170</yloc>
+      <width>266</width>
+      <heigth>22</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>

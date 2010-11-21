@@ -78,8 +78,8 @@ by a hierarchy change or just someone was playing silly beggars with the account
 Some transactions might occur earlier (up to 6 days for one MFI) than the first time a savings account was created.  Don&apos;t know why.
 In this case, the transaction is attached to the earliest open status entry.
 </note>
-      <xloc>11</xloc>
-      <yloc>294</yloc>
+      <xloc>27</xloc>
+      <yloc>405</yloc>
       <width>657</width>
       <heigth>147</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -174,7 +174,7 @@ In this case, the transaction is attached to the earliest open status entry.
     </attributes>
   </connection>
   <order>
-  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Get Transaction End Date Value</to><enabled>Y</enabled> </hop>  <hop> <from>Get Transaction End Date Value</from><to>Select Just Start and End Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Select Just Start and End Dates</from><to>Read account_trxn for Savings Transactions</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create Savings Transactions</name>
     <type>TableOutput</type>
@@ -290,8 +290,8 @@ In this case, the transaction is attached to the earliest open status entry.
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>712</xloc>
-      <yloc>214</yloc>
+      <xloc>761</xloc>
+      <yloc>286</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -331,8 +331,8 @@ In this case, the transaction is attached to the earliest open status entry.
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>403</xloc>
-      <yloc>34</yloc>
+      <xloc>452</xloc>
+      <yloc>106</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -359,8 +359,8 @@ In this case, the transaction is attached to the earliest open status entry.
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>709</xloc>
-      <yloc>118</yloc>
+      <xloc>758</xloc>
+      <yloc>190</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -376,13 +376,18 @@ In this case, the transaction is attached to the earliest open status entry.
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select atxn.action_date, ifnull(atxn.due_date, date(&apos;3001-01-01&apos;)) due_date, date(atxn.created_date) created_date, atxn.account_action_id, 
+    <sql>select atxn.action_date, cast(ifnull(atxn.due_date, &apos;3001-01-01&apos;) as date) as due_date,
+date(atxn.created_date) created_date, atxn.account_action_id, 
 atxn.account_trxn_id, atxn.account_id as savings_account_id, atxn.payment_id, atxn.installment_id, ap.payment_type_id,
 stxn.deposit_amount, stxn.withdrawal_amount, stxn.interest_amount
 from account_trxn atxn
 inner join  savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
 inner join account_payment ap on ap.payment_id = atxn.payment_id
 where atxn.account_action_id in (6,7, 11, 14)
+
+and atxn.created_date &gt;= date(?) 
+and atxn.created_date &lt; date(?)
+
 &#47;* 
 6 Deposit
 7 Withdrawal
@@ -390,14 +395,14 @@ where atxn.account_action_id in (6,7, 11, 14)
 14 SavingsAdjustment - but covers deposits and withdrawals
 *&#47;</sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Select Just Start and End Dates</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>110</xloc>
-      <yloc>35</yloc>
+      <xloc>166</xloc>
+      <yloc>106</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -424,8 +429,8 @@ where atxn.account_action_id in (6,7, 11, 14)
       </remove>      <remove>        <name>currency_key</name>
       </remove>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>248</xloc>
-      <yloc>116</yloc>
+      <xloc>297</xloc>
+      <yloc>188</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -465,8 +470,8 @@ order by savings_account_key</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>248</xloc>
-      <yloc>216</yloc>
+      <xloc>297</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -510,8 +515,125 @@ order by savings_account_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>708</xloc>
-      <yloc>37</yloc>
+      <xloc>757</xloc>
+      <yloc>109</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Start and End Date Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${MAINSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endDateAlter</name>
+        <variable>${MAINENDDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>589</xloc>
+      <yloc>15</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Transaction End Date Value</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>one</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>1</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>endDate</field_name>
+<calc_type>ADD_DAYS</calc_type>
+<field_a>endDateAlter</field_a>
+<field_b>one</field_b>
+<field_c/>
+<value_type>Date</value_type>
+<value_length>-1</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>361</xloc>
+      <yloc>15</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select Just Start and End Dates</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>startDate</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>endDate</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>166</xloc>
+      <yloc>15</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
