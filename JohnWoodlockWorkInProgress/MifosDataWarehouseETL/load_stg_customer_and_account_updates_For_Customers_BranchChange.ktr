@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Client(w&#47;o group membership) Branch Changes</from><to>Lookup Branch Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (w&#47;o center hierarchy) Branch Changes</from><to>Lookup Branch Id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Branch Id</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Client(w&#47;o group membership) Branch Changes</from><to>Lookup Branch Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (w&#47;o center hierarchy) Branch Changes</from><to>Lookup Branch Id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Branch Id</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Get Group (w&#47;o center hierarchy) Branch Changes</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Get Client(w&#47;o group membership) Branch Changes</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get Client(w&#47;o group membership) Branch Changes</name>
     <type>TableInput</type>
@@ -161,21 +161,22 @@ cld.new_value as branch_name,
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 1                      
+                        and cl.entity_type = 1
+						and (cl.changed_date between date(?) and date(?))     
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
                         and cld.field_name like   &apos;Branch membership&apos;
 
 where c.customer_level_id = 1
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>165</xloc>
-      <yloc>163</yloc>
+      <xloc>299</xloc>
+      <yloc>145</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -197,21 +198,22 @@ cld.new_value as branch_name,
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 12                      
+                        and cl.entity_type = 12 
+						and (cl.changed_date between date(?) and date(?))       
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
                         and cld.field_name like   &apos;Branch membership&apos;
 
 where c.customer_level_id = 2
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>158</xloc>
-      <yloc>42</yloc>
+      <xloc>298</xloc>
+      <yloc>18</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -251,8 +253,8 @@ where c.customer_level_id = 2
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>473</xloc>
-      <yloc>96</yloc>
+      <xloc>526</xloc>
+      <yloc>68</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -316,8 +318,52 @@ where c.customer_level_id = 2
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>688</xloc>
-      <yloc>96</yloc>
+      <xloc>781</xloc>
+      <yloc>67</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Start and End Date Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${MAINSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endDate</name>
+        <variable>${MAINENDDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>86</xloc>
+      <yloc>88</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

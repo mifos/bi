@@ -172,7 +172,100 @@ else (addition)
     </attributes>
   </connection>
   <order>
-  <hop> <from>Latest Group Membership Entry On a Day</from><to>Membership Removal?</to><enabled>Y</enabled> </hop>  <hop> <from>Membership Removal?</from><to>Set updated_parent_id to 0</to><enabled>Y</enabled> </hop>  <hop> <from>Set updated_parent_id to 0</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Membership Removal?</from><to>Check if Hierarchy Change Found</to><enabled>Y</enabled> </hop>  <hop> <from>Check if Hierarchy Change Found</from><to>Hierarchy Change Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Hierarchy Change Found?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Hierarchy Change Found?</from><to>Set updated_parent_id from 1st hierarchy change</to><enabled>Y</enabled> </hop>  <hop> <from>Set updated_parent_id from 1st hierarchy change</from><to>Remove hierarchyChangeFound</to><enabled>Y</enabled> </hop>  <hop> <from>Remove hierarchyChangeFound</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Latest Group Membership Entry On a Day</from><to>Membership Removal?</to><enabled>Y</enabled> </hop>  <hop> <from>Membership Removal?</from><to>Set updated_parent_id to 0</to><enabled>Y</enabled> </hop>  <hop> <from>Set updated_parent_id to 0</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Membership Removal?</from><to>Check if Hierarchy Change Found</to><enabled>Y</enabled> </hop>  <hop> <from>Check if Hierarchy Change Found</from><to>Hierarchy Change Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Hierarchy Change Found?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Hierarchy Change Found?</from><to>Set updated_parent_id from 1st hierarchy change</to><enabled>Y</enabled> </hop>  <hop> <from>Set updated_parent_id from 1st hierarchy change</from><to>Remove hierarchyChangeFound</to><enabled>Y</enabled> </hop>  <hop> <from>Remove hierarchyChangeFound</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Latest Group Membership Entry On a Day</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Check if Hierarchy Change Found</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+var hierarchyChangeFound = false;
+
+
+DBConnection = &quot;DestinationDB&quot;;
+
+sql = &quot;select count(*) from stg_customer_and_account_updates &quot;;
+sql = sql + &quot; where effective_date = &apos;&quot; + effective_date + &quot;&apos;&quot;;
+sql = sql + &quot; and level_id = &quot; + level_id;
+sql = sql + &quot; and entity_id = &quot; + entity_id;
+sql = sql + &quot; and change_type = &apos;&quot; + change_type + &quot;&apos;&quot;;
+
+sqlResults = fireToDB(DBConnection, sql);
+
+if (parseInt(sqlResults[0][0]) &gt; 1)
+{
+	hierarchyChangeFound = true;
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>hierarchyChangeFound</name>
+        <rename>hierarchyChangeFound</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>220</xloc>
+      <yloc>104</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy (do nothing)</name>
+    <type>Dummy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>228</xloc>
+      <yloc>193</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Hierarchy Change Found?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Dummy (do nothing)</send_true_to>
+<send_false_to>Set updated_parent_id from 1st hierarchy change</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>hierarchyChangeFound</leftvalue>
+ <function>=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>397</xloc>
+      <yloc>107</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Latest Group Membership Entry On a Day</name>
     <type>TableInput</type>
@@ -192,6 +285,7 @@ cld.new_value
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
                         and cl.entity_type = 1     
+						and (cl.changed_date between date(?) and date(?))
 						and cl.change_log_id = 
                             (select max(clmaxGF.change_log_id)
                             from change_log clmaxGF
@@ -210,14 +304,133 @@ where c.customer_level_id = 1
 
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>104</xloc>
-      <yloc>12</yloc>
+      <xloc>90</xloc>
+      <yloc>10</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Membership Removal?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Set updated_parent_id to 0</send_true_to>
+<send_false_to>Check if Hierarchy Change Found</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>new_value</leftvalue>
+ <function>=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>459</xloc>
+      <yloc>9</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove hierarchyChangeFound</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>hierarchyChangeFound</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>835</xloc>
+      <yloc>107</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set updated_parent_id from 1st hierarchy change</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <rowlimit>0</rowlimit>
+    <sql>SELECT ch.parent_id as updated_parent_id
+from customer_hierarchy ch 
+where ch.customer_id = ?
+and ch.hierarchy_id = 
+			(select min(chmin.hierarchy_id)
+             from customer_hierarchy chmin
+             where chmin.customer_id = ?)</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+      <field>
+        <name>entity_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>entity_id</name>
+        <type>Integer</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>615</xloc>
+      <yloc>109</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set updated_parent_id to 0</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>updated_parent_id</field_name>
+<calc_type>CONSTANT</calc_type>
+<field_a>0</field_a>
+<field_b/>
+<field_c/>
+<value_type>Integer</value_type>
+<value_length>15</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>634</xloc>
+      <yloc>8</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -285,15 +498,15 @@ where c.customer_level_id = 1
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>803</xloc>
-      <yloc>10</yloc>
+      <xloc>832</xloc>
+      <yloc>7</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Membership Removal?</name>
-    <type>FilterRows</type>
+    <name>Get Start and End Date Variables</name>
+    <type>GetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -301,204 +514,36 @@ where c.customer_level_id = 1
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Set updated_parent_id to 0</send_true_to>
-<send_false_to>Check if Hierarchy Change Found</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>new_value</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>String</type><text>0</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>299</xloc>
-      <yloc>12</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set updated_parent_id to 0</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>updated_parent_id</field_name>
-<calc_type>CONSTANT</calc_type>
-<field_a>0</field_a>
-<field_b/>
-<field_c/>
-<value_type>Integer</value_type>
-<value_length>15</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>572</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Check if Hierarchy Change Found</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
-var hierarchyChangeFound = false;
-
-
-DBConnection = &quot;DestinationDB&quot;;
-
-sql = &quot;select count(*) from stg_customer_and_account_updates &quot;;
-sql = sql + &quot; where effective_date = &apos;&quot; + effective_date + &quot;&apos;&quot;;
-sql = sql + &quot; and level_id = &quot; + level_id;
-sql = sql + &quot; and entity_id = &quot; + entity_id;
-sql = sql + &quot; and change_type = &apos;&quot; + change_type + &quot;&apos;&quot;;
-
-sqlResults = fireToDB(DBConnection, sql);
-
-if (parseInt(sqlResults[0][0]) &gt; 1)
-{
-	hierarchyChangeFound = true;
-}
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>hierarchyChangeFound</name>
-        <rename>hierarchyChangeFound</rename>
-        <type>Boolean</type>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${MAINSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>104</xloc>
-      <yloc>111</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Hierarchy Change Found?</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Dummy (do nothing)</send_true_to>
-<send_false_to>Set updated_parent_id from 1st hierarchy change</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>hierarchyChangeFound</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>Boolean</type><text>Y</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>320</xloc>
-      <yloc>114</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Dummy (do nothing)</name>
-    <type>Dummy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>228</xloc>
-      <yloc>193</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set updated_parent_id from 1st hierarchy change</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <rowlimit>0</rowlimit>
-    <sql>SELECT ch.parent_id as updated_parent_id
-from customer_hierarchy ch 
-where ch.customer_id = ?
-and ch.hierarchy_id = 
-			(select min(chmin.hierarchy_id)
-             from customer_hierarchy chmin
-             where chmin.customer_id = ?)</sql>
-    <outer_join>N</outer_join>
-    <replace_vars>N</replace_vars>
-    <parameter>
-      <field>
-        <name>entity_id</name>
-        <type>Integer</type>
+        <trim_type>none</trim_type>
       </field>
       <field>
-        <name>entity_id</name>
-        <type>Integer</type>
+        <name>endDate</name>
+        <variable>${MAINENDDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
       </field>
-    </parameter>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>540</xloc>
-      <yloc>114</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Remove hierarchyChangeFound</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <remove>        <name>hierarchyChangeFound</name>
-      </remove>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>806</xloc>
-      <yloc>116</yloc>
+      <xloc>91</xloc>
+      <yloc>153</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
