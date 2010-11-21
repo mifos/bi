@@ -141,6 +141,86 @@
       <xloc>339</xloc>
       <yloc>198</yloc>
       </entry>
+    <entry>
+      <name>Mail Failure</name>
+      <description>Mail</description>
+      <type>MAIL</type>
+      <server>smtp.gmail.com</server>
+      <port>465</port>
+      <destination>john.woodlock@gmail.com</destination>
+      <destinationCc/>
+      <destinationBCc/>
+      <replyto>john@nassles.com</replyto>
+      <replytoname>Agitated User</replytoname>
+      <subject>${Internal.Job.Filename.Name} Failed!</subject>
+      <include_date>Y</include_date>
+      <contact_person/>
+      <contact_phone/>
+      <comment>${Internal.Job.Filename.Name} did not complete successfully.
+
+But we love you anyway.</comment>
+      <include_files>N</include_files>
+      <zip_files>N</zip_files>
+      <zip_name/>
+      <use_auth>Y</use_auth>
+      <use_secure_auth>Y</use_secure_auth>
+      <auth_user>john.woodlock</auth_user>
+      <auth_password>Encrypted 2be98afc86aa7f2e49811fe77d69bee9b</auth_password>
+      <only_comment>N</only_comment>
+      <use_HTML>N</use_HTML>
+      <use_Priority>N</use_Priority>
+      <encoding>UTF-8</encoding>
+      <priority>normal</priority>
+      <importance>normal</importance>
+      <secureconnectiontype>SSL</secureconnectiontype>
+      <replyToAddresses/>
+      <filetypes>      </filetypes>      <embeddedimages>
+      </embeddedimages>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>726</xloc>
+      <yloc>110</yloc>
+      </entry>
+    <entry>
+      <name>Mail Success</name>
+      <description>Mail</description>
+      <type>MAIL</type>
+      <server>smtp.gmail.com</server>
+      <port>465</port>
+      <destination>john.woodlock@gmail.com</destination>
+      <destinationCc/>
+      <destinationBCc/>
+      <replyto>john.woodlock@gmail.com</replyto>
+      <replytoname>Very Happy Schedule Executor</replytoname>
+      <subject>${Internal.Job.Filename.Name} Succeeded</subject>
+      <include_date>Y</include_date>
+      <contact_person/>
+      <contact_phone/>
+      <comment>The Job completed successfully.</comment>
+      <include_files>N</include_files>
+      <zip_files>N</zip_files>
+      <zip_name/>
+      <use_auth>Y</use_auth>
+      <use_secure_auth>Y</use_secure_auth>
+      <auth_user>john.woodlock</auth_user>
+      <auth_password>Encrypted 2be98afc86aa7f2e49811fe77d69bee9b</auth_password>
+      <only_comment>N</only_comment>
+      <use_HTML>N</use_HTML>
+      <use_Priority>N</use_Priority>
+      <encoding>UTF-8</encoding>
+      <priority>normal</priority>
+      <importance>normal</importance>
+      <secureconnectiontype>SSL</secureconnectiontype>
+      <replyToAddresses/>
+      <filetypes>      </filetypes>      <embeddedimages>
+      </embeddedimages>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>729</xloc>
+      <yloc>258</yloc>
+      </entry>
   </entries>
   <hops>
     <hop>
@@ -160,6 +240,24 @@
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Create Data Warehouse</from>
+      <to>Mail Failure</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Create Data Warehouse</from>
+      <to>Mail Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
