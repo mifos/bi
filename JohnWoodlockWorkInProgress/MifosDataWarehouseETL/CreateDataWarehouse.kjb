@@ -136,8 +136,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>225</xloc>
-      <yloc>491</yloc>
+      <xloc>289</xloc>
+      <yloc>488</yloc>
       </entry>
     <entry>
       <name>START</name>
@@ -156,8 +156,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>85</xloc>
-      <yloc>362</yloc>
+      <xloc>101</xloc>
+      <yloc>492</yloc>
       </entry>
     <entry>
       <name>Load Simple High Level Dimensions</name>
@@ -186,8 +186,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>85</xloc>
-      <yloc>192</yloc>
+      <xloc>100</xloc>
+      <yloc>193</yloc>
       </entry>
     <entry>
       <name>Load Staging Tables</name>
@@ -246,8 +246,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>86</xloc>
-      <yloc>5</yloc>
+      <xloc>97</xloc>
+      <yloc>12</yloc>
       </entry>
     <entry>
       <name>Load Customer And Loan And Savings Dimensions</name>
@@ -306,8 +306,8 @@ But we love you anyway.</comment>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>669</xloc>
-      <yloc>354</yloc>
+      <xloc>754</xloc>
+      <yloc>347</yloc>
       </entry>
     <entry>
       <name>Adjust Customer Status Values</name>
@@ -368,8 +368,8 @@ But we love you anyway.</comment>
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>220</xloc>
-      <yloc>361</yloc>
+      <xloc>287</xloc>
+      <yloc>359</yloc>
       </entry>
     <entry>
       <name>Apply Loan Adjustments and Reversals</name>
@@ -403,15 +403,6 @@ But we love you anyway.</comment>
       </entry>
   </entries>
   <hops>
-    <hop>
-      <from>START</from>
-      <to>Load Simple High Level Dimensions</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
     <hop>
       <from>Load Simple High Level Dimensions</from>
       <to>Mail Failure</to>
@@ -555,6 +546,15 @@ But we love you anyway.</comment>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Load Simple High Level Dimensions</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
     </hop>
   </hops>
   <notepads>

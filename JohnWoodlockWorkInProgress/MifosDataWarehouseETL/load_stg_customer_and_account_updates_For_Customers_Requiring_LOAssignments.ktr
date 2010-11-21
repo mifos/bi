@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Center Hierarchy Changes - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>New Centers</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>New Groups (w&#47;o center hierarchy)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (without center hierarchy) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Client (without group membership) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Loan Officer Id</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Center Hierarchy Changes - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>New Centers</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>New Groups (w&#47;o center hierarchy)</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Group (without center hierarchy) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Client (without group membership) - Loan Officer Reassignments</from><to>Lookup Loan Officer Id</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Loan Officer Id</from><to>Write stg_customer_and_account_updates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Get Center Hierarchy Changes - Loan Officer Reassignments</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Get Group (without center hierarchy) - Loan Officer Reassignments</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Get Client (without group membership) - Loan Officer Reassignments</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>New Groups (w&#47;o center hierarchy)</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>New Centers</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get Center Hierarchy Changes - Loan Officer Reassignments</name>
     <type>TableInput</type>
@@ -161,21 +161,22 @@ null as updated_status, cld.new_value as loan_officer_name,
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 20                        
+                        and cl.entity_type = 20
+						and (cl.changed_date between date(?) and date(?))  
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
                         and cld.field_name =  &apos;Loan Officer Assigned&apos;
 
 where c.customer_level_id = 3
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>237</xloc>
-      <yloc>33</yloc>
+      <xloc>380</xloc>
+      <yloc>9</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -199,20 +200,21 @@ if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_of
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 1                      
+                        and cl.entity_type = 1
+						and (cl.changed_date between date(?) and date(?))  
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
                         and cld.field_name =  &apos;Loan Officer Assigned&apos;
 
 where c.customer_level_id = 1
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>179</xloc>
+      <xloc>384</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
       </GUI>
@@ -237,21 +239,22 @@ if(cld.new_value = &apos;-&apos;, &apos;Unknown&apos;, cld.new_value) as loan_of
 ifnull(c.customer_formedby_id, 0) as customer_formedby_id
 from customer c
 join change_log cl on c.customer_id = cl.entity_id
-                        and cl.entity_type = 12                      
+                        and cl.entity_type = 12
+						and (cl.changed_date between date(?) and date(?))  
 join change_log_detail cld on cld.change_log_id = cl.change_log_id
                         and cld.field_name =  &apos;Loan Officer Assigned&apos;
 
 where c.customer_level_id = 2
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>193</xloc>
-      <yloc>92</yloc>
+      <xloc>383</xloc>
+      <yloc>77</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -291,8 +294,8 @@ where c.customer_level_id = 2
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>555</xloc>
-      <yloc>138</yloc>
+      <xloc>661</xloc>
+      <yloc>155</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -344,16 +347,17 @@ left join change_log_detail cldlo on cldlo.change_log_id = cllo.change_log_id
                         and cldlo.field_name =  &apos;Loan Officer Assigned&apos;
 
 where c.customer_level_id = 3
+and c.created_date between date(?) and date(?)
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>712</xloc>
-      <yloc>270</yloc>
+      <xloc>389</xloc>
+      <yloc>362</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -407,16 +411,17 @@ left join change_log_detail cldlo on cldlo.change_log_id = cllo.change_log_id
                         and cldlo.field_name =  &apos;Loan Officer Assigned&apos;
 
 where c.customer_level_id = 2 and c.parent_customer_id is null
+and c.created_date between date(?) and date(?)
 </sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>524</xloc>
-      <yloc>282</yloc>
+      <xloc>385</xloc>
+      <yloc>262</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -484,8 +489,52 @@ where c.customer_level_id = 2 and c.parent_customer_id is null
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>552</xloc>
-      <yloc>18</yloc>
+      <xloc>830</xloc>
+      <yloc>152</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Start and End Date Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${MAINSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endDate</name>
+        <variable>${MAINENDDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>89</xloc>
+      <yloc>132</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

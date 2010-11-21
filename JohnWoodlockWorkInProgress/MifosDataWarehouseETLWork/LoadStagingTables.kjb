@@ -206,7 +206,8 @@
       <type>SQL</type>
       <sql>truncate table stg_personnel_names_and_name_changes;
 truncate table stg_customer_and_account_updates;
-truncate table stg_customer_type1_columns;</sql>
+truncate table stg_customer_type1_columns;
+truncate table stg_loan_type1_columns;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -312,29 +313,6 @@ truncate table stg_customer_type1_columns;</sql>
       <xloc>457</xloc>
       <yloc>202</yloc>
       </entry>
-    <entry>
-      <name>Set variables</name>
-      <description/>
-      <type>SET_VARIABLES</type>
-      <replacevars>N</replacevars>
-      <fields>
-        <field>
-          <variable_name>stagingLastDate</variable_name>
-          <variable_value>1900-01-01</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-        <field>
-          <variable_name>stagingUpToDate</variable_name>
-          <variable_value>2009-12-31</variable_value>
-          <variable_type>CURRENT_JOB</variable_type>
-        </field>
-      </fields>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>604</xloc>
-      <yloc>130</yloc>
-      </entry>
   </entries>
   <hops>
     <hop>
@@ -393,15 +371,6 @@ truncate table stg_customer_type1_columns;</sql>
     </hop>
     <hop>
       <from>Load stg_personnel_names_and_name_changes</from>
-      <to>Set variables</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Set variables</from>
       <to>Load stg_customer_and_account_updates For Customers</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
