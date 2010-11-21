@@ -154,7 +154,7 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, curdate() as mainEndDate
+    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, curdate() as mainEndDate, date_add(curdate(), INTERVAL 1 DAY) as mainEndTransactionDate
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -189,6 +189,12 @@
       <field>
         <field_name>mainEndDate</field_name>
         <variable_name>MAINENDDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>mainEndTransactionDate</field_name>
+        <variable_name>MAINENDTRANSACTIONDATE</variable_name>
         <variable_type>PARENT_JOB</variable_type>
         <default_value/>
         </field>
