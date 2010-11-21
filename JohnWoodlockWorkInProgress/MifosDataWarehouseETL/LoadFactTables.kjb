@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>574</xloc>
-      <yloc>154</yloc>
+      <xloc>772</xloc>
+      <yloc>329</yloc>
       </entry>
     <entry>
       <name>Load fact_client_attendances</name>
@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>305</xloc>
-      <yloc>261</yloc>
+      <xloc>133</xloc>
+      <yloc>181</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_repayments</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>331</xloc>
-      <yloc>11</yloc>
+      <xloc>733</xloc>
+      <yloc>18</yloc>
       </entry>
     <entry>
       <name>Load dw_loan_schedules</name>
@@ -204,8 +204,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>175</xloc>
-      <yloc>88</yloc>
+      <xloc>130</xloc>
+      <yloc>86</yloc>
       </entry>
     <entry>
       <name>Load fact_savings_transactions</name>
@@ -236,8 +236,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>178</xloc>
-      <yloc>199</yloc>
+      <xloc>458</xloc>
+      <yloc>389</yloc>
       </entry>
     <entry>
       <name>Load fact_customer_fees_and_charges</name>
@@ -268,8 +268,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>521</xloc>
-      <yloc>282</yloc>
+      <xloc>639</xloc>
+      <yloc>367</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_fees_and_charges</name>
@@ -300,8 +300,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>472</xloc>
-      <yloc>55</yloc>
+      <xloc>738</xloc>
+      <yloc>106</yloc>
       </entry>
   </entries>
   <hops>
