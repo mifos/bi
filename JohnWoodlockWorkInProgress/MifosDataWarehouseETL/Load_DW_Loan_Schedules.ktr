@@ -66,19 +66,20 @@
   </info>
   <notepads>
     <notepad>
-      <note>Question as to what version of data schedules link to.
-currently schedules attached to whatever entities are relevant at time of creation. 
-Probably should casccade with account (not done yet) though.
+      <note>Decided not to &apos;star schema&apos; loan schedule info... just copying as is without payment info
+though it might be more useful to include current payment for expected payments reporting
+or... always use production schema for this
+
+Need to add create and&#47;or update timestamp to determine changes.
 
 some secdep schedule action_dates are before the account opening date!
 might be a bit to do with moving to a different group with a different meeting date.
 
 and some null action dates
-
-Decided not to &apos;star schema&apos; loan schedule info... just copying as is without payment info</note>
+</note>
       <xloc>174</xloc>
       <yloc>149</yloc>
-      <width>438</width>
+      <width>456</width>
       <heigth>135</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
@@ -172,7 +173,7 @@ Decided not to &apos;star schema&apos; loan schedule info... just copying as is 
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read loan_schedule</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Create dw_loan_schedules</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Due Date Lookup</from><to>Create dw_loan_schedules</to><enabled>Y</enabled> </hop>  <hop> <from>Read loan_schedule</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create dw_loan_schedules</name>
     <type>TableOutput</type>
@@ -240,8 +241,8 @@ Decided not to &apos;star schema&apos; loan schedule info... just copying as is 
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>591</xloc>
-      <yloc>72</yloc>
+      <xloc>592</xloc>
+      <yloc>69</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -281,8 +282,8 @@ Decided not to &apos;star schema&apos; loan schedule info... just copying as is 
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>344</xloc>
-      <yloc>71</yloc>
+      <xloc>320</xloc>
+      <yloc>68</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -313,8 +314,38 @@ from loan_schedule ls</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>62</xloc>
-      <yloc>71</yloc>
+      <xloc>58</xloc>
+      <yloc>66</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Truncate Loan Schedules</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>truncate table dw_loan_schedules
+</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>709</xloc>
+      <yloc>175</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

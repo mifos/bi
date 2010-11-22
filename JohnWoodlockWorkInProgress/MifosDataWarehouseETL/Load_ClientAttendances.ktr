@@ -66,11 +66,7 @@
   </info>
   <notepads>
     <notepad>
-      <note>What to do with client_attendances that have been updated?
-
-If client is updated... could get the meetings again and update if necessary.
-
-or update all regardless (can be a lot)
+      <note>Need to add create and&#47;or update timestamp to determine changes.
 
 in secdep, are some meeting dates that are before the clients created_date
 and there can be duplicate meeting_id&#47;customer_id entries.
@@ -79,7 +75,7 @@ Note: this information might not be used in the standard DW reports</note>
       <xloc>20</xloc>
       <yloc>124</yloc>
       <width>380</width>
-      <heigth>135</heigth>
+      <heigth>85</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -508,6 +504,35 @@ from customer_attendance </sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>69</xloc>
       <yloc>64</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Truncate fact_client_attendances</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>truncate table fact_client_attendances</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>136</xloc>
+      <yloc>247</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
