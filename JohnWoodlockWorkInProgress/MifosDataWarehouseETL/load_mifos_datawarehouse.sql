@@ -575,10 +575,10 @@ DROP TABLE IF EXISTS `dw_ppi_survey`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dw_ppi_survey` (
   `survey_name` varchar(200) NOT NULL,
-  `survey_id` int(11) NULL,
+  `survey_id` int(11) DEFAULT NULL,
   `scoring_sql` varchar(6000) NOT NULL,
   PRIMARY KEY (`survey_name`),
-  KEY survey_id (`survey_id`)
+  KEY `survey_id` (`survey_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1152,6 +1152,34 @@ CREATE TABLE `stg_customer_type1_columns` (
 LOCK TABLES `stg_customer_type1_columns` WRITE;
 /*!40000 ALTER TABLE `stg_customer_type1_columns` DISABLE KEYS */;
 /*!40000 ALTER TABLE `stg_customer_type1_columns` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stg_etl_run_history`
+--
+
+DROP TABLE IF EXISTS `stg_etl_run_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stg_etl_run_history` (
+  `etl_name` varchar(50) NOT NULL,
+  `etl_start_time` datetime NOT NULL,
+  `etl_end_time` datetime DEFAULT NULL,
+  `etl_complete_to_date` date NOT NULL,
+  `etl_job` varchar(50) NOT NULL,
+  PRIMARY KEY (`etl_name`,`etl_start_time`),
+  KEY `etl_job` (`etl_job`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stg_etl_run_history`
+--
+
+LOCK TABLES `stg_etl_run_history` WRITE;
+/*!40000 ALTER TABLE `stg_etl_run_history` DISABLE KEYS */;
+INSERT INTO `stg_etl_run_history` VALUES ('arrears','2010-11-22 13:57:54','2010-11-22 13:57:54','1900-01-01','Initial Entry'),('main','2010-11-22 13:57:54','2010-11-22 13:57:54','1900-01-01','Initial Entry');
+/*!40000 ALTER TABLE `stg_etl_run_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2697,4 +2725,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-17 18:30:52
+-- Dump completed on 2010-11-22 15:14:42
