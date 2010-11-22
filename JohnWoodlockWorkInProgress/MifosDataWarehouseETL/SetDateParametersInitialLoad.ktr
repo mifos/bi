@@ -153,9 +153,16 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, curdate() as mainEndDate, date_add(curdate(), INTERVAL 1 DAY) as mainEndTransactionDate
-</sql>
+    <connection>SourceDB</connection>
+    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, curdate() as mainEndDate, date_add(curdate(), INTERVAL 1 DAY) as mainEndTransactionDate,
+a.startDate as arrearsStartDate, curdate() as arrearsEndDate
+
+from
+    (select ifnull(min(action_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account_trxn
+	where account_action_id = 10) a
+
+&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -195,6 +202,18 @@
       <field>
         <field_name>mainEndTransactionDate</field_name>
         <variable_name>MAINENDTRANSACTIONDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>arrearsStartDate</field_name>
+        <variable_name>ARREARSSTARTDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>arrearsEndDate</field_name>
+        <variable_name>ARREARSENDDATE</variable_name>
         <variable_type>PARENT_JOB</variable_type>
         <default_value/>
         </field>

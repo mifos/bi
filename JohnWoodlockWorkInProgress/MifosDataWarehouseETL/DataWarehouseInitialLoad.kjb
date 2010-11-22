@@ -233,15 +233,6 @@ But we love you anyway.</comment>
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Set Date Parameters for Initial Load</from>
-      <to>Create Data Warehouse</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
       <from>Create Data Warehouse</from>
       <to>Mail Failure</to>
       <from_nr>0</from_nr>
@@ -253,6 +244,15 @@ But we love you anyway.</comment>
     <hop>
       <from>Create Data Warehouse</from>
       <to>Mail Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set Date Parameters for Initial Load</from>
+      <to>Create Data Warehouse</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
