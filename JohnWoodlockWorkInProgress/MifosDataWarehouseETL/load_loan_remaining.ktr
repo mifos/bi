@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_customer_loan_savings_dim</name>
+    <name>load loan remaining</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -142,10 +142,10 @@
     </attributes>
   </connection>
   <order>
-  </order>
+  <hop> <from>New Loans not Already Covered</from><to>Update dim_loan</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Load Customers, Loans and Savings</name>
-    <type>ExecSQL</type>
+    <name>New Loans not Already Covered</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -154,40 +154,82 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
+    <sql>&#47;*identify any dim_loans that have been created but not covered by identified loan updates... e.g. changes due to customer hierarchy changes *&#47;
+
+select l.loan_account_key, l1.funder_name, l1.loan_amount, l1.original_principal, l1.original_interest, l1.original_fees, l1.original_penalty
+from dim_loan l
+join dim_loan l1 on l1.loan_account_id = l.loan_account_id
+                        and l1.loan_account_key = 
+                                (select max(maxl.loan_account_key) from dim_loan maxl
+                                where maxl.loan_account_id = l1.loan_account_id
+                                and maxl.funder_name is not null)
+where l.funder_name is null</sql>
+    <limit>0</limit>
+    <lookup/>
     <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <sql>call SPetl_customers_and_accounts();
-
-&#47;*update type1 columns on dim_customer to have the latest values*&#47;
-update dim_customer c
-join stg_customer_type1_columns c1 on c1.customer_id = c.customer_id
-set c.display_name = c1.display_name, c.gender = c1.gender, c.date_of_birth = c1.date_of_birth, c.government_id = c1.government_id,
-		c.num_children = c1.num_children, c.business_activity = c1.business_activity, c.ethnicity = c1.ethnicity, c.citizenship = c1.citizenship,
-		c.handicapped = c1.handicapped, c.marital_status = c1.marital_status, c.education_level = c1.education_level;
-
-
-&#47;*update type1 columns on dim_loan to have the latest values*&#47;
-update dim_loan l
-join stg_loan_type1_columns l1 on l1.loan_account_id = l.loan_account_id
-set l.funder_name = l1.funder_name, l.loan_amount = l1.loan_amount,
-l.original_principal = l1.loan_original_principal, l.original_interest = l1.loan_original_interest,
-l.original_fees = l1.loan_original_fees, l.original_penalty = l1.loan_original_penalty, l.`version` = l.`version` + 1
-where (ifnull(l.funder_name, &apos;!null&apos;) &lt;&gt; l1.funder_name or l.loan_amount &lt;&gt; l1.loan_amount
-or l.original_principal &lt;&gt; l1.loan_original_principal or l.original_interest &lt;&gt; l1.loan_original_interest
-or l.original_fees &lt;&gt; l1.loan_original_fees or l.original_penalty &lt;&gt; l1.loan_original_penalty);
-
-</sql>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>151</xloc>
-      <yloc>79</yloc>
+      <xloc>148</xloc>
+      <yloc>70</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Update dim_loan</name>
+    <type>Update</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <skip_lookup>N</skip_lookup>
+    <commit>100</commit>
+    <error_ignored>N</error_ignored>
+    <ignore_flag_field/>
+    <lookup>
+      <schema/>
+      <table>dim_loan</table>
+      <key>
+        <name>loan_account_key</name>
+        <field>loan_account_key</field>
+        <condition>=</condition>
+        <name2/>
+        </key>
+      <value>
+        <name>funder_name</name>
+        <rename>funder_name</rename>
+        </value>
+      <value>
+        <name>loan_amount</name>
+        <rename>loan_amount</rename>
+        </value>
+      <value>
+        <name>original_principal</name>
+        <rename>original_principal</rename>
+        </value>
+      <value>
+        <name>original_interest</name>
+        <rename>original_interest</rename>
+        </value>
+      <value>
+        <name>original_fees</name>
+        <rename>original_fees</rename>
+        </value>
+      <value>
+        <name>original_penalty</name>
+        <rename>original_penalty</rename>
+        </value>
+      </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>375</xloc>
+      <yloc>69</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

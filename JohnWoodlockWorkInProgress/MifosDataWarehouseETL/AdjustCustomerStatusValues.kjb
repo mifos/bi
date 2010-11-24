@@ -122,7 +122,7 @@ and customer_status = &apos;Application Pending Approval&apos;;
 update dim_customer c
 set customer_status = &apos;ClientStatus-Cancelled&apos;
 where c.customer_level_id = 1
-and customer_status = &apos;Cancel&apos;;
+and customer_status in (&apos;Cancel&apos;, &apos;Cancelled&apos;);
 
 update dim_customer c
 set customer_status = &apos;ClientStatus-Closed&apos;
@@ -152,7 +152,7 @@ and customer_status = &apos;Application Pending Approval&apos;;
 update dim_customer c
 set customer_status =&apos;GroupStatus-Cancelled&apos;
 where c.customer_level_id = 2
-and customer_status = &apos;Cancel&apos;;
+and customer_status in (&apos;Cancel&apos;, &apos;Cancelled&apos;);
 
 update dim_customer c
 set customer_status =&apos;GroupStatus-Closed&apos;
