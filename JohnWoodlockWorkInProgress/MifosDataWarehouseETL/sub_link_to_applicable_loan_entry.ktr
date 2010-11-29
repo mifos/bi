@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Applicable Loan Entry Found?</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Latest Loan Account Entry</from><to>Applicable Loan Entry Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Lookup Latest Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Applicable Loan Entry Found?</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Loan Account Entry</from><to>Earliest Loan Entry Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Earliest Loan Entry Found?</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Earliest Loan Entry Found?</from><to>Remove null Key Columns Again</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns Again</from><to>Set key fields to 0 for Investigation</to><enabled>Y</enabled> </hop>  <hop> <from>Set key fields to 0 for Investigation</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Applicable Loan Entry Found?</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Exact Loan Account Entry</from><to>Applicable Loan Entry Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Lookup Exact Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Applicable Loan Entry Found?</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Loan Account Entry</from><to>Earliest Loan Entry Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Earliest Loan Entry Found?</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Earliest Loan Entry Found?</from><to>Remove null Key Columns Again</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns Again</from><to>Set key fields to 0 for Investigation</to><enabled>Y</enabled> </hop>  <hop> <from>Set key fields to 0 for Investigation</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Applicable Loan Entry Found?</name>
     <type>FilterRows</type>
@@ -238,7 +238,7 @@ order by loan_account_key </sql>
     </step>
 
   <step>
-    <name>Lookup Latest Loan Account Entry</name>
+    <name>Lookup Exact Loan Account Entry</name>
     <type>DBJoin</type>
     <description/>
     <distribute>Y</distribute>
