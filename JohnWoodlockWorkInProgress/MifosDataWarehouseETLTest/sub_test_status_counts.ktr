@@ -194,11 +194,11 @@ var sc = source_count + 0;
 var dc = destination_count + 0;
 
 if (sc == dc){	
-	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name + &quot; : &quot; + source_count + &quot; records&quot;);
+	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name + &quot; : &quot; + entity_name + &quot; &quot; + status + &quot;: &quot; + source_count);
 }
 else
 {
-	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ test_name + &quot;: Source Count: &quot; + source_count + &quot; does not match Destination Count: &quot; + destination_count);
+	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ test_name + &quot;: &quot; + entity_name + &quot; &quot; + status + &quot;: &quot; + source_count + &quot; does not match &quot; + entity_name_1 + &quot; &quot; + status_1 + &quot;: &quot; + destination_count);
 }
 
 
@@ -223,9 +223,33 @@ else
            </partitioning>
     <fields>
       <field>
+        <name>entity_name</name>
+        <type>String</type>
+        <length>7</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>status</name>
+        <type>String</type>
+        <length>100</length>
+        <precision>-1</precision>
+      </field>
+      <field>
         <name>source_count</name>
         <type>Integer</type>
         <length>15</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>entity_name_1</name>
+        <type>String</type>
+        <length>7</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>status_1</name>
+        <type>String</type>
+        <length>100</length>
         <precision>-1</precision>
       </field>
       <field>

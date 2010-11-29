@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Test Current Customer Statuses</name>
+    <name>Test Current Savings Statuses Match</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -142,9 +142,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Customer Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Customer Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Test Status Counts</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Savings Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Test Status Counts</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Customer Destination Count</name>
+    <name>Savings Destination Count</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -154,19 +154,14 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select 
-case customer_level_id
-when 1 then &apos;Client&apos;
-when 2 then &apos;Group&apos;
-when 3 then &apos;Center&apos;
-else &apos;Unknown&apos;
-end as entity_name, 
-customer_status as status, count(*) as destination_count
-from dim_customer
+    <sql>select &apos;Savings&apos; as entity_name, savings_status as status, count(*) as destination_count 
+from dim_savings
 where valid_from &lt;= curdate() and valid_to &gt; curdate()
-and customer_key &gt; 0
+and savings_account_key &gt; 0
 group by entity_name, status
-order by entity_name, status</sql>
+order by entity_name, status
+
+ </sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -176,43 +171,6 @@ order by entity_name, status</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>263</xloc>
       <yloc>18</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Customer Source Count</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select 
-case customer_level_id
-when 1 then &apos;Client&apos;
-when 2 then &apos;Group&apos;
-when 3 then &apos;Center&apos;
-else &apos;Unknown&apos;
-end as entity_name,
-lv.lookup_name as status, count(*) as source_count
-from customer c
-join customer_state cst on cst.status_id = c.status_id
-join lookup_value lv on lv.lookup_id = cst.status_lookup_id
-group by entity_name, status
-order by entity_name, status</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>52</xloc>
-      <yloc>21</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -228,8 +186,8 @@ order by entity_name, status</sql>
            <schema_name/>
            </partitioning>
 <join_type>FULL OUTER</join_type>
-<step1>Customer Source Count</step1>
-<step2>Customer Destination Count</step2>
+<step1>Savings Source Count</step1>
+<step2>Savings Destination Count</step2>
     <keys_1>
       <key>entity_name</key>
       <key>status</key>
@@ -242,6 +200,39 @@ order by entity_name, status</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>156</xloc>
       <yloc>116</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Savings Source Count</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select &apos;Savings&apos; as entity_name, lv.lookup_name as status, count(*) as source_count
+from account a
+join savings_account la on la.account_id = a.account_id
+join account_state ast on ast.account_state_id = a.account_state_id
+join lookup_value lv on lv.lookup_id = ast.lookup_id
+group by entity_name, status
+order by entity_name, status
+
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>52</xloc>
+      <yloc>21</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
