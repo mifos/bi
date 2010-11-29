@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Do Transaction Lookups</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Loan Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create fact_loan_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create fact_loan_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Link to Applicable Active Loan Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Select Mapping Fields and Order Unspecified Fields by name</to><enabled>Y</enabled> </hop>  <hop> <from>Select Mapping Fields and Order Unspecified Fields by name</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Link to Applicable Active Loan Entry</from><to>Create fact_loan_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Loan Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Loan Misc. Charges and Misc. Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Loan Fees</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Do Transaction Lookups</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Loan Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Rescheduled Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Lookup Written Off Loan Account Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Rescheduled Loan Account Entry</from><to>Create fact_loan_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Written Off Loan Account Entry</from><to>Create fact_loan_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Abort Repayments Transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Determine Account Action Processing</from><to>Link to Applicable Loan Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Select Mapping Fields and Order Unspecified Fields by name</to><enabled>Y</enabled> </hop>  <hop> <from>Select Mapping Fields and Order Unspecified Fields by name</from><to>Determine Account Action Processing</to><enabled>Y</enabled> </hop>  <hop> <from>Link to Applicable Loan Entry</from><to>Create fact_loan_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Loan Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Loan Misc. Charges and Misc. Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Loan Fees</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Abort Repayments Transformation</name>
     <type>Abort</type>
@@ -311,13 +311,13 @@
 <case_value_group/>
 <default_target_step>Abort Repayments Transformation</default_target_step>
 <cases><case><value>1</value>
-<target_step>Link to Applicable Active Loan Entry</target_step>
+<target_step>Link to Applicable Loan Entry</target_step>
 </case><case><value>15</value>
 <target_step>Lookup Written Off Loan Account Entry</target_step>
 </case><case><value>20</value>
 <target_step>Lookup Rescheduled Loan Account Entry</target_step>
 </case><case><value>4</value>
-<target_step>Link to Applicable Active Loan Entry</target_step>
+<target_step>Link to Applicable Loan Entry</target_step>
 </case></cases>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>596</xloc>
@@ -409,7 +409,51 @@
     </step>
 
   <step>
-    <name>Link to Applicable Active Loan Entry</name>
+    <name>Get Start and End Date Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${MAINSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endDate</name>
+        <variable>${MAINENDTRANSACTIONDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>477</xloc>
+      <yloc>15</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Link to Applicable Loan Entry</name>
     <type>Mapping</type>
     <description/>
     <distribute>Y</distribute>
@@ -421,7 +465,7 @@
     <specification_method>filename</specification_method>
     <trans_object_id/>
     <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_link_to_applicable_active_loan_entry.ktr</filename>
+    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_link_to_applicable_loan_entry.ktr</filename>
     <directory_path/>
     <mappings>
       <input>
@@ -443,8 +487,8 @@
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>600</xloc>
-      <yloc>534</yloc>
+      <xloc>595</xloc>
+      <yloc>540</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -756,50 +800,6 @@ and atxn.created_date &lt; date(?)
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>231</xloc>
       <yloc>185</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Start and End Date Variables</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>N</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>startDate</name>
-        <variable>${MAINSTARTDATE}</variable>
-        <type>Date</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>endDate</name>
-        <variable>${MAINENDTRANSACTIONDATE}</variable>
-        <type>Date</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>477</xloc>
-      <yloc>15</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
