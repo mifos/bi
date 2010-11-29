@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>290</xloc>
-      <yloc>136</yloc>
+      <xloc>127</xloc>
+      <yloc>94</yloc>
       </entry>
     <entry>
       <name>Schedules before accounts were created</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>538</xloc>
-      <yloc>135</yloc>
+      <xloc>256</xloc>
+      <yloc>157</yloc>
       </entry>
     <entry>
       <name>Fact Tables With No link to Dimension Table</name>
@@ -204,8 +204,40 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>625</xloc>
-      <yloc>13</yloc>
+      <xloc>422</xloc>
+      <yloc>209</yloc>
+      </entry>
+    <entry>
+      <name>Transactions Not Linked To Matching Dim Table Entry</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;TestFactTablesWithTransactionsToBeInvestigated.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>611</xloc>
+      <yloc>169</yloc>
       </entry>
   </entries>
   <hops>
@@ -239,6 +271,15 @@
     <hop>
       <from>START</from>
       <to>Fact Tables With No link to Dimension Table</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Transactions Not Linked To Matching Dim Table Entry</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
