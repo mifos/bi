@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>246</xloc>
-      <yloc>152</yloc>
+      <xloc>609</xloc>
+      <yloc>39</yloc>
       </entry>
     <entry>
       <name>Savings Statuses</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>404</xloc>
-      <yloc>160</yloc>
+      <xloc>588</xloc>
+      <yloc>123</yloc>
       </entry>
   </entries>
   <hops>
@@ -182,7 +182,7 @@
       <to>Customer Statuses</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
     </hop>
@@ -206,5 +206,28 @@
     </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>Disable customer status checking because test database
+has lots of transfers where the change_logs aren&apos;t 
+maintained very well :(</note>
+      <xloc>58</xloc>
+      <yloc>118</yloc>
+      <width>293</width>
+      <heigth>47</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>
