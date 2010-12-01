@@ -10,135 +10,136 @@
 
                                     Score
 
-   1. How many people aged 0 to 17 are in the household?
+   1. How many people aged 0 to 17 are in the household? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ೦-೧೭ ವಯಸ್ಸಿನವರು ಎಷ್ಟು ಜನರಿದ್ದಾರೆ? ( ೧೮ ವರ್ಷಕ್ಕಿ೦ತ ಒಳಪಟ್ಟವರು ಎಷ್ಟು ಜನರಿದ್ದಾರೆ?) / परिवार मे कितने सदस्यो कि उम्र ०-१७ साल तक कि है?
 
-   A. Five or more
+   A. Five or more / ಐದು ಅಥವಾ ಅಧಿಕ / पान्च या उससे अधिक
 
                                       0
 
-   B. Four
+   B. Four / ನಾಲ್ಕು / चार
 
                                       4
 
-   C. Three
+   C. Three / ಮೂರು / तीन
 
                                       8
 
-   D. Two
+   D. Two / ಎರಡು / दो
 
                                      13
 
-   E. One
+   E. One / ಒ೦ದು / एक
 
                                      20
 
-   F. None
+   F. None / ಯಾವುದು ಇಲ್ಲ / कॊई नहीं
 
                                      27
 
-   2. What is the household's principal occupation?
+   2. What is the household's principal occupation? / ನಿಮ್ಮ ಕುಟು೦ಬದ ಮುಖ್ಯ ಉದ್ಯೋಗ ಯಾವುದು? / परिवार के आय क मुक्य क्षॆत्र क्या है?
 
-   A. Labourers (agricultural, plantation, other farm), hunters, tobacco preparers and tobacco product makers, and other labourers
+   A. Labourers (agricultural, plantation, other farm), hunters, tobacco preparers and tobacco product makers, and other labourers / ಕೂಲಿಕಾರರು (ಕೃಷಿ/ಕೃಷಿಗೆ ಸ೦ಬ೦ದಿಸಿದ/ಇತರೆ) ಕೂಲಿಕಾರರು ಬೀಡಿ ತಯಾರಕರು / ಹೊಗೆ ಸೊಪ್ಪು ಉತ್ಪನ್ನ ತಯಾರಕರು / मजदूर, शिकारि, बीडी व तंबाकू उत्पादन अन्य मजदूर
 
                                       0
 
-   B. Others
+   B. Others / ಇತರೆ / अन्य
 
                                       8
 
-   C. Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers
+   C. Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers / ತಾ೦ತ್ರಿಕಗಾರರು/ವೃತ್ತಿ ನಿರತರು/ಆಡಳಿತ ವರ್ಗ/ವ್ಯವಸ್ಥಾಪಕ ವರ್ಗ/ನಿರ್ವಾಹಕರು/ನಿರ್ಧೇಶಕರು/ಶಿಕ್ಷಕರು / पेशॆवार, तकनीशियन, क्लर्क, प्रशासक, प्रबन्धक, अधिशासी निर्दॆशक, पर्यवॆक्षक ऎव० शिक्षक
 
                                      14
 
-   3. Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard/cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)?
+   3. Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard/cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)? / ನಿಮ್ಮ ಮನೆಯು ಪೂರ್ತಿ ಪಕ್ಕಾ ಮನೆಯೇ? (ಸಿಮೆ೦ಟ್/ಕಲ್ಲು/ಇಟ್ಟಿಗೆ/ಮರ/ಟೈಲ್ಸ್/ಟಿನ್ ಶೀಟ್ಸ್/ಅಸ್ಬೆಸ್ಟೋಸ್ ಸಿಮೆ೦ಟ್ ಶೀಟ್ಸ್/ಇತರೆ) / क्या आपका पूरा घर पक्का है?(ईट/पत्थर/सिमॆंट/कांक्रीट, सिमॆंट जेकबॊर्ड/ सिमेंट-प्लास्टर्ड रीड्स/टैल्स/लकडि /टिन रॊड/अस्बेस्ट्स शीट)
 
-   A. No
+   A. No / ಇಲ್ಲ / नहीं
 
                                       0
 
-   B. Yes
+   B. Yes / ಹೌದು / हाँ
 
                                       4
 
-   4. What is the household's primary source of energy for cooking?
+   4. What is the household's primary source of energy for cooking? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಬಳಸುವ ಮೂಲ ಅಡುಗೆ ಇ೦ಧನ ಯಾವುದು? / भॊजन पकाने के लिये परिवार के पास इंधन का प्रमुख स्रॊत क्या है?
 
-   A. Firewood and chips, charcoal, or none
+   A. Firewood and chips, charcoal, or none / ಕಟ್ಟಿಗೆ/ಇದ್ದಿಲು/ಯಾವುದೂ ಅಲ್ಲ / जलावन, लकडी और टूकडे, कॊयला अथवा कुछ नहीं
 
                                       0
 
-   B. Others
+   B. Others / ಸೀಮೆ ಎಣ್ಣೆ/ಗೋಬರ್ ಗ್ಯಾಸ್/ವಿದ್ಯುತ್ ಸ್ಟೌವ್/ಇತರೆ / अन्य
 
                                       5
 
-   C. LPG
+   C. LPG / ಗ್ಯಾಸ್ (ಎಲ್.ಪಿ.ಜಿ) / गैस चूंल्हा
 
                                      17
 
-   5. Does the household own a television?
+   5. Does the household own a television? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಟೀವಿ ಇದೆಯೇ? / क्या परिवार के पास टेलिविजन है?
 
-   A. No
+   A. No / ಇಲ್ಲ / नहीं
 
                                       0
 
-   B. Yes
+   B. Yes / ಇದೆ / हाँ
 
                                       6
 
-   6. Does the household own a bicycle, scooter, or motor cycle?
+   6. Does the household own a bicycle, scooter, or motor cycle? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಸೈಕಲ್ / ಸ್ಕೂಟರ್ ಇದೆಯೇ? / क्या परिवार मे अपना सईकिल, स्कूटर अथवा मॊटर सईकिल है?
 
-   A. No
+   A. No / ಇಲ್ಲ / नहीं
 
                                       0
 
-   B. Yes
+   B. Yes / ಇದೆ / हाँ
 
                                       5
 
-   7. Does the household own an almirah/dressing table?
+   7. Does the household own an almirah/dressing table? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಬೀರು/ಡ್ರೆಸ್ಸಿ೦ಗ್ ಟೇಬಲ್ ಇದೆಯೇ? / क्या परिवार मे अपना अलमारि या श्रुंगारदान है?
 
-   A. No
+
+   A. No / ಇಲ್ಲ / नहीं
 
                                       0
 
-   B. Yes
+   B. Yes / ಇದೆ / हाँ
 
                                       3
 
-   8. Does the household own a sewing machine?
+   8. Does the household own a sewing machine? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಹೊಲಿಗೆ ಯ೦ತ್ರ ಇದೆಯೇ? / क्या परिवार मे अपना सिलाई मशीन है?
 
-   A. No
-
-                                      0
-
-   B. Yes
-
-                                      6
-
-   9. How many pressure cookers or pressure pans does the household own?
-
-   A. None
+   A. No / ಇಲ್ಲ / नहीं
 
                                       0
 
-   B. One
+   B. Yes / ಇದೆ / हाँ
 
                                       6
 
-   C. Two or more
+   9. How many pressure cookers or pressure pans does the household own? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಷ್ಟು ಕುಕ್ಕರ್ ಪ್ರೆಷರ್ ಪ್ಯಾನ್ ಇದೆ? / परिवार मे कितने प्रॆशर कुक्कर है?
+
+   A. None / ಒ೦ದೂ ಇಲ್ಲ / कुछ नहीं
+
+                                      0
+
+   B. One / ಒ೦ದು / एक
+
+                                      6
+
+   C. Two or more / ಎರಡು ಅಥವಾ ಅಧಿಕ / दो या उससे अधिक
 
                                       9
 
-   10. How many electric fans does the household own?
+   10. How many electric fans does the household own? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಲೆಕ್ಟ್ರಿಕ್ ಫ್ಯಾನ್ ಇದೆಯೇ? / परिवार मे कितने बिजलि के पंखे है?
 
-   A. None
+   A. None / ಒ೦ದೂ ಇಲ್ಲ / कुछ नहीं
 
                                       0
 
-   B. One
+   B. One / ಒ೦ದು / एक
 
                                       5
 
-   C. Two or more
+   C. Two or more / ಎರಡು ಅಥವಾ ಅಧಿಕ / दो या उससे अधिक
 
                                       9
 
