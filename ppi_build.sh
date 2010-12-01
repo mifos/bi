@@ -34,7 +34,7 @@ mysql $MYSQL_ARGS $DW_DB_NAME --default_character_set utf8 < $PRGDIR/JohnWoodloc
 
 echo "Running ETL..."
 log=`mktemp`
-$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/CreateDataWarehouse.kjb` | tee $log
+$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
 exitcode=0
 if grep -q '^ERROR ' $log
