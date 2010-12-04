@@ -261,8 +261,8 @@ to match to the transaction action_date.  This process will fall over with a &ap
           <stream_name>created_date_key</stream_name>
         </field>
         <field>
-          <column_name>account_action_key</column_name>
-          <stream_name>account_action_key</stream_name>
+          <column_name>account_action_id</column_name>
+          <stream_name>account_action_id</stream_name>
         </field>
         <field>
           <column_name>loan_account_key</column_name>
@@ -297,8 +297,8 @@ to match to the transaction action_date.  This process will fall over with a &ap
           <stream_name>formed_by_loan_officer_key</stream_name>
         </field>
         <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
+          <column_name>currency_id</column_name>
+          <stream_name>currency_id</stream_name>
         </field>
     </fields>
      <cluster_schema/>
@@ -479,7 +479,7 @@ to match to the transaction action_date.  This process will fall over with a &ap
     <connection>DestinationDB</connection>
     <rowlimit>1</rowlimit>
     <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_id
 from dim_loan
 where loan_account_id = ?
 and valid_from &lt;= ?
@@ -522,7 +522,7 @@ and loan_status = &apos;AccountState-ClosedRescheduled&apos;</sql>
     <connection>DestinationDB</connection>
     <rowlimit>1</rowlimit>
     <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_id
 from dim_loan
 where loan_account_id = ?
 and valid_from &lt;= ?

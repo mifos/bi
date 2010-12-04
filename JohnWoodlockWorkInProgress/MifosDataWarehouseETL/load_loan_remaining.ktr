@@ -156,14 +156,14 @@
     <connection>DestinationDB</connection>
     <sql>&#47;*identify any dim_loans that have been created but not covered by identified loan updates... e.g. changes due to customer hierarchy changes *&#47;
 
-select l.loan_account_key, l1.funder_name, l1.loan_amount, l1.original_principal, l1.original_interest, l1.original_fees, l1.original_penalty
+select l.loan_account_key, l1.fund_id, l1.disbursement_date, l1.loan_amount, l1.original_principal, l1.original_interest, l1.original_fees, l1.original_penalty
 from dim_loan l
 join dim_loan l1 on l1.loan_account_id = l.loan_account_id
                         and l1.loan_account_key = 
                                 (select max(maxl.loan_account_key) from dim_loan maxl
                                 where maxl.loan_account_id = l1.loan_account_id
-                                and maxl.funder_name is not null)
-where l.funder_name is null</sql>
+                                and maxl.fund_id is not null)
+where l.fund_id is null</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -189,7 +189,7 @@ where l.funder_name is null</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <skip_lookup>N</skip_lookup>
-    <commit>100</commit>
+    <commit>1000</commit>
     <error_ignored>N</error_ignored>
     <ignore_flag_field/>
     <lookup>
@@ -202,8 +202,12 @@ where l.funder_name is null</sql>
         <name2/>
         </key>
       <value>
-        <name>funder_name</name>
-        <rename>funder_name</rename>
+        <name>fund_id</name>
+        <rename>fund_id</rename>
+        </value>
+      <value>
+        <name>disbursement_date</name>
+        <rename>disbursement_date</rename>
         </value>
       <value>
         <name>loan_amount</name>

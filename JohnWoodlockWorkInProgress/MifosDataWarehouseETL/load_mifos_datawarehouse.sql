@@ -16,125 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `dim_account_action`
---
-
-DROP TABLE IF EXISTS `dim_account_action`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dim_account_action` (
-  `account_action_key` smallint(5) unsigned NOT NULL,
-  `account_action_id` smallint(6) NOT NULL,
-  `account_action_name` varchar(100) NOT NULL,
-  `valid_from` date NOT NULL DEFAULT '1900-01-01',
-  `valid_to` date NOT NULL DEFAULT '2199-12-31',
-  `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
-  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`account_action_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dim_account_action`
---
-
-LOCK TABLES `dim_account_action` WRITE;
-/*!40000 ALTER TABLE `dim_account_action` DISABLE KEYS */;
-INSERT INTO `dim_account_action` VALUES (0,0,'Unknown','1900-01-01','2199-12-31',0,0,'2010-09-18 08:26:40');
-/*!40000 ALTER TABLE `dim_account_action` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `dim_arrears_band_monthly`
---
-
-DROP TABLE IF EXISTS `dim_arrears_band_monthly`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dim_arrears_band_monthly` (
-  `arrears_band_monthly_key` tinyint(3) unsigned NOT NULL,
-  `past_due_description` varchar(30) NOT NULL,
-  `greater_than_days_in_arrears` int(11) DEFAULT NULL,
-  `less_than_days_in_arrears` int(11) DEFAULT NULL,
-  `loan_loss_reserve_rate` decimal(21,4) DEFAULT NULL,
-  PRIMARY KEY (`arrears_band_monthly_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dim_arrears_band_monthly`
---
-
-LOCK TABLES `dim_arrears_band_monthly` WRITE;
-/*!40000 ALTER TABLE `dim_arrears_band_monthly` DISABLE KEYS */;
-INSERT INTO `dim_arrears_band_monthly` VALUES (1,'0 to 30 Days in Arrears',0,31,'0.0000'),(2,'30 to 60 Days in Arrears',30,61,'0.0000'),(3,'60 to 90 Days in Arrears',60,91,'0.0000'),(4,'90 to 180 Days in Arrears',90,181,'0.0000'),(5,'> 180 Days in Arrears',180,9999999,'0.0000');
-/*!40000 ALTER TABLE `dim_arrears_band_monthly` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `dim_arrears_band_weekly`
---
-
-DROP TABLE IF EXISTS `dim_arrears_band_weekly`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dim_arrears_band_weekly` (
-  `arrears_band_weekly_key` tinyint(3) unsigned NOT NULL,
-  `past_due_description` varchar(30) NOT NULL,
-  `greater_than_days_in_arrears` int(11) DEFAULT NULL,
-  `less_than_days_in_arrears` int(11) DEFAULT NULL,
-  `loan_loss_reserve_rate` decimal(21,4) DEFAULT NULL,
-  PRIMARY KEY (`arrears_band_weekly_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dim_arrears_band_weekly`
---
-
-LOCK TABLES `dim_arrears_band_weekly` WRITE;
-/*!40000 ALTER TABLE `dim_arrears_band_weekly` DISABLE KEYS */;
-INSERT INTO `dim_arrears_band_weekly` VALUES (1,'1 Week in Arrears',0,8,'0.0000'),(2,'2 Weeks in Arrears',7,15,'0.0000'),(3,'3 Weeks in Arrears',14,22,'0.0000'),(4,'4 Weeks in Arrears',21,29,'0.0000'),(5,'5 Weeks in Arrears',28,36,'0.0000'),(6,'6 Weeks in Arrears',35,43,'0.0000'),(7,'7 Weeks in Arrears',42,50,'0.0000'),(8,'8 Weeks in Arrears',49,57,'0.0000'),(9,'9 Weeks in Arrears',56,64,'0.0000'),(10,'10 Weeks in Arrears',63,71,'0.0000'),(11,'11 Weeks in Arrears',70,78,'0.0000'),(12,'12 Weeks in Arrears',77,85,'0.0000'),(13,'12+ Weeks in Arrears',84,999999999,'0.0000');
-/*!40000 ALTER TABLE `dim_arrears_band_weekly` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `dim_currency`
---
-
-DROP TABLE IF EXISTS `dim_currency`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dim_currency` (
-  `currency_key` smallint(5) unsigned NOT NULL,
-  `currency_id` smallint(6) NOT NULL,
-  `currency_name` varchar(50) NOT NULL,
-  `rounding_amount` decimal(6,3) NOT NULL,
-  `currency_code` varchar(3) NOT NULL,
-  `valid_from` date NOT NULL DEFAULT '1900-01-01',
-  `valid_to` date NOT NULL DEFAULT '2199-12-31',
-  `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
-  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`currency_key`),
-  KEY `currency_id` (`currency_id`),
-  KEY `currency_name` (`currency_name`),
-  KEY `currency_code` (`currency_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dim_currency`
---
-
-LOCK TABLES `dim_currency` WRITE;
-/*!40000 ALTER TABLE `dim_currency` DISABLE KEYS */;
-INSERT INTO `dim_currency` VALUES (0,0,'Unknown','0.000','Unk','1900-01-01','2199-12-31',0,0,'2010-08-29 05:20:52');
-/*!40000 ALTER TABLE `dim_currency` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `dim_customer`
 --
 
@@ -145,7 +26,7 @@ CREATE TABLE `dim_customer` (
   `customer_key` int(10) unsigned NOT NULL,
   `customer_id` int(11) NOT NULL,
   `display_name` varchar(200) DEFAULT NULL,
-  `customer_status` varchar(100) NOT NULL,
+  `customer_status` varchar(50) NOT NULL,
   `customer_level_id` smallint(6) NOT NULL,
   `gender` varchar(15) DEFAULT NULL,
   `date_of_birth` date DEFAULT NULL,
@@ -164,8 +45,6 @@ CREATE TABLE `dim_customer` (
   `branch_key` smallint(5) unsigned NOT NULL,
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
-  `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`customer_key`),
   KEY `customer_id` (`customer_id`),
@@ -183,7 +62,7 @@ CREATE TABLE `dim_customer` (
 
 LOCK TABLES `dim_customer` WRITE;
 /*!40000 ALTER TABLE `dim_customer` DISABLE KEYS */;
-INSERT INTO `dim_customer` VALUES (0,0,'Unknown','Unknown',0,'Unknown',NULL,'Unknown',NULL,'Unknown','Unknown','Unknown','Unknown','Unknown','Unknown',0,0,0,0,0,'1900-01-01','2199-12-31',0,0,'2010-11-08 12:43:05');
+INSERT INTO `dim_customer` VALUES (0,0,'-','-',0,'-',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,0,'1900-01-01','3000-01-01','2010-12-03 09:35:51');
 /*!40000 ALTER TABLE `dim_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,40 +118,6 @@ INSERT INTO `dim_date` VALUES (20090101,'2009-01-01','09-01-01','Jan 1, 2009','J
 UNLOCK TABLES;
 
 --
--- Table structure for table `dim_fee`
---
-
-DROP TABLE IF EXISTS `dim_fee`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `dim_fee` (
-  `fee_key` smallint(5) unsigned NOT NULL,
-  `fee_id` smallint(6) NOT NULL,
-  `fee_name` varchar(50) NOT NULL,
-  `category_type` varchar(30) NOT NULL,
-  `fee_frequency_type` varchar(30) NOT NULL,
-  `fee_payment` varchar(40) NOT NULL,
-  `valid_from` date NOT NULL DEFAULT '1900-01-01',
-  `valid_to` date NOT NULL DEFAULT '2199-12-31',
-  `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
-  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`fee_key`),
-  UNIQUE KEY `fee_name` (`fee_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `dim_fee`
---
-
-LOCK TABLES `dim_fee` WRITE;
-/*!40000 ALTER TABLE `dim_fee` DISABLE KEYS */;
-INSERT INTO `dim_fee` VALUES (0,0,'Unknown','Unknown','Unknown','Unknown','1900-01-01','2199-12-31',0,0,'2010-10-18 09:54:48');
-/*!40000 ALTER TABLE `dim_fee` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `dim_loan`
 --
 
@@ -281,7 +126,8 @@ DROP TABLE IF EXISTS `dim_loan`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dim_loan` (
   `loan_account_key` int(10) unsigned NOT NULL,
-  `currency_key` smallint(5) unsigned NOT NULL,
+  `loan_account_id` int(11) NOT NULL,
+  `currency_id` smallint(6) NOT NULL,
   `product_key` int(10) unsigned NOT NULL,
   `customer_key` int(10) unsigned NOT NULL,
   `group_key` int(10) unsigned NOT NULL,
@@ -289,9 +135,9 @@ CREATE TABLE `dim_loan` (
   `loan_officer_key` smallint(5) unsigned NOT NULL,
   `branch_key` smallint(5) unsigned NOT NULL,
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
-  `loan_account_id` int(11) NOT NULL,
-  `loan_status` varchar(100) NOT NULL,
-  `funder_name` varchar(100) DEFAULT NULL,
+  `loan_status` varchar(50) NOT NULL,
+  `disbursement_date` date DEFAULT NULL,
+  `fund_id` smallint(6) DEFAULT NULL,
   `loan_amount` decimal(21,4) DEFAULT '0.0000',
   `original_principal` decimal(21,4) DEFAULT '0.0000',
   `original_interest` decimal(21,4) DEFAULT '0.0000',
@@ -299,11 +145,9 @@ CREATE TABLE `dim_loan` (
   `original_penalty` decimal(21,4) DEFAULT '0.0000',
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
-  `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`loan_account_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `currency_id` (`currency_id`),
   KEY `loan_account_id` (`loan_account_id`),
   KEY `product_key` (`product_key`),
   KEY `customer_key` (`customer_key`),
@@ -311,7 +155,8 @@ CREATE TABLE `dim_loan` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
+  KEY `formed_by_loan_officer_key` (`loan_officer_key`),
+  KEY `fund_id` (`fund_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -321,7 +166,7 @@ CREATE TABLE `dim_loan` (
 
 LOCK TABLES `dim_loan` WRITE;
 /*!40000 ALTER TABLE `dim_loan` DISABLE KEYS */;
-INSERT INTO `dim_loan` VALUES (0,0,0,0,0,0,0,0,0,0,'Unknown','Unknown','0.0000','0.0000','0.0000','0.0000','0.0000','1900-01-01','2199-12-31',0,0,'2010-10-01 03:54:17');
+INSERT INTO `dim_loan` VALUES (0,0,0,0,0,0,0,0,0,0,'-',NULL,0,NULL,NULL,NULL,NULL,NULL,'1900-01-01','3000-01-01','2010-12-03 09:37:23');
 /*!40000 ALTER TABLE `dim_loan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,7 +187,6 @@ CREATE TABLE `dim_office` (
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
   `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`office_key`),
   KEY `office_id` (`office_id`),
@@ -357,7 +201,7 @@ CREATE TABLE `dim_office` (
 
 LOCK TABLES `dim_office` WRITE;
 /*!40000 ALTER TABLE `dim_office` DISABLE KEYS */;
-INSERT INTO `dim_office` VALUES (0,0,'office-0',0,'Unknown','1900-01-01','1900-01-01','2199-12-31',0,0,'2010-10-03 11:44:44');
+INSERT INTO `dim_office` VALUES (0,0,'-',0,'-','1900-01-01','1900-01-01','3000-01-01',1,'2010-12-03 09:28:20');
 /*!40000 ALTER TABLE `dim_office` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,7 +228,6 @@ CREATE TABLE `dim_personnel` (
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
   `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`personnel_key`),
   KEY `personnel_key` (`personnel_key`),
@@ -398,7 +241,7 @@ CREATE TABLE `dim_personnel` (
 
 LOCK TABLES `dim_personnel` WRITE;
 /*!40000 ALTER TABLE `dim_personnel` DISABLE KEYS */;
-INSERT INTO `dim_personnel` VALUES (0,0,'user-0','Unknown','Unknown',0,NULL,'1900-01-01','1900-01-01','1900-01-01','1900-01-01',0,'1900-01-01','2199-12-31',0,0,'2010-10-03 11:44:35');
+INSERT INTO `dim_personnel` VALUES (0,0,'-','-','-',0,NULL,NULL,NULL,NULL,NULL,0,'1900-01-01','3000-01-01',1,'2010-12-03 09:42:16');
 /*!40000 ALTER TABLE `dim_personnel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,7 +263,6 @@ CREATE TABLE `dim_product` (
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
   `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -432,7 +274,7 @@ CREATE TABLE `dim_product` (
 
 LOCK TABLES `dim_product` WRITE;
 /*!40000 ALTER TABLE `dim_product` DISABLE KEYS */;
-INSERT INTO `dim_product` VALUES (0,0,'Unknown','Unknown','Unknown','Unknown','Unknown','1900-01-01','2199-12-31',0,0,'2010-09-07 14:14:27');
+INSERT INTO `dim_product` VALUES (0,0,'-','-','-','-','-','1900-01-01','3000-01-01',1,'2010-12-03 09:46:16');
 /*!40000 ALTER TABLE `dim_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,12 +295,10 @@ CREATE TABLE `dim_savings` (
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL,
   `branch_key` smallint(5) unsigned NOT NULL,
   `savings_account_id` int(11) NOT NULL,
-  `savings_status` varchar(100) NOT NULL,
-  `currency_key` smallint(5) unsigned NOT NULL,
+  `savings_status` varchar(50) NOT NULL,
+  `currency_id` smallint(6) NOT NULL,
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
-  `version` int(11) NOT NULL DEFAULT '0',
-  `current_record` tinyint(4) NOT NULL DEFAULT '0',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`savings_account_key`),
   KEY `savings_account_id` (`savings_account_id`),
@@ -468,7 +308,7 @@ CREATE TABLE `dim_savings` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `currency_id` (`currency_id`),
   KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -479,8 +319,33 @@ CREATE TABLE `dim_savings` (
 
 LOCK TABLES `dim_savings` WRITE;
 /*!40000 ALTER TABLE `dim_savings` DISABLE KEYS */;
-INSERT INTO `dim_savings` VALUES (0,0,0,0,0,0,0,0,0,'Unknown',0,'1900-01-01','2199-12-31',0,0,'2010-09-13 05:53:30');
+INSERT INTO `dim_savings` VALUES (0,0,0,0,0,0,0,0,0,'-',0,'1900-01-01','3000-01-01','2010-12-03 09:38:22');
 /*!40000 ALTER TABLE `dim_savings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_account_action`
+--
+
+DROP TABLE IF EXISTS `dw_account_action`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_account_action` (
+  `account_action_id` smallint(6) NOT NULL,
+  `account_action_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`account_action_id`),
+  UNIQUE KEY `account_action_name` (`account_action_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_account_action`
+--
+
+LOCK TABLES `dw_account_action` WRITE;
+/*!40000 ALTER TABLE `dw_account_action` DISABLE KEYS */;
+INSERT INTO `dw_account_action` VALUES (0,'-');
+/*!40000 ALTER TABLE `dw_account_action` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -506,6 +371,141 @@ LOCK TABLES `dw_account_charge_type` WRITE;
 /*!40000 ALTER TABLE `dw_account_charge_type` DISABLE KEYS */;
 INSERT INTO `dw_account_charge_type` VALUES (2,'Misc. Fees/Charges'),(3,'Misc. Penalties'),(1,'Periodic and One-time Fees');
 /*!40000 ALTER TABLE `dw_account_charge_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_arrears_band_monthly`
+--
+
+DROP TABLE IF EXISTS `dw_arrears_band_monthly`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_arrears_band_monthly` (
+  `arrears_band_monthly_key` tinyint(3) unsigned NOT NULL,
+  `past_due_description` varchar(30) NOT NULL,
+  `greater_than_days_in_arrears` int(11) DEFAULT NULL,
+  `less_than_days_in_arrears` int(11) DEFAULT NULL,
+  `loan_loss_reserve_rate` decimal(21,4) DEFAULT NULL,
+  PRIMARY KEY (`arrears_band_monthly_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_arrears_band_monthly`
+--
+
+LOCK TABLES `dw_arrears_band_monthly` WRITE;
+/*!40000 ALTER TABLE `dw_arrears_band_monthly` DISABLE KEYS */;
+INSERT INTO `dw_arrears_band_monthly` VALUES (1,'0 to 30 Days in Arrears',0,31,'0.0000'),(2,'30 to 60 Days in Arrears',30,61,'0.0000'),(3,'60 to 90 Days in Arrears',60,91,'0.0000'),(4,'90 to 180 Days in Arrears',90,181,'0.0000'),(5,'> 180 Days in Arrears',180,9999999,'0.0000');
+/*!40000 ALTER TABLE `dw_arrears_band_monthly` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_arrears_band_weekly`
+--
+
+DROP TABLE IF EXISTS `dw_arrears_band_weekly`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_arrears_band_weekly` (
+  `arrears_band_weekly_key` tinyint(3) unsigned NOT NULL,
+  `past_due_description` varchar(30) NOT NULL,
+  `greater_than_days_in_arrears` int(11) DEFAULT NULL,
+  `less_than_days_in_arrears` int(11) DEFAULT NULL,
+  `loan_loss_reserve_rate` decimal(21,4) DEFAULT NULL,
+  PRIMARY KEY (`arrears_band_weekly_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_arrears_band_weekly`
+--
+
+LOCK TABLES `dw_arrears_band_weekly` WRITE;
+/*!40000 ALTER TABLE `dw_arrears_band_weekly` DISABLE KEYS */;
+INSERT INTO `dw_arrears_band_weekly` VALUES (1,'1 Week in Arrears',0,8,'0.0000'),(2,'2 Weeks in Arrears',7,15,'0.0000'),(3,'3 Weeks in Arrears',14,22,'0.0000'),(4,'4 Weeks in Arrears',21,29,'0.0000'),(5,'5 Weeks in Arrears',28,36,'0.0000'),(6,'6 Weeks in Arrears',35,43,'0.0000'),(7,'7 Weeks in Arrears',42,50,'0.0000'),(8,'8 Weeks in Arrears',49,57,'0.0000'),(9,'9 Weeks in Arrears',56,64,'0.0000'),(10,'10 Weeks in Arrears',63,71,'0.0000'),(11,'11 Weeks in Arrears',70,78,'0.0000'),(12,'12 Weeks in Arrears',77,85,'0.0000'),(13,'12+ Weeks in Arrears',84,999999999,'0.0000');
+/*!40000 ALTER TABLE `dw_arrears_band_weekly` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_currency`
+--
+
+DROP TABLE IF EXISTS `dw_currency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_currency` (
+  `currency_id` smallint(6) NOT NULL,
+  `currency_name` varchar(50) NOT NULL,
+  `rounding_amount` decimal(6,3) NOT NULL,
+  `currency_code` varchar(3) NOT NULL,
+  PRIMARY KEY (`currency_id`),
+  KEY `currency_name` (`currency_name`),
+  KEY `currency_code` (`currency_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_currency`
+--
+
+LOCK TABLES `dw_currency` WRITE;
+/*!40000 ALTER TABLE `dw_currency` DISABLE KEYS */;
+INSERT INTO `dw_currency` VALUES (0,'-','0.000','-');
+/*!40000 ALTER TABLE `dw_currency` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_fee`
+--
+
+DROP TABLE IF EXISTS `dw_fee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_fee` (
+  `fee_id` smallint(6) NOT NULL,
+  `fee_name` varchar(50) NOT NULL,
+  `category_type` varchar(30) NOT NULL,
+  `fee_frequency_type` varchar(30) NOT NULL,
+  `fee_payment` varchar(40) NOT NULL,
+  PRIMARY KEY (`fee_id`),
+  UNIQUE KEY `fee_name` (`fee_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_fee`
+--
+
+LOCK TABLES `dw_fee` WRITE;
+/*!40000 ALTER TABLE `dw_fee` DISABLE KEYS */;
+INSERT INTO `dw_fee` VALUES (0,'-','-','-','-');
+/*!40000 ALTER TABLE `dw_fee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_fund`
+--
+
+DROP TABLE IF EXISTS `dw_fund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_fund` (
+  `fund_id` smallint(6) NOT NULL,
+  `fund_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`fund_id`),
+  UNIQUE KEY `fund_name` (`fund_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_fund`
+--
+
+LOCK TABLES `dw_fund` WRITE;
+/*!40000 ALTER TABLE `dw_fund` DISABLE KEYS */;
+INSERT INTO `dw_fund` VALUES (0,'-');
+/*!40000 ALTER TABLE `dw_fund` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -638,9 +638,9 @@ DROP TABLE IF EXISTS `fact_customer_fees_and_charges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fact_customer_fees_and_charges` (
-  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `fee_key` smallint(5) unsigned NOT NULL,
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `account_action_id` smallint(6) NOT NULL DEFAULT '0',
+  `fee_id` smallint(6) NOT NULL,
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
   `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
   `group_key` int(10) unsigned NOT NULL,
   `center_key` int(10) unsigned NOT NULL,
@@ -660,9 +660,9 @@ CREATE TABLE `fact_customer_fees_and_charges` (
   `account_charge_type_id` tinyint(4) NOT NULL,
   `amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`account_trxn_id`,`fee_trxn_detail_id`),
-  KEY `fee_key` (`account_action_key`),
-  KEY `account_action_key` (`account_action_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `fee_id` (`fee_id`),
+  KEY `account_action_id` (`account_action_id`),
+  KEY `currency_id` (`currency_id`),
   KEY `customer_key` (`customer_key`),
   KEY `group_key` (`group_key`),
   KEY `center_key` (`center_key`),
@@ -695,8 +695,8 @@ DROP TABLE IF EXISTS `fact_loan_disbursals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fact_loan_disbursals` (
-  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `account_action_id` smallint(6) NOT NULL DEFAULT '0',
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
   `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
   `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
   `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
@@ -707,6 +707,8 @@ CREATE TABLE `fact_loan_disbursals` (
   `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
   `disbursal_date_key` int(10) unsigned NOT NULL DEFAULT '0',
   `created_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `loan_account_id` int(11) NOT NULL DEFAULT '0',
+  `disbursal_date` date DEFAULT NULL,
   `payment_id` int(11) NOT NULL,
   `payment_type_id` smallint(6) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
@@ -714,10 +716,11 @@ CREATE TABLE `fact_loan_disbursals` (
   `disbursal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `reversed` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_trxn_id`),
-  KEY `account_action_key` (`account_action_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `account_action_id` (`account_action_id`),
+  KEY `currency_id` (`currency_id`),
   KEY `product_key` (`product_key`),
   KEY `loan_account_key` (`loan_account_key`),
+  KEY `loan_account_id` (`loan_account_id`),
   KEY `customer_key` (`customer_key`),
   KEY `group_key` (`group_key`),
   KEY `center_key` (`center_key`),
@@ -725,6 +728,7 @@ CREATE TABLE `fact_loan_disbursals` (
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
   KEY `disbursal_date_key` (`disbursal_date_key`),
+  KEY `disbursal_date` (`disbursal_date`),
   KEY `created_date_key` (`created_date_key`),
   KEY `payment_id` (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -748,9 +752,9 @@ DROP TABLE IF EXISTS `fact_loan_fees_and_charges`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fact_loan_fees_and_charges` (
   `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `fee_key` smallint(5) unsigned NOT NULL,
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `account_action_id` smallint(6) NOT NULL DEFAULT '0',
+  `fee_id` smallint(6) NOT NULL,
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
   `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
   `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
   `group_key` int(10) unsigned NOT NULL,
@@ -774,9 +778,9 @@ CREATE TABLE `fact_loan_fees_and_charges` (
   `adjusted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_trxn_id`,`fee_trxn_detail_id`),
   KEY `loan_account_key` (`loan_account_key`),
-  KEY `fee_key` (`account_action_key`),
-  KEY `account_action_key` (`account_action_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `fee_id` (`fee_id`),
+  KEY `account_action_id` (`account_action_id`),
+  KEY `currency_id` (`currency_id`),
   KEY `product_key` (`product_key`),
   KEY `customer_key` (`customer_key`),
   KEY `group_key` (`group_key`),
@@ -810,8 +814,8 @@ DROP TABLE IF EXISTS `fact_loan_repayments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fact_loan_repayments` (
-  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `account_action_id` smallint(6) NOT NULL DEFAULT '0',
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
   `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
   `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
   `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
@@ -834,8 +838,8 @@ CREATE TABLE `fact_loan_repayments` (
   `reversed` tinyint(4) NOT NULL DEFAULT '0',
   `adjusted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_trxn_id`),
-  KEY `account_action_key` (`account_action_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `account_action_id` (`account_action_id`),
+  KEY `currency_id` (`currency_id`),
   KEY `product_key` (`product_key`),
   KEY `loan_account_key` (`loan_account_key`),
   KEY `customer_key` (`customer_key`),
@@ -899,8 +903,8 @@ DROP TABLE IF EXISTS `fact_savings_transactions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fact_savings_transactions` (
-  `account_action_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `currency_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `account_action_id` smallint(6) NOT NULL DEFAULT '0',
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
   `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
   `savings_account_key` int(10) unsigned NOT NULL DEFAULT '0',
   `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
@@ -917,12 +921,13 @@ CREATE TABLE `fact_savings_transactions` (
   `payment_type_id` smallint(6) NOT NULL,
   `account_trxn_id` int(11) NOT NULL,
   `installment_id` smallint(6) DEFAULT '0',
+  `action_date` date NOT NULL,
   `deposit_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `withdrawal_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_amount` decimal(21,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`account_trxn_id`),
-  KEY `account_action_key` (`account_action_key`),
-  KEY `currency_key` (`currency_key`),
+  KEY `account_action_id` (`account_action_id`),
+  KEY `currency_id` (`currency_id`),
   KEY `product_key` (`product_key`),
   KEY `savings_account_key` (`savings_account_key`),
   KEY `customer_key` (`customer_key`),
@@ -956,40 +961,33 @@ DROP TABLE IF EXISTS `hist_loan_arrears`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `hist_loan_arrears` (
-  `as_of_date_key` int(10) unsigned NOT NULL,
-  `product_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `loan_account_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `customer_key` int(10) unsigned NOT NULL DEFAULT '0',
-  `group_key` int(10) unsigned NOT NULL,
-  `center_key` int(10) unsigned NOT NULL,
-  `loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `branch_key` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `formed_by_loan_officer_key` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `as_of_date` date NOT NULL,
+  `loan_account_id` int(11) NOT NULL,
+  `prd_offering_id` smallint(6) NOT NULL DEFAULT '0',
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL,
+  `center_id` int(11) NOT NULL,
+  `loan_officer_id` smallint(6) NOT NULL DEFAULT '0',
+  `branch_id` smallint(6) NOT NULL DEFAULT '0',
+  `formed_by_loan_officer_id` smallint(6) NOT NULL DEFAULT '0',
   `arrears_band_weekly_key` tinyint(3) unsigned DEFAULT '0',
   `arrears_band_monthly_key` tinyint(3) unsigned DEFAULT '0',
   `days_in_arrears` int(11) NOT NULL,
-  `installments_in_arrears` int(11) NOT NULL,
+  `installments_in_arrears` smallint(6) NOT NULL,
   `principal_in_arrears` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_in_arrears` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `total_in_arrears` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `principal_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `total_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `loan_account_id` int(11) NOT NULL,
-  `as_of_date` date NOT NULL,
-  PRIMARY KEY (`as_of_date_key`,`loan_account_key`),
-  KEY `product_key` (`product_key`),
-  KEY `loan_account_key` (`loan_account_key`),
-  KEY `loan_account_id` (`loan_account_id`),
-  KEY `as_of_date` (`as_of_date`),
-  KEY `customer_key` (`customer_key`),
-  KEY `group_key` (`group_key`),
-  KEY `center_key` (`center_key`),
-  KEY `loan_officer_key` (`loan_officer_key`),
-  KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`),
-  KEY `arrears_band_weekly_key` (`arrears_band_weekly_key`),
-  KEY `arrears_band_monthly_key` (`arrears_band_monthly_key`)
+  PRIMARY KEY (`as_of_date`,`loan_account_id`),
+  KEY `prd_offering_id` (`as_of_date`,`prd_offering_id`),
+  KEY `customer_id` (`as_of_date`,`customer_id`),
+  KEY `group_id` (`as_of_date`,`group_id`),
+  KEY `center_id` (`as_of_date`,`center_id`),
+  KEY `loan_officer_id` (`as_of_date`,`loan_officer_id`),
+  KEY `branch_id` (`as_of_date`,`branch_id`),
+  KEY `formed_by_loan_officer_id` (`as_of_date`,`formed_by_loan_officer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1190,7 +1188,8 @@ DROP TABLE IF EXISTS `stg_loan_type1_columns`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stg_loan_type1_columns` (
   `loan_account_id` int(11) NOT NULL,
-  `funder_name` varchar(100) DEFAULT NULL,
+  `fund_id` smallint(6) DEFAULT NULL,
+  `disbursement_date` date DEFAULT NULL,
   `loan_amount` decimal(21,4) DEFAULT NULL,
   `loan_original_principal` decimal(21,4) DEFAULT NULL,
   `loan_original_interest` decimal(21,4) DEFAULT NULL,
@@ -1257,20 +1256,20 @@ declare loan_account_id_var int;
 declare loan_account_key_var int;
 declare loan_status_var varchar(100);
 declare product_key_var int;
-declare currency_key_var int;
+declare currency_id_var int;
 declare savings_account_id_var int;
 declare savings_account_key_var int;
 declare savings_status_var varchar(100);
 
 declare loan_accounts_referenced_cursor cursor for 
-select loan_account_key, loan_account_id, loan_status, product_key, currency_key
+select loan_account_key, loan_account_id, loan_status, product_key, currency_id
 from dim_loan
 where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
 declare savings_accounts_referenced_cursor cursor for 
-select savings_account_key, savings_account_id, savings_status, product_key, currency_key
+select savings_account_key, savings_account_id, savings_status, product_key, currency_id
 from dim_savings
 where customer_key = current_customer_key
 and valid_from <= effective_date_param
@@ -1280,14 +1279,14 @@ declare continue handler for not found set done = 1;
 
 open loan_accounts_referenced_cursor;
 repeat
-    fetch loan_accounts_referenced_cursor into loan_account_key_var, loan_account_id_var, loan_status_var, product_key_var, currency_key_var;
+    fetch loan_accounts_referenced_cursor into loan_account_key_var, loan_account_id_var, loan_status_var, product_key_var, currency_id_var;
                             
     if not done then
                                     
         call SPloan_account_insert(loan_account_id_var, new_customer_key, product_key_var, 
                                             new_group_key, new_center_key, new_loan_officer_key,
                                             new_formed_by_loan_officer_key, new_branch_key,
-                                            currency_key_var,
+                                            currency_id_var,
                                             loan_status_var, 
                                             effective_date_param,
                                             @new_loan_account_key);   
@@ -1300,7 +1299,7 @@ close loan_accounts_referenced_cursor;
 commit;
 
 update dim_loan
-set valid_to = effective_date_param, `version` = `version` + 1
+set valid_to = effective_date_param
 where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
@@ -1311,14 +1310,14 @@ set done = 0;
 
 open savings_accounts_referenced_cursor;
 repeat
-    fetch savings_accounts_referenced_cursor into savings_account_key_var, savings_account_id_var, savings_status_var, product_key_var, currency_key_var;
+    fetch savings_accounts_referenced_cursor into savings_account_key_var, savings_account_id_var, savings_status_var, product_key_var, currency_id_var;
                             
     if not done then
                                     
         call SPsavings_account_insert(savings_account_id_var, new_customer_key, product_key_var, 
                                             new_group_key, new_center_key, new_loan_officer_key,
                                             new_formed_by_loan_officer_key, new_branch_key,
-                                            currency_key_var,
+                                            currency_id_var,
                                             savings_status_var, 
                                             effective_date_param,
                                             @new_savings_account_key);   
@@ -1331,7 +1330,7 @@ close savings_accounts_referenced_cursor;
 commit;
 
 update dim_savings
-set valid_to = effective_date_param, `version` = `version` + 1
+set valid_to = effective_date_param
 where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
@@ -1402,7 +1401,7 @@ commit;
 
 
 update dim_customer
-set valid_to = effective_date_param, `version` = `version` + 1
+set valid_to = effective_date_param
 where group_key = current_group_key
 and customer_level_id = 1
 and valid_from <= effective_date_param
@@ -1480,7 +1479,7 @@ commit;
 
 
 update dim_customer
-set valid_to = date_param, `version` = `version` + 1
+set valid_to = date_param
 where center_key = current_center_key
 and customer_level_id = 2
 and valid_from <= date_param
@@ -1597,13 +1596,11 @@ if entry_found = 0 then
                                                                     @parent_formed_by_loan_officer_key);
                                                                     
     call SPproduct_return_current_key_value(account_prd_offering_id_param, effective_date_param, @product_key);
-    
-    call SPcurrency_return_current_key_value(account_currency_id_param, effective_date_param, @currency_key);                                                
   
     call SPloan_account_insert(entity_id_param, @parent_customer_key, @product_key, 
                                             @parent_group_key, @parent_center_key, @parent_loan_officer_key,
                                             @parent_formed_by_loan_officer_key, @parent_branch_key,
-                                            @currency_key,
+                                            account_currency_id_param,
                                             updated_status_param, 
                                             effective_date_param,
                                             @new_loan_account_key);                                   
@@ -1652,13 +1649,11 @@ if entry_found = 0 then
                                                                     @parent_formed_by_loan_officer_key);
                                                                     
     call SPproduct_return_current_key_value(account_prd_offering_id_param, effective_date_param, @product_key);
-    
-    call SPcurrency_return_current_key_value(account_currency_id_param, effective_date_param, @currency_key);                                                
   
     call SPsavings_account_insert(entity_id_param, @parent_customer_key, @product_key, 
                                             @parent_group_key, @parent_center_key, @parent_loan_officer_key,
                                             @parent_formed_by_loan_officer_key, @parent_branch_key,
-                                            @currency_key,
+                                            account_currency_id_param,
                                             updated_status_param, 
                                             effective_date_param,
                                             @new_savings_account_key);                                   
@@ -1667,38 +1662,6 @@ else
     call SPfallover(concat('SPcreate_new_savings_account for account id: ', entity_id_param, ' - ', entry_found, ' entries already exist(s)')); 
 end if;
 
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `SPcurrency_return_current_key_value` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPcurrency_return_current_key_value`(IN currency_id_param smallint, IN effective_date_param date, 
-OUT current_currency_key smallint)
-BEGIN
-    
-select c.currency_key into current_currency_key
-from dim_currency c 
-where c.currency_id = currency_id_param
-and c.valid_from <= effective_date_param
-and c.valid_to > effective_date_param;
-
-
-if current_currency_key is null then
-    call SPfallover(concat('SPcurrency_return_current_key_value for currency id: ', currency_id_param, ' - expected one current dim_currency entry but found none')); 
-end if;
-                                                                
 
 END */;;
 DELIMITER ;
@@ -1861,7 +1824,7 @@ BEGIN
 
 
 update dim_customer
-set valid_to = effective_date_param, `version` = `version` + 1
+set valid_to = effective_date_param
 where customer_key = customer_key_param;
 
 if row_count() <> 1 then
@@ -2144,17 +2107,17 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPloan_account_insert`(IN loan_account_id_param int, IN customer_key_param int, IN product_key_param int, 
                 IN group_key_param int, IN center_key_param int, IN loan_officer_key_param int,
                 IN formed_by_loan_officer_key_param int, IN branch_key_param int,
-                IN currency_key_param int, IN loan_status_param varchar(100), 
+                IN currency_id_param int, IN loan_status_param varchar(100), 
                 IN effective_date_param date,
                 OUT new_loan_account_key int)
 BEGIN                              
 
 set @insert_loan_account_key = @insert_loan_account_key + 1;
 
-insert into dim_loan(loan_account_key, loan_account_id, loan_status, currency_key, customer_key, product_key,
+insert into dim_loan(loan_account_key, loan_account_id, loan_status, currency_id, customer_key, product_key,
 group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key,
 valid_from)
-values (@insert_loan_account_key, loan_account_id_param, loan_status_param, currency_key_param, customer_key_param, product_key_param,
+values (@insert_loan_account_key, loan_account_id_param, loan_status_param, currency_id_param, customer_key_param, product_key_param,
 group_key_param, center_key_param, loan_officer_key_param, branch_key_param, formed_by_loan_officer_key_param,
 effective_date_param);
             
@@ -2183,16 +2146,16 @@ OUT current_group_key int, OUT current_center_key int,
 OUT current_loan_officer_key int, OUT current_branch_key int, 
 OUT current_formed_by_loan_officer_key int,
 OUT current_product_key int,
-OUT current_currency_key int)
+OUT current_currency_id int)
 BEGIN
 
 select loan_account_key, customer_key, group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key,
-            product_key, currency_key
+            product_key, currency_id
 into current_loan_account_key, current_customer_key, 
 current_group_key, current_center_key, 
 current_loan_officer_key, current_branch_key, 
 current_formed_by_loan_officer_key,
-current_product_key, current_currency_key
+current_product_key, current_currency_id
 from dim_loan
 where loan_account_id = loan_account_id_param
     and valid_from <= effective_date_param
@@ -2223,7 +2186,7 @@ DELIMITER ;;
 BEGIN
 
 update dim_loan
-set valid_to = effective_date_param, `version` = `version` + 1
+set valid_to = effective_date_param
 where loan_account_key = loan_account_key_param;
 
 if row_count() <> 1 then
@@ -2255,14 +2218,14 @@ call SPloan_account_return_current_key_values(entity_id_param, effective_date_pa
                                                                 @current_group_key, @current_center_key, 
                                                                 @current_loan_officer_key, @current_branch_key, 
                                                                 @current_formed_by_loan_officer_key,
-                                                                @current_product_key, @current_currency_key);
+                                                                @current_product_key, @current_currency_id);
                                                                                             
 call SPloan_account_update_validto(@current_loan_account_key, effective_date_param);
                                 
 call SPloan_account_insert(entity_id_param, @current_customer_key, @current_product_key, 
                                 @current_group_key, @current_center_key, @current_loan_officer_key,
                                 @current_formed_by_loan_officer_key, @current_branch_key,
-                                @current_currency_key,
+                                @current_currency_id,
                                 updated_status_param, 
                                 effective_date_param,
                                 @new_loan_account_key);                                   
@@ -2382,17 +2345,17 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`root`@`localhost`*/ /*!50003 PROCEDURE `SPsavings_account_insert`(IN savings_account_id_param int, IN customer_key_param int, IN product_key_param int, 
                 IN group_key_param int, IN center_key_param int, IN loan_officer_key_param int,
                 IN formed_by_loan_officer_key_param int, IN branch_key_param int,
-                IN currency_key_param int, IN savings_status_param varchar(100), 
+                IN currency_id_param int, IN savings_status_param varchar(100), 
                 IN effective_date_param date,
                 OUT new_savings_account_key int)
 BEGIN                              
 
 set @insert_savings_account_key = @insert_savings_account_key + 1;
 
-insert into dim_savings(savings_account_key, savings_account_id, savings_status, currency_key, customer_key, product_key,
+insert into dim_savings(savings_account_key, savings_account_id, savings_status, currency_id, customer_key, product_key,
 group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key,
 valid_from)
-values (@insert_savings_account_key, savings_account_id_param, savings_status_param, currency_key_param, customer_key_param, product_key_param,
+values (@insert_savings_account_key, savings_account_id_param, savings_status_param, currency_id_param, customer_key_param, product_key_param,
 group_key_param, center_key_param, loan_officer_key_param, branch_key_param, formed_by_loan_officer_key_param,
 effective_date_param);
             
@@ -2421,16 +2384,16 @@ OUT current_group_key int, OUT current_center_key int,
 OUT current_loan_officer_key int, OUT current_branch_key int, 
 OUT current_formed_by_loan_officer_key int,
 OUT current_product_key int,
-OUT current_currency_key int)
+OUT current_currency_id int)
 BEGIN
 
 select savings_account_key, customer_key, group_key, center_key, loan_officer_key, branch_key, formed_by_loan_officer_key,
-            product_key, currency_key
+            product_key, currency_id
 into current_savings_account_key, current_customer_key, 
 current_group_key, current_center_key, 
 current_loan_officer_key, current_branch_key, 
 current_formed_by_loan_officer_key,
-current_product_key, current_currency_key
+current_product_key, current_currency_id
 from dim_savings
 where savings_account_id = savings_account_id_param
     and valid_from <= effective_date_param
@@ -2461,7 +2424,7 @@ DELIMITER ;;
 BEGIN
 
 update dim_savings
-set valid_to = effective_date_param, `version` = `version` + 1
+set valid_to = effective_date_param
 where savings_account_key = savings_account_key_param;
 
 if row_count() <> 1 then
@@ -2493,14 +2456,14 @@ call SPsavings_account_return_current_key_values(entity_id_param, effective_date
                                                                 @current_group_key, @current_center_key, 
                                                                 @current_loan_officer_key, @current_branch_key, 
                                                                 @current_formed_by_loan_officer_key,
-                                                                @current_product_key, @current_currency_key);
+                                                                @current_product_key, @current_currency_id);
                                                                                             
 call SPsavings_account_update_validto(@current_savings_account_key, effective_date_param);
                                 
 call SPsavings_account_insert(entity_id_param, @current_customer_key, @current_product_key, 
                                 @current_group_key, @current_center_key, @current_loan_officer_key,
                                 @current_formed_by_loan_officer_key, @current_branch_key,
-                                @current_currency_key,
+                                @current_currency_id,
                                 updated_status_param, 
                                 effective_date_param,
                                 @new_savings_account_key);                                   
@@ -2724,4 +2687,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-11-22 15:14:42
+-- Dump completed on 2010-12-03 23:48:37

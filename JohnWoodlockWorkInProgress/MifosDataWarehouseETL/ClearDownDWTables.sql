@@ -15,10 +15,12 @@ truncate table stg_customer_and_account_updates;
 truncate table stg_customer_type1_columns;
 truncate table stg_loan_type1_columns;
 
-delete from dim_account_action where account_action_key > 0;
-delete from dim_currency where currency_key > 0;
+delete from dw_account_action where account_action_id > 0;
+delete from dw_currency where currency_id > 0;
+delete from dw_fee where fee_id > 0;
+delete from dw_fund where fund_id > 0;
+
 delete from dim_product where product_key > 0;
-delete from dim_fee where fee_key > 0;
 delete from dim_office where office_key > 0;
 delete from dim_personnel where personnel_key > 0;
 

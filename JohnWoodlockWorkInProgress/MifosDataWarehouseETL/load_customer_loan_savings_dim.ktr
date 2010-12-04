@@ -170,12 +170,9 @@ set c.display_name = c1.display_name, c.gender = c1.gender, c.date_of_birth = c1
 &#47;*update type1 columns on dim_loan to have the latest values*&#47;
 update dim_loan l
 join stg_loan_type1_columns l1 on l1.loan_account_id = l.loan_account_id
-set l.funder_name = l1.funder_name, l.loan_amount = l1.loan_amount,
+set l.fund_id = l1.fund_id, l.disbursement_date = l1.disbursement_date, l.loan_amount = l1.loan_amount,
 l.original_principal = l1.loan_original_principal, l.original_interest = l1.loan_original_interest,
-l.original_fees = l1.loan_original_fees, l.original_penalty = l1.loan_original_penalty, l.`version` = l.`version` + 1
-where (ifnull(l.funder_name, &apos;!null&apos;) &lt;&gt; l1.funder_name or l.loan_amount &lt;&gt; l1.loan_amount
-or l.original_principal &lt;&gt; l1.loan_original_principal or l.original_interest &lt;&gt; l1.loan_original_interest
-or l.original_fees &lt;&gt; l1.loan_original_fees or l.original_penalty &lt;&gt; l1.loan_original_penalty);
+l.original_fees = l1.loan_original_fees, l.original_penalty = l1.loan_original_penalty;
 
 </sql>
     <insert_field/>

@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Currency lookup</from><to>Fee lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Fee lookup</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get latest open entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Currency lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Misc. Charges and Misc. Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Fees</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Customer - get latest open entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Misc. Charges and Misc. Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Fees</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create fact_customer_fees_and_charges</name>
     <type>TableOutput</type>
@@ -220,16 +220,16 @@
           <stream_name>created_date_key</stream_name>
         </field>
         <field>
-          <column_name>account_action_key</column_name>
-          <stream_name>account_action_key</stream_name>
+          <column_name>account_action_id</column_name>
+          <stream_name>account_action_id</stream_name>
         </field>
         <field>
-          <column_name>currency_key</column_name>
-          <stream_name>currency_key</stream_name>
+          <column_name>currency_id</column_name>
+          <stream_name>currency_id</stream_name>
         </field>
         <field>
-          <column_name>fee_key</column_name>
-          <stream_name>fee_key</stream_name>
+          <column_name>fee_id</column_name>
+          <stream_name>fee_id</stream_name>
         </field>
         <field>
           <column_name>customer_key</column_name>
@@ -260,47 +260,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>191</xloc>
       <yloc>231</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Currency lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_currency</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>currency_id</name>
-        <field>currency_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>currency_key</name>
-        <rename>currency_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>685</xloc>
-      <yloc>233</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -384,48 +343,7 @@ order by customer_key desc</sql>
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>843</xloc>
-      <yloc>231</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Fee lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_fee</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>fee_id</name>
-        <field>fee_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>fee_key</name>
-        <rename>fee_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>556</xloc>
+      <xloc>718</xloc>
       <yloc>233</yloc>
       <draw>Y</draw>
       </GUI>

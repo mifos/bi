@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load_currency_dim</name>
+    <name>load dw_fee</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,29 +65,6 @@
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>From source to destination (no staging).
-All fields are &apos;type 1&apos; (simple update).  
-Not expecting to do otherwise.</note>
-      <xloc>415</xloc>
-      <yloc>50</yloc>
-      <width>210</width>
-      <heigth>47</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -127,6 +104,8 @@ Not expecting to do otherwise.</note>
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
@@ -163,73 +142,9 @@ Not expecting to do otherwise.</note>
     </attributes>
   </connection>
   <order>
-  <hop> <from>Extract Currency Data</from><to>Currency Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Extract Fee Data</from><to>Insert &#47; Update dw_fee</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Currency Dimension lookup&#47;update</name>
-    <type>DimensionLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <schema/>
-      <table>dim_currency</table>
-      <connection>DestinationDB</connection>
-      <commit>100</commit>
-      <update>Y</update>
-      <fields>
-        <key>
-          <name>currency_id</name>
-          <lookup>currency_id</lookup>
-        </key>
-        <date>
-          <name/>
-          <from>valid_from</from>
-          <to>valid_to</to>
-        </date>
-        <field>
-          <name>currency_name</name>
-          <lookup>currency_name</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
-          <name>rounding_amount</name>
-          <lookup>rounding_amount</lookup>
-          <update>Punch through</update>
-        </field>
-        <field>
-          <name>currency_code</name>
-          <lookup>currency_code</lookup>
-          <update>Punch through</update>
-        </field>
-        <return>
-          <name>currency_key</name>
-          <rename/>
-          <creation_method>tablemax</creation_method>
-          <use_autoinc>N</use_autoinc>
-          <version>version</version>
-        </return>
-      </fields>
-      <sequence/>
-      <min_year>1900</min_year>
-      <max_year>2199</max_year>
-      <cache_size>500</cache_size>
-      <preload_cache>N</preload_cache>
-      <use_start_date_alternative>N</use_start_date_alternative>
-      <start_date_alternative>none</start_date_alternative>
-      <start_date_field_name/>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>277</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Extract Currency Data</name>
+    <name>Extract Fee Data</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -239,8 +154,20 @@ Not expecting to do otherwise.</note>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select currency_id, currency_name, rounding_amount, currency_code
-from currency</sql>
+    <sql>select f.fee_id, f.fee_name, 
+ifnull(ctlv.lookup_name, &apos;n&#47;a&apos;) as category_type, 
+ifnull(ftlv.lookup_name, &apos;n&#47;a&apos;) as fee_frequency_type, 
+ifnull(fplv.lookup_name, &apos;n&#47;a&apos;) as fee_payment
+from fees f
+left join category_type ct on ct.category_id = f.category_id
+left join lookup_value ctlv on ctlv.lookup_id = ct.category_lookup_id
+
+join fee_frequency fq on fq.fee_id = f.fee_id
+left join fee_frequency_type ft on ft.fee_frequency_id = fq.fee_frequencytype_id
+left join lookup_value ftlv on ftlv.lookup_id = ft.lookup_id
+
+left join fee_payment fp on fp.fee_payment_id = fq.frequency_payment_id
+left join lookup_value fplv on fplv.lookup_id = fp.fee_payment_lookup_Id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -250,6 +177,62 @@ from currency</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>274</xloc>
       <yloc>24</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Insert &#47; Update dw_fee</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dw_fee</table>
+      <key>
+        <name>fee_id</name>
+        <field>fee_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>fee_id</name>
+        <rename>fee_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>fee_name</name>
+        <rename>fee_name</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>category_type</name>
+        <rename>category_type</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>fee_frequency_type</name>
+        <rename>fee_frequency_type</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>fee_payment</name>
+        <rename>fee_payment</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>272</xloc>
+      <yloc>133</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

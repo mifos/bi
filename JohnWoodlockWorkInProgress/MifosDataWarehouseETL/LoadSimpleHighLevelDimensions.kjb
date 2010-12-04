@@ -80,12 +80,12 @@
       <yloc>155</yloc>
       </entry>
     <entry>
-      <name>Load dim_account_action</name>
+      <name>Load dw_account_action</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;load_account_action_dim.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;load_dw_account_action.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -112,12 +112,12 @@
       <yloc>158</yloc>
       </entry>
     <entry>
-      <name>Load dim_currency</name>
+      <name>Load dw_currency</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;load_currency_dim.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;load_dw_currency.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -144,12 +144,12 @@
       <yloc>226</yloc>
       </entry>
     <entry>
-      <name>Load dim_fee</name>
+      <name>Load dw_fee</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;load_fees_dim.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;load_dw_fee.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -271,11 +271,43 @@
       <xloc>197</xloc>
       <yloc>98</yloc>
       </entry>
+    <entry>
+      <name>Load dw_fund</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;load_dw_fund.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>508</xloc>
+      <yloc>255</yloc>
+      </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>Load dim_account_action</to>
+      <to>Load dw_account_action</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -284,7 +316,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load dim_currency</to>
+      <to>Load dw_currency</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -293,7 +325,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load dim_fee</to>
+      <to>Load dw_fee</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -321,6 +353,15 @@
     <hop>
       <from>START</from>
       <to>Load dw_mfi_configuration</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Load dw_fund</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

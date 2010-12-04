@@ -257,8 +257,8 @@ from office</sql>
       <start_date_field_name>created_date</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>206</xloc>
-      <yloc>204</yloc>
+      <xloc>212</xloc>
+      <yloc>185</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

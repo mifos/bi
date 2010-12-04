@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Currency Count</name>
+    <name>load dw_account_action</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,28 +65,6 @@
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Number of currency entries in the source  should equal the number in the destination
-</note>
-      <xloc>299</xloc>
-      <yloc>113</yloc>
-      <width>427</width>
-      <heigth>22</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -164,36 +142,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Currency Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Currency Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Select values</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Extract Account Action Data</from><to>Insert &#47; Update dw_account_action</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Currency Destination Count</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select 1 as the_join, count(*) as destination_count
-from dw_currency
-where currency_id &gt; 0</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>267</xloc>
-      <yloc>20</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Currency Source Count</name>
+    <name>Extract Account Action Data</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -203,8 +154,9 @@ where currency_id &gt; 0</sql>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select 1 as the_join, count(*) as source_count
-from currency</sql>
+    <sql>select aa.account_action_id, lv.lookup_name account_action_name
+from account_action aa
+join lookup_value lv on lv.lookup_id = aa.lookup_id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -212,15 +164,15 @@ from currency</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>52</xloc>
-      <yloc>20</yloc>
+      <xloc>213</xloc>
+      <yloc>25</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Join Source and Destination Counts</name>
-    <type>MergeJoin</type>
+    <name>Insert &#47; Update dw_account_action</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -228,87 +180,33 @@ from currency</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<join_type>INNER</join_type>
-<step1>Currency Source Count</step1>
-<step2>Currency Destination Count</step2>
-    <keys_1>
-      <key>the_join</key>
-    </keys_1>
-    <keys_2>
-      <key>the_join</key>
-    </keys_2>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dw_account_action</table>
+      <key>
+        <name>account_action_id</name>
+        <field>account_action_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>account_action_id</name>
+        <rename>account_action_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>account_action_name</name>
+        <rename>account_action_name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>156</xloc>
-      <yloc>116</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>source_count</name>
-        <rename/>
-        <length>-2</length>
-        <precision>15</precision>
-      </field>      <field>        <name>destination_count</name>
-        <rename/>
-        <length>-2</length>
-        <precision>15</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>154</xloc>
-      <yloc>241</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Test Counts</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_test_counts.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>361</xloc>
-      <yloc>240</yloc>
+      <xloc>215</xloc>
+      <yloc>136</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

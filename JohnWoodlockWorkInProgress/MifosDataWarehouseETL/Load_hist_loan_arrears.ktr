@@ -328,8 +328,7 @@ order by as_of_date, l.loan_account_id</sql>
 ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
 ifnull(sum(lr.interest_amount), 0.0)  as interest_paid
 from dim_loan l
-join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.action_date &lt;= ?
-join dim_account_action aa on aa.account_action_key = lr.account_action_key and aa.account_action_id = 1
+join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.account_action_id = 1 and lr.action_date &lt;= ? 
 where l.valid_from &lt;= ? 
 and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
@@ -558,40 +557,40 @@ order by d.date_value</sql>
     <return_field/>
     <fields>
         <field>
-          <column_name>as_of_date_key</column_name>
-          <stream_name>as_of_date_key</stream_name>
+          <column_name>as_of_date</column_name>
+          <stream_name>as_of_date</stream_name>
         </field>
         <field>
-          <column_name>product_key</column_name>
-          <stream_name>product_key</stream_name>
+          <column_name>loan_account_id</column_name>
+          <stream_name>loan_account_id</stream_name>
         </field>
         <field>
-          <column_name>loan_account_key</column_name>
-          <stream_name>loan_account_key</stream_name>
+          <column_name>prd_offering_id</column_name>
+          <stream_name>prd_offering_id</stream_name>
         </field>
         <field>
-          <column_name>customer_key</column_name>
-          <stream_name>customer_key</stream_name>
+          <column_name>customer_id</column_name>
+          <stream_name>customer_id</stream_name>
         </field>
         <field>
-          <column_name>group_key</column_name>
-          <stream_name>group_key</stream_name>
+          <column_name>group_id</column_name>
+          <stream_name>group_id</stream_name>
         </field>
         <field>
-          <column_name>center_key</column_name>
-          <stream_name>center_key</stream_name>
+          <column_name>center_id</column_name>
+          <stream_name>center_id</stream_name>
         </field>
         <field>
-          <column_name>branch_key</column_name>
-          <stream_name>branch_key</stream_name>
+          <column_name>branch_id</column_name>
+          <stream_name>branch_id</stream_name>
         </field>
         <field>
-          <column_name>formed_by_loan_officer_key</column_name>
-          <stream_name>formed_by_loan_officer_key</stream_name>
+          <column_name>formed_by_loan_officer_id</column_name>
+          <stream_name>formed_by_loan_officer_id</stream_name>
         </field>
         <field>
-          <column_name>loan_officer_key</column_name>
-          <stream_name>loan_officer_key</stream_name>
+          <column_name>loan_officer_id</column_name>
+          <stream_name>loan_officer_id</stream_name>
         </field>
         <field>
           <column_name>arrears_band_weekly_key</column_name>
@@ -632,14 +631,6 @@ order by d.date_value</sql>
         <field>
           <column_name>total_outstanding</column_name>
           <stream_name>total_outstanding</stream_name>
-        </field>
-        <field>
-          <column_name>loan_account_id</column_name>
-          <stream_name>loan_account_id</stream_name>
-        </field>
-        <field>
-          <column_name>as_of_date</column_name>
-          <stream_name>as_of_date</stream_name>
         </field>
     </fields>
      <cluster_schema/>

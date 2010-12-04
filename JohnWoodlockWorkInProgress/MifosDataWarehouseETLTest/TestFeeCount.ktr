@@ -66,13 +66,11 @@
   </info>
   <notepads>
     <notepad>
-      <note>Number of fees in the source  should equal the number in the destination
-
-Although the table structure of dim_fee has fields for managing type 2 changes... none are applied.</note>
+      <note>Number of fees in the source  should equal the number in the destination</note>
       <xloc>299</xloc>
       <yloc>113</yloc>
-      <width>489</width>
-      <heigth>47</heigth>
+      <width>363</width>
+      <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -178,8 +176,8 @@ Although the table structure of dim_fee has fields for managing type 2 changes..
            </partitioning>
     <connection>DestinationDB</connection>
     <sql>select 1 as the_join, count(*) as destination_count
-from dim_fee
-where fee_key &gt; 0</sql>
+from dw_fee
+where fee_id &gt; 0</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>

@@ -117,7 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Last Installment that had a Payment</from><to>Get Last Installment Due</to><enabled>Y</enabled> </hop>  <hop> <from>Get Last Installment Due</from><to>Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Account Key</from><to>Identify As Of Date Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify As Of Date Key</from><to>Identify Weekly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Weekly Band Key</from><to>Identify Monthly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate days_in_arrears</from><to>Identify Loan Account Key</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Arrears Mapping input specification</from><to>Get Last Installment that had a Payment</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Monthly Band Key</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment</from><to>Calculate Installment Due and In Arrears Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate Installment Due and In Arrears Values</from><to>Calculate Outstanding Amounts</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate Outstanding Amounts</from><to>Calculate days_in_arrears</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Last Installment that had a Payment</from><to>Get Last Installment Due</to><enabled>Y</enabled> </hop>  <hop> <from>Get Last Installment Due</from><to>Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Weekly Band Key</from><to>Identify Monthly Band Key</to><enabled>Y</enabled> </hop>  <hop> <from>Loan Arrears Mapping input specification</from><to>Get Last Installment that had a Payment</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Monthly Band Key</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Get Full Amounts Scheduled and Total Amount Expected up to Last Installment having Payment</from><to>Calculate Installment Due and In Arrears Values</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate Installment Due and In Arrears Values</from><to>Calculate Outstanding Amounts</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate Outstanding Amounts</from><to>Calculate days_in_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate days_in_arrears</from><to>Get ID Fields</to><enabled>Y</enabled> </hop>  <hop> <from>Get ID Fields</from><to>Identify Weekly Band Key</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Calculate Installment Due and In Arrears Values</name>
     <type>ScriptValueMod</type>
@@ -315,6 +315,56 @@ where ls.loan_account_id = ?</sql>
     </step>
 
   <step>
+    <name>Get ID Fields</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select c.customer_id as customer_id, g.customer_id as group_id, ce.customer_id as center_id, 
+lo.personnel_id as loan_officer_id, br.office_id as branch_id, 
+flo.personnel_id as formed_by_loan_officer_id,
+p.prd_offering_id as prd_offering_id
+from dim_loan l
+join dim_customer c on c.customer_key = l.customer_key
+join dim_customer g on g.customer_key = l.group_key
+join dim_customer ce on ce.customer_key = l.center_key
+join dim_personnel lo on lo.personnel_key = l.loan_officer_key
+join dim_office br on br.office_key = l.branch_key
+join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
+join dim_product p on p.product_key = l.product_key
+where l.loan_account_id = ?
+and l.valid_from &lt;= ? and l.valid_to &gt; ?</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>loan_account_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>as_of_date</name>
+        <type>Date</type>
+      </field>
+      <field>
+        <name>as_of_date</name>
+        <type>Date</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>192</xloc>
+      <yloc>244</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Get Last Installment Due</name>
     <type>DBJoin</type>
     <description/>
@@ -366,11 +416,10 @@ and ls.due_date &lt;= ?</sql>
     <sql>&#47;*There may not have been a payment*&#47;
 select ifnull(max(r.installment_id),1) as last_installment_having_payment
 from fact_loan_repayments r
-join dim_account_action aa on aa.account_action_key = r.account_action_key
 where r.loan_account_id = ?
 and r.action_date &lt;= ?
-and aa.account_action_id = 1
-and adjusted is false</sql>
+and r.account_action_id = 1
+and r.adjusted is false</sql>
     <outer_join>N</outer_join>
     <replace_vars>Y</replace_vars>
     <parameter>
@@ -392,142 +441,6 @@ and adjusted is false</sql>
     </step>
 
   <step>
-    <name>Identify As Of Date Key</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>100</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>as_of_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>as_of_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>235</xloc>
-      <yloc>243</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify Loan Account Key</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_loan</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>loan_account_id</name>
-        <field>loan_account_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>as_of_date</name>
-        <field>valid_from</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>as_of_date</name>
-        <field>valid_to</field>
-        <condition>&gt;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>loan_account_key</name>
-        <rename>loan_account_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>group_key</name>
-        <rename>group_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>center_key</name>
-        <rename>center_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>loan_officer_key</name>
-        <rename>loan_officer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>branch_key</name>
-        <rename>branch_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>formed_by_loan_officer_key</name>
-        <rename>formed_by_loan_officer_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>product_key</name>
-        <rename>product_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>77</xloc>
-      <yloc>242</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Identify Monthly Band Key</name>
     <type>DBLookup</type>
     <description/>
@@ -543,7 +456,7 @@ and adjusted is false</sql>
     <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>dim_arrears_band_monthly</table>
+      <table>dw_arrears_band_monthly</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
@@ -568,8 +481,8 @@ and adjusted is false</sql>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>540</xloc>
-      <yloc>243</yloc>
+      <xloc>541</xloc>
+      <yloc>242</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -590,7 +503,7 @@ and adjusted is false</sql>
     <cache_size>0</cache_size>
     <lookup>
       <schema/>
-      <table>dim_arrears_band_weekly</table>
+      <table>dw_arrears_band_weekly</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
@@ -615,8 +528,8 @@ and adjusted is false</sql>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>378</xloc>
-      <yloc>240</yloc>
+      <xloc>380</xloc>
+      <yloc>242</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

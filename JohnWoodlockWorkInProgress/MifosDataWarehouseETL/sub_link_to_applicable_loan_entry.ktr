@@ -212,7 +212,7 @@
     <connection>DestinationDB</connection>
     <rowlimit>1</rowlimit>
     <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_id
 from dim_loan
 where loan_account_id = ?
 and valid_to &gt;= ?
@@ -250,7 +250,7 @@ order by loan_account_key </sql>
     <connection>DestinationDB</connection>
     <rowlimit>1</rowlimit>
     <sql>select loan_account_key, customer_key, product_key, group_key, center_key,
-loan_officer_key, branch_key, formed_by_loan_officer_key, currency_key
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_id
 from dim_loan
 where loan_account_id = ?
 and valid_from &lt;= ?
@@ -349,7 +349,7 @@ and valid_to &gt; ?</sql>
       </remove>      <remove>        <name>loan_officer_key</name>
       </remove>      <remove>        <name>branch_key</name>
       </remove>      <remove>        <name>formed_by_loan_officer_key</name>
-      </remove>      <remove>        <name>currency_key</name>
+      </remove>      <remove>        <name>currency_id</name>
       </remove>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>461</xloc>
@@ -377,7 +377,7 @@ and valid_to &gt; ?</sql>
       </remove>      <remove>        <name>loan_officer_key</name>
       </remove>      <remove>        <name>branch_key</name>
       </remove>      <remove>        <name>formed_by_loan_officer_key</name>
-      </remove>      <remove>        <name>currency_key</name>
+      </remove>      <remove>        <name>currency_id</name>
       </remove>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>872</xloc>

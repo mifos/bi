@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Currency Count</name>
+    <name>load_dw_fund</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -66,12 +66,13 @@
   </info>
   <notepads>
     <notepad>
-      <note>Number of currency entries in the source  should equal the number in the destination
-</note>
-      <xloc>299</xloc>
-      <yloc>113</yloc>
-      <width>427</width>
-      <heigth>22</heigth>
+      <note>From source to destination (no staging).
+All fields are &apos;type 1&apos; (simple update).  
+Not expecting to do otherwise.</note>
+      <xloc>415</xloc>
+      <yloc>50</yloc>
+      <width>210</width>
+      <heigth>47</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -126,8 +127,6 @@
     <data_tablespace/>
     <index_tablespace/>
     <attributes>
-      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
@@ -164,36 +163,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Currency Source Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Currency Destination Count</from><to>Join Source and Destination Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Counts</to><enabled>Y</enabled> </hop>  <hop> <from>Join Source and Destination Counts</from><to>Select values</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Extract Fund Data</from><to>Insert &#47; Update dw_fund</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Currency Destination Count</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select 1 as the_join, count(*) as destination_count
-from dw_currency
-where currency_id &gt; 0</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>267</xloc>
-      <yloc>20</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Currency Source Count</name>
+    <name>Extract Fund Data</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -203,8 +175,8 @@ where currency_id &gt; 0</sql>
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select 1 as the_join, count(*) as source_count
-from currency</sql>
+    <sql>select fund_id, fund_name
+from fund</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -212,15 +184,15 @@ from currency</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>52</xloc>
-      <yloc>20</yloc>
+      <xloc>274</xloc>
+      <yloc>24</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Join Source and Destination Counts</name>
-    <type>MergeJoin</type>
+    <name>Insert &#47; Update dw_fund</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -228,87 +200,33 @@ from currency</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<join_type>INNER</join_type>
-<step1>Currency Source Count</step1>
-<step2>Currency Destination Count</step2>
-    <keys_1>
-      <key>the_join</key>
-    </keys_1>
-    <keys_2>
-      <key>the_join</key>
-    </keys_2>
+    <connection>DestinationDB</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dw_fund</table>
+      <key>
+        <name>fund_id</name>
+        <field>fund_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>fund_id</name>
+        <rename>fund_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>fund_name</name>
+        <rename>fund_name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>156</xloc>
-      <yloc>116</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>source_count</name>
-        <rename/>
-        <length>-2</length>
-        <precision>15</precision>
-      </field>      <field>        <name>destination_count</name>
-        <rename/>
-        <length>-2</length>
-        <precision>15</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>154</xloc>
-      <yloc>241</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Test Counts</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_test_counts.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>361</xloc>
-      <yloc>240</yloc>
+      <xloc>277</xloc>
+      <yloc>148</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
