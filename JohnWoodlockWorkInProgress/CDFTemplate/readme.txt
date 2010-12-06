@@ -1,0 +1,1 @@
+The template-dashboard-jw.html file goes in the pentaho biserver-ce\pentaho-solutions\system\pentaho-cdf directory.

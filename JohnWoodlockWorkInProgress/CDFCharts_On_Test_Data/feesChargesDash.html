@@ -1,0 +1,66 @@
+<div id=branchSelector></div>
+<br>
+<br>
+<table>
+<tr>
+<td><div id=MonthlyThingCustomer></td><td></div><div id=MonthlyThingLoan></div></td>
+</tr>
+</table>
+
+
+
+<script language="javascript" type="text/javascript">
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+
+Dashboards.globalcontext = false;
+var event = "";
+var office = "1";
+ 
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: solution,
+  	path: path ,
+  	action: "OfficeList.xaction",
+	parameter: "office",
+	valueAsId: false,
+	htmlObject: "branchSelector",
+	executeAtStart: true,
+	postChange: function(){Dashboards.fireChange("event",office);}
+};
+
+monthlyThingChartCustomer = {
+	name:"MonthlyThingCustomer", 
+	type: "XactionComponent",
+	listeners: ["event"],
+	solution: solution, 
+	path: path,
+	action: "monthly_customer_fees_charges_barchart.xaction",
+	parameters:[["officeId", "office"]],
+	htmlObject: "MonthlyThingCustomer",
+	executeAtStart: true
+};
+
+
+monthlyThingChartLoan = {
+	name:"MonthlyThingLoan", 
+	type: "XactionComponent",
+	listeners: ["event"],
+	solution: solution, 
+	path: path,
+	action: "monthly_loan_fees_charges_barchart.xaction",
+	parameters:[["officeId", "office"]],
+	htmlObject: "MonthlyThingLoan",
+	executeAtStart: true
+};
+
+
+
+
+Dashboards.init([branchSelector, monthlyThingChartCustomer, monthlyThingChartLoan]);
+</script>

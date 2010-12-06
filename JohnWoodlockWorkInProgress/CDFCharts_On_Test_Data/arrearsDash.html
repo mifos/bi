@@ -1,0 +1,48 @@
+<div id=branchSelector></div>
+<br>
+<br>
+<div id=MonthlyArrears></div>
+
+
+<script language="javascript" type="text/javascript">
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+
+Dashboards.globalcontext = false;
+var event = "";
+var office = "1";
+ 
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: solution,
+  	path: path ,
+  	action: "OfficeList.xaction",
+	parameter: "office",
+	valueAsId: false,
+	htmlObject: "branchSelector",
+	executeAtStart: true,
+	postChange: function(){Dashboards.fireChange("event",office);}
+};
+
+monthlyArrearsChart = {
+	name:"MonthlyArrears", 
+	type: "XactionComponent",
+	listeners: ["event"],
+	solution: solution, 
+	path: path,
+	action: "monthly_arrears_barchart.xaction",
+	parameters:[["officeId", "office"]],
+	htmlObject: "MonthlyArrears",
+	executeAtStart: true
+};
+
+
+
+
+Dashboards.init([branchSelector, monthlyArrearsChart]);
+</script>
