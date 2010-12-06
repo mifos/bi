@@ -52,7 +52,7 @@ CREATE TABLE `dim_customer` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -155,8 +155,8 @@ CREATE TABLE `dim_loan` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`),
-  KEY `fund_id` (`fund_id`)
+  KEY `fund_id` (`fund_id`),
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -617,7 +617,7 @@ CREATE TABLE `fact_client_attendances` (
   KEY `center_key` (`center_key`),
   KEY `loan_officer_key` (`loan_officer_key`),
   KEY `branch_key` (`branch_key`),
-  KEY `formed_by_loan_officer_key` (`loan_officer_key`)
+  KEY `formed_by_loan_officer_key` (`formed_by_loan_officer_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2687,4 +2687,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-03 23:48:37
+-- Dump completed on 2010-12-06 20:57:19
