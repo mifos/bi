@@ -175,6 +175,31 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>wcm</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>wcm</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce7dc781bed6</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
   <hop> <from>Generate Rows with Initial Date</from><to>Days Sequence</to><enabled>Y</enabled> </hop>  <hop> <from>Days Sequence</from><to>Calculate and Format Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Calculate and Format Dates</from><to>is_first_day_in_month</to><enabled>Y</enabled> </hop>  <hop> <from>is_first_day_in_month</from><to>is_last_day_in_month</to><enabled>Y</enabled> </hop>  <hop> <from>is_first_day_in_week</from><to>is_last_day_in_week</to><enabled>Y</enabled> </hop>  <hop> <from>is_last_day_in_month</from><to>is_first_day_in_week</to><enabled>Y</enabled> </hop>  <hop> <from>is_last_day_in_week</from><to>is_weekend</to><enabled>Y</enabled> </hop>  <hop> <from>is_weekend</from><to>Load dim_date</to><enabled>Y</enabled> </hop>  <hop> <from>Missing Date</from><to>Load dim_date</to><enabled>Y</enabled> </hop>  </order>
   <step>
@@ -703,12 +728,12 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>20090101</nullif>
+        <nullif>20070101</nullif>
         <length>-1</length>
         <precision>-1</precision>
       </field>
     </fields>
-    <limit>3600</limit>
+    <limit>5400</limit>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>274</xloc>
