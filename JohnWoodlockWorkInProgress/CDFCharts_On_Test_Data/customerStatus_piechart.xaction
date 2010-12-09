@@ -42,11 +42,12 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select substring(loan_status,instr(loan_status,'-') + 1) as loan_status, count(*) as status_count
-from dim_loan
+        <query><![CDATA[select substring(customer_status, instr(customer_status,'-') + 1) as customer_status, count(*) as status_count
+from dim_customer
 where valid_from <= date('{asOfDate}') and valid_to > date('{asOfDate}')
-and loan_account_key > 0
-group by loan_status
+and customer_key > 0
+and customer_level_id = 1
+group by customer_status
 order by 1;]]></query> 
       </component-definition> 
     </action-definition>

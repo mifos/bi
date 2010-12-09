@@ -1,0 +1,76 @@
+
+<table>
+<tr><td align="center"><div id=date1Obj></div></td><td align="center"><div id=date2Obj></td></tr>
+<tr><td><div id=Chart1></div></td><td><div id=Chart2></div></td></tr>
+</table>
+
+<script language="javascript" type="text/javascript">
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+
+Dashboards.globalcontext = false;
+
+var event1 = "";
+var event2 = "";
+var dateInput1 = "2010-11-01";
+var dateInput2 = "2009-11-01";
+var dateInput1Updated = dateInput1;
+var dateInput2Updated = dateInput2;
+
+dateInput1Updated.replace(/-/g,'');
+dateInput2Updated.replace(/-/g,'');
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "dateInput1",
+	htmlObject: "date1Obj",
+	executeAtStart: true,
+	postChange: function(){dateInput1Updated = dateInput1; dateInput1Updated.replace(/-/g,''); Dashboards.fireChange("event1", dateInput1Updated );}
+};
+
+date2 = 
+{
+	name: "date2",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "dateInput2",
+	htmlObject: "date2Obj",
+	executeAtStart: true,
+	postChange: function(){dateInput2Updated = dateInput2; dateInput2Updated.replace(/-/g,''); Dashboards.fireChange("event2", dateInput2Updated );}
+
+};
+
+
+Chart1 = {
+	name:"Chart1", 
+	type: "XactionComponent",
+	solution: solution, 
+	path: path,
+	listeners: ["event1"],
+	parameters:[["asOfDate", "dateInput1Updated"]],
+	action: "customerStatus_piechart.xaction",
+	htmlObject: "Chart1",
+	executeAtStart: true
+};
+
+
+Chart2 = {
+	name:"Chart2", 
+	type: "XactionComponent",
+	solution: solution, 
+	path: path,
+	listeners: ["event2"],
+	parameters:[["asOfDate", "dateInput2Updated"]],
+	action: "customerStatus_piechart.xaction",
+	htmlObject: "Chart2",
+	executeAtStart: true
+};
+
+
+Dashboards.init([date1, date2, Chart1, Chart2]);
+</script>

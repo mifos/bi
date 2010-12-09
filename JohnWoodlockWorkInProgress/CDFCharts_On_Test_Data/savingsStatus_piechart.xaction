@@ -34,7 +34,7 @@
       <component-name>SQLLookupRule</component-name>
       <action-type>Relational</action-type>
       <action-inputs> 
-        <asOfDate type="string"/> 
+        <asOfDate type="string"/>
       </action-inputs>
       <action-outputs> 
         <query-result type="result-set" mapping="query_result"/> 
@@ -42,12 +42,12 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select substring(loan_status,instr(loan_status,'-') + 1) as loan_status, count(*) as status_count
-from dim_loan
+        <query><![CDATA[select substring(savings_status, instr(savings_status,'-') + 1) as savings_status, count(*) as status_count
+from dim_savings
 where valid_from <= date('{asOfDate}') and valid_to > date('{asOfDate}')
-and loan_account_key > 0
-group by loan_status
-order by 1;]]></query> 
+and savings_account_key > 0
+group by savings_status
+order by 1;]]></query>
       </component-definition> 
     </action-definition>
   
@@ -70,7 +70,7 @@ order by 1;]]></query>
         </chart-attributes>  
         <width><![CDATA[400]]></width>  
         <height><![CDATA[300]]></height>  
-        <title><![CDATA[Status of Clients]]></title> 
+        <title><![CDATA[Status of Savings]]></title>
       </component-definition> 
     </action-definition>
  

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Loans Status</title>
+	<title>Savings Status</title>
 	<author>John Woodlock</author>
 	<description></description>
 	<icon></icon>
 	<style>jw</style>
-	<template>loansDash.html</template>
+	<template>savingsStatusDash.html</template>
 </cdf>
