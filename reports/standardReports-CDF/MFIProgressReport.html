@@ -60,8 +60,8 @@ var event = 0;
 var office = "1.1.";
 
 // set these properly
-var m1 = "2010-Oct";
-var m2 = "2010-Nov";
+var m1 = ""; // "2010-Oct";
+var m2 = ""; //"2010-Nov";
 
 var outputType = "application/pdf";
 
@@ -148,4 +148,10 @@ theReport =
 
 Dashboards.init([branchSelector, month1, month2, outputSelector, runReport, theReport]);
 
+$(document).ready(function() {
+	$('#month1 select option:eq(2)').attr('selected', 'selected')
+	$('#month2 select option:eq(1)').attr('selected', 'selected')
+	m1 = $('#month1 select option:selected').val();
+	m2 = $('#month2 select option:selected').val();
+});
 </script>
