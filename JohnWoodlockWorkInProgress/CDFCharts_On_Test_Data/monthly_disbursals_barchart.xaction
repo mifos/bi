@@ -42,7 +42,7 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select d.month_abbreviation, sum(disb.disbursal_amount) as "Disbursed Amount"
+        <query><![CDATA[select d.year_month_abbreviation, sum(disb.disbursal_amount) as "Disbursed Amount"
 from fact_loan_disbursals disb
 join dim_date d on d.date_key = disb.disbursal_date_key
 join dim_office o on o.office_id = {officeId} 
@@ -50,7 +50,7 @@ join dim_office oo on oo.search_id like concat(o.search_id, '%') and oo.office_k
 
 where disb.reversed is false and disb.account_action_id = 10
 and d.date_value between date('2010-05-01') and date('2010-10-31')
-group by d.month_abbreviation 
+group by d.year_month_abbreviation 
 order by d.date_value]]></query> 
       </component-definition> 
     </action-definition>

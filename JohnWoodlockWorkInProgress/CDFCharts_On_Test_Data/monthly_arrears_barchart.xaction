@@ -42,7 +42,7 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select d.month_abbreviation, sum(principal_in_arrears) as "Principal in Arrears"
+        <query><![CDATA[select d.year_month_abbreviation, sum(principal_in_arrears) as "Principal in Arrears"
 from hist_loan_arrears hla
 join dw_mfi_configuration config on config.mfi_configuration_key = 1
 join dim_date d
@@ -56,7 +56,7 @@ and hla.days_in_arrears > config.loan_lateness_days
 
 and oo.valid_from <= hla.as_of_date and oo.valid_to > hla.as_of_date
 and oo.office_id = hla.branch_id
-group by d.month_abbreviation 
+group by d.year_month_abbreviation 
 order by d.date_value]]></query> 
       </component-definition> 
     </action-definition>

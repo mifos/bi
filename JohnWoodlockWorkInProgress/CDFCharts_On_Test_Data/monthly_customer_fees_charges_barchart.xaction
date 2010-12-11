@@ -42,7 +42,7 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select d.month_abbreviation, 
+        <query><![CDATA[select d.year_month_abbreviation, 
 sum(if(x.account_charge_type_id = 1, x.amount, 0)) as "Periodic and One-time Fees",
 sum(if(x.account_charge_type_id != 1, x.amount, 0)) as "Misc. Fees, Charges and Penalties"
 from fact_customer_fees_and_charges x
@@ -51,7 +51,7 @@ join dim_office o on o.office_id = {officeId}
 join dim_office oo on oo.search_id like concat(o.search_id, '%') and oo.office_key = x.branch_key
 
 where d.date_value between date('2010-05-01') and date('2010-10-31')
-group by d.month_abbreviation 
+group by d.year_month_abbreviation 
 order by d.date_value]]></query> 
       </component-definition> 
     </action-definition>

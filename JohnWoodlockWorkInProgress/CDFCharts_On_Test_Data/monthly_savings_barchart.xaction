@@ -42,7 +42,7 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select d.month_abbreviation,
+        <query><![CDATA[select d.year_month_abbreviation,
 sum(x.deposit_amount) as "Deposits", 
 sum(x.interest_amount) as "Interest", 
 sum(x.withdrawal_amount) as "Withdrawals", 
@@ -53,7 +53,7 @@ join dim_office o on o.office_id = {officeId}
 join dim_office oo on oo.search_id like concat(o.search_id, '%') and oo.office_key = x.branch_key
 
 where d.date_value between date('2010-05-01') and date('2010-10-31')
-group by d.month_abbreviation 
+group by d.year_month_abbreviation 
 order by d.date_value]]></query> 
       </component-definition> 
     </action-definition>

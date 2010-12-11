@@ -42,7 +42,7 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select d.month_abbreviation, sum(r.principal_amount) as "Principal", sum(r.interest_amount) as "Interest"
+        <query><![CDATA[select d.year_month_abbreviation, sum(r.principal_amount) as "Principal", sum(r.interest_amount) as "Interest"
 from fact_loan_repayments r
 join dim_date d on d.date_key = r.action_date_key
 join dim_office o on o.office_id = {officeId}
@@ -50,7 +50,7 @@ join dim_office oo on oo.search_id like concat(o.search_id, '%') and oo.office_k
 
 where r.reversed is false and r.adjusted = false and r.account_action_id = 1
 and d.date_value between date('2010-05-01') and date('2010-10-31')
-group by d.month_abbreviation 
+group by d.year_month_abbreviation 
 order by d.date_value]]></query> 
       </component-definition> 
     </action-definition>
