@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Office List Search Id</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs>
+    <officeId type="string">
+      <sources>
+        <request>officeId</request>
+      </sources>
+      <default-value/>
+    </officeId>
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs>
+        <officeId type="string"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select distinctrow p.personnel_id, p.display_name
+from dim_personnel p
+join dim_office o on o.office_key = p.office_key
+		and o.office_id = {officeId}
+where p.is_loan_officer = true
+and p.valid_from <= curdate()
+and p.valid_to > curdate())
+union 
+(select -1, "  ALL")
+
+order by 2]]></query>
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

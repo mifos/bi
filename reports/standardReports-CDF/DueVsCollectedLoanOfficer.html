@@ -1,0 +1,197 @@
+<style type="text/css">
+
+#theReport {
+  	height: 800px;
+  	width: 100%; 
+  	background-color:white;
+  	border-color:blue; 
+  	border-style:solid; 
+  	border-width:1px;
+}
+
+table
+{
+	border-style:solid;
+	width: 100%;
+}
+.reportLabel {
+	font-weight: bold;
+}
+
+
+
+</style>
+<table>
+<tr>
+<td><div class=reportLabel>Office</div></td>
+<td><div class=reportLabel>Loan Officer</div></td>
+<td><div class=reportLabel>Start Date</div></td>
+<td><div class=reportLabel>End Date</div></td>
+<td><div class=reportLabel>Output Type</div></td>
+</tr>
+<tr>
+<td><div id=branchSelector></div></td>
+<td><div id=LOSelector></div></td>
+<td><div id=date1Obj></div></td>
+<td><div id=date2Obj></div></td>
+<td><div id=outputSelector></div></td>
+</tr>
+<tr><td><div id=runReport></div></td><td></td><td></td><td></td><td><div id=clearReport></td></tr>
+
+</table>
+
+<div id=theReport></div>
+
+<script language="javascript" type="text/javascript">
+
+function updateLOSelect()
+{
+	Dashboards.fireChange("officeId",officeId);
+	$('#LOSelector select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelector select option:selected').val();
+}
+
+function runTheReport()
+{
+
+	if (startDate > endDate)
+	{
+		alert("Start Date is after End Date");
+		return;
+	}
+
+	event = event + 1;
+	Dashboards.fireChange("event", event);
+}
+
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+var commonActionsSolution = "commonActions";
+var standardReportsSolution = "standardReports";
+
+
+Dashboards.globalcontext = false;
+var event = 0;
+var officeId = 0;
+var loanOfficerId = -1;
+
+
+var currentDate = new Date();
+var month = currentDate.getMonth() + 1;
+var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
+
+var startDate = currentDateStr;
+var endDate = currentDateStr;
+var outputType = "application/pdf";
+
+ 
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "BranchList.xaction",
+	parameter: "officeId",
+	valueAsId: false,
+	htmlObject: "branchSelector",
+	postChange: function(){updateLOSelect();},
+	executeAtStart: true
+};
+
+LOSelector = 
+{
+	name: "LOSelector",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "LOBranchList.xaction",
+	parameter: "loanOfficerId",
+	valueAsId: false,
+	htmlObject: "LOSelector",
+	executeAtStart: true
+};
+
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "startDate",
+	htmlObject: "date1Obj",
+	executeAtStart: true
+};
+
+date2 = 
+{
+	name: "date2",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "endDate",
+	htmlObject: "date2Obj",
+	executeAtStart: true
+};
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelector",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReport",
+  	label: "View Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReport",
+  	label: "Clear Report(if its in the way)",
+  	expression: function(){$('#theReport').html("");},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: standardReportsSolution,
+  	path: path,
+  	action: "DueVsCollectedLoanOfficer.prpt",
+  	listeners:["event"],
+  	parameters: [["selected_office","officeId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
+  	htmlObject: "theReport",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([branchSelector, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+
+$(document).ready(function() {
+	$('#branchSelector select option:eq(0)').attr('selected', 'selected')
+	officeId = $('#branchSelector select option:selected').val();
+	updateLOSelect();
+});
+
+
+</script>
