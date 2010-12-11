@@ -1,0 +1,151 @@
+<style type="text/css">
+
+#theReport {
+  	height: 800px;
+  	width: 100%; 
+  	background-color:white;
+  	border-color:blue; 
+  	border-style:solid; 
+  	border-width:1px;
+}
+
+table
+{
+	border-style:solid;
+	width: 100%;
+}
+.reportLabel {
+	font-weight: bold;
+}
+
+
+
+</style>
+<table>
+<tr>
+<td><div class=reportLabel>Office</div></td>
+<td><div class=reportLabel>Month 1</div></td>
+<td><div class=reportLabel>Month 2</div></td>
+<td><div class=reportLabel>Output Type</div></td>
+</tr>
+<tr>
+<td><div id=branchSelector></div></td>
+<td><div id=month1></div></td>
+<td><div id=month2></div></td>
+<td><div id=outputSelector></div></td>
+</tr>
+<tr><td><div id=runReport></div></td><td></td><td></td><td></td></tr>
+
+</table>
+
+<div id=theReport></div>
+
+<script language="javascript" type="text/javascript">
+
+function runTheReport()
+{
+	event = event + 1;
+	Dashboards.fireChange("event", event);
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+var commonActionsSolution = "commonActions";
+var standardReportsSolution = "standardReports";
+
+
+Dashboards.globalcontext = false;
+var event = 0;
+var office = "1.1.";
+
+// set these properly
+var m1 = "2010-Oct";
+var m2 = "2010-Nov";
+
+var outputType = "application/pdf";
+
+
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "OfficeListSearchIdNoAll.xaction",
+	parameter: "office",
+	valueAsId: false,
+	htmlObject: "branchSelector",
+	executeAtStart: true
+};
+
+month1 = 
+{
+	name: "month1",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "MonthList.xaction",
+	parameter: "m1",
+	valueAsId: false,
+	htmlObject: "month1",
+	executeAtStart: true
+};
+
+
+month2 = 
+{
+	name: "month2",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "MonthList.xaction",
+	parameter: "m2",
+	valueAsId: false,
+	htmlObject: "month2",
+	executeAtStart: true
+};
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelector",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReport",
+  	label: "View Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: standardReportsSolution,
+  	path: path,
+  	action: "MFIProgressReport.prpt",
+  	listeners:["event"],
+  	parameters: [["selected_office","office"],["selected_period1","m1"],["selected_period2","m2"],["output-type","outputType"]],
+  	htmlObject: "theReport",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([branchSelector, month1, month2, outputSelector, runReport, theReport]);
+
+</script>
