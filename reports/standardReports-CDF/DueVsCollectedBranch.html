@@ -66,8 +66,13 @@ var standardReportsSolution = "standardReports";
 Dashboards.globalcontext = false;
 var event = 0;
 var office = "-1";
-var startDate = "2010-10-01";
-var endDate = "2010-11-01";
+
+var currentDate = new Date();
+var month = currentDate.getMonth() + 1;
+var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
+alert(currentDateStr);
+var startDate = currentDateStr;
+var endDate = currentDateStr;
 var outputType = "application/pdf";
 
  
@@ -153,4 +158,5 @@ theReport =
 }
 
 Dashboards.init([branchSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+
 </script>
