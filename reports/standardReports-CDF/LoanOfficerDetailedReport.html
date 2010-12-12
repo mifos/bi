@@ -1,5 +1,9 @@
 <style type="text/css">
 
+#returnSearchId {
+  	display: none;
+}
+
 #theReport {
   	height: 800px;
   	width: 100%; 
@@ -40,6 +44,8 @@ table
 
 </table>
 
+<div id=returnSearchId></div>
+
 <div id=theReport></div>
 
 <script language="javascript" type="text/javascript">
@@ -47,8 +53,12 @@ table
 function updateLOSelect()
 {
 	Dashboards.fireChange("officeId",officeId);
+
 	$('#LOSelector select option:eq(0)').attr('selected', 'selected'); 
 	loanOfficerId = $('#LOSelector select option:selected').val();
+
+	$('#returnSearchId select option:eq(0)').attr('selected', 'selected'); 
+	officeSearchId = $('#returnSearchId select option:selected').val();
 }
 
 function runTheReport()
@@ -75,7 +85,9 @@ var standardReportsSolution = "standardReports";
 Dashboards.globalcontext = false;
 var event = 0;
 var officeId = 0;
+var officeSearchId = "";
 var loanOfficerId = -1;
+
 
 
 var currentDate = new Date();
@@ -94,13 +106,29 @@ branchSelector =
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "BranchList.xaction",
+  	action: "OfficeListNoAll.xaction",
 	parameter: "officeId",
 	valueAsId: false,
 	htmlObject: "branchSelector",
 	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
+
+returnSearchId = 
+{
+	name: "returnSearchId",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "OfficeSearchIdFromId.xaction",
+	parameter: "officeSearchId",
+	valueAsId: false,
+	htmlObject: "returnSearchId",
+	executeAtStart: false
+};
+
 
 LOSelector = 
 {
@@ -110,7 +138,7 @@ LOSelector =
 	parameters:[["officeId", "officeId"]],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "LOBranchList.xaction",
+  	action: "LOOfficeListSearchId.xaction",
 	parameter: "loanOfficerId",
 	valueAsId: false,
 	htmlObject: "LOSelector",
@@ -176,16 +204,16 @@ theReport =
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "DueVsCollectedLoanOfficer.prpt",
+  	action: "LoanOfficerDetailedReport.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReport",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, returnSearchId, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
 	$('#branchSelector select option:eq(0)').attr('selected', 'selected')
