@@ -9,41 +9,20 @@
 		<link rel="stylesheet" type="text/css" href="resources/style/template.css"/>
 	</head>
 	<body>
-		<script language="javascript" type="text/javascript">
 
-			navigatorComponent =
-{
-name: "navigatorComponent",
-	  type: "navigator",
-	  listeners:[],
-	  parameters: [],
-	  htmlObject: "navObject",
-	  executeAtStart: true,
-	  mode: "horizontal",
-	  includeSolutions: true
-};
-// Removed folderlist
-var templateComponents = [navigatorComponent];
-Dashboards.addComponents(templateComponents);
-</script>
+
 <script language="javascript">
 
 	isAdmin = "{isAdmin}";
 	isLoggedIn = "{isLoggedIn}";
 
 </script>
-            <h1><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></h1>
+
+
+            <div><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></div>
 
 		<!-- start header -->
-
-		<div id = "contentx">
-			<div id = "primaryContentContainerx">
-				<div id="primaryContentx">
-					<br>
-					{content}
-				</div>
-			</div>
+			{content}
 			<div class="clear"/>
-		</div>
 </body>
 </html>

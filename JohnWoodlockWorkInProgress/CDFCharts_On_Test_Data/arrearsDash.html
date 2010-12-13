@@ -1,13 +1,22 @@
-<div id=branchSelector></div>
-<br>
-<br>
-<div id=MonthlyArrears></div>
+<table>
+<tr><td align="center">
+<div id=branchSelectorObj></div>
+</td></tr>
+
+<tr><td height="20px"></td></tr>
+
+<tr><td>
+<div id=MonthlyArrearsObj></div>
+</td></tr>
+</table>
 
 
 <script language="javascript" type="text/javascript">
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var commonActionsSolution = "commonActions";
+
 
 
 Dashboards.globalcontext = false;
@@ -19,12 +28,12 @@ branchSelector =
 	name: "branchSelector",
 	type: "select",
 	parameters:[],
-  	solution: solution,
+  	solution: commonActionsSolution,
   	path: path ,
-  	action: "OfficeList.xaction",
+  	action: "OfficeListNoAll.xaction",
 	parameter: "office",
 	valueAsId: false,
-	htmlObject: "branchSelector",
+	htmlObject: "branchSelectorObj",
 	executeAtStart: true,
 	postChange: function(){Dashboards.fireChange("event",office);}
 };
@@ -37,7 +46,7 @@ monthlyArrearsChart = {
 	path: path,
 	action: "monthly_arrears_barchart.xaction",
 	parameters:[["officeId", "office"]],
-	htmlObject: "MonthlyArrears",
+	htmlObject: "MonthlyArrearsObj",
 	executeAtStart: true
 };
 

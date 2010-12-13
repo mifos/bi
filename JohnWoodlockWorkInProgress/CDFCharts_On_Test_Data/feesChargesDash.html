@@ -1,19 +1,17 @@
-<div id=branchSelector></div>
-<br>
-<br>
 <table>
-<tr>
-<td><div id=MonthlyThingCustomer></td><td></div><div id=MonthlyThingLoan></div></td>
-</tr>
-</table>
+<tr><td align="center"><div id=branchSelectorObj></div></td><td></td></tr>
 
+<tr><td height="20px"></td><td></td></tr>
+
+<tr><td><div id=MonthlyThingCustomerObj></td><td></div><div id=MonthlyThingLoanObj></div></td></tr>
+</table>
 
 
 <script language="javascript" type="text/javascript">
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
-
+var commonActionsSolution = "commonActions";
 
 Dashboards.globalcontext = false;
 var event = "";
@@ -24,12 +22,12 @@ branchSelector =
 	name: "branchSelector",
 	type: "select",
 	parameters:[],
-  	solution: solution,
+  	solution: commonActionsSolution,
   	path: path ,
-  	action: "OfficeList.xaction",
+  	action: "OfficeListNoAll.xaction",
 	parameter: "office",
 	valueAsId: false,
-	htmlObject: "branchSelector",
+	htmlObject: "branchSelectorObj",
 	executeAtStart: true,
 	postChange: function(){Dashboards.fireChange("event",office);}
 };
@@ -42,7 +40,7 @@ monthlyThingChartCustomer = {
 	path: path,
 	action: "monthly_customer_fees_charges_barchart.xaction",
 	parameters:[["officeId", "office"]],
-	htmlObject: "MonthlyThingCustomer",
+	htmlObject: "MonthlyThingCustomerObj",
 	executeAtStart: true
 };
 
@@ -55,7 +53,7 @@ monthlyThingChartLoan = {
 	path: path,
 	action: "monthly_loan_fees_charges_barchart.xaction",
 	parameters:[["officeId", "office"]],
-	htmlObject: "MonthlyThingLoan",
+	htmlObject: "MonthlyThingLoanObj",
 	executeAtStart: true
 };
 

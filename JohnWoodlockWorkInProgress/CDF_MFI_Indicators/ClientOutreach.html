@@ -6,9 +6,13 @@
 <tr><td height="20px"></td></tr>
 
 <tr><td>
-<div id=MonthlyThingObj></div>
+<div id=BarChartObj></div>
 </td></tr>
 </table>
+
+
+
+
 
 
 <script language="javascript" type="text/javascript">
@@ -16,6 +20,7 @@
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 var commonActionsSolution = "commonActions";
+
 
 Dashboards.globalcontext = false;
 var event = "";
@@ -36,20 +41,20 @@ branchSelector =
 	postChange: function(){Dashboards.fireChange("event",office);}
 };
 
-monthlyThingChart = {
-	name:"MonthlyThing", 
+BarChart = {
+	name:"BarChart", 
 	type: "XactionComponent",
 	listeners: ["event"],
 	solution: solution, 
 	path: path,
-	action: "monthly_repayments_barchart.xaction",
+	action: "ClientOutreach_barchart.xaction",
 	parameters:[["officeId", "office"]],
-	htmlObject: "MonthlyThingObj",
+	htmlObject: "BarChartObj",
 	executeAtStart: true
 };
 
 
 
 
-Dashboards.init([branchSelector, monthlyThingChart]);
+Dashboards.init([branchSelector, BarChart]);
 </script>

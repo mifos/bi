@@ -1,7 +1,7 @@
 
 <table>
 <tr><td align="center"><div id=date1Obj></div></td><td align="center"><div id=date2Obj></td></tr>
-<tr><td><div id=Chart1></div></td><td><div id=Chart2></div></td></tr>
+<tr><td><div id=Chart1Obj></div></td><td><div id=Chart2Obj></div></td></tr>
 </table>
 
 <script language="javascript" type="text/javascript">
@@ -54,7 +54,7 @@ Chart1 = {
 	listeners: ["event1"],
 	parameters:[["asOfDate", "dateInput1Updated"]],
 	action: "savingsStatus_piechart.xaction",
-	htmlObject: "Chart1",
+	htmlObject: "Chart1Obj",
 	executeAtStart: true
 };
 
@@ -67,7 +67,7 @@ Chart2 = {
 	listeners: ["event2"],
 	parameters:[["asOfDate", "dateInput2Updated"]],
 	action: "savingsStatus_piechart.xaction",
-	htmlObject: "Chart2",
+	htmlObject: "Chart2Obj",
 	executeAtStart: true
 };
 
