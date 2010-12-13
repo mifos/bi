@@ -1,44 +1,18 @@
-<style type="text/css">
-
-#theReport {
-  	height: 800px;
-  	width: 100%; 
-  	background-color:white;
-  	border-color:blue; 
-  	border-style:solid; 
-  	border-width:1px;
-}
-
-table
-{
-	border-style:solid;
-	width: 100%;
-}
-.reportLabel {
-	font-weight: bold;
-}
-
-
-
-</style>
-<table>
+<table width=100%>
 <tr>
-<td><div class=reportLabel>Office</div></td>
-<td><div class=reportLabel>Month 1</div></td>
-<td><div class=reportLabel>Month 2</div></td>
-<td><div class=reportLabel>Output Type</div></td>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
+<td><pre>     </pre></td>
+<td><div class=reportLabel>Month 1</div><div id=month1Obj></div></td>
+<td><div class=reportLabel>Month 2</div><div id=month2Obj></div></td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
-<tr>
-<td><div id=branchSelector></div></td>
-<td><div id=month1></div></td>
-<td><div id=month2></div></td>
-<td><div id=outputSelector></div></td>
+<tr><td><div id=runReportObj></div></td><td></td><td></td><td></td><td></td><td><div id=clearReportObj></td>
 </tr>
-<tr><td><div id=runReport></div></td><td></td><td></td><td></td></tr>
-
 </table>
 
-<div id=theReport></div>
+<div id=theReportObj></div>
+
 
 <script language="javascript" type="text/javascript">
 
@@ -57,11 +31,10 @@ var standardReportsSolution = "standardReports";
 
 Dashboards.globalcontext = false;
 var event = 0;
-var office = "1.1.";
+var office = "";
 
-// set these properly
-var m1 = ""; // "2010-Oct";
-var m2 = ""; //"2010-Nov";
+var m1 = ""; 
+var m2 = ""; 
 
 var outputType = "application/pdf";
 
@@ -76,7 +49,7 @@ branchSelector =
   	action: "OfficeListSearchIdNoAll.xaction",
 	parameter: "office",
 	valueAsId: false,
-	htmlObject: "branchSelector",
+	htmlObject: "branchSelectorObj",
 	executeAtStart: true
 };
 
@@ -90,7 +63,7 @@ month1 =
   	action: "MonthList.xaction",
 	parameter: "m1",
 	valueAsId: false,
-	htmlObject: "month1",
+	htmlObject: "month1Obj",
 	executeAtStart: true
 };
 
@@ -105,7 +78,7 @@ month2 =
   	action: "MonthList.xaction",
 	parameter: "m2",
 	valueAsId: false,
-	htmlObject: "month2",
+	htmlObject: "month2Obj",
 	executeAtStart: true
 };
 
@@ -117,7 +90,7 @@ outputSelector =
 	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
 	parameter:"outputType",
 	valueAsId: false,
-	htmlObject: "outputSelector",
+	htmlObject: "outputSelectorObj",
 	executeAtStart: true
 }
 
@@ -125,7 +98,7 @@ runReport =
 {
   	name: "runReport",
   	type: "Button",
-  	htmlObject: "runReport",
+  	htmlObject: "runReportObj",
   	label: "View Report",
   	expression: function(){runTheReport();},
   	executeAtStart: true
@@ -140,7 +113,7 @@ theReport =
   	action: "MFIProgressReport.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","office"],["selected_period1","m1"],["selected_period2","m2"],["output-type","outputType"]],
-  	htmlObject: "theReport",
+  	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
@@ -149,9 +122,14 @@ theReport =
 Dashboards.init([branchSelector, month1, month2, outputSelector, runReport, theReport]);
 
 $(document).ready(function() {
-	$('#month1 select option:eq(2)').attr('selected', 'selected')
-	$('#month2 select option:eq(1)').attr('selected', 'selected')
-	m1 = $('#month1 select option:selected').val();
-	m2 = $('#month2 select option:selected').val();
+
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	office = $('#branchSelectorObj select option:selected').val();
+
+	$('#month1Obj select option:eq(2)').attr('selected', 'selected')
+	$('#month2Obj select option:eq(1)').attr('selected', 'selected')
+
+	m1 = $('#month1Obj select option:selected').val();
+	m2 = $('#month2Obj select option:selected').val();
 });
 </script>

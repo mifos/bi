@@ -9,18 +9,31 @@
 		<link rel="stylesheet" type="text/css" href="resources/style/template.css"/>
 	</head>
 	<body>
-		<script language="javascript" type="text/javascript">
 </script>
-<script language="javascript">
+
+<style type="text/css">
+
+.reportLabel {
+	font-weight: bold;
+}
+
+#theReportObj {
+  	height: 600px;
+  	width: 100%; 
+}
+
+</style>
+
+
+<script language="javascript" type="text/javascript">
 
 	isAdmin = "{isAdmin}";
 	isLoggedIn = "{isLoggedIn}";
 
 </script>
-            <div><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></div>
 
 		<!-- start header -->
-			<div>{content}</div>
+			{content}
 			<div class="clear"/>
 </body>
 </html>

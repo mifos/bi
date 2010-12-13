@@ -1,52 +1,26 @@
 <style type="text/css">
-
-#returnSearchId {
+#returnSearchIdObj {
   	display: none;
 }
-
-#theReport {
-  	height: 800px;
-  	width: 100%; 
-  	background-color:white;
-  	border-color:blue; 
-  	border-style:solid; 
-  	border-width:1px;
-}
-
-table
-{
-	border-style:solid;
-	width: 100%;
-}
-.reportLabel {
-	font-weight: bold;
-}
-
-
-
 </style>
-<table>
-<tr>
-<td><div class=reportLabel>Office</div></td>
-<td><div class=reportLabel>Loan Officer</div></td>
-<td><div class=reportLabel>Start Date</div></td>
-<td><div class=reportLabel>End Date</div></td>
-<td><div class=reportLabel>Output Type</div></td>
-</tr>
-<tr>
-<td><div id=branchSelector></div></td>
-<td><div id=LOSelector></div></td>
-<td><div id=date1Obj></div></td>
-<td><div id=date2Obj></div></td>
-<td><div id=outputSelector></div></td>
-</tr>
-<tr><td><div id=runReport></div></td><td></td><td></td><td></td><td><div id=clearReport></td></tr>
 
+<table width=100%>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td>
+<td><pre>     </pre></td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+</tr>
+<tr><td><div id=runReportObj></div></td><td></td><td></td><td></td><td></td><td></td><td><div id=clearReportObj></td>
+</tr>
 </table>
 
-<div id=returnSearchId></div>
+<div id=returnSearchIdObj></div>
 
-<div id=theReport></div>
+<div id=theReportObj></div>
 
 <script language="javascript" type="text/javascript">
 
@@ -54,11 +28,11 @@ function updateLOSelect()
 {
 	Dashboards.fireChange("officeId",officeId);
 
-	$('#LOSelector select option:eq(0)').attr('selected', 'selected'); 
-	loanOfficerId = $('#LOSelector select option:selected').val();
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
 
-	$('#returnSearchId select option:eq(0)').attr('selected', 'selected'); 
-	officeSearchId = $('#returnSearchId select option:selected').val();
+	$('#returnSearchIdObj select option:eq(0)').attr('selected', 'selected'); 
+	officeSearchId = $('#returnSearchIdObj select option:selected').val();
 }
 
 function runTheReport()
@@ -88,8 +62,6 @@ var officeId = 0;
 var officeSearchId = "";
 var loanOfficerId = -1;
 
-
-
 var currentDate = new Date();
 var month = currentDate.getMonth() + 1;
 var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
@@ -109,7 +81,7 @@ branchSelector =
   	action: "OfficeListNoAll.xaction",
 	parameter: "officeId",
 	valueAsId: false,
-	htmlObject: "branchSelector",
+	htmlObject: "branchSelectorObj",
 	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
@@ -125,7 +97,7 @@ returnSearchId =
   	action: "OfficeSearchIdFromId.xaction",
 	parameter: "officeSearchId",
 	valueAsId: false,
-	htmlObject: "returnSearchId",
+	htmlObject: "returnSearchIdObj",
 	executeAtStart: false
 };
 
@@ -141,7 +113,7 @@ LOSelector =
   	action: "LOOfficeListSearchId.xaction",
 	parameter: "loanOfficerId",
 	valueAsId: false,
-	htmlObject: "LOSelector",
+	htmlObject: "LOSelectorObj",
 	executeAtStart: false
 };
 
@@ -174,7 +146,7 @@ outputSelector =
 	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
 	parameter:"outputType",
 	valueAsId: false,
-	htmlObject: "outputSelector",
+	htmlObject: "outputSelectorObj",
 	executeAtStart: true
 }
 
@@ -182,7 +154,7 @@ runReport =
 {
   	name: "runReport",
   	type: "Button",
-  	htmlObject: "runReport",
+  	htmlObject: "runReportObj",
   	label: "View Report",
   	expression: function(){runTheReport();},
   	executeAtStart: true
@@ -192,9 +164,9 @@ clearReport =
 {
   	name: "clearReport",
   	type: "Button",
-  	htmlObject: "clearReport",
-  	label: "Clear Report(if its in the way)",
-  	expression: function(){$('#theReport').html("");},
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");},
   	executeAtStart: true
 }
 
@@ -207,7 +179,7 @@ theReport =
   	action: "LoanOfficerDetailedReport.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
-  	htmlObject: "theReport",
+  	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
@@ -216,8 +188,8 @@ theReport =
 Dashboards.init([branchSelector, returnSearchId, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
-	$('#branchSelector select option:eq(0)').attr('selected', 'selected')
-	officeId = $('#branchSelector select option:selected').val();
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	officeId = $('#branchSelectorObj select option:selected').val();
 	updateLOSelect();
 });
 

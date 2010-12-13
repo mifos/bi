@@ -1,54 +1,27 @@
-<style type="text/css">
-
-#theReport {
-  	height: 800px;
-  	width: 100%; 
-  	background-color:white;
-  	border-color:blue; 
-  	border-style:solid; 
-  	border-width:1px;
-}
-
-table
-{
-	border-style:solid;
-	width: 100%;
-}
-.reportLabel {
-	font-weight: bold;
-}
-
-
-
-</style>
-<table>
+<table width=100%>
 <tr>
-<td><div class=reportLabel>Office</div></td>
-<td><div class=reportLabel>Loan Officer</div></td>
-<td><div class=reportLabel>Start Date</div></td>
-<td><div class=reportLabel>End Date</div></td>
-<td><div class=reportLabel>Output Type</div></td>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td>
+<td><pre>     </pre></td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
-<tr>
-<td><div id=branchSelector></div></td>
-<td><div id=LOSelector></div></td>
-<td><div id=date1Obj></div></td>
-<td><div id=date2Obj></div></td>
-<td><div id=outputSelector></div></td>
+<tr><td><div id=runReportObj></div></td><td></td><td></td><td></td><td></td><td></td><td><div id=clearReportObj></td>
 </tr>
-<tr><td><div id=runReport></div></td><td></td><td></td><td></td><td><div id=clearReport></td></tr>
 
 </table>
 
-<div id=theReport></div>
+<div id=theReportObj></div>
 
 <script language="javascript" type="text/javascript">
 
 function updateLOSelect()
 {
 	Dashboards.fireChange("officeId",officeId);
-	$('#LOSelector select option:eq(0)').attr('selected', 'selected'); 
-	loanOfficerId = $('#LOSelector select option:selected').val();
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
 }
 
 function runTheReport()
@@ -75,7 +48,7 @@ var standardReportsSolution = "standardReports";
 Dashboards.globalcontext = false;
 var event = 0;
 var officeId = 0;
-var loanOfficerId = -1;
+var loanOfficerId = 0;
 
 
 var currentDate = new Date();
@@ -97,7 +70,7 @@ branchSelector =
   	action: "BranchList.xaction",
 	parameter: "officeId",
 	valueAsId: false,
-	htmlObject: "branchSelector",
+	htmlObject: "branchSelectorObj",
 	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
@@ -113,7 +86,7 @@ LOSelector =
   	action: "LOBranchList.xaction",
 	parameter: "loanOfficerId",
 	valueAsId: false,
-	htmlObject: "LOSelector",
+	htmlObject: "LOSelectorObj",
 	executeAtStart: false
 };
 
@@ -146,7 +119,7 @@ outputSelector =
 	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
 	parameter:"outputType",
 	valueAsId: false,
-	htmlObject: "outputSelector",
+	htmlObject: "outputSelectorObj",
 	executeAtStart: true
 }
 
@@ -154,7 +127,7 @@ runReport =
 {
   	name: "runReport",
   	type: "Button",
-  	htmlObject: "runReport",
+  	htmlObject: "runReportObj",
   	label: "View Report",
   	expression: function(){runTheReport();},
   	executeAtStart: true
@@ -164,9 +137,9 @@ clearReport =
 {
   	name: "clearReport",
   	type: "Button",
-  	htmlObject: "clearReport",
-  	label: "Clear Report(if its in the way)",
-  	expression: function(){$('#theReport').html("");},
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");},
   	executeAtStart: true
 }
 
@@ -179,7 +152,7 @@ theReport =
   	action: "DueVsCollectedLoanOfficer.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","officeId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
-  	htmlObject: "theReport",
+  	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
@@ -188,10 +161,9 @@ theReport =
 Dashboards.init([branchSelector, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
-	$('#branchSelector select option:eq(0)').attr('selected', 'selected')
-	officeId = $('#branchSelector select option:selected').val();
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	officeId = $('#branchSelectorObj select option:selected').val();
 	updateLOSelect();
 });
-
 
 </script>
