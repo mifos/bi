@@ -16,25 +16,26 @@ UNION
 SELECT personnel_id,display_name FROM personnel order by display_name 
 </Query>
     </DataAccess>
-    <DataAccess id="getProducts" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
-		   <Name>Get Products</Name>
+    <DataAccess id="getBranches" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
+		   <Name>Get Branches</Name>
 <Query>
-SELECT -5 as prd_offering_id, "---Select One---" as prd_offering_name
-UNION
-SELECT -1 as prd_offering_id, "--ALL--" as prd_offering_name 
-UNION
-SELECT prd_offering_id, prd_offering_name FROM prd_offering order by prd_offering_name
+select -5 as branch_id, "---Select One---" as branch_name
+union
+select -1 as branch_id,'--ALL--' as branch_name
+union
+select office_id as branch_id,display_name as branch_name 
+from office where office_level_id=5 order by branch_name
 </Query>
     </DataAccess>
     <DataAccess id="getTransactionTypes" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
 		   <Name>Get Transaction Types</Name>
 <Query>
-SELECT -5 as action_id, "---Select One---" as action_name
-UNION
-SELECT -1 as action_id, 'ALL' as action_name
-UNION
-SELECT account_action_id as action_id,replace(lookup_name,"AccountAction-","") as action_name 
-FROM account_action a join lookup_value l on l.lookup_id=a.lookup_id order by action_name
+select -5 as action_id, "---Select One---" as action_name
+union
+select -1 as action_id, "--ALL--" as action_name
+union
+select account_action_id as action_id,replace(lookup_name,"AccountAction-","") as action_name 
+from account_action a join lookup_value l on l.lookup_id=a.lookup_id order by action_name
 </Query>
     </DataAccess>
 </CDADescriptor>
