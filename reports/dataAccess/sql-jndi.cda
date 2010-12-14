@@ -38,5 +38,15 @@ select account_action_id as action_id,replace(lookup_name,"AccountAction-","") a
 from account_action a join lookup_value l on l.lookup_id=a.lookup_id order by action_name
 </Query>
     </DataAccess>
+    <DataAccess id="getPaymentTypes" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
+		   <Name>Get Payment Types</Name>
+<Query>
+select -5 as id, '--Select One--' as name
+union
+select -1 as id, '---All---' as name
+union
+(select payment_type_id as id, replace(lookup_name,"PaymentType-","") as name from  payment_type p join lookup_value l 
+on l.lookup_id=p.payment_type_lookup_id order by name);
+</Query>
+    </DataAccess>
 </CDADescriptor>
-

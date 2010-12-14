@@ -1,3 +1,18 @@
+<table width=100%>
+	<tr>
+                <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
+		<td><div class=reportLabel> From Date: </div><div id="selectFromDateObject"></div> </td>
+		<td><div class=reportLabel>To Date: </div><div id="selectToDateObject"></div> </td>
+		<td><div class=reportLabel>Branch Office: </div><div id="selectBranchObject"></div> </td>
+		<td><div class=reportLabel>Transaction Type: </div><div id="selectTransactionTypeObject"></div> </td>
+		<td><div class=reportLabel>Personnel: </div><div id="selectUserObject"></div> </td>
+                <td><div class=reportLabel>Mode of Payment: </div><div id="selectPaymentTypeObject"></div> </td>
+                <td><div class=reportLabel>Report Type: <div><div id="selectReportObject"></div> </td>
+		<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div> </td>
+		<td><div id=clearReportObj></div> </td><td> <div id=runReportObj></div> </td>
+	</tr>
+</table>
+		<div id=theReportObj></div> 
 <script language="javascript" type="text/javascript">
 
 var currentDate = new Date();
@@ -6,9 +21,10 @@ var fromDate = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDa
 var toDate = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
 var branch_id = -5;
 var transaction_type_id = -5;
+var payment_type_id = -5
 var user_id = -5;
 var report_type = "detail";
-var outputType = "application/pdf";
+var outputType = "text/html";
 
 Dashboards.globalcontext = false;
 
@@ -23,7 +39,7 @@ function runTheReport()
 	{
 		alert("From Date is after To Date");
 		return;
-	} else if ( branch_id == -5 ||  transaction_type_id == -5 || user_id == -5 ) 
+	} else if ( branch_id == -5 ||  transaction_type_id == -5 || user_id == -5 || payment_type_id == -5) 
         {
                alert("Please select appropriate values");
 	       return;
@@ -35,21 +51,21 @@ function runTheReport()
 
 selectUser = 
 {
-	name:                "selectUser",
-	type:                "select",
-	parameter:           "user_id",
-	valueAsId:           false,
-        queryDefinition:     { dataAccessId: "getMifosUsers", path: "dataAccess/sql-jndi.cda" },
-	htmlObject:          "selectUserObject",
-	executeAtStart:      true
+	name: "selectUser",
+	type: "selectComponent",
+	parameter: "user_id",
+	valueAsId: false,
+        queryDefinition:  { dataAccessId: "getMifosUsers", path: "dataAccess/sql-jndi.cda" },
+	htmlObject: "selectUserObject",
+	executeAtStart: true
 };
 
 selectBranch = 
 {
-	name:                "selectBranch",
-	type:                "select",
-	parameter:           "branch_id",
-	valueAsId:           false,
+	name: "selectBranch",
+	type: "select",
+	parameter: "branch_id",
+	valueAsId: false,
         queryDefinition: { dataAccessId: "getBranches", path: "dataAccess/sql-jndi.cda" },
 	htmlObject: "selectBranchObject",
 	executeAtStart: true
@@ -63,6 +79,17 @@ selectTransactionType =
 	valueAsId: false,
         queryDefinition: { dataAccessId: "getTransactionTypes", path: "dataAccess/sql-jndi.cda" },
 	htmlObject: "selectTransactionTypeObject",
+	executeAtStart: true
+};
+
+selectPaymentType = 
+{
+	name: "selectPaymentType",
+	type: "select",
+	parameter: "payment_type_id",
+	valueAsId: false,
+        queryDefinition: { dataAccessId: "getPaymentTypes", path: "dataAccess/sql-jndi.cda" },
+	htmlObject: "selectPaymentTypeObject",
 	executeAtStart: true
 };
 
@@ -101,7 +128,7 @@ outputSelector =
 	name: "outputSelector",
 	type: "select",
 	parameters:[],
-	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	valuesArray: [["text/html","HTML"], ["application/pdf","PDF"], ["application/vnd.ms-excel","EXCEL"]],
 	parameter:"outputType",
 	valueAsId: false,
 	htmlObject: "outputSelectorObj",
@@ -145,40 +172,34 @@ theReport =
   	type: "prpt",
         listeners:["event"],
   	solution: solution,
-  	path: path,
+  	path: "prpt",
   	action: "",
-  	parameters: [["from_date","fromDate"],["to_date","toDate"],["p_branch_id","branch_id"],["p_user_id","user_id"],["p_trans_type_id","transaction_type_id"],["output-type","outputType"]],
+  	parameters: [["from_date","fromDate"],
+                     ["to_date","toDate"],
+                     ["p_branch_id","branch_id"],
+                     ["p_user_id","user_id"],
+                     ["p_trans_type_id","transaction_type_id"],
+                     ["p_payment_type_id","payment_type_id"],
+                     ["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
        // iframe: false,
 	showParameters: false,
         preExecution:function(){
+                             alert(report_type);
   	                     if(report_type == "detail") { 
-                              this.action = "Detail.prpt"; 
+                              this.action = "Detail.prpt";return;
                              } else {
-                              this.action = "Summary.prpt";
+                              this.action = "Summary.prpt";return;
                              }
                            }
 }
 
 function load(){
-      Dashboards.init([selectUser,selectBranch,selectTransactionType,selectFromDate,selectToDate,outputSelector,runReport,clearReport,selectReport,theReport]);
+      Dashboards.init([selectUser,selectBranch,selectTransactionType,selectPaymentType,selectFromDate,selectToDate,outputSelector,runReport,clearReport,selectReport,theReport]);
 }
 
 load();
 
 </script>
-<table>
-	<tr>
-		<td> From Date: <div id="selectFromDateObject"></div> </td>
-		<td>To Date: <div id="selectToDateObject"></div> </td>
-		<td>Branch Office: <div id="selectBranchObject"></div> </td>
-		<td>Transaction Type: <div id="selectTransactionTypeObject"></div> </td>
-		<td>Personnel: <div id="selectUserObject"></div> </td>
-                <td>Report Type: <div id="selectReportObject"></div> </td>
-		<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div> </td>
-		<td><div id=clearReportObj></div> </td><td> <div id=runReportObj></div> </td>
-	</tr>
-</table>
-		<div id=theReportObj></div> 
