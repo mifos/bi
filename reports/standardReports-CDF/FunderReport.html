@@ -1,0 +1,139 @@
+<table width=100%>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
+<td><div class=reportLabel>Funder</div><div id=funderSelectorObj></div></td>
+<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+<td><div id=clearReportObj></div><div id=runReportObj></div></td>
+</tr>
+</table>
+
+<div id=theReportObj></div>
+
+<script language="javascript" type="text/javascript">
+
+function runTheReport()
+{
+	event = event + 1;
+	Dashboards.fireChange("event", event);
+}
+
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+var commonActionsSolution = "commonActions";
+var standardReportsSolution = "standardReports";
+
+
+Dashboards.globalcontext = false;
+var event = 0;
+var officeId = 0;
+var funderId = 0;
+
+
+var currentDate = new Date();
+var month = currentDate.getMonth() + 1;
+var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
+
+var outDate = currentDateStr;
+var outputType = "application/pdf";
+
+ 
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "OfficeListSearchId.xaction",
+	parameter: "officeId",
+	valueAsId: false,
+	htmlObject: "branchSelectorObj",
+	executeAtStart: true
+};
+
+funderSelector = 
+{
+	name: "funderSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "FunderList.xaction",
+	parameter: "funderId",
+	valueAsId: false,
+	htmlObject: "funderSelectorObj",
+	executeAtStart: true
+};
+
+
+asOnDate = 
+{
+	name: "asOnDate",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "outDate",
+	htmlObject: "dateObj",
+	executeAtStart: true
+};
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelectorObj",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReportObj",
+  	label: "View Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: standardReportsSolution,
+  	path: path,
+  	action: "FunderReport.prpt",
+  	listeners:["event"],
+  	parameters: [["selected_office","officeId"],["selected_funder","funderId"],["out_date","outDate"],["output-type","outputType"]],
+  	htmlObject: "theReportObj",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([branchSelector, funderSelector, asOnDate, outputSelector, runReport, clearReport, theReport]);
+
+$(document).ready(function() {
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	officeId = $('#branchSelectorObj select option:selected').val();
+	$('#funderSelectorObj select option:eq(0)').attr('selected', 'selected')
+	funderId = $('#funderSelectorObj select option:selected').val();
+});
+
+</script>
