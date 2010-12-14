@@ -1,0 +1,75 @@
+ <script language="javascript" type="text/javascript">
+
+user_id = -5;
+product_id = -5;
+fromDate = "TODAY";
+toDate = "TODAY";
+
+selectUser = 
+{
+	name:                "selectUser",
+	type:                "select",
+	parameter:           "user_id",
+	valueAsId:           false,
+        queryDefinition:     { dataAccessId: "getMifosUsers", path: "dataAccess/sql-jndi.cda" },
+	htmlObject:          "selectUserObject",
+	executeAtStart:      true,
+        postChange: function(){alert("You chose: " + user_id);}
+};
+
+selectProduct = 
+{
+	name:                "selectProduct",
+	type:                "select",
+	parameter:           "product_id",
+	valueAsId:           false,
+        queryDefinition:     { dataAccessId: "getProducts", path: "dataAccess/sql-jndi.cda" },
+	htmlObject:          "selectProductObject",
+	executeAtStart:      true,
+        postChange: function(){alert("You chose: " + product_id);}
+};
+
+
+selectFromDate = 
+{
+	name: "selectFromDate",
+	type: "dateInput",
+	parameters:[],
+	parameter: "fromDate",
+	htmlObject: "selectFromDateObject",
+        dateFormat: "yy-mm-dd",
+	startDate: "2006-05-31",
+	endDate: "TODAY",
+	executeAtStart: true,
+	tooltip: "Click me to select a date",
+	postChange: function(){alert("You chose: " + fromDate);}
+};
+
+
+selectToDate = 
+{
+	name: "selectToDate",
+	type: "dateInput",
+	parameters:[],
+	parameter: "toDate",
+	htmlObject: "selectToDateObject",
+        dateFormat: "yy-mm-dd",
+	startDate: "2006-05-31",
+	endDate: "TODAY",
+	executeAtStart: true,
+	tooltip: "Click me to select a date",
+	postChange: function(){alert("You chose: " + toDate);}
+};
+
+function load(){
+      Dashboards.init([selectUser,selectProduct,selectFromDate,selectToDate]);
+}
+
+load();
+
+</script>
+
+Mifos User Name: <div id="selectUserObject"></div>
+Product Name: <div id="selectProductObject"></div>
+From Date: <div id="selectFromDateObject"></div>
+To Date: <div id="selectToDateObject"></div>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CDADescriptor>
+
+    <DataSources>
+        <Connection id="1" type="sql.jndi">
+            <Jndi>SourceDB</Jndi>
+        </Connection>
+    </DataSources>
+    <DataAccess id="getMifosUsers" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
+		   <Name>Get Mifos Users</Name>
+<Query>
+SELECT -5 as personnel_id, "---Select One---" as display_name
+UNION
+SELECT -1 as personnel_id , "--ALL--" as display_name 
+UNION
+SELECT personnel_id,display_name FROM personnel order by display_name 
+</Query>
+    </DataAccess>
+    <DataAccess id="getProducts" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
+		   <Name>Get Products</Name>
+<Query>
+SELECT -5 as prd_offering_id, "---Select One---" as prd_offering_name
+UNION
+SELECT -1 as prd_offering_id, "--ALL--" as prd_offering_name 
+UNION
+SELECT prd_offering_id, prd_offering_name FROM prd_offering order by prd_offering_name
+</Query>
+    </DataAccess>
+    <DataAccess id="getTransactionTypes" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
+		   <Name>Get Transaction Types</Name>
+<Query>
+SELECT -5 as action_id, "---Select One---" as action_name
+UNION
+SELECT -1 as action_id, 'ALL' as action_name
+UNION
+SELECT account_action_id as action_id,replace(lookup_name,"AccountAction-","") as action_name 
+FROM account_action a join lookup_value l on l.lookup_id=a.lookup_id order by action_name
+</Query>
+    </DataAccess>
+</CDADescriptor>
+

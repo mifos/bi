@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Transaction Report</title>
+	<author>Udai Gupta</author>
+	<description>Transaction Report</description>
+	<icon></icon>
+	<template>template.html</template>
+</cdf>
