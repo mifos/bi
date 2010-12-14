@@ -4,5 +4,6 @@
 	<author>Udai Gupta</author>
 	<description>Transaction Report</description>
 	<icon></icon>
+	<style>mifosreports</style>
 	<template>template.html</template>
 </cdf>
