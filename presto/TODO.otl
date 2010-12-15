@@ -1,0 +1,10 @@
+[X] maven or ?
+	[X] gradle looks cool
+	[X] meh, just stick with Maven. It works, we know it.
+[_] generic
+	[_] make it so that anyone can use it!
+	[_] use maven release plugin (or similar) to create releases
+	[_] ideas for pointing it at your pentaho tests
+		[_] customized by {user.home}/.presto or similar
+		[_] define directory structure
+[_]
