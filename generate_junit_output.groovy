@@ -19,7 +19,7 @@ System.in.eachLine() { line ->
             test['result'] = 'fail'
             test['name'] = (m[0][3] =~ /TEST NAME: ([^A-Z]*)[A-Z]/)[0][1]
             test['message'] = m[0][3]
-            stats['failed'] += 1
+            stats['failures'] += 1
         }
         tests.add(test)
     }
