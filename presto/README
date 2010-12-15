@@ -1,8 +1,12 @@
 Pentaho Report Test Framework
 
-prereqs:
+prereqs for running:
   * Maven
   * PDI 4.1.0 w/Reporting Output Step installed
+  * set up PDI db connection params
+
+prereqs for dev only:
+  * Eclipse (Helios) with Groovy plugin
 
 conventions:
   * dir structure of presto files matches dir(s) w/reports
@@ -11,3 +15,7 @@ related:
   * http://sandbox.pentaho.com/Pentaho-Data-Integration-Reporting-Plug-in/
   * http://mifosforge.jira.com/browse/MIFOSBI-144
   * http://article.gmane.org/gmane.comp.finance.mifos.devel/10458
+  * http://forums.pentaho.com/showthread.php?79085 - Announcement/Poll
+  * http://forums.pentaho.com/showthread.php?79709-automated-report-testing
+  * http://jira.pentaho.com/browse/PDI-5076
+  * http://www.ibridge.be/?p=190 - Another announcement

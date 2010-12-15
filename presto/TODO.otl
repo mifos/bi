@@ -1,13 +1,37 @@
 [X] maven or ?
 	[X] gradle looks cool
 	[X] meh, just stick with Maven. It works, we know it.
+[_] basic automated test
+	[_] use existing install of PDI/reporting output step
+	[_] load sample database
+		OR: prereq: run "ppi_build.sh" first
+	[_] ARGH! need to chdir to PDI install dir
+	[_] run report
+	[_] check output
 [_] generic/reusable
 	make it so that anyone can use it on their reports
 	better than making it Mifos-specific
 		isolates problems w/the framework (vs. with the reports being tested)
+	[_] template-replaced PDI job (use params in job/transform)
+		or just use a fixed one, and move around reports before running Kitchen
+	[_] independent/stand-alone
+		[_] can download/setup PDI/reporting output step
+		[_] can run in parallel
+			[_] config is stored right in deploy dir?
+[_] use more pan.sh command line args
+	http://wiki.pentaho.com/display/EAI/Pan+User+Documentation
+	[_] params for the transform
+		[_] path to report
+		[_] where to send output
+		[_] report params too
+			[_] might not work... might need to generate .ktr file
+				params are hardcoded in Pentaho Reporting Output step
+	[_] params for Kettle/Pan/PDI/etc.
+		[_] logging file/level
 [_] use maven release plugin (or similar) to create releases
 [_] ideas for pointing it at your pentaho tests
 	[_] customized by {user.home}/.presto or similar
+		[_] or, store config right in deploy dir? (ignore w/git)
 	[_] specific directory structure - CONVENTION
 		[_] dir w/prpt files
 		[_] seed data
@@ -27,3 +51,10 @@
 	[_] report filename
 [_] awesome test output showing exactly what failed
 [_] clearly document/demonstrate conventions!
+[_] use PDI API
+	good example in "Pentaho® Kettle Solutions: Building Open Source ETL Solutions with Pentaho Data Integration", Chapter 22: Kettle Integration
+		got a basic example working
+		blocked by difficulty in calling API and using Pentaho Reporting Output step plugin
+			http://forums.pentaho.com/showthread.php?79812-executing-a-transformation-using-the-Kettle-4-API-Maven-example
+	bad/old example(s) on wiki
+		http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+-+Java+API+Examples

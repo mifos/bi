@@ -1,6 +1,8 @@
 package org.mifos.bi
 
-class ReportTest extends GroovyTestCase
+import org.junit.Test
+
+class ReportTest
 {
     ReportTest() {
         println "Starting"
