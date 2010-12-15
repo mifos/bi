@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Transaction Report - Detail</title>
+	<author>GFUSA</author>
+	<description>Transaction Report - Detail</description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>TransactionReport-Detail.html</template>
+</cdf>
