@@ -1,1 +1,8 @@
 Pentaho Report Test Framework
+
+prereqs:
+  * Maven
+  * PDI 4.1.0 w/Reporting Output Step installed
+
+conventions:
+  * dir structure of presto files matches dir(s) w/reports

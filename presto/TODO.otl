@@ -1,10 +1,29 @@
 [X] maven or ?
 	[X] gradle looks cool
 	[X] meh, just stick with Maven. It works, we know it.
-[_] generic
-	[_] make it so that anyone can use it!
-	[_] use maven release plugin (or similar) to create releases
-	[_] ideas for pointing it at your pentaho tests
-		[_] customized by {user.home}/.presto or similar
-		[_] define directory structure
-[_]
+[_] generic/reusable
+	make it so that anyone can use it on their reports
+	better than making it Mifos-specific
+		isolates problems w/the framework (vs. with the reports being tested)
+[_] use maven release plugin (or similar) to create releases
+[_] ideas for pointing it at your pentaho tests
+	[_] customized by {user.home}/.presto or similar
+	[_] specific directory structure - CONVENTION
+		[_] dir w/prpt files
+		[_] seed data
+		[_] expected CSV output
+		[_] stuff besides prpt files could be in an identical directory structure
+[_] API: just a base "test" class? Groovy?
+[_] sensible defaults, but allow overriding anything
+[_] Groovy framework
+[_] JUnit 4
+	http://groovy.codehaus.org/Using+JUnit+4+with+Groovy
+[_] simple config
+[_] runnable directly from Hudson
+[_] load seed data
+	one seed data per class - CONVENTION
+[_] generate PDI XML file(s)
+	[_] report params
+	[_] report filename
+[_] awesome test output showing exactly what failed
+[_] clearly document/demonstrate conventions!
