@@ -1,6 +1,14 @@
 [_] add automated test that generated XML is well-formed?
 [_] use JNDI for etl_build.sh db connect params
 	we've already specified db connection settings for all databases in /opt/pentaho/data-integration/simple-jndi/jdbc.properties
+[_] sync up db connections for Mifos/Pentaho/etc.
+	[_] write a small Python script to help out w/that
+	[_] mifos' connection to its OLTP database
+	[_] pentaho's connections to the Mifos OLTP database and data warehouse
+		[_] pentaho report designer (dev only)
+		[_] pentaho data integration (dev and prod)
+		[_] pentaho bi server (dev and prod)
+			done via admin console - actually stored in a DB!!
 
 [N] shell scripts: die if BI_HOME isn't set
     BI_HOME is no longer used
