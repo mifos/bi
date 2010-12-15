@@ -273,10 +273,16 @@ la.loan_amount as loan_amount,
 ls.orig_principal as loan_original_principal,
 ls.orig_interest as loan_original_interest,
 ls.orig_fees as loan_original_fees,
-ls.orig_penalty as loan_original_penalty
+ls.orig_penalty as loan_original_penalty,
+la.no_of_installments as no_of_installments, 
+rd.recur_after as meeting_recur_after, 
+r.recurrence_name as meeting_recurrence_name
+
 from account a
 join loan_account la on la.account_id = a.account_id
 join loan_summary ls on ls.account_id = la.account_id
+join recurrence_detail rd on rd.meeting_id = la.meeting_id 
+join recurrence_type r on rd.recurrence_id = r.recurrence_id
 
 where (
 			(a.created_date between date(?) and date(?))
@@ -354,6 +360,18 @@ where (
         <field>
           <column_name>loan_original_penalty</column_name>
           <stream_name>loan_original_penalty</stream_name>
+        </field>
+        <field>
+          <column_name>no_of_installments</column_name>
+          <stream_name>no_of_installments</stream_name>
+        </field>
+        <field>
+          <column_name>meeting_recur_after</column_name>
+          <stream_name>meeting_recur_after</stream_name>
+        </field>
+        <field>
+          <column_name>meeting_recurrence_name</column_name>
+          <stream_name>meeting_recurrence_name</stream_name>
         </field>
     </fields>
      <cluster_schema/>

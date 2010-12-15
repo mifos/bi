@@ -32,7 +32,7 @@ CREATE TABLE `dim_customer` (
   `date_of_birth` date DEFAULT NULL,
   `government_id` varchar(50) DEFAULT NULL,
   `num_children` smallint(6) DEFAULT NULL,
-  `business_activity` varchar(60) DEFAULT NULL,
+  `business_activity` varchar(80) DEFAULT NULL,
   `ethnicity` varchar(60) DEFAULT NULL,
   `citizenship` varchar(60) DEFAULT NULL,
   `handicapped` varchar(60) DEFAULT NULL,
@@ -62,7 +62,6 @@ CREATE TABLE `dim_customer` (
 
 LOCK TABLES `dim_customer` WRITE;
 /*!40000 ALTER TABLE `dim_customer` DISABLE KEYS */;
-INSERT INTO `dim_customer` VALUES (0,0,'-','-',0,'-',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,0,'1900-01-01','3000-01-01','2010-12-03 09:35:51');
 /*!40000 ALTER TABLE `dim_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,6 +143,9 @@ CREATE TABLE `dim_loan` (
   `original_interest` decimal(21,4) DEFAULT '0.0000',
   `original_fees` decimal(21,4) DEFAULT '0.0000',
   `original_penalty` decimal(21,4) DEFAULT '0.0000',
+  `no_of_installments` smallint(6) DEFAULT NULL,
+  `meeting_recur_after` smallint(6) DEFAULT NULL,
+  `meeting_recurrence_name` varchar(20) DEFAULT NULL,
   `valid_from` date NOT NULL DEFAULT '1900-01-01',
   `valid_to` date NOT NULL DEFAULT '2199-12-31',
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -167,7 +169,6 @@ CREATE TABLE `dim_loan` (
 
 LOCK TABLES `dim_loan` WRITE;
 /*!40000 ALTER TABLE `dim_loan` DISABLE KEYS */;
-INSERT INTO `dim_loan` VALUES (0,0,0,0,0,0,0,0,0,0,'-',NULL,0,NULL,NULL,NULL,NULL,NULL,'1900-01-01','3000-01-01','2010-12-03 09:37:23');
 /*!40000 ALTER TABLE `dim_loan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +321,6 @@ CREATE TABLE `dim_savings` (
 
 LOCK TABLES `dim_savings` WRITE;
 /*!40000 ALTER TABLE `dim_savings` DISABLE KEYS */;
-INSERT INTO `dim_savings` VALUES (0,0,0,0,0,0,0,0,0,'-',0,'1900-01-01','3000-01-01','2010-12-03 09:38:22');
 /*!40000 ALTER TABLE `dim_savings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -563,7 +563,7 @@ CREATE TABLE `dw_mfi_configuration` (
 
 LOCK TABLES `dw_mfi_configuration` WRITE;
 /*!40000 ALTER TABLE `dw_mfi_configuration` DISABLE KEYS */;
-INSERT INTO `dw_mfi_configuration` VALUES (1,10,30);
+INSERT INTO `dw_mfi_configuration` VALUES (1,5,370);
 /*!40000 ALTER TABLE `dw_mfi_configuration` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1133,7 +1133,7 @@ CREATE TABLE `stg_customer_type1_columns` (
   `date_of_birth` date DEFAULT NULL,
   `government_id` varchar(50) DEFAULT NULL,
   `num_children` smallint(6) DEFAULT NULL,
-  `business_activity` varchar(60) DEFAULT NULL,
+  `business_activity` varchar(80) DEFAULT NULL,
   `ethnicity` varchar(60) DEFAULT NULL,
   `citizenship` varchar(60) DEFAULT NULL,
   `handicapped` varchar(60) DEFAULT NULL,
@@ -1196,6 +1196,9 @@ CREATE TABLE `stg_loan_type1_columns` (
   `loan_original_interest` decimal(21,4) DEFAULT NULL,
   `loan_original_fees` decimal(21,4) DEFAULT NULL,
   `loan_original_penalty` decimal(21,4) DEFAULT NULL,
+  `no_of_installments` smallint(6) DEFAULT NULL,
+  `meeting_recur_after` smallint(6) DEFAULT NULL,
+  `meeting_recurrence_name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`loan_account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2688,4 +2691,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-07 17:37:09
+-- Dump completed on 2010-12-15 13:18:48
