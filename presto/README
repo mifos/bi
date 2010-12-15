@@ -6,3 +6,8 @@ prereqs:
 
 conventions:
   * dir structure of presto files matches dir(s) w/reports
+
+related:
+  * http://sandbox.pentaho.com/Pentaho-Data-Integration-Reporting-Plug-in/
+  * http://mifosforge.jira.com/browse/MIFOSBI-144
+  * http://article.gmane.org/gmane.comp.finance.mifos.devel/10458
