@@ -1,12 +1,19 @@
 Pentaho Report Test Framework
 
-prereqs for running:
+QUICK START:
+    install.py will help you make sure you are ready to run tests. Run that
+    first. It will report diagnostics on your dev environment and tell you how
+    to run the tests.
+
+
+prereqs for running tests:
   * Maven
   * PDI 4.1.0 w/Reporting Output Step installed
   * set up PDI db connection params
 
-prereqs for dev only:
-  * Eclipse (Helios) with Groovy plugin
+prereqs for test development:
+  * Eclipse with Groovy plugin (optional)
+  * Python (to run install.py)
 
 conventions:
   * dir structure of presto files matches dir(s) w/reports
