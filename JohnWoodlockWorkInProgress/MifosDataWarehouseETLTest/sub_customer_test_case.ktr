@@ -386,7 +386,7 @@ function doIdsMatch(sqlInput)
 
 	if (sqlR.length != 1)
 	{
-			fail_test(&quot;System Error - query expected to return 1 row returned: &quot; + sqlR.length + &quot; rows - Query: &quot; + sqlInput);
+			fail_test(&quot;Error - System Error - query expected to return 1 row returned: &quot; + sqlR.length + &quot; rows - Query: &quot; + sqlInput);
 			return &quot;Error&quot;;
 	}
 
@@ -421,7 +421,7 @@ function getChange(entityType, oldKey, newKey)
 		entityTypeSQL = &quot;customer&quot;;
   		break;
 	default:
-		fail_test(&quot;System Error - Unknown value for entityType: &quot; + entityType);
+		fail_test(&quot;Error - System Error - Unknown value for entityType: &quot; + entityType);
 		return &quot;Error&quot;;
 	}
 
@@ -442,7 +442,7 @@ function getChange(entityType, oldKey, newKey)
 		return &quot;Error&quot;;
   		break;
 	default:
-		fail_test(&quot;System Error - Unknown return value from doIdsMatch: &quot; + idsMatch);
+		fail_test(&quot;Error - System Error - Unknown return value from doIdsMatch: &quot; + idsMatch);
 		return &quot;Error&quot;;
 	}
 
@@ -454,7 +454,7 @@ function getChangeType(row_num)
 
 	if ((customer_status == prev_customer_status) &amp;&amp; (group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
 	{
-		fail_test(&quot;System Error - Entry has no change - row index:&quot; + row_num);
+		fail_test(&quot;Error - System Error - Entry has no change - row index:&quot; + row_num);
 		return &quot;Error&quot;;
 	}
 
@@ -462,12 +462,11 @@ function getChangeType(row_num)
 	{
 		if ((group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
 		{
-			Alert(&quot;status change&quot;);
 			return &quot;status&quot;;
 		}
 		else
 		{
-			fail_test(&quot;System Error - Status Change... but other row changes found - row index: &quot; + row_num);
+			fail_test(&quot;Error - System Error - Status Change... but other row changes found - row index: &quot; + row_num);
 			return &quot;Error&quot;;
 		}
 	}
@@ -476,13 +475,13 @@ function getChangeType(row_num)
 &#47;&#47;branch
 	if (branch_key == 0 || prev_branch_key == 0)
 	{
-			fail_test(&quot;System Error - branch key is 0 - row index: &quot; + row_num);
+			fail_test(&quot;Error - System Error - branch key is 0 - row index: &quot; + row_num);
 			return &quot;Error&quot;;
 	}
 	branch_change = getChange(&quot;branch&quot;, prev_branch_key, branch_key);
 	if (branch_change == &quot;Version&quot;)
 	{
-		fail_test(&quot;System Error - Branch IDs same but no office versioning supported: old Key: &quot; + prev_branch_key + &quot; new Key &quot; + branch_key);
+		fail_test(&quot;Error - System Error - Branch IDs same but no office versioning supported: old Key: &quot; + prev_branch_key + &quot; new Key &quot; + branch_key);
 		return &quot;Error&quot;;
 	}
 	if (branch_change == &quot;Error&quot;)
@@ -494,7 +493,7 @@ function getChangeType(row_num)
 	loan_officer_change = getChange(&quot;loan officer&quot;, prev_loan_officer_key, loan_officer_key);
 	if (loan_officer_change == &quot;Version&quot;)
 	{
-		fail_test(&quot;System Error - Loan Officer IDs same - invalid because Loan Officers moving branch don&apos;t bring their customers with them: old Key: &quot; + prev_loan_officer_key + &quot; new Key &quot; + loan_officer_key);
+		fail_test(&quot;Error - System Error - Loan Officer IDs same - invalid because Loan Officers moving branch don&apos;t bring their customers with them: old Key: &quot; + prev_loan_officer_key + &quot; new Key &quot; + loan_officer_key);
 		return &quot;Error&quot;;
 	}
 	if (loan_officer_change == &quot;Error&quot;)
@@ -580,7 +579,7 @@ Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot
 
 
 
-	fail_test(&quot;System Error - Was a Change - Branch Change: &quot; + branch_change + &quot;   LO Change: &quot; + loan_officer_change + &quot;   Center Change: &quot; + center_change + &quot;   Group Change: &quot; + group_change + &quot; - but not picked up - row index: &quot; + row_num);
+	fail_test(&quot;Error System Error - Was a Change - Branch Change: &quot; + branch_change + &quot;   LO Change: &quot; + loan_officer_change + &quot;   Center Change: &quot; + center_change + &quot;   Group Change: &quot; + group_change + &quot; - but not picked up - row index: &quot; + row_num);
 	return &quot;Error&quot;;
 }
 
