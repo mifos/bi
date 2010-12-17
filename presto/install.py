@@ -49,9 +49,24 @@ def main():
         else:
             fail('pdi', '%s not found.' % panPath)
 
+    say('Storing local settings...')
     if 'pdi' not in failed:
-        dbSettingsFile = os.path.join(get_for_os('pdi'), 'simple-jndi', 'jdbc.properties')
+        userHome = os.getenv('USERPROFILE') or os.getenv('HOME')
+        prestoSettings = os.path.join(userHome, '.presto')
+        if promptYesNo('%s exists. Overwrite? [Y/n]: ' % prestoSettings) == 'yes':
+            prestoSettingsFd = open(prestoSettings, 'w')
+            print >> prestoSettingsFd, 'pdiPath=%s' % pdiPath
+            prestoSettingsFd.close()
+            say('Wrote %s' % prestoSettings)
+        else:
+            say('Ok, not touching %s.' % prestoSettings)
+
+    if 'pdi' not in failed:
+        dbSettingsFile = os.path.join(pdiPath, 'simple-jndi', 'jdbc.properties')
+        say('')
         say('Be sure to configure your database connections in %s' % dbSettingsFile)
+        say('SourceDB must be a Mifos OLTP database, DestinationDB must be a Mifos BI data warehouse.')
+        say('Mysql connection URL must include useUnicode=true&characterEncoding=UTF-8.')
 
     say('')
     say('DONE.')
