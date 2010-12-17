@@ -8,6 +8,13 @@
 	[_] ARGH! need to chdir to PDI install dir
 	[_] run report
 	[_] check output
+[_] stuff to pull out into a separate library
+	docs: README, TODO.otl, pom.xml
+	install.py, run_in_dir.sh
+	PrptReport.groovy
+[_] make sure database connection works?
+	causes difficult-to-track-down problems
+	[_] do in some Mifos-specific class
 [_] generic/reusable
 	make it so that anyone can use it on their reports
 	better than making it Mifos-specific
