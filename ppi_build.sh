@@ -49,7 +49,7 @@ echo "Running tests..."
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
 
 mkdir -p target
-groovy generate_junit_output.groovy < $log > target/junit_output.xml
+groovy $PRGDIR/generate_junit_output.groovy < $log > target/junit_output.xml
 
 if grep -q '^ERROR ' $log
 then
