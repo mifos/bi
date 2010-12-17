@@ -49,17 +49,16 @@ def main():
         else:
             fail('pdi', '%s not found.' % panPath)
 
-    say('Storing local settings...')
+    userHome = os.getenv('USERPROFILE') or os.getenv('HOME')
+    prestoSettings = os.path.join(userHome, '.presto')
     if 'pdi' not in failed:
-        userHome = os.getenv('USERPROFILE') or os.getenv('HOME')
-        prestoSettings = os.path.join(userHome, '.presto')
-        if promptYesNo('%s exists. Overwrite? [Y/n]: ' % prestoSettings) == 'yes':
+        if os.path.exists(prestoSettings) and promptYesNo('%s exists. Overwrite? [Y/n]: ' % prestoSettings) == 'yes' \
+                or not os.path.exists(prestoSettings):
+            say('Storing local settings...')
             prestoSettingsFd = open(prestoSettings, 'w')
             print >> prestoSettingsFd, 'pdiPath=%s' % pdiPath
             prestoSettingsFd.close()
             say('Wrote %s' % prestoSettings)
-        else:
-            say('Ok, not touching %s.' % prestoSettings)
 
     if 'pdi' not in failed:
         dbSettingsFile = os.path.join(pdiPath, 'simple-jndi', 'jdbc.properties')
