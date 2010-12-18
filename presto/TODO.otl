@@ -1,12 +1,24 @@
-[X] maven or ?
-	[X] gradle looks cool
-	[X] meh, just stick with Maven. It works, we know it.
+[_] make asserts work on CSV output
+[_] generate .ktr file / parameterize transform
+	why? so we can
+		[_] use passed-in reportPath
+		[_] send CSV output to a temp file
+[_] neither "mvn test" nor "mvn verify" work
+	seems to be a JUnit 4/maven issue
+	maven.test.search.classdir doesn't fix this, that was with the Maven 1.x test plugin
+		old/outdated: http://groovy.codehaus.org/Using+JUnit+4+with+Groovy
+	http://codeforfun.wordpress.com/2006/05/19/groovy-and-maven2-in-action/
+	http://docs.codehaus.org/display/GMAVEN/Building+Groovy+Projects?&#comments
+	[_] just switch to JUnit 3?
+	[_] switch to gradle to buildr?
+		http://markmail.org/message/xx2uyriytw7nzqlw <-- NEW!
 [_] basic automated test
-	[_] use existing install of PDI/reporting output step
+	[X] use existing install of PDI/reporting output step
 	[_] load sample database
 		OR: prereq: run "ppi_build.sh" first
-	[_] ARGH! need to chdir to PDI install dir
-	[_] run report
+	[X] ARGH! need to chdir to PDI install dir
+		run_in_dir.sh
+	[X] run report
 	[_] check output
 [_] stuff to pull out into a separate library
 	docs: README, TODO.otl, pom.xml
@@ -27,6 +39,10 @@
 			[_] config is stored right in deploy dir?
 [_] use more pan.sh command line args
 	http://wiki.pentaho.com/display/EAI/Pan+User+Documentation
+	http://type-exit.org/adventures-with-open-source-bi/2010/07/using-named-parameters-in-kettle/
+	http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+Steps
+	http://wiki.pentaho.com/display/EAI/Named+Parameters
+	OLD: http://wiki.pentaho.com/display/COM/Using+Variables+in+Kettle
 	[_] params for the transform
 		[_] path to report
 		[_] where to send output
@@ -35,7 +51,6 @@
 				params are hardcoded in Pentaho Reporting Output step
 	[_] params for Kettle/Pan/PDI/etc.
 		[_] logging file/level
-[_] use maven release plugin (or similar) to create releases
 [_] ideas for pointing it at your pentaho tests
 	[_] customized by {user.home}/.presto or similar
 		[_] or, store config right in deploy dir? (ignore w/git)
@@ -44,11 +59,12 @@
 		[_] seed data
 		[_] expected CSV output
 		[_] stuff besides prpt files could be in an identical directory structure
+[_] document with something useful/pretty
+	[_] generate documentation w/Maven site?
+	[_] just use a confluence wiki page?
 [_] API: just a base "test" class? Groovy?
 [_] sensible defaults, but allow overriding anything
 [_] Groovy framework
-[_] JUnit 4
-	http://groovy.codehaus.org/Using+JUnit+4+with+Groovy
 [_] simple config
 [_] runnable directly from Hudson
 [_] load seed data
@@ -65,3 +81,7 @@
 			http://forums.pentaho.com/showthread.php?79812-executing-a-transformation-using-the-Kettle-4-API-Maven-example
 	bad/old example(s) on wiki
 		http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+-+Java+API+Examples
+[_] use maven release plugin (or similar) to create releases
+[X] maven or ?
+	[X] gradle looks cool
+	[X] meh, just stick with Maven. It works, we know it.

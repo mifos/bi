@@ -6,6 +6,9 @@ QUICK START:
     to run the tests.
 
 
+how to write tests:
+  * see writing_tests.txt
+
 prereqs for running tests:
   * Maven
   * PDI 4.1.0 w/Reporting Output Step installed
