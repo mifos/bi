@@ -7,14 +7,14 @@ def main():
     if run('java -version'):
         say('OK!')
     else:
-        fail('java', 'not found. Must be in PATH. Java is needed to run Maven.')
+        fail('java', 'not found. Must be in PATH. Java is needed to run Gradle.')
         say('No java.')
 
-    say('Trying to run Maven... ')
-    if run('mvn -version'):
+    say('Trying to run Gradle... ')
+    if run('gradle -v'):
         say('OK!')
     else:
-        fail('maven', 'not found. Must be in PATH. Maven is needed to run tests.')
+        fail('gradle', 'not found. Must be in PATH. Gradle is needed to build.')
         say('No maven.')
 
     pdiPath = ""

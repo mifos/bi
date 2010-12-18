@@ -3,13 +3,14 @@
 	why? so we can
 		[_] use passed-in reportPath
 		[_] send CSV output to a temp file
+		[_] make tests work on Hudson
 [_] think again about gradle!
 	most minimal build script evar
-	[_] works w/Hudson?
-	[_] works w/Eclipse?
-	[_] can actually make usable Maven artifacts?
-[_] port install.py to Groovy
-	removes Python dependency
+	[X] works w/Hudson?
+	[X] works w/Eclipse?
+	[_] makes usable Maven artifacts?
+		looks like it, need to try using the artifact, though
+	[X] works w/Idea?
 [_] basic automated test
 	[X] use existing install of PDI/reporting output step
 	[_] load sample database
@@ -22,6 +23,8 @@
 	docs: README, TODO.otl, pom.xml
 	install.py, run_in_dir.sh
 	PrptReport.groovy
+[_] port install.py to Groovy
+	removes Python dependency
 [_] make sure database connection works?
 	causes difficult-to-track-down problems
 	[_] do in some Mifos-specific class
