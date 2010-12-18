@@ -3,15 +3,6 @@
 	why? so we can
 		[_] use passed-in reportPath
 		[_] send CSV output to a temp file
-[_] neither "mvn test" nor "mvn verify" work
-	seems to be a JUnit 4/maven issue
-	maven.test.search.classdir doesn't fix this, that was with the Maven 1.x test plugin
-		old/outdated: http://groovy.codehaus.org/Using+JUnit+4+with+Groovy
-	http://codeforfun.wordpress.com/2006/05/19/groovy-and-maven2-in-action/
-	http://docs.codehaus.org/display/GMAVEN/Building+Groovy+Projects?&#comments
-	[_] just switch to JUnit 3?
-	[_] switch to gradle to buildr?
-		http://markmail.org/message/xx2uyriytw7nzqlw <-- NEW!
 [_] basic automated test
 	[X] use existing install of PDI/reporting output step
 	[_] load sample database
@@ -82,6 +73,16 @@
 	bad/old example(s) on wiki
 		http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+-+Java+API+Examples
 [_] use maven release plugin (or similar) to create releases
+
+[X] neither "mvn test" nor "mvn verify" work
+	seems to be a JUnit 4/maven issue
+	maven.test.search.classdir doesn't fix this, that was with the Maven 1.x test plugin
+		old/outdated: http://groovy.codehaus.org/Using+JUnit+4+with+Groovy
+	http://codeforfun.wordpress.com/2006/05/19/groovy-and-maven2-in-action/
+	http://docs.codehaus.org/display/GMAVEN/Building+Groovy+Projects?&#comments
+	[N] just switch to JUnit 3?
+	[N] switch to gradle to buildr?
+		http://markmail.org/message/xx2uyriytw7nzqlw <-- NEW!
 [X] maven or ?
 	[X] gradle looks cool
 	[X] meh, just stick with Maven. It works, we know it.

@@ -43,7 +43,7 @@ class PrptReport {
             throw new RuntimeException("Error(s) executing PDI.")
         }
         
-        tests.call(this)
+        tests.call(this) // set up asserts
         performAsserts()
     }
     
