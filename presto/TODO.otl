@@ -3,6 +3,13 @@
 	why? so we can
 		[_] use passed-in reportPath
 		[_] send CSV output to a temp file
+[_] think again about gradle!
+	most minimal build script evar
+	[_] works w/Hudson?
+	[_] works w/Eclipse?
+	[_] can actually make usable Maven artifacts?
+[_] port install.py to Groovy
+	removes Python dependency
 [_] basic automated test
 	[X] use existing install of PDI/reporting output step
 	[_] load sample database
