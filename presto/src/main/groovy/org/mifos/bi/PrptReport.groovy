@@ -6,9 +6,9 @@ import static org.junit.Assert.*
  * Helpful for writing tests against Pentaho reports in prpt format.
  */
 class PrptReport {
-    // if baseDir is set in your config, reportFilename is relative to baseDir
-    // otherwise, reportFilename is assumed to be the full (relative or absolute) path
-    def execute(transformPath='presto/src/test/resources/test.ktr', reportPath, tests) {
+    /** if baseDir is set in your config, reportFilename is relative to baseDir
+     otherwise, reportFilename is assumed to be the full (relative or absolute) path */
+    def execute(transformPath='presto/src/test/resources/test.ktr', reportPath, testsClosure) {
         def util = new ReportTestConfig()
         def transformFile = null
         if (util.getCfg('baseDir')) {
@@ -43,43 +43,43 @@ class PrptReport {
             throw new RuntimeException("Error(s) executing PDI.")
         }
 
-        tests.call(this) // set up asserts
+        testsClosure.call(this) // set up asserts
         performAsserts()
     }
 
-    /** one allowed per row */
+    def tests = [
+        'cell': [:],
+        'row': [:],
+    ]
+
     def assertRowEquals(row, expected) {
-        println "in assertRowEquals"
-        // TODO: store test
+        tests['row'][row] = expected;
     }
 
     def assertCellEquals(row, col, expected) {
-        println "in assertCellEquals"
-        // TODO: store test
+        if (!tests['cell'][row]) {
+            tests['cell'][row] = [:]
+        }
+        tests['cell'][row][col] = expected
     }
-
-    def tests = [
-        ['cell': [1: 'Customer ID']],
-        ['row': ['1']],
-    ]
 
     def performAsserts() {
         new File('/tmp/out.csv').eachLine { line, lineno ->
             // poor-man's CSV parsing
             def cols = line.tokenize(',')
-            def testsForThisLine = tests[lineno - 1]
-            if (testsForThisLine) {
-                // cell-based tests
-                if (testsForThisLine['cell']) {
-                    testsForThisLine['cell'].each { cell, expected ->
-                        assertEquals(expected, cols[cell - 1])
+            // cell-based tests
+            if (tests['cell'][lineno]) {
+                (0..cols.size()).each { i ->
+                    def expected = tests['cell'][lineno][i + 1]
+                    if (expected) {
+                        assertEquals(expected, cols[i])
                     }
                 }
-                // row-based tests
-                if (testsForThisLine['row']) {
-                    def expected = testsForThisLine['row']
-                    assertEquals(expected, cols)
-                }
+            }
+            // row-based tests
+            if (tests['row'][lineno]) {
+                def expected = tests['row'][lineno]
+                assertEquals(expected, cols)
             }
         }
     }

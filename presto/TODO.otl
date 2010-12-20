@@ -1,4 +1,4 @@
-[_] make asserts work on CSV output
+[X] make asserts work on CSV output
 [_] generate .ktr file / parameterize transform
 	why? so we can
 		[_] use passed-in reportPath

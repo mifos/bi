@@ -7,6 +7,7 @@ class ExamplePrptReportTest {
     @Test
     void testDataDumpReport() {
         new PrptReport().execute (reportPath:'src/test/resources/Simple.prpt') { t ->
+            // NOTE use 1-based indices!
             t.assertCellEquals(1, 1, "Customer ID")
             t.assertRowEquals(2, ['1'])
         }
