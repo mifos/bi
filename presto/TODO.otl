@@ -2,6 +2,7 @@
 [_] generate .ktr file / parameterize transform
 	why? so we can
 		[_] use passed-in reportPath
+		[_] use passed-in output location (a temp file)
 		[_] send CSV output to a temp file
 		[_] make tests work on Hudson
 [_] think again about gradle!
@@ -19,7 +20,7 @@
 	[X] ARGH! need to chdir to PDI install dir
 		run_in_dir.sh
 	[X] run report
-	[_] check output
+	[X] check output
 [_] stuff to pull out into a separate library
 	docs: README, TODO.otl, pom.xml
 	install.py, run_in_dir.sh
