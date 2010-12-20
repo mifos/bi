@@ -10,6 +10,7 @@
 	[X] works w/Eclipse?
 	[_] makes usable Maven artifacts?
 		looks like it, need to try using the artifact, though
+		file:///home/adamm/dist/gradle/docs/userguide/maven_plugin.html#uploading_to_maven_repositories
 	[X] works w/Idea?
 [_] basic automated test
 	[X] use existing install of PDI/reporting output step

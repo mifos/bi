@@ -3,7 +3,7 @@ package org.mifos.bi
 import static org.junit.Assert.*
 
 /**
- * Helpful for writing tests against Pentaho reports in prpt format.    
+ * Helpful for writing tests against Pentaho reports in prpt format.
  */
 class PrptReport {
     // if baseDir is set in your config, reportFilename is relative to baseDir
@@ -32,7 +32,7 @@ class PrptReport {
         } else {
             cmdWithArgs = "./run_in_dir.sh ${pdiPath} ./pan.sh ${args}"
         }
-        
+
         println "executing: ${cmdWithArgs}"
         def proc = cmdWithArgs.execute()
         proc.waitFor()
@@ -42,22 +42,22 @@ class PrptReport {
         if (proc.exitValue() != 0) {
             throw new RuntimeException("Error(s) executing PDI.")
         }
-        
+
         tests.call(this) // set up asserts
         performAsserts()
     }
-    
+
     /** one allowed per row */
     def assertRowEquals(row, expected) {
         println "in assertRowEquals"
         // TODO: store test
     }
-    
+
     def assertCellEquals(row, col, expected) {
         println "in assertCellEquals"
         // TODO: store test
     }
-    
+
     def tests = [
         ['cell': [1: 'Customer ID']],
         ['row': ['1']],
@@ -69,15 +69,15 @@ class PrptReport {
             def cols = line.tokenize(',')
             def testsForThisLine = tests[lineno - 1]
             if (testsForThisLine) {
-				// cell-based tests
-				if (testsForThisLine['cell']) {
-					testsForThisLine['cell'].each { cell, expected ->
+                // cell-based tests
+                if (testsForThisLine['cell']) {
+                    testsForThisLine['cell'].each { cell, expected ->
                         assertEquals(expected, cols[cell - 1])
-					}
-				}
+                    }
+                }
                 // row-based tests
                 if (testsForThisLine['row']) {
-                    def expected = testsForThisLine['row'] 
+                    def expected = testsForThisLine['row']
                     assertEquals(expected, cols)
                 }
             }
