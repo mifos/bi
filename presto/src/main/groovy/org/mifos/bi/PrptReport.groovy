@@ -9,7 +9,7 @@ class PrptReport {
     // if baseDir is set in your config, reportFilename is relative to baseDir
     // otherwise, reportFilename is assumed to be the full (relative or absolute) path
     def execute(transformPath='presto/src/test/resources/test.ktr', reportPath, tests) {
-        def util = new ReportTestUtil()
+        def util = new ReportTestConfig()
         def transformFile = null
         if (util.getCfg('baseDir')) {
             transformFile = new File(new File(util.getCfg('baseDir')), transformPath)

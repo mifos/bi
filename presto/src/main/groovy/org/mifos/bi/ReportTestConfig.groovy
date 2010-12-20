@@ -1,7 +1,6 @@
 package org.mifos.bi
 
-// TODO: rename to ReportTestConfig
-class ReportTestUtil {
+class ReportTestConfig {
     def getCfgFilePath() {
         def home = new File(System.properties['user.home'])
         return new File(home, '.presto').getPath()
