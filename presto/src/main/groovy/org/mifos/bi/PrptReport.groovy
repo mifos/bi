@@ -6,28 +6,41 @@ import static org.junit.Assert.*
  * Helpful for writing tests against Pentaho reports in prpt format.
  */
 class PrptReport {
-    String transformPath = 'presto/src/test/resources/test.ktr'
+    String transformPath
     String reportPath
+
+    /** The transform must be generated so we can pass in stuff like report
+     * path, output location, and report params. */
+    def prepareTransform(reportPath, outputLocation) {
+        def ktr = getClass().getResourceAsStream("/test.ktr").text
+    }
+
+    def resolveReportPath(cfg) {
+        def reportFile = null
+        if (cfg.getCfg('baseDir')) {
+            reportFile = new File(new File(cfg.getCfg('baseDir')), reportPath)
+        } else {
+            reportFile = new File(transformPath)
+        }
+        return reportFile.getPath()
+    }
 
     /** if baseDir is set in your config, reportFilename is relative to baseDir
      otherwise, reportFilename is assumed to be the full (relative or absolute) path */
-    def execute(testsClosure) {
-        def util = new ReportTestConfig()
-        def transformFile = null
-        if (util.getCfg('baseDir')) {
-            transformFile = new File(new File(util.getCfg('baseDir')), transformPath)
-        } else {
-            transformFile = new File(transformPath)
-        }
-        def resolvedTransformPath = transformFile.getPath()
-        def pdiPath = util.getCfg('pdiPath')
+    def execute(prepClosure) {
+        prepClosure.call(this) // set up file paths, asserts, report params, etc.
+        def cfg = new ReportTestConfig()
+        def resolvedReportPath = resolveReportPath(cfg)
+        // TODO: clean up temp file (unless errors?)
+        File tempFile = File.createTempFile('presto', null)
+        prepareTransform(resolvedReportPath, tempFile)
+        def pdiPath = cfg.getCfg('pdiPath')
         if (pdiPath == '') {
-            throw new RuntimeException("pdiPath must be set in ${getCfgFilePath()}")
+            throw new RuntimeException("pdiPath must be set in ${cfg.getCfgFilePath()}")
         }
-        // TODO: start using reportPath parameter
-        // FIXME: -param:OUTPUT=... doesn't seem to be working or I'm not using it correctly
-        def args = "-file=${resolvedTransformPath}"
-        def cmdWithArgs = ""
+
+        def args = "-file=${transformPath}"
+        def cmdWithArgs = ''
 
         if (System.properties['os.name'] =~ '^Windows') {
             println "WARNING: invoking experimental pan.sh invocation. Creating run_in_dir.bat might be necessary instead to work around PDI-5076."
@@ -46,7 +59,6 @@ class PrptReport {
             throw new RuntimeException("Error(s) executing PDI.")
         }
 
-        testsClosure.call(this) // set up asserts
         performAsserts()
     }
 
