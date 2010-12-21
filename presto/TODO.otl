@@ -1,3 +1,5 @@
+[_] don't run run_in_dir.sh directly, use a temp file
+	(Bash can't run scripts from inside the jar)
 [_] improve error output if queries in reports fail
 	currently all you get is something like this:
 		ERROR 20-12 20:40:07,951 - Pentaho Reporting Output - Unexpected error :

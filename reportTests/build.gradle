@@ -1,0 +1,14 @@
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+apply plugin: 'idea'
+
+group = 'org.mifos.bi.test'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenRepo urls: 'http://maven.mifos.org/nexus/content/groups/public-snapshots'
+}
+
+dependencies {
+    groovy group: 'org.mifos.bi.test', name: 'presto', version: '1.0-SNAPSHOT'
+}
