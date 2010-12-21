@@ -34,7 +34,7 @@
 		run_in_dir.sh
 	[X] run report
 	[X] check output
-[_] stuff to pull out into a separate library
+[X] stuff to pull out into a separate library
 	docs: README, TODO.otl, pom.xml
 	install.py, run_in_dir.sh
 	PrptReport.groovy
@@ -47,13 +47,14 @@
 	make it so that anyone can use it on their reports
 	better than making it Mifos-specific
 		isolates problems w/the framework (vs. with the reports being tested)
-	[_] template-replaced PDI job (use params in job/transform)
+	[X] template-replaced PDI job (use params in job/transform)
 		or just use a fixed one, and move around reports before running Kitchen
 	[_] independent/stand-alone
 		[_] can download/setup PDI/reporting output step
 		[_] can run in parallel
 			[_] config is stored right in deploy dir?
 [_] use more pan.sh command line args
+	NOTE: had troubles trying to get this to work. Dynamically generating .ktr file instead.
 	http://wiki.pentaho.com/display/EAI/Pan+User+Documentation
 	http://type-exit.org/adventures-with-open-source-bi/2010/07/using-named-parameters-in-kettle/
 	http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+Steps
@@ -78,19 +79,20 @@
 [_] document with something useful/pretty
 	[_] generate documentation w/Maven site?
 	[_] just use a confluence wiki page?
+	[_] heck, plain text works.
 [_] API: just a base "test" class? Groovy?
 [_] sensible defaults, but allow overriding anything
-[_] Groovy framework
-[_] simple config
-[_] runnable directly from Hudson
+[X] Groovy framework
+[X] simple config
+[X] runnable directly from Hudson
 [_] load seed data
 	one seed data per class - CONVENTION
-[_] generate PDI XML file(s)
-	[_] report params
-	[_] report filename
-[_] awesome test output showing exactly what failed
+[X] generate PDI XML file(s)
+	[X] report params
+	[X] report filename
+[X] awesome test output showing exactly what failed
 [_] clearly document/demonstrate conventions!
-[_] use PDI API
+[N] use PDI API
 	good example in "Pentaho® Kettle Solutions: Building Open Source ETL Solutions with Pentaho Data Integration", Chapter 22: Kettle Integration
 		got a basic example working
 		blocked by difficulty in calling API and using Pentaho Reporting Output step plugin
