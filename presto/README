@@ -1,0 +1,43 @@
+Pentaho Report Test Framework - "presto"
+
+QUICK START:
+    install.py will help you make sure you are ready to run tests. Run that
+    first. It will report diagnostics on your dev environment and tell you how
+    to run the tests.
+
+how to compile code and run tests:
+  * execute "gradle build"
+
+how to write tests:
+  * see writing_tests.txt
+
+how to develop presto with an IDE
+  * Eclipse: "gradle eclipse"
+    * don't commit .project or .classpath
+    * ignore changes to .settings/
+    * if you change dependencies, run "gradle eclipseClasspath"
+    * see http://www.gradle.org/eclipse_plugin.html for more info
+  * IntelliJ Idea: "gradle idea"
+
+prereqs for running tests:
+  * Gradle
+  * PDI 4.1.0 w/Reporting Output Step installed
+  * set up PDI db connection params
+
+prereqs for test development:
+  * Eclipse with Groovy plugin (optional)
+  * Python (to run install.py)
+
+conventions:
+  * indent all source code with 4 spaces, no tabs
+  * don't commit IDE settings (exception: .settings/ dir for Eclipse since, for
+    instance, it enforces the use of spaces instead of tabs)
+
+related:
+  * http://sandbox.pentaho.com/Pentaho-Data-Integration-Reporting-Plug-in/
+  * http://mifosforge.jira.com/browse/MIFOSBI-144
+  * http://article.gmane.org/gmane.comp.finance.mifos.devel/10458
+  * http://forums.pentaho.com/showthread.php?79085 - Announcement/Poll
+  * http://forums.pentaho.com/showthread.php?79709-automated-report-testing
+  * http://jira.pentaho.com/browse/PDI-5076
+  * http://www.ibridge.be/?p=190 - Another announcement
