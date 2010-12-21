@@ -100,29 +100,9 @@
         <length>-1</length>
         <precision>-1</precision>
       </field>
-      <field>
-        <name>Start Date Param</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>End Date Param</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
     </fields>
     <data>
-      <line> <item>&#47;home&#47;adamm&#47;Documents&#47;Grameen&#47;Code&#47;Pentaho&#47;MIFOSBI-144&#47;Simple.prpt</item><item>&#47;tmp&#47;out.csv</item><item/><item>2010-12-14</item> </line>
+      <line>$items</line>
     </data>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>

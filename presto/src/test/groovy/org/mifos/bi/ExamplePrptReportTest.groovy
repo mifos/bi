@@ -7,9 +7,12 @@ class ExamplePrptReportTest {
     @Test
     void testDataDumpReport() {
         new PrptReport().execute () { t ->
+            // Report settings.
             t.reportPath = 'src/test/resources/Simple.prpt'
-            // NOTE use 1-based indices!
+            t.reportParams = ['dummyParamName': 'dummyParamValue']
+            // Output data tests. NOTE: use 1-based indices!
             t.assertCellEquals(1, 1, "Customer ID")
+            t.assertCellEquals(1, 2, "Customer Status")
             t.assertRowEquals(2, ['1'])
         }
         assertTrue(true)

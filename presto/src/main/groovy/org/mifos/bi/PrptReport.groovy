@@ -1,26 +1,62 @@
 package org.mifos.bi
 
+
+import java.io.FileOutputStream;
+
+import org.apache.commons.lang.StringEscapeUtils
+
 import static org.junit.Assert.*
 
 /**
  * Helpful for writing tests against Pentaho reports in prpt format.
  */
 class PrptReport {
-    String transformPath
     String reportPath
+    Map<String, String> reportParams
+
+    def getItemXml(content) {
+        return "<item>${content}</item>"
+    }
+
+    def getItemsXml(reportPath, outputLocation) {
+        def items = new StringBuilder()
+        // TODO: test on Windows
+        items.append(getItemXml(StringEscapeUtils.escapeHtml(reportPath)))
+        items.append(getItemXml(StringEscapeUtils.escapeHtml(outputLocation)))
+        return items.toString()
+    }
+
+    def getParamsXml(reportParams) {
+        if (reportParams != [:]) {
+            println "reports with params not yet supported"
+        }
+    }
 
     /** The transform must be generated so we can pass in stuff like report
      * path, output location, and report params. */
-    def prepareTransform(reportPath, outputLocation) {
+    def prepareTransform(transformFile, reportPath, reportParams=[:], outputLocation) {
         def ktr = getClass().getResourceAsStream("/test.ktr").text
+        def engine = new groovy.text.SimpleTemplateEngine()
+        // TODO: add params for reports that take them
+        def binding = [
+            items: getItemsXml(reportPath, outputLocation),
+            params: getParamsXml(reportParams)
+        ]
+        def template = engine.createTemplate(ktr).make(binding)
+        def tOut = new FileWriter(transformFile)
+        tOut.write(template.toString())
+        println "transform is ${transformFile.path}, output is ${outputLocation}"
+        tOut.close()
     }
 
     def resolveReportPath(cfg) {
         def reportFile = null
         if (cfg.getCfg('baseDir')) {
+            // relative path given
             reportFile = new File(new File(cfg.getCfg('baseDir')), reportPath)
         } else {
-            reportFile = new File(transformPath)
+            // assume absolute path given
+            reportFile = new File(reportPath)
         }
         return reportFile.getPath()
     }
@@ -31,15 +67,15 @@ class PrptReport {
         prepClosure.call(this) // set up file paths, asserts, report params, etc.
         def cfg = new ReportTestConfig()
         def resolvedReportPath = resolveReportPath(cfg)
-        // TODO: clean up temp file (unless errors?)
-        File tempFile = File.createTempFile('presto', null)
-        prepareTransform(resolvedReportPath, tempFile)
+        File output = File.createTempFile('presto', '.csv')
+        File transform = File.createTempFile('presto', '.ktr')
+        prepareTransform(transform, resolvedReportPath, [:], output.path)
         def pdiPath = cfg.getCfg('pdiPath')
         if (pdiPath == '') {
-            throw new RuntimeException("pdiPath must be set in ${cfg.getCfgFilePath()}")
+            throw new RuntimeException("pdiPath must be set in ${cfg.cfgFilePath}")
         }
 
-        def args = "-file=${transformPath}"
+        def args = "-file=${transform.path}"
         def cmdWithArgs = ''
 
         if (System.properties['os.name'] =~ '^Windows') {
@@ -59,7 +95,12 @@ class PrptReport {
             throw new RuntimeException("Error(s) executing PDI.")
         }
 
-        performAsserts()
+        performAsserts(output.path)
+
+        // Clean up. Will only happen if all asserts passed. This is a Good
+        // Thing, if an assert failed we can inspect the temp files.
+        output.delete()
+        transform.delete()
     }
 
     def tests = [
@@ -68,6 +109,9 @@ class PrptReport {
     ]
 
     def assertRowEquals(row, expected) {
+        if (tests['row'][row]) {
+            throw new RuntimeException("extant test for row ${row} (expecting '${tests['row'][row]}')")
+        }
         tests['row'][row] = expected;
     }
 
@@ -75,11 +119,14 @@ class PrptReport {
         if (!tests['cell'][row]) {
             tests['cell'][row] = [:]
         }
+        if (tests['cell'][row][col]) {
+            throw new RuntimeException("extant test for row ${row}, col ${col} (expecting '${tests['cell'][row][col]}')")
+        }
         tests['cell'][row][col] = expected
     }
 
-    def performAsserts() {
-        new File('/tmp/out.csv').eachLine { line, lineno ->
+    def performAsserts(outputLocation) {
+        new File(outputLocation).eachLine { line, lineno ->
             // poor-man's CSV parsing
             def cols = line.tokenize(',')
             // cell-based tests
@@ -89,13 +136,17 @@ class PrptReport {
                     if (expected) {
                         assertEquals(expected, cols[i])
                     }
+                    tests['cell'][lineno].remove(i + 1)
                 }
+                tests['cell'].remove(lineno)
             }
             // row-based tests
             if (tests['row'][lineno]) {
                 def expected = tests['row'][lineno]
                 assertEquals(expected, cols)
+                tests['row'].remove(lineno)
             }
         }
+        assertEquals("output exhausted but not all tests were executed!", ['cell': [:], 'row': [:]], tests)
     }
 }
