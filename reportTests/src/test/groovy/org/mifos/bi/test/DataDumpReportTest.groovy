@@ -1,7 +1,6 @@
-package org.mifos.bi.report.test
+package org.mifos.bi.test
 
 import org.junit.Test
-import org.mifos.bi.test.PrptReport
 
 class DataDumpReportTest {
     @Test
