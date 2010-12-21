@@ -13,6 +13,10 @@ how to write tests:
 
 how to develop presto with an IDE
   * Eclipse: "gradle eclipse"
+    * don't commit .project or .classpath
+    * ignore changes to .settings/
+    * if you change dependencies, run "gradle eclipseClasspath"
+    * see http://www.gradle.org/eclipse_plugin.html for more info
   * IntelliJ Idea: "gradle idea"
 
 prereqs for running tests:

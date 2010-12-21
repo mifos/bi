@@ -6,9 +6,12 @@ import static org.junit.Assert.*
  * Helpful for writing tests against Pentaho reports in prpt format.
  */
 class PrptReport {
+    String transformPath = 'presto/src/test/resources/test.ktr'
+    String reportPath
+
     /** if baseDir is set in your config, reportFilename is relative to baseDir
      otherwise, reportFilename is assumed to be the full (relative or absolute) path */
-    def execute(transformPath='presto/src/test/resources/test.ktr', reportPath, testsClosure) {
+    def execute(testsClosure) {
         def util = new ReportTestConfig()
         def transformFile = null
         if (util.getCfg('baseDir')) {
@@ -23,11 +26,11 @@ class PrptReport {
         }
         // TODO: start using reportPath parameter
         // FIXME: -param:OUTPUT=... doesn't seem to be working or I'm not using it correctly
-        def args = "-file=${resolvedTransformPath} -param:OUTPUT=/tmp/test4.csv"
+        def args = "-file=${resolvedTransformPath}"
         def cmdWithArgs = ""
 
         if (System.properties['os.name'] =~ '^Windows') {
-            println "WARNING: invoking experimental pan.sh invocation. run_in_dir.bat might be necessary instead to work around PDI-5076."
+            println "WARNING: invoking experimental pan.sh invocation. Creating run_in_dir.bat might be necessary instead to work around PDI-5076."
             cmdWithArgs = "${pdiPath}/pan.sh ${args}}"
         } else {
             cmdWithArgs = "./run_in_dir.sh ${pdiPath} ./pan.sh ${args}"

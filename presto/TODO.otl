@@ -2,7 +2,9 @@
 [_] generate .ktr file / parameterize transform
 	why? so we can
 		[_] use passed-in reportPath
-		[_] use passed-in output location (a temp file)
+		[_] use dynamic output location (generated temp file)
+		[_] send params to reports
+			pass a map to PrptReport().execute()
 		[_] send CSV output to a temp file
 		[_] make tests work on Hudson
 [_] think again about gradle!
