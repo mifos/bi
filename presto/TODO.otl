@@ -1,11 +1,22 @@
+[_] improve error output if queries in reports fail
+	currently all you get is something like this:
+		ERROR 20-12 20:40:07,951 - Pentaho Reporting Output - Unexpected error :
+		ERROR 20-12 20:40:07,951 - Pentaho Reporting Output - org.pentaho.di.core.exception.KettleException:
+		There was an unexpected error processing report '/home/hudson/hudson-home/jobs/bi-presto/workspace/presto/src/test/resources/Simple.prpt' to produce file '/tmp/presto1308401775291869355.csv' with processor: CSV.
+		Unable to initialize the report
+		org.pentaho.reporting.plugin.PentahoReportingOutput.processReport(Unknown Source)
+		org.pentaho.reporting.plugin.PentahoReportingOutput.processRow(Unknown Source)
+		org.pentaho.di.trans.step.RunThread.run(RunThread.java:40)
+		java.lang.Thread.run(Thread.java:619)
+[_] get this working on Windows
 [X] make asserts work on CSV output
 [_] generate .ktr file / parameterize transform
 	why? so we can
-		[_] use passed-in reportPath
-		[_] use dynamic output location (generated temp file)
+		[X] use passed-in reportPath
+		[X] use dynamic output location (generated temp file)
 		[_] send params to reports
 			pass a map to PrptReport().execute()
-		[_] send CSV output to a temp file
+		[X] send CSV output to a temp file
 		[_] make tests work on Hudson
 [_] think again about gradle!
 	most minimal build script evar

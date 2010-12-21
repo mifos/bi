@@ -134,7 +134,7 @@ class PrptReport {
                 (0..cols.size()).each { i ->
                     def expected = tests['cell'][lineno][i + 1]
                     if (expected) {
-                        assertEquals(expected, cols[i])
+                        assertEquals("cell test for (${lineno}, ${i + 1}) failed.", expected, cols[i])
                     }
                     tests['cell'][lineno].remove(i + 1)
                 }
@@ -143,7 +143,7 @@ class PrptReport {
             // row-based tests
             if (tests['row'][lineno]) {
                 def expected = tests['row'][lineno]
-                assertEquals(expected, cols)
+                assertEquals("test for row ${lineno} failed.", expected, cols)
                 tests['row'].remove(lineno)
             }
         }
