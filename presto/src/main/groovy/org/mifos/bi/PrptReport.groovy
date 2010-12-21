@@ -1,8 +1,5 @@
 package org.mifos.bi
 
-
-import java.io.FileOutputStream;
-
 import org.apache.commons.lang.StringEscapeUtils
 
 import static org.junit.Assert.*
