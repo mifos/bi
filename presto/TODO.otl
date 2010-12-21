@@ -20,6 +20,8 @@
 			pass a map to PrptReport().execute()
 		[X] send CSV output to a temp file
 		[_] make tests work on Hudson
+[_] why don't groovy transitive dependencies work?
+	[_] shouldn't need 'runtime' lines in build.gradle
 [_] think again about gradle!
 	most minimal build script evar
 	[X] works w/Hudson?
