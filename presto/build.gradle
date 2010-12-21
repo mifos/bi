@@ -10,10 +10,8 @@ repositories {
     mavenRepo urls: 'http://maven.mifos.org/nexus/content/groups/public'
 }
 
+conf2ScopeMappings.addMapping(MavenPlugin.RUNTIME_PRIORITY, configurations.groovy, Conf2ScopeMappingContainer.RUNTIME)
 dependencies {
-    runtime group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.5'
-    runtime group: 'junit', name: 'junit', version: '4.7'
-    runtime group: 'commons-lang', name: 'commons-lang', version: '2.5'
     groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.5', { transitive = true }
     groovy group: 'junit', name: 'junit', version: '4.7', { transitive = true }
     groovy group: 'commons-lang', name: 'commons-lang', version: '2.5', { transitive = true }
