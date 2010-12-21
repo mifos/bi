@@ -1,0 +1,113 @@
+[_] improve error output if queries in reports fail
+	currently all you get is something like this:
+		ERROR 20-12 20:40:07,951 - Pentaho Reporting Output - Unexpected error :
+		ERROR 20-12 20:40:07,951 - Pentaho Reporting Output - org.pentaho.di.core.exception.KettleException:
+		There was an unexpected error processing report '/home/hudson/hudson-home/jobs/bi-presto/workspace/presto/src/test/resources/Simple.prpt' to produce file '/tmp/presto1308401775291869355.csv' with processor: CSV.
+		Unable to initialize the report
+		org.pentaho.reporting.plugin.PentahoReportingOutput.processReport(Unknown Source)
+		org.pentaho.reporting.plugin.PentahoReportingOutput.processRow(Unknown Source)
+		org.pentaho.di.trans.step.RunThread.run(RunThread.java:40)
+		java.lang.Thread.run(Thread.java:619)
+[_] get this working on Windows
+[X] make asserts work on CSV output
+[_] generate .ktr file / parameterize transform
+	why? so we can
+		[X] use passed-in reportPath
+		[X] use dynamic output location (generated temp file)
+		[_] send params to reports
+			pass a map to PrptReport().execute()
+		[X] send CSV output to a temp file
+		[_] make tests work on Hudson
+[_] think again about gradle!
+	most minimal build script evar
+	[X] works w/Hudson?
+	[X] works w/Eclipse?
+	[_] makes usable Maven artifacts?
+		looks like it, need to try using the artifact, though
+		file:///home/adamm/dist/gradle/docs/userguide/maven_plugin.html#uploading_to_maven_repositories
+	[X] works w/Idea?
+[_] basic automated test
+	[X] use existing install of PDI/reporting output step
+	[_] load sample database
+		OR: prereq: run "ppi_build.sh" first
+	[X] ARGH! need to chdir to PDI install dir
+		run_in_dir.sh
+	[X] run report
+	[X] check output
+[_] stuff to pull out into a separate library
+	docs: README, TODO.otl, pom.xml
+	install.py, run_in_dir.sh
+	PrptReport.groovy
+[_] port install.py to Groovy
+	removes Python dependency
+[_] make sure database connection works?
+	causes difficult-to-track-down problems
+	[_] do in some Mifos-specific class
+[_] generic/reusable
+	make it so that anyone can use it on their reports
+	better than making it Mifos-specific
+		isolates problems w/the framework (vs. with the reports being tested)
+	[_] template-replaced PDI job (use params in job/transform)
+		or just use a fixed one, and move around reports before running Kitchen
+	[_] independent/stand-alone
+		[_] can download/setup PDI/reporting output step
+		[_] can run in parallel
+			[_] config is stored right in deploy dir?
+[_] use more pan.sh command line args
+	http://wiki.pentaho.com/display/EAI/Pan+User+Documentation
+	http://type-exit.org/adventures-with-open-source-bi/2010/07/using-named-parameters-in-kettle/
+	http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+Steps
+	http://wiki.pentaho.com/display/EAI/Named+Parameters
+	OLD: http://wiki.pentaho.com/display/COM/Using+Variables+in+Kettle
+	[_] params for the transform
+		[_] path to report
+		[_] where to send output
+		[_] report params too
+			[_] might not work... might need to generate .ktr file
+				params are hardcoded in Pentaho Reporting Output step
+	[_] params for Kettle/Pan/PDI/etc.
+		[_] logging file/level
+[_] ideas for pointing it at your pentaho tests
+	[_] customized by {user.home}/.presto or similar
+		[_] or, store config right in deploy dir? (ignore w/git)
+	[_] specific directory structure - CONVENTION
+		[_] dir w/prpt files
+		[_] seed data
+		[_] expected CSV output
+		[_] stuff besides prpt files could be in an identical directory structure
+[_] document with something useful/pretty
+	[_] generate documentation w/Maven site?
+	[_] just use a confluence wiki page?
+[_] API: just a base "test" class? Groovy?
+[_] sensible defaults, but allow overriding anything
+[_] Groovy framework
+[_] simple config
+[_] runnable directly from Hudson
+[_] load seed data
+	one seed data per class - CONVENTION
+[_] generate PDI XML file(s)
+	[_] report params
+	[_] report filename
+[_] awesome test output showing exactly what failed
+[_] clearly document/demonstrate conventions!
+[_] use PDI API
+	good example in "Pentaho® Kettle Solutions: Building Open Source ETL Solutions with Pentaho Data Integration", Chapter 22: Kettle Integration
+		got a basic example working
+		blocked by difficulty in calling API and using Pentaho Reporting Output step plugin
+			http://forums.pentaho.com/showthread.php?79812-executing-a-transformation-using-the-Kettle-4-API-Maven-example
+	bad/old example(s) on wiki
+		http://wiki.pentaho.com/display/EAI/Pentaho+Data+Integration+-+Java+API+Examples
+[_] use maven release plugin (or similar) to create releases
+
+[X] neither "mvn test" nor "mvn verify" work
+	seems to be a JUnit 4/maven issue
+	maven.test.search.classdir doesn't fix this, that was with the Maven 1.x test plugin
+		old/outdated: http://groovy.codehaus.org/Using+JUnit+4+with+Groovy
+	http://codeforfun.wordpress.com/2006/05/19/groovy-and-maven2-in-action/
+	http://docs.codehaus.org/display/GMAVEN/Building+Groovy+Projects?&#comments
+	[N] just switch to JUnit 3?
+	[N] switch to gradle to buildr?
+		http://markmail.org/message/xx2uyriytw7nzqlw <-- NEW!
+[X] maven or ?
+	[X] gradle looks cool
+	[X] meh, just stick with Maven. It works, we know it.

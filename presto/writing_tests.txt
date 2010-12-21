@@ -1,0 +1,11 @@
+Configuration:
+
+Coding:
+
+* See ExamplePrptReportTest.groovy
+
+* PrptReport.execute() takes a reportPath, and a closure of tests to perform on
+  the output of the report under test.
+
+* if baseDir is set in your config, reportFilename is relative to baseDir
+  otherwise, reportFilename is assumed to be the full (relative or absolute) path
