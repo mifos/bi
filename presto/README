@@ -23,6 +23,7 @@ prereqs for running tests:
   * Gradle
   * PDI 4.1.0 w/Reporting Output Step installed
   * set up PDI db connection params
+  * create ~/.gradle/gradle.properties which defines mifosNexusUsername mifosNexusPassword
 
 prereqs for test development:
   * Eclipse with Groovy plugin (optional)
