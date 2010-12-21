@@ -1,4 +1,4 @@
-package org.mifos.bi
+package org.mifos.bi.test
 
 import org.apache.commons.lang.StringEscapeUtils
 

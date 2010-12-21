@@ -1,4 +1,4 @@
-package org.mifos.bi
+package org.mifos.bi.test
 
 class ReportTestConfig {
     def getCfgFilePath() {
