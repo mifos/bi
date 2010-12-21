@@ -15,6 +15,5 @@ class ExamplePrptReportTest {
             t.assertCellEquals(1, 2, "Customer Status")
             t.assertRowEquals(2, ['1'])
         }
-        assertTrue(true)
     }
 }
