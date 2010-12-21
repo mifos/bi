@@ -15,3 +15,11 @@ dependencies {
     groovy group: 'junit', name: 'junit', version: '4.7'
     groovy group: 'commons-lang', name: 'commons-lang', version: '2.5'
 }
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "http://maven.mifos.org/nexus/content/repositories/mifos-snapshots/") {
+            authentication(userName: mifosNexusUsername, password: mifosNexusPassword)
+        }
+    }
+}
