@@ -55,6 +55,9 @@ class PrptReport {
             // assume absolute path given
             reportFile = new File(reportPath)
         }
+        if (! reportFile.exists()) {
+            throw new RuntimeException("${reportPath} does not exist.")
+        }
         return reportFile.getPath()
     }
 
