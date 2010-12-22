@@ -46,6 +46,14 @@ class PrptReport {
         tOut.close()
     }
 
+    def prepareBootstrap(bootstrapFile) {
+        def bashScript = getClass().getResourceAsStream("/run_in_dir.sh").text
+        def bOut = new FileWriter(bootstrapFile)
+        bOut.write(bashScript.toString())
+        println "PDI-5076 workaround hack is ${bootstrapFile.path}"
+        bOut.close()
+    }
+
     def resolveReportPath(cfg) {
         def reportFile = null
         if (cfg.getCfg('baseDir')) {
@@ -82,7 +90,10 @@ class PrptReport {
             println "WARNING: invoking experimental pan.sh invocation. Creating run_in_dir.bat might be necessary instead to work around PDI-5076."
             cmdWithArgs = "${pdiPath}/pan.sh ${args}}"
         } else {
-            cmdWithArgs = "./run_in_dir.sh ${pdiPath} ./pan.sh ${args}"
+            File bootstrap = File.createTempFile('run_in_dir', '.sh')
+            prepareBootstrap(bootstrap)
+            "chmod 755 ${bootstrap.path}".execute().waitFor()
+            cmdWithArgs = "${bootstrap.path} ${pdiPath} ./pan.sh ${args}"
         }
 
         println "executing: ${cmdWithArgs}"

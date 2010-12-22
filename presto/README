@@ -6,7 +6,9 @@ QUICK START:
     to run the tests.
 
 how to compile code and run tests:
-  * execute "gradle build"
+  * run install.py, follow all instructions
+  * execute "ppi_build.sh" in parent dir
+  * execute "gradle build" in this dir
 
 how to write tests:
   * see writing_tests.txt

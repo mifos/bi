@@ -1,4 +1,5 @@
-[_] don't run run_in_dir.sh directly, use a temp file
+[_] only run uploadArchives from Hudson build
+[X] don't run run_in_dir.sh directly, use a temp file
 	(Bash can't run scripts from inside the jar)
 [_] improve error output if queries in reports fail
 	currently all you get is something like this:
@@ -19,7 +20,7 @@
 		[_] send params to reports
 			pass a map to PrptReport().execute()
 		[X] send CSV output to a temp file
-		[_] make tests work on Hudson
+		[X] make tests work on Hudson
 [_] why don't groovy transitive dependencies work?
 	[_] shouldn't need 'runtime' lines in build.gradle
 [_] think again about gradle!
