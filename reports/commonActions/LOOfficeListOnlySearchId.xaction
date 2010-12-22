@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Office List Using Only Search Id</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <officeSearchId type="string"> 
+      <sources> 
+        <request>officeSearchId</request> 
+      </sources>  
+      <default-value/> 
+    </officeSearchId> 
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <officeSearchId type="string"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select distinctrow p.personnel_key,p.display_name
+from dim_personnel p
+join dim_office o on p.office_key = o.office_key
+where p.is_loan_officer='1'
+and (o.search_id like concat("{officeSearchId}",'%') or (("{officeSearchId}")='-1')))
+union (select 0," All")
+order by display_name]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

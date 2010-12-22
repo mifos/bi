@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Loan Statuses List Using Product Key</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <productKey type="integer"> 
+      <sources> 
+        <request>productKey</request> 
+      </sources>  
+      <default-value/> 
+    </productKey> 
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <productKey type="integer"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select distinctrow
+loan_status,
+(substring_index(`dim_loan`.`loan_status`, '-', -1)) as status
+from `dim_loan`
+where loan_status <> '-'
+and if({productKey} != 0,
+{productKey} in (select product_key from dim_product where product_type = "Loan-Loan"),
+0 = 0))
+union (select "All", " All" as status)
+order by status]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
