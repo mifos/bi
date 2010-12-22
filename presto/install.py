@@ -11,10 +11,11 @@ def main():
         say('No java.')
 
     say('Trying to run Gradle... ')
-    if run('gradle -v'):
+    gradle = get_for_os('gradle')
+    if run('%s -v' % gradle):
         say('OK!')
     else:
-        fail('gradle', 'not found. Must be in PATH. Gradle is needed to build.')
+        fail(gradle, 'not found. Must be in PATH. Gradle is needed to build.')
         say('No maven.')
 
     pdiPath = ""
@@ -89,6 +90,10 @@ default_locations = {
     'pan_script': {
         'nt' : 'pan.bat',
         'posix': 'pan.sh',
+    },
+    'gradle': {
+        'nt' : 'gradle.bat',
+        'posix': 'gradle',
     },
 }
 failed = []
