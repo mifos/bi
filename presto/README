@@ -9,6 +9,7 @@ how to compile code and run tests:
   * run install.py, follow all instructions
   * execute "ppi_build.sh" in parent dir
   * execute "gradle build" in this dir
+  * re-running tests? use "gradle cleanTest test"
 
 how to write tests:
   * see writing_tests.txt

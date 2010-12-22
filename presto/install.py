@@ -76,7 +76,7 @@ def main():
         for msg in failmsgs:
             say(msg)
     else:
-        say('Ready to test Pentaho reports! Run tests with "mvn verify".')
+        say('Ready to test Pentaho reports! Build using "gradle build".')
 
 import os
 import re

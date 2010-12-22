@@ -1,11 +1,18 @@
 Configuration:
 
+* ~/.presto
+  * baseDir - convenience so, in your tests, you need only mention part of the
+    path to .prpt files
+  * pdiHome - full/absolute path to Pentaho Data Integration installation
+
 Coding:
 
 * See ExamplePrptReportTest.groovy
 
 * PrptReport.execute() takes a reportPath, and a closure of tests to perform on
   the output of the report under test.
+
+* all tests use 1-based indices
 
 * if baseDir is set in your config, reportFilename is relative to baseDir
   otherwise, reportFilename is assumed to be the full (relative or absolute) path
