@@ -100,6 +100,7 @@
         <length>-1</length>
         <precision>-1</precision>
       </field>
+      $paramFields
     </fields>
     <data>
       <line>$items</line>
@@ -124,7 +125,7 @@
            </partitioning>
   <input_file_field>Report</input_file_field>
   <output_file_field>Output</output_file_field>
-  <parameters>  </parameters>    <processor_type>CSV</processor_type>
+  <parameters> $params </parameters>    <processor_type>CSV</processor_type>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>286</xloc>

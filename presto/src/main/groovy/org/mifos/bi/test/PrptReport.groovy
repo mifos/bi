@@ -1,5 +1,7 @@
 package org.mifos.bi.test
 
+import java.io.File;
+
 import org.apache.commons.lang.StringEscapeUtils
 
 import static org.junit.Assert.*
@@ -15,18 +17,41 @@ class PrptReport {
         return "<item>${content}</item>"
     }
 
-    def getItemsXml(reportPath, outputLocation) {
-        def items = new StringBuilder()
+    def getItemsXml(reportPath, outputLocation, reportParams) {
+        def items = new StringBuilder("")
         // TODO: test on Windows
         items.append(getItemXml(StringEscapeUtils.escapeHtml(reportPath)))
         items.append(getItemXml(StringEscapeUtils.escapeHtml(outputLocation)))
+        reportParams.each { key, value ->
+            items.append(getItemXml(StringEscapeUtils.escapeHtml(value)))
+        }
         return items.toString()
     }
 
-    def getParamsXml(reportParams) {
-        if (reportParams != [:]) {
-            println "reports with params not yet supported"
+    def getParamFieldXml(content) {
+        return """<field><name>${content}</name><type>String</type>
+        <format/><currency/><decimal/><group/><length>-1</length><precision>-1</precision>
+      </field>"""
+    }
+
+    def getParamFieldsXml(reportParams) {
+        def paramFields = new StringBuilder("")
+        reportParams.each { key, value ->
+            paramFields.append(getParamFieldXml(StringEscapeUtils.escapeHtml(key)))
         }
+        return paramFields.toString()
+    }
+
+    def getParamXml(content) {
+        return "<parameter><name>${content}</name><field>${content}</field></parameter>"
+    }
+
+    def getParamsXml(reportParams) {
+        def params = new StringBuilder("")
+        reportParams.each { key, value ->
+            params.append(getParamXml(StringEscapeUtils.escapeHtml(key)))
+        }
+        return params
     }
 
     /** The transform must be generated so we can pass in stuff like report
@@ -34,10 +59,10 @@ class PrptReport {
     def prepareTransform(transformFile, reportPath, reportParams=[:], outputLocation) {
         def ktr = getClass().getResourceAsStream("/test.ktr").text
         def engine = new groovy.text.SimpleTemplateEngine()
-        // TODO: add params for reports that take them
         def binding = [
-            items: getItemsXml(reportPath, outputLocation),
-            params: getParamsXml(reportParams)
+            items: getItemsXml(reportPath, outputLocation, reportParams),
+            paramFields: getParamFieldsXml(reportParams),
+            params: getParamsXml(reportParams),
         ]
         def template = engine.createTemplate(ktr).make(binding)
         def tOut = new FileWriter(transformFile)
@@ -77,7 +102,7 @@ class PrptReport {
         def resolvedReportPath = resolveReportPath(cfg)
         File output = File.createTempFile('presto', '.csv')
         File transform = File.createTempFile('presto', '.ktr')
-        prepareTransform(transform, resolvedReportPath, [:], output.path)
+        prepareTransform(transform, resolvedReportPath, reportParams, output.path)
         def pdiPath = cfg.getCfg('pdiPath')
         if (pdiPath == '') {
             throw new RuntimeException("pdiPath must be set in ${cfg.cfgFilePath}")
@@ -86,11 +111,12 @@ class PrptReport {
         def args = "-file=${transform.path}"
         def cmdWithArgs = ''
 
+        File bootstrap = null
         if (System.properties['os.name'] =~ '^Windows') {
             println "WARNING: invoking experimental pan.sh invocation. Creating run_in_dir.bat might be necessary instead to work around PDI-5076."
             cmdWithArgs = "${pdiPath}/pan.sh ${args}}"
         } else {
-            File bootstrap = File.createTempFile('run_in_dir', '.sh')
+            bootstrap = File.createTempFile('run_in_dir', '.sh')
             prepareBootstrap(bootstrap)
             "chmod 755 ${bootstrap.path}".execute().waitFor()
             cmdWithArgs = "${bootstrap.path} ${pdiPath} ./pan.sh ${args}"
@@ -112,6 +138,9 @@ class PrptReport {
         // Thing, if an assert failed we can inspect the temp files.
         output.delete()
         transform.delete()
+        if (bootstrap != null) {
+            bootstrap.delete()
+        }
     }
 
     def tests = [

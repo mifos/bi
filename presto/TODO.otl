@@ -13,21 +13,22 @@
 		java.lang.Thread.run(Thread.java:619)
 [_] get this working on Windows
 [X] make asserts work on CSV output
-[_] generate .ktr file / parameterize transform
+[X] generate .ktr file / parameterize transform
 	why? so we can
 		[X] use passed-in reportPath
 		[X] use dynamic output location (generated temp file)
-		[_] send params to reports
+		[X] send params to reports
 			pass a map to PrptReport().execute()
 		[X] send CSV output to a temp file
 		[X] make tests work on Hudson
 [_] why don't groovy transitive dependencies work?
 	[_] shouldn't need 'runtime' lines in build.gradle
-[_] think again about gradle!
+	http://jira.codehaus.org/browse/GRADLE-1266
+[X] think again about gradle!
 	most minimal build script evar
 	[X] works w/Hudson?
 	[X] works w/Eclipse?
-	[_] makes usable Maven artifacts?
+	[X] makes usable Maven artifacts?
 		looks like it, need to try using the artifact, though
 		file:///home/adamm/dist/gradle/docs/userguide/maven_plugin.html#uploading_to_maven_repositories
 	[X] works w/Idea?
@@ -45,6 +46,7 @@
 	PrptReport.groovy
 [_] port install.py to Groovy
 	removes Python dependency
+	can make a build target for setting up presto
 [_] make sure database connection works?
 	causes difficult-to-track-down problems
 	[_] do in some Mifos-specific class
@@ -74,12 +76,12 @@
 	[_] params for Kettle/Pan/PDI/etc.
 		[_] logging file/level
 [_] ideas for pointing it at your pentaho tests
-	[_] customized by {user.home}/.presto or similar
-		[_] or, store config right in deploy dir? (ignore w/git)
+	[X] customized by {user.home}/.presto or similar
+	[N] or, store config right in deploy dir? (ignore w/git)
 	[_] specific directory structure - CONVENTION
-		[_] dir w/prpt files
+		[X] dir w/prpt files
 		[_] seed data
-		[_] expected CSV output
+		[X] expected CSV output
 		[_] stuff besides prpt files could be in an identical directory structure
 [_] document with something useful/pretty
 	[_] generate documentation w/Maven site?
