@@ -8,6 +8,7 @@ truncate table fact_client_attendances;
 truncate table dw_ppi_survey;
 truncate table fact_ppi_survey_results;
 
+truncate table hist_savings_balances;
 truncate table hist_loan_arrears;
 
 truncate table stg_personnel_names_and_name_changes;

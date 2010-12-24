@@ -61,6 +61,8 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
+  <created_user/>
+  <created_date>2010&#47;12&#47;24 19:10:42.726</created_date>
   <modified_user>-</modified_user>
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
@@ -155,14 +157,19 @@
            </partitioning>
     <connection>SourceDB</connection>
     <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, curdate() as mainEndDate, date_add(curdate(), INTERVAL 1 DAY) as mainEndTransactionDate,
-a.startDate as arrearsStartDate, curdate() as arrearsEndDate
+a.startDate as arrearsStartDate, curdate() as arrearsEndDate,
+b.startDate as savingsStartDate, curdate() as savingsEndDate
 
 from
     (select ifnull(min(action_date), date(&apos;3000-01-01&apos;)) as startDate
 	from account_trxn
 	where account_action_id = 10) a
+&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;
 
-&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;</sql>
+,
+    (select ifnull(min(ac.created_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account ac
+	where ac.account_type_id = 2) b</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -214,6 +221,18 @@ from
       <field>
         <field_name>arrearsEndDate</field_name>
         <variable_name>ARREARSENDDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>savingsStartDate</field_name>
+        <variable_name>SAVINGSSTARTDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>savingsEndDate</field_name>
+        <variable_name>SAVINGSENDDATE</variable_name>
         <variable_type>PARENT_JOB</variable_type>
         <default_value/>
         </field>
