@@ -989,7 +989,7 @@ CREATE TABLE `hist_loan_arrears` (
   KEY `loan_officer_id` (`as_of_date`,`loan_officer_id`),
   KEY `branch_id` (`as_of_date`,`branch_id`),
   KEY `formed_by_loan_officer_id` (`as_of_date`,`formed_by_loan_officer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -999,6 +999,52 @@ CREATE TABLE `hist_loan_arrears` (
 LOCK TABLES `hist_loan_arrears` WRITE;
 /*!40000 ALTER TABLE `hist_loan_arrears` DISABLE KEYS */;
 /*!40000 ALTER TABLE `hist_loan_arrears` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hist_loan_balances`
+--
+
+DROP TABLE IF EXISTS `hist_loan_balances`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hist_loan_balances` (
+  `as_of_date` date NOT NULL,
+  `loan_account_id` int(11) NOT NULL,
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
+  `prd_offering_id` smallint(6) NOT NULL DEFAULT '0',
+  `customer_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL,
+  `center_id` int(11) NOT NULL,
+  `loan_officer_id` smallint(6) NOT NULL DEFAULT '0',
+  `branch_id` smallint(6) NOT NULL DEFAULT '0',
+  `formed_by_loan_officer_id` smallint(6) NOT NULL DEFAULT '0',
+  `principal_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `interest_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `fees_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `total_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `principal_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `interest_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `total_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`as_of_date`,`loan_account_id`),
+  KEY `currency_id` (`as_of_date`,`currency_id`),
+  KEY `prd_offering_id` (`as_of_date`,`prd_offering_id`),
+  KEY `customer_id` (`as_of_date`,`customer_id`),
+  KEY `group_id` (`as_of_date`,`group_id`),
+  KEY `center_id` (`as_of_date`,`center_id`),
+  KEY `loan_officer_id` (`as_of_date`,`loan_officer_id`),
+  KEY `branch_id` (`as_of_date`,`branch_id`),
+  KEY `formed_by_loan_officer_id` (`as_of_date`,`formed_by_loan_officer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hist_loan_balances`
+--
+
+LOCK TABLES `hist_loan_balances` WRITE;
+/*!40000 ALTER TABLE `hist_loan_balances` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hist_loan_balances` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2734,4 +2780,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-24 19:42:46
+-- Dump completed on 2010-12-27 18:47:54

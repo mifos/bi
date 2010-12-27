@@ -61,8 +61,6 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
-  <created_user/>
-  <created_date>2010&#47;12&#47;24 16:46:46.601</created_date>
   <modified_user>-</modified_user>
   <modified_date>2010&#47;10&#47;09 02:25:25.522</modified_date>
   </info>
@@ -119,7 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Identify Dates to Process</from><to>Get Savings Balances</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Savings Balances</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Identify Dates to Process</from><to>Get Savings Balances</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Savings Balances</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Write hist_savings_balances</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Add Balance Total</name>
     <type>Calculator</type>
@@ -282,7 +280,7 @@ order by d.date_value</sql>
     </step>
 
   <step>
-    <name>Write hist_loan_arrears</name>
+    <name>Write hist_savings_balances</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>

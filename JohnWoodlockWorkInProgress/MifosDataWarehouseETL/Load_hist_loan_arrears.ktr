@@ -117,7 +117,53 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Get ID Fields</to><enabled>Y</enabled> </hop>  <hop> <from>Get ID Fields</from><to>Write hist_loan_balances</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Add Balance Total</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>total_paid</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_paid</field_a>
+<field_b>interest_paid</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>total_outstanding</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_outstanding</field_a>
+<field_b>interest_outstanding</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>274</xloc>
+      <yloc>230</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Build Loan Arrears Entry for a Date</name>
     <type>Mapping</type>
@@ -153,8 +199,8 @@
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>628</xloc>
-      <yloc>172</yloc>
+      <xloc>821</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -317,7 +363,7 @@ order by as_of_date, l.loan_account_id</sql>
     <name>Get Loan Repayments</name>
     <type>TableInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -326,11 +372,12 @@ order by as_of_date, l.loan_account_id</sql>
     <connection>DestinationDB</connection>
     <sql>select ? as as_of_date, l.loan_account_id,
 ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
-ifnull(sum(lr.interest_amount), 0.0)  as interest_paid
+ifnull(sum(lr.interest_amount), 0.0)  as interest_paid,
+l.original_principal - ifnull(sum(lr.principal_amount), 0.0) as principal_outstanding,
+l.original_interest - ifnull(sum(lr.interest_amount), 0.0) as interest_outstanding
 from dim_loan l
 join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.account_action_id = 1 and lr.action_date &lt;= ? 
-where l.valid_from &lt;= ? 
-and l.valid_to &gt; ?    
+where l.valid_from &lt;= ? and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 and lr.adjusted is false
 group by as_of_date,l.loan_account_id
@@ -635,8 +682,159 @@ order by d.date_value</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>414</xloc>
-      <yloc>174</yloc>
+      <xloc>827</xloc>
+      <yloc>379</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write hist_loan_balances</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <schema/>
+    <table>hist_loan_balances</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>as_of_date</column_name>
+          <stream_name>as_of_date</stream_name>
+        </field>
+        <field>
+          <column_name>loan_account_id</column_name>
+          <stream_name>loan_account_id</stream_name>
+        </field>
+        <field>
+          <column_name>principal_paid</column_name>
+          <stream_name>principal_paid</stream_name>
+        </field>
+        <field>
+          <column_name>interest_paid</column_name>
+          <stream_name>interest_paid</stream_name>
+        </field>
+        <field>
+          <column_name>principal_outstanding</column_name>
+          <stream_name>principal_outstanding</stream_name>
+        </field>
+        <field>
+          <column_name>interest_outstanding</column_name>
+          <stream_name>interest_outstanding</stream_name>
+        </field>
+        <field>
+          <column_name>total_paid</column_name>
+          <stream_name>total_paid</stream_name>
+        </field>
+        <field>
+          <column_name>total_outstanding</column_name>
+          <stream_name>total_outstanding</stream_name>
+        </field>
+        <field>
+          <column_name>currency_id</column_name>
+          <stream_name>currency_id</stream_name>
+        </field>
+        <field>
+          <column_name>customer_id</column_name>
+          <stream_name>customer_id</stream_name>
+        </field>
+        <field>
+          <column_name>group_id</column_name>
+          <stream_name>group_id</stream_name>
+        </field>
+        <field>
+          <column_name>center_id</column_name>
+          <stream_name>center_id</stream_name>
+        </field>
+        <field>
+          <column_name>loan_officer_id</column_name>
+          <stream_name>loan_officer_id</stream_name>
+        </field>
+        <field>
+          <column_name>branch_id</column_name>
+          <stream_name>branch_id</stream_name>
+        </field>
+        <field>
+          <column_name>formed_by_loan_officer_id</column_name>
+          <stream_name>formed_by_loan_officer_id</stream_name>
+        </field>
+        <field>
+          <column_name>prd_offering_id</column_name>
+          <stream_name>prd_offering_id</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>274</xloc>
+      <yloc>445</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get ID Fields</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select l.currency_id, c.customer_id as customer_id, g.customer_id as group_id, ce.customer_id as center_id, 
+lo.personnel_id as loan_officer_id, br.office_id as branch_id, 
+flo.personnel_id as formed_by_loan_officer_id,
+p.prd_offering_id as prd_offering_id
+from dim_loan l
+join dim_customer c on c.customer_key = l.customer_key
+join dim_customer g on g.customer_key = l.group_key
+join dim_customer ce on ce.customer_key = l.center_key
+join dim_personnel lo on lo.personnel_key = l.loan_officer_key
+join dim_office br on br.office_key = l.branch_key
+join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
+join dim_product p on p.product_key = l.product_key
+where l.loan_account_id = ?
+and l.valid_from &lt;= ? and l.valid_to &gt; ?</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>loan_account_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>as_of_date</name>
+        <type>Date</type>
+      </field>
+      <field>
+        <name>as_of_date</name>
+        <type>Date</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>272</xloc>
+      <yloc>343</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
