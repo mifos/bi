@@ -4,11 +4,14 @@
 		<td><div class=reportLabel> From Date: </div><div id="selectFromDateObject"></div> </td>
 		<td><div class=reportLabel>To Date: </div><div id="selectToDateObject"></div> </td>
 		<td><div class=reportLabel>Branch Office: </div><div id="selectBranchObject"></div> </td>
+                <td><div class=reportLabel>Personnel: </div><div id="selectUserObject"></div> </td>
+                
+          </tr> <tr> <td width="200"></td>
 		<td><div class=reportLabel>Transaction Type: </div><div id="selectTransactionTypeObject"></div> </td>
-		<td><div class=reportLabel>Personnel: </div><div id="selectUserObject"></div> </td>
                 <td><div class=reportLabel>Mode of Payment: </div><div id="selectPaymentTypeObject"></div> </td>
 		<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div> </td>
-		<td><div id=clearReportObj></div> </td><td> <div id=runReportObj></div> </td>
+		<td><div id=runReportObj></div></td>
+                <td><div id=clearReportObj></div> </td>
 	</tr>
 </table>
 		<div id=theReportObj></div> 
@@ -48,17 +51,6 @@ function runTheReport()
 	Dashboards.fireChange("event", event);
 }
 
-selectUser = 
-{
-	name: "selectUser",
-	type: "selectComponent",
-	parameter: "user_id",
-	valueAsId: false,
-        queryDefinition:  { dataAccessId: "getMifosUsers", path: "dataAccess/sql-jndi.cda" },
-	htmlObject: "selectUserObject",
-	executeAtStart: true
-};
-
 selectBranch = 
 {
 	name: "selectBranch",
@@ -67,6 +59,20 @@ selectBranch =
 	valueAsId: false,
         queryDefinition: { dataAccessId: "getBranches", path: "dataAccess/sql-jndi.cda" },
 	htmlObject: "selectBranchObject",
+	executeAtStart: true
+};
+
+selectUser = 
+{
+	name: "selectUser",
+	type: "selectComponent",
+	parameter: "user_id",
+	valueAsId: false,
+        queryDefinition: { dataAccessId: "getMifosUsersByBranch", path: "dataAccess/sql-jndi.cda" },
+        listeners:["branch_id"],
+        parameters: [["branch_id","branch_id"]], // Valid for cdf 4 or higher
+        cdaParams: [["branch_id","branch_id"]],  // Valid on cdf 3.6
+	htmlObject: "selectUserObject",
 	executeAtStart: true
 };
 
@@ -124,7 +130,6 @@ outputSelector =
 {
 	name: "outputSelector",
 	type: "select",
-	parameters:[],
 	valuesArray: [["text/html","HTML"], ["application/pdf","PDF"], ["application/vnd.ms-excel","EXCEL"]],
 	parameter:"outputType",
 	valueAsId: false,
@@ -175,7 +180,7 @@ theReport =
 }
 
 function load(){
-      Dashboards.init([selectUser,selectBranch,selectTransactionType,selectPaymentType,selectFromDate,selectToDate,outputSelector,runReport,clearReport,theReport]);
+      Dashboards.init([selectBranch,selectUser,selectTransactionType,selectPaymentType,selectFromDate,selectToDate,outputSelector,runReport,clearReport,theReport]);
 }
 
 load();
