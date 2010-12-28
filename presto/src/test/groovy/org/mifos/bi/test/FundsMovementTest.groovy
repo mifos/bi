@@ -12,13 +12,13 @@ class FundsMovementTest {
     def detailsFirstFundSecondAccount_20100723 = ['38', 'lose group ..', '2010-07-22', '3000.0000', '7', '1 week(s)', '3000.0000', '2.9000', '0.0000', '0.0000', '0']
     def detailsFirstFundSecondAccount_20101231 = ['38', 'lose group ..', '2010-07-22', '3000.0000', '7', '1 week(s)', '0.0000', '0.0000', '0.0000', '0.0000', '0']
     def detailsFirstFundThirdAccount_20101231 = ['44', 'xfer to gr in ..', '2010-07-22', '6000.0000', '9', '1 week(s)', '6000.0000', '5.8000', '0.0000', '0.0000', '0']
-    def subTotalFirstFund_20100723 = ['sub-total', '3', ' ', '12000.0000', ' ', ' ', '11924.9000', '26.8000', '0.0000', '0.0000', ' ']
-    def subTotalFirstFund_20101231 = ['sub-total', '3', ' ', '12000.0000', ' ', ' ', '8924.9000', '23.9000', '0.0000', '0.0000', ' ']
-    def subTotalFirstFundBO1Branch_20101231 = ['sub-total', '2', ' ', '9000.0000', ' ', ' ', '6000.0000', '5.8000', '0.0000', '0.0000', ' ']
+    def subTotalFirstFund_20100723 = ['Sub Total', '3', ' ', '12000.0000', ' ', ' ', '11924.9000', '26.8000', '0.0000', '0.0000', ' ']
+    def subTotalFirstFund_20101231 = ['Sub Total', '3', ' ', '12000.0000', ' ', ' ', '8924.9000', '23.9000', '0.0000', '0.0000', ' ']
+    def subTotalFirstFundBO1Branch_20101231 = ['Sub Total', '2', ' ', '9000.0000', ' ', ' ', '6000.0000', '5.8000', '0.0000', '0.0000', ' ']
 
     def secondFund = ['Source of Fund:', 'Funding Org A']
     def detailsSecondFundFirstAccount_20101231 = ['4', 'client dw1 1 1 ..', '2010-07-16', '3000.0000', '7', '1 week(s)', '2752.9000', '0.0000', '0.0000', '0.0000', '0']
-    def subTotalSecondFund_20101231 = ['sub-total', '1', ' ', '3000.0000', ' ', ' ', '2752.9000', '0.0000', '0.0000', '0.0000', ' ']
+    def subTotalSecondFund_20101231 = ['Sub Total', '1', ' ', '3000.0000', ' ', ' ', '2752.9000', '0.0000', '0.0000', '0.0000', ' ']
 
     def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
