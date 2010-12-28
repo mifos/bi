@@ -964,6 +964,7 @@ DROP TABLE IF EXISTS `hist_loan_arrears`;
 CREATE TABLE `hist_loan_arrears` (
   `as_of_date` date NOT NULL,
   `loan_account_id` int(11) NOT NULL,
+  `currency_id` smallint(6) NOT NULL DEFAULT '0',
   `prd_offering_id` smallint(6) NOT NULL DEFAULT '0',
   `customer_id` int(11) NOT NULL DEFAULT '0',
   `group_id` int(11) NOT NULL,
@@ -982,6 +983,7 @@ CREATE TABLE `hist_loan_arrears` (
   `interest_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `total_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`as_of_date`,`loan_account_id`),
+  KEY `currency_id` (`as_of_date`,`currency_id`),
   KEY `prd_offering_id` (`as_of_date`,`prd_offering_id`),
   KEY `customer_id` (`as_of_date`,`customer_id`),
   KEY `group_id` (`as_of_date`,`group_id`),
@@ -1035,7 +1037,7 @@ CREATE TABLE `hist_loan_balances` (
   KEY `loan_officer_id` (`as_of_date`,`loan_officer_id`),
   KEY `branch_id` (`as_of_date`,`branch_id`),
   KEY `formed_by_loan_officer_id` (`as_of_date`,`formed_by_loan_officer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1078,7 +1080,7 @@ CREATE TABLE `hist_savings_balances` (
   KEY `loan_officer_id` (`as_of_date`,`loan_officer_id`),
   KEY `branch_id` (`as_of_date`,`branch_id`),
   KEY `formed_by_loan_officer_id` (`as_of_date`,`formed_by_loan_officer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2780,4 +2782,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-27 18:47:54
+-- Dump completed on 2010-12-28 13:09:24

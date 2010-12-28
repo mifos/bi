@@ -329,7 +329,7 @@ where ls.loan_account_id = ?</sql>
     <sql>select c.customer_id as customer_id, g.customer_id as group_id, ce.customer_id as center_id, 
 lo.personnel_id as loan_officer_id, br.office_id as branch_id, 
 flo.personnel_id as formed_by_loan_officer_id,
-p.prd_offering_id as prd_offering_id
+p.prd_offering_id as prd_offering_id, l.currency_id
 from dim_loan l
 join dim_customer c on c.customer_key = l.customer_key
 join dim_customer g on g.customer_key = l.group_key

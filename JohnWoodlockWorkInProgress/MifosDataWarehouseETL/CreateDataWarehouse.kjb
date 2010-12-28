@@ -260,12 +260,12 @@
       <yloc>164</yloc>
       </entry>
     <entry>
-      <name>Derive Loan Arrears</name>
+      <name>Derive Loan Balances and Arrears</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_hist_loan_arrears.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_hist_loan_balances_and_arrears.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -348,8 +348,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>425</xloc>
-      <yloc>332</yloc>
+      <xloc>449</xloc>
+      <yloc>340</yloc>
       </entry>
     <entry>
       <name>Derive hist_savings_balances</name>
@@ -441,7 +441,7 @@
     </hop>
     <hop>
       <from>Apply Loan Adjustments and Reversals</from>
-      <to>Derive Loan Arrears</to>
+      <to>Derive Loan Balances and Arrears</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
