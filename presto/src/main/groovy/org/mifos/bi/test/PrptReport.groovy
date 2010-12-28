@@ -174,7 +174,7 @@ class PrptReport {
                 (0..cols.size()).each { i ->
                     def expected = tests['cell'][lineno][i + 1]
                     if (expected) {
-                        assertEquals("cell test for (${lineno}, ${i + 1}) failed.", expected, cols[i])
+                        assertEquals("cell test for (${lineno}, ${i + 1}) failed.", trim(expected), trim(cols[i]))
                     }
                     tests['cell'][lineno].remove(i + 1)
                 }
@@ -183,10 +183,14 @@ class PrptReport {
             // row-based tests
             if (tests['row'][lineno]) {
                 def expected = tests['row'][lineno]
-                assertEquals("test for row ${lineno} failed.", expected, cols)
+                assertEquals("test for row ${lineno} failed.", trim(expected.toString()), trim(cols.toString()))
                 tests['row'].remove(lineno)
             }
         }
         assertEquals("output exhausted but not all tests were executed!", ['cell': [:], 'row': [:]], tests)
+    }
+
+    def trim(text) {
+        return text.replaceAll("\\s+", "_")
     }
 }

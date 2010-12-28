@@ -4,7 +4,7 @@ import org.junit.Test
 
 class FunderReportTest {
 
-    def detailsHeader = ['Source of  Funds', 'Disbursed', 'Paid', 'Outstanding', 'Principal in Arrears', 'Number of  loans', 'Number of  clients', 'Number of  groups']
+    def detailsHeader = ['Source of Funds', 'Disbursed', 'Paid', 'Outstanding', 'Principal in Arrears', 'Number of loans', 'Number of clients', 'Number of groups']
 
     def firstBranch = ['Branch:', 'BO 1']
     def detailsFirstBranchFirstFund_20100723 = ['-', '9000.0000', '0.0000', '9000.0000', '0.0000', '2', '2', '0']
