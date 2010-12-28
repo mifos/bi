@@ -30,34 +30,34 @@ class FunderReportTest {
             t.reportPath = 'reports/standardReports/FunderReport.prpt'
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
-            // Report title - row 10
-            t.assertRowEquals(10, ['Funder Outstanding Report'])
+            // Report title
+            t.assertRowEquals(1, ['Funder Outstanding Report'])
 
-            // Page header - row 12
-            t.assertCellEquals(12, 1, 'As On Date:')
-            t.assertCellEquals(12, 2, '2010-12-31')
-            t.assertCellEquals(12, 3, 'Report Date:')
+            // Page header
+            t.assertCellEquals(2, 1, 'As On Date:')
+            t.assertCellEquals(2, 2, '2010-12-31')
+            t.assertCellEquals(2, 3, 'Report Date:')
 
-            // 1st Group header - row 15
-            t.assertRowEquals(15, firstBranch)
-            // 1st Details header - row 17
-            t.assertRowEquals(17, detailsHeader)
-            // Branch: BO 1 -> Fund: '-' - row 18
-            t.assertRowEquals(18, detailsFirstBranchFirstFund_20101231)
-            // Branch: BO 1 -> Fund: 'Funding Org A' - row 19
-            t.assertRowEquals(19, detailsFirstBranchSecondFund)
+            // 1st Group header
+            t.assertRowEquals(3, firstBranch)
+            // 1st Details header
+            t.assertRowEquals(4, detailsHeader)
+            // Branch: BO 1 -> Fund: '-'
+            t.assertRowEquals(5, detailsFirstBranchFirstFund_20101231)
+            // Branch: BO 1 -> Fund: 'Funding Org A'
+            t.assertRowEquals(6, detailsFirstBranchSecondFund)
 
-            // 2nd Group header - row 21
-            t.assertRowEquals(21, secondBranch)
-            // 2nd Details header - row 23
-            t.assertRowEquals(23, detailsHeader)
-            // Branch: br2 -> Fund: '-' - row 24
-            t.assertRowEquals(24, detailsSecondBranchFirstFund)
+            // 2nd Group header
+            t.assertRowEquals(7, secondBranch)
+            // 2nd Details header
+            t.assertRowEquals(8, detailsHeader)
+            // Branch: br2 -> Fund: '-'
+            t.assertRowEquals(9, detailsSecondBranchFirstFund)
 
-            // Report footer - row 26
-            t.assertRowEquals(26, grandTotal_20101231)
-            // Page footer - row 29
-            t.assertRowEquals(29, pageFooter)
+            // Report footer
+            t.assertRowEquals(10, grandTotal_20101231)
+            // Page footer
+            t.assertRowEquals(11, pageFooter)
         }
     }
 
@@ -69,27 +69,27 @@ class FunderReportTest {
             t.reportPath = 'reports/standardReports/FunderReport.prpt'
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
-            // Report title - row 10
-            t.assertRowEquals(10, ['Funder Outstanding Report'])
+            // Report title
+            t.assertRowEquals(1, ['Funder Outstanding Report'])
 
-            // Page header - row 12
-            t.assertCellEquals(12, 1, 'As On Date:')
-            t.assertCellEquals(12, 2, '2010-12-31')
-            t.assertCellEquals(12, 3, 'Report Date:')
+            // Page header
+            t.assertCellEquals(2, 1, 'As On Date:')
+            t.assertCellEquals(2, 2, '2010-12-31')
+            t.assertCellEquals(2, 3, 'Report Date:')
 
-            // 1st Group header - row 15
-            t.assertRowEquals(15, firstBranch)
-            // 1st Details header - row 17
-            t.assertRowEquals(17, detailsHeader)
-            // Branch: BO 1 -> Fund: '-' - row 18
-            t.assertRowEquals(18, detailsFirstBranchFirstFund_20101231)
-            // Branch: BO 1 -> Fund: 'Funding Org A' - row 19
-            t.assertRowEquals(19, detailsFirstBranchSecondFund)
+            // 1st Group header
+            t.assertRowEquals(3, firstBranch)
+            // 1st Details header
+            t.assertRowEquals(4, detailsHeader)
+            // Branch: BO 1 -> Fund: '-'
+            t.assertRowEquals(5, detailsFirstBranchFirstFund_20101231)
+            // Branch: BO 1 -> Fund: 'Funding Org A'
+            t.assertRowEquals(6, detailsFirstBranchSecondFund)
 
-            // Report footer - row 21
-            t.assertRowEquals(21, grandTotalFirstBranch_20101231)
-            // Page footer - row 24
-            t.assertRowEquals(24, pageFooter)
+            // Report footer
+            t.assertRowEquals(7, grandTotalFirstBranch_20101231)
+            // Page footer
+            t.assertRowEquals(8, pageFooter)
         }
     }
 
@@ -101,27 +101,27 @@ class FunderReportTest {
             t.reportPath = 'reports/standardReports/FunderReport.prpt'
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '2', 'out_date': '2010-12-31']
 
-            // Report title - row 10
-            t.assertRowEquals(10, ['Funder Outstanding Report'])
+            // Report title
+            t.assertRowEquals(1, ['Funder Outstanding Report'])
 
-            // Page header - row 12
-            t.assertCellEquals(12, 1, 'As On Date:')
-            t.assertCellEquals(12, 2, '2010-12-31')
-            t.assertCellEquals(12, 3, 'Report Date:')
+            // Page header
+            t.assertCellEquals(2, 1, 'As On Date:')
+            t.assertCellEquals(2, 2, '2010-12-31')
+            t.assertCellEquals(2, 3, 'Report Date:')
 
-            // 1st Group header - row 15
-            t.assertRowEquals(15, firstBranch)
-            // 1st Details header - row 17
-            t.assertRowEquals(17, detailsHeader)
-            // Branch: BO 1 -> Fund: 'Funding Org A' - row 18
+            // 1st Group header
+            t.assertRowEquals(3, firstBranch)
+            // 1st Details header
+            t.assertRowEquals(4, detailsHeader)
+            // Branch: BO 1 -> Fund: 'Funding Org A'
             //TODO: t.assertRowEquals(18, detailsFirstBranchSecondFund)
-            t.assertRowEquals(18, ['Funding Org ..', '3000.0000', '247.1000', '2752.9000', '0.0', '1', '1', '0'])
+            t.assertRowEquals(5, ['Funding Org ..', '3000.0000', '247.1000', '2752.9000', '0.0', '1', '1', '0'])
 
-            // Report footer - row 20
+            // Report footer
             //TODO: t.assertRowEquals(20, grandTotalFirstBranchSecondFund)
-            t.assertRowEquals(20, ['Grand Total', '3000.0000', '247.1000', '2752.9000', '0.0', ' ', ' ', ' '])
-            // Page footer - row 23
-            t.assertRowEquals(23, pageFooter)
+            t.assertRowEquals(6, ['Grand Total', '3000.0000', '247.1000', '2752.9000', '0.0', ' ', ' ', ' '])
+            // Page footer
+            t.assertRowEquals(7, pageFooter)
         }
     }
 
@@ -133,34 +133,34 @@ class FunderReportTest {
             t.reportPath = 'reports/standardReports/FunderReport.prpt'
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-07-23']
 
-            // Report title - row 10
-            t.assertRowEquals(10, ['Funder Outstanding Report'])
+            // Report title
+            t.assertRowEquals(1, ['Funder Outstanding Report'])
 
-            // Page header - row 12
-            t.assertCellEquals(12, 1, 'As On Date:')
-            t.assertCellEquals(12, 2, '2010-07-23')
-            t.assertCellEquals(12, 3, 'Report Date:')
+            // Page header
+            t.assertCellEquals(2, 1, 'As On Date:')
+            t.assertCellEquals(2, 2, '2010-07-23')
+            t.assertCellEquals(2, 3, 'Report Date:')
 
-            // 1st Group header - row 15
-            t.assertRowEquals(15, firstBranch)
-            // 1st Details header - row 17
-            t.assertRowEquals(17, detailsHeader)
-            // Branch: BO 1 -> Fund: '-' - row 18
-            t.assertRowEquals(18, detailsFirstBranchFirstFund_20100723)
-            // Branch: BO 1 -> Fund: 'Funding Org A' - row 19
-            t.assertRowEquals(19, detailsFirstBranchSecondFund)
+            // 1st Group header
+            t.assertRowEquals(3, firstBranch)
+            // 1st Details header
+            t.assertRowEquals(4, detailsHeader)
+            // Branch: BO 1 -> Fund: '-'
+            t.assertRowEquals(5, detailsFirstBranchFirstFund_20100723)
+            // Branch: BO 1 -> Fund: 'Funding Org A'
+            t.assertRowEquals(6, detailsFirstBranchSecondFund)
 
-            // 2nd Group header - row 21
-            t.assertRowEquals(21, secondBranch)
-            // 2nd Details header - row 23
-            t.assertRowEquals(23, detailsHeader)
-            // Branch: br2 -> Fund: '-' - row 24
-            t.assertRowEquals(24, detailsSecondBranchFirstFund)
+            // 2nd Group header
+            t.assertRowEquals(7, secondBranch)
+            // 2nd Details header
+            t.assertRowEquals(8, detailsHeader)
+            // Branch: br2 -> Fund: '-'
+            t.assertRowEquals(9, detailsSecondBranchFirstFund)
 
-            // Report footer - row 26
-            t.assertRowEquals(26, grandTotal_20100723)
-            // Page footer - row 29
-            t.assertRowEquals(29, pageFooter)
+            // Report footer
+            t.assertRowEquals(10, grandTotal_20100723)
+            // Page footer
+            t.assertRowEquals(11, pageFooter)
         }
     }
 }
