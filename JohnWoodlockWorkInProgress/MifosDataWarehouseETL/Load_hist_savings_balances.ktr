@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load hist_savings_balances</name>
+    <name>Load_hist_savings_balancesTest</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -117,96 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Identify Dates to Process</from><to>Get Savings Balances</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Savings Balances</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Write hist_savings_balances</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Add Balance Total</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>additions</field_name>
-<calc_type>ADD</calc_type>
-<field_a>total_deposit_amount</field_a>
-<field_b>total_interest_amount</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>43</value_length>
-<value_precision>4</value_precision>
-<remove>Y</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>balance</field_name>
-<calc_type>SUBTRACT</calc_type>
-<field_a>additions</field_a>
-<field_b>total_withdrawal_amount</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>43</value_length>
-<value_precision>4</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>643</xloc>
-      <yloc>55</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Savings Balances</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select ? as as_of_date, s.savings_account_id, s.currency_id, p.prd_offering_id, 
-cust.customer_id, gr.customer_id as group_id, cen.customer_id as center_id,
-lo.personnel_id as loan_officer_id, o.office_id as branch_id, flo.personnel_id as formed_by_loan_officer_id,
-ifnull(sum(sav.deposit_amount), 0.0) as total_deposit_amount,
-ifnull(sum(sav.interest_amount), 0.0) as total_interest_amount,
-ifnull(sum(sav.withdrawal_amount), 0.0) as total_withdrawal_amount
-from dim_savings s
-join dim_product p on p.product_key = s.product_key
-join dim_customer cust on cust.customer_key = s.customer_key
-join dim_customer gr on gr.customer_key = s.group_key
-join dim_customer cen on cen.customer_key = s.center_key
-join dim_personnel lo on lo.personnel_key = s.loan_officer_key
-join dim_office o on o.office_key = s.branch_key
-join dim_personnel flo on flo.personnel_key = s.formed_by_loan_officer_key
-left join fact_savings_transactions sav on sav.savings_account_id = s.savings_account_id and sav.action_date &lt;= ? 
-where s.valid_from &lt;= ? and s.valid_to &gt; ?    
-and s.savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
-group by as_of_date,s.savings_account_id
-</sql>
-    <limit>0</limit>
-    <lookup>Identify Dates to Process</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>473</xloc>
-      <yloc>55</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Write Savings Balances</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get Start and End Date Variables</name>
     <type>GetVariable</type>
@@ -262,7 +173,7 @@ group by as_of_date,s.savings_account_id
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>SELECT d.date_value as d1, d.date_value as d2, d.date_value as d3, d.date_value as d4
+    <sql>SELECT d.date_value as d1
 from dim_date d
 where d.date_value between date(?) and date(?)
 order by d.date_value</sql>
@@ -273,15 +184,15 @@ order by d.date_value</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>292</xloc>
-      <yloc>55</yloc>
+      <xloc>295</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Write hist_savings_balances</name>
-    <type>TableOutput</type>
+    <name>Write Savings Balances</name>
+    <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -290,84 +201,46 @@ order by d.date_value</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <schema/>
-    <table>hist_savings_balances</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>as_of_date</column_name>
-          <stream_name>as_of_date</stream_name>
-        </field>
-        <field>
-          <column_name>savings_account_id</column_name>
-          <stream_name>savings_account_id</stream_name>
-        </field>
-        <field>
-          <column_name>currency_id</column_name>
-          <stream_name>currency_id</stream_name>
-        </field>
-        <field>
-          <column_name>prd_offering_id</column_name>
-          <stream_name>prd_offering_id</stream_name>
-        </field>
-        <field>
-          <column_name>customer_id</column_name>
-          <stream_name>customer_id</stream_name>
-        </field>
-        <field>
-          <column_name>group_id</column_name>
-          <stream_name>group_id</stream_name>
-        </field>
-        <field>
-          <column_name>center_id</column_name>
-          <stream_name>center_id</stream_name>
-        </field>
-        <field>
-          <column_name>loan_officer_id</column_name>
-          <stream_name>loan_officer_id</stream_name>
-        </field>
-        <field>
-          <column_name>branch_id</column_name>
-          <stream_name>branch_id</stream_name>
-        </field>
-        <field>
-          <column_name>formed_by_loan_officer_id</column_name>
-          <stream_name>formed_by_loan_officer_id</stream_name>
-        </field>
-        <field>
-          <column_name>total_deposit_amount</column_name>
-          <stream_name>total_deposit_amount</stream_name>
-        </field>
-        <field>
-          <column_name>total_interest_amount</column_name>
-          <stream_name>total_interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>total_withdrawal_amount</column_name>
-          <stream_name>total_withdrawal_amount</stream_name>
-        </field>
-        <field>
-          <column_name>balance</column_name>
-          <stream_name>balance</stream_name>
-        </field>
-    </fields>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>Y</single_statement>
+    <replace_variables>Y</replace_variables>
+    <sql>insert into hist_savings_balances (as_of_date, savings_account_id, currency_id, prd_offering_id, customer_id, group_id, center_id,
+loan_officer_id, branch_id, formed_by_loan_officer_id, 
+total_deposit_amount, total_interest_amount, total_withdrawal_amount, balance)
+
+select &apos;?&apos; as as_of_date, s.savings_account_id, s.currency_id, p.prd_offering_id, 
+cust.customer_id, gr.customer_id as group_id, cen.customer_id as center_id,
+lo.personnel_id as loan_officer_id, o.office_id as branch_id, flo.personnel_id as formed_by_loan_officer_id,
+ifnull(sum(sav.deposit_amount), 0.0) as total_deposit_amount,
+ifnull(sum(sav.interest_amount), 0.0) as total_interest_amount,
+ifnull(sum(sav.withdrawal_amount), 0.0) as total_withdrawal_amount,
+ifnull(sum(sav.deposit_amount + sav.interest_amount - sav.withdrawal_amount), 0.0) as balance
+from dim_savings s
+join dim_product p on p.product_key = s.product_key
+join dim_customer cust on cust.customer_key = s.customer_key
+join dim_customer gr on gr.customer_key = s.group_key
+join dim_customer cen on cen.customer_key = s.center_key
+join dim_personnel lo on lo.personnel_key = s.loan_officer_key
+join dim_office o on o.office_key = s.branch_key
+join dim_personnel flo on flo.personnel_key = s.formed_by_loan_officer_key
+left join fact_savings_transactions sav on sav.savings_account_id = s.savings_account_id and sav.action_date &lt;= &apos;?&apos; 
+where s.valid_from &lt;= &apos;?&apos; and s.valid_to &gt; &apos;?&apos;    
+and s.savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
+group by as_of_date,s.savings_account_id;</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>d1</name></argument>
+       <argument><name>d1</name></argument>
+       <argument><name>d1</name></argument>
+       <argument><name>d1</name></argument>
+    </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>853</xloc>
-      <yloc>54</yloc>
+      <xloc>495</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

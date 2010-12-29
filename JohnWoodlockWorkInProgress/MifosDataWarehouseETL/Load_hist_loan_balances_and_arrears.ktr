@@ -117,7 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Get ID Fields</to><enabled>Y</enabled> </hop>  <hop> <from>Get ID Fields</from><to>Write hist_loan_balances</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Write hist_loan_balances</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Add Balance Total</name>
     <type>Calculator</type>
@@ -326,56 +326,6 @@
     </step>
 
   <step>
-    <name>Get ID Fields</name>
-    <type>DBJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <rowlimit>1</rowlimit>
-    <sql>select l.currency_id, c.customer_id as customer_id, g.customer_id as group_id, ce.customer_id as center_id, 
-lo.personnel_id as loan_officer_id, br.office_id as branch_id, 
-flo.personnel_id as formed_by_loan_officer_id,
-p.prd_offering_id as prd_offering_id
-from dim_loan l
-join dim_customer c on c.customer_key = l.customer_key
-join dim_customer g on g.customer_key = l.group_key
-join dim_customer ce on ce.customer_key = l.center_key
-join dim_personnel lo on lo.personnel_key = l.loan_officer_key
-join dim_office br on br.office_key = l.branch_key
-join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
-join dim_product p on p.product_key = l.product_key
-where l.loan_account_id = ?
-and l.valid_from &lt;= ? and l.valid_to &gt; ?</sql>
-    <outer_join>N</outer_join>
-    <replace_vars>Y</replace_vars>
-    <parameter>
-      <field>
-        <name>loan_account_id</name>
-        <type>Integer</type>
-      </field>
-      <field>
-        <name>as_of_date</name>
-        <type>Date</type>
-      </field>
-      <field>
-        <name>as_of_date</name>
-        <type>Date</type>
-      </field>
-    </parameter>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>272</xloc>
-      <yloc>343</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Get Loan Amounts Due</name>
     <type>TableInput</type>
     <description/>
@@ -424,9 +374,24 @@ order by as_of_date, l.loan_account_id</sql>
 ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
 ifnull(sum(lr.interest_amount), 0.0)  as interest_paid,
 l.original_principal - ifnull(sum(lr.principal_amount), 0.0) as principal_outstanding,
-l.original_interest - ifnull(sum(lr.interest_amount), 0.0) as interest_outstanding
+l.original_interest - ifnull(sum(lr.interest_amount), 0.0) as interest_outstanding,
+
+l.currency_id, c.customer_id as customer_id, g.customer_id as group_id, ce.customer_id as center_id, 
+lo.personnel_id as loan_officer_id, br.office_id as branch_id, 
+flo.personnel_id as formed_by_loan_officer_id,
+p.prd_offering_id as prd_offering_id
+
 from dim_loan l
 join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.account_action_id = 1 and lr.action_date &lt;= ? 
+
+join dim_customer c on c.customer_key = l.customer_key
+join dim_customer g on g.customer_key = l.group_key
+join dim_customer ce on ce.customer_key = l.center_key
+join dim_personnel lo on lo.personnel_key = l.loan_officer_key
+join dim_office br on br.office_key = l.branch_key
+join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
+join dim_product p on p.product_key = l.product_key
+
 where l.valid_from &lt;= ? and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 and lr.adjusted is false
@@ -837,8 +802,8 @@ order by d.date_value</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
-      <yloc>445</yloc>
+      <xloc>271</xloc>
+      <yloc>361</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
