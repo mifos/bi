@@ -33,10 +33,10 @@ class LoanProcessingTest {
             t.assertRowEquals(1, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Loan Officer:', ' All'])
             t.assertRowEquals(5, ['Loan Status:', ' All'])
             t.assertRowEquals(6, ['Product:', ' All'])
@@ -59,6 +59,7 @@ class LoanProcessingTest {
 
             // Page footer
             t.assertRowEquals(26, pageFooter)
+            t.assertCellEquals(27, 1, 'Printed by:')
         }
     }
 
@@ -74,10 +75,10 @@ class LoanProcessingTest {
             t.assertRowEquals(1, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Loan Officer:', 'br2 LO xxx'])
             t.assertRowEquals(5, ['Loan Status:', ' All'])
             t.assertRowEquals(6, ['Product:', ' All'])
@@ -96,6 +97,7 @@ class LoanProcessingTest {
 
             // Page footer
             t.assertRowEquals(12, pageFooter)
+            t.assertCellEquals(13, 1, 'Printed by:')
         }
     }
 
@@ -111,10 +113,10 @@ class LoanProcessingTest {
             t.assertRowEquals(1, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', 'br4'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, 'br4')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Loan Officer:', 'Fees LO xxx'])
             t.assertRowEquals(5, ['Loan Status:', ' All'])
             t.assertRowEquals(6, ['Product:', ' All'])
@@ -129,6 +131,7 @@ class LoanProcessingTest {
 
             // Page footer
             t.assertRowEquals(10, pageFooter)
+            t.assertCellEquals(11, 1, 'Printed by:')
         }
     }
 
@@ -144,10 +147,10 @@ class LoanProcessingTest {
             t.assertRowEquals(1, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Loan Officer:', 'br2 LO xxx'])
             t.assertRowEquals(5, ['Loan Status:', ' All'])
             t.assertRowEquals(6, ['Product:', 'loan prod 1'])
@@ -164,6 +167,7 @@ class LoanProcessingTest {
 
             // Page footer
             t.assertRowEquals(11, pageFooter)
+            t.assertCellEquals(12, 1, 'Printed by:')
         }
     }
 
@@ -179,10 +183,10 @@ class LoanProcessingTest {
             t.assertRowEquals(1, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Loan Officer:', 'br2 LO xxx'])
             t.assertRowEquals(5, ['Loan Status:', 'ActiveInBadStanding'])
             t.assertRowEquals(6, ['Product:', 'loan prod 1'])
@@ -197,6 +201,7 @@ class LoanProcessingTest {
 
             // Page footer
             t.assertRowEquals(10, pageFooter)
+            t.assertCellEquals(11, 1, 'Printed by:')
         }
     }
 
@@ -212,10 +217,10 @@ class LoanProcessingTest {
             t.assertRowEquals(1, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Loan Officer:', 'br2 LO xxx'])
             t.assertRowEquals(5, ['Loan Status:', 'Cancel'])
             t.assertRowEquals(6, ['Product:', 'loan prod 1'])
@@ -228,6 +233,7 @@ class LoanProcessingTest {
 
             // Page footer
             t.assertRowEquals(9, pageFooter)
+            t.assertCellEquals(10, 1, 'Printed by:')
         }
     }
 }
