@@ -34,10 +34,10 @@ class FundsMovementTest {
             t.assertRowEquals(1, ['Funds Movement Report'])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Funding:', ' All'])
 
             // 1st Group header
@@ -64,6 +64,7 @@ class FundsMovementTest {
 
             // Page footer
             t.assertRowEquals(15, pageFooter)
+            t.assertCellEquals(16, 1, 'Printed by:')
         }
     }
 
@@ -79,10 +80,10 @@ class FundsMovementTest {
             t.assertRowEquals(1, ['Funds Movement Report'])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', 'BO 1'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, 'BO 1')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Funding:', ' All'])
 
             // 1st Group header
@@ -107,6 +108,7 @@ class FundsMovementTest {
 
             // Page footer
             t.assertRowEquals(14, pageFooter)
+            t.assertCellEquals(15, 1, 'Printed by:')
         }
     }
 
@@ -122,10 +124,10 @@ class FundsMovementTest {
             t.assertRowEquals(1, ['Funds Movement Report'])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-12-31')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', 'BO 1'])
+            t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, 'BO 1')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Funding:', 'Funding Org A'])
 
             // 1st Group header
@@ -139,6 +141,7 @@ class FundsMovementTest {
 
             // Page footer
             t.assertRowEquals(9, pageFooter)
+            t.assertCellEquals(10, 1, 'Printed by:')
         }
     }
 
@@ -154,10 +157,10 @@ class FundsMovementTest {
             t.assertRowEquals(1, ['Funds Movement Report'])
 
             // Page header
-            t.assertCellEquals(2, 1, 'As Of:')
-            t.assertCellEquals(2, 2, '2010-07-23')
-            t.assertCellEquals(2, 3, 'Report Date:')
-            t.assertRowEquals(3, ['Branch:', ' All'])
+            t.assertRowEquals(2, ['As Of:', '2010-07-23', 'MFI Name:', 'Mifos HO '])
+            t.assertCellEquals(3, 1, 'Branch:')
+            t.assertCellEquals(3, 2, ' All')
+            t.assertCellEquals(3, 3, 'Report Date:')
             t.assertRowEquals(4, ['Funding:', ' All'])
 
             // 1st Group header
@@ -184,6 +187,7 @@ class FundsMovementTest {
 
             // Page footer
             t.assertRowEquals(15, pageFooter)
+            t.assertCellEquals(16, 1, 'Printed by:')
         }
     }
 }
