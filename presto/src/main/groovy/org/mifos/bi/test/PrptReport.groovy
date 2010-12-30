@@ -194,7 +194,7 @@ class PrptReport {
                 (0..cols.size()).each { i ->
                     def expected = tests['raw_cell'][lineno][i + 1]
                     if (expected) {
-                        assertEquals("raw cell test for (${lineno}, ${i + 1}) failed.", trim(expected), trim(cols[i]))
+                        assertTrue("raw cell test for (${lineno}, ${i + 1}) failed.", compareCellValues(trim(expected), trim(cols[i])))
                     }
                     tests['raw_cell'][lineno].remove(i + 1)
                 }
@@ -214,7 +214,7 @@ class PrptReport {
                     (0..cols.size()).each { i ->
                         def expected = tests['cell'][nonempty_row_counter][i + 1]
                         if (expected) {
-                            assertEquals("cell test for (${nonempty_row_counter} (${lineno}), ${i + 1}) failed.", trim(expected), trim(cols[i]))
+                            assertTrue("cell test for (${nonempty_row_counter} (${lineno}), ${i + 1}) failed.", compareCellValues(trim(expected), trim(cols[i])))
                         }
                         tests['cell'][nonempty_row_counter].remove(i + 1)
                     }
@@ -233,5 +233,14 @@ class PrptReport {
 
     def trim(text) {
         return text.replaceAll("\\s+", "_")
+    }
+
+    def compareCellValues(expected, actual) {
+        if (actual.endsWith('..')) {
+            return expected.startsWith(actual[0..-3]);
+        }
+        else {
+            return expected.equals(actual)
+        }
     }
 }
