@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load hist_loan_balances_and_arrears</name>
+    <name>Load_hist_loan_balances_and_arrearsPrev</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -117,7 +117,53 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Write hist_loan_balances</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Identify Dates to Process</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Add Balance Total</to><enabled>Y</enabled> </hop>  <hop> <from>Add Balance Total</from><to>Write hist_loan_balances</to><enabled>Y</enabled> </hop>  </order>
+  <step>
+    <name>Add Balance Total</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>total_paid</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_paid</field_a>
+<field_b>interest_paid</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>total_outstanding</field_name>
+<calc_type>ADD</calc_type>
+<field_a>principal_outstanding</field_a>
+<field_b>interest_outstanding</field_b>
+<field_c/>
+<value_type>BigNumber</value_type>
+<value_length>43</value_length>
+<value_precision>4</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>274</xloc>
+      <yloc>230</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>Build Loan Arrears Entry for a Date</name>
     <type>Mapping</type>
@@ -153,8 +199,8 @@
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>740</xloc>
-      <yloc>238</yloc>
+      <xloc>821</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -163,7 +209,7 @@
     <name>Calculator</name>
     <type>Calculator</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -183,10 +229,10 @@
 <grouping_symbol/>
 <currency_symbol/>
 </calculation>
-       <calculation><field_name>principal_outstanding</field_name>
-<calc_type>SUBTRACT</calc_type>
-<field_a>original_principal</field_a>
-<field_b>principal_paid</field_b>
+       <calculation><field_name>principal_paid_calc</field_name>
+<calc_type>NVL</calc_type>
+<field_a>principal_paid</field_a>
+<field_b>amount_zero</field_b>
 <field_c/>
 <value_type>BigNumber</value_type>
 <value_length>-1</value_length>
@@ -197,10 +243,10 @@
 <grouping_symbol/>
 <currency_symbol/>
 </calculation>
-       <calculation><field_name>interest_outstanding</field_name>
-<calc_type>SUBTRACT</calc_type>
-<field_a>original_interest</field_a>
-<field_b>interest_paid</field_b>
+       <calculation><field_name>interest_paid_calc</field_name>
+<calc_type>NVL</calc_type>
+<field_a>interest_paid</field_a>
+<field_b>amount_zero</field_b>
 <field_c/>
 <value_type>BigNumber</value_type>
 <value_length>-1</value_length>
@@ -214,9 +260,9 @@
        <calculation><field_name>principal_in_arrears</field_name>
 <calc_type>SUBTRACT</calc_type>
 <field_a>principal_due</field_a>
-<field_b>principal_paid</field_b>
+<field_b>principal_paid_calc</field_b>
 <field_c/>
-<value_type>BigNumber</value_type>
+<value_type>-</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
 <remove>N</remove>
@@ -228,9 +274,9 @@
        <calculation><field_name>interest_in_arrears</field_name>
 <calc_type>SUBTRACT</calc_type>
 <field_a>interest_due</field_a>
-<field_b>interest_paid</field_b>
+<field_b>interest_paid_calc</field_b>
 <field_c/>
-<value_type>BigNumber</value_type>
+<value_type>-</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
 <remove>N</remove>
@@ -244,35 +290,7 @@
 <field_a>principal_in_arrears</field_a>
 <field_b>interest_in_arrears</field_b>
 <field_c/>
-<value_type>BigNumber</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>total_paid</field_name>
-<calc_type>ADD</calc_type>
-<field_a>principal_paid</field_a>
-<field_b>interest_paid</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>total_outstanding</field_name>
-<calc_type>ADD</calc_type>
-<field_a>principal_outstanding</field_a>
-<field_b>interest_outstanding</field_b>
-<field_c/>
-<value_type>BigNumber</value_type>
+<value_type>-</value_type>
 <value_length>-1</value_length>
 <value_precision>-1</value_precision>
 <remove>N</remove>
@@ -283,8 +301,8 @@
 </calculation>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>521</xloc>
-      <yloc>48</yloc>
+      <xloc>558</xloc>
+      <yloc>50</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -301,8 +319,8 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>889</xloc>
-      <yloc>48</yloc>
+      <xloc>814</xloc>
+      <yloc>46</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -318,32 +336,16 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select ? as as_of_date, l.loan_account_id, l.original_principal, l.original_interest, l.currency_id, 
-p.prd_offering_id, 
-cust.customer_id, gr.customer_id as group_id, cen.customer_id as center_id,
-lo.personnel_id as loan_officer_id, o.office_id as branch_id, flo.personnel_id as formed_by_loan_officer_id,
+    <sql>select ? as as_of_date, l.loan_account_id,
 ifnull(sum(ls.principal_amount), 0.0)  as principal_due,
-ifnull(sum(ls.interest_amount), 0.0)  as interest_due,
-
-&#47;*last_installment_due is used for arrears only.  If the loan is in arrears, there must be at least one installment due - the 99 was put 
-in so it stands out if an a loan not in arrears makes it through to arrears processing*&#47;
-ifnull(max(ls.installment_id), -99) as last_installment_due
-
+ifnull(sum(ls.interest_amount), 0.0)  as interest_due
 from dim_loan l
-join dim_product p on p.product_key = l.product_key
-join dim_customer cust on cust.customer_key = l.customer_key
-join dim_customer gr on gr.customer_key = l.group_key
-join dim_customer cen on cen.customer_key = l.center_key
-join dim_personnel lo on lo.personnel_key = l.loan_officer_key
-join dim_office o on o.office_key = l.branch_key
-join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
-left join dw_loan_schedules ls on ls.loan_account_id = l.loan_account_id and ls.due_date &lt;= ?
-where l.valid_from &lt;= ? and l.valid_to &gt; ?   
+join dw_loan_schedules ls on ls.loan_account_id = l.loan_account_id and ls.due_date &lt;= ?
+where l.valid_from &lt;= ?
+and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 group by as_of_date,l.loan_account_id
-order by as_of_date, l.loan_account_id;
-
-</sql>
+order by as_of_date, l.loan_account_id</sql>
     <limit>0</limit>
     <lookup>Identify Dates to Process</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -351,8 +353,8 @@ order by as_of_date, l.loan_account_id;
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>257</xloc>
-      <yloc>24</yloc>
+      <xloc>273</xloc>
+      <yloc>13</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -361,7 +363,7 @@ order by as_of_date, l.loan_account_id;
     <name>Get Loan Repayments</name>
     <type>TableInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -371,25 +373,34 @@ order by as_of_date, l.loan_account_id;
     <sql>select ? as as_of_date, l.loan_account_id,
 ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
 ifnull(sum(lr.interest_amount), 0.0)  as interest_paid,
+l.original_principal - ifnull(sum(lr.principal_amount), 0.0) as principal_outstanding,
+l.original_interest - ifnull(sum(lr.interest_amount), 0.0) as interest_outstanding,
 
-
-&#47;*last_installment_having_payment is used for arrears only*&#47;
-ifnull(max(lr.installment_id),1) as last_installment_having_payment
+l.currency_id, c.customer_id as customer_id, g.customer_id as group_id, ce.customer_id as center_id, 
+lo.personnel_id as loan_officer_id, br.office_id as branch_id, 
+flo.personnel_id as formed_by_loan_officer_id,
+p.prd_offering_id as prd_offering_id
 
 from dim_loan l
-left join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.action_date &lt;= ? 
-								   and lr.account_action_id = 1 and lr.adjusted is false
+join fact_loan_repayments lr on lr.loan_account_id = l.loan_account_id and lr.account_action_id = 1 and lr.action_date &lt;= ? 
+
+join dim_customer c on c.customer_key = l.customer_key
+join dim_customer g on g.customer_key = l.group_key
+join dim_customer ce on ce.customer_key = l.center_key
+join dim_personnel lo on lo.personnel_key = l.loan_officer_key
+join dim_office br on br.office_key = l.branch_key
+join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
+join dim_product p on p.product_key = l.product_key
 
 where l.valid_from &lt;= ? and l.valid_to &gt; ?    
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
-group by as_of_date,l.loan_account_id 
-order by as_of_date, l.loan_account_id;
+and lr.adjusted is false
+group by as_of_date,l.loan_account_id
+order by as_of_date, l.loan_account_id
 
 &#47;* only pick up unadjusted repayments. i.e. adjustments (even though perhaps entered in the system after the arrears date being processed) are taken into account.
 Reversals are ignored.  Although the reversal (aka cancel) transaction is backdated to the date of each entry it reverses... it doesn&apos;t come into play
-until the day the reversal is entered on the system (indicated by a cancel loan account status).*&#47;
-
-</sql>
+until the day the reversal is entered on the system (indicated by a cancel loan account status).*&#47;</sql>
     <limit>0</limit>
     <lookup>Identify Dates to Process</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -397,7 +408,7 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>257</xloc>
+      <xloc>273</xloc>
       <yloc>108</yloc>
       <draw>Y</draw>
       </GUI>
@@ -441,8 +452,8 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>95</xloc>
-      <yloc>172</yloc>
+      <xloc>101</xloc>
+      <yloc>195</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -469,8 +480,8 @@ order by d.date_value</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>92</xloc>
-      <yloc>55</yloc>
+      <xloc>101</xloc>
+      <yloc>49</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -497,8 +508,8 @@ order by d.date_value</sql>
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>734</xloc>
-      <yloc>48</yloc>
+      <xloc>675</xloc>
+      <yloc>46</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -513,7 +524,7 @@ order by d.date_value</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-<join_type>INNER</join_type>
+<join_type>LEFT OUTER</join_type>
 <step1>Get Loan Amounts Due</step1>
 <step2>Get Loan Repayments</step2>
     <keys_1>
@@ -526,8 +537,8 @@ order by d.date_value</sql>
     </keys_2>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>395</xloc>
-      <yloc>49</yloc>
+      <xloc>469</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -550,12 +561,12 @@ order by d.date_value</sql>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>principal_paid</name>
-        <rename/>
+      </field>      <field>        <name>principal_paid_calc</name>
+        <rename>principal_paid</rename>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>interest_paid</name>
-        <rename/>
+      </field>      <field>        <name>interest_paid_calc</name>
+        <rename>interest_paid</rename>
         <length>-2</length>
         <precision>-2</precision>
       </field>      <field>        <name>principal_in_arrears</name>
@@ -570,63 +581,11 @@ order by d.date_value</sql>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>principal_outstanding</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>interest_outstanding</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>total_outstanding</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>last_installment_having_payment</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>last_installment_due</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>currency_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>prd_offering_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>customer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>group_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>center_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>loan_officer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>branch_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>formed_by_loan_officer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>737</xloc>
-      <yloc>144</yloc>
+      <xloc>816</xloc>
+      <yloc>172</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -644,7 +603,7 @@ order by d.date_value</sql>
     <connection>DestinationDB</connection>
     <schema/>
     <table>hist_loan_arrears</table>
-    <commit>5000</commit>
+    <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
@@ -742,8 +701,8 @@ order by d.date_value</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>881</xloc>
-      <yloc>201</yloc>
+      <xloc>827</xloc>
+      <yloc>379</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -761,7 +720,7 @@ order by d.date_value</sql>
     <connection>DestinationDB</connection>
     <schema/>
     <table>hist_loan_balances</table>
-    <commit>5000</commit>
+    <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
@@ -843,8 +802,8 @@ order by d.date_value</sql>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>522</xloc>
-      <yloc>174</yloc>
+      <xloc>271</xloc>
+      <yloc>361</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

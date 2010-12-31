@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_hist_savings_balancesTest</name>
+    <name>Load hist_savings_balances</name>
     <description/>
     <extended_description/>
     <trans_version/>
