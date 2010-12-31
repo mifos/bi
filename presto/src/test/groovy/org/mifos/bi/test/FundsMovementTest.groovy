@@ -8,12 +8,12 @@ class FundsMovementTest {
             'Installment Frequency', 'Principal Outstanding', 'Interest Outstanding', 'Loan Fees Outstanding', 'Arrears amount', 'Arrears days']
 
     def firstFund = ['Source of Fund:', '-']
-    def detailsFirstFundFirstAccount_20101231 = ['32', 'br2 client 1 xxx', '2010-07-21', '3000.0000', '7', '1 week(s)', '2924.9000', '18.1000', '0.0000', '0.0000', '0']
+    def detailsFirstFundFirstAccount_20101231 = ['32', 'br2 client 1 xxx', '2010-07-21', '3000.0000', '7', '1 week(s)', '2924.9000', '18.1000', '0.0000', '2924.9000', '151']
     def detailsFirstFundSecondAccount_20100723 = ['38', 'lose group ..', '2010-07-22', '3000.0000', '7', '1 week(s)', '3000.0000', '2.9000', '0.0000', '0.0000', '0']
     def detailsFirstFundSecondAccount_20101231 = ['38', 'lose group ..', '2010-07-22', '3000.0000', '7', '1 week(s)', '0.0000', '0.0000', '0.0000', '0.0000', '0']
     def detailsFirstFundThirdAccount_20101231 = ['44', 'xfer to gr in ..', '2010-07-22', '6000.0000', '9', '1 week(s)', '6000.0000', '5.8000', '0.0000', '0.0000', '0']
     def subTotalFirstFund_20100723 = ['Sub Total', '3', ' ', '12000.0000', ' ', ' ', '11924.9000', '26.8000', '0.0000', '0.0000', ' ']
-    def subTotalFirstFund_20101231 = ['Sub Total', '3', ' ', '12000.0000', ' ', ' ', '8924.9000', '23.9000', '0.0000', '0.0000', ' ']
+    def subTotalFirstFund_20101231 = ['Sub Total', '3', ' ', '12000.0000', ' ', ' ', '8924.9000', '23.9000', '0.0000', '2924.9000', ' ']
     def subTotalFirstFundBO1Branch_20101231 = ['Sub Total', '2', ' ', '9000.0000', ' ', ' ', '6000.0000', '5.8000', '0.0000', '0.0000', ' ']
 
     def secondFund = ['Source of Fund:', 'Funding Org A']
