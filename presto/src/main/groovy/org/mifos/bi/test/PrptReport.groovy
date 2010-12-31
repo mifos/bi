@@ -194,7 +194,9 @@ class PrptReport {
                 (0..cols.size()).each { i ->
                     def expected = tests['raw_cell'][lineno][i + 1]
                     if (expected) {
-                        assertTrue("raw cell test for (${lineno}, ${i + 1}) failed.", compareCellValues(trim(expected), trim(cols[i])))
+                        if (!compareCellValues(trim(expected), trim(cols[i]))) {
+                            assertEquals("raw cell test for (${lineno}, ${i + 1}) failed.", trim(expected), trim(cols[i]))
+                        }
                     }
                     tests['raw_cell'][lineno].remove(i + 1)
                 }
@@ -203,7 +205,9 @@ class PrptReport {
             // row-based tests
             if (tests['raw_row'][lineno]) {
                 def expected = tests['raw_row'][lineno]
-                assertTrue("test for raw row ${lineno} failed.", compareRowValues(expected, cols))
+                if (!compareRowValues(expected, cols)) {
+                    assertEquals("test for raw row ${lineno} failed.", trim(expected.toString()), trim(cols.toString()))
+                }
                 tests['raw_row'].remove(lineno)
             }
 
@@ -214,7 +218,9 @@ class PrptReport {
                     (0..cols.size()).each { i ->
                         def expected = tests['cell'][nonempty_row_counter][i + 1]
                         if (expected) {
-                            assertTrue("cell test for (${nonempty_row_counter} (${lineno}), ${i + 1}) failed.", compareCellValues(trim(expected), trim(cols[i])))
+                            if (!compareCellValues(trim(expected), trim(cols[i]))) {
+                                assertEquals("cell test for (${nonempty_row_counter} (${lineno}), ${i + 1}) failed.", trim(expected), trim(cols[i]))
+                            }
                         }
                         tests['cell'][nonempty_row_counter].remove(i + 1)
                     }
@@ -223,7 +229,9 @@ class PrptReport {
                 // row-based tests
                 if (tests['row'][nonempty_row_counter]) {
                     def expected = tests['row'][nonempty_row_counter]
-                    assertTrue("test for row ${nonempty_row_counter} (${lineno}) failed.", compareRowValues(expected, cols))
+                    if (!compareRowValues(expected, cols)) {
+                        assertEquals("test for row ${nonempty_row_counter} (${lineno}) failed.", trim(expected.toString()), trim(cols.toString()))
+                    }
                     tests['row'].remove(nonempty_row_counter)
                 }
             }
@@ -232,7 +240,7 @@ class PrptReport {
     }
 
     def trim(text) {
-        return text.replaceAll("\\s+", "_")
+        return text.trim().replaceAll("\\s+", "_")
     }
 
     def compareCellValues(expected, actual) {
@@ -247,7 +255,11 @@ class PrptReport {
     def compareRowValues(expected, actual) {
         def equal = true
         equal &= (expected.size() == actual.size())
-        expected.eachWithIndex {val, i -> equal &= compareCellValues(trim(val), trim(actual[i]))}
+        expected.eachWithIndex {val, i ->
+            if (equal) {
+                equal &= compareCellValues(trim(val), trim(actual[i]))
+            }
+        }
         return equal
     }
 }
