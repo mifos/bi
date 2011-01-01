@@ -1023,7 +1023,7 @@ CREATE TABLE `hist_loan_balances` (
   `formed_by_loan_officer_id` smallint(6) NOT NULL DEFAULT '0',
   `principal_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
-  `fees_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
+  `fees_and_charges_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `total_paid` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `principal_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
   `interest_outstanding` decimal(21,4) NOT NULL DEFAULT '0.0000',
@@ -2782,4 +2782,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-28 13:09:24
+-- Dump completed on 2011-01-01 16:56:22
