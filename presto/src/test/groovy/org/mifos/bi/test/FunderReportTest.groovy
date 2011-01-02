@@ -15,7 +15,8 @@ class FunderReportTest {
     def grandTotalFirstBranchSecondFund = ['Grand Total', '3000.0000', '247.1000', '2752.9000', '0.0000', ' ', ' ', ' ']
 
     def secondBranch = ['Branch:', 'br2']
-    def detailsSecondBranchFirstFund = ['-', '3000.0000', '75.1000', '2924.9000', '2924.9000', '1', '1', '0']
+    def detailsSecondBranchFirstFund_20100723 = ['-', '3000.0000', '75.1000', '2924.9000', '0.0000', '1', '1', '0']
+    def detailsSecondBranchFirstFund_20101231 = ['-', '3000.0000', '75.1000', '2924.9000', '2924.9000', '1', '1', '0']
 
     def grandTotal_20100723 = ['Grand Total', '15000.0000', '322.2000', '14677.8000', '0.0000', ' ', ' ', ' ']
     def grandTotal_20101231 = ['Grand Total', '15000.0000', '3322.2000', '11677.8000', '2924.9000', ' ', ' ', ' ']
@@ -52,7 +53,7 @@ class FunderReportTest {
             // 2nd Details header
             t.assertRowEquals(9, detailsHeader)
             // Branch: br2 -> Fund: '-'
-            t.assertRowEquals(10, detailsSecondBranchFirstFund)
+            t.assertRowEquals(10, detailsSecondBranchFirstFund_20101231)
 
             // Report footer
             t.assertRowEquals(11, grandTotal_20101231)
@@ -161,7 +162,7 @@ class FunderReportTest {
             // 2nd Details header
             t.assertRowEquals(9, detailsHeader)
             // Branch: br2 -> Fund: '-'
-            t.assertRowEquals(10, detailsSecondBranchFirstFund)
+            t.assertRowEquals(10, detailsSecondBranchFirstFund_20100723)
 
             // Report footer
             t.assertRowEquals(11, grandTotal_20100723)
