@@ -253,20 +253,6 @@
 <grouping_symbol/>
 <currency_symbol/>
 </calculation>
-       <calculation><field_name>total_paid</field_name>
-<calc_type>ADD3</calc_type>
-<field_a>principal_paid</field_a>
-<field_b>interest_paid</field_b>
-<field_c>fees_and_charges_paid</field_c>
-<value_type>BigNumber</value_type>
-<value_length>-1</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
        <calculation><field_name>total_outstanding</field_name>
 <calc_type>ADD</calc_type>
 <field_a>principal_outstanding</field_a>
@@ -846,6 +832,14 @@ order by d.date_value</sql>
           <stream_name>loan_account_id</stream_name>
         </field>
         <field>
+          <column_name>principal_due</column_name>
+          <stream_name>principal_due</stream_name>
+        </field>
+        <field>
+          <column_name>interest_due</column_name>
+          <stream_name>interest_due</stream_name>
+        </field>
+        <field>
           <column_name>principal_paid</column_name>
           <stream_name>principal_paid</stream_name>
         </field>
@@ -864,14 +858,6 @@ order by d.date_value</sql>
         <field>
           <column_name>interest_outstanding</column_name>
           <stream_name>interest_outstanding</stream_name>
-        </field>
-        <field>
-          <column_name>total_paid</column_name>
-          <stream_name>total_paid</stream_name>
-        </field>
-        <field>
-          <column_name>total_outstanding</column_name>
-          <stream_name>total_outstanding</stream_name>
         </field>
         <field>
           <column_name>currency_id</column_name>
