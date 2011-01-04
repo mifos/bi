@@ -24,7 +24,7 @@ var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
@@ -118,7 +118,7 @@ theReport =
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "FunderReport.prpt",
+  	action: "FundsMovement.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","officeId"],["selected_funder","funderId"],["out_date","outDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",

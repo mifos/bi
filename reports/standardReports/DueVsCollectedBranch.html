@@ -1,14 +1,7 @@
-<style type="text/css">
-#returnSearchIdObj {
-  	display: none;
-}
-</style>
-
 <table width=100%>
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
-<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td>
 <td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td>
 <td><div class=reportLabel>End Date</div><div id=date2Obj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
@@ -16,22 +9,9 @@
 </tr>
 </table>
 
-<div id=returnSearchIdObj></div>
-
 <div id=theReportObj></div>
 
 <script language="javascript" type="text/javascript">
-
-function updateLOSelect()
-{
-	Dashboards.fireChange("officeId",officeId);
-
-	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
-	loanOfficerId = $('#LOSelectorObj select option:selected').val();
-
-	$('#returnSearchIdObj select option:eq(0)').attr('selected', 'selected'); 
-	officeSearchId = $('#returnSearchIdObj select option:selected').val();
-}
 
 function runTheReport()
 {
@@ -51,14 +31,12 @@ var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
 var event = 0;
-var officeId = 0;
-var officeSearchId = "";
-var loanOfficerId = -1;
+var office = "";
 
 var currentDate = new Date();
 var month = currentDate.getMonth() + 1;
@@ -76,45 +54,12 @@ branchSelector =
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "OfficeListNoAll.xaction",
-	parameter: "officeId",
+  	action: "OfficeListSearchId.xaction",
+	parameter: "office",
 	valueAsId: false,
 	htmlObject: "branchSelectorObj",
-	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
-
-returnSearchId = 
-{
-	name: "returnSearchId",
-	type: "select",
-	listeners: ["officeId"],
-	parameters:[["officeId", "officeId"]],
-  	solution: commonActionsSolution,
-  	path: path ,
-  	action: "OfficeSearchIdFromId.xaction",
-	parameter: "officeSearchId",
-	valueAsId: false,
-	htmlObject: "returnSearchIdObj",
-	executeAtStart: false
-};
-
-
-LOSelector = 
-{
-	name: "LOSelector",
-	type: "select",
-	listeners: ["officeId"],
-	parameters:[["officeId", "officeId"]],
-  	solution: commonActionsSolution,
-  	path: path ,
-  	action: "LOOfficeListSearchId.xaction",
-	parameter: "loanOfficerId",
-	valueAsId: false,
-	htmlObject: "LOSelectorObj",
-	executeAtStart: false
-};
-
 
 date1 = 
 {
@@ -174,22 +119,20 @@ theReport =
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "LoanOfficerDetailedReport.prpt",
+  	action: "DueVsCollectedBranch.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","office"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, returnSearchId, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
-	officeId = $('#branchSelectorObj select option:selected').val();
-	updateLOSelect();
+	office = $('#branchSelectorObj select option:selected').val();
 });
-
 
 </script>

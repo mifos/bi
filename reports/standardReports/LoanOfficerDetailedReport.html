@@ -1,15 +1,22 @@
+<style type="text/css">
+#returnSearchIdObj {
+  	display: none;
+}
+</style>
+
 <table width=100%>
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
 <td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td>
-<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td>
-<td><div class=reportLabel>Loan Status</div><div id=LSSelectorObj></div></td>
-<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 <td><div id=clearReportObj></div><div id=runReportObj></div></td>
 </tr>
 </table>
+
+<div id=returnSearchIdObj></div>
 
 <div id=theReportObj></div>
 
@@ -17,23 +24,24 @@
 
 function updateLOSelect()
 {
-	Dashboards.fireChange("officeSearchId",officeSearchId);
+	Dashboards.fireChange("officeId",officeId);
 
 	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
 	loanOfficerId = $('#LOSelectorObj select option:selected').val();
-}
 
-
-function updateLSSelect()
-{
-	Dashboards.fireChange("productKey",productKey);
-
-	$('#LSSelectorObj select option:eq(0)').attr('selected', 'selected'); 
-	loanStatus = $('#LSSelectorObj select option:selected').val();
+	$('#returnSearchIdObj select option:eq(0)').attr('selected', 'selected'); 
+	officeSearchId = $('#returnSearchIdObj select option:selected').val();
 }
 
 function runTheReport()
 {
+
+	if (startDate > endDate)
+	{
+		alert("Start Date is after End Date");
+		return;
+	}
+
 	event = event + 1;
 	Dashboards.fireChange("event", event);
 }
@@ -43,21 +51,21 @@ var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
 var event = 0;
-var officeSearchId = "-1";
-var loanOfficerId = 0;
-var loanStatus = 'All';
-var productKey = 0;
+var officeId = 0;
+var officeSearchId = "";
+var loanOfficerId = -1;
 
 var currentDate = new Date();
 var month = currentDate.getMonth() + 1;
 var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
 
-var outDate = currentDateStr;
+var startDate = currentDateStr;
+var endDate = currentDateStr;
 var outputType = "application/pdf";
 
  
@@ -68,66 +76,63 @@ branchSelector =
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "OfficeListSearchId.xaction",
-	parameter: "officeSearchId",
+  	action: "OfficeListNoAll.xaction",
+	parameter: "officeId",
 	valueAsId: false,
 	htmlObject: "branchSelectorObj",
 	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
 
+returnSearchId = 
+{
+	name: "returnSearchId",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "OfficeSearchIdFromId.xaction",
+	parameter: "officeSearchId",
+	valueAsId: false,
+	htmlObject: "returnSearchIdObj",
+	executeAtStart: false
+};
+
+
 LOSelector = 
 {
 	name: "LOSelector",
 	type: "select",
-	listeners: ["officeSearchId"],
-	parameters:[["officeSearchId", "officeSearchId"]],
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "LOOfficeListOnlySearchId.xaction",
+  	action: "LOOfficeListSearchId.xaction",
 	parameter: "loanOfficerId",
 	valueAsId: false,
 	htmlObject: "LOSelectorObj",
 	executeAtStart: false
 };
 
-ProductSelector = 
+
+date1 = 
 {
-	name: "ProductSelector",
-	type: "select",
+	name: "date1",
+	type: "dateInputComponent",
 	parameters:[],
-  	solution: commonActionsSolution,
-  	path: path ,
-  	action: "ProductListKey.xaction",
-	parameter: "productKey",
-	valueAsId: false,
-	htmlObject: "ProductSelectorObj",
-	postChange: function(){updateLSSelect();},
+	parameter: "startDate",
+	htmlObject: "date1Obj",
 	executeAtStart: true
 };
 
-LSSelector = 
+date2 = 
 {
-	name: "LSSelector",
-	type: "select",
-	listeners: ["productKey"],
-	parameters:[["productKey", "productKey"]],
-  	solution: commonActionsSolution,
-  	path: path ,
-  	action: "LSProductListKey.xaction",
-	parameter: "loanStatus",
-	valueAsId: false,
-	htmlObject: "LSSelectorObj",
-	executeAtStart: false
-};
-
-asOnDate = 
-{
-	name: "asOnDate",
+	name: "date2",
 	type: "dateInputComponent",
 	parameters:[],
-	parameter: "outDate",
-	htmlObject: "dateObj",
+	parameter: "endDate",
+	htmlObject: "date2Obj",
 	executeAtStart: true
 };
 
@@ -169,25 +174,21 @@ theReport =
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "LoanProcessing.prpt",
+  	action: "LoanOfficerDetailedReport.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["selected_product","productKey"],["selected_loan_status","loanStatus"],["out_date","outDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, LOSelector, LSSelector, ProductSelector, asOnDate, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, returnSearchId, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
-	officeSearchId = $('#branchSelectorObj select option:selected').val();
+	officeId = $('#branchSelectorObj select option:selected').val();
 	updateLOSelect();
-
-	$('#ProductSelectorObj select option:eq(0)').attr('selected', 'selected')
-	productKey = $('#ProductSelectorObj select option:selected').val();
-	updateLSSelect();
 });
 
 

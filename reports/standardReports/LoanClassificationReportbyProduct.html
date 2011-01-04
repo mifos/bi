@@ -11,6 +11,7 @@
 
 <div id=theReportObj></div>
 
+
 <script language="javascript" type="text/javascript">
 
 function runTheReport()
@@ -31,7 +32,7 @@ var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
@@ -54,7 +55,7 @@ branchSelector =
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "OfficeListSearchId.xaction",
+  	action: "OfficeListSearchIdNoAll.xaction",
 	parameter: "office",
 	valueAsId: false,
 	htmlObject: "branchSelectorObj",
@@ -119,7 +120,7 @@ theReport =
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "DueVsCollectedBranch.prpt",
+  	action: "LoanClassificationReportbyProduct.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","office"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
@@ -133,6 +134,7 @@ Dashboards.init([branchSelector, date1, date2, outputSelector, runReport, clearR
 $(document).ready(function() {
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
 	office = $('#branchSelectorObj select option:selected').val();
+	updateLOSelect();
 });
 
 </script>

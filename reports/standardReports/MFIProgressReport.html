@@ -2,8 +2,8 @@
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
-<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td>
-<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td>
+<td><div class=reportLabel>Month 1</div><div id=month1Obj></div></td>
+<td><div class=reportLabel>Month 2</div><div id=month2Obj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 <td><div id=clearReportObj></div><div id=runReportObj></div></td>
 </tr>
@@ -16,38 +16,27 @@
 
 function runTheReport()
 {
-
-	if (startDate > endDate)
-	{
-		alert("Start Date is after End Date");
-		return;
-	}
-
 	event = event + 1;
 	Dashboards.fireChange("event", event);
 }
-
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
 var event = 0;
 var office = "";
 
-var currentDate = new Date();
-var month = currentDate.getMonth() + 1;
-var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
+var m1 = ""; 
+var m2 = ""; 
 
-var startDate = currentDateStr;
-var endDate = currentDateStr;
 var outputType = "application/pdf";
 
- 
+
 branchSelector = 
 {
 	name: "branchSelector",
@@ -62,23 +51,32 @@ branchSelector =
 	executeAtStart: true
 };
 
-date1 = 
+month1 = 
 {
-	name: "date1",
-	type: "dateInputComponent",
+	name: "month1",
+	type: "select",
 	parameters:[],
-	parameter: "startDate",
-	htmlObject: "date1Obj",
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "MonthList.xaction",
+	parameter: "m1",
+	valueAsId: false,
+	htmlObject: "month1Obj",
 	executeAtStart: true
 };
 
-date2 = 
+
+month2 = 
 {
-	name: "date2",
-	type: "dateInputComponent",
+	name: "month2",
+	type: "select",
 	parameters:[],
-	parameter: "endDate",
-	htmlObject: "date2Obj",
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "MonthList.xaction",
+	parameter: "m2",
+	valueAsId: false,
+	htmlObject: "month2Obj",
 	executeAtStart: true
 };
 
@@ -104,37 +102,32 @@ runReport =
   	executeAtStart: true
 }
 
-clearReport = 
-{
-  	name: "clearReport",
-  	type: "Button",
-  	htmlObject: "clearReportObj",
-  	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");},
-  	executeAtStart: true
-}
-
 theReport = 
 {
   	name: "theReport",
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "LoanClassificationReportbyProduct.prpt",
+  	action: "MFIProgressReport.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","office"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","office"],["selected_period1","m1"],["selected_period2","m2"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, month1, month2, outputSelector, runReport, theReport]);
 
 $(document).ready(function() {
+
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
 	office = $('#branchSelectorObj select option:selected').val();
-	updateLOSelect();
-});
 
+	$('#month1Obj select option:eq(2)').attr('selected', 'selected')
+	$('#month2Obj select option:eq(1)').attr('selected', 'selected')
+
+	m1 = $('#month1Obj select option:selected').val();
+	m2 = $('#month2Obj select option:selected').val();
+});
 </script>

@@ -2,7 +2,9 @@
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
-<td><div class=reportLabel>Funder</div><div id=funderSelectorObj></div></td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td>
+<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td>
+<td><div class=reportLabel>Loan Status</div><div id=LSSelectorObj></div></td>
 <td><div class=reportLabel>As On Date</div><div id=dateObj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 <td><div id=clearReportObj></div><div id=runReportObj></div></td>
@@ -12,6 +14,23 @@
 <div id=theReportObj></div>
 
 <script language="javascript" type="text/javascript">
+
+function updateLOSelect()
+{
+	Dashboards.fireChange("officeSearchId",officeSearchId);
+
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
+}
+
+
+function updateLSSelect()
+{
+	Dashboards.fireChange("productKey",productKey);
+
+	$('#LSSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanStatus = $('#LSSelectorObj select option:selected').val();
+}
 
 function runTheReport()
 {
@@ -24,14 +43,15 @@ var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
 var event = 0;
-var officeId = 0;
-var funderId = 0;
-
+var officeSearchId = "-1";
+var loanOfficerId = 0;
+var loanStatus = 'All';
+var productKey = 0;
 
 var currentDate = new Date();
 var month = currentDate.getMonth() + 1;
@@ -49,26 +69,57 @@ branchSelector =
   	solution: commonActionsSolution,
   	path: path ,
   	action: "OfficeListSearchId.xaction",
-	parameter: "officeId",
+	parameter: "officeSearchId",
 	valueAsId: false,
 	htmlObject: "branchSelectorObj",
+	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
 
-funderSelector = 
+LOSelector = 
 {
-	name: "funderSelector",
+	name: "LOSelector",
+	type: "select",
+	listeners: ["officeSearchId"],
+	parameters:[["officeSearchId", "officeSearchId"]],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "LOOfficeListOnlySearchId.xaction",
+	parameter: "loanOfficerId",
+	valueAsId: false,
+	htmlObject: "LOSelectorObj",
+	executeAtStart: false
+};
+
+ProductSelector = 
+{
+	name: "ProductSelector",
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "FunderList.xaction",
-	parameter: "funderId",
+  	action: "ProductListKey.xaction",
+	parameter: "productKey",
 	valueAsId: false,
-	htmlObject: "funderSelectorObj",
+	htmlObject: "ProductSelectorObj",
+	postChange: function(){updateLSSelect();},
 	executeAtStart: true
 };
 
+LSSelector = 
+{
+	name: "LSSelector",
+	type: "select",
+	listeners: ["productKey"],
+	parameters:[["productKey", "productKey"]],
+  	solution: commonActionsSolution,
+  	path: path ,
+  	action: "LSProductListKey.xaction",
+	parameter: "loanStatus",
+	valueAsId: false,
+	htmlObject: "LSSelectorObj",
+	executeAtStart: false
+};
 
 asOnDate = 
 {
@@ -118,22 +169,26 @@ theReport =
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "FundsMovement.prpt",
+  	action: "LoanProcessing.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeId"],["selected_funder","funderId"],["out_date","outDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["selected_product","productKey"],["selected_loan_status","loanStatus"],["out_date","outDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, funderSelector, asOnDate, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, LOSelector, LSSelector, ProductSelector, asOnDate, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
-	officeId = $('#branchSelectorObj select option:selected').val();
-	$('#funderSelectorObj select option:eq(0)').attr('selected', 'selected')
-	funderId = $('#funderSelectorObj select option:selected').val();
+	officeSearchId = $('#branchSelectorObj select option:selected').val();
+	updateLOSelect();
+
+	$('#ProductSelectorObj select option:eq(0)').attr('selected', 'selected')
+	productKey = $('#ProductSelectorObj select option:selected').val();
+	updateLSSelect();
 });
+
 
 </script>

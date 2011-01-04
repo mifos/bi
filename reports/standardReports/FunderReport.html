@@ -2,15 +2,14 @@
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td>
-<td><div class=reportLabel>Month 1</div><div id=month1Obj></div></td>
-<td><div class=reportLabel>Month 2</div><div id=month2Obj></div></td>
+<td><div class=reportLabel>Funder</div><div id=funderSelectorObj></div></td>
+<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 <td><div id=clearReportObj></div><div id=runReportObj></div></td>
 </tr>
 </table>
 
 <div id=theReportObj></div>
-
 
 <script language="javascript" type="text/javascript">
 
@@ -20,23 +19,28 @@ function runTheReport()
 	Dashboards.fireChange("event", event);
 }
 
+
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports";
+var standardReportsSolution = "standardReports/prpts";
 
 
 Dashboards.globalcontext = false;
 var event = 0;
-var office = "";
+var officeId = 0;
+var funderId = 0;
 
-var m1 = ""; 
-var m2 = ""; 
 
+var currentDate = new Date();
+var month = currentDate.getMonth() + 1;
+var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
+
+var outDate = currentDateStr;
 var outputType = "application/pdf";
 
-
+ 
 branchSelector = 
 {
 	name: "branchSelector",
@@ -44,39 +48,35 @@ branchSelector =
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "OfficeListSearchIdNoAll.xaction",
-	parameter: "office",
+  	action: "OfficeListSearchId.xaction",
+	parameter: "officeId",
 	valueAsId: false,
 	htmlObject: "branchSelectorObj",
 	executeAtStart: true
 };
 
-month1 = 
+funderSelector = 
 {
-	name: "month1",
+	name: "funderSelector",
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
   	path: path ,
-  	action: "MonthList.xaction",
-	parameter: "m1",
+  	action: "FunderList.xaction",
+	parameter: "funderId",
 	valueAsId: false,
-	htmlObject: "month1Obj",
+	htmlObject: "funderSelectorObj",
 	executeAtStart: true
 };
 
 
-month2 = 
+asOnDate = 
 {
-	name: "month2",
-	type: "select",
+	name: "asOnDate",
+	type: "dateInputComponent",
 	parameters:[],
-  	solution: commonActionsSolution,
-  	path: path ,
-  	action: "MonthList.xaction",
-	parameter: "m2",
-	valueAsId: false,
-	htmlObject: "month2Obj",
+	parameter: "outDate",
+	htmlObject: "dateObj",
 	executeAtStart: true
 };
 
@@ -102,32 +102,38 @@ runReport =
   	executeAtStart: true
 }
 
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");},
+  	executeAtStart: true
+}
+
 theReport = 
 {
   	name: "theReport",
   	type: "prpt",
   	solution: standardReportsSolution,
   	path: path,
-  	action: "MFIProgressReport.prpt",
+  	action: "FunderReport.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","office"],["selected_period1","m1"],["selected_period2","m2"],["output-type","outputType"]],
+  	parameters: [["selected_office","officeId"],["selected_funder","funderId"],["out_date","outDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, month1, month2, outputSelector, runReport, theReport]);
+Dashboards.init([branchSelector, funderSelector, asOnDate, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
-
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
-	office = $('#branchSelectorObj select option:selected').val();
-
-	$('#month1Obj select option:eq(2)').attr('selected', 'selected')
-	$('#month2Obj select option:eq(1)').attr('selected', 'selected')
-
-	m1 = $('#month1Obj select option:selected').val();
-	m2 = $('#month2Obj select option:selected').val();
+	officeId = $('#branchSelectorObj select option:selected').val();
+	$('#funderSelectorObj select option:eq(0)').attr('selected', 'selected')
+	funderId = $('#funderSelectorObj select option:selected').val();
 });
+
 </script>
