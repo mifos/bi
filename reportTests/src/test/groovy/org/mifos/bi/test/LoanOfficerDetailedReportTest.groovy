@@ -82,7 +82,7 @@ class LoanOfficerDetailedReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/LoanOfficerDetailedReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/LoanOfficerDetailedReport.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
@@ -174,7 +174,7 @@ class LoanOfficerDetailedReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/LoanOfficerDetailedReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/LoanOfficerDetailedReport.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title

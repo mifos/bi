@@ -126,7 +126,7 @@ class MFIProgressReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/MFIProgressReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/MFIProgressReport.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'selected_period1': '2010-Jul', 'selected_period2': '2010-Sep']
 
             // Report title
@@ -256,7 +256,7 @@ class MFIProgressReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/MFIProgressReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/MFIProgressReport.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'selected_period1': '2010-Jul', 'selected_period2': '2010-Aug']
 
             // Report title

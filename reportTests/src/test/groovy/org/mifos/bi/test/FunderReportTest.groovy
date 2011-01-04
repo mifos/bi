@@ -27,7 +27,7 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/FunderReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
             // Report title
@@ -68,7 +68,7 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/FunderReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
             // Report title
@@ -102,7 +102,7 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/FunderReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '2', 'out_date': '2010-12-31']
 
             // Report title
@@ -136,7 +136,7 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/FunderReport.prpt'
+            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-07-23']
 
             // Report title

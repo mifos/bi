@@ -37,7 +37,7 @@ class DueVsCollectedBranchTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/DueVsCollectedBranch.prpt'
+            t.reportPath = 'reports/standardReports/prpts/DueVsCollectedBranch.prpt'
             t.reportParams = ['selected_office': '-1', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-09-30']
 
             // Report title
@@ -110,7 +110,7 @@ class DueVsCollectedBranchTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/DueVsCollectedBranch.prpt'
+            t.reportPath = 'reports/standardReports/prpts/DueVsCollectedBranch.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-09-30']
 
             // Report title
@@ -163,7 +163,7 @@ class DueVsCollectedBranchTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/DueVsCollectedBranch.prpt'
+            t.reportPath = 'reports/standardReports/prpts/DueVsCollectedBranch.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-08-15']
 
             // Report title

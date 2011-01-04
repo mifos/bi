@@ -24,7 +24,7 @@ class LoanClassificationReportbyProductTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/LoanClassificationReportbyProduct.prpt'
+            t.reportPath = 'reports/standardReports/prpts/LoanClassificationReportbyProduct.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
@@ -67,7 +67,7 @@ class LoanClassificationReportbyProductTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/LoanClassificationReportbyProduct.prpt'
+            t.reportPath = 'reports/standardReports/prpts/LoanClassificationReportbyProduct.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title

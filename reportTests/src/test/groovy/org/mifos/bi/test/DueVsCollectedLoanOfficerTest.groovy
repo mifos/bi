@@ -27,7 +27,7 @@ class DueVsCollectedLoanOfficerTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/DueVsCollectedLoanOfficer.prpt'
+            t.reportPath = 'reports/standardReports/prpts/DueVsCollectedLoanOfficer.prpt'
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '-1', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
@@ -80,7 +80,7 @@ class DueVsCollectedLoanOfficerTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/DueVsCollectedLoanOfficer.prpt'
+            t.reportPath = 'reports/standardReports/prpts/DueVsCollectedLoanOfficer.prpt'
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
@@ -133,7 +133,7 @@ class DueVsCollectedLoanOfficerTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/DueVsCollectedLoanOfficer.prpt'
+            t.reportPath = 'reports/standardReports/prpts/DueVsCollectedLoanOfficer.prpt'
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '-1', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title
