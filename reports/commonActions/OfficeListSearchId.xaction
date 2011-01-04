@@ -31,7 +31,7 @@
         <live><![CDATA[true]]></live>  
         <query><![CDATA[(select distinctrow search_id,
 concat( case office_level_id
-when 2 then '.'
+when 2 then '. '
 when 3 then '. . '
 when 4 then '. . . '
 when 5 then '. . . . '
@@ -40,6 +40,7 @@ end, display_name) as office_name
 from dim_office
 where office_key > 0 and office_level_id !=1)
 union (select "-1"," All")
+union (select "-", "  Select One")
 order by search_id]]></query> 
       </component-definition> 
     </action-definition>
