@@ -6,7 +6,7 @@ class DataDumpReportTest {
     @Test
     void testDataDumpReport() {
         new PrptReport().execute () { t ->
-            t.reportPath = 'reports/ppiReports/DataDumpReport.prpt'
+            t.reportPath = 'standardReports/PPIDataDumpReport.prpt'
             t.reportParams = [
                 'startDate': 'dummyParamValue',
                 'endDate': 'dummyParamValue',
