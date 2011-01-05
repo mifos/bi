@@ -1,1 +1,0 @@
-In 3.7, Use only one xcdf just by adding a "report-type["detail","summary"]" select component and change theReport.action: "<report-type>.prpt" at preExecution of report component (there is not preExecution in 3.6 report component)

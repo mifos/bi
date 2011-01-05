@@ -5,5 +5,5 @@
 	<description>Transaction Report</description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>template.html</template>
+	<template>TransactionReport-Template.html</template>
 </cdf>
