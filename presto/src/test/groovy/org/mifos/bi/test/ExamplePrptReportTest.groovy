@@ -1,4 +1,4 @@
-package org.mifos.bi.test;
+package org.mifos.bi.test
 
 import static org.junit.Assert.*
 import org.junit.Test
