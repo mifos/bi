@@ -43,8 +43,6 @@ var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 
 var commonActionsSolution = "commonActions";
-var standardReportsSolution = "standardReports/prpts";
-
 
 Dashboards.globalcontext = false;
 var event = 0;
@@ -167,7 +165,7 @@ theReport =
 {
   	name: "theReport",
   	type: "prpt",
-  	solution: standardReportsSolution,
+  	solution: solution,
   	path: path,
   	action: "LoanProcessing.prpt",
   	listeners:["event"],
