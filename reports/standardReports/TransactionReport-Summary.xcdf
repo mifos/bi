@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Summary - Transaction Report</title>
+	<title>Transactions - Summary</title>
 	<author>Udai Gupta</author>
-	<description>Summary - Transaction Report</description>
+	<description>Transactions - Summary</description>
 	<icon></icon>
 	<style>mifosreports</style>
 	<template>TransactionReport-Summary.html</template>
