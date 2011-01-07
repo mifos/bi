@@ -4,8 +4,8 @@ import org.junit.Test
 
 class LoanOfficerDetailedReportTest {
 
-    def branch = ['Branch', ':', 'br2']
-    def gender = ['Gender', ':', 'Female']
+    def branch = ['Branch:', 'br2']
+    def gender = ['Gender:', 'Female']
 
     def detailsHeader1 = ['Group Formation', 'Key Dates']
     def numOfClientsAddedToDate_JoinedMFI = ['# of Clients added(To Date)', '3', 'Joined MFI']
@@ -36,9 +36,9 @@ class LoanOfficerDetailedReportTest {
     def mandatorySavings = ['Mandatory Savings', '1206.1000']
 
     def detailsHeader3 = ['Aging in Arrears by Week']
-    def detailsHeader3_4 = ['# of Clients', '# of Loans', 'Arrears (P+I)', 'Principal Outstanding']
+    def detailsHeader3_4 = ['# of Clients', '# of Loans', 'Arrears', 'Principal Outstanding']
     def weeksInArrears1 = ['1 Week in Arrears', '0', '0', '0.0000', '0.0000']
-    def weeksInArrears2_20100815 = ['2 Weeks in Arrears', '1', '1', '784.0000', '2943.0000']
+    def weeksInArrears2_20100815 = ['2 Weeks in Arrears', '1', '1', '781.1000', '2924.9000']
     def weeksInArrears2 = ['2 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears3 = ['3 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears4 = ['4 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
@@ -47,26 +47,25 @@ class LoanOfficerDetailedReportTest {
     def weeksInArrears7 = ['7 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears8 = ['8 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears9_20100815 = ['9 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
-    def weeksInArrears9 = ['9 Weeks in Arrears', '1', '1', '2943.0000', '2943.0000']
+    def weeksInArrears9 = ['9 Weeks in Arrears', '1', '1', '2924.9000', '2924.9000']
     def weeksInArrears10 = ['10 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears11 = ['11 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears12 = ['12 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears12p = ['12+ Weeks in Arrears', '0', '0', '0.0000', '0.0000']
-    def arrearsTotal_20100815 = ['Total', '1', '1', '784.0000', '2943.0000']
-    def arrearsTotal = ['Total', '1', '1', '2943.0000', '2943.0000']
+    def arrearsTotal_20100815 = ['Total', '1', '1', '781.1000', '2924.9000']
+    def arrearsTotal = ['Total', '1', '1', '2924.9000', '2924.9000']
 
     def detailsHeader4 = ['Aging in Arrears by Days']
-    def daysInArrears1_20100815 = ['0 to 30 Days in Arrears', '1', '1', '784.0000', '2943.0000']
+    def daysInArrears1_20100815 = ['0 to 30 Days in Arrears', '1', '1', '781.1000', '2924.9000']
     def daysInArrears1 = ['0 to 30 Days in Arrears', '0', '0', '0.0000', '0.0000']
     def daysInArrears2_20100815 = ['30 to 60 Days in Arrears', '0', '0', '0.0000', '0.0000']
-    def daysInArrears2 = ['30 to 60 Days in Arrears', '1', '1', '2943.0000', '2943.0000']
+    def daysInArrears2 = ['30 to 60 Days in Arrears', '1', '1', '2924.9000', '2924.9000']
     def daysInArrears3 = ['60 to 90 Days in Arrears', '0', '0', '0.0000', '0.0000']
     def daysInArrears4 = ['90 to 180 Days in Arrears', '0', '0', '0.0000', '0.0000']
     def daysInArrears5 = ['> 180 Days in Arrears', '0', '0', '0.0000', '0.0000']
 
     def detailsHeader5 = ['Summary of Centers (Groups) Managed']
-    def detailsHeader5a = ['Name', 'Clients', 'Principal', 'Center', 'Arrears', 'PAR']
-    def detailsHeader5b = ['Outstanding', 'Savings', 'Amount']
+    def detailsHeader5a = ['Name', 'Clients', 'Principal Outstanding', 'Center Savings', 'Arrears Amount', 'PAR']
     def center1_20100815 = ['br2 center 1', '3', '2924.9000', '1200.1000', '781.1000', '100.00']
     def center1 = ['br2 center 1', '3', '2924.9000', '1206.1000', '2924.9000', '100.00']
     def center2_20100815 = ['center with savings a/c', '0', '0.0000', '777.0000', '0.0000', '0.00']
@@ -75,7 +74,7 @@ class LoanOfficerDetailedReportTest {
     def centerTotal_20100815 = ['Total', '4', '2924.9000', '1977.1000', '781.1000', '-']
     def centerTotal = ['Total', '4', '2924.9000', '1998.8000', '2924.9000', '-']
 
-    def pageFooter = ['Version 1.1', 'Page 1 / 1']
+    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
     void testParams_br2_br2LOxxx_20100701_20100930() {
@@ -89,83 +88,88 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(1, ['Loan Officer Detailed Report'])
 
             // Page header
-            t.assertRowEquals(2, ['LoanOfficer', ':', 'br2 LO xxx', 'ID', ':'])
-            t.assertRowEquals(3, ['TimePeriod', ':'])
-            t.assertRowEquals(4, branch)
-            t.assertCellEquals(5, 1, 'Reportcreationdate')
-            t.assertCellEquals(5, 2, ':')
-            t.assertRowEquals(6, gender)
+            t.assertRowEquals(2, ['MFI Name:', 'Mifos HO', 'ID:'])
+            t.assertRowEquals(3, ['TimePeriod:'])
+            t.assertRowEquals(4, ['LoanOfficer:', 'br2 LO xxx'])
+            t.assertRowEquals(5, branch)
+            t.assertCellEquals(6, 1, 'Reportcreationdate:')
+            t.assertRowEquals(7, gender)
 
             // 1st Details header
-            t.assertRowEquals(7, detailsHeader1)
+            def offset = 8
+            t.assertRowEquals(offset, detailsHeader1)
             // Details
-            t.assertRowEquals(8, numOfClientsAddedToDate_JoinedMFI)
-            t.assertRowEquals(9, numOfClientsAddedThisPeriod_BecameLO)
-            t.assertRowEquals(10, numOfGroupsAddedToDate_BranchMemberships)
-            t.assertRowEquals(11, numOfGroupsAddedThisPeriod)
-            t.assertRowEquals(12, branchMempership_br2)
-            t.assertRowEquals(13, numOfDropoutClientsToDate)
-            t.assertRowEquals(14, leftMFI)
-            t.assertRowEquals(15, numOfDropoutClientsThisPeriod)
+            t.assertRowEquals(offset+1, numOfClientsAddedToDate_JoinedMFI)
+            t.assertRowEquals(offset+2, numOfClientsAddedThisPeriod_BecameLO)
+            t.assertRowEquals(offset+3, numOfGroupsAddedToDate_BranchMemberships)
+            t.assertRowEquals(offset+4, numOfGroupsAddedThisPeriod)
+            t.assertRowEquals(offset+5, branchMempership_br2)
+            t.assertRowEquals(offset+6, numOfDropoutClientsToDate)
+            t.assertRowEquals(offset+7, leftMFI)
+            t.assertRowEquals(offset+8, numOfDropoutClientsThisPeriod)
 
             // 2nd Details header
-            t.assertRowEquals(16, detailsHeader2)
+            offset = 17
+            t.assertRowEquals(offset, detailsHeader2)
             // Details
-            t.assertRowEquals(17, numOfCentersManaged_numOfActiveLoans)
-            t.assertRowEquals(18, numOfGroups_Principal)
-            t.assertRowEquals(19, numOfClients_Interest)
-            t.assertRowEquals(20, numOfClientsWithLoans)
-            t.assertRowEquals(21, portfolioAtRisk)
-            t.assertRowEquals(22, numOfClientsWithSavings)
-            t.assertRowEquals(23, numOfLoansWrittenOff)
-            t.assertRowEquals(24, dormantClients)
-            t.assertRowEquals(25, amountOfLoansWrittenOff)
-            t.assertRowEquals(26, totalSavings)
-            t.assertRowEquals(27, voluntarySavings)
-            t.assertRowEquals(28, mandatorySavings)
+            t.assertRowEquals(offset+1, numOfCentersManaged_numOfActiveLoans)
+            t.assertRowEquals(offset+2, numOfGroups_Principal)
+            t.assertRowEquals(offset+3, numOfClients_Interest)
+            t.assertRowEquals(offset+4, numOfClientsWithLoans)
+            t.assertRowEquals(offset+5, portfolioAtRisk)
+            t.assertRowEquals(offset+6, numOfClientsWithSavings)
+            t.assertRowEquals(offset+7, numOfLoansWrittenOff)
+            t.assertRowEquals(offset+8, dormantClients)
+            t.assertRowEquals(offset+9, amountOfLoansWrittenOff)
+            t.assertRowEquals(offset+10, totalSavings)
+            t.assertRowEquals(offset+11, voluntarySavings)
+            t.assertRowEquals(offset+12, mandatorySavings)
 
             // 3rd Details header
-            t.assertRowEquals(29, detailsHeader3)
-            t.assertRowEquals(30, detailsHeader3_4)
+            offset = 30
+            t.assertRowEquals(offset, detailsHeader3)
+            t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
-            t.assertRowEquals(31, weeksInArrears1)
-            t.assertRowEquals(32, weeksInArrears2)
-            t.assertRowEquals(33, weeksInArrears3)
-            t.assertRowEquals(34, weeksInArrears4)
-            t.assertRowEquals(35, weeksInArrears5)
-            t.assertRowEquals(36, weeksInArrears6)
-            t.assertRowEquals(37, weeksInArrears7)
-            t.assertRowEquals(38, weeksInArrears8)
-            t.assertRowEquals(39, weeksInArrears9)
-            t.assertRowEquals(40, weeksInArrears10)
-            t.assertRowEquals(41, weeksInArrears11)
-            t.assertRowEquals(42, weeksInArrears12)
-            t.assertRowEquals(43, weeksInArrears12p)
-            t.assertRowEquals(44, arrearsTotal)
+            t.assertRowEquals(offset+2, weeksInArrears1)
+            t.assertRowEquals(offset+3, weeksInArrears2)
+            t.assertRowEquals(offset+4, weeksInArrears3)
+            t.assertRowEquals(offset+5, weeksInArrears4)
+            t.assertRowEquals(offset+6, weeksInArrears5)
+            t.assertRowEquals(offset+7, weeksInArrears6)
+            t.assertRowEquals(offset+8, weeksInArrears7)
+            t.assertRowEquals(offset+9, weeksInArrears8)
+            t.assertRowEquals(offset+10, weeksInArrears9)
+            t.assertRowEquals(offset+11, weeksInArrears10)
+            t.assertRowEquals(offset+12, weeksInArrears11)
+            t.assertRowEquals(offset+13, weeksInArrears12)
+            t.assertRowEquals(offset+14, weeksInArrears12p)
+            t.assertRowEquals(offset+15, arrearsTotal)
 
             //4th Details header
-            t.assertRowEquals(45, detailsHeader4)
-            t.assertRowEquals(46, detailsHeader3_4)
+            offset = 46
+            t.assertRowEquals(offset, detailsHeader4)
+            t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
-            t.assertRowEquals(47, daysInArrears1)
-            t.assertRowEquals(48, daysInArrears2)
-            t.assertRowEquals(49, daysInArrears3)
-            t.assertRowEquals(50, daysInArrears4)
-            t.assertRowEquals(51, daysInArrears5)
-            t.assertRowEquals(52, arrearsTotal)
+            t.assertRowEquals(offset+2, daysInArrears1)
+            t.assertRowEquals(offset+3, daysInArrears2)
+            t.assertRowEquals(offset+4, daysInArrears3)
+            t.assertRowEquals(offset+5, daysInArrears4)
+            t.assertRowEquals(offset+6, daysInArrears5)
+            t.assertRowEquals(offset+7, arrearsTotal)
 
             // 5th Details header
-            t.assertRowEquals(53, detailsHeader5)
-            t.assertRowEquals(54, detailsHeader5a)
-            t.assertRowEquals(55, detailsHeader5b)
+            offset = 54
+            t.assertRowEquals(offset, detailsHeader5)
+            t.assertRowEquals(offset+1, detailsHeader5a)
             // Details
-            t.assertRowEquals(56, center1)
-            t.assertRowEquals(57, center2)
-            t.assertRowEquals(58, center3)
-            t.assertRowEquals(59, centerTotal)
+            t.assertRowEquals(offset+2, center1)
+            t.assertRowEquals(offset+3, center2)
+            t.assertRowEquals(offset+4, center3)
+            t.assertRowEquals(offset+5, centerTotal)
 
             // Page footer
-            t.assertRowEquals(60, pageFooter)
+            offset = 60
+            t.assertRowEquals(offset, pageFooter)
         }
     }
 
@@ -181,83 +185,88 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(1, ['Loan Officer Detailed Report'])
 
             // Page header
-            t.assertRowEquals(2, ['LoanOfficer', ':', 'br2 LO xxx', 'ID', ':'])
-            t.assertRowEquals(3, ['TimePeriod', ':'])
-            t.assertRowEquals(4, branch)
-            t.assertCellEquals(5, 1, 'Reportcreationdate')
-            t.assertCellEquals(5, 2, ':')
-            t.assertRowEquals(6, gender)
+            t.assertRowEquals(2, ['MFI Name:', 'Mifos HO', 'ID:'])
+            t.assertRowEquals(3, ['TimePeriod:'])
+            t.assertRowEquals(4, ['LoanOfficer:', 'br2 LO xxx'])
+            t.assertRowEquals(5, branch)
+            t.assertCellEquals(6, 1, 'Reportcreationdate:')
+            t.assertRowEquals(7, gender)
 
             // 1st Details header
-            t.assertRowEquals(7, detailsHeader1)
+            def offset = 8
+            t.assertRowEquals(offset, detailsHeader1)
             // Details
-            t.assertRowEquals(8, numOfClientsAddedToDate_JoinedMFI)
-            t.assertRowEquals(9, numOfClientsAddedThisPeriod_BecameLO)
-            t.assertRowEquals(10, numOfGroupsAddedToDate_BranchMemberships)
-            t.assertRowEquals(11, numOfGroupsAddedThisPeriod)
-            t.assertRowEquals(12, branchMempership_br2)
-            t.assertRowEquals(13, numOfDropoutClientsToDate)
-            t.assertRowEquals(14, leftMFI)
-            t.assertRowEquals(15, numOfDropoutClientsThisPeriod)
+            t.assertRowEquals(offset+1, numOfClientsAddedToDate_JoinedMFI)
+            t.assertRowEquals(offset+2, numOfClientsAddedThisPeriod_BecameLO)
+            t.assertRowEquals(offset+3, numOfGroupsAddedToDate_BranchMemberships)
+            t.assertRowEquals(offset+4, numOfGroupsAddedThisPeriod)
+            t.assertRowEquals(offset+5, branchMempership_br2)
+            t.assertRowEquals(offset+6, numOfDropoutClientsToDate)
+            t.assertRowEquals(offset+7, leftMFI)
+            t.assertRowEquals(offset+8, numOfDropoutClientsThisPeriod)
 
             // 2nd Details header
-            t.assertRowEquals(16, detailsHeader2)
+            offset = 17
+            t.assertRowEquals(offset, detailsHeader2)
             // Details
-            t.assertRowEquals(17, numOfCentersManaged_numOfActiveLoans)
-            t.assertRowEquals(18, numOfGroups_Principal_20100815)
-            t.assertRowEquals(19, numOfClients_Interest)
-            t.assertRowEquals(20, numOfClientsWithLoans)
-            t.assertRowEquals(21, portfolioAtRisk)
-            t.assertRowEquals(22, numOfClientsWithSavings)
-            t.assertRowEquals(23, numOfLoansWrittenOff)
-            t.assertRowEquals(24, dormantClients)
-            t.assertRowEquals(25, amountOfLoansWrittenOff)
-            t.assertRowEquals(26, totalSavings_20100815)
-            t.assertRowEquals(27, voluntarySavings_20100815)
-            t.assertRowEquals(28, mandatorySavings_20100815)
+            t.assertRowEquals(offset+1, numOfCentersManaged_numOfActiveLoans)
+            t.assertRowEquals(offset+2, numOfGroups_Principal_20100815)
+            t.assertRowEquals(offset+3, numOfClients_Interest)
+            t.assertRowEquals(offset+4, numOfClientsWithLoans)
+            t.assertRowEquals(offset+5, portfolioAtRisk)
+            t.assertRowEquals(offset+6, numOfClientsWithSavings)
+            t.assertRowEquals(offset+7, numOfLoansWrittenOff)
+            t.assertRowEquals(offset+8, dormantClients)
+            t.assertRowEquals(offset+9, amountOfLoansWrittenOff)
+            t.assertRowEquals(offset+10, totalSavings_20100815)
+            t.assertRowEquals(offset+11, voluntarySavings_20100815)
+            t.assertRowEquals(offset+12, mandatorySavings_20100815)
 
             // 3rd Details header
-            t.assertRowEquals(29, detailsHeader3)
-            t.assertRowEquals(30, detailsHeader3_4)
+            offset = 30
+            t.assertRowEquals(offset, detailsHeader3)
+            t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
-            t.assertRowEquals(31, weeksInArrears1)
-            t.assertRowEquals(32, weeksInArrears2_20100815)
-            t.assertRowEquals(33, weeksInArrears3)
-            t.assertRowEquals(34, weeksInArrears4)
-            t.assertRowEquals(35, weeksInArrears5)
-            t.assertRowEquals(36, weeksInArrears6)
-            t.assertRowEquals(37, weeksInArrears7)
-            t.assertRowEquals(38, weeksInArrears8)
-            t.assertRowEquals(39, weeksInArrears9_20100815)
-            t.assertRowEquals(40, weeksInArrears10)
-            t.assertRowEquals(41, weeksInArrears11)
-            t.assertRowEquals(42, weeksInArrears12)
-            t.assertRowEquals(43, weeksInArrears12p)
-            t.assertRowEquals(44, arrearsTotal_20100815)
+            t.assertRowEquals(offset+2, weeksInArrears1)
+            t.assertRowEquals(offset+3, weeksInArrears2_20100815)
+            t.assertRowEquals(offset+4, weeksInArrears3)
+            t.assertRowEquals(offset+5, weeksInArrears4)
+            t.assertRowEquals(offset+6, weeksInArrears5)
+            t.assertRowEquals(offset+7, weeksInArrears6)
+            t.assertRowEquals(offset+8, weeksInArrears7)
+            t.assertRowEquals(offset+9, weeksInArrears8)
+            t.assertRowEquals(offset+10, weeksInArrears9_20100815)
+            t.assertRowEquals(offset+11, weeksInArrears10)
+            t.assertRowEquals(offset+12, weeksInArrears11)
+            t.assertRowEquals(offset+13, weeksInArrears12)
+            t.assertRowEquals(offset+14, weeksInArrears12p)
+            t.assertRowEquals(offset+15, arrearsTotal_20100815)
 
             //4th Details header
-            t.assertRowEquals(45, detailsHeader4)
-            t.assertRowEquals(46, detailsHeader3_4)
+            offset = 46
+            t.assertRowEquals(offset, detailsHeader4)
+            t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
-            t.assertRowEquals(47, daysInArrears1_20100815)
-            t.assertRowEquals(48, daysInArrears2_20100815)
-            t.assertRowEquals(49, daysInArrears3)
-            t.assertRowEquals(50, daysInArrears4)
-            t.assertRowEquals(51, daysInArrears5)
-            t.assertRowEquals(52, arrearsTotal_20100815)
+            t.assertRowEquals(offset+2, daysInArrears1_20100815)
+            t.assertRowEquals(offset+3, daysInArrears2_20100815)
+            t.assertRowEquals(offset+4, daysInArrears3)
+            t.assertRowEquals(offset+5, daysInArrears4)
+            t.assertRowEquals(offset+6, daysInArrears5)
+            t.assertRowEquals(offset+7, arrearsTotal_20100815)
 
             // 5th Details header
-            t.assertRowEquals(53, detailsHeader5)
-            t.assertRowEquals(54, detailsHeader5a)
-            t.assertRowEquals(55, detailsHeader5b)
+            offset = 54
+            t.assertRowEquals(offset, detailsHeader5)
+            t.assertRowEquals(offset+1, detailsHeader5a)
             // Details
-            t.assertRowEquals(56, center1_20100815)
-            t.assertRowEquals(57, center2_20100815)
-            t.assertRowEquals(58, center3)
-            t.assertRowEquals(59, centerTotal_20100815)
+            t.assertRowEquals(offset+2, center1_20100815)
+            t.assertRowEquals(offset+3, center2_20100815)
+            t.assertRowEquals(offset+4, center3)
+            t.assertRowEquals(offset+5, centerTotal_20100815)
 
             // Page footer
-            t.assertRowEquals(60, pageFooter)
+            offset = 60
+            t.assertRowEquals(offset, pageFooter)
         }
     }
 }
