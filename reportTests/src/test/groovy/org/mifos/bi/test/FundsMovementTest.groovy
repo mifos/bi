@@ -7,7 +7,7 @@ class FundsMovementTest {
     def detailsHeader = ['Account ID', 'Client name', 'Loan Disbursal Date', 'Loan Amount Disbursed', 'No. of Installments',
             'Installment Frequency', 'Principal Outstanding', 'Interest Outstanding', 'Loan Fees Outstanding', 'Arrears amount', 'Arrears days']
 
-    def firstFund = ['Source of Fund:', '-']
+    def firstFund = ['Source of Funds:', '-']
     def detailsFirstFundFirstAccount_20100723 = ['32', 'br2 client 1 xxx', '2010-07-21', '3000.0000', '7', '1 week(s)', '2924.9000', '18.1000', '0.0000', '0.0000', '0']
     def detailsFirstFundFirstAccount_20101231 = ['32', 'br2 client 1 xxx', '2010-07-21', '3000.0000', '7', '1 week(s)', '2924.9000', '18.1000', '0.0000', '2924.9000', '151']
     def detailsFirstFundSecondAccount_20100723 = ['38', 'lose group ..', '2010-07-22', '3000.0000', '7', '1 week(s)', '3000.0000', '2.9000', '0.0000', '0.0000', '0']
@@ -17,11 +17,11 @@ class FundsMovementTest {
     def subTotalFirstFund_20101231 = ['Sub Total', '3', ' ', '12000.0000', ' ', ' ', '8924.9000', '23.9000', '0.0000', '2924.9000', ' ']
     def subTotalFirstFundBO1Branch_20101231 = ['Sub Total', '2', ' ', '9000.0000', ' ', ' ', '6000.0000', '5.8000', '0.0000', '0.0000', ' ']
 
-    def secondFund = ['Source of Fund:', 'Funding Org A']
+    def secondFund = ['Source of Funds:', 'Funding Org A']
     def detailsSecondFundFirstAccount_20101231 = ['4', 'client dw1 1 1 ..', '2010-07-16', '3000.0000', '7', '1 week(s)', '2752.9000', '0.0000', '0.0000', '0.0000', '0']
     def subTotalSecondFund_20101231 = ['Sub Total', '1', ' ', '3000.0000', ' ', ' ', '2752.9000', '0.0000', '0.0000', '0.0000', ' ']
 
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_20101231() {
@@ -39,7 +39,7 @@ class FundsMovementTest {
             t.assertCellEquals(3, 1, 'Branch:')
             t.assertCellEquals(3, 2, ' All')
             t.assertCellEquals(3, 3, 'Report Date:')
-            t.assertRowEquals(4, ['Funding:', ' All'])
+            t.assertRowEquals(4, ['Source of Funds:', ' All'])
 
             // 1st Group header
             t.assertRowEquals(5, firstFund)
@@ -85,7 +85,7 @@ class FundsMovementTest {
             t.assertCellEquals(3, 1, 'Branch:')
             t.assertCellEquals(3, 2, 'BO 1')
             t.assertCellEquals(3, 3, 'Report Date:')
-            t.assertRowEquals(4, ['Funding:', ' All'])
+            t.assertRowEquals(4, ['Source of Funds:', ' All'])
 
             // 1st Group header
             t.assertRowEquals(5, firstFund)
@@ -129,7 +129,7 @@ class FundsMovementTest {
             t.assertCellEquals(3, 1, 'Branch:')
             t.assertCellEquals(3, 2, 'BO 1')
             t.assertCellEquals(3, 3, 'Report Date:')
-            t.assertRowEquals(4, ['Funding:', 'Funding Org A'])
+            t.assertRowEquals(4, ['Source of Funds:', 'Funding Org A'])
 
             // 1st Group header
             t.assertRowEquals(5, secondFund)
@@ -162,7 +162,7 @@ class FundsMovementTest {
             t.assertCellEquals(3, 1, 'Branch:')
             t.assertCellEquals(3, 2, ' All')
             t.assertCellEquals(3, 3, 'Report Date:')
-            t.assertRowEquals(4, ['Funding:', ' All'])
+            t.assertRowEquals(4, ['Source of Funds:', ' All'])
 
             // 1st Group header
             t.assertRowEquals(5, firstFund)
