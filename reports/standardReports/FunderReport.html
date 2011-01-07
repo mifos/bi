@@ -22,6 +22,7 @@ function runTheReport()
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
 
@@ -45,7 +46,7 @@ branchSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "OfficeListSearchId.xaction",
 	parameter: "officeId",
 	valueAsId: false,
@@ -59,7 +60,7 @@ funderSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "FunderList.xaction",
 	parameter: "funderId",
 	valueAsId: false,
@@ -115,7 +116,7 @@ theReport =
   	name: "theReport",
   	type: "prpt",
   	solution: solution,
-  	path: path,
+  	path: prptPath,
   	action: "FunderReport.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","officeId"],["selected_funder","funderId"],["out_date","outDate"],["output-type","outputType"]],

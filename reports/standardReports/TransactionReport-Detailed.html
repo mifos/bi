@@ -32,6 +32,7 @@ Dashboards.globalcontext = false;
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
 
 var event = 0;
 
@@ -163,7 +164,7 @@ theReport =
   	type: "prpt",
         listeners:["event"],
   	solution: solution,
-  	path: "prpts",
+  	path: prptPath,
   	action: "TransactionReportDetail.prpt",
   	parameters: [["from_date","fromDate"],
                      ["to_date","toDate"],

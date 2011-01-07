@@ -41,6 +41,7 @@ function runTheReport()
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
 
@@ -65,7 +66,7 @@ branchSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "OfficeListSearchId.xaction",
 	parameter: "officeSearchId",
 	valueAsId: false,
@@ -81,7 +82,7 @@ LOSelector =
 	listeners: ["officeSearchId"],
 	parameters:[["officeSearchId", "officeSearchId"]],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "LOOfficeListOnlySearchId.xaction",
 	parameter: "loanOfficerId",
 	valueAsId: false,
@@ -95,7 +96,7 @@ ProductSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "ProductListKey.xaction",
 	parameter: "productKey",
 	valueAsId: false,
@@ -111,7 +112,7 @@ LSSelector =
 	listeners: ["productKey"],
 	parameters:[["productKey", "productKey"]],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "LSProductListKey.xaction",
 	parameter: "loanStatus",
 	valueAsId: false,
@@ -166,7 +167,7 @@ theReport =
   	name: "theReport",
   	type: "prpt",
   	solution: solution,
-  	path: path,
+  	path: prptPath,
   	action: "LoanProcessing.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","officeSearchId"],["selected_loan_officer","loanOfficerId"],["selected_product","productKey"],["selected_loan_status","loanStatus"],["out_date","outDate"],["output-type","outputType"]],

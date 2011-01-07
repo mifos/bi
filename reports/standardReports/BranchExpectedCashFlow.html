@@ -29,6 +29,7 @@ function runTheReport()
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
 
@@ -51,7 +52,7 @@ branchSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "OfficeListSearchId.xaction",
 	parameter: "office",
 	valueAsId: false,
@@ -116,7 +117,7 @@ theReport =
   	name: "theReport",
   	type: "prpt",
   	solution: solution,
-  	path: path,
+  	path: prptPath,
   	action: "BranchExpectedCashFlow.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","office"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],

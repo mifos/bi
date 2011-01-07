@@ -22,6 +22,7 @@ function runTheReport()
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
 
@@ -41,7 +42,7 @@ branchSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "OfficeListSearchIdNoAll.xaction",
 	parameter: "office",
 	valueAsId: false,
@@ -55,7 +56,7 @@ month1 =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "MonthList.xaction",
 	parameter: "m1",
 	valueAsId: false,
@@ -70,7 +71,7 @@ month2 =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "MonthList.xaction",
 	parameter: "m2",
 	valueAsId: false,
@@ -105,7 +106,7 @@ theReport =
   	name: "theReport",
   	type: "prpt",
   	solution: solution,
-  	path: path,
+  	path: prptPath,
   	action: "MFIProgressReport.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","office"],["selected_period1","m1"],["selected_period2","m2"],["output-type","outputType"]],

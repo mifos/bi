@@ -37,6 +37,7 @@ function runTheReport()
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
+var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
 
@@ -61,7 +62,7 @@ branchSelector =
 	type: "select",
 	parameters:[],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "BranchList.xaction",
 	parameter: "officeId",
 	valueAsId: false,
@@ -77,7 +78,7 @@ LOSelector =
 	listeners: ["officeId"],
 	parameters:[["officeId", "officeId"]],
   	solution: commonActionsSolution,
-  	path: path ,
+  	path: "/" ,
   	action: "LOBranchList.xaction",
 	parameter: "loanOfficerId",
 	valueAsId: false,
@@ -143,7 +144,7 @@ theReport =
   	name: "theReport",
   	type: "prpt",
   	solution: solution,
-  	path: path,
+  	path: prptPath,
   	action: "DueVsCollectedLoanOfficer.prpt",
   	listeners:["event"],
   	parameters: [["selected_office","officeId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
