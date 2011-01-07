@@ -43,12 +43,22 @@ def main():
     if 'pdi' in failed:
         say('PDI wasn''t found, skipped check for Pentaho Reporting Output plugin.')
         fail('pdi', 'Pentaho Reporting Output plugin not found, but is needed to run tests.')
-    else:
+
+    if 'pdi' not in failed:
         say('Looking for Pentaho Reporting Output plugin...')
-        if os.path.exists(os.path.join(panPath)):
+        outputPluginPath = os.path.join(pdiPath, 'plugins', 'pentaho-reporting-plugin.jar')
+        if os.path.exists(outputPluginPath):
             say('OK!')
         else:
-            fail('pdi', '%s not found.' % panPath)
+            fail('pdi', '%s not found.' % outputPluginPath)
+
+    if 'pdi' not in failed:
+        say('Looking for Mifos i18n bundles...')
+        i18nBundlePath = os.path.join(pdiPath, 'org', 'mifos', 'bi', 'reports')
+        if os.path.exists(i18nBundlePath):
+            say('OK!')
+        else:
+            fail('pdi', '%s not found, but is needed to run tests.' % i18nBundlePath)
 
     userHome = os.getenv('USERPROFILE') or os.getenv('HOME')
     prestoSettings = os.path.join(userHome, '.presto')
@@ -72,7 +82,7 @@ def main():
     say('DONE.')
     say('')
     if failed:
-        say('THERE WERE ERRORS. You\'ll have to fix the following before you continue:')
+        say('THERE WERE ERRORS. Fix the following, then try again:')
         for msg in failmsgs:
             say(msg)
     else:
