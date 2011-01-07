@@ -23,11 +23,11 @@ PRGDIR=`dirname "$PRG"`
 echo "Initializing data warehouse ($DW_DB_NAME)..."
 echo "drop database $DW_DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DW_DB_NAME" | mysql $MYSQL_ARGS
-mysql $MYSQL_ARGS $DW_DB_NAME < $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
+mysql $MYSQL_ARGS $DW_DB_NAME < $PRGDIR/ETL/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
 
 echo "Running ETL..."
 log=`mktemp`
-$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
+$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
 exitcode=0
 if grep -q '^ERROR ' $log

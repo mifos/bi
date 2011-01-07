@@ -24,17 +24,17 @@ PRGDIR=`dirname "$PRG"`
 echo "Initializing OLTP database ($OLTP_DB_NAME)..."
 echo "drop database $OLTP_DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $OLTP_DB_NAME" | mysql $MYSQL_ARGS
-mysql $MYSQL_ARGS $OLTP_DB_NAME < $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/load_testppi_db.sql
+mysql $MYSQL_ARGS $OLTP_DB_NAME < $PRGDIR/ETL/MifosDataWarehouseETLTest/load_testppi_db.sql
 
 echo "Initializing data warehouse ($DW_DB_NAME)..."
 echo "drop database $DW_DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DW_DB_NAME" | mysql $MYSQL_ARGS
-mysql $MYSQL_ARGS $DW_DB_NAME < $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
-mysql $MYSQL_ARGS $DW_DB_NAME --default_character_set utf8 < $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/load_dw_ppi_survey.sql
+mysql $MYSQL_ARGS $DW_DB_NAME < $PRGDIR/ETL/MifosDataWarehouseETL/load_mifos_datawarehouse.sql
+mysql $MYSQL_ARGS $DW_DB_NAME --default_character_set utf8 < $PRGDIR/ETL/MifosDataWarehouseETL/load_dw_ppi_survey.sql
 
 echo "Running ETL..."
 log=`mktemp`
-$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
+$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
 exitcode=0
 if grep -q '^ERROR ' $log
@@ -46,7 +46,7 @@ then
 fi
 
 echo "Running tests..."
-$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/JohnWoodlockWorkInProgress/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
+$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
 
 mkdir -p target
 groovy $PRGDIR/generate_junit_output.groovy < $log > target/junit_output.xml
