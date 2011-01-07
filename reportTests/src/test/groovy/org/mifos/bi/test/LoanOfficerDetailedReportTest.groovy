@@ -11,10 +11,8 @@ class LoanOfficerDetailedReportTest {
     def numOfClientsAddedToDate_JoinedMFI = ['# of Clients added(To Date)', '3', 'Joined MFI']
     def numOfClientsAddedThisPeriod_BecameLO = ['# of Clients added(This Period)', '3', 'Became Loan Officer']
     def numOfGroupsAddedToDate_BranchMemberships = ['# of groups added(To Date)', '3', 'Branch Memberships']
-    def numOfGroupsAddedThisPeriod = ['# of groups added(This Period)', '3']
-    def branchMempership_br2 = ['br2', '2010-07-20 - Current']
-    def numOfDropoutClientsToDate = ['# of dropout clients(To Date)', '0']
-    def leftMFI = ['Left MFI']
+    def numOfGroupsAddedThisPeriod_branchMempership_br2 = ['# of groups added(This Period)', '3', 'br2', '2010-07-20 - Current']
+    def numOfDropoutClientsToDate_leftMFI = ['# of dropout clients(To Date)', '0', 'Left MFI']
     def numOfDropoutClientsThisPeriod = ['# of dropout clients(This Period)', '0']
 
     def detailsHeader2 = ['Client Summary', 'Account Summary']
@@ -102,14 +100,12 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+1, numOfClientsAddedToDate_JoinedMFI)
             t.assertRowEquals(offset+2, numOfClientsAddedThisPeriod_BecameLO)
             t.assertRowEquals(offset+3, numOfGroupsAddedToDate_BranchMemberships)
-            t.assertRowEquals(offset+4, numOfGroupsAddedThisPeriod)
-            t.assertRowEquals(offset+5, branchMempership_br2)
-            t.assertRowEquals(offset+6, numOfDropoutClientsToDate)
-            t.assertRowEquals(offset+7, leftMFI)
-            t.assertRowEquals(offset+8, numOfDropoutClientsThisPeriod)
+            t.assertRowEquals(offset+4, numOfGroupsAddedThisPeriod_branchMempership_br2)
+            t.assertRowEquals(offset+5, numOfDropoutClientsToDate_leftMFI)
+            t.assertRowEquals(offset+6, numOfDropoutClientsThisPeriod)
 
             // 2nd Details header
-            offset = 17
+            offset = 15
             t.assertRowEquals(offset, detailsHeader2)
             // Details
             t.assertRowEquals(offset+1, numOfCentersManaged_numOfActiveLoans)
@@ -126,7 +122,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+12, mandatorySavings)
 
             // 3rd Details header
-            offset = 30
+            offset = 28
             t.assertRowEquals(offset, detailsHeader3)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -146,7 +142,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+15, arrearsTotal)
 
             //4th Details header
-            offset = 46
+            offset = 44
             t.assertRowEquals(offset, detailsHeader4)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -158,7 +154,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+7, arrearsTotal)
 
             // 5th Details header
-            offset = 54
+            offset = 52
             t.assertRowEquals(offset, detailsHeader5)
             t.assertRowEquals(offset+1, detailsHeader5a)
             // Details
@@ -168,7 +164,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+5, centerTotal)
 
             // Page footer
-            offset = 60
+            offset = 58
             t.assertRowEquals(offset, pageFooter)
         }
     }
@@ -199,14 +195,12 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+1, numOfClientsAddedToDate_JoinedMFI)
             t.assertRowEquals(offset+2, numOfClientsAddedThisPeriod_BecameLO)
             t.assertRowEquals(offset+3, numOfGroupsAddedToDate_BranchMemberships)
-            t.assertRowEquals(offset+4, numOfGroupsAddedThisPeriod)
-            t.assertRowEquals(offset+5, branchMempership_br2)
-            t.assertRowEquals(offset+6, numOfDropoutClientsToDate)
-            t.assertRowEquals(offset+7, leftMFI)
-            t.assertRowEquals(offset+8, numOfDropoutClientsThisPeriod)
+            t.assertRowEquals(offset+4, numOfGroupsAddedThisPeriod_branchMempership_br2)
+            t.assertRowEquals(offset+5, numOfDropoutClientsToDate_leftMFI)
+            t.assertRowEquals(offset+6, numOfDropoutClientsThisPeriod)
 
             // 2nd Details header
-            offset = 17
+            offset = 15
             t.assertRowEquals(offset, detailsHeader2)
             // Details
             t.assertRowEquals(offset+1, numOfCentersManaged_numOfActiveLoans)
@@ -223,7 +217,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+12, mandatorySavings_20100815)
 
             // 3rd Details header
-            offset = 30
+            offset = 28
             t.assertRowEquals(offset, detailsHeader3)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -243,7 +237,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+15, arrearsTotal_20100815)
 
             //4th Details header
-            offset = 46
+            offset = 44
             t.assertRowEquals(offset, detailsHeader4)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -255,7 +249,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+7, arrearsTotal_20100815)
 
             // 5th Details header
-            offset = 54
+            offset = 52
             t.assertRowEquals(offset, detailsHeader5)
             t.assertRowEquals(offset+1, detailsHeader5a)
             // Details
@@ -265,7 +259,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+5, centerTotal_20100815)
 
             // Page footer
-            offset = 60
+            offset = 58
             t.assertRowEquals(offset, pageFooter)
         }
     }
