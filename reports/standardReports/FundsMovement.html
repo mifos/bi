@@ -22,7 +22,12 @@ function runTheReport()
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
-var prptPath = path.endsWith("/") ? path + "prpts" : path + "/prpts";
+
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
 
