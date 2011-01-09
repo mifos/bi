@@ -7,7 +7,11 @@
 <td><div class=reportLabel>Loan Status</div><div id=LSSelectorObj></div></td>
 <td><div class=reportLabel>As On Date</div><div id=dateObj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
-<td><div id=clearReportObj></div><div id=runReportObj></div></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+<td><div id=clearReportObj style="visibility:hidden"></div></td>
+<td><div id=runReportObj></div></td>
 </tr>
 </table>
 
@@ -34,8 +38,9 @@ function updateLSSelect()
 
 function runTheReport()
 {
-	event = event + 1;
-	Dashboards.fireChange("event", event);
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    document.getElementById('clearReportObj').style.visibility = "visible";
 }
 
 
@@ -152,7 +157,7 @@ runReport =
   	name: "runReport",
   	type: "Button",
   	htmlObject: "runReportObj",
-  	label: "View Report",
+  	label: "Run Report",
   	expression: function(){runTheReport();},
   	executeAtStart: true
 }
@@ -163,7 +168,7 @@ clearReport =
   	type: "Button",
   	htmlObject: "clearReportObj",
   	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");},
+  	expression: function(){$('#theReportObj').html("");document.getElementById('clearReportObj').style.visibility = "hidden";},
   	executeAtStart: true
 }
 

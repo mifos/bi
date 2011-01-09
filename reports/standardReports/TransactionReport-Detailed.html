@@ -10,8 +10,8 @@
 		<td><div class=reportLabel>Transaction Type: </div><div id="selectTransactionTypeObject"></div> </td>
                 <td><div class=reportLabel>Mode of Payment: </div><div id="selectPaymentTypeObject"></div> </td>
 		<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div> </td>
+                <td><div id=clearReportObj style="visibility:hidden"></div> </td>
 		<td><div id=runReportObj></div></td>
-                <td><div id=clearReportObj></div> </td>
 	</tr>
 </table>
 		<div id=theReportObj></div> 
@@ -43,18 +43,19 @@ var event = 0;
 
 function runTheReport()
 {
-	if (fromDate > toDate)
-	{
-		alert("From Date is after To Date");
-		return;
-	} else if ( branch_id == -5 ||  transaction_type_id == -5 || user_id == -5 || payment_type_id == -5) 
-        {
-               alert("Please select appropriate values");
-	       return;
-        }
+    if (fromDate > toDate)
+    {
+        alert("From Date is after To Date");
+        return;
+    } else if ( branch_id == -5 ||  transaction_type_id == -5 || user_id == -5 || payment_type_id == -5) 
+    {
+        alert("Please select appropriate values");
+        return;
+    }
 
-	event = event + 1;
-	Dashboards.fireChange("event", event);
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    document.getElementById('clearReportObj').style.visibility = "visible";
 }
 
 selectBranch = 
@@ -148,7 +149,7 @@ runReport =
   	name: "runReport",
   	type: "Button",
   	htmlObject: "runReportObj",
-  	label: "View Report",
+  	label: "Run Report",
   	expression: function(){runTheReport();},
   	executeAtStart: true
 }
@@ -159,7 +160,7 @@ clearReport =
   	type: "Button",
   	htmlObject: "clearReportObj",
   	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");},
+  	expression: function(){$('#theReportObj').html("");document.getElementById('clearReportObj').style.visibility = "hidden";},
   	executeAtStart: true
 }
 
