@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Savings</title>
+	<author>John Woodlock</author>
+	<description></description>
+	<icon>logo.jpg</icon>
+	<style>jw</style>
+	<template>savingsDash.html</template>
+</cdf>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<action-sequence> 
+  <name>PieChart1.xaction</name>
+  <title>Arrears by Branch Bar Chart</title>
+  <version>1</version>
+  <logging-level>TRACE</logging-level>
+  <documentation> 
+    <author>John Woodlock</author>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <officeId type="string"> 
+      <sources> 
+        <request>officeId</request> 
+      </sources>  
+      <default-value/> 
+    </officeId> 
+  </inputs>
+
+  <outputs> 
+    <image-tag type="string"/>  
+    <!--query_result/-->  
+    <!--swresult/--> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <officeId type="string"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[select d.year_month_abbreviation, count(distinct(x.customer_id)) as "Active Clients"
+from dim_customer x
+join dim_date d 
+join dim_office o on o.office_id = {officeId}
+join dim_office oo on oo.search_id like concat(o.search_id, '%') and oo.office_key = x.branch_key
+
+
+where (d.date_value between date('2010-05-01') and date('2010-10-31')) and d.is_last_day_in_month = 'yes'
+and x.valid_from <= d.date_value and x.valid_to > d.date_value
+and x.customer_status in ('ClientStatus-Active', 'ClientStatus-OnHold')
+
+and (exists (select 'f' from dim_loan l 
+                where l.customer_key = x.customer_key    
+                and l.loan_status in ('AccountState-ActiveInGoodStanding', 'AccountState-ActiveInBadStanding')
+                and l.valid_from <= d.date_value and l.valid_to > d.date_value)
+                
+        or exists (select 'f' from dim_savings s 
+                where s.customer_key = x.customer_key
+                and s.savings_status in ('SavingsStatus-Active', 'SavingsStatus-Inactive')
+                and s.valid_from <= d.date_value and s.valid_to > d.date_value))
+
+group by d.year_month_abbreviation 
+order by d.date_value]]></query>
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>ChartComponent</component-name>
+      <action-type>Bar Chart</action-type>
+      <action-inputs> 
+        <chart-data type="result-set" mapping="query_result"/> 
+      </action-inputs>
+      <action-outputs> 
+        <image-tag type="string"/> 
+      </action-outputs>
+      <component-definition> 
+        <chart-attributes> 
+          <chart-type>BarChart</chart-type>  
+          <is-3D>true</is-3D>  
+          <title-font> 
+            <size>14</size>  
+            <is-bold>true</is-bold> 
+          </title-font> 
+        </chart-attributes>  
+        <width><![CDATA[500]]></width>  
+        <height><![CDATA[300]]></height>  
+        <by-row><![CDATA[false]]></by-row>  
+        <title><![CDATA[Clients Receiving Services]]></title> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
