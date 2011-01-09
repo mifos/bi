@@ -20,7 +20,7 @@ class FunderReportTest {
 
     def grandTotal_20100723 = ['Grand Total', '15000.0000', '322.2000', '14677.8000', '0.0000', ' ', ' ', ' ']
     def grandTotal_20101231 = ['Grand Total', '15000.0000', '3322.2000', '11677.8000', '2924.9000', ' ', ' ', ' ']
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_20101231() {

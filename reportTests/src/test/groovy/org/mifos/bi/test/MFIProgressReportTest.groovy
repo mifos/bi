@@ -4,8 +4,8 @@ import org.junit.Test
 
 class MFIProgressReportTest {
 
-    def branch = ['Branch', ':', 'br2']
-    def gender = ['Gender', ':', 'Female']
+    def branchAndMFIName = ['Branch:', 'br2', 'MFI Name:', 'Mifos HO']
+    def gender = ['Gender:', 'Female']
 
     def detailsHeader1_08 = ['OUTREACH', 'Jul 2010', 'Aug 2010', '% Change']
     def detailsHeader1_09 = ['OUTREACH', 'Jul 2010', 'Sep 2010', '% Change']
@@ -121,6 +121,8 @@ class MFIProgressReportTest {
     def avgInterestOutstanding = ['Average Interest Outstanding', '18.10', '18.10', '0']
     def avgLoanSize = ['Average Loan Size', '3021.00', '3021.00', '0']
 
+    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
+
     @Test
     void testParams_br2_br2LOxxx_2010Jul_2010Sep() {
         new PrptReport().execute () { t ->
@@ -133,121 +135,129 @@ class MFIProgressReportTest {
             t.assertRowEquals(1, ['MFI Progress Report'])
 
             // Page header
-            t.assertRowEquals(2, branch)
-            t.assertRowEquals(3, [':'])
-            t.assertCellEquals(4, 1, 'Period 1')
-            t.assertCellEquals(4, 2, ':')
-            t.assertCellEquals(4, 3, 'Jul 2010')
-            t.assertCellEquals(4, 4, 'Report Creation Date')
-            t.assertRowEquals(5, ['Period 2', ':', 'Sep 2010'])
+            t.assertRowEquals(2, branchAndMFIName)
+            t.assertCellEquals(3, 1, 'Period 1:')
+            t.assertCellEquals(3, 2, 'Jul 2010')
+            t.assertCellEquals(3, 3, 'Report Creation Date:')
+            t.assertRowEquals(4, ['Period 2:', 'Sep 2010'])
 
             // 1st Details header
-            t.assertRowEquals(6, detailsHeader1_09)
+            def offset = 5
+            t.assertRowEquals(offset, detailsHeader1_09)
             // Details
-            t.assertRowEquals(7, branches)
-            t.assertRowEquals(8, centers)
-            t.assertRowEquals(9, groups_09)
-            t.assertRowEquals(10, clients_09)
-            t.assertRowEquals(11, activeBorrowers)
-            t.assertRowEquals(12, activeDepositors)
-            t.assertRowEquals(13, dropouts)
-            t.assertRowEquals(14, noOfLoanOfficers)
+            t.assertRowEquals(offset+1, branches)
+            t.assertRowEquals(offset+2, centers)
+            t.assertRowEquals(offset+3, groups_09)
+            t.assertRowEquals(offset+4, clients_09)
+            t.assertRowEquals(offset+5, activeBorrowers)
+            t.assertRowEquals(offset+6, activeDepositors)
+            t.assertRowEquals(offset+7, dropouts)
+            t.assertRowEquals(offset+8, noOfLoanOfficers)
 
             // 2nd Details header
-            t.assertRowEquals(15, detailsHeader2_09)
+            offset = 14
+            t.assertRowEquals(offset, detailsHeader2_09)
 
-            t.assertRowEquals(16, noOfActiveLoans)
-            t.assertRowEquals(17, noOfALgroupLoan)
-            t.assertRowEquals(18, noOfALloanProd1)
-            t.assertRowEquals(19, noOfALloanProd2)
-            t.assertRowEquals(20, noOfALTotal)
+            t.assertRowEquals(offset+1, noOfActiveLoans)
+            t.assertRowEquals(offset+2, noOfALgroupLoan)
+            t.assertRowEquals(offset+3, noOfALloanProd1)
+            t.assertRowEquals(offset+4, noOfALloanProd2)
+            t.assertRowEquals(offset+5, noOfALTotal)
 
-            t.assertRowEquals(21, loanDisbursals)
-            t.assertRowEquals(22, lDisgroupLoan)
-            t.assertRowEquals(23, lDisloanProd1)
-            t.assertRowEquals(24, lDisloanProd2)
-            t.assertRowEquals(25, lDisTotal)
+            t.assertRowEquals(offset+6, loanDisbursals)
+            t.assertRowEquals(offset+7, lDisgroupLoan)
+            t.assertRowEquals(offset+8, lDisloanProd1)
+            t.assertRowEquals(offset+9, lDisloanProd2)
+            t.assertRowEquals(offset+10, lDisTotal)
 
-            t.assertRowEquals(26, outstandingAL)
-            t.assertRowEquals(27, outALgroupLoan)
-            t.assertRowEquals(28, outALloanProd1)
-            t.assertRowEquals(29, outALloanProd2)
-            t.assertRowEquals(30, outALTotal)
+            t.assertRowEquals(offset+11, outstandingAL)
+            t.assertRowEquals(offset+12, outALgroupLoan)
+            t.assertRowEquals(offset+13, outALloanProd1)
+            t.assertRowEquals(offset+14, outALloanProd2)
+            t.assertRowEquals(offset+15, outALTotal)
 
-            t.assertRowEquals(31, noSavings)
-            t.assertRowEquals(32, noScenter)
-            t.assertRowEquals(33, noSgroup)
-            t.assertRowEquals(34, noSproduct1)
-            t.assertRowEquals(35, noSproduct2)
-            t.assertRowEquals(36, noSTotal)
+            t.assertRowEquals(offset+16, noSavings)
+            t.assertRowEquals(offset+17, noScenter)
+            t.assertRowEquals(offset+18, noSgroup)
+            t.assertRowEquals(offset+19, noSproduct1)
+            t.assertRowEquals(offset+20, noSproduct2)
+            t.assertRowEquals(offset+21, noSTotal)
 
-            t.assertRowEquals(37, noDeposits)
-            t.assertRowEquals(38, noDcenter)
-            t.assertRowEquals(39, noDgroup)
-            t.assertRowEquals(40, noDproduct1)
-            t.assertRowEquals(41, noDproduct2)
-            t.assertRowEquals(42, noDTotal)
+            t.assertRowEquals(offset+22, noDeposits)
+            t.assertRowEquals(offset+23, noDcenter)
+            t.assertRowEquals(offset+24, noDgroup)
+            t.assertRowEquals(offset+25, noDproduct1)
+            t.assertRowEquals(offset+26, noDproduct2)
+            t.assertRowEquals(offset+27, noDTotal)
 
             // 3rd Details header
-            t.assertRowEquals(43, detailsHeader3_09)
+            offset = 42
+            t.assertRowEquals(offset, detailsHeader3_09)
 
-            t.assertRowEquals(44, interestIncome)
-            t.assertRowEquals(45, loanFees)
-            t.assertRowEquals(46, clientFees)
-            t.assertRowEquals(47, incomeTotal)
+            t.assertRowEquals(offset+1, interestIncome)
+            t.assertRowEquals(offset+2, loanFees)
+            t.assertRowEquals(offset+3, clientFees)
+            t.assertRowEquals(offset+4, incomeTotal)
 
             // 4th Details header
-            t.assertRowEquals(48, detailsHeader4_09)
+            offset = 47
+            t.assertRowEquals(offset, detailsHeader4_09)
             
-            t.assertRowEquals(49, overdueAmount_09)
-            t.assertRowEquals(50, outstandingOfLoansInArrears)
-            t.assertRowEquals(51, par_09)
-
+            t.assertRowEquals(offset+1, overdueAmount_09)
+            t.assertRowEquals(offset+2, outstandingOfLoansInArrears)
+            t.assertRowEquals(offset+3, par_09)
 
             // 5th Details header
-            t.assertRowEquals(52, detailsHeader5_6a_09)
-            t.assertRowEquals(53, detailsHeader5_6b)
+            offset = 51
+            t.assertRowEquals(offset, detailsHeader5_6a_09)
+            t.assertRowEquals(offset+1, detailsHeader5_6b)
 
-            t.assertRowEquals(54, weeksInArrears1)
-            t.assertRowEquals(55, weeksInArrears2)
-            t.assertRowEquals(56, weeksInArrears3)
-            t.assertRowEquals(57, weeksInArrears4)
-            t.assertRowEquals(58, weeksInArrears5)
-            t.assertRowEquals(59, weeksInArrears6)
-            t.assertRowEquals(60, weeksInArrears7)
-            t.assertRowEquals(61, weeksInArrears8)
-            t.assertRowEquals(62, weeksInArrears9)
-            t.assertRowEquals(63, weeksInArrears10)
-            t.assertRowEquals(64, weeksInArrears11)
-            t.assertRowEquals(65, weeksInArrears12)
-            t.assertRowEquals(66, weeksInArrears12p)
-            t.assertRowEquals(67, arrearsTotal)
+            t.assertRowEquals(offset+2, weeksInArrears1)
+            t.assertRowEquals(offset+3, weeksInArrears2)
+            t.assertRowEquals(offset+4, weeksInArrears3)
+            t.assertRowEquals(offset+5, weeksInArrears4)
+            t.assertRowEquals(offset+6, weeksInArrears5)
+            t.assertRowEquals(offset+7, weeksInArrears6)
+            t.assertRowEquals(offset+8, weeksInArrears7)
+            t.assertRowEquals(offset+9, weeksInArrears8)
+            t.assertRowEquals(offset+10, weeksInArrears9)
+            t.assertRowEquals(offset+11, weeksInArrears10)
+            t.assertRowEquals(offset+12, weeksInArrears11)
+            t.assertRowEquals(offset+13, weeksInArrears12)
+            t.assertRowEquals(offset+14, weeksInArrears12p)
+            t.assertRowEquals(offset+15, arrearsTotal)
 
             // 6th Details header
-            t.assertRowEquals(68, detailsHeader5_6a_09)
-            t.assertRowEquals(69, detailsHeader5_6b)
+            offset = 67
+            t.assertRowEquals(offset, detailsHeader5_6a_09)
+            t.assertRowEquals(offset+1, detailsHeader5_6b)
 
-            t.assertRowEquals(70, daysInArrears1)
-            t.assertRowEquals(71, daysInArrears2)
-            t.assertRowEquals(72, daysInArrears3)
-            t.assertRowEquals(73, daysInArrears4)
-            t.assertRowEquals(74, daysInArrears5)
-            t.assertRowEquals(75, arrearsTotal)
+            t.assertRowEquals(offset+2, daysInArrears1)
+            t.assertRowEquals(offset+3, daysInArrears2)
+            t.assertRowEquals(offset+4, daysInArrears3)
+            t.assertRowEquals(offset+5, daysInArrears4)
+            t.assertRowEquals(offset+6, daysInArrears5)
+            t.assertRowEquals(offset+7, arrearsTotal)
 
             // 7th Details header
-            t.assertRowEquals(76, detailsHeader7_09)
-            t.assertRowEquals(77, activeBorrowersPerLO)
-            t.assertRowEquals(78, netLoanPortfolioPerLO)
-            t.assertRowEquals(79, avgPortfolioPerActiveBorrower)
-            t.assertRowEquals(80, activeClientsPerBranch)
-            t.assertRowEquals(81, avgClientsPerCenter)
-            t.assertRowEquals(82, avgClientsPerLO)
-            t.assertRowEquals(83, avgClientsPerBranch)
-            t.assertRowEquals(84, avgLoanOutstanding)
-            t.assertRowEquals(85, avgPrincipalOutstanding)
-            t.assertRowEquals(86, avgInterestOutstanding)
-            t.assertRowEquals(87, avgLoanSize)
+            offset = 75
+            t.assertRowEquals(offset, detailsHeader7_09)
+            t.assertRowEquals(offset+1, activeBorrowersPerLO)
+            t.assertRowEquals(offset+2, netLoanPortfolioPerLO)
+            t.assertRowEquals(offset+3, avgPortfolioPerActiveBorrower)
+            t.assertRowEquals(offset+4, activeClientsPerBranch)
+            t.assertRowEquals(offset+5, avgClientsPerCenter)
+            t.assertRowEquals(offset+6, avgClientsPerLO)
+            t.assertRowEquals(offset+7, avgClientsPerBranch)
+            t.assertRowEquals(offset+8, avgLoanOutstanding)
+            t.assertRowEquals(offset+9, avgPrincipalOutstanding)
+            t.assertRowEquals(offset+10, avgInterestOutstanding)
+            t.assertRowEquals(offset+11, avgLoanSize)
 
+            // Page footer
+            offset = 87
+            t.assertRowEquals(offset, pageFooter)
+            t.assertCellEquals(offset+1, 1, 'Printed by:')
         }
     }
 
@@ -263,121 +273,129 @@ class MFIProgressReportTest {
             t.assertRowEquals(1, ['MFI Progress Report'])
 
             // Page header
-            t.assertRowEquals(2, branch)
-            t.assertRowEquals(3, [':'])
-            t.assertCellEquals(4, 1, 'Period 1')
-            t.assertCellEquals(4, 2, ':')
-            t.assertCellEquals(4, 3, 'Jul 2010')
-            t.assertCellEquals(4, 4, 'Report Creation Date')
-            t.assertRowEquals(5, ['Period 2', ':', 'Aug 2010'])
+            t.assertRowEquals(2, branchAndMFIName)
+            t.assertCellEquals(3, 1, 'Period 1:')
+            t.assertCellEquals(3, 2, 'Jul 2010')
+            t.assertCellEquals(3, 3, 'Report Creation Date:')
+            t.assertRowEquals(4, ['Period 2:', 'Aug 2010'])
 
             // 1st Details header
-            t.assertRowEquals(6, detailsHeader1_08)
+            def offset = 5
+            t.assertRowEquals(offset, detailsHeader1_08)
             // Details
-            t.assertRowEquals(7, branches)
-            t.assertRowEquals(8, centers)
-            t.assertRowEquals(9, groups_08)
-            t.assertRowEquals(10, clients_08)
-            t.assertRowEquals(11, activeBorrowers)
-            t.assertRowEquals(12, activeDepositors)
-            t.assertRowEquals(13, dropouts)
-            t.assertRowEquals(14, noOfLoanOfficers)
+            t.assertRowEquals(offset+1, branches)
+            t.assertRowEquals(offset+2, centers)
+            t.assertRowEquals(offset+3, groups_08)
+            t.assertRowEquals(offset+4, clients_08)
+            t.assertRowEquals(offset+5, activeBorrowers)
+            t.assertRowEquals(offset+6, activeDepositors)
+            t.assertRowEquals(offset+7, dropouts)
+            t.assertRowEquals(offset+8, noOfLoanOfficers)
 
             // 2nd Details header
-            t.assertRowEquals(15, detailsHeader2_08)
+            offset = 14
+            t.assertRowEquals(offset, detailsHeader2_08)
 
-            t.assertRowEquals(16, noOfActiveLoans)
-            t.assertRowEquals(17, noOfALgroupLoan)
-            t.assertRowEquals(18, noOfALloanProd1)
-            t.assertRowEquals(19, noOfALloanProd2)
-            t.assertRowEquals(20, noOfALTotal)
+            t.assertRowEquals(offset+1, noOfActiveLoans)
+            t.assertRowEquals(offset+2, noOfALgroupLoan)
+            t.assertRowEquals(offset+3, noOfALloanProd1)
+            t.assertRowEquals(offset+4, noOfALloanProd2)
+            t.assertRowEquals(offset+5, noOfALTotal)
 
-            t.assertRowEquals(21, loanDisbursals)
-            t.assertRowEquals(22, lDisgroupLoan)
-            t.assertRowEquals(23, lDisloanProd1)
-            t.assertRowEquals(24, lDisloanProd2)
-            t.assertRowEquals(25, lDisTotal)
+            t.assertRowEquals(offset+6, loanDisbursals)
+            t.assertRowEquals(offset+7, lDisgroupLoan)
+            t.assertRowEquals(offset+8, lDisloanProd1)
+            t.assertRowEquals(offset+9, lDisloanProd2)
+            t.assertRowEquals(offset+10, lDisTotal)
 
-            t.assertRowEquals(26, outstandingAL)
-            t.assertRowEquals(27, outALgroupLoan)
-            t.assertRowEquals(28, outALloanProd1)
-            t.assertRowEquals(29, outALloanProd2)
-            t.assertRowEquals(30, outALTotal)
+            t.assertRowEquals(offset+11, outstandingAL)
+            t.assertRowEquals(offset+12, outALgroupLoan)
+            t.assertRowEquals(offset+13, outALloanProd1)
+            t.assertRowEquals(offset+14, outALloanProd2)
+            t.assertRowEquals(offset+15, outALTotal)
 
-            t.assertRowEquals(31, noSavings)
-            t.assertRowEquals(32, noScenter)
-            t.assertRowEquals(33, noSgroup)
-            t.assertRowEquals(34, noSproduct1)
-            t.assertRowEquals(35, noSproduct2)
-            t.assertRowEquals(36, noSTotal)
+            t.assertRowEquals(offset+16, noSavings)
+            t.assertRowEquals(offset+17, noScenter)
+            t.assertRowEquals(offset+18, noSgroup)
+            t.assertRowEquals(offset+19, noSproduct1)
+            t.assertRowEquals(offset+20, noSproduct2)
+            t.assertRowEquals(offset+21, noSTotal)
 
-            t.assertRowEquals(37, noDeposits)
-            t.assertRowEquals(38, noDcenter)
-            t.assertRowEquals(39, noDgroup)
-            t.assertRowEquals(40, noDproduct1)
-            t.assertRowEquals(41, noDproduct2)
-            t.assertRowEquals(42, noDTotal)
+            t.assertRowEquals(offset+22, noDeposits)
+            t.assertRowEquals(offset+23, noDcenter)
+            t.assertRowEquals(offset+24, noDgroup)
+            t.assertRowEquals(offset+25, noDproduct1)
+            t.assertRowEquals(offset+26, noDproduct2)
+            t.assertRowEquals(offset+27, noDTotal)
 
             // 3rd Details header
-            t.assertRowEquals(43, detailsHeader3_08)
+            offset = 42
+            t.assertRowEquals(offset, detailsHeader3_08)
 
-            t.assertRowEquals(44, interestIncome)
-            t.assertRowEquals(45, loanFees)
-            t.assertRowEquals(46, clientFees)
-            t.assertRowEquals(47, incomeTotal)
+            t.assertRowEquals(offset+1, interestIncome)
+            t.assertRowEquals(offset+2, loanFees)
+            t.assertRowEquals(offset+3, clientFees)
+            t.assertRowEquals(offset+4, incomeTotal)
 
             // 4th Details header
-            t.assertRowEquals(48, detailsHeader4_08)
+            offset = 47
+            t.assertRowEquals(offset, detailsHeader4_08)
 
-            t.assertRowEquals(49, overdueAmount_08)
-            t.assertRowEquals(50, outstandingOfLoansInArrears)
-            t.assertRowEquals(51, par_08)
-
+            t.assertRowEquals(offset+1, overdueAmount_08)
+            t.assertRowEquals(offset+2, outstandingOfLoansInArrears)
+            t.assertRowEquals(offset+3, par_08)
 
             // 5th Details header
-            t.assertRowEquals(52, detailsHeader5_6a_08)
-            t.assertRowEquals(53, detailsHeader5_6b)
+            offset = 51
+            t.assertRowEquals(offset, detailsHeader5_6a_08)
+            t.assertRowEquals(offset+1, detailsHeader5_6b)
 
-            t.assertRowEquals(54, weeksInArrears1)
-            t.assertRowEquals(55, weeksInArrears2)
-            t.assertRowEquals(56, weeksInArrears3)
-            t.assertRowEquals(57, weeksInArrears4)
-            t.assertRowEquals(58, weeksInArrears5_08)
-            t.assertRowEquals(59, weeksInArrears6)
-            t.assertRowEquals(60, weeksInArrears7)
-            t.assertRowEquals(61, weeksInArrears8)
-            t.assertRowEquals(62, weeksInArrears9_08)
-            t.assertRowEquals(63, weeksInArrears10)
-            t.assertRowEquals(64, weeksInArrears11)
-            t.assertRowEquals(65, weeksInArrears12)
-            t.assertRowEquals(66, weeksInArrears12p)
-            t.assertRowEquals(67, arrearsTotal_08)
+            t.assertRowEquals(offset+2, weeksInArrears1)
+            t.assertRowEquals(offset+3, weeksInArrears2)
+            t.assertRowEquals(offset+4, weeksInArrears3)
+            t.assertRowEquals(offset+5, weeksInArrears4)
+            t.assertRowEquals(offset+6, weeksInArrears5_08)
+            t.assertRowEquals(offset+7, weeksInArrears6)
+            t.assertRowEquals(offset+8, weeksInArrears7)
+            t.assertRowEquals(offset+9, weeksInArrears8)
+            t.assertRowEquals(offset+10, weeksInArrears9_08)
+            t.assertRowEquals(offset+11, weeksInArrears10)
+            t.assertRowEquals(offset+12, weeksInArrears11)
+            t.assertRowEquals(offset+13, weeksInArrears12)
+            t.assertRowEquals(offset+14, weeksInArrears12p)
+            t.assertRowEquals(offset+15, arrearsTotal_08)
 
             // 6th Details header
-            t.assertRowEquals(68, detailsHeader5_6a_08)
-            t.assertRowEquals(69, detailsHeader5_6b)
+            offset = 67
+            t.assertRowEquals(offset, detailsHeader5_6a_08)
+            t.assertRowEquals(offset+1, detailsHeader5_6b)
 
-            t.assertRowEquals(70, daysInArrears1_08)
-            t.assertRowEquals(71, daysInArrears2_08)
-            t.assertRowEquals(72, daysInArrears3)
-            t.assertRowEquals(73, daysInArrears4)
-            t.assertRowEquals(74, daysInArrears5)
-            t.assertRowEquals(75, arrearsTotal_08)
+            t.assertRowEquals(offset+2, daysInArrears1_08)
+            t.assertRowEquals(offset+3, daysInArrears2_08)
+            t.assertRowEquals(offset+4, daysInArrears3)
+            t.assertRowEquals(offset+5, daysInArrears4)
+            t.assertRowEquals(offset+6, daysInArrears5)
+            t.assertRowEquals(offset+7, arrearsTotal_08)
 
             // 7th Details header
-            t.assertRowEquals(76, detailsHeader7_08)
-            t.assertRowEquals(77, activeBorrowersPerLO)
-            t.assertRowEquals(78, netLoanPortfolioPerLO)
-            t.assertRowEquals(79, avgPortfolioPerActiveBorrower)
-            t.assertRowEquals(80, activeClientsPerBranch_08)
-            t.assertRowEquals(81, avgClientsPerCenter_08)
-            t.assertRowEquals(82, avgClientsPerLO_08)
-            t.assertRowEquals(83, avgClientsPerBranch_08)
-            t.assertRowEquals(84, avgLoanOutstanding)
-            t.assertRowEquals(85, avgPrincipalOutstanding)
-            t.assertRowEquals(86, avgInterestOutstanding)
-            t.assertRowEquals(87, avgLoanSize)
+            offset = 75
+            t.assertRowEquals(offset, detailsHeader7_08)
+            t.assertRowEquals(offset+1, activeBorrowersPerLO)
+            t.assertRowEquals(offset+2, netLoanPortfolioPerLO)
+            t.assertRowEquals(offset+3, avgPortfolioPerActiveBorrower)
+            t.assertRowEquals(offset+4, activeClientsPerBranch_08)
+            t.assertRowEquals(offset+5, avgClientsPerCenter_08)
+            t.assertRowEquals(offset+6, avgClientsPerLO_08)
+            t.assertRowEquals(offset+7, avgClientsPerBranch_08)
+            t.assertRowEquals(offset+8, avgLoanOutstanding)
+            t.assertRowEquals(offset+9, avgPrincipalOutstanding)
+            t.assertRowEquals(offset+10, avgInterestOutstanding)
+            t.assertRowEquals(offset+11, avgLoanSize)
 
+            // Page footer
+            offset = 87
+            t.assertRowEquals(offset, pageFooter)
+            t.assertCellEquals(offset+1, 1, 'Printed by:')
         }
     }
 }
