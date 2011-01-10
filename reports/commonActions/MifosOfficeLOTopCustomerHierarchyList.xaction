@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Mifos Office LO Top Customer Hierarchy List</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <officeId type="string"> 
+      <sources> 
+        <request>officeId</request> 
+      </sources>  
+      <default-value/> 
+    </officeId>  
+    <loanOfficerId type="string"> 
+      <sources> 
+        <request>loanOfficerId</request> 
+      </sources>  
+      <default-value/> 
+    </loanOfficerId>  
+    <nextMeetingDate type="string"> 
+      <sources> 
+        <request>nextMeetingDate</request> 
+      </sources>  
+      <default-value/> 
+    </nextMeetingDate> 
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <officeId type="string"/>  
+        <loanOfficerId type="string"/>  
+        <nextMeetingDate type="string"/> 
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select -1 as customer_id, "  ALL" as customer_name, " " as branch_name)
+union 
+(select c.customer_id, concat(c.display_name, ' (', br.display_name, ')') as customer_name, br.display_name as branch_name
+from office otop
+join office br on br.search_id like concat(otop.search_id, '%')
+join customer c on c.branch_id = br.office_id
+join personnel lo on lo.personnel_id = c.loan_officer_id
+join customer_schedule cs on cs.customer_id = c.customer_id 
+			and cs.action_date = date('{nextMeetingDate}')
+                     and cs.id = (select min(csmin.id)
+                     		from customer_schedule csmin
+                     		where csmin.customer_id = cs.customer_id
+                     		and csmin.action_date >= curdate())
+where otop.office_id = {officeId}
+and c.parent_customer_id is null
+and c.status_id in (3,4,9,10,13)
+and (c.loan_officer_id = {loanOfficerId} or -1 = {loanOfficerId}))
+
+order by 3, 2]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
