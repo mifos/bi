@@ -6,7 +6,10 @@
 <td><div class=reportLabel>Next Meeting Date</div><div id=date1Obj></div></td>
 <td><div class=reportLabel>Center/Group</div><div id=centerOrGroupObj></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
-<td><div id=clearReportObj></div><div id=runReportObj></div></td>
+</tr>
+<tr>
+<td><div id=runReportObj></div></td>
+<td><div id=clearReportObj style="visibility:hidden"></div></td>
 </tr>
 </table>
 
@@ -55,15 +58,15 @@ function updateNextMeetingDate()
 
 function runTheReport()
 {
+    if (currentDateStr > nextMeetingDate)
+    {
+        alert("Next Meeting Date must be on or after Today");
+        //return;
+    }
 
-	if (currentDateStr > nextMeetingDate)
-	{
-		alert("Next Meeting Date must be on or after Today");
-		//return;
-	}
-
-	event = event + 1;
-	Dashboards.fireChange("event", event);
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    document.getElementById('clearReportObj').style.visibility = "visible";
 }
 
 
@@ -183,7 +186,7 @@ clearReport =
   	type: "Button",
   	htmlObject: "clearReportObj",
   	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");},
+  	expression: function(){$('#theReportObj').html("");document.getElementById('clearReportObj').style.visibility = "hidden";},
   	executeAtStart: true
 }
 
