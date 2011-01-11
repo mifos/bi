@@ -1,17 +1,19 @@
-<table width=100%>
+<table>
 	<tr>
-                <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td>
-		<td><div class=reportLabel> From Date: </div><div id="selectFromDateObject"></div> </td>
-		<td><div class=reportLabel>To Date: </div><div id="selectToDateObject"></div> </td>
-		<td><div class=reportLabel>Branch Office: </div><div id="selectBranchObject"></div> </td>
+                <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+		<td><div class=reportLabel> From Date: </div><div id="selectFromDateObject"></div> </td><td width="20">&nbsp;</td>
+		<td><div class=reportLabel>To Date: </div><div id="selectToDateObject"></div> </td><td width="20">&nbsp;</td>
+		<td><div class=reportLabel>Branch Office: </div><div id="selectBranchObject"></div> </td><td width="20">&nbsp;</td>
                 <td><div class=reportLabel>Personnel: </div><div id="selectUserObject"></div> </td>
                 
-          </tr> <tr> <td width="200"></td>
-		<td><div class=reportLabel>Transaction Type: </div><div id="selectTransactionTypeObject"></div> </td>
-                <td><div class=reportLabel>Mode of Payment: </div><div id="selectPaymentTypeObject"></div> </td>
+          </tr> <tr> <td width="200"></td><td width="20">&nbsp;</td>
+		<td><div class=reportLabel>Transaction Type: </div><div id="selectTransactionTypeObject"></div> </td><td width="20">&nbsp;</td>
+                <td><div class=reportLabel>Mode of Payment: </div><div id="selectPaymentTypeObject"></div> </td><td width="20">&nbsp;</td>
 		<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div> </td>
           </tr> <tr>
+		<td>&nbsp;</td><td>&nbsp;</td>
 		<td><div id=runReportObj></div></td>
+		<td>&nbsp;</td>
                 <td><div id=clearReportObj style="visibility:hidden"></div> </td>
 	</tr>
 </table>
@@ -138,7 +140,7 @@ outputSelector =
 {
 	name: "outputSelector",
 	type: "select",
-	valuesArray: [["text/html","HTML"], ["application/pdf","PDF"], ["application/vnd.ms-excel","EXCEL"]],
+	valuesArray: [["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
 	parameter:"outputType",
 	valueAsId: false,
 	htmlObject: "outputSelectorObj",
