@@ -4,7 +4,7 @@ import org.junit.Test
 
 class LoanProcessingTest {
 
-    def reportName = 'Loan Processing Report';
+    def reportName = 'Loan Processing';
     def detailsHeader = ['Account ID', 'Account name', 'Product name', 'Loan Officer', 'Loan Amount', 'Loan Status', 'time in existing status', 'last edited user']
 
     def detailsAccount32_20101231 = ['32', 'br2 client 1 xxx', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'ActiveInBadStanding', '46', 'br2 LO xxx']

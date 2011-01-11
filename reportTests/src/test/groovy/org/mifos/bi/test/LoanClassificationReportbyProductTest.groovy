@@ -4,6 +4,8 @@ import org.junit.Test
 
 class LoanClassificationReportbyProductTest {
 
+    def reportPath = 'reports/standardReports/prpts/LoanClassificationProduct.prpt'
+    def reportName = 'Loan Classification by Product'
     def detailsHeader = ['Product Name', '# of Loans Disbursed (during period)', 'Amount Disbursed (during period)',
             'Amount Outstanding (end of period)', 'Arrears (end of period)', 'PAR (end of period)',
             '# of Loans Disbursed (end of period)', 'Amount of Loans Disbursed (end of period)',
@@ -25,11 +27,11 @@ class LoanClassificationReportbyProductTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanClassificationReportbyProduct.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Loan Classification Report by Product'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, office)
@@ -66,11 +68,11 @@ class LoanClassificationReportbyProductTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanClassificationReportbyProduct.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title
-            t.assertRowEquals(1, ['Loan Classification Report by Product'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, office)

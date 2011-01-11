@@ -4,6 +4,7 @@ import org.junit.Test
 
 class LoanOfficerPerformanceSummaryTest {
 
+    def reportName = 'Loan Officer Performance Summary'
     def branch = ['Branch:', 'br2']
     def duringPeriod = ['During Period']
     def detailsHeader = ['Name', 'Date Joined', 'Total Groups Formed', 'Total Loans Disbursed', 'Total amt of Loans Disbursed',
@@ -37,7 +38,7 @@ class LoanOfficerPerformanceSummaryTest {
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Loan Officer Performance Summary Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['Time Period:', 'From:', 'MFI Name:', 'Mifos HO'])
@@ -84,7 +85,7 @@ class LoanOfficerPerformanceSummaryTest {
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title
-            t.assertRowEquals(1, ['Loan Officer Performance Summary Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['Time Period:', 'From:', 'MFI Name:', 'Mifos HO'])

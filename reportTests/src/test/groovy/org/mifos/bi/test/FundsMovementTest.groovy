@@ -4,6 +4,7 @@ import org.junit.Test
 
 class FundsMovementTest {
 
+    def reportName = 'Funds Movement'
     def detailsHeader = ['Account ID', 'Client name', 'Loan Disbursal Date', 'Loan Amount Disbursed', 'No. of Installments',
             'Installment Frequency', 'Principal Outstanding', 'Interest Outstanding', 'Loan Fees Outstanding', 'Arrears amount', 'Arrears days']
 
@@ -32,7 +33,7 @@ class FundsMovementTest {
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
             // Report title
-            t.assertRowEquals(1, ['Funds Movement Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
@@ -78,7 +79,7 @@ class FundsMovementTest {
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
             // Report title
-            t.assertRowEquals(1, ['Funds Movement Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
@@ -122,7 +123,7 @@ class FundsMovementTest {
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '2', 'out_date': '2010-12-31']
 
             // Report title
-            t.assertRowEquals(1, ['Funds Movement Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['As Of:', '2010-12-31', 'MFI Name:', 'Mifos HO '])
@@ -155,7 +156,7 @@ class FundsMovementTest {
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-07-23']
 
             // Report title
-            t.assertRowEquals(1, ['Funds Movement Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['As Of:', '2010-07-23', 'MFI Name:', 'Mifos HO '])

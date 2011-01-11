@@ -4,6 +4,8 @@ import org.junit.Test
 
 class FunderReportTest {
 
+    def reportPath = 'reports/standardReports/prpts/FundsOutstanding.prpt'
+    def reportName = 'Funds Outstanding'
     def detailsHeader = ['Source of Funds', 'Disbursed', 'Paid', 'Outstanding', 'Principal in Arrears', 'Number of loans', 'Number of clients', 'Number of groups']
 
     def firstBranch = ['Branch:', 'BO 1']
@@ -27,11 +29,11 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
             // Report title
-            t.assertRowEquals(1, ['Funder Outstanding Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['MFI Name:', 'Mifos HO '])
@@ -68,11 +70,11 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '-1', 'out_date': '2010-12-31']
 
             // Report title
-            t.assertRowEquals(1, ['Funder Outstanding Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['MFI Name:', 'Mifos HO '])
@@ -102,11 +104,11 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.3.2.', 'selected_funder': '2', 'out_date': '2010-12-31']
 
             // Report title
-            t.assertRowEquals(1, ['Funder Outstanding Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['MFI Name:', 'Mifos HO '])
@@ -136,11 +138,11 @@ class FunderReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/FunderReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_funder': '-1', 'out_date': '2010-07-23']
 
             // Report title
-            t.assertRowEquals(1, ['Funder Outstanding Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['MFI Name:', 'Mifos HO '])

@@ -4,6 +4,8 @@ import org.junit.Test
 
 class MFIProgressReportTest {
 
+    def reportPath = 'reports/standardReports/prpts/MFIProgress.prpt'
+    def reportName = 'MFI Progress';
     def branchAndMFIName = ['Branch:', 'br2', 'MFI Name:', 'Mifos HO']
     def gender = ['Gender:', 'Female']
 
@@ -128,11 +130,11 @@ class MFIProgressReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/MFIProgressReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_period1': '2010-Jul', 'selected_period2': '2010-Sep']
 
             // Report title
-            t.assertRowEquals(1, ['MFI Progress Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, branchAndMFIName)
@@ -266,11 +268,11 @@ class MFIProgressReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/MFIProgressReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_period1': '2010-Jul', 'selected_period2': '2010-Aug']
 
             // Report title
-            t.assertRowEquals(1, ['MFI Progress Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, branchAndMFIName)

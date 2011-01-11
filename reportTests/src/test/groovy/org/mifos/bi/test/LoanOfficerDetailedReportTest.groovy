@@ -4,6 +4,8 @@ import org.junit.Test
 
 class LoanOfficerDetailedReportTest {
 
+    def reportPath = 'reports/standardReports/prpts/LoanOfficerDetailed.prpt'
+    def reportName = 'Loan Officer Detailed'
     def branch = ['Branch:', 'br2']
     def gender = ['Gender:', 'Female']
 
@@ -79,11 +81,11 @@ class LoanOfficerDetailedReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanOfficerDetailedReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Loan Officer Detailed Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['MFI Name:', 'Mifos HO', 'ID:'])
@@ -174,11 +176,11 @@ class LoanOfficerDetailedReportTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanOfficerDetailedReport.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title
-            t.assertRowEquals(1, ['Loan Officer Detailed Report'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertRowEquals(2, ['MFI Name:', 'Mifos HO', 'ID:'])

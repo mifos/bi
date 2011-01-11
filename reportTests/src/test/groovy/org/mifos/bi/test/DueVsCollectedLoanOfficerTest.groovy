@@ -4,6 +4,7 @@ import org.junit.Test
 
 class DueVsCollectedLoanOfficerTest {
 
+    def reportName = 'Due vs Collected by Loan Officer'
     def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
 
     def firstLoanOfficer = ['Loan Officer:', 'br2 LO xxx']
@@ -31,7 +32,7 @@ class DueVsCollectedLoanOfficerTest {
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '-1', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Due vs Collected Report by Loan Officer'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertCellEquals(2, 1, 'Date:')
@@ -87,7 +88,7 @@ class DueVsCollectedLoanOfficerTest {
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Due vs Collected Report by Loan Officer'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertCellEquals(2, 1, 'Date:')
@@ -143,7 +144,7 @@ class DueVsCollectedLoanOfficerTest {
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '-1', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
             // Report title
-            t.assertRowEquals(1, ['Due vs Collected Report by Loan Officer'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertCellEquals(2, 1, 'Date:')

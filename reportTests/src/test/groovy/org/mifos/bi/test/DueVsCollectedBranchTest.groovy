@@ -4,6 +4,7 @@ import org.junit.Test
 
 class DueVsCollectedBranchTest {
 
+    def reportName = 'Due vs Collected by Branch'
     def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
 
     def firstBranch = ['Branch:', 'BO 1']
@@ -41,7 +42,7 @@ class DueVsCollectedBranchTest {
             t.reportParams = ['selected_office': '-1', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Due vs Collected Report by Branch'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertCellEquals(2, 1, 'Date:')
@@ -119,7 +120,7 @@ class DueVsCollectedBranchTest {
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-09-30']
 
             // Report title
-            t.assertRowEquals(1, ['Due vs Collected Report by Branch'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertCellEquals(2, 1, 'Date:')
@@ -175,7 +176,7 @@ class DueVsCollectedBranchTest {
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-08-15']
 
             // Report title
-            t.assertRowEquals(1, ['Due vs Collected Report by Branch'])
+            t.assertRowEquals(1, [reportName])
 
             // Page header
             t.assertCellEquals(2, 1, 'Date:')
