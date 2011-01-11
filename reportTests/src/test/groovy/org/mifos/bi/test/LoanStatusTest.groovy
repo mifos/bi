@@ -6,13 +6,13 @@ class LoanStatusTest {
 
     def reportPath = 'reports/standardReports/prpts/LoanStatus.prpt'
     def reportName = 'Loan Status';
-    def detailsHeader = ['Account ID', 'Account name', 'Product name', 'Loan Officer', 'Loan Amount', 'Loan Status', 'time in existing status', 'last edited user']
+    def detailsHeader = ['Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Loan Status', 'Time in existing status (days)', 'Last edited by']
 
-    def detailsAccount32_20101231 = ['32', 'br2 client 1 xxx', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'ActiveInBadStanding', '46', 'br2 LO xxx']
-    def detailsAccount38_20101231 = ['38', 'lose group ..', 'loan prod 1', 'br1 lo 1 smith', '3000.0000', 'ClosedObligationMet', '152', 'br1 lo3 Sturty xxx']
-    def detailsAccount55_20101231 = ['55', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', 'ApplicationApproved', '159', 'br2 LO xxx']
-    def detailsAccount59_20101231 = ['59', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'ApplicationApproved', '159', 'br2 LO xxx']
-    def detailsAccount112_20101231 = ['112', 'group for loan fees', 'group loan', 'Fees LO xxx', '5000.0000', 'Cancel', '125', 'Fees LO xxx']
+    def detailsAccount32_20101231 = ['32', 'br2 client 1 xxx', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'Active in bad standing', '46', 'br2 LO xxx']
+    def detailsAccount38_20101231 = ['38', 'lose group ..', 'loan prod 1', 'br1 lo 1 smith', '3000.0000', 'Closed - obligation met', '152', 'br1 lo3 Sturty xxx']
+    def detailsAccount55_20101231 = ['55', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', 'Application approved', '159', 'br2 LO xxx']
+    def detailsAccount59_20101231 = ['59', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'Application approved', '159', 'br2 LO xxx']
+    def detailsAccount112_20101231 = ['112', 'group for loan fees', 'group loan', 'Fees LO xxx', '5000.0000', 'Canceled', '125', 'Fees LO xxx']
     def totalAll_20101231 = [' ', ' ', ' ', ' ', '67000.0000', ' ', ' ', ' ']
     def totalBr2LOxxx_20101231 = [' ', ' ', ' ', ' ', '11000.0000', ' ', ' ', ' ']
     def totalBr2LOxxxLoanProd1_20101231 = [' ', ' ', ' ', ' ', '6000.0000', ' ', ' ', ' ']
