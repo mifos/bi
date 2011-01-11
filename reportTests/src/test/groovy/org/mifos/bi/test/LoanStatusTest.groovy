@@ -2,9 +2,10 @@ package org.mifos.bi.test;
 
 import org.junit.Test
 
-class LoanProcessingTest {
+class LoanStatusTest {
 
-    def reportName = 'Loan Processing';
+    def reportPath = 'reports/standardReports/prpts/LoanStatus.prpt'
+    def reportName = 'Loan Status';
     def detailsHeader = ['Account ID', 'Account name', 'Product name', 'Loan Officer', 'Loan Amount', 'Loan Status', 'time in existing status', 'last edited user']
 
     def detailsAccount32_20101231 = ['32', 'br2 client 1 xxx', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'ActiveInBadStanding', '46', 'br2 LO xxx']
@@ -26,7 +27,7 @@ class LoanProcessingTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanProcessing.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '0', 'selected_product': '0', 'selected_loan_status': 'All', 'out_date': '2010-12-31']
 
             // Report title
@@ -68,7 +69,7 @@ class LoanProcessingTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanProcessing.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '5', 'selected_product': '0', 'selected_loan_status': 'All', 'out_date': '2010-12-31']
 
             // Report title
@@ -106,7 +107,7 @@ class LoanProcessingTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanProcessing.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.2.', 'selected_loan_officer': '7', 'selected_product': '0', 'selected_loan_status': 'All', 'out_date': '2010-12-31']
 
             // Report title
@@ -140,7 +141,7 @@ class LoanProcessingTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanProcessing.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '5', 'selected_product': '1', 'selected_loan_status': 'All', 'out_date': '2010-12-31']
 
             // Report title
@@ -176,7 +177,7 @@ class LoanProcessingTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanProcessing.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '5', 'selected_product': '1', 'selected_loan_status': 'AccountState-ActiveInBadStanding', 'out_date': '2010-12-31']
 
             // Report title
@@ -210,7 +211,7 @@ class LoanProcessingTest {
         new PrptReport().execute () { t ->
 
             // Report settings.
-            t.reportPath = 'reports/standardReports/prpts/LoanProcessing.prpt'
+            t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '5', 'selected_product': '1', 'selected_loan_status': 'AccountState-Cancel', 'out_date': '2010-12-31']
 
             // Report title

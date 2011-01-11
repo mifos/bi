@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Loan Processing</title>
+	<title>Loan Status</title>
 	<author>Jakub Sławiński</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>LoanProcessing.html</template>
+	<template>LoanStatus.html</template>
 </cdf>
