@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Loan Classification Report by Product</title>
+	<title>Loan Classification by Product</title>
 	<author>John Woodlock</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>LoanClassificationReportbyProduct.html</template>
+	<template>LoanClassificationProduct.html</template>
 </cdf>

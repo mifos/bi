@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Funder Report</title>
+	<title>Funds Outstanding</title>
 	<author>Jakub Sławiński</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>FunderReport.html</template>
+	<template>FundsOutstanding.html</template>
 </cdf>

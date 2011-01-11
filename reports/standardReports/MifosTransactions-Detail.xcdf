@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Transactions - Detailed</title>
+	<title>Mifos Transactions - Detail</title>
 	<author>GFUSA</author>
-	<description>Transactions - Detailed</description>
+	<description>Transactions - Detail</description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>TransactionReport-Detailed.html</template>
+	<template>MifosTransactions-Detail.html</template>
 </cdf>
