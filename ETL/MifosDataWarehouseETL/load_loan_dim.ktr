@@ -181,6 +181,7 @@ Also just handles initial load. </note>
     <connection>SourceDB</connection>
     <sql>
 select a.account_id as loan_account_id,
+a.global_account_num as loan_account_global_id,
 lv.lookup_name as loan_status, la.loan_amount, 
 ls.orig_principal as original_principal, ls.orig_interest as original_interest, ls.orig_fees as original_fees, ls.orig_penalty as original_penalty,
 la.loan_amount_currency_id as currency_id, a.customer_id, la.prd_offering_id,
@@ -225,6 +226,11 @@ order by a.customer_id</sql>
           <name>loan_account_id</name>
           <lookup>loan_account_id</lookup>
         </key>
+        <field>
+          <name>loan_account_global_id</name>
+          <lookup>loan_account_global_id</lookup>
+          <update>Punch through</update>
+        </field>
         <date>
           <name/>
           <from>valid_from</from>

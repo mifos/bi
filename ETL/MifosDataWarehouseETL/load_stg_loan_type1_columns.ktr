@@ -267,6 +267,7 @@ These columns can be added to the dim_loan table with no impact on the current s
            </partitioning>
     <connection>SourceDB</connection>
     <sql>select la.account_id as loan_account_id,
+a.global_account_num as loan_account_global_id,
 ifnull(la.fund_id, 0) as fund_id,
 la. disbursement_date,
 la.loan_amount as loan_amount,
@@ -332,6 +333,10 @@ where (
         <field>
           <column_name>loan_account_id</column_name>
           <stream_name>loan_account_id</stream_name>
+        </field>
+        <field>
+          <column_name>loan_account_global_id</column_name>
+          <stream_name>loan_account_global_id</stream_name>
         </field>
         <field>
           <column_name>fund_id</column_name>

@@ -173,7 +173,8 @@ join stg_loan_type1_columns l1 on l1.loan_account_id = l.loan_account_id
 set l.fund_id = l1.fund_id, l.disbursement_date = l1.disbursement_date, l.loan_amount = l1.loan_amount,
 l.original_principal = l1.loan_original_principal, l.original_interest = l1.loan_original_interest,
 l.original_fees = l1.loan_original_fees, l.original_penalty = l1.loan_original_penalty,
-l.no_of_installments = l1.no_of_installments, l.meeting_recur_after = l1.meeting_recur_after, l.meeting_recurrence_name = l1.meeting_recurrence_name
+l.no_of_installments = l1.no_of_installments, l.meeting_recur_after = l1.meeting_recur_after, l.meeting_recurrence_name = l1.meeting_recurrence_name,
+l.loan_account_global_id = l1.loan_account_global_id
 ;
 
 </sql>

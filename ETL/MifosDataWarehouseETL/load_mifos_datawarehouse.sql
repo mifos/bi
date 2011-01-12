@@ -127,6 +127,7 @@ DROP TABLE IF EXISTS `dim_loan`;
 CREATE TABLE `dim_loan` (
   `loan_account_key` int(10) unsigned NOT NULL,
   `loan_account_id` int(11) NOT NULL,
+  `loan_account_global_id` varchar(100) DEFAULT NULL,
   `currency_id` smallint(6) NOT NULL,
   `product_key` int(10) unsigned NOT NULL,
   `customer_key` int(10) unsigned NOT NULL,
@@ -1280,6 +1281,7 @@ DROP TABLE IF EXISTS `stg_loan_type1_columns`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stg_loan_type1_columns` (
   `loan_account_id` int(11) NOT NULL,
+  `loan_account_global_id` varchar(100) DEFAULT NULL,
   `fund_id` smallint(6) DEFAULT NULL,
   `disbursement_date` date DEFAULT NULL,
   `loan_amount` decimal(21,4) DEFAULT NULL,
