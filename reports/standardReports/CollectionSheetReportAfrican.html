@@ -11,7 +11,7 @@
 <td>&nbsp;</td><td>&nbsp;</td>
 <td><div id=runReportObj></div></td>
 <td>&nbsp;</td>
-<td><div id=clearReportObj style="visibility:hidden"></div></td>
+<td><div id=clearReportObj></div></td>
 </tr>
 </table>
 
@@ -50,7 +50,6 @@ function updateTopCustomerHierarchySelect()
 
 function updateNextMeetingDate()
 {
-
 	nextMeetingDateUpdated = nextMeetingDate;
 	nextMeetingDateUpdated.replace(/-/g,'');
 	Dashboards.fireChange("CoG",nextMeetingDateUpdated);
@@ -60,6 +59,7 @@ function updateNextMeetingDate()
 
 function runTheReport()
 {
+    nextMeetingDate = $('#date1Obj input').val();
     if (currentDateStr > nextMeetingDate)
     {
         alert("Next Meeting Date must be on or after Today");
@@ -68,19 +68,12 @@ function runTheReport()
 
     event = event + 1;
     Dashboards.fireChange("event", event);
-    document.getElementById('clearReportObj').style.visibility = "visible";
+    enableClearButton();
 }
-
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
-
-function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-}
-
 var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
-
 var commonActionsSolution = "commonActions";
 
 Dashboards.globalcontext = false;
@@ -89,7 +82,6 @@ var officeId = 0;
 var officeSearchId = "";
 var loanOfficerId = -1;
 var topCustomerHierarchyId = -1;
-
 
 var currentDate = new Date();
 var month = currentDate.getMonth() + 1;
@@ -101,7 +93,6 @@ nextMeetingDateUpdated.replace(/-/g,'');
 
 var outputType = "application/pdf";
 
- 
 branchSelector = 
 {
 	name: "branchSelector",
@@ -188,7 +179,7 @@ clearReport =
   	type: "Button",
   	htmlObject: "clearReportObj",
   	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");document.getElementById('clearReportObj').style.visibility = "hidden";},
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
   	executeAtStart: true
 }
 
@@ -210,6 +201,7 @@ theReport =
 Dashboards.init([branchSelector, LOSelector, date1, centerOrGroup, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
+        initRunClearButtons();
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
 	officeId = $('#branchSelectorObj select option:selected').val();
 	updateLOSelect();

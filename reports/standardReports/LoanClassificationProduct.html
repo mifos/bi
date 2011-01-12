@@ -10,17 +10,18 @@
 <td>&nbsp;</td><td>&nbsp;</td>
 <td><div id=runReportObj></div></td>
 <td>&nbsp;</td>
-<td><div id=clearReportObj style="visibility:hidden"></div></td>
+<td><div id=clearReportObj></div></td>
 </tr>
 </table>
 
 <div id=theReportObj></div>
 
-
 <script language="javascript" type="text/javascript">
 
 function runTheReport()
 {
+    startDate = $('#date1Obj input').val();
+    endDate = $('#date2Obj input').val();
     if (startDate > endDate)
     {
         alert("Start Date is after End Date");
@@ -29,17 +30,11 @@ function runTheReport()
 
     event = event + 1;
     Dashboards.fireChange("event", event);
-    document.getElementById('clearReportObj').style.visibility = "visible";
+    enableClearButton();
 }
-
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
-
-function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-}
-
 var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
@@ -56,7 +51,6 @@ var startDate = currentDateStr;
 var endDate = currentDateStr;
 var outputType = "application/pdf";
 
- 
 branchSelector = 
 {
 	name: "branchSelector",
@@ -119,7 +113,7 @@ clearReport =
   	type: "Button",
   	htmlObject: "clearReportObj",
   	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");document.getElementById('clearReportObj').style.visibility = "hidden";},
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
   	executeAtStart: true
 }
 
@@ -141,6 +135,7 @@ theReport =
 Dashboards.init([branchSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
+        initRunClearButtons();
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
 	office = $('#branchSelectorObj select option:selected').val();
 	updateLOSelect();

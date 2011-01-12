@@ -10,7 +10,7 @@
 <td>&nbsp;</td><td>&nbsp;</td>
 <td><div id=runReportObj></div></td>
 <td>&nbsp;</td>
-<td><div id=clearReportObj style="visibility:hidden"></div></td>
+<td><div id=clearReportObj></div></td>
 </tr>
 </table>
 
@@ -23,16 +23,11 @@ function runTheReport()
 {
     event = event + 1;
     Dashboards.fireChange("event", event);
-    document.getElementById('clearReportObj').style.visibility = "visible";
+    enableClearButton();
 }
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
-
-function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-}
-
 var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
 
 var commonActionsSolution = "commonActions";
@@ -45,7 +40,6 @@ var m1 = "";
 var m2 = ""; 
 
 var outputType = "application/pdf";
-
 
 branchSelector = 
 {
@@ -118,7 +112,7 @@ clearReport =
   	type: "Button",
   	htmlObject: "clearReportObj",
   	label: "Clear Report",
-  	expression: function(){$('#theReportObj').html("");document.getElementById('clearReportObj').style.visibility = "hidden";},
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
   	executeAtStart: true
 }
 
@@ -140,6 +134,7 @@ theReport =
 Dashboards.init([branchSelector, month1, month2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
+        initRunClearButtons();
 
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
 	office = $('#branchSelectorObj select option:selected').val();
