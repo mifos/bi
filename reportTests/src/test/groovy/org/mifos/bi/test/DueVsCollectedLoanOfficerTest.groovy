@@ -4,9 +4,11 @@ import org.junit.Test
 
 class DueVsCollectedLoanOfficerTest {
 
+    def mfiName = 'Mifos HO'
     def reportName = 'Due vs Collected by Loan Officer'
     def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
 
+    def firstOffice = ['Office:', 'br2']
     def firstLoanOfficer = ['Loan Officer:', 'br2 LO xxx']
     def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000']
     def detailsbr2_20100803 = ['2010-08-03', '428.1000', '2.9000', '0.0000', '0.0000', '0.0000', '0.0000']
@@ -19,8 +21,8 @@ class DueVsCollectedLoanOfficerTest {
     def totalbr2 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
 
-    def grandTotalbr2_20100701_20100815 = ['GrandTotal', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
-    def grandTotalbr2_20100701_20100930 = ['GrandTotal', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
+    def grandTotalbr2_20100701_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
+    def grandTotalbr2_20100701_20100930 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -31,21 +33,20 @@ class DueVsCollectedLoanOfficerTest {
             t.reportPath = 'reports/standardReports/prpts/DueVsCollectedLoanOfficer.prpt'
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '-1', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
+            // MFI Name
+            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'Date:')
-            t.assertCellEquals(2, 2, 'From:')
-            // TODO t.assertCellEquals(2, 3, '2010-07-01')
-            t.assertCellEquals(2, 3, 'MFI Name:')
-            t.assertCellEquals(2, 4, 'Mifos HO')
-            t.assertCellEquals(3, 1, 'To:')
-            // TODO t.assertCellEquals(3, 2, '2010-09-30')
-            t.assertCellEquals(3, 2, 'Report Date:')
+            t.assertCellEquals(3, 1, 'From:')
+            // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(4, 1, 'To:')
+            // TODO t.assertCellEquals(4, 1, '2010-09-30')
+            t.assertRowEquals(5, firstOffice)
 
             // Group header
-            def offset = 4
+            def offset = 6
             t.assertRowEquals(offset, firstLoanOfficer)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -69,13 +70,13 @@ class DueVsCollectedLoanOfficerTest {
             t.assertRowEquals(offset+10, totalbr2)
 
             // Report footer
-            offset = 15
-            t.assertRowEquals(offset, detailsHeader)
-            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
-            // Page footer
             offset = 17
+            t.assertRowEquals(offset, grandTotalbr2_20100701_20100930)
+            // Page footer
+            offset = 18
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 
@@ -87,21 +88,20 @@ class DueVsCollectedLoanOfficerTest {
             t.reportPath = 'reports/standardReports/prpts/DueVsCollectedLoanOfficer.prpt'
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
+            // MFI Name
+            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'Date:')
-            t.assertCellEquals(2, 2, 'From:')
-            // TODO t.assertCellEquals(2, 3, '2010-07-01')
-            t.assertCellEquals(2, 3, 'MFI Name:')
-            t.assertCellEquals(2, 4, 'Mifos HO')
-            t.assertCellEquals(3, 1, 'To:')
-            // TODO t.assertCellEquals(3, 2, '2010-09-30')
-            t.assertCellEquals(3, 2, 'Report Date:')
+            t.assertCellEquals(3, 1, 'From:')
+            // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(4, 1, 'To:')
+            // TODO t.assertCellEquals(4, 1, '2010-09-30')
+            t.assertRowEquals(5, firstOffice)
 
             // Group header
-            def offset = 4
+            def offset = 6
             t.assertRowEquals(offset, firstLoanOfficer)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -125,13 +125,13 @@ class DueVsCollectedLoanOfficerTest {
             t.assertRowEquals(offset+10, totalbr2)
 
             // Report footer
-            offset = 15
-            t.assertRowEquals(offset, detailsHeader)
-            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
-            // Page footer
             offset = 17
+            t.assertRowEquals(offset, grandTotalbr2_20100701_20100930)
+            // Page footer
+            offset = 18
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 
@@ -143,21 +143,20 @@ class DueVsCollectedLoanOfficerTest {
             t.reportPath = 'reports/standardReports/prpts/DueVsCollectedLoanOfficer.prpt'
             t.reportParams = ['selected_office': '4', 'selected_loan_officer': '-1', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
+            // MFI Name
+            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'Date:')
-            t.assertCellEquals(2, 2, 'From:')
-            // TODO t.assertCellEquals(2, 3, '2010-07-01')
-            t.assertCellEquals(2, 3, 'MFI Name:')
-            t.assertCellEquals(2, 4, 'Mifos HO')
-            t.assertCellEquals(3, 1, 'To:')
-            // TODO t.assertCellEquals(3, 2, '2010-09-30')
-            t.assertCellEquals(3, 2, 'Report Date:')
+            t.assertCellEquals(3, 1, 'From:')
+            // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(4, 1, 'To:')
+            // TODO t.assertCellEquals(4, 1, '2010-08-15')
+            t.assertRowEquals(5, firstOffice)
 
             // Group header
-            def offset = 4
+            def offset = 6
             t.assertRowEquals(offset, firstLoanOfficer)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -171,13 +170,13 @@ class DueVsCollectedLoanOfficerTest {
             t.assertRowEquals(offset+5, totalbr2_20100815)
 
             // Report footer
-            offset = 10
-            t.assertRowEquals(offset, detailsHeader)
-            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100815)
-            // Page footer
             offset = 12
+            t.assertRowEquals(offset, grandTotalbr2_20100701_20100815)
+            // Page footer
+            offset = 13
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 }
