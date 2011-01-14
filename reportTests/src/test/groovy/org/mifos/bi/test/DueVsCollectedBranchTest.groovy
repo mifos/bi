@@ -4,15 +4,16 @@ import org.junit.Test
 
 class DueVsCollectedBranchTest {
 
+    def mfiName = 'Mifos HO'
     def reportName = 'Due vs Collected by Branch'
     def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
 
-    def firstBranch = ['Branch:', 'BO 1']
+    def firstBranch = ['Office:', 'BO 1']
     def detailsBO1_20100718 = ['2010-07-18', '0.0000', '0.0000', '0.0000', '0.0000', '517.2000', '5.8000']
     def detailsBO1_20100724 = ['2010-07-24', '0.0000', '0.0000', '0.0000', '0.0000', '3000.0000', '2.9000']
     def totalBO1 = ['Total', '0.0000', '0.0000', '-', '-', '3517.2000', '8.7000']
 
-    def secondBranch = ['Branch:', 'br2']
+    def secondBranch = ['Office:', 'br2']
     def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000']
     def detailsbr2_20100803 = ['2010-08-03', '428.1000', '2.9000', '0.0000', '0.0000', '0.0000', '0.0000']
     def detailsbr2_20100810 = ['2010-08-10', '428.1000', '2.9000', '353.0000', '0.0000', '0.0000', '0.0000']
@@ -24,7 +25,7 @@ class DueVsCollectedBranchTest {
     def totalbr2 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def totalbr2_20100915 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
 
-    def thirdBranch = ['Branch:', 'br4']
+    def thirdBranch = ['Office:', 'br4']
     def detailsbr4_20100828 = ['2010-08-28', '0.0000', '0.0000', '0.0000', '0.0000', '621.3000', '7.7000']
     def totalbr4 = ['Total', '0.0000', '0.0000', '-', '-', '621.3000', '7.7000']
 
@@ -41,21 +42,20 @@ class DueVsCollectedBranchTest {
             t.reportPath = 'reports/standardReports/prpts/DueVsCollectedBranch.prpt'
             t.reportParams = ['selected_office': '-1', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-09-30']
 
+            // MFI Name
+            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'Date:')
-            t.assertCellEquals(2, 2, 'From:')
-            // TODO t.assertCellEquals(2, 3, '2010-07-01')
-            t.assertCellEquals(2, 4, 'MFI Name:')
-            t.assertCellEquals(2, 5, 'Mifos HO')
-            t.assertCellEquals(3, 1, 'To:')
-            // TODO t.assertCellEquals(3, 2, '2010-09-30')
-            t.assertCellEquals(3, 2, 'Report Date:')
+            t.assertCellEquals(3, 1, 'From:')
+            // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(4, 1, 'To:')
+            // TODO t.assertCellEquals(4, 2, '2010-09-30')
+            t.assertRowEquals(5, ['Office:', ' All'])
 
             // 1st Group header
-            def offset = 4
+            def offset = 6
             t.assertRowEquals(offset, firstBranch)
             // 1st Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -67,7 +67,7 @@ class DueVsCollectedBranchTest {
             t.assertRowEquals(offset+4, totalBO1)
 
             // 2nd Group header
-            offset = 9
+            offset = 11
             t.assertRowEquals(offset, secondBranch)
             // 2nd Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -91,7 +91,7 @@ class DueVsCollectedBranchTest {
             t.assertRowEquals(offset+10, totalbr2)
 
             // 3rd Group header
-            offset = 20
+            offset = 22
             t.assertRowEquals(offset, thirdBranch)
             // 2nd Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -101,13 +101,15 @@ class DueVsCollectedBranchTest {
             t.assertRowEquals(offset+3, totalbr4)
 
             // Report footer
-            offset = 24
+            offset = 26
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotal_20100701_20100930)
             // Page footer
-            offset = 26
+            offset = 28
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
+
         }
     }
 
@@ -119,21 +121,20 @@ class DueVsCollectedBranchTest {
             t.reportPath = 'reports/standardReports/prpts/DueVsCollectedBranch.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-09-30']
 
+            // MFI Name
+            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'Date:')
-            t.assertCellEquals(2, 2, 'From:')
-            // TODO t.assertCellEquals(2, 3, '2010-07-01')
-            t.assertCellEquals(2, 4, 'MFI Name:')
-            t.assertCellEquals(2, 5, 'Mifos HO')
-            t.assertCellEquals(3, 1, 'To:')
-            // TODO t.assertCellEquals(3, 2, '2010-09-30')
-            t.assertCellEquals(3, 2, 'Report Date:')
+            t.assertCellEquals(3, 1, 'From:')
+            // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(4, 1, 'To:')
+            // TODO t.assertCellEquals(4, 2, '2010-09-30')
+            t.assertRowEquals(5, ['Office:', 'br2'])
 
             // Group header
-            def offset = 4
+            def offset = 6
             t.assertRowEquals(offset, secondBranch)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -157,13 +158,14 @@ class DueVsCollectedBranchTest {
             t.assertRowEquals(offset+10, totalbr2)
 
             // Report footer
-            offset = 15
+            offset = 17
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
             // Page footer
-            offset = 17
+            offset = 19
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 
@@ -175,21 +177,20 @@ class DueVsCollectedBranchTest {
             t.reportPath = 'reports/standardReports/prpts/DueVsCollectedBranch.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010/07/01 00:00:00.000', 'end_date': '2010-08-15']
 
+            // MFI Name
+            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertCellEquals(2, 1, 'Date:')
-            t.assertCellEquals(2, 2, 'From:')
-            // TODO t.assertCellEquals(2, 3, '2010-07-01')
-            t.assertCellEquals(2, 4, 'MFI Name:')
-            t.assertCellEquals(2, 5, 'Mifos HO')
-            t.assertCellEquals(3, 1, 'To:')
-            // TODO t.assertCellEquals(3, 2, '2010-09-30')
-            t.assertCellEquals(3, 2, 'Report Date:')
+            t.assertCellEquals(3, 1, 'From:')
+            // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(4, 1, 'To:')
+            // TODO t.assertCellEquals(4, 2, '2010-08-15')
+            t.assertRowEquals(5, ['Office:', 'br2'])
 
             // Group header
-            def offset = 4
+            def offset = 6
             t.assertRowEquals(offset, secondBranch)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -203,13 +204,14 @@ class DueVsCollectedBranchTest {
             t.assertRowEquals(offset+5, totalbr2_20100915)
 
             // Report footer
-            offset = 10
+            offset = 12
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100815)
             // Page footer
-            offset = 12
+            offset = 14
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 }

@@ -8,7 +8,6 @@ class DueVsCollectedLoanOfficerTest {
     def reportName = 'Due vs Collected by Loan Officer'
     def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
 
-    def firstOffice = ['Office:', 'br2']
     def firstLoanOfficer = ['Loan Officer:', 'br2 LO xxx']
     def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000']
     def detailsbr2_20100803 = ['2010-08-03', '428.1000', '2.9000', '0.0000', '0.0000', '0.0000', '0.0000']
@@ -21,8 +20,8 @@ class DueVsCollectedLoanOfficerTest {
     def totalbr2 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
 
-    def grandTotalbr2_20100701_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
-    def grandTotalbr2_20100701_20100930 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
+    def grandTotalbr2_20100701_20100815 = ['Grand Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
+    def grandTotalbr2_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -41,12 +40,15 @@ class DueVsCollectedLoanOfficerTest {
             // Page header
             t.assertCellEquals(3, 1, 'From:')
             // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(3, 2, 'Office:')
+            t.assertCellEquals(3, 3, 'br2')
             t.assertCellEquals(4, 1, 'To:')
-            // TODO t.assertCellEquals(4, 1, '2010-09-30')
-            t.assertRowEquals(5, firstOffice)
+            // TODO t.assertCellEquals(4, 2, '2010-09-30')
+            t.assertCellEquals(4, 2, 'Loan Officer:')
+            t.assertCellEquals(4, 3, '  ALL')
 
             // Group header
-            def offset = 6
+            def offset = 5
             t.assertRowEquals(offset, firstLoanOfficer)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -70,8 +72,9 @@ class DueVsCollectedLoanOfficerTest {
             t.assertRowEquals(offset+10, totalbr2)
 
             // Report footer
-            offset = 17
-            t.assertRowEquals(offset, grandTotalbr2_20100701_20100930)
+            offset = 16
+            t.assertRowEquals(offset, detailsHeader)
+            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
             // Page footer
             offset = 18
             t.assertRowEquals(offset, pageFooter)
@@ -96,12 +99,15 @@ class DueVsCollectedLoanOfficerTest {
             // Page header
             t.assertCellEquals(3, 1, 'From:')
             // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(3, 2, 'Office:')
+            t.assertCellEquals(3, 3, 'br2')
             t.assertCellEquals(4, 1, 'To:')
-            // TODO t.assertCellEquals(4, 1, '2010-09-30')
-            t.assertRowEquals(5, firstOffice)
+            // TODO t.assertCellEquals(4, 2, '2010-09-30')
+            t.assertCellEquals(4, 2, 'Loan Officer:')
+            t.assertCellEquals(4, 3, 'br2 LO xxx')
 
             // Group header
-            def offset = 6
+            def offset = 5
             t.assertRowEquals(offset, firstLoanOfficer)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -125,8 +131,9 @@ class DueVsCollectedLoanOfficerTest {
             t.assertRowEquals(offset+10, totalbr2)
 
             // Report footer
-            offset = 17
-            t.assertRowEquals(offset, grandTotalbr2_20100701_20100930)
+            offset = 16
+            t.assertRowEquals(offset, detailsHeader)
+            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
             // Page footer
             offset = 18
             t.assertRowEquals(offset, pageFooter)
@@ -151,12 +158,15 @@ class DueVsCollectedLoanOfficerTest {
             // Page header
             t.assertCellEquals(3, 1, 'From:')
             // TODO t.assertCellEquals(3, 2, '2010-07-01')
+            t.assertCellEquals(3, 2, 'Office:')
+            t.assertCellEquals(3, 3, 'br2')
             t.assertCellEquals(4, 1, 'To:')
-            // TODO t.assertCellEquals(4, 1, '2010-08-15')
-            t.assertRowEquals(5, firstOffice)
+            // TODO t.assertCellEquals(4, 2, '2010-08-15')
+            t.assertCellEquals(4, 2, 'Loan Officer:')
+            t.assertCellEquals(4, 3, '  ALL')
 
             // Group header
-            def offset = 6
+            def offset = 5
             t.assertRowEquals(offset, firstLoanOfficer)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
@@ -170,8 +180,9 @@ class DueVsCollectedLoanOfficerTest {
             t.assertRowEquals(offset+5, totalbr2_20100815)
 
             // Report footer
-            offset = 12
-            t.assertRowEquals(offset, grandTotalbr2_20100701_20100815)
+            offset = 11
+            t.assertRowEquals(offset, detailsHeader)
+            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100815)
             // Page footer
             offset = 13
             t.assertRowEquals(offset, pageFooter)
