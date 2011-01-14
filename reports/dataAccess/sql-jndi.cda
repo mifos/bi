@@ -20,6 +20,22 @@
             <Parameter name="branch_id" type="Integer" default="-5"/>
         </Parameters>
     </DataAccess>
+    <DataAccess id="getGroupsByLoanOfficer" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
+        <Name>Get Groups By Loan Officer</Name>
+        <Query>
+            select -5 as group_id, "---Select One---" as group_name
+            union
+            select -1 as group_id,'--ALL--' as group_name
+            union
+            select customer_id as group_id,display_name as group_name
+            from customer where customer_level_id=2 and
+            (loan_officer_id = ${loan_officer_id} or -1 = ${loan_officer_id})
+            order by group_name
+        </Query>
+        <Parameters>
+            <Parameter name="loan_officer_id" type="Integer" default="-5"/>
+        </Parameters>
+    </DataAccess>
     <DataAccess id="getBranches" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
         <Name>Get Branches</Name>
         <Query>
