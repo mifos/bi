@@ -6,28 +6,25 @@ class LoanOfficerDetailedReportTest {
 
     def reportPath = 'reports/standardReports/prpts/LoanOfficerDetailed.prpt'
     def reportName = 'Loan Officer Detailed'
-    def branch = ['Branch:', 'br2']
-    def gender = ['Gender:', 'Female']
+    def branch = ['Office:', 'br2', 'From:']
+    def gender = ['Gender:', 'Female', 'To:']
 
     def detailsHeader1 = ['Group Formation', 'Key Dates']
     def numOfClientsAddedToDate_JoinedMFI = ['# of Clients added(To Date)', '3', 'Joined MFI']
     def numOfClientsAddedThisPeriod_BecameLO = ['# of Clients added(This Period)', '3', 'Became Loan Officer']
-    def numOfGroupsAddedToDate_BranchMemberships = ['# of groups added(To Date)', '3', 'Branch Memberships']
-    def numOfGroupsAddedThisPeriod_branchMempership_br2 = ['# of groups added(This Period)', '3', 'br2', '2010-07-20 - Current']
-    def numOfDropoutClientsToDate_leftMFI = ['# of dropout clients(To Date)', '0', 'Left MFI']
-    def numOfDropoutClientsThisPeriod = ['# of dropout clients(This Period)', '0']
+    def numOfGroupsAddedToDate_BranchMemberships = ['# of Groups added(To Date)', '3', 'Branch Memberships']
+    def numOfGroupsAddedThisPeriod_branchMempership_br2 = ['# of Groups added(This Period)', '3', 'br2', '2010-07-20 - Current']
+    def numOfDropoutClientsToDate_leftMFI = ['# of Dropout clients(To Date)', '0', 'Left MFI']
+    def numOfDropoutClientsThisPeriod = ['# of Dropout clients(This Period)', '0']
 
     def detailsHeader2 = ['Client Summary', 'Account Summary']
-    def numOfCentersManaged_numOfActiveLoans = ['# of Centers managed', '2', '# of active loans', '1']
-    def numOfGroups_Principal_20100815 = ['# of groups', '4', 'Principal Amount Outstanding', '2924.9000']
-    def numOfGroups_Principal = ['# of groups', '5', 'Principal Amount Outstanding', '2924.9000']
+    def numOfCentersManaged_numOfActiveLoans = ['# of Centers managed', '2', '# of Active Loans', '1']
+    def numOfGroups_Principal_20100815 = ['# of Groups', '4', 'Principal Amount Outstanding', '2924.9000']
+    def numOfGroups_Principal = ['# of Groups', '5', 'Principal Amount Outstanding', '2924.9000']
     def numOfClients_Interest = ['# of Clients', '4', 'Interest Amount Outstanding', '18.1000']
-    def numOfClientsWithLoans = ['# of Clients with loans', '1']
-    def portfolioAtRisk = ['Portfolio at Risk %', '100.00']
-    def numOfClientsWithSavings = ['# of Clients with savings', '2']
-    def numOfLoansWrittenOff = ['# of loans written off', '0']
-    def dormantClients = ['Dormant clients', '3']
-    def amountOfLoansWrittenOff = ['Amount of loans written off', '0.0000']
+    def numOfClientsWithLoans = ['# of Clients with loans', '1', 'Portfolio at Risk %', '100.00']
+    def numOfClientsWithSavings = ['# of Clients with savings', '2', '# of Loans written off', '0']
+    def dormantClients = ['Dormant Clients', '3', 'Amount of loans written off', '0.0000']
     def totalSavings_20100815 = ['Total Savings', '1977.1000']
     def totalSavings = ['Total Savings', '1998.8000']
     def voluntarySavings_20100815 = ['Voluntary Savings', '777.0000']
@@ -36,7 +33,7 @@ class LoanOfficerDetailedReportTest {
     def mandatorySavings = ['Mandatory Savings', '1206.1000']
 
     def detailsHeader3 = ['Aging in Arrears by Week']
-    def detailsHeader3_4 = ['# of Clients', '# of Loans', 'Arrears', 'Principal Outstanding']
+    def detailsHeader3_4 = ['# of Clients', '# of Loans', 'Arrears Amount', 'Principal Outstanding']
     def weeksInArrears1 = ['1 Week in Arrears', '0', '0', '0.0000', '0.0000']
     def weeksInArrears2_20100815 = ['2 Weeks in Arrears', '1', '1', '781.1000', '2924.9000']
     def weeksInArrears2 = ['2 Weeks in Arrears', '0', '0', '0.0000', '0.0000']
@@ -84,19 +81,19 @@ class LoanOfficerDetailedReportTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
+            // MFI name
+            t.assertRowEquals(1, ['Mifos HO'])
+
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(2, ['MFI Name:', 'Mifos HO', 'ID:'])
-            t.assertRowEquals(3, ['TimePeriod:'])
-            t.assertRowEquals(4, ['LoanOfficer:', 'br2 LO xxx'])
-            t.assertRowEquals(5, branch)
-            t.assertCellEquals(6, 1, 'Reportcreationdate:')
-            t.assertRowEquals(7, gender)
+            t.assertRowEquals(3, ['LoanOfficer:', 'br2 LO xxx', 'ID:'])
+            t.assertRowEquals(4, branch)
+            t.assertRowEquals(5, gender)
 
             // 1st Details header
-            def offset = 8
+            def offset = 6
             t.assertRowEquals(offset, detailsHeader1)
             // Details
             t.assertRowEquals(offset+1, numOfClientsAddedToDate_JoinedMFI)
@@ -107,24 +104,21 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+6, numOfDropoutClientsThisPeriod)
 
             // 2nd Details header
-            offset = 15
+            offset = 13
             t.assertRowEquals(offset, detailsHeader2)
             // Details
             t.assertRowEquals(offset+1, numOfCentersManaged_numOfActiveLoans)
             t.assertRowEquals(offset+2, numOfGroups_Principal)
             t.assertRowEquals(offset+3, numOfClients_Interest)
             t.assertRowEquals(offset+4, numOfClientsWithLoans)
-            t.assertRowEquals(offset+5, portfolioAtRisk)
-            t.assertRowEquals(offset+6, numOfClientsWithSavings)
-            t.assertRowEquals(offset+7, numOfLoansWrittenOff)
-            t.assertRowEquals(offset+8, dormantClients)
-            t.assertRowEquals(offset+9, amountOfLoansWrittenOff)
-            t.assertRowEquals(offset+10, totalSavings)
-            t.assertRowEquals(offset+11, voluntarySavings)
-            t.assertRowEquals(offset+12, mandatorySavings)
+            t.assertRowEquals(offset+5, numOfClientsWithSavings)
+            t.assertRowEquals(offset+6, dormantClients)
+            t.assertRowEquals(offset+7, totalSavings)
+            t.assertRowEquals(offset+8, voluntarySavings)
+            t.assertRowEquals(offset+9, mandatorySavings)
 
             // 3rd Details header
-            offset = 28
+            offset = 23
             t.assertRowEquals(offset, detailsHeader3)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -144,7 +138,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+15, arrearsTotal)
 
             //4th Details header
-            offset = 44
+            offset = 39
             t.assertRowEquals(offset, detailsHeader4)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -156,7 +150,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+7, arrearsTotal)
 
             // 5th Details header
-            offset = 52
+            offset = 47
             t.assertRowEquals(offset, detailsHeader5)
             t.assertRowEquals(offset+1, detailsHeader5a)
             // Details
@@ -166,8 +160,10 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+5, centerTotal)
 
             // Page footer
-            offset = 58
+            offset = 53
             t.assertRowEquals(offset, pageFooter)
+            t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 
@@ -179,19 +175,19 @@ class LoanOfficerDetailedReportTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_loan_officer': '5', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
 
+            // MFI name
+            t.assertRowEquals(1, ['Mifos HO'])
+
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(2, ['MFI Name:', 'Mifos HO', 'ID:'])
-            t.assertRowEquals(3, ['TimePeriod:'])
-            t.assertRowEquals(4, ['LoanOfficer:', 'br2 LO xxx'])
-            t.assertRowEquals(5, branch)
-            t.assertCellEquals(6, 1, 'Reportcreationdate:')
-            t.assertRowEquals(7, gender)
+            t.assertRowEquals(3, ['LoanOfficer:', 'br2 LO xxx', 'ID:'])
+            t.assertRowEquals(4, branch)
+            t.assertRowEquals(5, gender)
 
             // 1st Details header
-            def offset = 8
+            def offset = 6
             t.assertRowEquals(offset, detailsHeader1)
             // Details
             t.assertRowEquals(offset+1, numOfClientsAddedToDate_JoinedMFI)
@@ -202,24 +198,21 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+6, numOfDropoutClientsThisPeriod)
 
             // 2nd Details header
-            offset = 15
+            offset = 13
             t.assertRowEquals(offset, detailsHeader2)
             // Details
             t.assertRowEquals(offset+1, numOfCentersManaged_numOfActiveLoans)
             t.assertRowEquals(offset+2, numOfGroups_Principal_20100815)
             t.assertRowEquals(offset+3, numOfClients_Interest)
             t.assertRowEquals(offset+4, numOfClientsWithLoans)
-            t.assertRowEquals(offset+5, portfolioAtRisk)
-            t.assertRowEquals(offset+6, numOfClientsWithSavings)
-            t.assertRowEquals(offset+7, numOfLoansWrittenOff)
-            t.assertRowEquals(offset+8, dormantClients)
-            t.assertRowEquals(offset+9, amountOfLoansWrittenOff)
-            t.assertRowEquals(offset+10, totalSavings_20100815)
-            t.assertRowEquals(offset+11, voluntarySavings_20100815)
-            t.assertRowEquals(offset+12, mandatorySavings_20100815)
+            t.assertRowEquals(offset+5, numOfClientsWithSavings)
+            t.assertRowEquals(offset+6, dormantClients)
+            t.assertRowEquals(offset+7, totalSavings_20100815)
+            t.assertRowEquals(offset+8, voluntarySavings_20100815)
+            t.assertRowEquals(offset+9, mandatorySavings_20100815)
 
             // 3rd Details header
-            offset = 28
+            offset = 23
             t.assertRowEquals(offset, detailsHeader3)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -239,7 +232,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+15, arrearsTotal_20100815)
 
             //4th Details header
-            offset = 44
+            offset = 39
             t.assertRowEquals(offset, detailsHeader4)
             t.assertRowEquals(offset+1, detailsHeader3_4)
             // Details
@@ -251,7 +244,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+7, arrearsTotal_20100815)
 
             // 5th Details header
-            offset = 52
+            offset = 47
             t.assertRowEquals(offset, detailsHeader5)
             t.assertRowEquals(offset+1, detailsHeader5a)
             // Details
@@ -261,8 +254,10 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(offset+5, centerTotal_20100815)
 
             // Page footer
-            offset = 58
+            offset = 53
             t.assertRowEquals(offset, pageFooter)
+            t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 }
