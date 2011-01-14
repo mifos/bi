@@ -150,7 +150,7 @@ theReport =
   	path: prptPath,
   	action: "ClientExit.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeId"],["selected_loan_officer","loanOfficerId"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
+  	parameters: [["p_branch_id","-1"],["p_loan_officer","-1"],["p_group","-1"],["from_date","startDate"],["to_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
