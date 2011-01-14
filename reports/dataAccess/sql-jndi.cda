@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CDADescriptor>
-
     <DataSources>
         <Connection id="1" type="sql.jndi">
             <Jndi>SourceDB</Jndi>
         </Connection>
     </DataSources>
     <DataAccess id="getMifosUsersByBranch" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
-		   <Name>Get Mifos Users By Branch</Name>
-       <Query>
-         SELECT -5 as personnel_id, "---Select One---" as display_name
-         UNION
-         SELECT -1 as personnel_id , "--ALL--" as display_name 
-         UNION
-         SELECT personnel_id,display_name FROM personnel  where (${branch_id}=-1 or office_id=${branch_id}) order by display_name 
-      </Query>
-      <Parameters>
-         <Parameter name="branch_id" type="Integer" default="-5"/>
-      </Parameters>
+        <Name>Get Mifos Users By Branch</Name>
+        <Query>
+            select -5 as personnel_id, "---Select One---" as display_name
+            union
+            select -1 as personnel_id , "--ALL--" as display_name
+            union
+            select personnel_id,display_name from personnel
+            where (${branch_id}=-1 or office_id=${branch_id})
+            order by display_name
+        </Query>
+        <Parameters>
+            <Parameter name="branch_id" type="Integer" default="-5"/>
+        </Parameters>
     </DataAccess>
     <DataAccess id="getBranches" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
-		   <Name>Get Branches</Name>
-<Query>
-select -5 as branch_id, "---Select One---" as branch_name
-union
-select -1 as branch_id,'--ALL--' as branch_name
-union
-select office_id as branch_id,display_name as branch_name 
-from office where office_level_id=5 order by branch_name
-</Query>
+        <Name>Get Branches</Name>
+        <Query>
+            select -5 as branch_id, "---Select One---" as branch_name
+            union
+            select -1 as branch_id,'--ALL--' as branch_name
+            union
+            select office_id as branch_id,display_name as branch_name
+            from office where office_level_id=5 order by branch_name
+        </Query>
     </DataAccess>
     <DataAccess id="getTransactionTypes" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
-		   <Name>Get Transaction Types</Name>
-<Query>
-select -5 as action_id, "---Select One---" as action_name
-union
-select -1 as action_id, "--ALL--" as action_name
-union
-select account_action_id as action_id,replace(lookup_name,"AccountAction-","") as action_name 
-from account_action a join lookup_value l on l.lookup_id=a.lookup_id order by action_name
-</Query>
+        <Name>Get Transaction Types</Name>
+        <Query>
+            select -5 as action_id, "---Select One---" as action_name
+            union
+            select -1 as action_id, "--ALL--" as action_name
+            union
+            select account_action_id as action_id,replace(lookup_name,"AccountAction-","") as action_name
+            from account_action a join lookup_value l on l.lookup_id=a.lookup_id
+            order by action_name
+        </Query>
     </DataAccess>
     <DataAccess id="getPaymentTypes" connection="1" type="sql" access="public" cache="true" cacheDuration="3600">
-		   <Name>Get Payment Types</Name>
-<Query>
-select -5 as id, '--Select One--' as name
-union
-select -1 as id, '---All---' as name
-union
-(select payment_type_id as id, replace(lookup_name,"PaymentType-","") as name from  payment_type p join lookup_value l 
-on l.lookup_id=p.payment_type_lookup_id order by name);
-</Query>
+        <Name>Get Payment Types</Name>
+        <Query>
+            select -5 as id, '--Select One--' as name
+            union
+            select -1 as id, '---All---' as name
+            union
+            (select payment_type_id as id, replace(lookup_name,"PaymentType-","") as name from  payment_type p join lookup_value l
+            on l.lookup_id=p.payment_type_lookup_id order by name);
+        </Query>
     </DataAccess>
 </CDADescriptor>
