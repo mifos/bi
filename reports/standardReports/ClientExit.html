@@ -1,10 +1,12 @@
 <table>
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=selectBranchObject></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Group</div><div id=selectGroupObject></div></td><td width="20">
+&nbsp;</td>
+<td><div class=reportLabel>From Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>To Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
@@ -18,13 +20,6 @@
 <div id=theReportObj></div>
 
 <script language="javascript" type="text/javascript">
-
-function updateLOSelect()
-{
-	Dashboards.fireChange("officeId",officeId);
-	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
-	loanOfficerId = $('#LOSelectorObj select option:selected').val();
-}
 
 function runTheReport()
 {
@@ -44,13 +39,12 @@ function runTheReport()
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
-var commonActionsSolution = "commonActions";
 
 Dashboards.globalcontext = false;
 var event = 0;
-var officeId = 0;
-var loanOfficerId = 0;
-
+var officeId = -5;
+var loanOfficerId = -5;
+var groupId = -5;
 var currentDate = new Date();
 var month = currentDate.getMonth() + 1;
 var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
@@ -59,38 +53,46 @@ var startDate = currentDateStr;
 var endDate = currentDateStr;
 var outputType = "application/pdf";
 
-branchSelector = 
+selectBranch =
 {
-	name: "branchSelector",
+	name: "selectBranch",
 	type: "select",
-	parameters:[],
-  	solution: commonActionsSolution,
-  	path: "/" ,
-  	action: "BranchList.xaction",
 	parameter: "officeId",
 	valueAsId: false,
-	htmlObject: "branchSelectorObj",
-	postChange: function(){updateLOSelect();},
+	queryDefinition: { dataAccessId: "getBranches", path: "dataAccess/sql-jndi.cda" },
+	htmlObject: "selectBranchObject",
 	executeAtStart: true
 };
 
-LOSelector = 
+LOSelector =
 {
 	name: "LOSelector",
 	type: "select",
 	listeners: ["officeId"],
-	parameters:[["officeId", "officeId"]],
-  	solution: commonActionsSolution,
-  	path: "/" ,
-  	action: "LOBranchList.xaction",
+	parameters:[["branch_id", "officeId"]],
+	cdaParams:[["branch_id", "officeId"]],
+	queryDefinition: { dataAccessId: "getMifosUsersByBranch", path: "dataAccess/sql-jndi.cda" },
 	parameter: "loanOfficerId",
 	valueAsId: false,
 	htmlObject: "LOSelectorObj",
-	executeAtStart: false
+	executeAtStart: true
 };
 
+selectGroup =
+{
+	name: "selectGroup",
+	type: "selectComponent",
+	parameter: "groupId",
+	valueAsId: false,
+        queryDefinition: { dataAccessId: "getGroupsByLoanOfficer", path: "dataAccess/sql-jndi.cda" },
+        listeners:["loanOfficerId"],
+        parameters: [["loan_officer_id","loanOfficerId"]], // Valid for cdf 4 or higher
+        cdaParams: [["loan_offcier_id","loanOfficerId"]],  // Valid on cdf 3.6
+	htmlObject: "selectGroupObject",
+	executeAtStart: true
+};
 
-date1 = 
+date1 =
 {
 	name: "date1",
 	type: "dateInputComponent",
@@ -100,7 +102,7 @@ date1 =
 	executeAtStart: true
 };
 
-date2 = 
+date2 =
 {
 	name: "date2",
 	type: "dateInputComponent",
@@ -110,7 +112,7 @@ date2 =
 	executeAtStart: true
 };
 
-outputSelector = 
+outputSelector =
 {
 	name: "outputSelector",
 	type: "select",
@@ -122,7 +124,7 @@ outputSelector =
 	executeAtStart: true
 }
 
-runReport = 
+runReport =
 {
   	name: "runReport",
   	type: "Button",
@@ -132,7 +134,7 @@ runReport =
   	executeAtStart: true
 }
 
-clearReport = 
+clearReport =
 {
   	name: "clearReport",
   	type: "Button",
@@ -142,7 +144,7 @@ clearReport =
   	executeAtStart: true
 }
 
-theReport = 
+theReport =
 {
   	name: "theReport",
   	type: "prpt",
@@ -150,20 +152,17 @@ theReport =
   	path: prptPath,
   	action: "ClientExit.prpt",
   	listeners:["event"],
-  	parameters: [["p_branch_id","-1"],["p_loan_officer","-1"],["p_group","-1"],["from_date","startDate"],["to_date","endDate"],["output-type","outputType"]],
+  	parameters: [["p_branch_id","officeId"],["p_loan_officer","loanOfficerId"],["p_group","groupId"],["from_date","startDate"],["to_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, LOSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([selectBranch, LOSelector, selectGroup, date1, date2, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
         initRunClearButtons();
-	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
-	officeId = $('#branchSelectorObj select option:selected').val();
-	updateLOSelect();
 });
 
 </script>
