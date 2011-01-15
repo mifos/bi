@@ -6,7 +6,7 @@ class MFIProgressReportTest {
 
     def reportPath = 'reports/standardReports/prpts/MFIProgress.prpt'
     def reportName = 'MFI Progress';
-    def branchAndMFIName = ['Branch:', 'br2', 'MFI Name:', 'Mifos HO']
+    def branch = ['Office:', 'br2']
     def gender = ['Gender:', 'Female']
 
     def detailsHeader1_08 = ['OUTREACH', 'Jul 2010', 'Aug 2010', '% Change']
@@ -31,13 +31,13 @@ class MFIProgressReportTest {
     def noOfALloanProd2 = ['loan prod 2', '0', '0']
     def noOfALTotal = ['Total # Active Loans', '1', '1', '0']
 
-    def loanDisbursals = ['Loan Disbursals']
+    def loanDisbursals = ['Disbursal Amount']
     def lDisgroupLoan = ['group loan', '0.0000', '0.0000']
     def lDisloanProd1 = ['loan prod 1', '3000.0000', '0.0000', '-100.00']
     def lDisloanProd2 = ['loan prod 2', '0.0000', '0.0000']
     def lDisTotal = ['Total Disbursal Amount', '3000.0000', '0.0000', '-100']
 
-    def outstandingAL = ['Outstanding of Active Loans']
+    def outstandingAL = ['Active Loans Outstanding']
     def outALgroupLoan = ['group loan', '0.0000', '0.0000']
     def outALloanProd1 = ['loan prod 1', '2924.9000', '2924.9000', '0.00']
     def outALloanProd2 = ['loan prod 2', '0.0000', '0.0000']
@@ -68,15 +68,15 @@ class MFIProgressReportTest {
     def detailsHeader4_08 = ['AGING ANALYSIS', 'Jul 2010', 'Aug 2010', '% Change']
     def detailsHeader4_09 = ['AGING ANALYSIS', 'Jul 2010', 'Sep 2010', '% Change']
 
-    def overdueAmount_08 = ['Overdue Amount', '0.0000', '2077.0000']
-    def overdueAmount_09 = ['Overdue Amount', '0.0000', '2943.0000']
-    def outstandingOfLoansInArrears = ['Outstanding of Loans in Arrears', '0.0000', '2943.0000']
-    def par_08 = ['PAR', '0.00', '71.01']
-    def par_09 = ['PAR', '0.00', '100.62']
+    def overdueAmount_08 = ['Arrears Amount', '0.0000', '2077.0000']
+    def overdueAmount_09 = ['Arrears Amount', '0.0000', '2943.0000']
+    def outstandingOfLoansInArrears = ['PAR', '0.0000', '2943.0000']
+    def par_08 = ['PAR Ratio', '0.00', '71.01']
+    def par_09 = ['PAR Ratio', '0.00', '100.62']
 
     def detailsHeader5_6a_08 = ['AGING TABLE', 'Jul 2010', 'Aug 2010']
     def detailsHeader5_6a_09 = ['AGING TABLE', 'Jul 2010', 'Sep 2010']
-    def detailsHeader5_6b = ['AGING TABLE', '# of Loans', 'Arrears', 'Outstanding', '# of Loans', 'Arrears', 'Outstanding']
+    def detailsHeader5_6b = ['AGING TABLE', '# of Loans', 'Arrears Amount', 'Outstanding', '# of Loans', 'Arrears Amount', 'Outstanding']
 
     def weeksInArrears1 = ['1 Week in Arrears', '0', '0.0000', '0.0000', '0', '0.0000', '0.0000']
     def weeksInArrears2 = ['2 Weeks in Arrears', '0', '0.0000', '0.0000', '0', '0.0000', '0.0000']
@@ -107,15 +107,15 @@ class MFIProgressReportTest {
     def detailsHeader7_08 = ['PERFORMANCE RATIOS', 'Jul 2010', 'Aug 2010', '% Change']
     def detailsHeader7_09 = ['PERFORMANCE RATIOS', 'Jul 2010', 'Sep 2010', '% Change']
 
-    def activeBorrowersPerLO = ['Active Borrowers per Loanofficer', '1.00', '1.00', '0']
-    def netLoanPortfolioPerLO = ['Net Loan Portfolio per Loanofficer', '3021.00', '3021.00', '0']
+    def activeBorrowersPerLO = ['Active Borrowers per Loan Officer', '1.00', '1.00', '0']
+    def netLoanPortfolioPerLO = ['Net Loan Portfolio per Loan Officer', '3021.00', '3021.00', '0']
     def avgPortfolioPerActiveBorrower = ['Average Portfolio per Active Borrower', '3021.00', '3021.00', '0']
     def activeClientsPerBranch_08 = ['Active Clients per Branch', '6.00', '5.00', '-16.6666666666666666666666666666666668']
     def activeClientsPerBranch = ['Active Clients per Branch', '6.00', '6.00', '0']
     def avgClientsPerCenter_08 = ['Average Clients per Center', '3.00', '2.50', '-16.6666666666666666666666666666666668']
     def avgClientsPerCenter = ['Average Clients per Center', '3.00', '3.00', '0']
-    def avgClientsPerLO_08 = ['Average Clients per Loanofficer', '6.00', '5.00', '-16.6666666666666666666666666666666668']
-    def avgClientsPerLO = ['Average Clients per Loanofficer', '6.00', '6.00', '0']
+    def avgClientsPerLO_08 = ['Average Clients per Loan Officer', '6.00', '5.00', '-16.6666666666666666666666666666666668']
+    def avgClientsPerLO = ['Average Clients per Loan Officer', '6.00', '6.00', '0']
     def avgClientsPerBranch_08 = ['Average Clients per Branch', '6.00', '5.00', '-16.6666666666666666666666666666666668']
     def avgClientsPerBranch = ['Average Clients per Branch', '6.00', '6.00', '0']
     def avgLoanOutstanding = ['Average Loan Outstanding', '2943.00', '2943.00', '0']
@@ -133,18 +133,19 @@ class MFIProgressReportTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_period1': '2010-Jul', 'selected_period2': '2010-Sep']
 
+            // MFI name
+            t.assertRowEquals(1, ['Mifos HO'])
+
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(2, branchAndMFIName)
-            t.assertCellEquals(3, 1, 'Period 1:')
-            t.assertCellEquals(3, 2, 'Jul 2010')
-            t.assertCellEquals(3, 3, 'Report Creation Date:')
-            t.assertRowEquals(4, ['Period 2:', 'Sep 2010'])
+            t.assertRowEquals(3, branch)
+            t.assertRowEquals(4, ['Period 1:', 'Jul 2010'])
+            t.assertRowEquals(5, ['Period 2:', 'Sep 2010'])
 
             // 1st Details header
-            def offset = 5
+            def offset = 6
             t.assertRowEquals(offset, detailsHeader1_09)
             // Details
             t.assertRowEquals(offset+1, branches)
@@ -157,7 +158,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+8, noOfLoanOfficers)
 
             // 2nd Details header
-            offset = 14
+            offset = 15
             t.assertRowEquals(offset, detailsHeader2_09)
 
             t.assertRowEquals(offset+1, noOfActiveLoans)
@@ -193,7 +194,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+27, noDTotal)
 
             // 3rd Details header
-            offset = 42
+            offset = 43
             t.assertRowEquals(offset, detailsHeader3_09)
 
             t.assertRowEquals(offset+1, interestIncome)
@@ -202,7 +203,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+4, incomeTotal)
 
             // 4th Details header
-            offset = 47
+            offset = 48
             t.assertRowEquals(offset, detailsHeader4_09)
             
             t.assertRowEquals(offset+1, overdueAmount_09)
@@ -210,7 +211,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+3, par_09)
 
             // 5th Details header
-            offset = 51
+            offset = 52
             t.assertRowEquals(offset, detailsHeader5_6a_09)
             t.assertRowEquals(offset+1, detailsHeader5_6b)
 
@@ -230,7 +231,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+15, arrearsTotal)
 
             // 6th Details header
-            offset = 67
+            offset = 68
             t.assertRowEquals(offset, detailsHeader5_6a_09)
             t.assertRowEquals(offset+1, detailsHeader5_6b)
 
@@ -242,7 +243,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+7, arrearsTotal)
 
             // 7th Details header
-            offset = 75
+            offset = 76
             t.assertRowEquals(offset, detailsHeader7_09)
             t.assertRowEquals(offset+1, activeBorrowersPerLO)
             t.assertRowEquals(offset+2, netLoanPortfolioPerLO)
@@ -257,9 +258,10 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+11, avgLoanSize)
 
             // Page footer
-            offset = 87
+            offset = 88
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 
@@ -271,18 +273,19 @@ class MFIProgressReportTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.1.', 'selected_period1': '2010-Jul', 'selected_period2': '2010-Aug']
 
+            // MFI name
+            t.assertRowEquals(1, ['Mifos HO'])
+
             // Report title
-            t.assertRowEquals(1, [reportName])
+            t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(2, branchAndMFIName)
-            t.assertCellEquals(3, 1, 'Period 1:')
-            t.assertCellEquals(3, 2, 'Jul 2010')
-            t.assertCellEquals(3, 3, 'Report Creation Date:')
-            t.assertRowEquals(4, ['Period 2:', 'Aug 2010'])
+            t.assertRowEquals(3, branch)
+            t.assertRowEquals(4, ['Period 1:', 'Jul 2010'])
+            t.assertRowEquals(5, ['Period 2:', 'Aug 2010'])
 
             // 1st Details header
-            def offset = 5
+            def offset = 6
             t.assertRowEquals(offset, detailsHeader1_08)
             // Details
             t.assertRowEquals(offset+1, branches)
@@ -295,7 +298,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+8, noOfLoanOfficers)
 
             // 2nd Details header
-            offset = 14
+            offset = 15
             t.assertRowEquals(offset, detailsHeader2_08)
 
             t.assertRowEquals(offset+1, noOfActiveLoans)
@@ -331,7 +334,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+27, noDTotal)
 
             // 3rd Details header
-            offset = 42
+            offset = 43
             t.assertRowEquals(offset, detailsHeader3_08)
 
             t.assertRowEquals(offset+1, interestIncome)
@@ -340,7 +343,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+4, incomeTotal)
 
             // 4th Details header
-            offset = 47
+            offset = 48
             t.assertRowEquals(offset, detailsHeader4_08)
 
             t.assertRowEquals(offset+1, overdueAmount_08)
@@ -348,7 +351,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+3, par_08)
 
             // 5th Details header
-            offset = 51
+            offset = 52
             t.assertRowEquals(offset, detailsHeader5_6a_08)
             t.assertRowEquals(offset+1, detailsHeader5_6b)
 
@@ -368,7 +371,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+15, arrearsTotal_08)
 
             // 6th Details header
-            offset = 67
+            offset = 68
             t.assertRowEquals(offset, detailsHeader5_6a_08)
             t.assertRowEquals(offset+1, detailsHeader5_6b)
 
@@ -380,7 +383,7 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+7, arrearsTotal_08)
 
             // 7th Details header
-            offset = 75
+            offset = 76
             t.assertRowEquals(offset, detailsHeader7_08)
             t.assertRowEquals(offset+1, activeBorrowersPerLO)
             t.assertRowEquals(offset+2, netLoanPortfolioPerLO)
@@ -395,9 +398,10 @@ class MFIProgressReportTest {
             t.assertRowEquals(offset+11, avgLoanSize)
 
             // Page footer
-            offset = 87
+            offset = 88
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
+            t.assertCellEquals(offset+1, 2, 'On:')
         }
     }
 }
