@@ -10,21 +10,21 @@ class LoanOfficerDetailedReportTest {
     def gender = ['Gender:', 'Female', 'To:']
 
     def detailsHeader1 = ['Group Formation', 'Key Dates']
-    def numOfClientsAddedToDate_JoinedMFI = ['# of Clients added(To Date)', '3', 'Joined MFI']
-    def numOfClientsAddedThisPeriod_BecameLO = ['# of Clients added(This Period)', '3', 'Became Loan Officer']
+    def numOfClientsAddedToDate_JoinedMFI = ['# of Clients added(To Date)', '3', 'Joined MFI', '2010-07-20']
+    def numOfClientsAddedThisPeriod_BecameLO = ['# of Clients added(This Period)', '3', 'Became Loan Officer', '2010-07-20']
     def numOfGroupsAddedToDate_BranchMemberships = ['# of Groups added(To Date)', '3', 'Branch Memberships']
     def numOfGroupsAddedThisPeriod_branchMempership_br2 = ['# of Groups added(This Period)', '3', 'br2', '2010-07-20 - Current']
-    def numOfDropoutClientsToDate_leftMFI = ['# of Dropout clients(To Date)', '0', 'Left MFI']
+    def numOfDropoutClientsToDate_leftMFI = ['# of Dropout clients(To Date)', '0', 'Left MFI', '-']
     def numOfDropoutClientsThisPeriod = ['# of Dropout clients(This Period)', '0']
 
     def detailsHeader2 = ['Client Summary', 'Account Summary']
-    def numOfCentersManaged_numOfActiveLoans = ['# of Centers managed', '2', '# of Active Loans', '1']
+    def numOfCentersManaged_numOfActiveLoans = ['# of Centers', '2', '# of Active Loans', '1']
     def numOfGroups_Principal_20100815 = ['# of Groups', '4', 'Principal Amount Outstanding', '2924.9000']
     def numOfGroups_Principal = ['# of Groups', '5', 'Principal Amount Outstanding', '2924.9000']
     def numOfClients_Interest = ['# of Clients', '4', 'Interest Amount Outstanding', '18.1000']
     def numOfClientsWithLoans = ['# of Clients with loans', '1', 'Portfolio at Risk %', '100.00']
     def numOfClientsWithSavings = ['# of Clients with savings', '2', '# of Loans written off', '0']
-    def dormantClients = ['Dormant Clients', '3', 'Amount of loans written off', '0.0000']
+    def dormantClients = ['Dormant Clients (no loans)', '3', 'Amount of loans written off', '0.0000']
     def totalSavings_20100815 = ['Total Savings', '1977.1000']
     def totalSavings = ['Total Savings', '1998.8000']
     def voluntarySavings_20100815 = ['Voluntary Savings', '777.0000']
@@ -88,7 +88,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(3, ['LoanOfficer:', 'br2 LO xxx', 'ID:'])
+            t.assertRowEquals(3, ['LoanOfficer:', 'br2 LO xxx', 'Government ID:'])
             t.assertRowEquals(4, branch)
             t.assertRowEquals(5, gender)
 
@@ -182,7 +182,7 @@ class LoanOfficerDetailedReportTest {
             t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(3, ['LoanOfficer:', 'br2 LO xxx', 'ID:'])
+            t.assertRowEquals(3, ['LoanOfficer:', 'br2 LO xxx', 'Government ID:'])
             t.assertRowEquals(4, branch)
             t.assertRowEquals(5, gender)
 
