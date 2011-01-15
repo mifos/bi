@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Funds Outstanding</title>
+	<title>Balance Outstanding by Source of Funds</title>
 	<author>Jakub Sławiński</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>FundsOutstanding.html</template>
+	<template>BalanceOutstandingBySourceOfFunds.html</template>
 </cdf>
