@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>gen-ktr</name>
+    <name>ppi-gen-sql2</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -10,39 +10,9 @@
     <directory>&#47;</directory>
     <parameters>
         <parameter>
-            <name>EXCEL_DIR</name>
-            <default_value>D:\tmp</default_value>
-            <description>null</description>
-        </parameter>
-        <parameter>
-            <name>EXCEL_FILE</name>
-            <default_value>excel</default_value>
-            <description>null</description>
-        </parameter>
-        <parameter>
-            <name>JDBC_DRIVER</name>
-            <default_value>com.mysql.jdbc.Driver</default_value>
-            <description>null</description>
-        </parameter>
-        <parameter>
-            <name>JDBC_PASSWORD</name>
-            <default_value>sakila</default_value>
-            <description>null</description>
-        </parameter>
-        <parameter>
-            <name>JDBC_URL</name>
-            <default_value>jdbc:mysql:&#47;&#47;localhost:3351&#47;sakila</default_value>
-            <description>null</description>
-        </parameter>
-        <parameter>
-            <name>JDBC_USER</name>
-            <default_value>sakila</default_value>
-            <description>null</description>
-        </parameter>
-        <parameter>
-            <name>SQL</name>
-            <default_value>select 1</default_value>
-            <description>null</description>
+            <name>SQLCOLS</name>
+            <default_value/>
+            <description/>
         </parameter>
     </parameters>
     <log>
@@ -52,7 +22,7 @@
 <size_limit_lines/>
 <interval/>
 <timeout_days/>
-<field><id>ID_BATCH</id><enabled>N</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>N</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>N</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></trans-log-table>
 <perf-log-table><connection/>
 <schema/>
 <table/>
@@ -176,9 +146,180 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Run ${SQL} to get Metadata</from><to>Get Stream Metadata</to><enabled>Y</enabled> </hop>  <hop> <from>Generate &lt;field&gt; definitions</from><to>Merge &lt;field&gt; definitions into transformation template </to><enabled>Y</enabled> </hop>  <hop> <from>Merge &lt;field&gt; definitions into transformation template </from><to>Write gen.ktr transformation</to><enabled>Y</enabled> </hop>  <hop> <from>Load transformation template</from><to>Conctenate lines</to><enabled>Y</enabled> </hop>  <hop> <from>Conctenate lines</from><to>Merge &lt;field&gt; definitions into transformation template </to><enabled>Y</enabled> </hop>  <hop> <from>Get Stream Metadata</from><to>Get Field Format (by Field Data Type)</to><enabled>Y</enabled> </hop>  <hop> <from>Get Field Format (by Field Data Type)</from><to>Generate &lt;field&gt; definitions</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Table input</from><to>Identify Non-null PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Non-null PPILines</from><to>Select PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILines</from><to>Split field to rows</to><enabled>Y</enabled> </hop>  <hop> <from>Split field to rows</from><to>Select PPILine</to><enabled>Y</enabled> </hop>  <hop> <from>Unique rows (HashSet)</from><to>Group by for Final Column List</to><enabled>Y</enabled> </hop>  <hop> <from>Group by for Final Column List</from><to>Modified Java Script Value 2</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILine</from><to>Filter Blanks</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Blanks</from><to>Unique rows (HashSet)</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Conctenate lines</name>
+    <name>Identify Non-null PPILines</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var idx = getInputRowMeta().indexOfValue(&quot;ppi_survey&quot;);
+if ( idx &lt; 0 )
+{
+   var lookupValue = 0;
+}
+else
+{
+   var lookupValue = row[idx];
+} 
+ 
+
+var i;
+var valueMeta;
+var PPILines = &quot;&quot;;
+for (i=0;i&lt;getInputRowMeta().size();i++)
+{
+	valueMeta = getInputRowMeta().getValueMeta(i);
+	if (valueMeta.getTypeDesc().equals(&quot;Number&quot;)) {
+		if(!(row[i]==null)) {
+			PPILines = PPILines + valueMeta.getName() + &quot;;&quot;;
+		}
+	}
+}</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>PPILines</name>
+        <rename>PPILines</rename>
+        <type>String</type>
+        <length>4000</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>178</xloc>
+      <yloc>9</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Table input</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select b.* 
+from dw_ppi_survey s 
+join ppi_category_likelihood_bands b on b.ppi_survey = s.survey_name and b.lower_bound = 0 
+where s.survey_id is not null
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>40</xloc>
+      <yloc>10</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select PPILines</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>PPILines</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>317</xloc>
+      <yloc>9</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Split field to rows</name>
+    <type>SplitFieldToRows3</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+   <splitfield>PPILines</splitfield>
+   <delimiter>;</delimiter>
+   <newfield>PPILine</newfield>
+   <rownum>N</rownum>
+   <rownum_field/>
+   <resetrownumber>Y</resetrownumber>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>463</xloc>
+      <yloc>8</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Unique rows (HashSet)</name>
+    <type>UniqueRowsByHashSet</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <store_values>N</store_values>
+      <reject_duplicate_row>N</reject_duplicate_row>
+      <error_description/>
+    <fields>      <field>        <name>PPILine</name>
+        </field>      </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>789</xloc>
+      <yloc>93</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select PPILine</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>PPILine</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>610</xloc>
+      <yloc>7</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Group by for Final Column List</name>
     <type>GroupBy</type>
     <description/>
     <distribute>Y</distribute>
@@ -199,23 +340,23 @@
       </group>
       <fields>
         <field>
-          <aggregate>transformation_xml</aggregate>
-          <subject>line</subject>
-          <type>CONCAT_STRING</type>
+          <aggregate>columnList</aggregate>
+          <subject>PPILine</subject>
+          <type>CONCAT_COMMA</type>
           <valuefield/>
         </field>
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>249</xloc>
-      <yloc>130</yloc>
+      <xloc>617</xloc>
+      <yloc>95</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Generate &lt;field&gt; definitions</name>
-    <type>AddXML</type>
+    <name>Modified Java Script Value 2</name>
+    <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -223,68 +364,21 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <encoding>UTF-8</encoding>
-    <valueName>field_xml</valueName>
-    <xml_repeat_element>field</xml_repeat_element>
-    <file>
-      <omitXMLheader>Y</omitXMLheader>
-      <omitNullValues>N</omitNullValues>
-    </file>
-    <fields>
-      <field>
-        <name>Fieldname</name>
-        <element>name</element>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <attribute>N</attribute>
-        <attributeParentName/>
-        </field>
-      <field>
-        <name>Type</name>
-        <element>type</element>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <attribute>N</attribute>
-        <attributeParentName/>
-        </field>
-      <field>
-        <name>format</name>
-        <element/>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <attribute>N</attribute>
-        <attributeParentName/>
-        </field>
-    </fields>
-     <cluster_schema/>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>Alert(columnList);</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>577</xloc>
-      <yloc>26</yloc>
+      <xloc>453</xloc>
+      <yloc>95</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Get Field Format (by Field Data Type)</name>
-    <type>ValueMapper</type>
+    <name>Filter Blanks</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -292,200 +386,20 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <field_to_use>Type</field_to_use>
-    <target_field>format</target_field>
-    <non_match_default/>
-    <fields>
-      <field>
-        <source_value>Integer</source_value>
-        <target_value>#</target_value>
-      </field>
-    </fields>
+<send_true_to/>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>PPILine</leftvalue>
+ <function>&gt;=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>&quot;&quot;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>409</xloc>
-      <yloc>26</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Stream Metadata</name>
-    <type>StepMetastructure</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <outputRowcount>N</outputRowcount>
-    <rowcountField/>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>249</xloc>
-      <yloc>26</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Load transformation template</name>
-    <type>FixedInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;ktr-template.ktr</filename>
-    <line_width>255</line_width>
-    <header>N</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
-    <line_feed>Y</line_feed>
-    <parallel>N</parallel>
-    <file_type>NONE</file_type>
-    <encoding>UTF-8</encoding>
-    <add_to_result_filenames>N</add_to_result_filenames>
-    <fields>
-      <field>
-        <name>line</name>
-        <type>String</type>
-        <format/>
-        <trim_type>none</trim_type>
-        <currency/>
-        <decimal/>
-        <group/>
-        <width>255</width>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>87</xloc>
-      <yloc>130</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Merge &lt;field&gt; definitions into transformation template </name>
-    <type>XMLJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <valueXMLField>final_xml</valueXMLField>
-    <targetXMLstep>Conctenate lines</targetXMLstep>
-    <targetXMLfield>transformation_xml</targetXMLfield>
-    <sourceXMLstep>Generate &lt;field&gt; definitions</sourceXMLstep>
-    <sourceXMLfield>field_xml</sourceXMLfield>
-    <complexJoin>N</complexJoin>
-    <joinCompareField/>
-    <targetXPath>&#47;transformation&#47;step[type&#47;text()=&apos;ExcelOutput&apos;]&#47;fields</targetXPath>
-    <encoding>UTF-8</encoding>
-    <omitXMLHeader>N</omitXMLHeader>
-    <omitNullValues>N</omitNullValues>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>577</xloc>
-      <yloc>130</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Run ${SQL} to get Metadata</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>SELECT *
-FROM (
-    ${SQL}
-) a
-WHERE 1 = 0
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>89</xloc>
-      <yloc>25</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Write gen.ktr transformation</name>
-    <type>TextFileOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <separator> </separator>
-    <enclosure/>
-    <enclosure_forced>N</enclosure_forced>
-    <header>N</header>
-    <footer>N</footer>
-    <format>DOS</format>
-    <compression>None</compression>
-    <encoding/>
-    <endedLine/>
-    <fileNameInField>N</fileNameInField>
-    <fileNameField/>
-    <file>
-      <name>${Internal.Transformation.Filename.Directory}&#47;gen</name>
-      <is_command>N</is_command>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
-      <extention>ktr</extention>
-      <append>N</append>
-      <split>N</split>
-      <haspartno>N</haspartno>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format/>
-      <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
-      <fast_dump>N</fast_dump>
-      <splitevery>0</splitevery>
-    </file>
-    <fields>
-      <field>
-        <name>final_xml</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif/>
-        <trim_type>both</trim_type>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>577</xloc>
-      <yloc>236</yloc>
+      <xloc>785</xloc>
+      <yloc>6</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

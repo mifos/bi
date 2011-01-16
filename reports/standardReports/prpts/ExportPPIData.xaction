@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Export PPI Data to Excel</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description>Empty blank action sequence document</description>  
+    <help/>  
+    <result-type/>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <startDate type="string">
+      <sources>
+        <request>startDate</request>
+      </sources>
+      <default-value/>
+    </startDate>
+    <endDate type="string">
+      <sources>
+        <request>endDate</request>
+      </sources>
+      <default-value/>
+    </endDate>
+  </inputs>
+
+  <outputs> 
+    <ClickMessage type="string"/>
+  </outputs>
+
+  <resources> 
+    <transformation-file> 
+      <file> 
+        <location>C:\dev\businessIntelligenceRepo\bi\ETL\ExportToExcel\ppi-gen-ktr.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </file> 
+    </transformation-file>  
+    <transformation-file1> 
+      <file> 
+        <location>C:\dev\businessIntelligenceRepo\bi\ETL\ExportToExcel\ppi-gen.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </file> 
+    </transformation-file1>  
+    <transformation-file2> 
+      <file> 
+        <location>C:\dev\businessIntelligenceRepo\bi\ETL\ExportToExcel\ppi-gen-sql.ktr</location>  
+        <mime-type>text/plain</mime-type> 
+      </file> 
+    </transformation-file2> 
+  </resources>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>JavascriptRule</component-name>
+      <action-type>JavaScript</action-type>
+      <action-outputs> 
+        <SQLCOLS type="string"/> 
+      </action-outputs>
+      <component-definition> 
+        <script><![CDATA[SQLCOLS = ', customer_status, valid_from, valid_to';]]></script> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>KettleComponent</component-name>
+      <action-type>Create Dynamic SQL</action-type>
+      <action-inputs> 
+        <SQLCOLS type="string"/> 
+      </action-inputs>
+      <action-resources> 
+        <transformation-file type="resource" mapping="transformation-file2"/> 
+      </action-resources>
+      <action-outputs> 
+        <transformation-output-rows type="result-set" mapping="dynsql"/> 
+      </action-outputs>
+      <component-definition> 
+        <set-parameter> 
+          <name>SQLCOLS</name>  
+          <mapping>SQLCOLS</mapping> 
+        </set-parameter>  
+        <monitor-step><![CDATA[Generated SQL]]></monitor-step> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>JavascriptRule</component-name>
+      <action-type>GET SQL Parameter</action-type>
+      <action-inputs> 
+        <dynsql type="result-set"/>  
+        <startDate type="string"/>
+        <endDate type="string"/>
+      </action-inputs>
+      <action-outputs> 
+        <SQL type="string"/>  
+        <ClickMessage type="string"/>
+      </action-outputs>
+      <component-definition> 
+        <script><![CDATA[SQL = dynsql.getValueAt(0,0);
+ClickMessage = 'SQL: ' + SQL + '<br>start date is: ' + startDate + '<br>end date is: ' + endDate + '<br><a  href="../../../ExcelDumps/PPIDataDump.xls">Export Finished.  Click here to download.</a>']]></script> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>KettleComponent</component-name>
+      <action-type>Generate PPI transformation</action-type>
+      <action-inputs> 
+        <SQL type="string"/> 
+      </action-inputs>
+      <action-resources> 
+        <transformation-file type="resource"/> 
+      </action-resources>
+      <component-definition> 
+        <set-parameter> 
+          <name>SQL</name>  
+          <mapping>SQL</mapping> 
+        </set-parameter> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>KettleComponent</component-name>
+      <action-type>Run generated PPI transformation</action-type>
+      <action-inputs> 
+        <SQL type="string"/> 
+      </action-inputs>
+      <action-resources> 
+        <transformation-file type="resource" mapping="transformation-file1"/> 
+      </action-resources>
+      <component-definition> 
+        <set-parameter> 
+          <name>SQL</name>  
+          <mapping>SQL</mapping> 
+        </set-parameter> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

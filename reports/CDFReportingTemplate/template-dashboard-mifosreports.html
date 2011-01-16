@@ -65,6 +65,18 @@ function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
 
+function pad2(number) {
+    return (number < 10 ? '0' : '') + number
+}
+
+function setCurrentDate() {
+    xxDate = new Date();
+    return xxDate.getFullYear() + "-" + pad2(xxDate.getMonth() + 1) + "-" + pad2(xxDate.getDate());
+}
+
+
+
+
 function initRunClearButtons() {
 	$('#runReportObj button').removeClass('ui-button')
 	$('#runReportObj button').removeClass('ui-widget')
