@@ -56,8 +56,8 @@
       <component-name>KettleComponent</component-name>
       <action-type>Create Dynamic SQL</action-type>
       <action-inputs> 
-        <startDate type="string"/>
-        <endDate type="string"/>
+        <startDate type="string"/>  
+        <endDate type="string"/> 
       </action-inputs>
       <action-resources> 
         <transformation-file type="resource" mapping="transformation-file2"/> 
@@ -92,7 +92,7 @@
       </action-outputs>
       <component-definition> 
         <script><![CDATA[SQL = dynsql.getValueAt(0,0);
-ClickMessage = 'SQL: ' + SQL + '<br><a  href="../../../ExcelDumps/PPIDataDump.xls">Export Finished.  Click here to download.</a>']]></script> 
+ClickMessage = '<br> <a  href="../../../ExcelDumps/PPIDataDump.xls">Export Finished.  Click here to download.</a>']]></script> 
       </component-definition> 
     </action-definition>
   

@@ -11,7 +11,7 @@
     <parameters>
         <parameter>
             <name>SQL</name>
-            <default_value>select * from dw_account_action</default_value>
+            <default_value/>
             <description>null</description>
         </parameter>
     </parameters>
