@@ -12,22 +12,22 @@
   </documentation>
 
   <inputs> 
-    <startDate type="string">
-      <sources>
-        <request>startDate</request>
-      </sources>
-      <default-value/>
-    </startDate>
-    <endDate type="string">
-      <sources>
-        <request>endDate</request>
-      </sources>
-      <default-value/>
-    </endDate>
+    <startDate type="string"> 
+      <sources> 
+        <request>startDate</request> 
+      </sources>  
+      <default-value/> 
+    </startDate>  
+    <endDate type="string"> 
+      <sources> 
+        <request>endDate</request> 
+      </sources>  
+      <default-value/> 
+    </endDate> 
   </inputs>
 
   <outputs> 
-    <ClickMessage type="string"/>
+    <ClickMessage type="string"/> 
   </outputs>
 
   <resources> 
@@ -53,21 +53,11 @@
   
   <actions> 
     <action-definition> 
-      <component-name>JavascriptRule</component-name>
-      <action-type>JavaScript</action-type>
-      <action-outputs> 
-        <SQLCOLS type="string"/> 
-      </action-outputs>
-      <component-definition> 
-        <script><![CDATA[SQLCOLS = ', customer_status, valid_from, valid_to';]]></script> 
-      </component-definition> 
-    </action-definition>
-  
-    <action-definition> 
       <component-name>KettleComponent</component-name>
       <action-type>Create Dynamic SQL</action-type>
       <action-inputs> 
-        <SQLCOLS type="string"/> 
+        <startDate type="string"/>
+        <endDate type="string"/>
       </action-inputs>
       <action-resources> 
         <transformation-file type="resource" mapping="transformation-file2"/> 
@@ -77,10 +67,14 @@
       </action-outputs>
       <component-definition> 
         <set-parameter> 
-          <name>SQLCOLS</name>  
-          <mapping>SQLCOLS</mapping> 
+          <name>startDate</name>  
+          <mapping>startDate</mapping> 
         </set-parameter>  
-        <monitor-step><![CDATA[Generated SQL]]></monitor-step> 
+        <set-parameter> 
+          <name>endDate</name>  
+          <mapping>endDate</mapping> 
+        </set-parameter>  
+        <monitor-step><![CDATA[SQL Output]]></monitor-step> 
       </component-definition> 
     </action-definition>
   
@@ -89,16 +83,16 @@
       <action-type>GET SQL Parameter</action-type>
       <action-inputs> 
         <dynsql type="result-set"/>  
-        <startDate type="string"/>
-        <endDate type="string"/>
+        <startDate type="string"/>  
+        <endDate type="string"/> 
       </action-inputs>
       <action-outputs> 
         <SQL type="string"/>  
-        <ClickMessage type="string"/>
+        <ClickMessage type="string"/> 
       </action-outputs>
       <component-definition> 
         <script><![CDATA[SQL = dynsql.getValueAt(0,0);
-ClickMessage = 'SQL: ' + SQL + '<br>start date is: ' + startDate + '<br>end date is: ' + endDate + '<br><a  href="../../../ExcelDumps/PPIDataDump.xls">Export Finished.  Click here to download.</a>']]></script> 
+ClickMessage = 'SQL: ' + SQL + '<br><a  href="../../../ExcelDumps/PPIDataDump.xls">Export Finished.  Click here to download.</a>']]></script> 
       </component-definition> 
     </action-definition>
   

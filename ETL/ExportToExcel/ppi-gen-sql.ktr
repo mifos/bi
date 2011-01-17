@@ -10,7 +10,12 @@
     <directory>&#47;</directory>
     <parameters>
         <parameter>
-            <name>SQLCOLS</name>
+            <name>endDate</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>startDate</name>
             <default_value/>
             <description/>
         </parameter>
@@ -70,6 +75,28 @@
   <modified_date>2010&#47;11&#47;26 18:30:27.578</modified_date>
   </info>
   <notepads>
+    <notepad>
+      <note>Select likelihood band data for all Operation surveys and determine which columns are not null.
+Generate the PPI Data Dump SQL and only include the non-null likelihood bands.</note>
+      <xloc>62</xloc>
+      <yloc>265</yloc>
+      <width>478</width>
+      <heigth>35</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
   <connection>
     <name>connection</name>
@@ -146,10 +173,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Modified Java Script Value</from><to>Generated SQL</to><enabled>Y</enabled> </hop>  <hop> <from>Generate Rows</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Select all likelihood bands for Operational Surveys</from><to>Identify Non-null PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Non-null PPILines</from><to>Select PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILines</from><to>Split field to rows</to><enabled>Y</enabled> </hop>  <hop> <from>Split field to rows</from><to>Select PPILine</to><enabled>Y</enabled> </hop>  <hop> <from>Unique rows (HashSet)</from><to>Group by for Final Column List</to><enabled>Y</enabled> </hop>  <hop> <from>Group by for Final Column List</from><to>Create SQL</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILine</from><to>Filter Blanks</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Blanks</from><to>Unique rows (HashSet)</to><enabled>Y</enabled> </hop>  <hop> <from>Create SQL</from><to>SQL Output</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Generate Rows</name>
-    <type>RowGenerator</type>
+    <name>Filter Blanks</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -157,30 +184,269 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>
-      <field>
-        <name>onerow</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>x</nullif>
-        <length>1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <limit>1</limit>
+<send_true_to/>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>PPILine</leftvalue>
+ <function>&gt;=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>&quot;&quot;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>138</xloc>
-      <yloc>62</yloc>
+      <xloc>863</xloc>
+      <yloc>148</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Generated SQL</name>
+    <name>Group by for Final Column List</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <all_rows>N</all_rows>
+      <ignore_aggregate>N</ignore_aggregate>
+      <field_ignore/>
+      <directory>%%java.io.tmpdir%%</directory>
+      <prefix>grp</prefix>
+      <add_linenr>N</add_linenr>
+      <linenr_fieldname/>
+      <give_back_row>N</give_back_row>
+      <group>
+      </group>
+      <fields>
+        <field>
+          <aggregate>columnList</aggregate>
+          <subject>PPILine</subject>
+          <type>CONCAT_COMMA</type>
+          <valuefield/>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>500</xloc>
+      <yloc>148</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Non-null PPILines</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var idx = getInputRowMeta().indexOfValue(&quot;ppi_survey&quot;);
+if ( idx &lt; 0 )
+{
+   var lookupValue = 0;
+}
+else
+{
+   var lookupValue = row[idx];
+} 
+ 
+
+var i;
+var valueMeta;
+var PPILines = &quot;&quot;;
+for (i=0;i&lt;getInputRowMeta().size();i++)
+{
+	valueMeta = getInputRowMeta().getValueMeta(i);
+	if (valueMeta.getTypeDesc().equals(&quot;Number&quot;)) {
+		if(!(row[i]==null)) {
+			PPILines = PPILines + valueMeta.getName() + &quot;;&quot;;
+		}
+	}
+}</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>PPILines</name>
+        <rename>PPILines</rename>
+        <type>String</type>
+        <length>4000</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>348</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create SQL</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+
+
+var SQL = &apos;SELECT ppi_survey, &apos; + columnList + &quot;, &apos;&quot; + getVariable(&quot;startDate&quot;, &quot;&quot;) +&quot;&apos; as startDate &quot;;
+SQL = SQL + &quot;, &apos;&quot; + getVariable(&quot;endDate&quot;, &quot;&quot;) +&quot;&apos; as endDate &quot;
+SQL = SQL + &apos;FROM ppi_category_likelihood_bands&apos;;
+&#47;&#47;Alert(SQL);
+
+&#47;&#47;writeToLog(SQL);</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>SQL</name>
+        <rename>SQL</rename>
+        <type>String</type>
+        <length>4000</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>296</xloc>
+      <yloc>148</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select PPILine</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>PPILine</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>858</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select PPILines</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>PPILines</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>499</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Split field to rows</name>
+    <type>SplitFieldToRows3</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+   <splitfield>PPILines</splitfield>
+   <delimiter>;</delimiter>
+   <newfield>PPILine</newfield>
+   <rownum>N</rownum>
+   <rownum_field/>
+   <resetrownumber>Y</resetrownumber>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>693</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select all likelihood bands for Operational Surveys</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select b.* 
+from dw_ppi_survey s 
+join ppi_category_likelihood_bands b on b.ppi_survey = s.survey_name and b.lower_bound = 0 
+where s.survey_id is not null
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>116</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Unique rows (HashSet)</name>
+    <type>UniqueRowsByHashSet</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <store_values>N</store_values>
+      <reject_duplicate_row>N</reject_duplicate_row>
+      <error_description/>
+    <fields>      <field>        <name>PPILine</name>
+        </field>      </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>701</xloc>
+      <yloc>148</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>SQL Output</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -196,75 +462,8 @@
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>589</xloc>
-      <yloc>66</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Modified Java Script Value</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-function getNonNullLines()
-{
-    DBConnection = &quot;DestinationDB&quot;;
-	sqlLines = &quot;select b.* from dw_ppi_survey s join ppi_category_likelihood_bands b on b.ppi_survey = s.survey_name and b.lower_bound = 0 where s.survey_id is not null&quot;;
-	return fireToDB(DBConnection, sqlLines);
-}
-
-function getLinesHeader()
-{
-    DBConnection = &quot;DestinationDB&quot;;
-	sqlLines = &quot;select b.* from dw_ppi_survey s join ppi_category_likelihood_bands b on b.ppi_survey = s.survey_name and b.lower_bound = 0 where s.survey_id is not null&quot;;
-	return fireToDB(DBConnection, sqlLines);
-}
-
-var queryResult = getNonNullLines();
-
-
-Alert(queryResult[0].length);
-
-	for (var i in queryResult)
-	{
-		Alert(&apos;5: &apos; + queryResult[i][5] + &apos;  6: &apos; + queryResult[i][6] + &apos; 7: &apos; + queryResult[i][7]);
-	}
-
-Alert(queryResult[0]);
-Alert(queryResult[1]);
-Alert(queryResult[2]);
-Alert(queryResult[3]);
-Alert(queryResult[4]);
-Alert(queryResult[5]);
-
-
-
-var SQL = &apos;select customer_key, customer_id&apos; + getVariable(&quot;SQLCOLS&quot;, &quot;&quot;);
-SQL = SQL + &apos; from dim_customer&apos;;
-
-&#47;&#47;Alert(SQL);
-
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>SQL</name>
-        <rename>SQL</rename>
-        <type>String</type>
-        <length>4000</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>366</xloc>
-      <yloc>65</yloc>
+      <xloc>115</xloc>
+      <yloc>149</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
