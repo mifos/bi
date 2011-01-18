@@ -83,9 +83,7 @@ var officeSearchId = "";
 var loanOfficerId = -1;
 var topCustomerHierarchyId = -1;
 
-var currentDate = new Date();
-var month = currentDate.getMonth() + 1;
-var currentDateStr = currentDate.getFullYear() + "-" + pad2(month) + "-" + pad2(currentDate.getDate());
+var currentDateStr = setCurrentDate();
 
 var nextMeetingDate = currentDateStr;
 var nextMeetingDateUpdated = nextMeetingDate;

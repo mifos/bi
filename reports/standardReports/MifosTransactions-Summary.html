@@ -20,10 +20,8 @@
 		<div id=theReportObj></div> 
 <script language="javascript" type="text/javascript">
 
-var currentDate = new Date();
-var month = currentDate.getMonth() + 1;
-var fromDate = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
-var toDate = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
+var fromDate = setCurrentDate();
+var toDate = setCurrentDate();
 var defaultValue = -5;
 var branch_id = defaultValue;
 var transaction_type_id = defaultValue;

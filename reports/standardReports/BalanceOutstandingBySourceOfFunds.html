@@ -37,11 +37,7 @@ var event = 0;
 var officeId = 0;
 var funderId = 0;
 
-var currentDate = new Date();
-var month = currentDate.getMonth() + 1;
-var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
-
-var outDate = currentDateStr;
+var outDate = setCurrentDate();
 var outputType = "application/pdf";
 
 branchSelector = 

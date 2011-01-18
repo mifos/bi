@@ -52,12 +52,8 @@ var event = 0;
 var officeId = 0;
 var loanOfficerId = 0;
 
-var currentDate = new Date();
-var month = currentDate.getMonth() + 1;
-var currentDateStr = currentDate.getFullYear() + "-" + month + "-" + currentDate.getDate();
-
-var startDate = currentDateStr;
-var endDate = currentDateStr;
+var startDate = setCurrentDate();
+var endDate = setCurrentDate();
 var outputType = "application/pdf";
 
 branchSelector = 
