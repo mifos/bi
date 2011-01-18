@@ -32,22 +32,22 @@
 
   <resources> 
     <transformation-file> 
-      <file> 
-        <location>C:\dev\businessIntelligenceRepo\bi\ETL\ExportToExcel\ppi-gen-ktr.ktr</location>  
+      <solution-file> 
+        <location>ExportToExcel/ppi-gen-ktr.ktr</location>  
         <mime-type>text/plain</mime-type> 
-      </file> 
+      </solution-file> 
     </transformation-file>  
     <transformation-file1> 
-      <file> 
-        <location>C:\dev\businessIntelligenceRepo\bi\ETL\ExportToExcel\ppi-gen.ktr</location>  
+      <solution-file> 
+        <location>ExportToExcel/ppi-gen.ktr</location>  
         <mime-type>text/plain</mime-type> 
-      </file> 
+      </solution-file> 
     </transformation-file1>  
     <transformation-file2> 
-      <file> 
-        <location>C:\dev\businessIntelligenceRepo\bi\ETL\ExportToExcel\ppi-gen-sql.ktr</location>  
+      <solution-file> 
+        <location>ExportToExcel/ppi-gen-sql.ktr</location>  
         <mime-type>text/plain</mime-type> 
-      </file> 
+      </solution-file> 
     </transformation-file2> 
   </resources>
   
