@@ -163,7 +163,7 @@
     <append>N</append>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>C:\Program Files\pentahoUpdated\biserver-ce\tomcat\webapps\ExcelDumps\PPIDataDump.xls</name>
+      <name>&#47;mnt&#47;tmp&#47;PPIDataDump.xls</name>
       <extention/>
       <do_not_open_newfile_init>N</do_not_open_newfile_init>
       <split>N</split>
