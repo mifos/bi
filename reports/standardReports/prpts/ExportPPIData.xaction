@@ -27,7 +27,7 @@
   </inputs>
 
   <outputs> 
-    <ClickMessage type="string"/> 
+    <ClickMessage type="string"/>
   </outputs>
 
   <resources> 
@@ -88,11 +88,13 @@
       </action-inputs>
       <action-outputs> 
         <SQL type="string"/>  
-        <ClickMessage type="string"/> 
+        <ClickMessage type="string"/>  
+        <ExportFile type="string"/>
       </action-outputs>
       <component-definition> 
         <script><![CDATA[SQL = dynsql.getValueAt(0,0);
-ClickMessage = '<br> <a  href="../../../pentaho/PPIDataDump.xls">Export Finished.  Click here to download.</a>']]></script> 
+ClickMessage = '<br> <a  href="../../../pentaho/PPIDataDump.csv">Export Finished.  Click here to download.</a>'
+ExportFile = "../../../pentaho/PPIDataDump.xls"]]></script> 
       </component-definition> 
     </action-definition>
   

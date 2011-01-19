@@ -11,7 +11,7 @@
     <parameters>
         <parameter>
             <name>SQL</name>
-            <default_value/>
+            <default_value>select * from dw_account_action</default_value>
             <description>null</description>
         </parameter>
     </parameters>
@@ -256,7 +256,7 @@
     <name>Get Field Format (by Field Data Type)</name>
     <type>ValueMapper</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -358,7 +358,7 @@
     <sourceXMLfield>field_xml</sourceXMLfield>
     <complexJoin>N</complexJoin>
     <joinCompareField/>
-    <targetXPath>&#47;transformation&#47;step[type&#47;text()=&apos;ExcelOutput&apos;]&#47;fields</targetXPath>
+    <targetXPath>&#47;transformation&#47;step[type&#47;text()=&apos;TextFileOutput&apos;]&#47;fields</targetXPath>
     <encoding>UTF-8</encoding>
     <omitXMLHeader>N</omitXMLHeader>
     <omitNullValues>N</omitNullValues>
