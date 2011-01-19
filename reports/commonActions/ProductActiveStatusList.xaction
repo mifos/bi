@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Status for Currently Active Loan or Savings Account</title>
+  <version>1</version>
+  <logging-level>DEBUG</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <productKey type="integer"> 
+      <sources> 
+        <request>productKey</request> 
+      </sources> 
+    </productKey> 
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <productKey type="integer"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <query><![CDATA[select statusValue,statusLabel
+from
+(
+select "AccountState-ActiveInGoodStanding" as statusValue, "Loan - Active in Good Standing" as statusLabel
+union
+select "AccountState-ActiveInBadStanding", "Loan - Active in Bad Standing"
+)as Loan_Status
+where IF({productKey} != 0,
+              {productKey} IN (SELECT product_key
+                       FROM dim_product
+                      WHERE product_type = "Loan-Loan"),
+              0 = 0)
+union
+select statusValue,statusLabel
+from
+(
+select "SavingsStatus-Active" as statusValue, "Saving - Active" as statusLabel
+union
+select "SavingsStatus-Inactive", "Saving - Inactive"
+)as Saving_Status
+where IF({productKey}  != 0,
+              {productKey} IN (SELECT product_key
+                       FROM dim_product
+                      WHERE product_type = "Savings-Savings"),
+              0 = 0)
+union
+select "ALL","ALL"]]></query>  
+        <live><![CDATA[true]]></live> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

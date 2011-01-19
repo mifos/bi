@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Balance Outstanding (For Loan and Saving Accounts)</title>
+	<author>Vishwas Babu A J</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>BalanceOutstanding.html</template>
+</cdf>
