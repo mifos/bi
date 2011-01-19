@@ -46,7 +46,7 @@ var commonActionsSolution = "commonActions";
 Dashboards.globalcontext = false;
 var event = 0;
 
-var startDate = setCurrentDate();
+var startDate = setCurrentDate();;
 var endDate = setCurrentDate();  
 
 date1 = 
@@ -74,7 +74,7 @@ runReport =
   	name: "runReport",
   	type: "Button",
   	htmlObject: "runReportObj",
-  	label: "Run Report",
+  	label: "Export",
   	expression: function(){runTheReport();},
   	executeAtStart: true
 }
@@ -84,7 +84,7 @@ clearReport =
   	name: "clearReport",
   	type: "Button",
   	htmlObject: "clearReportObj",
-  	label: "Clear Report",
+  	label: "Clear",
   	expression: function(){$('#theReportObj').html("");disableClearButton();},
   	executeAtStart: true
 }

@@ -163,7 +163,7 @@
     <append>N</append>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>&#47;opt&#47;pentaho&#47;biserver-ce&#47;tomcat&#47;webapps&#47;ExcelDumps&#47;PPIDataDump.xls</name>
+      <name>..&#47;webapps&#47;pentaho&#47;PPIDataDump.xls</name>
       <extention/>
       <do_not_open_newfile_init>N</do_not_open_newfile_init>
       <split>N</split>
@@ -197,7 +197,7 @@
     <name>Table input</name>
     <type>TableInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -212,8 +212,8 @@
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>72</xloc>
-      <yloc>81</yloc>
+      <xloc>73</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
