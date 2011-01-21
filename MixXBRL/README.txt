@@ -8,6 +8,6 @@ put at biserver-ce/tomcat/webapps/pentaho/WEB-INF/lib
 
 drop "pentaho" folder at $HOME/.mifos/
 
-Setting $HOME/.mifos/pentaho/xbrl-etl.properties
+Setting $HOME/.mifos/pentaho/xbrl-etl.properties (in this package under pentaho folder)
 
 Start Pentaho BI Server

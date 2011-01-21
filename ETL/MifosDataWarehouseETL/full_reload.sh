@@ -26,7 +26,7 @@ PRGDIR=`dirname "$PRG"`
 
 DB_NAME=$1
 PDI_HOME=$2
-MYSQL_ARGS="-u root"
+MYSQL_ARGS="-u root -pmifos"
 echo "drop database $DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DB_NAME" | mysql $MYSQL_ARGS
 mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_mifos_datawarehouse.sql

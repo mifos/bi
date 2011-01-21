@@ -70,8 +70,8 @@
     <name>mifos</name>
     <server>localhost</server>
     <type>MYSQL</type>
-    <access>Native</access>
-    <database>mifos_gazelle_acceptance</database>
+    <access>JNDI</access>
+    <database>SourceDB</database>
     <port>3306</port>
     <username>root</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce7dd794a0c9</password>
