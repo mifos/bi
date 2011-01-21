@@ -1,15 +1,18 @@
 <table>
 <tr>
-<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Loan Status</div><div id=ProductStatusSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td><td width="20">&nbsp;</td>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Product Status</div><div id=ProductStatusSelectorObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>View Group Total</div><div><input id="groupwiseTotalCheckBox" type="checkbox"/></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>View Loan Officer Total</div><div><input id="loanOfficerwiseTotalCheckBox" type="checkbox"/></div></td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
-<td>&nbsp;</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
 <td><div id=runReportObj></div></td>
 <td>&nbsp;</td>
 <td><div id=clearReportObj></div></td>
@@ -57,11 +60,13 @@ var event = 0;
 var officeSearchId = -1;
 var productStatus = 'All';
 var loanOfficerId = 0;
+var groupTotalCheckBoxValue="false";
+var loanOfficerTotalCheckBoxValue="false";
 var productKey = 0;
 
 
 
-var asOnDate = setCurrentDate();
+var date1 = setCurrentDate();
 var outputType = "application/pdf";
 
 branchSelector = 
@@ -78,6 +83,7 @@ branchSelector =
 	postChange: function(){updateLOSelect();},
 	executeAtStart: true
 };
+
 
 
 LOSelector = 
@@ -130,7 +136,7 @@ asOnDate =
 	name: "asOnDate",
 	type: "dateInputComponent",
 	parameters:[],
-	parameter: "asOnDate",
+	parameter: "date1",
 	htmlObject: "dateObj",
 	executeAtStart: true
 };
@@ -175,7 +181,7 @@ theReport =
   	path: prptPath,
   	action: "BalanceOutstanding.prpt",
   	listeners:["event"],
-  	parameters: [["selectedBranch","officeSearchId"],["selectedLoanOfficer","loanOfficerId"],["selectedProduct","productKey"],["selectedProductStatus","productStatus"],["asOnDate","asOnDate"],["output-type","outputType"]],
+  	parameters: [["selectedBranch","officeSearchId"],["selectedLoanOfficer","loanOfficerId"],["selectedProduct","productKey"],["selectedProductStatus","productStatus"],["asOnDate","date1"],["groupTotal","groupTotalCheckBoxValue"],["loanOfficerTotal","loanOfficerTotalCheckBoxValue"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
@@ -194,6 +200,27 @@ $(document).ready(function() {
 	$('#ProductSelectorObj select option:eq(0)').attr('selected', 'selected')
 	productKey = $('#ProductSelectorObj select option:selected').val();
 	updateProductStatusSelect();
+	
+	/**Onchange Listeners for groupwise total checkbox**/
+	$('#groupwiseTotalCheckBox').change(function() {
+		if($("#groupwiseTotalCheckBox").attr("checked")){
+			groupTotalCheckBoxValue="true";
+		}else{
+			groupTotalCheckBoxValue="false";;
+			//alert(groupTotalCheckBoxValue);
+		}
+	});
+	
+	
+	/**Onchange Listeners for loanOfficerWise total checkbox**/
+	$('#loanOfficerwiseTotalCheckBox').change(function() {
+		if($("#loanOfficerwiseTotalCheckBox").attr("checked")){
+			loanOfficerTotalCheckBoxValue="true";
+		}else{
+			loanOfficerTotalCheckBoxValue="false";;
+			//alert(groupTotalCheckBoxValue);
+		}
+	});
 	
 
 });
