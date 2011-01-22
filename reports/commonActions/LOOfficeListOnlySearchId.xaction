@@ -44,8 +44,8 @@ from dim_personnel p
 join dim_office o on p.office_key = o.office_key
 where p.is_loan_officer='1'
 and (o.search_id like concat("{officeSearchId}",'%') or (("{officeSearchId}")='-1')))
-union (select 0, " All")
-union (select 99999, "  Select One")
+union (select 0 as personnel_key, " All" as display_name)
+union (select 99999 as personnel_key, "  Select One" as display_name)
 order by display_name]]></query> 
       </component-definition> 
     </action-definition>

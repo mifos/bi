@@ -37,7 +37,7 @@
       </action-outputs>
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
-        <query><![CDATA[SELECT -2 AS statusValue, "  Select One" AS statusLabel
+        <query><![CDATA[SELECT "-2" AS statusValue, "  Select One" AS statusLabel
 UNION
 SELECT "ALL" AS statusValue, " All" AS statusLabel
 UNION
