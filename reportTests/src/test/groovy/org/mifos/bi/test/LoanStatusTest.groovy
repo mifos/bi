@@ -38,7 +38,7 @@ class LoanStatusTest {
 
             // Page header
             t.assertRowEquals(3, ['As Of:', '2010-12-31', 'Loan Status:', ' All'])
-            t.assertRowEquals(4, ['Branch:', 'All', 'Product:', ' All'])
+            t.assertRowEquals(4, ['Office:', 'All', 'Product:', ' All'])
             t.assertRowEquals(5, ['Loan Officer:', ' All'])
 
             // Details header
@@ -79,7 +79,7 @@ class LoanStatusTest {
 
             // Page header
             t.assertRowEquals(3, ['As Of:', '2010-12-31', 'Loan Status:', ' All'])
-            t.assertRowEquals(4, ['Branch:', 'All', 'Product:', ' All'])
+            t.assertRowEquals(4, ['Office:', 'All', 'Product:', ' All'])
             t.assertRowEquals(5, ['Loan Officer:', 'br2 LO xxx'])
 
             // Details header
@@ -116,7 +116,7 @@ class LoanStatusTest {
 
             // Page header
             t.assertRowEquals(3, ['As Of:', '2010-12-31', 'Loan Status:', ' All'])
-            t.assertRowEquals(4, ['Branch:', 'br4', 'Product:', ' All'])
+            t.assertRowEquals(4, ['Office:', 'br4', 'Product:', ' All'])
             t.assertRowEquals(5, ['Loan Officer:', 'Fees LO xxx'])
 
             // Details header
@@ -149,7 +149,7 @@ class LoanStatusTest {
 
             // Page header
             t.assertRowEquals(3, ['As Of:', '2010-12-31', 'Loan Status:', ' All'])
-            t.assertRowEquals(4, ['Branch:', 'All', 'Product:', 'loan prod 1'])
+            t.assertRowEquals(4, ['Office:', 'All', 'Product:', 'loan prod 1'])
             t.assertRowEquals(5, ['Loan Officer:', 'br2 LO xxx'])
 
             // Details header
@@ -184,7 +184,7 @@ class LoanStatusTest {
 
             // Page header
             t.assertRowEquals(3, ['As Of:', '2010-12-31', 'Loan Status:', 'ActiveInBadStanding'])
-            t.assertRowEquals(4, ['Branch:', 'All', 'Product:', 'loan prod 1'])
+            t.assertRowEquals(4, ['Office:', 'All', 'Product:', 'loan prod 1'])
             t.assertRowEquals(5, ['Loan Officer:', 'br2 LO xxx'])
 
             // Details header
@@ -217,7 +217,7 @@ class LoanStatusTest {
 
             // Page header
             t.assertRowEquals(3, ['As Of:', '2010-12-31', 'Loan Status:', 'Cancel'])
-            t.assertRowEquals(4, ['Branch:', 'All', 'Product:', 'loan prod 1'])
+            t.assertRowEquals(4, ['Office:', 'All', 'Product:', 'loan prod 1'])
             t.assertRowEquals(5, ['Loan Officer:', 'br2 LO xxx'])
 
             // Details header
