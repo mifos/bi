@@ -4,4 +4,4 @@
 
 set -e
 
-/usr/bin/zip -r -x@build/exclude.txt mifos_bi.zip BUILD_ENV.txt LICENSE ETL/MifosDataWarehouseETL reports
+/usr/bin/zip -r -x@build/exclude.txt mifos_bi-1.0.0.zip BUILD_ENV.txt LICENSE ETL/MifosDataWarehouseETL reports
