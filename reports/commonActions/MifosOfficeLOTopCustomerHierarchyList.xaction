@@ -68,8 +68,8 @@ where otop.office_id = {officeId}
 and c.parent_customer_id is null
 and c.status_id in (3,4,9,10,13)
 and (c.loan_officer_id = {loanOfficerId} or -1 = {loanOfficerId}))
-union (select "-1", " All", " ")
-union (select "0", "  Select One", " ")
+union (select -1, " All", " ")
+union (select 0, "  Select One", " ")
 order by 3, 2]]></query> 
       </component-definition> 
     </action-definition>

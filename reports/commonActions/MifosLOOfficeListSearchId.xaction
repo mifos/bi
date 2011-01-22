@@ -45,8 +45,8 @@ join office otop on otop.office_id = {officeId}
 join office o on o.office_id = p.office_id
 		and o.search_id like concat(otop.search_id,'%')
 where p.level_id = 1 and p.personnel_status = 1)
-union (select "-1", " All")
-union (select "0", "  Select One")
+union (select -1, " All")
+union (select 0, "  Select One")
 order by 2]]></query> 
       </component-definition> 
     </action-definition>

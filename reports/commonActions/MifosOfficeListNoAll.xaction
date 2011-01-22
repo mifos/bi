@@ -39,7 +39,7 @@ else ''
 end, display_name) as office_name,
 search_id
 from office)
-union (select "0", "  Select One", "0")
+union (select 0, "  Select One", 0)
 order by search_id]]></query> 
       </component-definition> 
     </action-definition>

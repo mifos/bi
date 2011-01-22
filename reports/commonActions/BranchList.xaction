@@ -32,7 +32,7 @@
         <query><![CDATA[(select distinctrow office_id, display_name
 from dim_office o
 where office_level_id = 5)
-union (select "0", "  Select One")
+union (select 0, "  Select One")
 order by display_name]]></query>
       </component-definition> 
     </action-definition>

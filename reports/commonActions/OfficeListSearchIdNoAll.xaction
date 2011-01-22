@@ -39,7 +39,7 @@ else ''
 end, display_name) as office_name
 from dim_office
 where office_key > 0)
-union (select "-", "  Select One")
+union (select 0, "  Select One")
 order by search_id]]></query> 
       </component-definition> 
     </action-definition>
