@@ -29,7 +29,7 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select distinctrow search_id,
+        <query><![CDATA[(select distinctrow search_id,
 concat( case office_level_id
 when 2 then '.'
 when 3 then '. . '
@@ -38,7 +38,8 @@ when 5 then '. . . . '
 else ''
 end, display_name) as office_name
 from dim_office
-where office_key > 0 
+where office_key > 0)
+union (select "-", "  Select One")
 order by search_id]]></query> 
       </component-definition> 
     </action-definition>

@@ -32,7 +32,8 @@
         <query><![CDATA[(select fund_id, fund_name
 from dw_fund
 where fund_id > 0)
-union (select -1, " All")
+union (select "-1", " All")
+union (select "-", "  Select One")
 order by fund_name]]></query>
       </component-definition> 
     </action-definition>

@@ -21,6 +21,11 @@
 
 function runTheReport()
 {
+    if (office == "-")
+    {
+        alert("Please select appropriate values");
+        return;
+    }
     event = event + 1;
     Dashboards.fireChange("event", event);
     enableClearButton();

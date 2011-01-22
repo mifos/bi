@@ -32,7 +32,8 @@
         <query><![CDATA[(select product_key, prd_offering_name
 from dim_product
 where product_key <> 0)
-union (select 0, " All")
+union (select "0", " All")
+union (select "-", "  Select One")
 order by prd_offering_name]]></query>
       </component-definition> 
     </action-definition>

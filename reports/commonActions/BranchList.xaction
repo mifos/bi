@@ -29,9 +29,10 @@
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select distinctrow office_id, display_name
+        <query><![CDATA[(select distinctrow office_id, display_name
 from dim_office o
-where office_level_id = 5
+where office_level_id = 5)
+union (select "0", "  Select One")
 order by display_name]]></query>
       </component-definition> 
     </action-definition>

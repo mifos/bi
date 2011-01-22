@@ -65,6 +65,11 @@ function runTheReport()
         alert("Next Meeting Date must be on or after Today");
         //return;
     }
+    else if (officeId == 0 || loanOfficerId == 0 || topCustomerHierarchyId == 0)
+    {
+        alert("Please select appropriate values");
+        return;
+    }
 
     event = event + 1;
     Dashboards.fireChange("event", event);

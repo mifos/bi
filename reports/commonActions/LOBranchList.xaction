@@ -46,9 +46,8 @@ join dim_office o on o.office_key = p.office_key
 where p.is_loan_officer = true
 and p.valid_from <= curdate()
 and p.valid_to > curdate())
-union 
-(select -1, "  ALL")
-
+union (select "-1", " All")
+union (select "0", "  Select One")
 order by 2]]></query>
       </component-definition> 
     </action-definition>

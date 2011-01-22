@@ -43,6 +43,11 @@ function updateProductStatusSelect()
 
 function runTheReport()
 {
+    if (officeSearchId == "-" || loanOfficerId == "-" || productKey == "-" || productStatus == "-")
+    {   
+        alert("Please select appropriate values");
+        return;
+    }
     asOnDate = $('#dateObj input').val();
     event = event + 1;
     Dashboards.fireChange("event", event);

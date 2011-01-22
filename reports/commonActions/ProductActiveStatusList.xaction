@@ -37,7 +37,9 @@
       </action-outputs>
       <component-definition> 
         <jndi><![CDATA[DestinationDB]]></jndi>  
-        <query><![CDATA[SELECT "ALL" AS statusValue, "All" AS statusLabel
+        <query><![CDATA[SELECT "-" AS statusValue, "  Select One" AS statusLabel
+UNION
+SELECT "ALL" AS statusValue, " All" AS statusLabel
 UNION
 select statusValue,statusLabel
 from
@@ -46,8 +48,8 @@ select "AccountState-ActiveInGoodStanding" as statusValue, "Loan - Active in Goo
 union
 select "AccountState-ActiveInBadStanding", "Loan - Active in Bad Standing"
 )as Loan_Status
-where IF({productKey} != 0,
-              {productKey} IN (SELECT product_key
+where IF('{productKey}' <> '0',
+              '{productKey}' IN (SELECT product_key
                        FROM dim_product
                       WHERE product_type = "Loan-Loan"),
               0 = 0)
@@ -59,8 +61,8 @@ select "SavingsStatus-Active" as statusValue, "Saving - Active" as statusLabel
 union
 select "SavingsStatus-Inactive", "Saving - Inactive"
 )as Saving_Status
-where IF({productKey}  != 0,
-              {productKey} IN (SELECT product_key
+where IF('{productKey}' <> '0',
+              '{productKey}' IN (SELECT product_key
                        FROM dim_product
                       WHERE product_type = "Savings-Savings"),
               0 = 0)]]></query>  

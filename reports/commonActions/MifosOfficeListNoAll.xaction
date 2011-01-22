@@ -29,15 +29,17 @@
       <component-definition> 
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[select office_id,
+        <query><![CDATA[(select office_id,
 concat( case office_level_id
 when 2 then '.'
 when 3 then '. . '
 when 4 then '. . . '
 when 5 then '. . . . '
 else ''
-end, display_name) as office_name
-from office
+end, display_name) as office_name,
+search_id
+from office)
+union (select "0", "  Select One", "0")
 order by search_id]]></query> 
       </component-definition> 
     </action-definition>

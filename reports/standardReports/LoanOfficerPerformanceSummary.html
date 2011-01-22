@@ -27,6 +27,11 @@ function runTheReport()
         alert("Start Date is after End Date");
         return;
     }
+    if (office == "-")
+    {
+        alert("Please select appropriate values");
+        return;
+    }
 
     event = event + 1;
     Dashboards.fireChange("event", event);

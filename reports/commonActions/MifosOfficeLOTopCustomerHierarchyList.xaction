@@ -53,9 +53,7 @@
       <component-definition> 
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[(select -1 as customer_id, "  ALL" as customer_name, " " as branch_name)
-union 
-(select c.customer_id, concat(c.display_name, ' (', br.display_name, ')') as customer_name, br.display_name as branch_name
+        <query><![CDATA[(select c.customer_id, concat(c.display_name, ' (', br.display_name, ')') as customer_name, br.display_name as branch_name
 from office otop
 join office br on br.search_id like concat(otop.search_id, '%')
 join customer c on c.branch_id = br.office_id
@@ -70,7 +68,8 @@ where otop.office_id = {officeId}
 and c.parent_customer_id is null
 and c.status_id in (3,4,9,10,13)
 and (c.loan_officer_id = {loanOfficerId} or -1 = {loanOfficerId}))
-
+union (select "-1", " All", " ")
+union (select "0", "  Select One", " ")
 order by 3, 2]]></query> 
       </component-definition> 
     </action-definition>

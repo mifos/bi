@@ -20,6 +20,11 @@
 
 function runTheReport()
 {
+    if (officeId == "-" || funderId == "-")
+    {
+        alert("Please select appropriate values");
+        return;
+    }
     outDate = $('#dateObj input').val();
     event = event + 1;
     Dashboards.fireChange("event", event);

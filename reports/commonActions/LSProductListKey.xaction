@@ -44,10 +44,11 @@ loan_status,
 (substring_index(`dim_loan`.`loan_status`, '-', -1)) as status
 from `dim_loan`
 where loan_status <> '-'
-and if({productKey} != 0,
-{productKey} in (select product_key from dim_product where product_type = "Loan-Loan"),
+and if('{productKey}' <> '0',
+'{productKey}' in (select product_key from dim_product where product_type = "Loan-Loan"),
 0 = 0))
 union (select "All", " All" as status)
+union (select "-", "  Select One" as status)
 order by status]]></query> 
       </component-definition> 
     </action-definition>

@@ -39,6 +39,11 @@ function updateLSSelect()
 
 function runTheReport()
 {
+    if (officeSearchId == "-" || loanOfficerId == "-" || productKey == "-" || loanStatus == "-")
+    {
+        alert("Please select appropriate values");
+        return;
+    }
     outDate = $('#dateObj input').val();
     event = event + 1;
     Dashboards.fireChange("event", event);
