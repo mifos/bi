@@ -29,6 +29,10 @@ function runTheReport()
     {
         alert("Start Date is after End Date");
         return;
+    } else if ( officeId == -5 || loanOfficerId == -5 || groupId == -5) 
+    {
+        alert("Please select appropriate values");
+        return;
     }
 
     event = event + 1;
@@ -84,7 +88,7 @@ selectGroup =
         queryDefinition: { dataAccessId: "getGroupsByLoanOfficer", path: "dataAccess/sql-jndi.cda" },
         listeners:["loanOfficerId"],
         parameters: [["loan_officer_id","loanOfficerId"]], // Valid for cdf 4 or higher
-        cdaParams: [["loan_offcier_id","loanOfficerId"]],  // Valid on cdf 3.6
+        cdaParams: [["loan_officer_id","loanOfficerId"]],  // Valid on cdf 3.6
 	htmlObject: "selectGroupObject",
 	executeAtStart: true
 };
