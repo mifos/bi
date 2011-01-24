@@ -14,6 +14,9 @@ class ExamplePrptReportTest {
             t.assertCellEquals(1, 1, "Customer ID")
             t.assertCellEquals(1, 2, "Customer Status")
             t.assertRowEquals(2, ['1'])
+
+            t.assertRowsNumber(4)
+            t.assertAllRowsNumber(4)
         }
     }
 }

@@ -150,6 +150,9 @@ class PrptReport {
             'raw_row': [:],
     ]
 
+    def rows = -1
+    def allRows = -1
+
     def assertRawRowEquals(row, expected) {
         if (tests['raw_row'][row]) {
             throw new RuntimeException("extant test for raw_row ${row} (expecting '${tests['raw_row'][row]}')")
@@ -184,9 +187,19 @@ class PrptReport {
         tests['cell'][row][col] = expected
     }
 
+    def assertRowsNumber(rowsNumber) {
+        rows = rowsNumber;
+    }
+
+    def assertAllRowsNumber(rowsNumber) {
+        allRows = rowsNumber;
+    }
+
     def performAsserts(outputLocation) {
         def nonempty_row_counter = 0;
+        def row_counter = 0;
         new File(outputLocation).eachLine { line, lineno ->
+            row_counter++
             // poor-man's CSV parsing
             def cols = line.tokenize(',')
             // cell-based tests
@@ -212,7 +225,7 @@ class PrptReport {
             }
 
             if (!(line ==~ /^,*$/)) {
-                nonempty_row_counter++;
+                nonempty_row_counter++
                 // cell-based tests
                 if (tests['cell'][nonempty_row_counter]) {
                     (0..cols.size()).each { i ->
@@ -236,6 +249,15 @@ class PrptReport {
                 }
             }
         }
+
+        if (rows != -1) {
+            assertEquals("rows number do not match!", rows, nonempty_row_counter)
+        }
+
+        if (allRows != -1) {
+            assertEquals("all rows number do not match!", allRows, row_counter)
+        }
+
         assertEquals("output exhausted but not all tests were executed!", ['cell': [:], 'raw_cell': [:], 'row': [:], 'raw_row' : [:]], tests)
     }
 
