@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Collection Sheet (India)</title>
+	<author>GFUSA</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>CollectionSheetIndia.html</template>
+</cdf>
