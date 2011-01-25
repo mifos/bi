@@ -22,6 +22,9 @@ class MPESALoanDisbursalsExportTest {
             t.assertRowEquals(2, ['6000.0000'])
             t.assertRowEquals(3, ['3000.0000'])
             t.assertRowEquals(4, ['6000.0000'])
+
+            // Total number of rows
+            t.assertAllRowsNumber(4)
         }
     }
 
@@ -38,6 +41,9 @@ class MPESALoanDisbursalsExportTest {
 
             // Details
             t.assertRowEquals(2, ['6000.0000'])
+
+            // Total number of rows
+            t.assertAllRowsNumber(2)
         }
     }
 
@@ -51,6 +57,9 @@ class MPESALoanDisbursalsExportTest {
 
             // Report header
             t.assertRowEquals(1, reportHeader)
+
+            // Total number of rows
+            t.assertAllRowsNumber(1)
         }
     }
 
