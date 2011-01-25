@@ -4,7 +4,7 @@ import org.junit.Test
 
 class MPESALoanDisbursalsExportTest {
 
-    def reportPath = 'reports/mpesa/MPESALoanDisbursalsExport.prpt'
+    def reportPath = 'reports/mpesa/prpts/MPESALoanDisbursalsExport.prpt'
     def reportHeader = ['Amount', 'CreditIdentityString', 'CreditIdentityStringType', 'ValidationIdentityString', 'ValidationIdentityStringType']
 
     @Test

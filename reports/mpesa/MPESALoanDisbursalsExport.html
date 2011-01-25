@@ -1,0 +1,80 @@
+<table>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Extract Date</div><div id=extractDateObj></div></td><td width="20">&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td>
+<td><div id=runReportObj></div></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+
+<div id=theReportObj style="visibility:hidden"></div>
+
+<script language="javascript" type="text/javascript">
+
+function runTheReport()
+{
+    startDate = $('#extractDateObj input').val();
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+var event = 0;
+
+var extractDate = setCurrentDate();
+var outputType = "text/csv";
+
+date = 
+{
+    name: "date",
+    type: "dateInputComponent",
+    parameters:[],
+    parameter: "extractDate",
+    htmlObject: "extractDateObj",
+    startDate: "TODAY",
+    executeAtStart: true
+};
+
+runReport = 
+{
+    name: "runReport",
+    type: "Button",
+    displayClass: "buttn",
+    htmlObject: "runReportObj",
+    label: "Run Report",
+    expression: function(){runTheReport();},
+    executeAtStart: true
+}
+
+
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: solution,
+  	path: prptPath,
+  	action: "MPESALoanDisbursalsExport.prpt",
+  	listeners:["event"],
+  	parameters: [["extract_date","extractDate"], ["output-type","outputType"]],
+  	htmlObject: "theReportObj",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([date, runReport, theReport]);
+
+$(document).ready(function() {
+	initRunClearButtons();
+});
+
+</script>

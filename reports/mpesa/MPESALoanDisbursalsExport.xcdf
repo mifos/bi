@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>MPESA Loan Disbursals Export</title>
+	<author>Rafał Lewandowski</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>MPESALoanDisbursalsExport.html</template>
+</cdf>
