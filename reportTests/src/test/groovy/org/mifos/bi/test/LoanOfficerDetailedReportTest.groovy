@@ -62,7 +62,7 @@ class LoanOfficerDetailedReportTest {
     def daysInArrears5 = ['> 180 Days in Arrears', '0', '0', '0.0000', '0.0000']
 
     def detailsHeader5 = ['Summary of Centers (Groups) Managed']
-    def detailsHeader5a = ['Name', 'Clients', 'Principal Outstanding', 'Center Savings', 'Arrears Amount', 'PAR']
+    def detailsHeader5a = ['Name', 'Clients', 'Principal Outstanding', 'Center Savings', 'Arrears Amount', 'PAR ratio']
     def center1_20100815 = ['br2 center 1', '3', '2924.9000', '1200.1000', '781.1000', '100.00%']
     def center1 = ['br2 center 1', '3', '2924.9000', '1206.1000', '2924.9000', '100.00%']
     def center2_20100815 = ['center with savings a/c', '0', '0.0000', '777.0000', '0.0000', '0.00%']
