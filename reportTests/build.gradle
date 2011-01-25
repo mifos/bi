@@ -8,5 +8,6 @@ repositories {
 
 dependencies {
     groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.5'
+    groovy group: 'joda-time', name: 'joda-time', version: '1.6'
     groovy group: 'org.mifos.bi.test', name: 'presto', version: '1.0-SNAPSHOT'
 }

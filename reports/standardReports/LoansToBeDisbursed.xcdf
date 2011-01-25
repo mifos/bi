@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Loans To Be Disbursed</title>
+	<author>GFUSA</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>LoansToBeDisbursed.html</template>
+</cdf>

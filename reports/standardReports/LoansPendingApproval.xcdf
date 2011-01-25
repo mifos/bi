@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Loan Status</title>
-	<author>Jakub Sławiński</author>
+	<title>Loans Pending Approval</title>
+	<author>GFUSA</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>LoanStatus.html</template>
+	<template>LoansPendingApproval.html</template>
 </cdf>
