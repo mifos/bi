@@ -8,7 +8,7 @@ import org.joda.time.Days
 class LoansToBeDisbursedTest {
 
     def today = DateTimeFormat.forPattern("yyyy-MM-dd").print(new DateTime())
-    def timeOffset = Days.daysBetween(new DateTime(2010, 12, 31, 12, 0, 0, 0), new DateTime()).getDays()
+    def timeOffset = Days.daysBetween(new DateTime(2010, 12, 31, 0, 0, 0, 0), new DateTime()).getDays()
 
     def mfiName = 'Mifos HO'
     def reportPath = 'reports/standardReports/prpts/LoansToBeDisbursed.prpt'
