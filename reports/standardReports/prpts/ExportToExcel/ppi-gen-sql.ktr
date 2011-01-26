@@ -188,8 +188,8 @@ Generate the PPI Data Dump SQL and only include the non-null likelihood bands.</
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
-var SQL = &apos;SELECT cust.display_name AS customer_name, cast(cust.customer_id as unsigned) AS customer_id, ppi.date_survey_taken AS date_survey_taken, &apos;;
-SQL = SQL + &apos;dw_survey.survey_name AS survey_name, office.display_name AS branch_name, start_cust.start_date as start_date, &apos;;
+var SQL = &apos;SELECT cust.display_name AS &quot;Customer Name&quot;, cast(cust.customer_id as unsigned) AS customer_id, cast(ppi.date_survey_taken as char) AS date_survey_taken, &apos;;
+SQL = SQL + &apos;dw_survey.survey_name AS survey_name, office.display_name AS branch_name, cast(start_cust.start_date as char) as start_date, &apos;;
 SQL = SQL + &apos;disb.prd_offering_name as loan_product_type, disb.initial_loan_amount as initial_loan_amount, &apos;;
 SQL = SQL + &apos;savings.total_savings_balance as total_savings_balance, &apos;;
 SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.gender,&apos;-&apos;,-1), &apos;&apos;) AS gender, &quot;;
@@ -197,8 +197,8 @@ SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.business_activity,&apos;-&apos;,-1
 SQL = SQL + &apos;arrears.principal_in_arrears as principal_in_arrears, &apos;;
 SQL = SQL + &apos;cust.num_children as number_of_children, &apos;;
 SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.education_level,&apos;-&apos;,-1), &apos;&apos;) as education_level, &quot;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.ethnicity,&apos;-&apos;,-1), &apos;&apos;) as ethnicity, &quot;;
-SQL = SQL + &apos;     cust.date_of_birth, cast(ppi.ppi_score as unsigned) AS ppi_score, paramColumnList &apos;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.ethnicity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as ethnicity, &quot;;
+SQL = SQL + &apos;     cast(cust.date_of_birth as char) as date_of_birth, cast(ppi.ppi_score as unsigned) AS ppi_score, paramColumnList &apos;;
 SQL = SQL + &apos;from ppi_category_likelihood_bands cat &apos;;
 SQL = SQL + &apos;join dw_ppi_survey dw_survey on cat.ppi_survey = dw_survey.survey_name &apos;;
 SQL = SQL + &apos;join fact_ppi_survey_results ppi on ppi.survey_id = dw_survey.survey_id &apos;;
