@@ -188,17 +188,17 @@ Generate the PPI Data Dump SQL and only include the non-null likelihood bands.</
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
-var SQL = &apos;SELECT cust.display_name AS &quot;Customer Name&quot;, cast(cust.customer_id as unsigned) AS customer_id, cast(ppi.date_survey_taken as char) AS date_survey_taken, &apos;;
-SQL = SQL + &apos;dw_survey.survey_name AS survey_name, office.display_name AS branch_name, cast(start_cust.start_date as char) as start_date, &apos;;
-SQL = SQL + &apos;disb.prd_offering_name as loan_product_type, disb.initial_loan_amount as initial_loan_amount, &apos;;
-SQL = SQL + &apos;savings.total_savings_balance as total_savings_balance, &apos;;
+var SQL = &apos;SELECT cast(cust.display_name as char) AS &quot;customer name&quot;, cast(cust.customer_id as unsigned) AS &quot;customer id&quot;, cast(ppi.date_survey_taken as char) AS &quot;date survey taken&quot;, &apos;;
+SQL = SQL + &apos;cast(dw_survey.survey_name as char) AS &quot;survey name&quot;, cast(office.display_name as char) AS &quot;branch&quot;, cast(start_cust.start_date as char) as &quot;start date&quot;, &apos;;
+SQL = SQL + &apos;cast(disb.prd_offering_name as char) as &quot;loan product type&quot;, cast(disb.initial_loan_amount as char) as &quot;initial loan amount&quot;, &apos;;
+SQL = SQL + &apos;cast(savings.total_savings_balance as char) as &quot;savings balance&quot;, &apos;;
 SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.gender,&apos;-&apos;,-1), &apos;&apos;) AS gender, &quot;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.business_activity,&apos;-&apos;,-1), &apos;&apos;) as business_activity, &quot;;
-SQL = SQL + &apos;arrears.principal_in_arrears as principal_in_arrears, &apos;;
-SQL = SQL + &apos;cust.num_children as number_of_children, &apos;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.education_level,&apos;-&apos;,-1), &apos;&apos;) as education_level, &quot;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.business_activity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as &quot; + &apos;&quot;business activity&quot;, &apos;;
+SQL = SQL + &apos;cast(arrears.principal_in_arrears as char) as &quot;principal in arrears&quot;, &apos;;
+SQL = SQL + &apos;cast(cust.num_children as char) as &quot;number of children&quot;, &apos;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.education_level,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as &quot; + &apos;&quot;education level&quot;, &apos;;
 SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.ethnicity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as ethnicity, &quot;;
-SQL = SQL + &apos;     cast(cust.date_of_birth as char) as date_of_birth, cast(ppi.ppi_score as unsigned) AS ppi_score, paramColumnList &apos;;
+SQL = SQL + &apos;     cast(cust.date_of_birth as char) as &quot;date of birth&quot;, cast(ppi.ppi_score as unsigned) AS &quot;ppi score&quot;, paramColumnList &apos;;
 SQL = SQL + &apos;from ppi_category_likelihood_bands cat &apos;;
 SQL = SQL + &apos;join dw_ppi_survey dw_survey on cat.ppi_survey = dw_survey.survey_name &apos;;
 SQL = SQL + &apos;join fact_ppi_survey_results ppi on ppi.survey_id = dw_survey.survey_id &apos;;
@@ -276,7 +276,7 @@ SQL = replace(SQL, &quot;paramEndDate&quot;, endD);
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>296</xloc>
+      <xloc>297</xloc>
       <yloc>148</yloc>
       <draw>Y</draw>
       </GUI>
