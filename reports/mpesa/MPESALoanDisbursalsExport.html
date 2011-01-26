@@ -1,6 +1,7 @@
 <table>
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Group</div><div id=selectGroupObject></div></td><td width="20">
 <td><div class=reportLabel>Extract Date</div><div id=extractDateObj></div></td><td width="20">&nbsp;</td>
 </tr>
 <tr>
@@ -30,7 +31,22 @@ Dashboards.globalcontext = false;
 var event = 0;
 
 var extractDate = setCurrentDate();
+var groupId = -1;
 var outputType = "text/csv";
+
+selectGroup =
+{
+    name: "selectGroup",
+    type: "select",
+    parameters:[],
+    solution: commonActionsSolution,
+    path: "/" ,
+    action: "MifosGroupList.xaction",
+    parameter: "groupId",
+    valueAsId: false,
+    htmlObject: "selectGroupObject",
+    executeAtStart: true
+};
 
 date = 
 {
@@ -54,8 +70,6 @@ runReport =
     executeAtStart: true
 }
 
-
-
 theReport = 
 {
   	name: "theReport",
@@ -64,14 +78,14 @@ theReport =
   	path: prptPath,
   	action: "MPESALoanDisbursalsExport.prpt",
   	listeners:["event"],
-  	parameters: [["extract_date","extractDate"], ["output-type","outputType"]],
+  	parameters: [["c_group","groupId"], ["extract_date","extractDate"], ["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([date, runReport, theReport]);
+Dashboards.init([selectGroup, date, runReport, theReport]);
 
 $(document).ready(function() {
 	initRunClearButtons();
