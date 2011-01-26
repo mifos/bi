@@ -11,9 +11,9 @@ class LoansPendingApprovalTest {
     def mfiName = 'Mifos HO'
     def reportPath = 'reports/standardReports/prpts/LoansPendingApproval.prpt'
     def reportName = 'Loans Pending Approval';
-    def detailsHeader = ['Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Loan Status', 'Time in existing status (days)', 'Last edited by']
+    def detailsHeader = ['Office', 'Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Time in existing status (days)', 'Last edited by']
 
-    def total = [' ', ' ', ' ', ' ', '0', ' ', ' ', ' ']
+    def total = ['0']
 
     def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
@@ -25,10 +25,11 @@ class LoansPendingApprovalTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '0', 'selected_product': '0']
 
-            // MFI Name
-            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(2, [reportName])
+            t.assertRowEquals(1, [reportName])
+            // MFI Name
+            t.assertRowEquals(2, [mfiName])
+
 
             // Page header
             t.assertRowEquals(3, ['As Of:', today, 'Office:', 'All'])

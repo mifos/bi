@@ -13,13 +13,13 @@ class LoansToBeDisbursedTest {
     def mfiName = 'Mifos HO'
     def reportPath = 'reports/standardReports/prpts/LoansToBeDisbursed.prpt'
     def reportName = 'Loans To Be Disbursed';
-    def detailsHeader = ['Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Loan Status', 'Time in existing status (days)', 'Last edited by']
+    def detailsHeader = ['Office', 'Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Time in existing status (days)', 'Last edited by']
 
-    def detailsAccount55 = ['000100000000055', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', 'Application approved', String.valueOf(159+timeOffset), 'mifos']
-    def detailsAccount59 = ['000100000000059', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', 'Application approved', String.valueOf(159+timeOffset), 'mifos']
-    def totalAll = [' ', ' ', ' ', ' ', '41000.0000', ' ', ' ', ' ']
-    def totalbr4FeesLOxxx = [' ', ' ', ' ', ' ', '0', ' ', ' ', ' ']
-    def totalAllLoanProd1 = [' ', ' ', ' ', ' ', '18000.0000', ' ', ' ', ' ']
+    def detailsAccount55 = ['br2', '000100000000055', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', String.valueOf(159+timeOffset), 'mifos']
+    def detailsAccount59 = ['br2', '000100000000059', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', String.valueOf(159+timeOffset), 'mifos']
+    def totalAll = ['41000.0000']
+    def totalbr4FeesLOxxx = ['0']
+    def totalAllLoanProd1 = ['18000.0000']
 
     def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
@@ -31,10 +31,11 @@ class LoansToBeDisbursedTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '0', 'selected_product': '0']
 
-            // MFI Name
-            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(2, [reportName])
+            t.assertRowEquals(1, [reportName])
+            // MFI Name
+            t.assertRowEquals(2, [mfiName])
+
 
             // Page header
             t.assertRowEquals(3, ['As Of:', today, 'Office:', 'All'])
@@ -63,10 +64,11 @@ class LoansToBeDisbursedTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '1.1.2.', 'selected_loan_officer': '7', 'selected_product': '0']
 
-            // MFI Name
-            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(2, [reportName])
+            t.assertRowEquals(1, [reportName])
+            // MFI Name
+            t.assertRowEquals(2, [mfiName])
+
 
             // Page header
             t.assertRowEquals(3, ['As Of:', today, 'Office:', 'br4'])
@@ -93,10 +95,11 @@ class LoansToBeDisbursedTest {
             t.reportPath = reportPath
             t.reportParams = ['selected_office': '-1', 'selected_loan_officer': '0', 'selected_product': '1']
 
-            // MFI Name
-            t.assertRowEquals(1, [mfiName])
             // Report title
-            t.assertRowEquals(2, [reportName])
+            t.assertRowEquals(1, [reportName])
+            // MFI Name
+            t.assertRowEquals(2, [mfiName])
+
 
             // Page header
             t.assertRowEquals(3, ['As Of:', today, 'Office:', 'All'])

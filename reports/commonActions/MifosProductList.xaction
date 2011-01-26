@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <action-sequence> 
-  <title>Product List Id</title>
+  <title>Product List Id (Loans only)</title>
   <version>1</version>
   <logging-level>ERROR</logging-level>
   <documentation> 
@@ -30,7 +30,8 @@
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
         <query><![CDATA[(select prd_offering_id, prd_offering_name
-from prd_offering)
+from prd_offering
+where prd_type_id = 1)
 union (select 0 as prd_offering_id, " All" as prd_offering_name)
 union (select 99999 as prd_offering_id, "  Select One" as prd_offering_name)
 order by prd_offering_name]]></query>
