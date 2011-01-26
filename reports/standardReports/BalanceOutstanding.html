@@ -1,13 +1,17 @@
 <table>
 <tr>
-<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>Product Status</div><div id=ProductStatusSelectorObj></div></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>View Group Total</div><div><input id="groupwiseTotalCheckBox" type="checkbox"/></div></td><td width="5">&nbsp;</td>
-<td><div class=reportLabel>View Loan Officer Total</div><div><input id="loanOfficerwiseTotalCheckBox" type="checkbox"/></div></td>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Product Status</div><div id=ProductStatusSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>As On Date</div><div id=dateObj></div></td>
+</tr>
+<tr>
+<td width="200"></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Group Totals</div><div><input id="groupwiseTotalCheckBox" type="checkbox"/></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Loan Officer Totals</div><div><input id="loanOfficerwiseTotalCheckBox" type="checkbox"/></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Branch Totals</div><div><input id="branchwiseTotalCheckBox" type="checkbox"/></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
@@ -48,7 +52,7 @@ function runTheReport()
         alert("Please select appropriate values");
         return;
     }
-    asOnDate = $('#dateObj input').val();
+    date1 = $('#dateObj input').val();
     event = event + 1;
     Dashboards.fireChange("event", event);
     enableClearButton();
@@ -67,6 +71,7 @@ var productStatus = 'All';
 var loanOfficerId = 0;
 var groupTotalCheckBoxValue="false";
 var loanOfficerTotalCheckBoxValue="false";
+var branchTotalCheckBoxValue="false";
 var productKey = 0;
 
 
@@ -186,7 +191,7 @@ theReport =
   	path: prptPath,
   	action: "BalanceOutstanding.prpt",
   	listeners:["event"],
-  	parameters: [["selectedBranch","officeSearchId"],["selectedLoanOfficer","loanOfficerId"],["selectedProduct","productKey"],["selectedProductStatus","productStatus"],["asOnDate","date1"],["groupTotal","groupTotalCheckBoxValue"],["loanOfficerTotal","loanOfficerTotalCheckBoxValue"],["output-type","outputType"]],
+  	parameters: [["selectedBranch","officeSearchId"],["selectedLoanOfficer","loanOfficerId"],["selectedProduct","productKey"],["selectedProductStatus","productStatus"],["asOnDate","date1"],["groupTotal","groupTotalCheckBoxValue"],["loanOfficerTotal","loanOfficerTotalCheckBoxValue"],["branchTotal","branchTotalCheckBoxValue"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
@@ -223,6 +228,16 @@ $(document).ready(function() {
 			loanOfficerTotalCheckBoxValue="true";
 		}else{
 			loanOfficerTotalCheckBoxValue="false";;
+			//alert(groupTotalCheckBoxValue);
+		}
+	});
+	
+	/**Onchange Listeners for branchwise total checkbox**/
+	$('#branchwiseTotalCheckBox').change(function() {
+		if($("#branchwiseTotalCheckBox").attr("checked")){
+			branchTotalCheckBoxValue="true";
+		}else{
+			branchTotalCheckBoxValue="false";;
 			//alert(groupTotalCheckBoxValue);
 		}
 	});
