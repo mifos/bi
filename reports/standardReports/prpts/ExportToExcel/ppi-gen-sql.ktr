@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>ppi-gen-sql</name>
+    <name>ppi-gen-sqlOld</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -173,7 +173,7 @@ Generate the PPI Data Dump SQL and only include the non-null likelihood bands.</
     </attributes>
   </connection>
   <order>
-  <hop> <from>Select all likelihood bands for Operational Surveys</from><to>Identify Non-null PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Non-null PPILines</from><to>Select PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILines</from><to>Split field to rows</to><enabled>Y</enabled> </hop>  <hop> <from>Split field to rows</from><to>Select PPILine</to><enabled>Y</enabled> </hop>  <hop> <from>Unique rows (HashSet)</from><to>Group by for Final Column List</to><enabled>Y</enabled> </hop>  <hop> <from>Group by for Final Column List</from><to>Create SQL</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILine</from><to>Filter Blanks</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Blanks</from><to>Unique rows (HashSet)</to><enabled>Y</enabled> </hop>  <hop> <from>Create SQL</from><to>SQL Output</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Select all likelihood bands for Operational Surveys</from><to>Identify Non-null PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Non-null PPILines</from><to>Select PPILines</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILines</from><to>Split field to rows</to><enabled>Y</enabled> </hop>  <hop> <from>Split field to rows</from><to>Select PPILine</to><enabled>Y</enabled> </hop>  <hop> <from>Group by for Final Column List</from><to>Create SQL</to><enabled>Y</enabled> </hop>  <hop> <from>Select PPILine</from><to>Filter Blanks</to><enabled>Y</enabled> </hop>  <hop> <from>Filter Blanks</from><to>Unique rows (HashSet)</to><enabled>Y</enabled> </hop>  <hop> <from>Create SQL</from><to>SQL Output</to><enabled>Y</enabled> </hop>  <hop> <from>Unique rows (HashSet)</from><to>Set Column Headings for PPI Lines</to><enabled>Y</enabled> </hop>  <hop> <from>Set Column Headings for PPI Lines</from><to>Group by for Final Column List</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create SQL</name>
     <type>ScriptValueMod</type>
@@ -188,17 +188,17 @@ Generate the PPI Data Dump SQL and only include the non-null likelihood bands.</
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
-var SQL = &apos;SELECT cast(cust.display_name as char) AS &quot;customer name&quot;, cast(cust.customer_id as unsigned) AS &quot;customer id&quot;, cast(ppi.date_survey_taken as char) AS &quot;date survey taken&quot;, &apos;;
-SQL = SQL + &apos;cast(dw_survey.survey_name as char) AS &quot;survey name&quot;, cast(office.display_name as char) AS &quot;branch&quot;, cast(start_cust.start_date as char) as &quot;start date&quot;, &apos;;
-SQL = SQL + &apos;cast(disb.prd_offering_name as char) as &quot;loan product type&quot;, cast(disb.initial_loan_amount as char) as &quot;initial loan amount&quot;, &apos;;
-SQL = SQL + &apos;cast(savings.total_savings_balance as char) as &quot;savings balance&quot;, &apos;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.gender,&apos;-&apos;,-1), &apos;&apos;) AS gender, &quot;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.business_activity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as &quot; + &apos;&quot;business activity&quot;, &apos;;
-SQL = SQL + &apos;cast(arrears.principal_in_arrears as char) as &quot;principal in arrears&quot;, &apos;;
-SQL = SQL + &apos;cast(cust.num_children as char) as &quot;number of children&quot;, &apos;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.education_level,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as &quot; + &apos;&quot;education level&quot;, &apos;;
-SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.ethnicity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as ethnicity, &quot;;
-SQL = SQL + &apos;     cast(cust.date_of_birth as char) as &quot;date of birth&quot;, cast(ppi.ppi_score as unsigned) AS &quot;ppi score&quot;, paramColumnList &apos;;
+var SQL = &apos;SELECT cast(cust.display_name as char) AS &quot;Customer Name&quot;, cast(cust.customer_id as unsigned) AS &quot;Customer Id&quot;, cast(ppi.date_survey_taken as char) AS &quot;Date Survey Taken&quot;, &apos;;
+SQL = SQL + &apos;cast(dw_survey.survey_name as char) AS &quot;Survey Name&quot;, cast(office.display_name as char) AS &quot;Branch&quot;, cast(start_cust.start_date as char) as &quot;Start Date&quot;, &apos;;
+SQL = SQL + &apos;cast(disb.prd_offering_name as char) as &quot;Loan Product Type&quot;, cast(disb.initial_loan_amount as char) as &quot;Initial Loan Amount&quot;, &apos;;
+SQL = SQL + &apos;cast(savings.total_savings_balance as char) as &quot;Savings Balance&quot;, &apos;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(cust.gender,&apos;-&apos;,-1), &apos;&apos;) AS Gender, &quot;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.business_activity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as &quot; + &apos;&quot;Business Activity&quot;, &apos;;
+SQL = SQL + &apos;cast(arrears.principal_in_arrears as char) as &quot;Principal in Arrears&quot;, &apos;;
+SQL = SQL + &apos;cast(cust.num_children as char) as &quot;Number of Children&quot;, &apos;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.education_level,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as &quot; + &apos;&quot;Education Level&quot;, &apos;;
+SQL = SQL + &quot;IFNULL(SUBSTRING_INDEX(SUBSTRING_INDEX(cust.ethnicity,&apos;.&apos;,-2 ), &apos;.&apos;, 1), &apos;&apos;) as Ethnicity, &quot;;
+SQL = SQL + &apos;     cast(cust.date_of_birth as char) as &quot;Date of Birth&quot;, cast(ppi.ppi_score as unsigned) AS &quot;PPI Score&quot;, paramColumnList &apos;;
 SQL = SQL + &apos;from ppi_category_likelihood_bands cat &apos;;
 SQL = SQL + &apos;join dw_ppi_survey dw_survey on cat.ppi_survey = dw_survey.survey_name &apos;;
 SQL = SQL + &apos;join fact_ppi_survey_results ppi on ppi.survey_id = dw_survey.survey_id &apos;;
@@ -263,9 +263,8 @@ SQL = replace(SQL, &quot;paramStartDate&quot;, startD);
 SQL = replace(SQL, &quot;paramEndDate&quot;, endD);
 
 &#47;&#47; writeToLog(SQL);
+Alert(SQL);
 
-
-&#47;&#47; test SQL = &quot;select l.* from dim_loan l join dim_customer c on c.customer_key = l.customer_key where l.loan_status = &apos;AccountState-Cancel&apos; and l.branch_key  = 4&quot;;
 
 </jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>SQL</name>
@@ -276,8 +275,8 @@ SQL = replace(SQL, &quot;paramEndDate&quot;, endD);
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>297</xloc>
-      <yloc>148</yloc>
+      <xloc>232</xloc>
+      <yloc>147</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -333,15 +332,15 @@ SQL = replace(SQL, &quot;paramEndDate&quot;, endD);
       <fields>
         <field>
           <aggregate>columnList</aggregate>
-          <subject>PPILine</subject>
+          <subject>PPIColumnHeading</subject>
           <type>CONCAT_COMMA</type>
           <valuefield/>
         </field>
       </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>500</xloc>
-      <yloc>148</yloc>
+      <xloc>364</xloc>
+      <yloc>146</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -536,6 +535,37 @@ where s.survey_id is not null
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>701</xloc>
       <yloc>148</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set Column Headings for PPI Lines</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+var PPIColumnHeading = PPILine + &apos; as &quot;&apos; + replace(PPILine, &quot;_&quot;, &quot; &quot;) + &apos;&quot;&apos;; 
+
+&#47;&#47;Alert(PPIColumnHeading);</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>PPIColumnHeading</name>
+        <rename>PPIColumnHeading</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>547</xloc>
+      <yloc>146</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
