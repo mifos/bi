@@ -19,12 +19,10 @@ class MPESALoanDisbursalsExportTest {
             t.assertRowEquals(1, reportHeader)
 
             // Details
-            t.assertRowEquals(2, ['6000.0000', 'ERROR'])
-            t.assertRowEquals(3, ['3000.0000', '254321654987'])
-            t.assertRowEquals(4, ['6000.0000', 'ERROR'])
+            t.assertRowEquals(2, ['3000.0000', '254321654987', '[Phone Details][Mobile Phone Number]', '[Security Information][National Identity Number]'])
 
             // Total number of rows
-            t.assertAllRowsNumber(4)
+            t.assertAllRowsNumber(2)
         }
     }
 
@@ -40,11 +38,10 @@ class MPESALoanDisbursalsExportTest {
             t.assertRowEquals(1, reportHeader)
 
             // Details
-            t.assertRowEquals(2, ['3000.0000', '254321654987'])
-            t.assertRowEquals(3, ['6000.0000', 'ERROR'])
+            t.assertRowEquals(2, ['3000.0000', '254321654987', '[Phone Details][Mobile Phone Number]', '[Security Information][National Identity Number]'])
 
             // Total number of rows
-            t.assertAllRowsNumber(3)
+            t.assertAllRowsNumber(2)
         }
     }
 
@@ -59,11 +56,8 @@ class MPESALoanDisbursalsExportTest {
             // Report header
             t.assertRowEquals(1, reportHeader)
 
-            // Details
-            t.assertRowEquals(2, ['6000.0000', 'ERROR'])
-
             // Total number of rows
-            t.assertAllRowsNumber(2)
+            t.assertAllRowsNumber(1)
         }
     }
 
@@ -78,11 +72,8 @@ class MPESALoanDisbursalsExportTest {
             // Report header
             t.assertRowEquals(1, reportHeader)
 
-            // Details
-            t.assertRowEquals(2, ['6000.0000', 'ERROR'])
-
             // Total number of rows
-            t.assertAllRowsNumber(2)
+            t.assertAllRowsNumber(1)
         }
     }
 
