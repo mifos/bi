@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Due Vs Collected by Center</title>
+	<author>Adam Balcerzak</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>DueVsCollectedCenter.html</template>
+</cdf>
