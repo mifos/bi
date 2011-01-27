@@ -263,7 +263,7 @@ SQL = replace(SQL, &quot;paramStartDate&quot;, startD);
 SQL = replace(SQL, &quot;paramEndDate&quot;, endD);
 
 &#47;&#47; writeToLog(SQL);
-Alert(SQL);
+&#47;&#47;Alert(SQL);
 
 
 </jsScript_script>
@@ -553,7 +553,7 @@ where s.survey_id is not null
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
-var PPIColumnHeading = PPILine + &apos; as &quot;&apos; + replace(PPILine, &quot;_&quot;, &quot; &quot;) + &apos;&quot;&apos;; 
+var PPIColumnHeading = &quot;cast(&quot; + PPILine + &apos; as char) as &quot;&apos; + replace(PPILine, &quot;_&quot;, &quot; &quot;) + &apos;&quot;&apos;; 
 
 &#47;&#47;Alert(PPIColumnHeading);</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>PPIColumnHeading</name>
