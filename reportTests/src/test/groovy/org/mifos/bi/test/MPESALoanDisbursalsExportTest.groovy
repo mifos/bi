@@ -8,12 +8,12 @@ class MPESALoanDisbursalsExportTest {
     def reportHeader = ['Amount', 'CreditIdentityString', 'CreditIdentityStringType', 'ValidationIdentityString', 'ValidationIdentityStringType']
 
     @Test
-    void testParams_ALL_20100708() {
+    void testParams_All_All_20100708() {
         new PrptReport().execute () { t ->
 
             // Report settings.
             t.reportPath = reportPath
-            t.reportParams = ['c_group': '-1','extract_date': '2010-07-08']
+            t.reportParams = ['c_group': '-1', 'l_product': '0', 'extract_date': '2010-07-08']
 
             // Report header
             t.assertRowEquals(1, reportHeader)
@@ -27,12 +27,12 @@ class MPESALoanDisbursalsExportTest {
     }
 
     @Test
-    void testParams_groupdw12_20100708() {
+    void testParams_groupdw12_All_20100708() {
         new PrptReport().execute () { t ->
 
             // Report settings.
             t.reportPath = reportPath
-            t.reportParams = ['c_group': '5','extract_date': '2010-07-08']
+            t.reportParams = ['c_group': '5','l_product': '0', 'extract_date': '2010-07-08']
 
             // Report header
             t.assertRowEquals(1, reportHeader)
@@ -46,12 +46,12 @@ class MPESALoanDisbursalsExportTest {
     }
 
     @Test
-    void testParams_groupdw11_20100708() {
+    void testParams_groupdw11_All_20100708() {
         new PrptReport().execute () { t ->
 
             // Report settings.
             t.reportPath = reportPath
-            t.reportParams = ['c_group': '2','extract_date': '2010-07-08']
+            t.reportParams = ['c_group': '2', 'l_product': '0', 'extract_date': '2010-07-08']
 
             // Report header
             t.assertRowEquals(1, reportHeader)
@@ -62,12 +62,12 @@ class MPESALoanDisbursalsExportTest {
     }
 
     @Test
-    void testParams_ALL_20100724() {
+    void testParams_ALL_All_20100724() {
         new PrptReport().execute () { t ->
             
             // Report settings.
             t.reportPath = reportPath
-            t.reportParams = ['c_group': '-1', 'extract_date': '2010-07-24']
+            t.reportParams = ['c_group': '-1', 'l_product': '0', 'extract_date': '2010-07-24']
 
             // Report header
             t.assertRowEquals(1, reportHeader)
@@ -78,12 +78,12 @@ class MPESALoanDisbursalsExportTest {
     }
 
      @Test
-    void testParams_groupdw13_20100724() {
+    void testParams_groupdw13_All_20100724() {
         new PrptReport().execute () { t ->
             
             // Report settings.
             t.reportPath = reportPath
-            t.reportParams = ['c_group': '8', 'extract_date': '2010-07-24']
+            t.reportParams = ['c_group': '8', 'l_product': '0', 'extract_date': '2010-07-24']
 
             // Report header
             t.assertRowEquals(1, reportHeader)
@@ -94,12 +94,12 @@ class MPESALoanDisbursalsExportTest {
     }
 
     @Test
-    void testParams_ALL_20100727() {
+    void testParams_ALL_All_20100727() {
         new PrptReport().execute () { t ->
 
             // Report settings.
             t.reportPath = reportPath
-            t.reportParams = ['c_group': '-1', 'extract_date': '2010-07-27']
+            t.reportParams = ['c_group': '-1', 'l_product': '0', 'extract_date': '2010-07-27']
 
             // Report header
             t.assertRowEquals(1, reportHeader)
