@@ -9,10 +9,21 @@
 </tr>
 <tr>
 <td width="200"></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Group Totals</div><div><input id="groupwiseTotalCheckBox" type="checkbox"/></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Loan Officer Totals</div><div><input id="loanOfficerwiseTotalCheckBox" type="checkbox"/></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Branch Totals</div><div><input id="branchwiseTotalCheckBox" type="checkbox"/></div></td><td width="20">&nbsp;</td>
+<td colspan="5" rowspan="2">	
+	<table>
+		<tr>
+			<td colspan="3"  class=reportLabel> Include Totals By:</td>
+		</tr>
+		<tr>
+			<td><input id="groupwiseTotalCheckBox" type="checkbox"/>&nbsp;&nbsp;Group</td>
+			<td style="padding-left:50px;"><input id="loanOfficerwiseTotalCheckBox" type="checkbox"/>&nbsp;&nbsp;Loan Officer</td>
+			<td style="padding-left:50px;"><input id="branchwiseTotalCheckBox" type="checkbox"/>&nbsp;&nbsp;Branch</td>
+		</tr>
+	</table>
+</td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+</tr>
+<tr>
 </tr>
 <tr>
 <td>&nbsp;</td>
