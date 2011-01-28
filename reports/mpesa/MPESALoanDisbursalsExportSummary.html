@@ -2,6 +2,7 @@
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Group</div><div id=selectGroupObject></div></td><td width="20">
+<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Extract Date</div><div id=extractDateObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
@@ -35,6 +36,7 @@ var event = 0;
 
 var extractDate = setCurrentDate();
 var groupId = -1;
+var productKey = 0;
 var outputType = "application/pdf";
 
 selectGroup =
@@ -49,6 +51,20 @@ selectGroup =
     valueAsId: false,
     htmlObject: "selectGroupObject",
     executeAtStart: true
+};
+
+ProductSelector = 
+{
+	name: "ProductSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosProductList.xaction",
+	parameter: "productKey",
+	valueAsId: false,
+	htmlObject: "ProductSelectorObj",
+	executeAtStart: true
 };
 
 date = 
@@ -103,17 +119,23 @@ theReport =
   	path: prptPath,
   	action: "MPESALoanDisbursalsExportSummary.prpt",
   	listeners:["event"],
-  	parameters: [["c_group","groupId"], ["extract_date","extractDate"], ["output-type","outputType"]],
+  	parameters: [["c_group","groupId"], ["l_product","productKey"], ["extract_date","extractDate"], ["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([selectGroup, date, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([selectGroup, ProductSelector, date, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
 	initRunClearButtons();
+
+	$('#selectGroupObject select option:eq(0)').attr('selected', 'selected')
+	groupId = $('#selectGroupObject select option:selected').val();
+
+	$('#ProductSelectorObj select option:eq(0)').attr('selected', 'selected')
+	productKey = $('#ProductSelectorObj select option:selected').val();
 });
 
 </script>
