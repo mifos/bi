@@ -13,6 +13,8 @@
 </table>
 
 <div id=theReportObj style="visibility:hidden"></div>
+<iframe id="myIFrm" src="" style="visibility:hidden">
+</iframe>
 
 <script language="javascript" type="text/javascript">
 
@@ -23,10 +25,21 @@ function runTheReport()
         alert("Please select appropriate values");
         return;
     }
-    startDate = $('#extractDateObj input').val();
+    extractDate = $('#extractDateObj input').val();
+    csvName = "MPESALoanDisbursalsExport_" + extractDate.replace(/-/g, "_") + ".csv";
+    target = generatePath + csvName;
     event = event + 1;
+
     Dashboards.fireChange("event", event);
+    exportReport();
 }
+
+function exportReport()
+{
+    oIFrm = document.getElementById('myIFrm');
+    oIFrm.src = urlPath+csvName;
+}
+
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
@@ -40,6 +53,10 @@ var extractDate = setCurrentDate();
 var groupId = -1;
 var productKey = 0;
 var outputType = "text/csv";
+var csvName = "MPESALoanDisbursalsExport.csv";
+var generatePath = "../webapps/pentaho/";
+var urlPath = "../../../pentaho/";
+var target = generatePath + csvName;
 
 selectGroup =
 {
@@ -86,7 +103,7 @@ runReport =
     type: "Button",
     displayClass: "buttn",
     htmlObject: "runReportObj",
-    label: "Run Report",
+    label: "Export",
     expression: function(){runTheReport();},
     executeAtStart: true
 }
@@ -94,16 +111,14 @@ runReport =
 theReport = 
 {
   	name: "theReport",
-  	type: "prpt",
+  	type: "xaction",
   	solution: solution,
   	path: prptPath,
-  	action: "MPESALoanDisbursalsExport.prpt",
+  	action: "GenerateReport.xaction",
   	listeners:["event"],
-  	parameters: [["c_group","groupId"], ["l_product","productKey"], ["extract_date","extractDate"], ["output-type","outputType"]],
+  	parameters: [["target","target"], ["c_group","groupId"], ["l_product","productKey"], ["extract_date","extractDate"]],
   	htmlObject: "theReportObj",
-  	executeAtStart: false,
-  	paginate: false,
-	showParameters: false
+  	executeAtStart: false
 }
 
 Dashboards.init([selectGroup, ProductSelector, date, runReport, theReport]);
