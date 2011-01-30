@@ -26,7 +26,11 @@ function runTheReport()
         return;
     }
     extractDate = $('#extractDateObj input').val();
-    csvName = "MPESALoanDisbursalsExport_" + extractDate.replace(/-/g, "_") + ".csv";
+    csvName = "MPESALoanDisbursalsExport_" +
+              $('#selectGroupObject select option:selected').text().trim().replace(/ /g, "_") + "_" +
+              $('#ProductSelectorObj select option:selected').text().trim().replace(/ /g, "_") + "_" +
+              extractDate.replace(/-/g, "_") +
+              ".csv";
     target = generatePath + csvName;
     event = event + 1;
 
