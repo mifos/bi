@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>African Collection Sheet Report (only rough work in progress)</title>
+	<title>Collection Sheet (Africa)</title>
 	<author>John Woodlock</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>CollectionSheetReportAfrican.html</template>
+	<template>CollectionSheetAfrica.html</template>
 </cdf>
