@@ -32,9 +32,9 @@ class BalanceOutstandingTest {
   def detailsBr2_SavingsProduct1_20110130 = ['109', 'client charge anyone xxx', '20.0000', 'Active', '2010-08-27', 'Female', 'Group with lots of fees', 'Fees LO xxx']
   def detailsBr2_LoanProduct1_20110128 = ['32', 'br2 client 1 xxx', '3000.0000', '3000.0000', 'Active in Bad Standing', '2010-07-21', 'Female', 'br2 group 1', 'br2 LO xxx', '-']
   def detailsBr2_CentersSavings_20110128 = ['61', 'center with savings a/c', '800.7000', 'Active', '2010-07-25', 'br2 LO xxx']
-  def detailsBr2_GroupSavings_20110128 = ['56', 'group w/o center hierarchy', '0.0000', 'Active', '2010-08-04', 'group w/o center hierarchy', 'br2 LO xxx']
+  def detailsBr2_GroupSavings_20110128 = ['56', 'group w/o center hierarchy', '0.0000', 'Active', '2010-07-25', 'group w/o center hierarchy', 'br2 LO xxx']
   def detailsBr2_SavingProduct1_20110128 = ['30', 'br2 client 1 xxx', '1209.2000', 'Active', '2010-07-21', 'Female', 'br2 group 1', 'br2 LO xxx']
-  def detailsBr2_GroupSavings1_20110128 = ['58', 'client of group w/o center xxx', '0.0000', 'Active', '2010-08-04', 'Male', 'group w/o center hierarchy', 'br2 LO xxx']
+  def detailsBr2_GroupSavings1_20110128 = ['58', 'client of group w/o center xxx', '0.0000', 'Active', '2010-07-25', 'Male', 'group w/o center hierarchy', 'br2 LO xxx']
   def totalBr2_20110128 = ['Total for', 'loan prod 1', '3000.0000', '3000.0000']
   def totalBr2_20110130 = ['Total for', 'savings product 1', '20.0000']
   def totalBr2_LoanProduct_20110128 = ['Total for', 'loan prod 1', '3000.0000', '3000.0000']
@@ -127,7 +127,7 @@ class BalanceOutstandingTest {
       t.assertRowEquals(offset, savingProductsHeader)
       t.assertRowEquals(offset + 1, savingProduct)
 
-      /** Saving Product  **/
+      /** Loan Product  **/
       // Group loan
       t.assertRowEquals(offset + 2, savingProductDetailsHeader)
       // loan prod 1
