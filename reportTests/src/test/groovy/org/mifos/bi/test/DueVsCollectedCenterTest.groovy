@@ -20,8 +20,6 @@ class DueVsCollectedCenterTest {
     def totalbr2_20100930 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
 
-    def grandTotalbr2_20100701_20100815 = ['Grand Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
-    def grandTotalbr2_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -72,12 +70,8 @@ class DueVsCollectedCenterTest {
             // 2nd Group footer
             t.assertRowEquals(offset+10, totalbr2_20100930)
 
-            // Report footer
-            offset = 17
-            t.assertRowEquals(offset, detailsHeader)
-            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
             // Page footer
-            offset = 19
+            offset = 17
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -130,14 +124,10 @@ class DueVsCollectedCenterTest {
             // Branch: br2 -> 2010-09-14
             t.assertRowEquals(offset+9, detailsbr2_20100914)
             // 2nd Group footer
-            t.assertRowEquals(offset+10, totalbr2_20100930)
+            t.assertRowEquals(offset+10, totalbr2_20100930)        
 
-            // Report footer
-            offset = 17
-            t.assertRowEquals(offset, detailsHeader)
-            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
             // Page footer
-            offset = 19
+			offset = 17
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -182,12 +172,8 @@ class DueVsCollectedCenterTest {
             // 2nd Group footer
             t.assertRowEquals(offset+5, totalbr2_20100815)
 
-            // Report footer
-            offset = 12
-            t.assertRowEquals(offset, detailsHeader)
-            t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100815)
             // Page footer
-            offset = 14
+			offset = 12
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
