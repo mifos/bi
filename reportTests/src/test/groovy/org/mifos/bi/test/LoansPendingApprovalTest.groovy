@@ -13,7 +13,7 @@ class LoansPendingApprovalTest {
     def reportName = 'Loans Pending Approval';
     def detailsHeader = ['Office', 'Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Time in existing status (days)', 'Last edited by']
 
-    def total = ['0']
+    def total = ['Total', '0']
 
     def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 

@@ -17,9 +17,9 @@ class LoansToBeDisbursedTest {
 
     def detailsAccount55 = ['br2', '000100000000055', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', String.valueOf(159+timeOffset), 'mifos']
     def detailsAccount59 = ['br2', '000100000000059', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', String.valueOf(159+timeOffset), 'mifos']
-    def totalAll = ['41000.0000']
-    def totalbr4FeesLOxxx = ['0']
-    def totalAllLoanProd1 = ['18000.0000']
+    def totalAll = ['Total', '41000.0000']
+    def totalbr4FeesLOxxx = ['Total', '0']
+    def totalAllLoanProd1 = ['Total', '18000.0000']
 
     def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
