@@ -5,11 +5,11 @@ import org.junit.Test
 class DataDumpReportTest {
     @Test
     void testDataDumpReport() {
-        new PrptReport().execute () { t ->
-            t.reportPath = 'reports/standardReports/PPIDataDumpReport.prpt'
+        new PrptReport().executeFromKjb () { t ->
+            t.reportPath = 'reports/ppiTest/PPIDataDumpJob.kjb'
             t.reportParams = [
-                'startDate': 'dummyParamValue',
-                'endDate': 'dummyParamValue',
+                'startDate': '2011-01-01',
+                'endDate': '2011-02-01',
             ]
             t.assertCellEquals(1, 1, "Client Name")
         }
