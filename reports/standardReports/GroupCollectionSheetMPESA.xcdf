@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>Collection Sheet (Africa)</title>
+	<title>Group Collection Sheet (MPESA)</title>
 	<author>John Woodlock</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>CollectionSheetAfrica.html</template>
+	<template>GroupCollectionSheetMPESA.html</template>
 </cdf>
