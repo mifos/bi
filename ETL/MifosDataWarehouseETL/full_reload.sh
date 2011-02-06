@@ -4,9 +4,9 @@
 #
 #example: full_reload mifos_ppi_dw ~/pentaho-data-integration ~/reportingWorkspace/bi
 
-if [ $# -lt 2 ]
+if [ $# -lt 3 ]
 then
-    echo "Usage: `basename $0` <DB_NAME> <PDI_HOME>"
+    echo "Usage: `basename $0` <DB_NAME> <PDI_HOME> <MYSQL_ARGS>"
     exit 1
 fi
 
@@ -24,9 +24,9 @@ done
 
 PRGDIR=`dirname "$PRG"`
 
-DB_NAME=$1
-PDI_HOME=$2
-MYSQL_ARGS="-u root -pmifos"
+DB_NAME="$1"
+PDI_HOME="$2"
+MYSQL_ARGS="$3"
 echo "drop database $DB_NAME" | mysql $MYSQL_ARGS
 echo "create database $DB_NAME" | mysql $MYSQL_ARGS
 mysql $MYSQL_ARGS $DB_NAME < $PRGDIR/load_mifos_datawarehouse.sql

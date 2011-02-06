@@ -159,7 +159,7 @@ class PrptReport {
 
         def args = "-file=${resolvedReportPath} -param:outputFile=${output.path}"
         for (entry in reportParams) {
-            args += " -param:${entry.key}:${entry.value}"
+            args += " -param:${entry.key}=${entry.value}"
         }
         
         def cmdWithArgs = ''
