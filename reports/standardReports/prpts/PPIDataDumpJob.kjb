@@ -75,7 +75,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;ppi-gen-sql.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;ExportToExcel&#47;ppi-gen-sql.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -113,7 +113,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;ppi-gen-ktr.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;ExportToExcel&#47;ppi-gen-ktr.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
@@ -133,7 +133,10 @@
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>      <parallel>N</parallel>
+            <parameter>            <name>SQL</name>
+            <stream_name/>
+            <value>${SQL}</value>
+            </parameter>      </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>645</xloc>
@@ -145,7 +148,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;ppi-gen.ktr</filename>
+      <filename>&#47;home&#47;rlewan&#47;mifostrunk&#47;bi&#47;reports&#47;standardReports&#47;prpts&#47;ExportToExcel&#47;ppi-ktr-template.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
@@ -168,6 +171,9 @@
             <parameter>            <name>outputFile</name>
             <stream_name/>
             <value>${outputFile}</value>
+            </parameter>            <parameter>            <name>SQL</name>
+            <stream_name/>
+            <value>${SQL}</value>
             </parameter>      </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>

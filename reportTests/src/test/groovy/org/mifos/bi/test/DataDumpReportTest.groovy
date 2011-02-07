@@ -4,7 +4,7 @@ import org.junit.Test
 
 class DataDumpReportTest {
 
-    def reportPath = 'reports/ppiTest/PPIDataDumpJob.kjb'
+    def reportPath = 'reports/standardReports/prpts/PPIDataDumpJob.kjb'
 
     def reportHeader = [
         'Customer Name', 'Customer Id', 'Date Survey Taken', 'Survey Name', 'Branch', 'Start Date', 'Loan Product Type',
