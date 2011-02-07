@@ -35,14 +35,14 @@
 	</td></tr>
 
 	<tr><td ALIGN="RIGHT">
-		<div id="outstandingObj">78993999.8</div>
+		<div id="outstandingObj">33975848.3</div>
 	</td></tr>
 
 	<tr><td>
 	<div class="headone">OVERDUE:</div>
 	</td></tr>
 	<tr><td ALIGN="RIGHT">
-		<div id="overdueObj">1994929.2</div>
+		<div id="overdueObj">4089976.3</div>
 	</td></tr>
 
 	</table>
@@ -72,6 +72,7 @@
 <script language="javascript" type="text/javascript">
 
 var collectionClickedEvent = 0;
+var overdueClickedEvent = 0;
 var selectedBranchId = 0;
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
@@ -100,6 +101,22 @@ function disbursementClicked()
 	alert("Disbursement bit not done yet");
 }
 
+
+var clickFunctionOutstanding = function(){
+ 	alert("Outstanding drilldown not done yet");
+}
+
+var clickFunctionOverdue = function(){
+	$('#displayOneObj').html("");
+	$('#displayTwoObj').html("");
+
+	overdueClickedEvent = overdueClickedEvent + 1;
+	Dashboards.fireChange("overdueClickedEvent", overdueClickedEvent);
+}
+
+var clickFunctionInArrears = function(){
+ 	alert("Thats all for arrears for now");
+}
 
 
 collection = {
@@ -135,14 +152,6 @@ var clickFunction = function(){
 
 var clickFunctionLO = function(){
 	alert("Loan Officer is as far as it goes for the moment");
-}
-
-var clickFunctionOutstanding = function(){
- 	alert("Outstanding drilldown not done yet");
-}
-
-var clickFunctionOverdue = function(){
- 	alert("Overdue drilldown not done yet: " + $(this).text());
 }
 
 var mouseoverFunction = function(){
@@ -181,7 +190,21 @@ var mouseoutFunction = function(){
 	info: true,
       dataAccessId: "getRemainingLoanOfficersCollection", 
 	path: cdaPath
+    },
+
+    inArrearsDef: {
+      colHeaders: ["Id", "-", "# of Loans", "Arrears", "Outstanding"],
+      colTypes: ['numeric','string','numeric','numeric','numeric'],
+      colWidths: ['30px','200px','100px','100px','100px'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: true,
+	filter: true,
+	info: true,
+      dataAccessId: "getInArrears", 
+	path: cdaPath
     }
+
 
   };
 
@@ -230,9 +253,31 @@ var remainingLoanOfficersCollection =
   };
 
 
+var inArrears =
+	{
+ 		name: "inArrears",
+		type: "tableComponent",
+		listeners: ["overdueClickedEvent"],
+
+    		chartDefinition: MetaLayerVar.inArrearsDef,
+    		htmlObject: "displayOneObj",
+    		executeAtStart: false,
+  		postExecution: function(){
+   					var rows = $("#displayOneObj tbody tr");
+   					rows.die("click");
+   					rows.die("mouseover");
+   					rows.die("mouseout");
+   					rows.live("click", clickFunctionInArrears);
+   					rows.live("mouseover",mouseoverFunction);
+   					rows.live("mouseout",mouseoutFunction);
+   					$("#displayOneObj td:nth-child(1), th:nth-child(1)").hide();
+  				}
+  };
+
+
 //
 
-Dashboards.init([collection, disbursement, remainingBranchesCollection, remainingLoanOfficersCollection]);
+Dashboards.init([collection, disbursement, inArrears, remainingBranchesCollection, remainingLoanOfficersCollection]);
 
 
 $(document).ready(function() {
