@@ -255,7 +255,7 @@ SQL = SQL + &apos;    join dim_product p on p.product_key = disb.product_key &ap
 SQL = SQL + &apos;    join fact_ppi_survey_results ppi on ppi.customer_key = c.customer_key  &apos;;
 SQL = SQL + &apos;                and ppi.date_survey_taken between paramStartDate and paramEndDate ) disb on disb.customer_id = cust.customer_id &apos;;
 SQL = SQL + &apos;where ppi.date_survey_taken between paramStartDate and paramEndDate &apos;;
-SQL = SQL + &apos;order by cust.display_name, ppi.date_survey_taken &apos;;
+SQL = SQL + &apos;order by cust.display_name, ppi.date_survey_taken, dw_survey.survey_name&apos;;
 
 startD = &quot;&apos;&quot; + getVariable(&quot;startDate&quot;, &quot;&quot;) + &quot;&apos;&quot;;
 endD = &quot;&apos;&quot; + getVariable(&quot;endDate&quot;, &quot;&quot;) + &quot;&apos;&quot;;
