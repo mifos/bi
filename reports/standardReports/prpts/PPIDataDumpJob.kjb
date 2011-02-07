@@ -148,7 +148,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>&#47;home&#47;rlewan&#47;mifostrunk&#47;bi&#47;reports&#47;standardReports&#47;prpts&#47;ExportToExcel&#47;ppi-ktr-template.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;ExportToExcel&#47;ppi-ktr-template.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
