@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CDADescriptor>
+
+    <DataSources>
+        <Connection id="1" type="sql.jndi">
+            <Jndi>SourceDB</Jndi>
+        </Connection>
+
+        <Connection id="2" type="sql.jndi">
+            <Jndi>DestinationDB</Jndi>
+        </Connection>
+
+    </DataSources>
+
+
+    <DataAccess id="getRemainingBranchesCollection" connection="2" type="sql" access="public" cache="false" cacheDuration="3600">
+		   <Name>Get Remaining Branches for Collections</Name>
+<Query>
+<![CDATA[
+
+select o.office_id as branch_id, o.display_name as branch_name, 
+cast(round(expected_amount, 1) as char) as expected, 
+cast(round(collected_amount, 1) as char) as collected, 
+cast(round(((collected_amount * 100) / expected_amount),1) as char) as collected_pc
+from spike_dashboard_branches sdb
+join dim_office o on o.office_id = sdb.branch_id
+                    and o.valid_from <= curdate() and o.valid_to > curdate()
+where sdb.collected_amount < sdb.expected_amount
+]]>
+</Query>
+
+    </DataAccess>
+
+
+    <DataAccess id="getRemainingLoanOfficersCollection" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+		   <Name>Get Remaining Loan Officers for Collections</Name>
+<Query>
+<![CDATA[
+
+select p.personnel_id as loan_officer_id, p.display_name as loan_officer,
+cast(round(sum(lse.principal), 1) as char) as expected, 
+cast(round(sum(lse.principal_paid), 1) as char) as collected, 
+cast(round(((sum(lse.principal_paid) * 100) / sum(lse.principal)),1) as char) as collected_pc
+
+from loan_schedule lse
+join account a on a.account_id = lse.account_id
+join personnel p on p.personnel_id = a.personnel_id
+join office o on o.office_id = a.office_id
+where  lse.action_date = '2010-11-18'
+and a.office_id = ${selectedBranchId}  
+group by p.personnel_id
+]]>
+</Query>
+
+        <Parameters>
+            <Parameter name="selectedBranchId" type="Integer" default="-999"/>
+        </Parameters>
+    </DataAccess>
+
+
+
+</CDADescriptor>

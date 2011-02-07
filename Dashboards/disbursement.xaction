@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<action-sequence> 
+  <name>PieChart1.xaction</name>
+  <title>Arrears by Branch Bar Chart</title>
+  <version>1</version>
+  <logging-level>TRACE</logging-level>
+  <documentation> 
+    <author>John Woodlock</author>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs/>
+
+  <outputs> 
+    <image-tag type="string"/>  
+    <!--query_result/-->  
+    <!--swresult/--> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs/>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select "Disbursed", 56789.6 as disbursed)
+UNION ALL
+(select "Remaining", 23999.3 as remaining)]]></query> 
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>ChartComponent</component-name>
+      <action-type>Pie Chart</action-type>
+      <action-inputs> 
+        <chart-data type="result-set" mapping="query_result"/> 
+      </action-inputs>
+      <action-outputs> 
+        <image-tag type="string"/> 
+      </action-outputs>
+      <component-definition>
+        <chart-attributes> 
+          <chart-type>PieChart</chart-type>  
+          <color-palette> 
+            <color>#09B4ED</color>  
+            <color>#DCE4D0</color> 
+          </color-palette>  
+          <url-template><![CDATA[javascript:disbursementClicked()]]></url-template>  
+          <title-font> 
+            <is-bold>false</is-bold>  
+            <size>14</size>
+            <font-family>Verdana</font-family>
+          </title-font> 
+        </chart-attributes>  
+        <width><![CDATA[400]]></width>  
+        <height><![CDATA[300]]></height>  
+        <title><![CDATA[DISBURSEMENT]]></title>
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

@@ -1,0 +1,1 @@
+The template-dashboard-dashboards.html file is a template file that needs to go in the pentaho biserver-ce\pentaho-solutions\system\pentaho-cdf directory.
