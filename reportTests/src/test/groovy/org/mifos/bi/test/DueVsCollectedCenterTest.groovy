@@ -8,7 +8,7 @@ class DueVsCollectedCenterTest {
     def reportName = 'Due vs Collected by Center'
     def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
 
-    def firstLoanOfficer = ['Loan Officer:', 'br2 LO xxx', 'Center:', 'br2_center_1']
+    def firstLoanOfficer = ['Center:', 'br2_center_1'] 
     def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000']
     def detailsbr2_20100803 = ['2010-08-03', '428.1000', '2.9000', '0.0000', '0.0000', '0.0000', '0.0000']
     def detailsbr2_20100810 = ['2010-08-10', '428.1000', '2.9000', '353.0000', '0.0000', '0.0000', '0.0000']
