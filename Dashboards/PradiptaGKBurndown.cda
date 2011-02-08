@@ -58,35 +58,4 @@ group by p.personnel_id
     </DataAccess>
 
 
-
-    <DataAccess id="getInArrears" connection="2" type="sql" access="public" cache="false" cacheDuration="3600">
-		   <Name>get In Arrears</Name>
-<Query>
-<![CDATA[
-select wbouter.arrears_band_monthly_key as monthly_key,
-wbouter.past_due_description as in_arrears_band,
-cast(arrears_p1.loans as char) as loans_p1,
-cast(arrears_p1.total_in_arrears as char) as in_arrears_p1,
-cast(arrears_p1.total_outstanding as char) as outstanding_p1
-from dw_arrears_band_monthly wbouter 
-
-left join 
-(select wb.arrears_band_monthly_key,
-count(distinct(hla.loan_account_id)) as loans,
-round(sum(total_in_arrears),1) as total_in_arrears,
-round(sum(total_outstanding),1) as total_outstanding
-from hist_loan_arrears hla
-join dw_arrears_band_monthly wb on wb.arrears_band_monthly_key = hla.arrears_band_monthly_key
-join dw_mfi_configuration config on config.mfi_configuration_key = 1
-where hla.as_of_date = date('2010-11-17')
-and hla.days_in_arrears > config.loan_lateness_days
-group by wb.arrears_band_monthly_key) arrears_p1 on arrears_p1.arrears_band_monthly_key = wbouter.arrears_band_monthly_key
-
-order by wbouter.arrears_band_monthly_key
-]]>
-</Query>
-    </DataAccess>
-
-
-
 </CDADescriptor>

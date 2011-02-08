@@ -26,29 +26,6 @@
 <table>
 <tr>
 <td VALIGN="TOP">
-	<table>
-	<tr><td>
-	<div><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></div>
-	</td></tr>
-	<tr><td>
-	<div class="headone">OUTSTANDING:</div>
-	</td></tr>
-
-	<tr><td ALIGN="RIGHT">
-		<div id="outstandingObj">33975848.3</div>
-	</td></tr>
-
-	<tr><td>
-	<div class="headone">OVERDUE:</div>
-	</td></tr>
-	<tr><td ALIGN="RIGHT">
-		<div id="overdueObj">4089976.3</div>
-	</td></tr>
-
-	</table>
-
-</td>
-<td VALIGN="TOP">
 	<div id=collectionObj></div>
 </td>
 <td VALIGN="TOP">
@@ -72,7 +49,6 @@
 <script language="javascript" type="text/javascript">
 
 var collectionClickedEvent = 0;
-var overdueClickedEvent = 0;
 var selectedBranchId = 0;
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
@@ -99,23 +75,6 @@ function disbursementClicked()
 	$('#displayTwoObj').html("");
 
 	alert("Disbursement bit not done yet");
-}
-
-
-var clickFunctionOutstanding = function(){
- 	alert("Outstanding drilldown not done yet");
-}
-
-var clickFunctionOverdue = function(){
-	$('#displayOneObj').html("");
-	$('#displayTwoObj').html("");
-
-	overdueClickedEvent = overdueClickedEvent + 1;
-	Dashboards.fireChange("overdueClickedEvent", overdueClickedEvent);
-}
-
-var clickFunctionInArrears = function(){
- 	alert("Thats all for arrears for now");
 }
 
 
@@ -173,7 +132,7 @@ var mouseoutFunction = function(){
       tableStyle: "classic",
 	paginate: false,
 	sort: true,
-	filter: true,
+	filter: false,
 	info: true,
       dataAccessId: "getRemainingBranchesCollection", 
 	path: cdaPath
@@ -186,25 +145,11 @@ var mouseoutFunction = function(){
       tableStyle: "classic",
 	paginate: false,
 	sort: true,
-	filter: true,
+	filter: false,
 	info: true,
       dataAccessId: "getRemainingLoanOfficersCollection", 
 	path: cdaPath
-    },
-
-    inArrearsDef: {
-      colHeaders: ["Id", "-", "# of Loans", "Arrears", "Outstanding"],
-      colTypes: ['numeric','string','numeric','numeric','numeric'],
-      colWidths: ['30px','200px','100px','100px','100px'],
-      tableStyle: "classic",
-	paginate: false,
-	sort: true,
-	filter: true,
-	info: true,
-      dataAccessId: "getInArrears", 
-	path: cdaPath
     }
-
 
   };
 
@@ -253,51 +198,8 @@ var remainingLoanOfficersCollection =
   };
 
 
-var inArrears =
-	{
- 		name: "inArrears",
-		type: "tableComponent",
-		listeners: ["overdueClickedEvent"],
-
-    		chartDefinition: MetaLayerVar.inArrearsDef,
-    		htmlObject: "displayOneObj",
-    		executeAtStart: false,
-  		postExecution: function(){
-   					var rows = $("#displayOneObj tbody tr");
-   					rows.die("click");
-   					rows.die("mouseover");
-   					rows.die("mouseout");
-   					rows.live("click", clickFunctionInArrears);
-   					rows.live("mouseover",mouseoverFunction);
-   					rows.live("mouseout",mouseoutFunction);
-   					$("#displayOneObj td:nth-child(1), th:nth-child(1)").hide();
-  				}
-  };
-
-
 //
 
-Dashboards.init([collection, disbursement, inArrears, remainingBranchesCollection, remainingLoanOfficersCollection]);
-
-
-$(document).ready(function() {
-   
-	var arbitraryClick = $("#outstandingObj");
-   	arbitraryClick.die("click");
-   	arbitraryClick.die("mouseover");
-   	arbitraryClick.die("mouseout");
-   	arbitraryClick.live("click", clickFunctionOutstanding);
-   	arbitraryClick.live("mouseover",mouseoverFunction);
-   	arbitraryClick.live("mouseout",mouseoutFunction);
-
-	var arbitraryClick = $("#overdueObj");
-   	arbitraryClick.die("click");
-   	arbitraryClick.die("mouseover");
-   	arbitraryClick.die("mouseout");
-   	arbitraryClick.live("click", clickFunctionOverdue);
-   	arbitraryClick.live("mouseover",mouseoverFunction);
-   	arbitraryClick.live("mouseout",mouseoutFunction);
-
-});
+Dashboards.init([collection, disbursement, remainingBranchesCollection, remainingLoanOfficersCollection]);
 
 </script>
