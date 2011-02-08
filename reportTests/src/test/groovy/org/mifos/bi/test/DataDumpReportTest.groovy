@@ -25,7 +25,7 @@ class DataDumpReportTest {
     ]
 
     @Test
-    void test_PPIKenya2008_20100101_20110101() {
+    void test_20100101_20110101() {
         new PrptReport().executeFromKjb () { t ->
             t.reportPath = reportPath
             t.reportParams = [
@@ -36,8 +36,15 @@ class DataDumpReportTest {
             // Check report header:
             t.assertRowEquals(1, reportHeader)
 
+            // Check row for PPI Bolivia 2009:
+            t.assertRowEquals(3, ['client dw1 2 1 xxx', '6', '2010-11-01', 'PPI Bolivia 2009', 'BO 1', '2010-07-03', '50.0000', 'Female', '1987-07-07', '0', '75.7', '72.5', '78.8', '100.0', '100.0', '100.0', '95.6', '95.6'])
+
             // Check row for PPI Kenya 2008:
             t.assertRowEquals(16, ['client dw1 2 1 xxx', '6', '2010-11-01', 'PPI Kenya 2008', 'BO 1', '2010-07-03', '50.0000', 'Female', '1987-07-07', '0', '55.8', '81.2', '63.1', '10.0', '63.4'])
-        }
+
+            // Check row for PPI Honduras 2010:
+            t.assertRowEquals(45, ['client dw1 2 1 xxx', '6', '2010-11-02', 'PPI Honduras 2010', 'BO 1', '2010-07-03', '50.0000', 'Female', '1987-07-07', '100', '0.0', '0.0', '0.0', '2.7', '0.0', '2.7'])
+        }  
     }
 }
+
