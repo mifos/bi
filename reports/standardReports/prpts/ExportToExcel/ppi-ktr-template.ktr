@@ -16,7 +16,7 @@
         </parameter>
         <parameter>
             <name>outputFile</name>
-            <default_value>..&#47;..&#47;..&#47;pentaho&#47;PPIDataDump.csv</default_value>
+            <default_value>..&#47;webapps&#47;pentaho&#47;PPIDataDump.csv</default_value>
             <description/>
         </parameter>
     </parameters>
@@ -71,8 +71,6 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
-  <created_user/>
-  <created_date>2011&#47;02&#47;07 16:53:01.672</created_date>
   <modified_user>-</modified_user>
   <modified_date>2010&#47;11&#47;26 18:30:27.578</modified_date>
   </info>
@@ -192,7 +190,6 @@
     <separator>,</separator>
     <enclosure>&quot;</enclosure>
     <enclosure_forced>N</enclosure_forced>
-    <enclosure_fix_disabled>Y</enclosure_fix_disabled>
     <header>Y</header>
     <footer>N</footer>
     <format>DOS</format>
