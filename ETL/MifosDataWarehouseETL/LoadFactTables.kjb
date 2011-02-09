@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>640</xloc>
-      <yloc>164</yloc>
+      <xloc>711</xloc>
+      <yloc>231</yloc>
       </entry>
     <entry>
       <name>Load fact_client_attendances</name>
@@ -236,8 +236,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>474</xloc>
-      <yloc>303</yloc>
+      <xloc>403</xloc>
+      <yloc>333</yloc>
       </entry>
     <entry>
       <name>Load fact_customer_fees_and_charges</name>
@@ -268,8 +268,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>606</xloc>
-      <yloc>247</yloc>
+      <xloc>661</xloc>
+      <yloc>301</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_fees_and_charges</name>
@@ -302,6 +302,70 @@
       <nr>0</nr>
       <xloc>562</xloc>
       <yloc>92</yloc>
+      </entry>
+    <entry>
+      <name>Load fact_customer_fees_and_charges_scheduled</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_CustomerFeesChargesPenaltiesScheduled.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>552</xloc>
+      <yloc>370</yloc>
+      </entry>
+    <entry>
+      <name>Load fact_loan_fees_and_charges_scheduled</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanFeesChargesPenaltiesScheduled.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>724</xloc>
+      <yloc>151</yloc>
       </entry>
   </entries>
   <hops>
@@ -368,14 +432,32 @@
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
     </hop>
+    <hop>
+      <from>START</from>
+      <to>Load fact_customer_fees_and_charges_scheduled</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Load fact_loan_fees_and_charges_scheduled</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
   </hops>
   <notepads>
     <notepad>
       <note>Need to think about putting timestamp on fca and dls</note>
       <xloc>15</xloc>
       <yloc>170</yloc>
-      <width>266</width>
-      <heigth>22</heigth>
+      <width>359</width>
+      <heigth>27</heigth>
       <fontname/>
       <fontsize>-1</fontsize>
       <fontbold>N</fontbold>
