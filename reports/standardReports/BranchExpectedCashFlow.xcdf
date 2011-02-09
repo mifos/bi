@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cdf>
-	<title>Branch Expected Cash Flow</title>
-	<author>Jakub Sławiński</author>
-	<description></description>
-	<icon></icon>
-	<style>mifosreports</style>
-	<template>BranchExpectedCashFlow.html</template>
-</cdf>

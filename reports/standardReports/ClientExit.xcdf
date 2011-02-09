@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cdf>
-	<title>Client Exit Report</title>
-	<author>Mifos developers</author>
-	<description>Report of client exits.</description>
-	<icon></icon>
-	<style>mifosreports</style>
-	<template>ClientExit.html</template>
-</cdf>

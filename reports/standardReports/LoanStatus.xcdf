@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cdf>
-	<title>Loan Status</title>
-	<author>Jakub Sławiński</author>
-	<description></description>
-	<icon></icon>
-	<style>mifosreports</style>
-	<template>LoanStatus.html</template>
-</cdf>
