@@ -76,8 +76,8 @@
       <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>337</xloc>
-      <yloc>153</yloc>
+      <xloc>492</xloc>
+      <yloc>168</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_disbursals</name>
@@ -108,8 +108,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>711</xloc>
-      <yloc>231</yloc>
+      <xloc>850</xloc>
+      <yloc>200</yloc>
       </entry>
     <entry>
       <name>Load fact_client_attendances</name>
@@ -140,8 +140,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>102</xloc>
-      <yloc>95</yloc>
+      <xloc>850</xloc>
+      <yloc>74</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_repayments</name>
@@ -172,8 +172,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>480</xloc>
-      <yloc>31</yloc>
+      <xloc>850</xloc>
+      <yloc>16</yloc>
       </entry>
     <entry>
       <name>Load dw_loan_schedules</name>
@@ -204,8 +204,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>135</xloc>
-      <yloc>22</yloc>
+      <xloc>157</xloc>
+      <yloc>38</yloc>
       </entry>
     <entry>
       <name>Load fact_savings_transactions</name>
@@ -236,8 +236,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>403</xloc>
-      <yloc>333</yloc>
+      <xloc>850</xloc>
+      <yloc>328</yloc>
       </entry>
     <entry>
       <name>Load fact_customer_fees_and_charges</name>
@@ -268,8 +268,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>661</xloc>
-      <yloc>301</yloc>
+      <xloc>850</xloc>
+      <yloc>264</yloc>
       </entry>
     <entry>
       <name>Load fact_loan_fees_and_charges</name>
@@ -300,16 +300,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>562</xloc>
-      <yloc>92</yloc>
+      <xloc>850</xloc>
+      <yloc>135</yloc>
       </entry>
     <entry>
-      <name>Load fact_customer_fees_and_charges_scheduled</name>
+      <name>Load dw_customer_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_CustomerFeesChargesPenaltiesScheduled.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Customer_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -332,16 +332,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>552</xloc>
-      <yloc>370</yloc>
+      <xloc>158</xloc>
+      <yloc>193</yloc>
       </entry>
     <entry>
-      <name>Load fact_loan_fees_and_charges_scheduled</name>
+      <name>Load dw_loan_fee_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanFeesChargesPenaltiesScheduled.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Loan_Fee_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -364,8 +364,40 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>724</xloc>
-      <yloc>151</yloc>
+      <xloc>158</xloc>
+      <yloc>117</yloc>
+      </entry>
+    <entry>
+      <name>Load dw_customer_fee_schedules</name>
+      <description>Transformation</description>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Customer_Fee_Schedules.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>158</xloc>
+      <yloc>255</yloc>
       </entry>
   </entries>
   <hops>
@@ -434,7 +466,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_customer_fees_and_charges_scheduled</to>
+      <to>Load dw_customer_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -443,7 +475,16 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_loan_fees_and_charges_scheduled</to>
+      <to>Load dw_loan_fee_schedules</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Load dw_customer_fee_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -454,8 +495,8 @@
   <notepads>
     <notepad>
       <note>Need to think about putting timestamp on fca and dls</note>
-      <xloc>15</xloc>
-      <yloc>170</yloc>
+      <xloc>338</xloc>
+      <yloc>314</yloc>
       <width>359</width>
       <heigth>27</heigth>
       <fontname/>
