@@ -6,19 +6,20 @@ class DueVsCollectedCenterTest {
 
     def mfiName = 'Mifos HO'
     def reportName = 'Due vs Collected by Center'
-    def detailsHeader = ['Repayment Date', 'Principal Due', 'Interest Due', 'Principal Arrears Due', 'Interest Arrears Due', 'Principal Collected', 'Interest Collected']
+    def columnHeader = ['Due', 'Collections']
+    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest']
 
     def firstLoanOfficer = ['Center:', 'br2_center_1'] 
-    def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000']
-    def detailsbr2_20100803 = ['2010-08-03', '428.1000', '2.9000', '0.0000', '0.0000', '0.0000', '0.0000']
-    def detailsbr2_20100810 = ['2010-08-10', '428.1000', '2.9000', '353.0000', '0.0000', '0.0000', '0.0000']
-    def detailsbr2_20100817 = ['2010-08-17', '428.1000', '2.9000', '781.1000', '2.9000', '0.0000', '0.0000']
-    def detailsbr2_20100824 = ['2010-08-24', '428.1000', '2.9000', '1209.2000', '5.8000', '0.0000', '0.0000']
-    def detailsbr2_20100831 = ['2010-08-31', '428.1000', '2.9000', '1637.3000', '8.7000', '0.0000', '0.0000']
-    def detailsbr2_20100907 = ['2010-09-07', '428.1000', '2.9000', '2065.4000', '11.6000', '0.0000', '0.0000']
-    def detailsbr2_20100914 = ['2010-09-14', '431.4000', '3.6000', '2493.5000', '14.5000', '0.0000', '0.0000']
-    def totalbr2_20100930 = ['Total', '3000.0000', '21.0000', '-', '-', '75.1000', '2.9000']
-    def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '75.1000', '2.9000']
+    def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0', '0.0000', '0.0000', '75.1000', '2.9000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100803 = ['2010-08-03', '428.1000', '2.9000', '0.0', '0.0000', '0.0000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100810 = ['2010-08-10', '428.1000', '2.9000', '0.0', '353.0000', '0.0000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100817 = ['2010-08-17', '428.1000', '2.9000', '0.0', '781.1000', '2.9000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100824 = ['2010-08-24', '428.1000', '2.9000', '0.0', '1209.2000', '5.8000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100831 = ['2010-08-31', '428.1000', '2.9000', '0.0', '1637.3000', '8.7000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100907 = ['2010-09-07', '428.1000', '2.9000', '0.0', '2065.4000', '11.6000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def detailsbr2_20100914 = ['2010-09-14', '431.4000', '3.6000', '0.0', '2493.5000', '14.5000', '0.0000', '0.0000', '0.0', '0.0', '0.0']
+    def totalbr2_20100930 = ['Total', '3000.0000', '21.0000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
+    def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
 
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
@@ -49,29 +50,31 @@ class DueVsCollectedCenterTest {
             // Group header
             def offset = 6
             t.assertRowEquals(offset, firstLoanOfficer)
+            // column header
+            t.assertRowEquals(offset+1, columnHeader)
             // Details header
-            t.assertRowEquals(offset+1, detailsHeader)
+            t.assertRowEquals(offset+2, detailsHeader)
             // Branch: br2 -> 2010-07-21
-            t.assertRowEquals(offset+2, detailsbr2_20100721)
+            t.assertRowEquals(offset+3, detailsbr2_20100721)
             // Branch: br2 -> 2010-08-03
-            t.assertRowEquals(offset+3, detailsbr2_20100803)
+            t.assertRowEquals(offset+4, detailsbr2_20100803)
             // Branch: br2 -> 2010-08-10
-            t.assertRowEquals(offset+4, detailsbr2_20100810)
+            t.assertRowEquals(offset+5, detailsbr2_20100810)
             // Branch: br2 -> 2010-08-17
-            t.assertRowEquals(offset+5, detailsbr2_20100817)
+            t.assertRowEquals(offset+6, detailsbr2_20100817)
             // Branch: br2 -> 2010-08-24
-            t.assertRowEquals(offset+6, detailsbr2_20100824)
+            t.assertRowEquals(offset+7, detailsbr2_20100824)
             // Branch: br2 -> 2010-08-31
-            t.assertRowEquals(offset+7, detailsbr2_20100831)
+            t.assertRowEquals(offset+8, detailsbr2_20100831)
             // Branch: br2 -> 2010-09-07
-            t.assertRowEquals(offset+8, detailsbr2_20100907)
+            t.assertRowEquals(offset+9, detailsbr2_20100907)
             // Branch: br2 -> 2010-09-14
-            t.assertRowEquals(offset+9, detailsbr2_20100914)
+            t.assertRowEquals(offset+10, detailsbr2_20100914)
             // 2nd Group footer
-            t.assertRowEquals(offset+10, totalbr2_20100930)
+            t.assertRowEquals(offset+11, totalbr2_20100930)
 
             // Page footer
-            offset = 17
+            offset = 18
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -105,29 +108,31 @@ class DueVsCollectedCenterTest {
             // Group header
             def offset = 6
             t.assertRowEquals(offset, firstLoanOfficer)
+            // column header
+            t.assertRowEquals(offset+1, columnHeader)
             // Details header
-            t.assertRowEquals(offset+1, detailsHeader)
+            t.assertRowEquals(offset+2, detailsHeader)
             // Branch: br2 -> 2010-07-21
-            t.assertRowEquals(offset+2, detailsbr2_20100721)
+            t.assertRowEquals(offset+3, detailsbr2_20100721)
             // Branch: br2 -> 2010-08-03
-            t.assertRowEquals(offset+3, detailsbr2_20100803)
+            t.assertRowEquals(offset+4, detailsbr2_20100803)
             // Branch: br2 -> 2010-08-10
-            t.assertRowEquals(offset+4, detailsbr2_20100810)
+            t.assertRowEquals(offset+5, detailsbr2_20100810)
             // Branch: br2 -> 2010-08-17
-            t.assertRowEquals(offset+5, detailsbr2_20100817)
+            t.assertRowEquals(offset+6, detailsbr2_20100817)
             // Branch: br2 -> 2010-08-24
-            t.assertRowEquals(offset+6, detailsbr2_20100824)
+            t.assertRowEquals(offset+7, detailsbr2_20100824)
             // Branch: br2 -> 2010-08-31
-            t.assertRowEquals(offset+7, detailsbr2_20100831)
+            t.assertRowEquals(offset+8, detailsbr2_20100831)
             // Branch: br2 -> 2010-09-07
-            t.assertRowEquals(offset+8, detailsbr2_20100907)
+            t.assertRowEquals(offset+9, detailsbr2_20100907)
             // Branch: br2 -> 2010-09-14
-            t.assertRowEquals(offset+9, detailsbr2_20100914)
+            t.assertRowEquals(offset+10, detailsbr2_20100914)
             // 2nd Group footer
-            t.assertRowEquals(offset+10, totalbr2_20100930)        
+            t.assertRowEquals(offset+11, totalbr2_20100930)        
 
             // Page footer
-			offset = 17
+			offset = 18
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -161,19 +166,21 @@ class DueVsCollectedCenterTest {
             // Group header
             def offset = 6
             t.assertRowEquals(offset, firstLoanOfficer)
+            // column header
+            t.assertRowEquals(offset+1, columnHeader)
             // Details header
-            t.assertRowEquals(offset+1, detailsHeader)
+            t.assertRowEquals(offset+2, detailsHeader)
             // Branch: br2 -> 2010-07-21
-            t.assertRowEquals(offset+2, detailsbr2_20100721)
+            t.assertRowEquals(offset+3, detailsbr2_20100721)
             // Branch: br2 -> 2010-08-03
-            t.assertRowEquals(offset+3, detailsbr2_20100803)
+            t.assertRowEquals(offset+4, detailsbr2_20100803)
             // Branch: br2 -> 2010-08-10
-            t.assertRowEquals(offset+4, detailsbr2_20100810)
+            t.assertRowEquals(offset+5, detailsbr2_20100810)
             // 2nd Group footer
-            t.assertRowEquals(offset+5, totalbr2_20100815)
+            t.assertRowEquals(offset+6, totalbr2_20100815)
 
             // Page footer
-			offset = 12
+			offset = 13
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
