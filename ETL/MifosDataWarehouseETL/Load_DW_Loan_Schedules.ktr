@@ -61,6 +61,8 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
+  <created_user/>
+  <created_date>2011&#47;02&#47;11 14:06:58.958</created_date>
   <modified_user>-</modified_user>
   <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
   </info>
@@ -79,8 +81,8 @@ and some null action dates
 </note>
       <xloc>174</xloc>
       <yloc>149</yloc>
-      <width>456</width>
-      <heigth>135</heigth>
+      <width>510</width>
+      <heigth>153</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -304,7 +306,7 @@ ls.account_id as loan_account_id, ls.installment_id,
 ls.principal as principal_amount, 
 ls.interest as interest_amount, 
 ls.misc_fees as misc_fee_amount, 
-ls.misc_penalty as misc_penalty_amount,
+(ls.misc_penalty+ls.penalty) as misc_penalty_amount,
 ls.action_date as due_date
 from loan_schedule ls</sql>
     <limit>0</limit>
