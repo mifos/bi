@@ -1,0 +1,144 @@
+<table>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td>
+<td><div id=runReportObj></div></td>
+<td>&nbsp;</td>
+<td><div id=clearReportObj></div></td>
+</tr>
+</table>
+
+<div id=theReportObj></div>
+
+<script language="javascript" type="text/javascript">
+
+function runTheReport()
+{
+    startDate = $('#date1Obj input').val();
+    endDate = $('#date2Obj input').val();
+    if (startDate > endDate)
+    {
+        alert("Start Date is after End Date");
+        return;
+    }
+    if (office == "-")
+    {
+        alert("Please select appropriate values");
+        return;
+    }
+
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    enableClearButton();
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
+
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+var event = 0;
+var office = "";
+
+var startDate = setCurrentDate();
+var endDate = setCurrentDate();
+var outputType = "application/pdf";
+
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "OfficeListSearchId.xaction",
+	parameter: "office",
+	valueAsId: false,
+	htmlObject: "branchSelectorObj",
+	executeAtStart: true
+};
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "startDate",
+	htmlObject: "date1Obj",
+	executeAtStart: true
+};
+
+date2 = 
+{
+	name: "date2",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "endDate",
+	htmlObject: "date2Obj",
+	executeAtStart: true
+};
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelectorObj",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReportObj",
+  	label: "Run Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: solution,
+  	path: prptPath,
+  	action: "LoanOfficerPerformanceSummaryCumulative.prpt",
+  	listeners:["event"],
+  	parameters: [["selected_office","office"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
+  	htmlObject: "theReportObj",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([branchSelector, date1, date2, outputSelector, runReport, clearReport, theReport]);
+
+$(document).ready(function() {
+        initRunClearButtons();
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	office = $('#branchSelectorObj select option:selected').val();
+});
+
+</script>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Loan Officer Performance Summary (During Period)</title>
+	<author>John Woodlock</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>LoanOfficerPerformanceSummaryDuringPeriod.html</template>
+</cdf>
