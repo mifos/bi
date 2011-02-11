@@ -1,0 +1,18 @@
+To build Mifos Business Intelligence source code including tests you need
+ - Sun JDK 1.6.x
+ - Maven 3.0.x
+ - Gradle 0.9
+ - Groovy 1.7.3+
+ - Python 2.5+
+ - MySQL 5.1.x
+ - Pentaho Data Integration 4.1.0-stable
+ - Download http://kettle4.s3.amazonaws.com/PentahoReporting.zip extract and drop pentaho-reporting-plugin.jar to
+   data-integration-4.1.0-stable/plugins/pentaho-reporting-plugin.jar
+
+Run bi/presto/install.py
+ - give absolute location to Pentaho Data integration folder 
+  example: /home/john/pdi-4.1.0-stable/data-integration
+  
+  Other things
+  need to have a softlink for bi/reports/i18n/org under pentaho-di
+   
