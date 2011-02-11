@@ -5,14 +5,10 @@ import org.junit.Test
 class LoanOfficerPerformanceSummaryDuringPeriodTest {
 
     def reportName = 'Loan Officer Performance Summary (During Period)'
-    def branch = ['Branch:', 'br2']
+
     def detailsHeader = ['Name', 'Date Joined', 'Total Groups Formed', 'Total Loans Disbursed', 'Total amt of Loans Disbursed',
             'Total amt of Loans Repaid', 'Total # new Savings Accounts', 'Total Clients Recruited', 'Total amt Savings Deposits',
             'Total amt Savings Withdrawals', '# of Dropouts']
-
-    def detailsDuringPeriodBr2LOxxx = ['br2 LO xxx', '2010-07-20', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
-    def totalDuringPeriod = ['Total During Period', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
-    def grandTotalDuringPeriod = ['Grand Total During Period', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
 
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
@@ -23,6 +19,11 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             // Report settings.
             t.reportPath = 'reports/standardReports/prpts/LoanOfficerPerformanceSummaryDuringPeriod.prpt'
             t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
+
+            def branch = ['Branch:', 'br2']
+            def detailsDuringPeriod = ['br2 LO xxx', '2010-07-20', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
+            def totalDuringPeriod = ['Total During Period', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
+            def grandTotalDuringPeriod = ['Grand Total During Period', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
 
             // Report title
             t.assertRowEquals(1, [reportName])
@@ -37,7 +38,7 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             t.assertRowEquals(offset, branch)
             t.assertRowEquals(offset+1, detailsHeader)
             // Details
-            t.assertRowEquals(offset+2, detailsDuringPeriodBr2LOxxx)
+            t.assertRowEquals(offset+2, detailsDuringPeriod)
             t.assertRowEquals(offset+3, totalDuringPeriod)
             // 1st Details footer
             t.assertRowEquals(offset+4, detailsHeader)
@@ -51,12 +52,19 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
     }
 
     @Test
-    void testParams_br2_20100701_20100815() {
+    void testParams_BO1_20100701_20100930() {
         new PrptReport().execute () { t ->
 
             // Report settings.
             t.reportPath = 'reports/standardReports/prpts/LoanOfficerPerformanceSummaryDuringPeriod.prpt'
-            t.reportParams = ['selected_office': '1.1.1.', 'start_date': '2010-07-01', 'end_date': '2010-08-15']
+            t.reportParams = ['selected_office': '1.1.3.2.', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
+
+            def branch = ['Branch:', 'BO 1']
+            def detailsDuringPeriod1 = ['br1 lo .. ..', '2010-07-01', '21', '3', '12000.0000', '3252.9000', '17', '24', '391.0000', '341.0000', '0']
+            def detailsDuringPeriod2 = ['br1 lo .. ..', '2010-07-04', '4', '0', '0.0000', '0.0000', '5', '2', '756.0000', '0.0000', '0']
+            def detailsDuringPeriod3 = ['br1 lo3 ..', '2010-07-29', '1', '0', '0.0000', '0.0000', '0', '0', '0.0000', '0.0000', '0']
+            def totalDuringPeriod = ['Total During Period', '26', '3', '12000.0000', '3252.9000', '22', '26', '1147.0000', '341.0000', '0']
+            def grandTotalDuringPeriod = ['Grand Total During Period', '26', '3', '12000.0000', '3252.9000', '22', '26', '1147.0000', '341.0000', '0']
 
             // Report title
             t.assertRowEquals(1, [reportName])
@@ -71,14 +79,16 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             t.assertRowEquals(offset, branch)
             t.assertRowEquals(offset+1, detailsHeader)
             // Details
-            t.assertRowEquals(offset+2, detailsDuringPeriodBr2LOxxx)
-            t.assertRowEquals(offset+3, totalDuringPeriod)
+            t.assertRowEquals(offset+2, detailsDuringPeriod1)
+            t.assertRowEquals(offset+3, detailsDuringPeriod2)
+            t.assertRowEquals(offset+4, detailsDuringPeriod3)
+            t.assertRowEquals(offset+5, totalDuringPeriod)
             // 1st Details footer
-            t.assertRowEquals(offset+4, detailsHeader)
-            t.assertRowEquals(offset+5, grandTotalDuringPeriod)
+            t.assertRowEquals(offset+6, detailsHeader)
+            t.assertRowEquals(offset+7, grandTotalDuringPeriod)
 
             // Page footer
-            offset = 10
+            offset = 12
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
         }
