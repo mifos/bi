@@ -1,0 +1,214 @@
+<table>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Next Meeting Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Group</div><div id=centerOrGroupObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td>
+<td><div id=runReportObj></div></td>
+<td>&nbsp;</td>
+<td><div id=clearReportObj></div></td>
+</tr>
+</table>
+
+<div id=theReportObj></div>
+
+<script language="javascript" type="text/javascript">
+
+function pad2(number) {
+   
+     return (number < 10 ? '0' : '') + number
+   
+}
+
+function updateLOSelect()
+{
+	Dashboards.fireChange("officeId",officeId);
+
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
+
+	updateTopCustomerHierarchySelect();
+}
+
+function updateTopCustomerHierarchySelect()
+{
+
+	nextMeetingDateUpdated = nextMeetingDate;
+	nextMeetingDateUpdated.replace(/-/g,'');
+
+	Dashboards.fireChange("loanOfficerId",loanOfficerId);
+
+	$('#centerOrGroupObj select option:eq(0)').attr('selected', 'selected'); 
+	topCustomerHierarchyId = $('#centerOrGroupObj select option:selected').val();
+}
+ 
+
+function updateNextMeetingDate()
+{
+	nextMeetingDateUpdated = nextMeetingDate;
+	nextMeetingDateUpdated.replace(/-/g,'');
+	Dashboards.fireChange("CoG",nextMeetingDateUpdated);
+}
+ 
+
+
+function runTheReport()
+{
+    nextMeetingDate = $('#date1Obj input').val();
+    if (currentDateStr > nextMeetingDate)
+    {
+        alert("Next Meeting Date must be on or after Today");
+        //return;
+    }
+    else if (officeId == 0 || loanOfficerId == 0 || topCustomerHierarchyId == 0)
+    {
+        alert("Please select appropriate values");
+        return;
+    }
+
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    enableClearButton();
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+var event = 0;
+var officeId = 0;
+var officeSearchId = "";
+var loanOfficerId = -1;
+var topCustomerHierarchyId = -1;
+
+var currentDateStr = setCurrentDate();
+
+var nextMeetingDate = currentDateStr;
+var nextMeetingDateUpdated = nextMeetingDate;
+nextMeetingDateUpdated.replace(/-/g,'');
+
+var outputType = "application/pdf";
+
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosOfficeListNoAll.xaction",
+	parameter: "officeId",
+	valueAsId: false,
+	htmlObject: "branchSelectorObj",
+	postChange: function(){updateLOSelect();},
+	executeAtStart: true
+};
+
+LOSelector = 
+{
+	name: "LOSelector",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosLOOfficeListSearchId.xaction",
+	parameter: "loanOfficerId",
+	valueAsId: false,
+	htmlObject: "LOSelectorObj",
+	postChange: function(){updateCoGSelect();},
+	executeAtStart: false
+};
+
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "nextMeetingDate",
+	htmlObject: "date1Obj",	
+	postChange: function(){updateNextMeetingDate();},
+	executeAtStart: true
+};
+
+centerOrGroup = 
+{
+	name: "centerOrGroup",
+	type: "select",
+	listeners: ["loanOfficerId", "CoG"],
+	parameters:[["officeId", "officeId"], ["loanOfficerId", "loanOfficerId"], ["nextMeetingDate", "nextMeetingDateUpdated"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosOfficeLOGroupList.xaction",
+	parameter: "topCustomerHierarchyId",
+	valueAsId: false,
+	htmlObject: "centerOrGroupObj",
+	executeAtStart: false
+};
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelectorObj",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReportObj",
+  	label: "Run Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: solution,
+  	path: prptPath,
+  	action: "GroupCollectionSheetMPESA.prpt",
+  	listeners:["event"],
+  	parameters: [["selected_office_id","officeId"],["selected_loan_officer_id","loanOfficerId"],["selected_next_meeting_date","nextMeetingDate"],["selected_top_customer_hierarchy_id","topCustomerHierarchyId"],["output-type","outputType"]],
+  	htmlObject: "theReportObj",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([branchSelector, LOSelector, date1, centerOrGroup, outputSelector, runReport, clearReport, theReport]);
+
+$(document).ready(function() {
+        initRunClearButtons();
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	officeId = $('#branchSelectorObj select option:selected').val();
+	updateLOSelect();
+});
+
+
+</script>

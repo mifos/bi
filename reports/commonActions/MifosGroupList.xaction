@@ -30,11 +30,13 @@
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
         <query><![CDATA[
-          (select c.customer_id, c.display_name
-           from customer c
-           where c.customer_level_id = 2)
+          (select customer_id, display_name
+           from customer
+           where customer_level_id = 2)
           union 
-          (select -1, "  ALL")
+          (select -1 as customer_id, " All" as display_name)
+	  union
+	  (select 99999 as customer_id, "  Select One" as display_name)
           order by 2
         ]]></query>
       </component-definition> 

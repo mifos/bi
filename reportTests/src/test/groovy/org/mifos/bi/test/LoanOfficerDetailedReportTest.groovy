@@ -20,7 +20,7 @@ class LoanOfficerDetailedReportTest {
     def detailsHeader2 = ['Client Summary', 'Account Summary']
     def numOfCentersManaged_numOfActiveLoans = ['# of Centers', '2', '# of Active Loans', '1']
     def numOfGroups_Principal_20100815 = ['# of Groups', '4', 'Principal Amount Outstanding', '2924.9000']
-    def numOfGroups_Principal = ['# of Groups', '5', 'Principal Amount Outstanding', '2924.9000']
+    def numOfGroups_Principal = ['# of Groups', '4', 'Principal Amount Outstanding', '2924.9000']
     def numOfClients_Interest = ['# of Clients', '4', 'Interest Amount Outstanding', '18.1000']
     def numOfClientsWithLoans = ['# of Clients with loans', '1', 'Portfolio at Risk %', '100.00']
     def numOfClientsWithSavings = ['# of Clients with savings', '2', '# of Loans written off', '0']

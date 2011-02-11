@@ -143,6 +143,58 @@ class PrptReport {
         }
     }
 
+    /** if baseDir is set in your config, reportFilename is relative to baseDir
+     otherwise, reportFilename is assumed to be the full (relative or absolute) path */
+    /* ./kitchen.sh -file=/home/rlewan/mifostrunk/local-work/PPIDataDumpJob.kjb -param:startDate=2010-02-02 -param:endDate=2011-02-02 -param:outputFile=/home/rlewan/Pulpit/hh.csv */
+    def executeFromKjb(prepClosure) {
+        prepClosure.call(this) // set up file paths, asserts, report params, etc.
+        def cfg = new ReportTestConfig()
+        def resolvedReportPath = resolveReportPath(cfg)
+        File output = File.createTempFile('presto', '.csv')
+
+        def pdiPath = cfg.getCfg('pdiPath')
+        if (pdiPath == '') {
+            throw new RuntimeException("pdiPath must be set in ${cfg.cfgFilePath}")
+        }
+
+        def args = "-file=${resolvedReportPath} -param:outputFile=${output.path}"
+        for (entry in reportParams) {
+            args += " -param:${entry.key}=${entry.value}"
+        }
+        
+        def cmdWithArgs = ''
+
+        File bootstrap = null
+        if (System.properties['os.name'] =~ '^Windows') {
+            println "WARNING: invoking experimental pan.sh invocation. Creating run_in_dir.bat might be necessary instead to work around PDI-5076."
+            cmdWithArgs = "${pdiPath}/kitchen.sh ${args}}"
+        } else {
+            bootstrap = File.createTempFile('run_in_dir', '.sh')
+            prepareBootstrap(bootstrap)
+            "chmod 755 ${bootstrap.path}".execute().waitFor()
+            cmdWithArgs = "${bootstrap.path} ${pdiPath} ./kitchen.sh ${args}"
+        }
+
+        println "executing: ${cmdWithArgs}"
+        def proc = cmdWithArgs.execute()
+        proc.waitFor()
+        println "return code: ${proc.exitValue()}"
+        println "stderr: ${proc.err.text}"
+        println "stdout: ${proc.in.text}"
+        if (proc.exitValue() != 0) {
+            throw new RuntimeException("Error(s) executing PDI.")
+        }
+
+        performAsserts(output.path)
+
+        // Clean up. Will only happen if all asserts passed. This is a Good
+        // Thing, if an assert failed we can inspect the temp files.
+        output.delete()
+        if (bootstrap != null) {
+            bootstrap.delete()
+        }
+    }
+
     def tests = [
             'cell': [:],
             'raw_cell': [:],

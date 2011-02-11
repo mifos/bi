@@ -2,6 +2,7 @@
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Group</div><div id=selectGroupObject></div></td><td width="20">
+<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Extract Date</div><div id=extractDateObj></div></td><td width="20">&nbsp;</td>
 </tr>
 <tr>
@@ -12,15 +13,37 @@
 </table>
 
 <div id=theReportObj style="visibility:hidden"></div>
+<iframe id="myIFrm" src="" style="visibility:hidden">
+</iframe>
 
 <script language="javascript" type="text/javascript">
 
 function runTheReport()
 {
-    startDate = $('#extractDateObj input').val();
+	if (groupId == 99999 || productKey == 99999)
+    {
+        alert("Please select appropriate values");
+        return;
+    }
+    extractDate = $('#extractDateObj input').val();
+    csvName = "MPESALoanDisbursalsExport_" +
+              $('#selectGroupObject select option:selected').text().trim().replace(/ /g, "_") + "_" +
+              $('#ProductSelectorObj select option:selected').text().trim().replace(/ /g, "_") + "_" +
+              extractDate.replace(/-/g, "_") +
+              ".csv";
+    target = generatePath + csvName;
     event = event + 1;
+
     Dashboards.fireChange("event", event);
+    exportReport();
 }
+
+function exportReport()
+{
+    oIFrm = document.getElementById('myIFrm');
+    oIFrm.src = urlPath+csvName;
+}
+
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
@@ -32,7 +55,12 @@ var event = 0;
 
 var extractDate = setCurrentDate();
 var groupId = -1;
+var productKey = 0;
 var outputType = "text/csv";
+var csvName = "MPESALoanDisbursalsExport.csv";
+var generatePath = "../webapps/pentaho/";
+var urlPath = "../../../pentaho/";
+var target = generatePath + csvName;
 
 selectGroup =
 {
@@ -46,6 +74,20 @@ selectGroup =
     valueAsId: false,
     htmlObject: "selectGroupObject",
     executeAtStart: true
+};
+
+ProductSelector = 
+{
+	name: "ProductSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosProductList.xaction",
+	parameter: "productKey",
+	valueAsId: false,
+	htmlObject: "ProductSelectorObj",
+	executeAtStart: true
 };
 
 date = 
@@ -65,7 +107,7 @@ runReport =
     type: "Button",
     displayClass: "buttn",
     htmlObject: "runReportObj",
-    label: "Run Report",
+    label: "Export",
     expression: function(){runTheReport();},
     executeAtStart: true
 }
@@ -73,22 +115,26 @@ runReport =
 theReport = 
 {
   	name: "theReport",
-  	type: "prpt",
+  	type: "xaction",
   	solution: solution,
   	path: prptPath,
-  	action: "MPESALoanDisbursalsExport.prpt",
+  	action: "GenerateReport.xaction",
   	listeners:["event"],
-  	parameters: [["c_group","groupId"], ["extract_date","extractDate"], ["output-type","outputType"]],
+  	parameters: [["target","target"], ["c_group","groupId"], ["l_product","productKey"], ["extract_date","extractDate"]],
   	htmlObject: "theReportObj",
-  	executeAtStart: false,
-  	paginate: false,
-	showParameters: false
+  	executeAtStart: false
 }
 
-Dashboards.init([selectGroup, date, runReport, theReport]);
+Dashboards.init([selectGroup, ProductSelector, date, runReport, theReport]);
 
 $(document).ready(function() {
 	initRunClearButtons();
+
+	$('#selectGroupObject select option:eq(0)').attr('selected', 'selected')
+	groupId = $('#selectGroupObject select option:selected').val();
+
+	$('#ProductSelectorObj select option:eq(0)').attr('selected', 'selected')
+	productKey = $('#ProductSelectorObj select option:selected').val();
 });
 
 </script>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Pradipta GK Burndown</title>
+	<author>John Woodlock</author>
+	<description></description>
+	<icon></icon>
+	<style>dashboards</style>
+	<template>PradiptaGKBurndown.html</template>
+</cdf>

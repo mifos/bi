@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Centers for Loan Officer Id</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <loanOfficerId type="string"> 
+      <sources> 
+        <request>loanOfficerId</request> 
+      </sources>  
+      <default-value/> 
+    </loanOfficerId>  
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <officeId type="string"/>  
+        <loanOfficerId type="string"/>  
+        <nextMeetingDate type="string"/> 
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[DestinationDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select distinctrow c.customer_id, c.display_name
+        from dim_customer c
+        join dim_personnel p on c.loan_officer_key = p.personnel_key
+        where c.customer_level_id = 3
+            and (p.personnel_id = {loanOfficerId} or -1 = {loanOfficerId}))
+        union (select -1 as customer_id, " All" as display_name)
+        union (select 0 as customer_id, "  Select One" as display_name)
+        order by display_name]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

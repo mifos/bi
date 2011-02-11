@@ -270,23 +270,23 @@ These columns can be added to the dim_customer table with no impact on the curre
 c.date_of_birth,
 c.government_id,
 cd.num_children as num_children, 
-bus_lv.lookup_name as business_activity,
+bus_lv.lookup_value as business_activity,
 gen_lv.lookup_name as gender, 
-eth_lv.lookup_name as ethnicity, 
-cit_lv.lookup_name as citizenship, 
-hand_lv.lookup_name as handicapped, 
-mar_lv.lookup_name as marital_status, 
-edu_lv.lookup_name as education_level
+eth_lv.lookup_value as ethnicity, 
+cit_lv.lookup_value as citizenship, 
+hand_lv.lookup_value as handicapped, 
+mar_lv.lookup_value as marital_status, 
+edu_lv.lookup_value as education_level
  
 from customer c
 left join customer_detail cd on cd.customer_id = c.customer_id
-left join lookup_value bus_lv on bus_lv.lookup_id = cd.business_activities 
+left join lookup_value_locale bus_lv on bus_lv.lookup_id = cd.business_activities 
 left join lookup_value gen_lv on gen_lv.lookup_id = cd.gender 
-left join lookup_value eth_lv on eth_lv.lookup_id = cd.ethinicity 
-left join lookup_value cit_lv on cit_lv.lookup_id = cd.citizenship 
-left join lookup_value hand_lv on hand_lv.lookup_id = cd.handicapped 
-left join lookup_value mar_lv on mar_lv.lookup_id = cd.marital_status 
-left join lookup_value edu_lv on edu_lv.lookup_id = cd.education_level   
+left join lookup_value_locale eth_lv on eth_lv.lookup_id = cd.ethinicity 
+left join lookup_value_locale cit_lv on cit_lv.lookup_id = cd.citizenship 
+left join lookup_value_locale hand_lv on hand_lv.lookup_id = cd.handicapped 
+left join lookup_value_locale mar_lv on mar_lv.lookup_id = cd.marital_status 
+left join lookup_value_locale edu_lv on edu_lv.lookup_id = cd.education_level   
 
 where (
 			(c.created_date between date(?) and date(?))

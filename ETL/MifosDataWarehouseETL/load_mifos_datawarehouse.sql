@@ -62,6 +62,7 @@ CREATE TABLE `dim_customer` (
 
 LOCK TABLES `dim_customer` WRITE;
 /*!40000 ALTER TABLE `dim_customer` DISABLE KEYS */;
+INSERT INTO `dim_customer` VALUES (0,0,'n/a','n/a',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,0,'1900-01-01','3000-01-01','2011-02-03 10:34:41');
 /*!40000 ALTER TABLE `dim_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,6 +171,7 @@ CREATE TABLE `dim_loan` (
 
 LOCK TABLES `dim_loan` WRITE;
 /*!40000 ALTER TABLE `dim_loan` DISABLE KEYS */;
+INSERT INTO `dim_loan` VALUES (0,0,'n/a',0,0,0,0,0,0,0,0,'n/a',NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'1900-01-01','3000-01-01','2011-02-03 10:37:20');
 /*!40000 ALTER TABLE `dim_loan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,6 +324,7 @@ CREATE TABLE `dim_savings` (
 
 LOCK TABLES `dim_savings` WRITE;
 /*!40000 ALTER TABLE `dim_savings` DISABLE KEYS */;
+INSERT INTO `dim_savings` VALUES (0,0,0,0,0,0,0,0,0,'n/a',0,'1900-01-01','3000-01-01','2011-02-03 10:38:13');
 /*!40000 ALTER TABLE `dim_savings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -541,6 +544,91 @@ CREATE TABLE `dw_loan_schedules` (
 LOCK TABLES `dw_loan_schedules` WRITE;
 /*!40000 ALTER TABLE `dw_loan_schedules` DISABLE KEYS */;
 /*!40000 ALTER TABLE `dw_loan_schedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_loan_fee_schedules`
+--
+
+DROP TABLE IF EXISTS `dw_loan_fee_schedules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_loan_fee_schedules` (
+  `account_fees_detail_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `fee_id` smallint(6) NOT NULL,
+  `amount` decimal(21,4) DEFAULT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`account_fees_detail_id`),
+  KEY `id` (`id`),
+  KEY `fee_id` (`fee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_loan_fee_schedules`
+--
+
+LOCK TABLES `dw_loan_fee_schedules` WRITE;
+/*!40000 ALTER TABLE `dw_loan_fee_schedules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dw_loan_fee_schedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Table structure for table `dw_customer_schedules`
+--
+
+DROP TABLE IF EXISTS `dw_customer_schedules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_customer_schedules` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `installment_id` smallint(6) NOT NULL,
+  `due_date_key` int(10) unsigned NOT NULL DEFAULT '0',
+  `due_date` date NOT NULL,
+  `misc_fees` decimal(21,4) DEFAULT '0.0000',
+  `misc_penalty` decimal(21,4) DEFAULT '0.0000',
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`, `due_date_key`),
+  KEY `customer_and_due_date` (`customer_id`, `due_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_customer_schedules`
+--
+
+LOCK TABLES `dw_customer_schedules` WRITE;
+/*!40000 ALTER TABLE `dw_customer_schedules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dw_customer_schedules` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dw_customer_fee_schedules`
+--
+
+DROP TABLE IF EXISTS `dw_customer_fee_schedules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dw_customer_fee_schedules` (
+  `account_fees_detail_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `fee_id` smallint(6) NOT NULL,
+  `amount` decimal(21,4) DEFAULT NULL DEFAULT '0.0000',
+  PRIMARY KEY (`account_fees_detail_id`),
+  KEY `id` (`id`),
+  KEY `fee_id` (`fee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dw_customer_fee_schedules`
+--
+
+LOCK TABLES `dw_customer_fee_schedules` WRITE;
+/*!40000 ALTER TABLE `dw_customer_fee_schedules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dw_customer_fee_schedules` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2784,4 +2872,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-02 15:33:07
+-- Dump completed on 2011-02-03 21:38:48

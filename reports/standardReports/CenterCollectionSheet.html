@@ -4,7 +4,7 @@
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Next Meeting Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Center/Group</div><div id=centerOrGroupObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Center</div><div id=centerObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
@@ -43,8 +43,8 @@ function updateTopCustomerHierarchySelect()
 
 	Dashboards.fireChange("loanOfficerId",loanOfficerId);
 
-	$('#centerOrGroupObj select option:eq(0)').attr('selected', 'selected'); 
-	topCustomerHierarchyId = $('#centerOrGroupObj select option:selected').val();
+	$('#centerObj select option:eq(0)').attr('selected', 'selected'); 
+	topCustomerHierarchyId = $('#centerObj select option:selected').val();
 }
  
 
@@ -139,9 +139,9 @@ date1 =
 	executeAtStart: true
 };
 
-centerOrGroup = 
+center = 
 {
-	name: "centerOrGroup",
+	name: "center",
 	type: "select",
 	listeners: ["loanOfficerId", "CoG"],
 	parameters:[["officeId", "officeId"], ["loanOfficerId", "loanOfficerId"], ["nextMeetingDate", "nextMeetingDateUpdated"]],
@@ -150,7 +150,7 @@ centerOrGroup =
   	action: "MifosOfficeLOTopCustomerHierarchyList.xaction",
 	parameter: "topCustomerHierarchyId",
 	valueAsId: false,
-	htmlObject: "centerOrGroupObj",
+	htmlObject: "centerObj",
 	executeAtStart: false
 };
 
@@ -192,7 +192,7 @@ theReport =
   	type: "prpt",
   	solution: solution,
   	path: prptPath,
-  	action: "CollectionSheetReportAfrican.prpt",
+  	action: "CenterCollectionSheet.prpt",
   	listeners:["event"],
   	parameters: [["selected_office_id","officeId"],["selected_loan_officer_id","loanOfficerId"],["selected_next_meeting_date","nextMeetingDate"],["selected_top_customer_hierarchy_id","topCustomerHierarchyId"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
@@ -201,7 +201,7 @@ theReport =
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, LOSelector, date1, centerOrGroup, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, LOSelector, date1, center, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
         initRunClearButtons();
