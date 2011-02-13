@@ -6,8 +6,8 @@ class DueVsCollectedBranchTest {
 
     def mfiName = 'Mifos HO'
     def reportName = 'Due vs Collected by Branch'
-    def columnHeader = ['Due', 'Collections']
-    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest']
+    def columnHeader = ['Due', 'Collections*']
+    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'Fees / Penalties', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'Fees / Penalties', 'Arrears Principal', 'Arrears Interest']
 
     def firstBranch = ['Office:', 'BO 1']
     def detailsBO1_20100718 = ['2010-07-18', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '247.1000', '2.9000', '0.0000', '0.0000', '0.0000']
@@ -29,6 +29,7 @@ class DueVsCollectedBranchTest {
     def grandTotalbr2_20100701_20100815 = ['Grand Total', '856.2000', '5.8000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
     def grandTotalbr2_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
     def grandTotal_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '-', '3322.2000', '8.7000', '-', '-', '-']
+    def collectionsFootnote = ['* These amounts do not include adjusted nor reversed payments']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -95,8 +96,9 @@ class DueVsCollectedBranchTest {
             offset = 24
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotal_20100701_20100930)
+            t.assertRowEquals(offset+2, collectionsFootnote)
             // Page footer
-            offset = 26
+            offset = 27
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -154,8 +156,9 @@ class DueVsCollectedBranchTest {
             offset = 18
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
+            t.assertRowEquals(offset+2, collectionsFootnote)
             // Page footer
-            offset = 20
+            offset = 21
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -202,8 +205,9 @@ class DueVsCollectedBranchTest {
             offset = 13
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100815)
+            t.assertRowEquals(offset+2, collectionsFootnote)
             // Page footer
-            offset = 15
+            offset = 16
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')

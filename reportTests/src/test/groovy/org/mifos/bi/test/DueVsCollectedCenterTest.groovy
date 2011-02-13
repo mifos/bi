@@ -6,8 +6,8 @@ class DueVsCollectedCenterTest {
 
     def mfiName = 'Mifos HO'
     def reportName = 'Due vs Collected by Center'
-    def columnHeader = ['Due', 'Collections']
-    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest']
+    def columnHeader = ['Due', 'Collections*']
+    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'Fees / Penalties', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'Fees / Penalties', 'Arrears Principal', 'Arrears Interest']
 
     def firstLoanOfficer = ['Center:', 'br2_center_1'] 
     def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000', '0.0000', '0.0000', '0.0000']
@@ -21,6 +21,7 @@ class DueVsCollectedCenterTest {
     def totalbr2_20100930 = ['Total', '3000.0000', '21.0000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
     def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
 
+    def collectionsFootnote = ['* These amounts do not include adjusted nor reversed payments']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -75,9 +76,10 @@ class DueVsCollectedCenterTest {
 
             // Page footer
             offset = 18
-            t.assertRowEquals(offset, pageFooter)
-            t.assertCellEquals(offset+1, 1, 'Printed by:')
-            t.assertCellEquals(offset+1, 2, 'On:')
+            t.assertRowEquals(offset, collectionsFootnote)
+            t.assertRowEquals(offset+1, pageFooter)
+            t.assertCellEquals(offset+2, 1, 'Printed by:')
+            t.assertCellEquals(offset+2, 2, 'On:')
         }
     }
 
@@ -132,10 +134,11 @@ class DueVsCollectedCenterTest {
             t.assertRowEquals(offset+11, totalbr2_20100930)        
 
             // Page footer
-			offset = 18
-            t.assertRowEquals(offset, pageFooter)
-            t.assertCellEquals(offset+1, 1, 'Printed by:')
-            t.assertCellEquals(offset+1, 2, 'On:')
+            offset = 18
+            t.assertRowEquals(offset, collectionsFootnote)
+            t.assertRowEquals(offset+1, pageFooter)
+            t.assertCellEquals(offset+2, 1, 'Printed by:')
+            t.assertCellEquals(offset+2, 2, 'On:')
         }
     }
 
@@ -180,10 +183,11 @@ class DueVsCollectedCenterTest {
             t.assertRowEquals(offset+6, totalbr2_20100815)
 
             // Page footer
-			offset = 13
-            t.assertRowEquals(offset, pageFooter)
-            t.assertCellEquals(offset+1, 1, 'Printed by:')
-            t.assertCellEquals(offset+1, 2, 'On:')
+            offset = 13
+            t.assertRowEquals(offset, collectionsFootnote)
+            t.assertRowEquals(offset+1, pageFooter)
+            t.assertCellEquals(offset+2, 1, 'Printed by:')
+            t.assertCellEquals(offset+2, 2, 'On:')
         }
     }
 }

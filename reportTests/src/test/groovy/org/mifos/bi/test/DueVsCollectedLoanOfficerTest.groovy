@@ -6,8 +6,8 @@ class DueVsCollectedLoanOfficerTest {
 
     def mfiName = 'Mifos HO'
     def reportName = 'Due vs Collected by Loan Officer'
-    def columnHeader = ['Due', 'Collections']
-    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'F/P', 'Arrears Principal', 'Arrears Interest']
+    def columnHeader = ['Due', 'Collections*']
+    def detailsHeader = ['Repayment Date', 'Principal', 'Interest', 'Fees / Penalties', 'Arrears Principal', 'Arrears Interest', 'Principal', 'Interest', 'Fees / Penalties', 'Arrears Principal', 'Arrears Interest']
 
     def firstLoanOfficer = ['Loan Officer:', 'br2 LO xxx']
     def detailsbr2_20100721 = ['2010-07-21', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '75.1000', '2.9000', '0.0000', '0.0000', '0.0000']
@@ -23,6 +23,7 @@ class DueVsCollectedLoanOfficerTest {
 
     def grandTotalbr2_20100701_20100815 = ['Grand Total', '856.2000', '5.8000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
     def grandTotalbr2_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
+    def collectionsFootnote = ['* These amounts do not include adjusted nor reversed payments']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -78,8 +79,10 @@ class DueVsCollectedLoanOfficerTest {
             offset = 17
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
+            t.assertRowEquals(offset+2, collectionsFootnote)
+
             // Page footer
-            offset = 19
+            offset = 20
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -139,8 +142,10 @@ class DueVsCollectedLoanOfficerTest {
             offset = 17
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100930)
+            t.assertRowEquals(offset+2, collectionsFootnote)
+
             // Page footer
-            offset = 19
+            offset = 20
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -190,8 +195,10 @@ class DueVsCollectedLoanOfficerTest {
             offset = 12
             t.assertRowEquals(offset, detailsHeader)
             t.assertRowEquals(offset+1, grandTotalbr2_20100701_20100815)
+            t.assertRowEquals(offset+2, collectionsFootnote)
+
             // Page footer
-            offset = 14
+            offset = 15
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
