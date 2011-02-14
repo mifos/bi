@@ -22,16 +22,25 @@
 	font-size: 110%;
 }
 
-#toptableObj table td,#toptableObj table th{
-	border-style:solid;
+.highlightRowxx { 
+	background-colour: #09B4ED;
+}
+
+.highlightRow { 
+	font-style:italic;
+	font-weight:bold;
+	font-size:130%;
+	color: black;
+}
+
+.hl { 
+	border-color: black;
 	border-width: 1px;
+	border-bottom: solid;
 }
 
 
 </style>
-
-
-
 
 <div id="burndown">
 	<div id=toptableObj></div>
@@ -87,20 +96,22 @@ Dashboards.globalcontext = false;
 
 //section for collect and disbursement pie charts
 
-function collectionClicked()
+function clearDisplay()
 {
 	$('#displayOneObj').html("");
 	$('#displayTwoObj').html("");
+}
 
+function collectionClicked()
+{
+	clearDisplay();
 	collectionClickedEvent = collectionClickedEvent + 1;
 	Dashboards.fireChange("collectionClickedEvent", collectionClickedEvent);
 }
 
 function disbursementClicked()
 {
-	$('#displayOneObj').html("");
-	$('#displayTwoObj').html("");
-
+	clearDisplay();
 	disbursementClickedEvent = disbursementClickedEvent + 1;
 	Dashboards.fireChange("disbursementClickedEvent", disbursementClickedEvent);
 }
@@ -136,8 +147,8 @@ var clickFunction = function(){
 
 	var selectedBranchId = $(this).children('td:nth-child(1)').text(); 
 
-	//$(this).css("font-size", "110%");
-	//$(this).css("font-style", "italic");
+	$(this).parent().children('tr').removeClass("highlightRow");
+	$(this).addClass("highlightRow");
 
 	Dashboards.fireChange("selectedBranchId", selectedBranchId);
 }
@@ -145,31 +156,42 @@ var clickFunction = function(){
 var clickFunctionDisb = function(){
 
 	var selectedBranchIdDisb = $(this).children('td:nth-child(1)').text(); 
+
+	$(this).parent().children('tr').removeClass("highlightRow");
+	$(this).addClass("highlightRow");
+
 	Dashboards.fireChange("selectedBranchIdDisb", selectedBranchIdDisb);
 }
 
 var clickFunctionLO = function(){
+	$(this).parent().children('tr').removeClass("highlightRow");
+	$(this).addClass("highlightRow");
+
 	alert("Loan Officer is as far as it goes for the moment");
 }
 
 var clickFunctionLODisb = function(){
+	$(this).parent().children('tr').removeClass("highlightRow");
+	$(this).addClass("highlightRow");
+
 	alert("Loan Officer Disbursements is as far as it goes for the moment");
 }
 
 var mouseoverFunction = function(){
  var oldColor = $(this).css("background-color");
  $(this).data("oldColor",oldColor);
- $(this).css("background-color","#242424");
+ $(this).css("background-color","#09B4ED");
  $(this).css("cursor","pointer");
 }
+
 var mouseoutFunction = function(){
- $(this).css("background-color",$(this).data("oldColor"));
- $(this).css("cursor","default");
+	$(this).css("background-color",$(this).data("oldColor"));
+	$(this).css("cursor","default");
 }
 
   var MetaLayerVar = {
     toptableDef: {
-      colHeaders: [currtime, "Branches", "Centers", "Clients", "Collection", "Disbursement"],
+      colHeaders: [" ", "Branches", "Centers", "Clients", "Collection", "Disbursement"],
       colTypes: ['string','numeric','numeric','numeric','numeric','numeric'],
       tableStyle: "classic",
 	paginate: false,
@@ -246,6 +268,12 @@ var toptable =
     		htmlObject: "toptableObj",
     		executeAtStart: true,
   		postExecution: function(){
+   					$("#toptableObjTable").css("border-collapse","collapse");
+   					$("#toptableObjTable th").css("text-align","right");
+   					$("#toptableObjTable th").css("border-bottom","solid");
+   					$("#toptableObjTable th").css("border-width","1px");
+   					$("#toptableObjTable th").css("border-color","black");
+   					$("#toptableObjTable td").css("background-color","white");
    					$("#toptableObjTable_wrapper").removeClass("dataTables_wrapper");
   				}
 
