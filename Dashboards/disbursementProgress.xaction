@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<action-sequence> 
+  <name>PieChart1.xaction</name>
+  <title>Arrears by Branch Bar Chart</title>
+  <version>1</version>
+  <logging-level>TRACE</logging-level>
+  <documentation> 
+    <author>John Woodlock</author>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs/>
+
+  <outputs> 
+    <image-tag type="string"/>  
+    <!--query_result/-->  
+    <!--swresult/--> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs/>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select  "Disbursed" as typename, ifnull(sum(att.amount), 0.0) as fulltotal 
+from account_status_change_history ast
+join
+    (select  la.account_id, max(account_status_change_id) as account_status_change_id
+    from loan_account la
+    join account_status_change_history ast on ast.account_id = la.account_id
+    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)  
+    and la.disbursement_date = curdate()
+    group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
+    
+left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = curdate()
+where ast.new_status = 3 )
+ 
+ UNION ALL
+ 
+(select  "Remaining" as typename, (ifnull(sum(la.loan_amount), 0.0) - ifnull(sum(att.amount), 0.0)) as remaining 
+from account_status_change_history ast
+join
+    (select  la.account_id, max(account_status_change_id) as account_status_change_id
+    from loan_account la
+    join account_status_change_history ast on ast.account_id = la.account_id
+    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)  
+    and la.disbursement_date = curdate()
+    group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
+    
+left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = curdate()
+join loan_account la on la.account_id = ast.account_id  
+where ast.new_status = 3)]]></query>
+      </component-definition> 
+    </action-definition>
+  
+    <action-definition> 
+      <component-name>ChartComponent</component-name>
+      <action-type>Pie Chart</action-type>
+      <action-inputs> 
+        <chart-data type="result-set" mapping="query_result"/> 
+      </action-inputs>
+      <action-outputs> 
+        <image-tag type="string"/> 
+      </action-outputs>
+      <component-definition> 
+        <chart-attributes> 
+          <chart-type>PieChart</chart-type>  
+          <color-palette> 
+            <color>#09B4ED</color>  
+            <color>#DCE4D0</color> 
+          </color-palette>  
+          <url-template><![CDATA[javascript:disbursementClicked()]]></url-template>  
+          <title-font> 
+            <is-bold>false</is-bold>  
+            <size>14</size>  
+            <font-family>Verdana</font-family> 
+          </title-font> 
+        </chart-attributes>  
+        <width><![CDATA[400]]></width>  
+        <height><![CDATA[300]]></height>  
+        <title><![CDATA[Disbursements]]></title>
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
