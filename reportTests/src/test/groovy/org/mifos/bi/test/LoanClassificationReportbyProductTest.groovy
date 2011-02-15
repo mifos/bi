@@ -21,7 +21,7 @@ class LoanClassificationReportbyProductTest {
     def totalbr2_20100815 = ['Total', '1', '3000.0000', '1', '3000.0000', '2924.9000', '781.1000', '100.00000000000000', '1', '100.00']
     def totalbr2_20100930 = ['Total', '1', '3000.0000', '1', '3000.0000', '2924.9000', '2924.9000', '100.00000000000000', '1', '100.00']
 
-    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
     @Test
     void testParams_br2_20100701_20100930() {
