@@ -123,7 +123,7 @@ class MFIProgressReportTest {
     def avgInterestOutstanding = ['Average Interest Outstanding', '18.10', '18.10', '0']
     def avgLoanSize = ['Average Loan Size', '3021.00', '3021.00', '0']
 
-    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
     @Test
     void testParams_br2_br2LOxxx_2010Jul_2010Sep() {
