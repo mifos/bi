@@ -2,24 +2,13 @@
 set -o errexit
 
 #usage: XXX <PDI_HOME> 
-PDI_HOME=$1
+PDI_HOME=/cygdrive/c/Users/Keith/Desktop/PentahoPlatform/pdi-ce-4.0.0-stable/data-integration/
 
-PRG="$0"
+echo "Running Data Warehouse Health Check..."
+$PDI_HOME/kitchen.sh /file:/cygdrive/c/dev/businessIntelligenceRepo/bi/ETL/MifosDataWarehouseETLTest/TestVerifyHealthChecks.kjb | tee tmplog.log
 
-while [ -h "$PRG" ] ; do
-  ls=`ls -ld "$PRG"`
-  link=`expr "$ls" : '.*-> \(.*\)$'`
-  if expr "$link" : '/.*' > /dev/null; then
-    PRG="$link"
-  else
-    PRG=`dirname "$PRG"`/"$link"
-  fi
-done
+grep "Pass:" tmplog.log
+grep "Fail:" tmplog.log
 
-PRGDIR=`dirname "$PRG"`
-
-echo "Running Data Warecheck Health Check..."
-$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/TestVerifyHealthChecks.kjb` | tee $log
-
-
+rm tmplog.logw
 exit $exitcode
