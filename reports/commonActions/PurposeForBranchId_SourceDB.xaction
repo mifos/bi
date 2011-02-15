@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Purpose List Search Id</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs>
+    <officeId type="long">
+      <sources>
+        <request>officeId</request>
+      </sources>
+      <default-value/>
+    </officeId>
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs>
+        <officeId type="long"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select l.business_activities_id as purpose_id,
+        v.lookup_value as purpose_name
+        from loan_account l 
+        join lookup_value_locale v on l.business_activities_id=v.lookup_id
+        join account a on l.account_id=a.account_id
+        where (a.office_id = {officeId} or {officeId} = -1)
+        and l.business_activities_id is not null
+        group by l.business_activities_id)
+        union (select -1 as purpose_id, " All" as purpose_name)
+        union (select 0 as purpose_id, "  Select One" as purpose_name)
+        order by purpose_name]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

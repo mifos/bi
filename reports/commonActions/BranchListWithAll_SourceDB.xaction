@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Office List Search Id</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs/>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select distinctrow office_id,
+            concat( case office_level_id
+            when 2 then '. '
+            when 3 then '. . '
+            when 4 then '. . . '
+            when 5 then '. . . . '
+            else ''
+            end, display_name) as office_name,
+            search_id
+            from office
+            where office_level_id = 5)
+            union (select -1 as office_id," All" as office_name, "-" as search_id)
+            union (select 0 as office_id, "  Select One" as office_name, " " as search_id)
+            order by search_id]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
