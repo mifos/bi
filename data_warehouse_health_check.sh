@@ -1,14 +1,25 @@
 #!/bin/bash
 set -o errexit
 
-#usage: XXX <PDI_HOME> 
-PDI_HOME=/cygdrive/c/Users/Keith/Desktop/PentahoPlatform/pdi-ce-4.0.0-stable/data-integration/
+#usage: XXX <PDI_HOME> <PDI_JOB> <OUTPUT_FILE>
+PDI_HOME=$1
+BI_GIT=$2
+OUTPUT_FILE=$3
 
-echo "Running Data Warehouse Health Check..."
-$PDI_HOME/kitchen.sh /file:/cygdrive/c/dev/businessIntelligenceRepo/bi/ETL/MifosDataWarehouseETLTest/TestVerifyHealthChecks.kjb | tee tmplog.log
 
-grep "Pass:" tmplog.log
-grep "Fail:" tmplog.log
+$PDI_HOME/kitchen.sh /file:$BI_GIT/ETL/MifosDataWarehouseETLTest/TestVerifyHealthChecks.kjb 1> tmplog.log
 
-rm tmplog.logw
+grep "Pass:" tmplog.log > $OUTPUT_FILE
+grep "Fail:" tmplog.log >> $OUTPUT_FILE
+
+rm tmplog.log
+
+echo " "
+echo " "
+echo " "
+echo "Listing Pass and Fail Info..."
+
+cat $OUTPUT_FILE
+
+
 exit $exitcode
