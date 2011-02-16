@@ -11,11 +11,11 @@ class ClientExitTest {
     def firstOffice = ['Office:', 'br4']
     def detailsHeader = ['Client ID', 'Client Name', 'Group Name', 'National ID', 'Closed Date', 'Reason', 'Notes', '# Loans', 'Amount Disbursed', 'Loan Officer']
 
-    def client = ['76', 'She2\'ll also be deleted Very2 soon', 'Group with lots of fees', /*missing National ID*/ '2011-01-13',	 'Blacklisted',
+    def client = ['76', 'She2\'ll also be deleted Very2 soon', 'Group with lots of fees', '', '2011-01-13',	 'Blacklisted',
             '"closed after approval, then blacklisted"', '0', '0.0000', 'Fees LO xxx']
 
-    def subTotalsClient = ['Total', '1', '0.0000']
-    def subTotalsEmpty = ['Total', '0', '0']
+    def subTotalsClient = ['Total', '1', '', '', '', '', '', '', '0.0000', '']
+    def subTotalsEmpty = ['Total', '0', '', '', '', '', '', '', '0', '']
 
     def pageFooter = ['Version 1.1', 'Page', '1 / 1']
 
