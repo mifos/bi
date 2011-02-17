@@ -27,8 +27,8 @@ function runTheReport()
     }
     extractDate = $('#extractDateObj input').val();
     csvName = "MPESALoanDisbursalsExport_" +
-              $('#selectGroupObject select option:selected').text().trim().replace(/ /g, "_") + "_" +
-              $('#ProductSelectorObj select option:selected').text().trim().replace(/ /g, "_") + "_" +
+              $('#selectGroupObject select option:selected').text().replace(/ /g, "_") + "_" +
+              $('#ProductSelectorObj select option:selected').text().replace(/ /g, "_") + "_" +
               extractDate.replace(/-/g, "_") +
               ".csv";
     target = generatePath + csvName;
