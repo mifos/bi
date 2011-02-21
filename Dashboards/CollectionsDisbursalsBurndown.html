@@ -45,7 +45,7 @@
 	float: right;
 }
 
-.inlineImg {
+.textlink {
 	vertical-align: 30%;
 }
 
@@ -53,6 +53,7 @@
 	color: #5E99E3;
 	font-size: 170%;
 	display: inline;
+	text-decoration: none;
 }
 
 </style>
@@ -83,8 +84,8 @@
 				<tr>
 					<td>
 						<div class=viewAll>
-							<a class=inlineImg href="#" onclick="linkToPage('Collections');return false;">View all branches</a>
-							<div class=blueArrow>&#x25B6;</div>
+							<a class=textlink href="#" onclick="linkToPage('Collections');return false;">View all branches</a>
+							<a class=blueArrow href="#" onclick="linkToPage('Collections');return false;">&#x25B6;</a>
 						</div>
 					</td>
 				</tr>
@@ -112,9 +113,10 @@
 				<tr>
 					<td>
 						<div class=viewAll>
-							<a class=inlineImg href="#" onclick="linkToPage('Disbursals');return false;">View all branches</a>
-							<div class=blueArrow>&#x25B6;</div>
+							<a class=textlink href="#" onclick="linkToPage('Disbursals');return false;">View all branches</a>
+							<a class=blueArrow href="#" onclick="linkToPage('Disbursals');return false;">&#x25B6;</a>
 						</div>
+
 					</td>
 
 				</tr>
@@ -140,7 +142,7 @@ var evenRow = "#E9EDF4";
 var topTableRows = "#FDEFE9";
 
 
-var currentDate = '2010-12-01';
+var currentDate = '2010-09-01';
 var currentDateUpdated = currentDate;
 currentDateUpdated.replace(/-/g,'');
 
