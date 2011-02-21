@@ -13,6 +13,7 @@
     </DataSources>
 
 
+
     <DataAccess id="getRemainingBranchesCollection" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
 		   <Name>Get Remaining Branches for Collections</Name>
 <Query>
@@ -31,56 +32,24 @@ join
     (select  la.account_id, max(account_status_change_id) as account_status_change_id
     from loan_account la
     join account_status_change_history ast on ast.account_id = la.account_id
-    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+    where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
     group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
     
-join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = curdate() 
+join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = ${currentDate} 
 where ast.new_status in (5,9)
    
 group by o.office_id 
 having ifnull(sum(ls.principal), 0.0) > ifnull(sum(ls.principal_paid), 0.0)    
+order by 5 desc
+
+LIMIT ${limit}
 ]]>
 </Query>
-
-    </DataAccess>
-
-
-    <DataAccess id="getRemainingLoanOfficersCollection" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
-		   <Name>Get Remaining Loan Officers for Collections</Name>
-<Query>
-<![CDATA[
-
-select p.personnel_id as loan_officer_id, p.display_name as loan_officer,
-    cast(round(ifnull(sum(ls.principal), 0.0), 1) as char) as expected, 
-    cast(round(ifnull(sum(ls.principal_paid), 0.0), 1) as char) as collected,
-    cast(round(
-            ( (ifnull(sum(ls.principal_paid), 0.0) * 100) / ifnull(sum(ls.principal), 0.0))
-                ,1) as char) as collected_pc
-from personnel p
-join account a on a.personnel_id = p.personnel_id
-join account_status_change_history ast on ast.account_id = a.account_id
-join
-    (select  la.account_id, max(account_status_change_id) as account_status_change_id
-    from loan_account la
-    join account_status_change_history ast on ast.account_id = la.account_id
-    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
-    group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
-    
-join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = curdate() 
-where ast.new_status in (5,9)
-and a.office_id = ${selectedBranchId}
-
-group by p.personnel_id 
-having ifnull(sum(ls.principal), 0.0) > ifnull(sum(ls.principal_paid), 0.0)
-
-]]>
-</Query>
-
         <Parameters>
-            <Parameter name="selectedBranchId" type="Integer" default="-999"/>
+    		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
-
 
 
     <DataAccess id="getRemainingBranchesDisbursement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
@@ -100,57 +69,24 @@ join
     (select  la.account_id, max(account_status_change_id) as account_status_change_id
     from loan_account la
     join account_status_change_history ast on ast.account_id = la.account_id
-    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)  
-    and la.disbursement_date = curdate()
+    where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)  
+    and la.disbursement_date = ${currentDate}
     group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
     
-left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = curdate()
+left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = ${currentDate}
 join loan_account la on la.account_id = ast.account_id  
 where ast.new_status = 3   
 group by o.office_id 
-having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0)
+having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0) 
+order by 5 desc
     
+LIMIT ${limit}
+
 ]]>
 </Query>
-
-    </DataAccess>
-
-
-
-    <DataAccess id="getRemainingLoanOfficersDisbursement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
-		   <Name>Get Remaining Loan Officers for Disbursements</Name>
-<Query>
-<![CDATA[
-
-select p.personnel_id as loan_officer_id, p.display_name as loan_officer,
-    cast(round(ifnull(sum(la.loan_amount), 0.0), 1) as char) as expected, 
-    cast(round(ifnull(sum(att.amount), 0.0), 1) as char) as disbursed,
-    cast(round(
-            ( (ifnull(sum(att.amount), 0.0) * 100) / ifnull(sum(la.loan_amount), 0.0))
-                ,1) as char) as disbursed_pc
-from personnel p
-join account a on a.personnel_id = p.personnel_id
-join account_status_change_history ast on ast.account_id = a.account_id
-join
-    (select  la.account_id, max(account_status_change_id) as account_status_change_id
-    from loan_account la
-    join account_status_change_history ast on ast.account_id = la.account_id
-    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)  
-    and la.disbursement_date = curdate()
-    group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
-    
-left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = curdate()
-join loan_account la on la.account_id = ast.account_id  
-where ast.new_status = 3   
-and a.office_id = ${selectedBranchId}
-
-group by p.personnel_id 
-having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0)
-]]>
-</Query>
-
         <Parameters>
-            <Parameter name="selectedBranchId" type="Integer" default="-999"/>
+    		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
 
@@ -162,12 +98,13 @@ having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0)
 <![CDATA[
 
 select bigquery.typeName, bigquery.branches, bigquery.centers, bigquery.clients, 
-    cast(round(bigquery.collection, 1) as char) as collection, cast(round(bigquery.disbursement, 1) as char) as disbursement
+    cast(bigquery.collection as char) as collection, 
+    cast(bigquery.disbursement as char) as disbursement
 from
 ((select "Target" as typeName,  repay.branches, repay.centers, repay.clients, repay.collection, disb.disbursement
 from
     (select count(distinct(a.office_id)) as branches, count(distinct(center.customer_id)) as centers,
-        count(distinct(c.customer_id)) as clients,  sum(ls.principal) as collection
+        count(distinct(c.customer_id)) as clients,  ifnull(sum(ls.principal), 0.0) as collection
     from loan_schedule ls
     join account a on a.account_id = ls.account_id
     join customer c on c.customer_id = a.customer_id
@@ -178,10 +115,10 @@ from
         (select  la.account_id, max(account_status_change_id) as account_status_change_id
         from loan_account la
         join account_status_change_history ast on ast.account_id = la.account_id
-        where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+        where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
         group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
 
-    where  ls.action_date = curdate()
+    where  ls.action_date = ${currentDate}
     and ast.new_status in (5,9) ) repay
 
  join 
@@ -191,11 +128,11 @@ from
         (select  la.account_id, max(account_status_change_id) as account_status_change_id
         from loan_account la
         join account_status_change_history ast on ast.account_id = la.account_id
-        where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)  
-        and la.disbursement_date = curdate()
+        where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)  
+        and la.disbursement_date = ${currentDate}
         group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
     
-    left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = curdate()
+    left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = ${currentDate}
     join loan_account la on la.account_id = ast.account_id  
     where ast.new_status = 3) disb)
     
@@ -215,10 +152,10 @@ from
             (select  la.account_id, max(account_status_change_id) as account_status_change_id
             from loan_account la
             join account_status_change_history ast on ast.account_id = la.account_id
-            where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+            where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
             group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
 
-        where  ls.action_date = curdate()
+        where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)
         group by a.customer_id
         having sum(ls.principal - ls.principal_paid) <= 0) as xx) clrepay
@@ -237,10 +174,10 @@ join
             (select  la.account_id, max(account_status_change_id) as account_status_change_id
             from loan_account la
             join account_status_change_history ast on ast.account_id = la.account_id
-            where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+            where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
             group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
 
-        where  ls.action_date = curdate()
+        where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)
         group by center.customer_id
         having sum(ls.principal - ls.principal_paid) <= 0) as xx) cerepay
@@ -256,26 +193,26 @@ join
             (select  la.account_id, max(account_status_change_id) as account_status_change_id
             from loan_account la
             join account_status_change_history ast on ast.account_id = la.account_id
-            where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+            where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
             group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
 
-        where  ls.action_date = curdate()
+        where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)
         group by a.office_id
         having sum(ls.principal - ls.principal_paid) <= 0) as xx) brrepay
 
   join 
-        (select sum(ls.principal_paid) as collection 
+        (select ifnull(sum(ls.principal_paid), 0.0) as collection 
         from loan_schedule ls 
         join  account_status_change_history ast on ast.account_id = ls.account_id
         join
             (select  la.account_id, max(account_status_change_id) as account_status_change_id
             from loan_account la
             join account_status_change_history ast on ast.account_id = la.account_id
-            where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+            where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
             group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
 
-        where  ls.action_date = curdate()
+        where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)) as donerepay
     
     
@@ -286,16 +223,19 @@ join
         (select  la.account_id, max(account_status_change_id) as account_status_change_id
         from loan_account la
         join account_status_change_history ast on ast.account_id = la.account_id
-        where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)  
-        and la.disbursement_date = curdate()
+        where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)  
+        and la.disbursement_date = ${currentDate}
         group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
     
-    left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = curdate()
+    left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = ${currentDate}
     where ast.new_status = 3) donedisb ) ) bigquery
     order by bigquery.typeName desc
-
 ]]>
 </Query>
+
+        <Parameters>
+    		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+        </Parameters>
 
     </DataAccess>
 

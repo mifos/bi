@@ -1,0 +1,187 @@
+
+<style type="text/css">
+
+#burndown {
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	display:none;
+}
+
+#toptableObj {
+	padding-bottom: 10px;
+}
+
+.boldLabel{
+	color: black;
+	padding-left: 5px;
+	font-weight:bold;
+	display: inline;
+}
+
+#mainHeading {
+      border-style: solid;
+      border-width: 1px;
+	padding-bottom: 10px;
+}
+
+
+</style>
+
+<div id="burndown">
+
+<div id=mainHeading><div class=boldLabel> DISBURSALS:</div> All Branches Remaining</div>
+<table width="100%">
+<tr>
+<td width="10%"><div id=mainpieObj></div></td>
+<td width="90%" valign="top"><div id=toptableObj></div></td>
+</tr>
+</table>
+<div id=remainingBranchesObj></div>
+</div>
+
+<script language="javascript" type="text/javascript">
+
+
+var lighterOrange = "#FCD5B5";
+var darkOrange = "#F79646";
+var darkBlue = "#4F81BD";
+var white = "white";
+var black = "black";
+var oddRow = "#D0D8E8";
+var evenRow = "#E9EDF4";
+var topTableRows = "#FDEFE9";
+
+var currentDate = '2010-12-01';
+var currentDateUpdated = currentDate;
+currentDateUpdated.replace(/-/g,'');
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var cdaPath = solution + "/" + "CollectionsDisbursalsBurndown.cda";
+
+
+var pieChartXAction = "disbursementProgress.xaction";
+var getRemainingBranchesQuery = "getRemainingBranchesDisbursement";
+
+
+
+
+Dashboards.globalcontext = false;
+
+
+
+  var MetaLayerVar = {
+    toptableDef: {
+      colHeaders: [" ", "Branches", "Centers", "Clients", "Collection", "Disbursement"],
+      colTypes: ['string','numeric','numeric','numeric','numeric','numeric'],
+	colFormats: [null, "%d", "%d", "%d", "%15.0f", "%15.0f"],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getTargetAndCompleted", 
+	path: cdaPath
+    },
+
+    branchDef: {
+      colHeaders: ["Id", "Branches Remaining", "Expected", "Collected", "% Collected"],
+      colTypes: ['numeric','string','numeric','numeric','numeric'],
+	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: getRemainingBranchesQuery, 
+	path: cdaPath
+    }
+
+  };
+
+
+var mainpie = {
+	name:"mainpie", 
+	type: "XactionComponent",
+	solution: solution, 
+	path: path,
+	parameters:[["asOfDate", "currentDateUpdated"]],
+	action: pieChartXAction,
+	htmlObject: "mainpieObj",
+	executeAtStart: true
+};
+
+var toptable =
+	{
+ 		name: "toptable",
+		type: "tableComponent",
+    		chartDefinition: MetaLayerVar.toptableDef,
+		parameters: [["currentDate","currentDate"]],
+		cdaParams: [["currentDate","currentDate"]],
+    		htmlObject: "toptableObj",
+    		executeAtStart: true,
+  		postExecution: function(){
+   					$("#toptableObjTable th").css("background-color", darkOrange);
+   					$("#toptableObjTable th").css("color",white);
+   					$("#toptableObjTable td").css("background-color",topTableRows);
+   					$("#toptableObjTable td").css("color",black);
+   					$("#toptableObjTable td:nth-child(1)").css("font-weight","bold");
+   					$("#toptableObjTable td:nth-child(1)").css("text-align","right");
+   					$("#toptableObjTable_wrapper").removeClass("dataTables_wrapper");
+  				}
+
+  };
+
+
+var remainingBranches =
+	{
+ 		name: "remainingBranches",
+		type: "tableComponent",
+    		chartDefinition: MetaLayerVar.branchDef,
+		parameters: [["currentDate","currentDate"]],
+		cdaParams: [["currentDate","currentDate"]],
+    		htmlObject: "remainingBranchesObj",
+    		executeAtStart: true,
+  		postExecution: function(){
+					$("#remainingBranchesObj td:nth-child(2)").each(function(index) {
+						var linkBranchName = '<a href="#" onclick="alert(' + "'" + $(this).text() + "'" + ');return false;">' + $(this).text() + '</a>';
+						$(this).html(linkBranchName);
+  					});
+   					$("#remainingBranchesObj th").addClass("tableHeading");
+   					$("#remainingBranchesObj th").css("background-color", darkBlue);
+   					$("#remainingBranchesObj th").css("color", white);
+   					$("#remainingBranchesObj th:nth-child(1)").hide();
+   					$("#remainingBranchesObj td:nth-child(1)").hide();
+   					$("#remainingBranchesObj_wrapper").removeClass("dataTables_wrapper");
+
+					$("#remainingBranchesObj").css("color", black);
+					$("#remainingBranchesObj tbody tr").each(function(index) {
+						if ($(this).hasClass("odd"))
+						{
+							$(this).css("background-color", oddRow);
+						}
+						else
+						{
+							$(this).css("background-color", evenRow);
+						}				
+  					});
+  				}
+  };
+
+
+
+//
+
+Dashboards.init([toptable, mainpie, remainingBranches]);
+
+$(document).ready(function() {
+
+   	$("#mainHeading").css("background-color", lighterOrange);
+   	$("#mainHeading").css("border-color", darkOrange);
+
+	$("#burndown").slideToggle("slow");
+});
+
+</script>
+

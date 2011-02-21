@@ -1,90 +1,149 @@
 
 <style type="text/css">
 
-.headone {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	padding-top: 30px;
-
-}
-
 #burndown {
 	padding-left: 10px;
 	padding-top: 10px;
 	padding-right: 10px;
+	display:none;
 }
 
-#displayArea {
-	padding-top: 20px;
+#toptableObj {
+	padding-bottom: 10px;
 }
 
-#toptableObj table {
-	font-size: 110%;
+#toptableObj th{
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-.highlightRowxx { 
-	background-colour: #09B4ED;
+#toptableObj td{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
 }
 
-.highlightRow { 
-	font-style:italic;
-	font-weight:bold;
-	font-size:130%;
+.boldLabel{
 	color: black;
+	padding-left: 5px;
+	font-weight:bold;
+	display: inline;
 }
 
-.hl { 
-	border-color: black;
-	border-width: 1px;
-	border-bottom: solid;
+.sectionTable {
+	border-collapse: collapse;
 }
 
+.borderSection {
+      border-style: solid;
+      border-width: 1px;
+	padding: 0;
+	vertical-align: text-top;
+}
+
+.viewAll {
+	float: right;
+}
+
+.inlineImg {
+	vertical-align: 30%;
+}
+
+.blueArrow {
+	color: #5E99E3;
+	font-size: 170%;
+	display: inline;
+}
 
 </style>
 
 <div id="burndown">
-	<div id=toptableObj></div>
 
-<table>
+<div id=toptableObj></div>
+
+<table width="100%">
 <tr>
-<td VALIGN="TOP">
-	<div id=collectionObj></div>
-</td>
-<td VALIGN="TOP">
-	<div id=disbursementObj></div>
+<td width="49%" class=borderSection>
+
+			<table width="100%" class=sectionTable>
+				<tr>
+					<td><div class=boldLabel> COLLECTIONS:</div> Top 5 Branches Remaining
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<div id=collectionObj></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id=top5CollectionObj></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class=viewAll>
+							<a class=inlineImg href="#" onclick="linkToPage('Collections');return false;">View all branches</a>
+							<div class=blueArrow>&#x25B6;</div>
+						</div>
+					</td>
+				</tr>
+			</table>
 
 </td>
+<td width="2%"></td>
+<td width="49%" class=borderSection>
+
+			<table width="100%" class=sectionTable>
+				<tr>
+					<td><div class=boldLabel> DISBURSALS:</div> Top 5 Branches Remaining
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<div id=disbursementObj></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id=top5DisbursementObj></div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class=viewAll>
+							<a class=inlineImg href="#" onclick="linkToPage('Disbursals');return false;">View all branches</a>
+							<div class=blueArrow>&#x25B6;</div>
+						</div>
+					</td>
+
+				</tr>
+
+			</table>
+</td>
+
 </tr>
 </table>
 
-<div id="displayArea">
-<table>
-	<tr>
-		<td width="50%"><div id="displayOneObj"></div></td>
-		<td width="50%"><div id="displayTwoObj"></div></td>
-	</tr>
-</table>
-</div>
 </div>
 
 
 <script language="javascript" type="text/javascript">
 
-function pad2(number) {
-    return (number < 10 ? '0' : '') + number
-}
+var lighterOrange = "#FCD5B5";
+var darkOrange = "#F79646";
+var darkBlue = "#4F81BD";
+var white = "white";
+var black = "black";
+var oddRow = "#D0D8E8";
+var evenRow = "#E9EDF4";
+var topTableRows = "#FDEFE9";
 
-function getTime()
-{
-	currentTime = new Date();
-	return pad2(currentTime.getHours()) + ":" + pad2(currentTime.getMinutes()) + ":" + pad2(currentTime.getSeconds());
-}
 
-var currtime = getTime();
-var collectionClickedEvent = 0;
-var disbursementClickedEvent = 0;
-var selectedBranchId = 0;
-var selectedBranchIdDisb = 0;
+var currentDate = '2010-12-01';
+var currentDateUpdated = currentDate;
+currentDateUpdated.replace(/-/g,'');
+
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 var cdaPath = solution + "/" + "CollectionsDisbursalsBurndown.cda";
@@ -93,106 +152,19 @@ var cdaPath = solution + "/" + "CollectionsDisbursalsBurndown.cda";
 Dashboards.globalcontext = false;
 
 
-
-//section for collect and disbursement pie charts
-
-function clearDisplay()
+function linkToPage(pageName)
 {
-	$('#displayOneObj').html("");
-	$('#displayTwoObj').html("");
+	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
+	//window.location = linkTo;
+	alert("Still In Progress");
 }
 
-function collectionClicked()
-{
-	clearDisplay();
-	collectionClickedEvent = collectionClickedEvent + 1;
-	Dashboards.fireChange("collectionClickedEvent", collectionClickedEvent);
-}
-
-function disbursementClicked()
-{
-	clearDisplay();
-	disbursementClickedEvent = disbursementClickedEvent + 1;
-	Dashboards.fireChange("disbursementClickedEvent", disbursementClickedEvent);
-}
-
-
-collection = {
-	name:"collection", 
-	type: "XactionComponent",
-	solution: solution, 
-	path: path,
-	action: "collectionProgress.xaction",
-	htmlObject: "collectionObj",
-	executeAtStart: true
-};
-
-disbursement = {
-	name:"disbursement", 
-	type: "XactionComponent",
-	solution: solution, 
-	path: path,
-	action: "disbursementProgress.xaction",
-	htmlObject: "disbursementObj",
-	executeAtStart: true
-};
-
-//
-
-
-
-//section for remaining branch collections
-
-var clickFunction = function(){
-
-	var selectedBranchId = $(this).children('td:nth-child(1)').text(); 
-
-	$(this).parent().children('tr').removeClass("highlightRow");
-	$(this).addClass("highlightRow");
-
-	Dashboards.fireChange("selectedBranchId", selectedBranchId);
-}
-
-var clickFunctionDisb = function(){
-
-	var selectedBranchIdDisb = $(this).children('td:nth-child(1)').text(); 
-
-	$(this).parent().children('tr').removeClass("highlightRow");
-	$(this).addClass("highlightRow");
-
-	Dashboards.fireChange("selectedBranchIdDisb", selectedBranchIdDisb);
-}
-
-var clickFunctionLO = function(){
-	$(this).parent().children('tr').removeClass("highlightRow");
-	$(this).addClass("highlightRow");
-
-	alert("Loan Officer is as far as it goes for the moment");
-}
-
-var clickFunctionLODisb = function(){
-	$(this).parent().children('tr').removeClass("highlightRow");
-	$(this).addClass("highlightRow");
-
-	alert("Loan Officer Disbursements is as far as it goes for the moment");
-}
-
-var mouseoverFunction = function(){
- var oldColor = $(this).css("background-color");
- $(this).data("oldColor",oldColor);
- $(this).css("background-color","#09B4ED");
- $(this).css("cursor","pointer");
-}
-
-var mouseoutFunction = function(){
-	$(this).css("background-color",$(this).data("oldColor"));
-	$(this).css("cursor","default");
-}
 
   var MetaLayerVar = {
     toptableDef: {
       colHeaders: [" ", "Branches", "Centers", "Clients", "Collection", "Disbursement"],
       colTypes: ['string','numeric','numeric','numeric','numeric','numeric'],
+	colFormats: [null, "%d", "%d", "%d", "%15.0f", "%15.0f"],
       tableStyle: "classic",
 	paginate: false,
 	sort: false,
@@ -205,75 +177,71 @@ var mouseoutFunction = function(){
     branchDef: {
       colHeaders: ["Id", "Branches Remaining", "Expected", "Collected", "% Collected"],
       colTypes: ['numeric','string','numeric','numeric','numeric'],
-      colWidths: ['30px','200px','100px','100px','100px'],
+	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
       tableStyle: "classic",
 	paginate: false,
-	sort: true,
+	sort: false,
 	filter: false,
-	info: true,
+	info: false,
       dataAccessId: "getRemainingBranchesCollection", 
-	path: cdaPath
-    },
-
-
-    loanOfficerDef: {
-      colHeaders: ["Id", "Loan Officers Remaining", "Expected", "Collected", "% Collected"],
-      colTypes: ['numeric','string','numeric','numeric','numeric'],
-      colWidths: ['30px','200px','100px','100px','100px'],
-      tableStyle: "classic",
-	paginate: false,
-	sort: true,
-	filter: false,
-	info: true,
-      dataAccessId: "getRemainingLoanOfficersCollection", 
 	path: cdaPath
     },
 
     branchDefDisb: {
       colHeaders: ["Id", "Branches Remaining", "Expected", "Collected", "% Collected"],
       colTypes: ['numeric','string','numeric','numeric','numeric'],
-      colWidths: ['30px','200px','100px','100px','100px'],
+	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
       tableStyle: "classic",
 	paginate: false,
-	sort: true,
+	sort: false,
 	filter: false,
-	info: true,
+	info: false,
       dataAccessId: "getRemainingBranchesDisbursement", 
-	path: cdaPath
-    },
-
-    loanOfficerDefDisb: {
-      colHeaders: ["Id", "Loan Officers Remaining", "Expected", "Collected", "% Collected"],
-      colTypes: ['numeric','string','numeric','numeric','numeric'],
-      colWidths: ['30px','200px','100px','100px','100px'],
-      tableStyle: "classic",
-	paginate: false,
-	sort: true,
-	filter: false,
-	info: true,
-      dataAccessId: "getRemainingLoanOfficersDisbursement", 
 	path: cdaPath
     }
 
-
   };
+
+
+collection = {
+	name:"collection", 
+	type: "XactionComponent",
+	solution: solution, 
+	path: path,
+	parameters:[["asOfDate", "currentDateUpdated"]],
+	action: "collectionProgress.xaction",
+	htmlObject: "collectionObj",
+	executeAtStart: true
+};
+
+disbursement = {
+	name:"disbursement", 
+	type: "XactionComponent",
+	solution: solution, 
+	path: path,
+	parameters:[["asOfDate", "currentDateUpdated"]],
+	action: "disbursementProgress.xaction",
+	htmlObject: "disbursementObj",
+	executeAtStart: true
+};
 
 
 var toptable =
 	{
  		name: "toptable",
 		type: "tableComponent",
-
     		chartDefinition: MetaLayerVar.toptableDef,
+		parameters: [["currentDate","currentDate"]],
+		cdaParams: [["currentDate","currentDate"]],
     		htmlObject: "toptableObj",
     		executeAtStart: true,
   		postExecution: function(){
-   					$("#toptableObjTable").css("border-collapse","collapse");
-   					$("#toptableObjTable th").css("text-align","right");
-   					$("#toptableObjTable th").css("border-bottom","solid");
-   					$("#toptableObjTable th").css("border-width","1px");
-   					$("#toptableObjTable th").css("border-color","black");
-   					$("#toptableObjTable td").css("background-color","white");
+   					$("#toptableObjTable th").css("background-color", darkOrange);
+   					$("#toptableObjTable th").css("color",white);
+   					$("#toptableObjTable td").css("background-color",topTableRows);
+   					$("#toptableObjTable td").css("color",black);
+   					$("#toptableObjTable td:nth-child(1)").css("font-weight","bold");
+   					$("#toptableObjTable td:nth-child(1)").css("text-align","right");
    					$("#toptableObjTable_wrapper").removeClass("dataTables_wrapper");
   				}
 
@@ -284,45 +252,34 @@ var remainingBranchesCollection =
 	{
  		name: "remainingBranchesCollection",
 		type: "tableComponent",
-		listeners: ["collectionClickedEvent"],
-
     		chartDefinition: MetaLayerVar.branchDef,
-    		htmlObject: "displayOneObj",
-    		executeAtStart: false,
+		parameters: [["currentDate","currentDate"], ["limit", "5"]],
+		cdaParams: [["currentDate","currentDate"], ["limit", "5"]],
+    		htmlObject: "top5CollectionObj",
+    		executeAtStart: true,
   		postExecution: function(){
-   					var rows = $("#displayOneObj tbody tr");
-   					rows.die("click");
-   					rows.die("mouseover");
-   					rows.die("mouseout");
-   					rows.live("click", clickFunction);
-   					rows.live("mouseover",mouseoverFunction);
-   					rows.live("mouseout",mouseoutFunction);
-   					$("#displayOneObj th:nth-child(1)").hide();
-   					$("#displayOneObj td:nth-child(1)").hide();
-  				}
-  };
+					$("#top5CollectionObj td:nth-child(2)").each(function(index) {
+						var linkBranchName = '<a href="#" onclick="alert(' + "'" + $(this).text() + "'" + ');return false;">' + $(this).text() + '</a>';
+						$(this).html(linkBranchName);
+  					});
+   					$("#top5CollectionObj th").addClass("tableHeading");
+   					$("#top5CollectionObj th").css("background-color", darkBlue);
+   					$("#top5CollectionObj th").css("color", white);
+   					$("#top5CollectionObj th:nth-child(1)").hide();
+   					$("#top5CollectionObj td:nth-child(1)").hide();
+   					$("#top5CollectionObjTable_wrapper").removeClass("dataTables_wrapper");
 
-
-var remainingLoanOfficersCollection =
-	{
- 		name: "remainingLoanOfficersCollection",
-		type: "tableComponent",
-		listeners: ["selectedBranchId"],
-		parameters: [["selectedBranchId","selectedBranchId"]],
-		cdaParams: [["selectedBranchId","selectedBranchId"]],
-    		chartDefinition: MetaLayerVar.loanOfficerDef,
-    		htmlObject: "displayTwoObj",
-    		executeAtStart: false,
-  		postExecution: function(){
-   					var rows = $("#displayTwoObj tbody tr");
-   					rows.die("click");
-   					rows.die("mouseover");
-   					rows.die("mouseout");
-   					rows.live("click", clickFunctionLO);
-   					rows.live("mouseover",mouseoverFunction);
-   					rows.live("mouseout",mouseoutFunction);
-   					$("#displayTwoObj th:nth-child(1)").hide();
-   					$("#displayTwoObj td:nth-child(1)").hide();
+					$("#top5CollectionObj").css("color", black);
+					$("#top5CollectionObj tbody tr").each(function(index) {
+						if ($(this).hasClass("odd"))
+						{
+							$(this).css("background-color", oddRow);
+						}
+						else
+						{
+							$(this).css("background-color", evenRow);
+						}				
+  					});
   				}
   };
 
@@ -331,52 +288,56 @@ var remainingBranchesDisbursement =
 	{
  		name: "remainingBranchesDisbursement",
 		type: "tableComponent",
-		listeners: ["disbursementClickedEvent"],
-
     		chartDefinition: MetaLayerVar.branchDefDisb,
-    		htmlObject: "displayOneObj",
-    		executeAtStart: false,
+		parameters: [["currentDate","currentDate"], ["limit", "5"]],
+		cdaParams: [["currentDate","currentDate"], ["limit", "5"]],
+    		htmlObject: "top5DisbursementObj",
+    		executeAtStart: true,
   		postExecution: function(){
-   					var rows = $("#displayOneObj tbody tr");
-   					rows.die("click");
-   					rows.die("mouseover");
-   					rows.die("mouseout");
-   					rows.live("click", clickFunctionDisb);
-   					rows.live("mouseover",mouseoverFunction);
-   					rows.live("mouseout",mouseoutFunction);
-   					$("#displayOneObj th:nth-child(1)").hide();
-   					$("#displayOneObj td:nth-child(1)").hide();
+					$("#top5DisbursementObj td:nth-child(2)").each(function(index) {
+						var linkBranchName = '<a href="#" onclick="alert(' + "'" + $(this).text() + "'" + ');return false;">' + $(this).text() + '</a>';
+						$(this).html(linkBranchName);
+  					});
+   					$("#top5DisbursementObj th").css("background-color", darkBlue);
+   					$("#top5DisbursementObj th").css("color", white);
+   					$("#top5DisbursementObj th:nth-child(1)").hide();
+   					$("#top5DisbursementObj td:nth-child(1)").hide();
+   					$("#top5DisbursementObjTable_wrapper").removeClass("dataTables_wrapper");
+
+					$("#top5DisbursementObj").css("color", black);
+					$("#top5DisbursementObj tbody tr").each(function(index) {
+						if ($(this).hasClass("odd"))
+						{
+							$(this).css("background-color", oddRow);
+						}
+						else
+						{
+							$(this).css("background-color", evenRow);
+						}				
+  					});
+
   				}
   };
 
-
-var remainingLoanOfficersDisbursement =
-	{
- 		name: "remainingLoanOfficersDisbursement",
-		type: "tableComponent",
-		listeners: ["selectedBranchIdDisb"],
-		parameters: [["selectedBranchId","selectedBranchIdDisb"]],
-		cdaParams: [["selectedBranchId","selectedBranchIdDisb"]],
-    		chartDefinition: MetaLayerVar.loanOfficerDefDisb,
-    		htmlObject: "displayTwoObj",
-    		executeAtStart: false,
-  		postExecution: function(){
-   					var rows = $("#displayTwoObj tbody tr");
-   					rows.die("click");
-   					rows.die("mouseover");
-   					rows.die("mouseout");
-   					rows.live("click", clickFunctionLODisb);
-   					rows.live("mouseover",mouseoverFunction);
-   					rows.live("mouseout",mouseoutFunction);
-   					$("#displayTwoObj th:nth-child(1)").hide();
-   					$("#displayTwoObj td:nth-child(1)").hide();
-
-  				}
-  };
 
 
 //
 
-Dashboards.init([toptable, collection, disbursement, remainingBranchesCollection, remainingLoanOfficersCollection, remainingBranchesDisbursement, remainingLoanOfficersDisbursement]);
+Dashboards.init([toptable, collection, disbursement, remainingBranchesCollection, remainingBranchesDisbursement]);
+
+$(document).ready(function() {
+
+   	$(".sectionTable > tbody > tr:nth-child(1)").css("background-color", lighterOrange);
+   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-bottom-style","solid");
+   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-width","1px");
+   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-color", darkOrange);
+   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("padding-top", "5px");
+   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("padding-bottom", "5px");
+
+   	$(".borderSection").css("border-color", darkOrange);
+
+
+	$("#burndown").slideToggle("slow");
+});
 
 </script>

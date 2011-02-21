@@ -12,7 +12,14 @@
     <icon/> 
   </documentation>
 
-  <inputs/>
+  <inputs> 
+    <asOfDate type="string"> 
+      <sources> 
+        <request>asOfDate</request> 
+      </sources>  
+      <default-value/> 
+    </asOfDate> 
+  </inputs>
 
   <outputs> 
     <image-tag type="string"/>  
@@ -26,23 +33,25 @@
     <action-definition> 
       <component-name>SQLLookupRule</component-name>
       <action-type>Relational</action-type>
-      <action-inputs/>
+      <action-inputs> 
+        <asOfDate type="string"/> 
+      </action-inputs>
       <action-outputs> 
         <query-result type="result-set" mapping="query_result"/> 
       </action-outputs>
       <component-definition> 
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
-        <query><![CDATA[(select "Collected" as typename, ifnull(sum(ls.principal_paid), 0.0) as fulltotal 
+        <query><![CDATA[(select "Completed" as typename, ifnull(sum(ls.principal_paid), 0.0) as fulltotal 
 from account_status_change_history ast
 join
     (select  la.account_id, max(account_status_change_id) as account_status_change_id
     from loan_account la
     join account_status_change_history ast on ast.account_id = la.account_id
-    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+    where ast.changed_date <= DATE_SUB(date('{asOfDate}'), INTERVAL 1 DAY)      
     group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
     
-join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = curdate() 
+join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = date('{asOfDate}') 
 where ast.new_status in (5,9) )
 
 UNION ALL
@@ -53,10 +62,10 @@ join
     (select  la.account_id, max(account_status_change_id) as account_status_change_id
     from loan_account la
     join account_status_change_history ast on ast.account_id = la.account_id
-    where ast.changed_date <= DATE_SUB(curdate(), INTERVAL 1 DAY)      
+    where ast.changed_date <= DATE_SUB(date('{asOfDate}'), INTERVAL 1 DAY)      
     group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
     
-join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = curdate() 
+join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = date('{asOfDate}') 
 where ast.new_status in (5,9) )]]></query> 
       </component-definition> 
     </action-definition>
@@ -74,18 +83,16 @@ where ast.new_status in (5,9) )]]></query>
         <chart-attributes> 
           <chart-type>PieChart</chart-type>  
           <color-palette> 
-            <color>#09B4ED</color>  
-            <color>#DCE4D0</color> 
+            <color>#00B050</color>  
+            <color>#FF5050</color> 
           </color-palette>  
-          <url-template><![CDATA[javascript:collectionClicked()]]></url-template>  
           <title-font> 
             <is-bold>false</is-bold>  
             <size>14</size> 
           </title-font> 
         </chart-attributes>  
-        <width><![CDATA[400]]></width>  
-        <height><![CDATA[300]]></height>  
-        <title><![CDATA[Collection]]></title>
+        <width><![CDATA[450]]></width>  
+        <height><![CDATA[150]]></height> 
       </component-definition> 
     </action-definition>
  

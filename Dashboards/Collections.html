@@ -1,0 +1,134 @@
+
+<style type="text/css">
+
+#burndown {
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	display:none;
+}
+
+.boldLabel{
+	color: black;
+	padding-left: 5px;
+	font-weight:bold;
+	display: inline;
+}
+
+#mainHeading {
+      border-style: solid;
+      border-width: 1px;
+	padding-bottom: 10px;
+}
+
+
+</style>
+
+<div id="burndown">
+
+<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div> All Branches Remaining</div>
+<div id=remainingBranchesObj></div>
+</div>
+
+<script language="javascript" type="text/javascript">
+
+
+var lighterOrange = "#FCD5B5";
+var darkOrange = "#F79646";
+var darkBlue = "#4F81BD";
+var white = "white";
+var black = "black";
+var oddRow = "#D0D8E8";
+var evenRow = "#E9EDF4";
+
+var currentDate = '2010-12-01';
+var currentDateUpdated = currentDate;
+currentDateUpdated.replace(/-/g,'');
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var cdaPath = solution + "/" + "CollectionsDisbursalsBurndown.cda";
+
+
+var pieChartXAction = "collectionProgress.xaction";
+var getRemainingBranchesQuery = "getRemainingBranchesCollection";
+
+
+
+
+Dashboards.globalcontext = false;
+
+
+
+  var MetaLayerVar = {
+
+    branchDef: {
+      colHeaders: ["Id", "Branches Remaining", "Expected", "Collected", "% Collected"],
+      colTypes: ['numeric','string','numeric','numeric','numeric'],
+	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: getRemainingBranchesQuery, 
+	path: cdaPath
+    }
+
+  };
+
+
+var remainingBranches =
+	{
+ 		name: "remainingBranches",
+		type: "tableComponent",
+    		chartDefinition: MetaLayerVar.branchDef,
+		parameters: [["currentDate","currentDate"]],
+		cdaParams: [["currentDate","currentDate"]],
+    		htmlObject: "remainingBranchesObj",
+    		executeAtStart: true,
+  		postExecution: function(){
+					$("#remainingBranchesObj td:nth-child(2)").each(function(index) {
+						var linkBranchName = '<a href="#" onclick="alert(' + "'" + $(this).text() + "'" + ');return false;">' + $(this).text() + '</a>';
+						$(this).html(linkBranchName);
+  					});
+   					$("#remainingBranchesObj th").addClass("tableHeading");
+   					$("#remainingBranchesObj th").css("background-color", darkBlue);
+   					$("#remainingBranchesObj th").css("color", white);
+   					$("#remainingBranchesObj th:nth-child(1)").hide();
+   					$("#remainingBranchesObj td:nth-child(1)").hide();
+   					$("#remainingBranchesObj_wrapper").removeClass("dataTables_wrapper");
+
+					$("#remainingBranchesObj").css("color", black);
+					$("#remainingBranchesObj tbody tr").each(function(index) {
+						if ($(this).hasClass("odd"))
+						{
+							$(this).css("background-color", oddRow);
+						}
+						else
+						{
+							$(this).css("background-color", evenRow);
+						}				
+  					});
+  				}
+  };
+
+
+
+//
+
+Dashboards.init([remainingBranches]);
+
+$(document).ready(function() {
+
+   	$("#mainHeading").css("background-color", lighterOrange);
+   	$("#mainHeading").css("border-color", darkOrange);
+   	$("#mainHeading").css("padding-top", "5px");
+   	$("#mainHeading").css("padding-bottom", "5px");
+
+
+	$("#burndown").slideToggle("slow");
+});
+
+</script>
+
