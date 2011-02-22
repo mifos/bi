@@ -1,30 +1,15 @@
 <div id="burndown">
-	<div id=breadcrumb><div id=breadcrumbBack>
-				<a href="x">HOME</a> >> <a href="x">COLLECTIONS </a>
-				</div>
-				<div id=breadcrumbCurrent> >>Away
-				</div>
-	</div>
-	<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div> All Branches Remaining</div>
+	<div id=mainHeading><div class=boldLabel> DISBURSALS:</div> All Centers Remaining</div>
 	<div id=remainingObj></div>
 </div>
 
 
-
 <script language="javascript" type="text/javascript">
 
-function setUpRemaining(getRemainingQueryParam, completedParam, nameHeadingParam, drillClickParam)
+function setUpRemaining()
 {
 
-  var remainingText = " Remaining";
-
-  var getRemainingQuery = getRemainingQueryParam;
-  var completed = completedParam;
-  var completedPC = "% " + completed;
-  var nameHeading = nameHeadingParam + remainingText;
-  var drillClick = drillClickParam;
-
-  var MetaLayerVar = {
+var MetaLayerVar = {
 
     remainingDef: {
       colHeaders: ["Id", nameHeading, "Expected", completed, completedPC],
@@ -47,17 +32,19 @@ var remaining =
  		name: "remaining",
 		type: "tableComponent",
     		chartDefinition: MetaLayerVar.remainingDef,
-		parameters: [["currentDate","currentDate"]],
-		cdaParams: [["currentDate","currentDate"]],
+		parameters: [["currentDate","currentDate"], ["tableParentId","tableParentId"]],
+		cdaParams: [["currentDate","currentDate"], ["tableParentId","tableParentId"]],
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
+				if (drillClick != '')
+				{
 					$("#remainingObj td:nth-child(2)").each(function(index) {
 						var paramId = $(this).parent().children("td:nth-child(1)").text();
 						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'" + drillClick + "', " + "'" + paramId + "'" + ');return false;">' + $(this).text() + '</a>';
 						$(this).html(linkBranchName);
   					});
-
+				}
    					$("#remainingObj th").addClass("tableHeading");
    					$("#remainingObj th").css("background-color", darkBlue);
    					$("#remainingObj th").css("color", white);
@@ -83,7 +70,18 @@ var remaining =
 
 }
 
-setUpRemaining("getRemainingBranchesCollection", "Collected", "Branches", "CollectionsLO");
+
+  var remainingText = " Remaining";
+
+  var getRemainingQuery = "getRemainingCenterDisbursement";
+  var completed = "Disbursed";
+  var completedPC = "% " + completed;
+  var nameHeading = "Centers" + remainingText;
+  var drillClick = "";
+  var tableParentId = Dashboards.getQueryParameter("pageParamId");
+
+setUpRemaining();
+
 
 $(document).ready(function() {
 
@@ -91,6 +89,7 @@ $(document).ready(function() {
    	$("#mainHeading").css("border-color", darkOrange);
    	$("#mainHeading").css("padding-top", "5px");
    	$("#mainHeading").css("padding-bottom", "5px");
+
 
 	$("#burndown").slideToggle("slow");
 });
