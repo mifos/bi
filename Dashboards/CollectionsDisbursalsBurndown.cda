@@ -52,6 +52,46 @@ LIMIT ${limit}
     </DataAccess>
 
 
+    <DataAccess id="getRemainingLOCollection" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+		   <Name>Get Remaining Loan Officers for Collections</Name>
+<Query>
+<![CDATA[
+
+select p.personnel_id as loan_officer_id, p.display_name as loan_officer_name, 
+    cast(round(ifnull(sum(ls.principal), 0.0), 1) as char) as expected, 
+    cast(round(ifnull(sum(ls.principal_paid), 0.0), 1) as char) as collected,
+    cast(round(
+            ( (ifnull(sum(ls.principal_paid), 0.0) * 100) / ifnull(sum(ls.principal), 0.0))
+                ,1) as char) as collected_pc
+from personnel p
+join account a on a.personnel_id = p.personnel_id
+join account_status_change_history ast on ast.account_id = a.account_id
+join
+    (select  la.account_id, max(account_status_change_id) as account_status_change_id
+    from loan_account la
+    join account_status_change_history ast on ast.account_id = la.account_id
+    where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)      
+    group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id  
+    
+join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = ${currentDate}
+where ast.new_status in (5,9)
+and p.office_id = ${tableParentId}
+
+group by p.personnel_id 
+having ifnull(sum(ls.principal), 0.0) > ifnull(sum(ls.principal_paid), 0.0)    
+order by 5 desc
+
+LIMIT ${limit}
+]]>
+</Query>
+        <Parameters>
+    		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="tableParentId" type="Integer" default="0"/>
+    		<Parameter name="limit" type="Integer" default="1000000"/>
+        </Parameters>
+    </DataAccess>
+
+
     <DataAccess id="getRemainingBranchesDisbursement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
 		   <Name>Get Remaining Branches for Disbursements</Name>
 <Query>
@@ -90,6 +130,46 @@ LIMIT ${limit}
         </Parameters>
     </DataAccess>
 
+
+    <DataAccess id="getRemainingLODisbursement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+		   <Name>Get Remaining Loan Officers for Disbursements</Name>
+<Query>
+<![CDATA[
+select p.personnel_id as loan_officer_id, p.display_name as loan_officer_name, 
+    cast(round(ifnull(sum(la.loan_amount), 0.0), 1) as char) as expected, 
+    cast(round(ifnull(sum(att.amount), 0.0), 1) as char) as disbursed,
+    cast(round(
+            ( (ifnull(sum(att.amount), 0.0) * 100) / ifnull(sum(la.loan_amount), 0.0))
+                ,1) as char) as disbursed_pc
+from personnel p
+join account a on a.personnel_id = p.personnel_id
+join account_status_change_history ast on ast.account_id = a.account_id
+join
+    (select  la.account_id, max(account_status_change_id) as account_status_change_id
+    from loan_account la
+    join account_status_change_history ast on ast.account_id = la.account_id
+    where ast.changed_date <= DATE_SUB(${currentDate}, INTERVAL 1 DAY)  
+    and la.disbursement_date = ${currentDate}
+    group by la.account_id) maxast on maxast.account_status_change_id = ast.account_status_change_id   
+    
+left join account_trxn att on att.account_id = ast.account_id and att.account_action_id = 10 and att.action_date = ${currentDate}
+join loan_account la on la.account_id = ast.account_id  
+where ast.new_status = 3   
+and p.office_id = ${tableParentId}
+group by p.personnel_id 
+having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0) 
+order by 5 desc
+    
+LIMIT ${limit}
+
+]]>
+</Query>
+        <Parameters>
+    		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="tableParentId" type="Integer" default="0"/>
+    		<Parameter name="limit" type="Integer" default="1000000"/>
+        </Parameters>
+    </DataAccess>
 
 
     <DataAccess id="getTargetAndCompleted" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">

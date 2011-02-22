@@ -1,24 +1,15 @@
 <div id="burndown">
-	<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div> All Branches Remaining</div>
+	<div id=mainHeading><div class=boldLabel> DISBURSALS:</div> All Loan Officers Remaining</div>
 	<div id=remainingObj></div>
 </div>
 
 
-
 <script language="javascript" type="text/javascript">
 
-function setUpRemaining(getRemainingQueryParam, completedParam, nameHeadingParam, drillClickParam)
+function setUpRemaining()
 {
 
-  var remainingText = " Remaining";
-
-  var getRemainingQuery = getRemainingQueryParam;
-  var completed = completedParam;
-  var completedPC = "% " + completed;
-  var nameHeading = nameHeadingParam + remainingText;
-  var drillClick = drillClickParam;
-
-  var MetaLayerVar = {
+var MetaLayerVar = {
 
     remainingDef: {
       colHeaders: ["Id", nameHeading, "Expected", completed, completedPC],
@@ -41,8 +32,8 @@ var remaining =
  		name: "remaining",
 		type: "tableComponent",
     		chartDefinition: MetaLayerVar.remainingDef,
-		parameters: [["currentDate","currentDate"]],
-		cdaParams: [["currentDate","currentDate"]],
+		parameters: [["currentDate","currentDate"], ["tableParentId","tableParentId"]],
+		cdaParams: [["currentDate","currentDate"], ["tableParentId","tableParentId"]],
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
@@ -77,7 +68,18 @@ var remaining =
 
 }
 
-setUpRemaining("getRemainingBranchesCollection", "Collected", "Branches", "CollectionsLO");
+
+  var remainingText = " Remaining";
+
+  var getRemainingQuery = "getRemainingLODisbursement";
+  var completed = "Disbursed";
+  var completedPC = "% " + completed;
+  var nameHeading = "Loan Officers" + remainingText;
+  var drillClick = "DisbursalsCenter";
+  var tableParentId = Dashboards.getQueryParameter("pageParamId");
+
+  setUpRemaining();
+
 
 $(document).ready(function() {
 
@@ -85,6 +87,7 @@ $(document).ready(function() {
    	$("#mainHeading").css("border-color", darkOrange);
    	$("#mainHeading").css("padding-top", "5px");
    	$("#mainHeading").css("padding-bottom", "5px");
+
 
 	$("#burndown").slideToggle("slow");
 });

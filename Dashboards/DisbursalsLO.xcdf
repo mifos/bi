@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Disbursals Loan Officers</title>
+	<author>John Woodlock</author>
+	<description></description>
+	<visible>false</visible>
+	<icon></icon>
+	<style>dashboards</style>
+	<template>DisbursalsLO.html</template>
+</cdf>

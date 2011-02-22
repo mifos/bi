@@ -10,14 +10,116 @@
 	</head>
 	<body>
 
+<style type="text/css">
+
+#burndown {
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-right: 10px;
+	display:none;
+}
+
+#toptableObj {
+	padding-bottom: 10px;
+}
+
+#toptableObj th{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#toptableObj td{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+}
+
+.boldLabel{
+	color: black;
+	padding-left: 5px;
+	font-weight:bold;
+	display: inline;
+}
+
+.sectionTable {
+	border-collapse: collapse;
+}
+
+.borderSection {
+      border-style: solid;
+      border-width: 1px;
+	padding: 0;
+	vertical-align: text-top;
+}
+
+.viewAll {
+	float: right;
+}
+
+.textlink {
+	vertical-align: 30%;
+}
+
+.blueArrow {
+	color: #5E99E3;
+	font-size: 170%;
+	display: inline;
+	text-decoration: none;
+}
+
+
+
+#mainHeading {
+      border-style: solid;
+      border-width: 1px;
+	padding-bottom: 10px;
+}
+
+</style>
+
 
 <script language="javascript">
 
 	isAdmin = "{isAdmin}";
 	isLoggedIn = "{isLoggedIn}";
 
-</script>
 
+function linkToPage(pageName, pageParamId)
+{
+	if (pageParamId == '')
+	{
+		linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
+		linkTo = linkTo + "&pageParamId=" + pageParamId;
+		window.location = linkTo;
+	}
+	else
+	{
+		alert("still in progress");
+	}
+}
+
+
+var lighterOrange = "#FCD5B5";
+var darkOrange = "#F79646";
+var darkBlue = "#4F81BD";
+var white = "white";
+var black = "black";
+var oddRow = "#D0D8E8";
+var evenRow = "#E9EDF4";
+var topTableRows = "#FDEFE9";
+
+
+var currentDate = '2010-09-01';
+var currentDateUpdated = currentDate;
+currentDateUpdated.replace(/-/g,'');
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var cdaPath = solution + path + "CollectionsDisbursalsBurndown.cda";
+
+Dashboards.globalcontext = false;
+
+</script>
 
 		<!-- start header -->
 			{content}

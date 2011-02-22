@@ -1,63 +1,4 @@
 
-<style type="text/css">
-
-#burndown {
-	padding-left: 10px;
-	padding-top: 10px;
-	padding-right: 10px;
-	display:none;
-}
-
-#toptableObj {
-	padding-bottom: 10px;
-}
-
-#toptableObj th{
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
-#toptableObj td{
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-right: 5px;
-}
-
-.boldLabel{
-	color: black;
-	padding-left: 5px;
-	font-weight:bold;
-	display: inline;
-}
-
-.sectionTable {
-	border-collapse: collapse;
-}
-
-.borderSection {
-      border-style: solid;
-      border-width: 1px;
-	padding: 0;
-	vertical-align: text-top;
-}
-
-.viewAll {
-	float: right;
-}
-
-.textlink {
-	vertical-align: 30%;
-}
-
-.blueArrow {
-	color: #5E99E3;
-	font-size: 170%;
-	display: inline;
-	text-decoration: none;
-}
-
-</style>
-
 <div id="burndown">
 
 <div id=toptableObj></div>
@@ -84,8 +25,8 @@
 				<tr>
 					<td>
 						<div class=viewAll>
-							<a class=textlink href="#" onclick="linkToPage('Collections');return false;">View all branches</a>
-							<a class=blueArrow href="#" onclick="linkToPage('Collections');return false;">&#x25B6;</a>
+							<a class=textlink href="#" onclick="linkToPage('Collections', '');return false;">View all branches</a>
+							<a class=blueArrow href="#" onclick="linkToPage('Collections', '');return false;">&#x25B6;</a>
 						</div>
 					</td>
 				</tr>
@@ -113,8 +54,8 @@
 				<tr>
 					<td>
 						<div class=viewAll>
-							<a class=textlink href="#" onclick="linkToPage('Disbursals');return false;">View all branches</a>
-							<a class=blueArrow href="#" onclick="linkToPage('Disbursals');return false;">&#x25B6;</a>
+							<a class=textlink href="#" onclick="linkToPage('Disbursals', '');return false;">View all branches</a>
+							<a class=blueArrow href="#" onclick="linkToPage('Disbursals', '');return false;">&#x25B6;</a>
 						</div>
 
 					</td>
@@ -132,34 +73,6 @@
 
 <script language="javascript" type="text/javascript">
 
-var lighterOrange = "#FCD5B5";
-var darkOrange = "#F79646";
-var darkBlue = "#4F81BD";
-var white = "white";
-var black = "black";
-var oddRow = "#D0D8E8";
-var evenRow = "#E9EDF4";
-var topTableRows = "#FDEFE9";
-
-
-var currentDate = '2010-09-01';
-var currentDateUpdated = currentDate;
-currentDateUpdated.replace(/-/g,'');
-
-var solution = Dashboards.getQueryParameter("solution");
-var path = Dashboards.getQueryParameter("path");
-var cdaPath = solution + "/" + "CollectionsDisbursalsBurndown.cda";
-
-
-Dashboards.globalcontext = false;
-
-
-function linkToPage(pageName)
-{
-	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
-	//window.location = linkTo;
-	alert("Still In Progress");
-}
 
 
   var MetaLayerVar = {
@@ -261,7 +174,8 @@ var remainingBranchesCollection =
     		executeAtStart: true,
   		postExecution: function(){
 					$("#top5CollectionObj td:nth-child(2)").each(function(index) {
-						var linkBranchName = '<a href="#" onclick="alert(' + "'" + $(this).text() + "'" + ');return false;">' + $(this).text() + '</a>';
+						var paramId = $(this).parent().children("td:nth-child(1)").text();
+						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'CollectionsLO', " + "'" + paramId + "'" + ');return false;">' + $(this).text() + '</a>';
 						$(this).html(linkBranchName);
   					});
    					$("#top5CollectionObj th").addClass("tableHeading");
@@ -297,9 +211,11 @@ var remainingBranchesDisbursement =
     		executeAtStart: true,
   		postExecution: function(){
 					$("#top5DisbursementObj td:nth-child(2)").each(function(index) {
-						var linkBranchName = '<a href="#" onclick="alert(' + "'" + $(this).text() + "'" + ');return false;">' + $(this).text() + '</a>';
+						var paramId = $(this).parent().children("td:nth-child(1)").text();
+						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'DisbursalsLO', " + "'" + paramId + "'" + ');return false;">' + $(this).text() + '</a>';
 						$(this).html(linkBranchName);
   					});
+
    					$("#top5DisbursementObj th").css("background-color", darkBlue);
    					$("#top5DisbursementObj th").css("color", white);
    					$("#top5DisbursementObj th:nth-child(1)").hide();
