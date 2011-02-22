@@ -8,8 +8,8 @@ class ActiveLoanSummaryBranchTest {
     def reportName = 'Active Loan Summary per Branch'
     def detailsHeader = ['Branch', 'No. of Centers', 'No. of Groups', 'No. of Clients', 'No. of Active Loans', 'No. of Loans in Arrears', 'Total Loans Disbursed', 'Total Principal Repaid', 'Total Interest Repaid', 'Total Principal Outstanding', 'Total Interest Outstanding', 'Amount in Arrears']
 
-    def details = ['br2', '2', '10', '9', '1', '1', '3000.0000', '75.1000', '2.9000', '2924.9000', '18.1000', '2943.0000']
-    def total = ['Total', '2', '10', '9', '1', '1', '3000.0000', '75.1000', '2.9000', '2924.9000', '18.1000', '2943.0000']
+    def details = ['br2', '1', '1', '1', '1', '1', '3000.0000', '75.1000', '2.9000', '2924.9000', '18.1000', '2943.0000']
+    def total = ['Total', '1', '1', '1', '1', '1', '3000.0000', '75.1000', '2.9000', '2924.9000', '18.1000', '2943.0000']
 
     def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
