@@ -1,7 +1,6 @@
 <table>
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>As of Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
@@ -18,7 +17,6 @@
 
 function runTheReport()
 {
-    startDate = $('#date1Obj input').val();
     event = event + 1;
     Dashboards.fireChange("event", event);
     enableClearButton();
@@ -33,18 +31,7 @@ var commonActionsSolution = "commonActions";
 Dashboards.globalcontext = false;
 var event = 0;
 
-var startDate = setCurrentDate();
 var outputType = "application/pdf";
-
-date1 = 
-{
-	name: "date1",
-	type: "dateInputComponent",
-	parameters:[],
-	parameter: "startDate",
-	htmlObject: "date1Obj",
-	executeAtStart: true
-};
 
 outputSelector = 
 {
@@ -86,14 +73,14 @@ theReport =
   	path: prptPath,
   	action: "ActiveLoanSummaryBranch.prpt",
   	listeners:["event"],
-  	parameters: [["out_date","startDate"],["output-type","outputType"]],
+  	parameters: [["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([date1, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
         initRunClearButtons();
