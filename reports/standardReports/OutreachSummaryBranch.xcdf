@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Outreach Summary by Branch</title>
+	<author>Adam Balcerzak</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosreports</style>
+	<template>OutreachSummaryBranch.html</template>
+</cdf>
