@@ -15,12 +15,12 @@ class ActiveLoansLastInstallmentTest {
     def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
-    void testParams_All_All_20110112() {
+    void testParams_All_All() {
         new PrptReport().execute () { t ->
 
             // Report settings.
             t.reportPath = 'reports/standardReports/prpts/ActiveLoansLastInstallment.prpt'
-            t.reportParams = ['selected_office': '-1', 'out_date': '2011-01-12']
+            t.reportParams = ['selected_office': '-1']
 
             // MFI Name
             t.assertRowEquals(1, [mfiName])
@@ -28,21 +28,20 @@ class ActiveLoansLastInstallmentTest {
             t.assertRowEquals(2, [reportName])
 
             // Page header
-            t.assertRowEquals(3, ['As Of:', '2011-01-12'])
-            t.assertRowEquals(4, ['Office:', 'All'])
+            t.assertRowEquals(3, ['Office:', 'All'])
 
             // Group header
-            def offset = 5
+            def offset = 4
             t.assertRowEquals(offset, center)
             // Details header
             t.assertRowEquals(offset+1, detailsHeader)
-            // Details -> 2010-07-21
+            // Details
             t.assertRowEquals(offset+2, details)
             // Group footer
             t.assertRowEquals(offset+3, total)
 
             // Page footer
-            offset = 9
+            offset = 8
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')

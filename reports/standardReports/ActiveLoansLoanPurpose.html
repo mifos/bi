@@ -3,7 +3,6 @@
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Purpose</div><div id=purposeSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>As of Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
@@ -27,7 +26,6 @@ function updatePurposeSelect()
 
 function runTheReport()
 {
-    startDate = $('#date1Obj input').val();
     if (officeId == 0 || purposeId == 0)
     {
         alert("Please select appropriate values");
@@ -50,7 +48,6 @@ var event = 0;
 var officeId = 0;
 var purposeId = 0;
 
-var startDate = setCurrentDate();
 var outputType = "application/pdf";
 
 branchSelector = 
@@ -81,16 +78,6 @@ purposeSelector=
 	valueAsId: false,
 	htmlObject: "purposeSelectorObj",
 	executeAtStart: false
-};
-
-date1 = 
-{
-	name: "date1",
-	type: "dateInputComponent",
-	parameters:[],
-	parameter: "startDate",
-	htmlObject: "date1Obj",
-	executeAtStart: true
 };
 
 outputSelector = 
@@ -133,14 +120,14 @@ theReport =
   	path: prptPath,
   	action: "ActiveLoansLoanPurpose.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeId"],["selected_purpose","purposeId"],["out_date","startDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","officeId"],["selected_purpose","purposeId"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, purposeSelector, date1, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, purposeSelector, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
         initRunClearButtons();
