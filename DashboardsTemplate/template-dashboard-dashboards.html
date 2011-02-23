@@ -14,9 +14,28 @@
 
 #burndown {
 	padding-left: 10px;
-	padding-top: 10px;
 	padding-right: 10px;
+	padding-top: 5px;
+
 	display:none;
+}
+
+#breadcrumb {
+	padding-bottom: 5px;
+}
+
+#breadcrumbBack {
+	color: black;
+	display: inline;
+}
+
+#breadcrumbBack a {
+	color: #F79646; 
+}
+
+#breadcrumbCurrent {
+	color: black;
+	display: inline;
 }
 
 #toptableObj {
@@ -86,16 +105,9 @@
 
 function linkToPage(pageName, pageParamId)
 {
-	if (pageParamId == '')
-	{
-		linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
-		linkTo = linkTo + "&pageParamId=" + pageParamId;
-		window.location = linkTo;
-	}
-	else
-	{
-		alert("still in progress");
-	}
+	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
+	linkTo = linkTo + "&pageParamId=" + pageParamId;
+	window.location = linkTo;
 }
 
 
