@@ -122,7 +122,76 @@ function linkToPage(pageName, pageParamId)
 {
 	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
 	linkTo = linkTo + "&pageParamId=" + pageParamId;
+	linkTo = linkTo + "&breadcrumbParam=[['" + pageName + "', 'textvalue', '" + pageParamId + "']]";
 	window.location = linkTo;
+}
+
+function specificPage(pageName)
+{
+	return webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
+}
+
+function constructBreadcrumb(currentName)
+{
+	if (currentName == "CollectionsDisbursalsBurndown")
+	{
+   		$("#breadcrumb").css("display", "none");
+	}
+	else
+	{
+		
+		var bcBack = '<a href="' + specificPage("CollectionsDisbursalsBurndown") + '">HOME</a>'
+		var txnType = '';
+		if (currentName.substring(0,11) == "Collections")
+		{
+			txnType = "Collections";
+		}
+		else
+		{
+			txnType = "Disbursals";
+		}
+
+		if (txnType != currentName)
+		{
+			bcBack = bcBack + " >> " + '<a href="' + specificPage(txnType ) + '">' + txnType + '</a>'
+		}
+
+		var bcCurrent = " >> " + currentName;
+   		$("#breadcrumbBack").html(bcBack);
+   		$("#breadcrumbCurrent").html(bcCurrent);
+
+	}
+}
+
+
+
+function finalisePage()
+{
+	var currentAction = Dashboards.getQueryParameter("action")
+	var fullstop = currentAction.indexOf(".");
+	var currentName = currentAction.substring(0, fullstop);
+
+	constructBreadcrumb(currentName);
+
+	if (currentName == "CollectionsDisbursalsBurndown")
+	{
+   		$(".sectionTable > tbody > tr:nth-child(1)").css("background-color", lighterOrange);
+   		$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-bottom-style","solid");
+   		$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-width","1px");
+   		$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-color", darkOrange);
+   		$(".sectionTable > tbody > tr:nth-child(1) > td").css("padding-top", "5px");
+   		$(".sectionTable > tbody > tr:nth-child(1) > td").css("padding-bottom", "5px");
+
+   		$(".borderSection").css("border-color", darkOrange);
+	}
+	else
+	{
+   		$("#mainHeading").css("background-color", lighterOrange);
+   		$("#mainHeading").css("border-color", darkOrange);
+   		$("#mainHeading").css("padding-top", "5px");
+   		$("#mainHeading").css("padding-bottom", "5px");
+	}
+	$("#burndown").slideToggle("slow");
 }
 
 var collectionCompleted = 0;
@@ -139,23 +208,31 @@ var oddRow = "#D0D8E8";
 var evenRow = "#E9EDF4";
 var topTableRows = "#FDEFE9";
 
+var currentDate = '2010-09-01';
+//var currentDate = setCurrentDate();
 
-//var currentDate = '2010-09-01';
-var currentDate = setCurrentDate();
-
-var currentDateUpdated = currentDate;
-currentDateUpdated.replace(/-/g,'');
+//var currentDateUpdated = currentDate;
+//currentDateUpdated.replace(/-/g,'');
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 var cdaPath = solution + path + "CollectionsDisbursalsBurndown.cda";
 
+var breadcrumbFrom = Dashboards.getQueryParameter("breadcrumbParam");
+//alert(breadcrumbFrom);
+
 Dashboards.globalcontext = false;
 
 </script>
 
-		<!-- start header -->
-			{content}
-			<div class="clear"/>
+	<!-- start header -->
+	<div id="burndown">
+		<div id=breadcrumb>
+			<div id=breadcrumbBack></div>
+			<div id=breadcrumbCurrent></div>
+		</div>
+		{content}
+	</div>
+	<div class="clear"/>
 </body>
 </html>
