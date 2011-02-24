@@ -73,7 +73,8 @@
 
 <script language="javascript" type="text/javascript">
 
-
+ 
+var toptableDone = 0;
 
   var MetaLayerVar = {
     toptableDef: {
@@ -123,21 +124,23 @@ collection = {
 	type: "XactionComponent",
 	solution: solution, 
 	path: path,
-	parameters:[["asOfDate", "currentDateUpdated"]],
-	action: "collectionProgress.xaction",
+	listeners: ["toptableDone"],
+	parameters:[["completed", "collectionCompleted"], ["remaining", "collectionRemaining"]],
+	action: "burndownProgress.xaction",
 	htmlObject: "collectionObj",
-	executeAtStart: true
+	executeAtStart: false
 };
 
 disbursement = {
 	name:"disbursement", 
 	type: "XactionComponent",
 	solution: solution, 
+	listeners: ["toptableDone"],
 	path: path,
-	parameters:[["asOfDate", "currentDateUpdated"]],
-	action: "disbursementProgress.xaction",
+	parameters:[["completed", "disbursementCompleted"], ["remaining", "disbursementRemaining"]],
+	action: "burndownProgress.xaction",
 	htmlObject: "disbursementObj",
-	executeAtStart: true
+	executeAtStart: false
 };
 
 
@@ -151,6 +154,25 @@ var toptable =
     		htmlObject: "toptableObj",
     		executeAtStart: true,
   		postExecution: function(){
+
+   					collectionCompleted = removeCommas($("#toptableObjTable tr:nth-child(2) td:nth-child(5)").text());
+   					var collectionTarget = removeCommas($("#toptableObjTable tr:nth-child(1) td:nth-child(5)").text());
+					collectionRemaining = collectionTarget - collectionCompleted;
+					if (collectionRemaining < 0)
+					{
+						collectionRemaining = 0;
+					}
+   					disbursementCompleted = removeCommas($("#toptableObjTable tr:nth-child(2) td:nth-child(6)").text());
+   					var disbursementTarget = removeCommas($("#toptableObjTable tr:nth-child(1) td:nth-child(6)").text());
+					disbursementRemaining = disbursementTarget - disbursementCompleted;
+					if (disbursementRemaining < 0)
+					{
+						disbursementRemaining = 0;
+					}
+					toptableDone = toptableDone + 1;
+					Dashboards.fireChange("toptableDone",toptableDone);
+
+
    					$("#toptableObjTable th").css("background-color", darkOrange);
    					$("#toptableObjTable th").css("color",white);
    					$("#toptableObjTable td").css("background-color",topTableRows);
@@ -159,7 +181,6 @@ var toptable =
    					$("#toptableObjTable td:nth-child(1)").css("text-align","right");
    					$("#toptableObjTable_wrapper").removeClass("dataTables_wrapper");
   				}
-
   };
 
 

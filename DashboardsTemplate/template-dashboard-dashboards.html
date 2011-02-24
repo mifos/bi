@@ -103,6 +103,21 @@
 	isLoggedIn = "{isLoggedIn}";
 
 
+function pad2(number) {
+    return (number < 10 ? '0' : '') + number
+}
+
+function setCurrentDate() {
+    xxDate = new Date();
+    return xxDate.getFullYear() + "-" + pad2(xxDate.getMonth() + 1) + "-" + pad2(xxDate.getDate());
+}
+
+function removeCommas(commaString)
+{
+    var re = /,/g;
+    return commaString.replace(re,"");
+}
+
 function linkToPage(pageName, pageParamId)
 {
 	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
@@ -110,6 +125,10 @@ function linkToPage(pageName, pageParamId)
 	window.location = linkTo;
 }
 
+var collectionCompleted = 0;
+var collectionRemaining = 0;
+var disbursementCompleted = 0;
+var disbursementRemaining = 0;
 
 var lighterOrange = "#FCD5B5";
 var darkOrange = "#F79646";
@@ -121,7 +140,9 @@ var evenRow = "#E9EDF4";
 var topTableRows = "#FDEFE9";
 
 
-var currentDate = '2010-09-01';
+//var currentDate = '2010-09-01';
+var currentDate = setCurrentDate();
+
 var currentDateUpdated = currentDate;
 currentDateUpdated.replace(/-/g,'');
 
