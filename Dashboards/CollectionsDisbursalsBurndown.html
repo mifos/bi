@@ -1,6 +1,4 @@
 
-<div id="burndown">
-
 <div id=toptableObj></div>
 
 <table width="100%">
@@ -67,8 +65,6 @@
 
 </tr>
 </table>
-
-</div>
 
 
 <script language="javascript" type="text/javascript">
@@ -265,18 +261,7 @@ var remainingBranchesDisbursement =
 Dashboards.init([toptable, collection, disbursement, remainingBranchesCollection, remainingBranchesDisbursement]);
 
 $(document).ready(function() {
-
-   	$(".sectionTable > tbody > tr:nth-child(1)").css("background-color", lighterOrange);
-   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-bottom-style","solid");
-   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-width","1px");
-   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-color", darkOrange);
-   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("padding-top", "5px");
-   	$(".sectionTable > tbody > tr:nth-child(1) > td").css("padding-bottom", "5px");
-
-   	$(".borderSection").css("border-color", darkOrange);
-
-
-	$("#burndown").slideToggle("slow");
+	finalisePage();
 });
 
 </script>

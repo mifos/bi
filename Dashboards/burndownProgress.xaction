@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <action-sequence> 
   <name>PieChart1.xaction</name>
-  <title>Arrears by Branch Bar Chart</title>
+  <title>Burndown Progress</title>
   <version>1</version>
   <logging-level>TRACE</logging-level>
   <documentation> 
@@ -13,18 +13,18 @@
   </documentation>
 
   <inputs> 
-    <completed type="string">
-      <sources>
-        <request>completed</request>
-      </sources>
-      <default-value/>
-    </completed>
-    <remaining type="string">
-      <sources>
-        <request>remaining</request>
-      </sources>
-      <default-value/>
-    </remaining>
+    <completed type="string"> 
+      <sources> 
+        <request>completed</request> 
+      </sources>  
+      <default-value/> 
+    </completed>  
+    <remaining type="string"> 
+      <sources> 
+        <request>remaining</request> 
+      </sources>  
+      <default-value/> 
+    </remaining> 
   </inputs>
 
   <outputs> 
@@ -40,8 +40,8 @@
       <component-name>SQLLookupRule</component-name>
       <action-type>Relational</action-type>
       <action-inputs> 
-        <completed type="string"/>
-        <remaining type="string"/>
+        <completed type="string"/>  
+        <remaining type="string"/> 
       </action-inputs>
       <action-outputs> 
         <query-result type="result-set" mapping="query_result"/> 

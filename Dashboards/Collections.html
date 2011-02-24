@@ -1,15 +1,5 @@
-<div id="burndown">
-	<div id=breadcrumb><div id=breadcrumbBack>
-				<a href="x">HOME</a> >> <a href="x">COLLECTIONS </a>
-				</div>
-				<div id=breadcrumbCurrent> >>Away
-				</div>
-	</div>
-	<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div> All Branches Remaining</div>
-	<div id=remainingObj></div>
-</div>
-
-
+<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div> All Branches Remaining</div>
+<div id=remainingObj></div>
 
 <script language="javascript" type="text/javascript">
 
@@ -87,13 +77,7 @@ var remaining =
 setUpRemaining("getRemainingBranchesCollection", "Collected", "Branches", "CollectionsLO");
 
 $(document).ready(function() {
-
-   	$("#mainHeading").css("background-color", lighterOrange);
-   	$("#mainHeading").css("border-color", darkOrange);
-   	$("#mainHeading").css("padding-top", "5px");
-   	$("#mainHeading").css("padding-bottom", "5px");
-
-	$("#burndown").slideToggle("slow");
+	finalisePage();
 });
 
 </script>
