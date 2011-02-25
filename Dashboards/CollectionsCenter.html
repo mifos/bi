@@ -35,14 +35,6 @@ var remaining =
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
-				if (drillClick != '')
-				{
-					$("#remainingObj td:nth-child(2)").each(function(index) {
-						var paramId = $(this).parent().children("td:nth-child(1)").text();
-						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'" + drillClick + "', " + "'" + paramId + "'" + ');return false;">' + $(this).text() + '</a>';
-						$(this).html(linkBranchName);
-  					});
-				}
    					$("#remainingObj th").addClass("tableHeading");
    					$("#remainingObj th").css("background-color", darkBlue);
    					$("#remainingObj th").css("color", white);
@@ -76,8 +68,7 @@ var remaining =
   var completed = "Collected";
   var completedPC = "% " + completed;
   var nameHeading = "Centers" + remainingText;
-  var drillClick = "";
-  var tableParentId = Dashboards.getQueryParameter("pageParamId");
+  var tableParentId = Dashboards.getQueryParameter("LOId");
 
 setUpRemaining();
 

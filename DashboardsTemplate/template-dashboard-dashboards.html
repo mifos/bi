@@ -118,48 +118,63 @@ function removeCommas(commaString)
     return commaString.replace(re,"");
 }
 
-function linkToPage(pageName, pageParamId)
+function linkToPage(pageName, extraParams)
 {
 	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
-	linkTo = linkTo + "&pageParamId=" + pageParamId;
-	linkTo = linkTo + "&breadcrumbParam=[['" + pageName + "', 'textvalue', '" + pageParamId + "']]";
+	linkTo = linkTo + extraParams;
 	window.location = linkTo;
 }
 
-function specificPage(pageName)
+function specificPage(pageName, extraParams)
 {
-	return webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
+	return webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle" + extraParams;
 }
 
 function constructBreadcrumb(currentName)
 {
+//rigidly coded but works fine
 	if (currentName == "CollectionsDisbursalsBurndown")
 	{
    		$("#breadcrumb").css("display", "none");
 	}
 	else
 	{
+		var viewAllBranchesPage = currentName.substring(0,11);
+		if (viewAllBranchesPage != "Collections")
+		{
+			viewAllBranchesPage = "Disbursals";
+		}
+
+		var bcBack = '<a href="' + specificPage("CollectionsDisbursalsBurndown", '') + '">HOME</a>';
+		if (viewAllBranchesPage != currentName)
+		{
+			bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllBranchesPage, '') + '">' + viewAllBranchesPage.toUpperCase() + '</a>';
+
+			var viewAllLOsPage = viewAllBranchesPage + "LO";
+			if (currentName != viewAllLOsPage)
+			{
+				var branchParams = "&branchId=" + branchIdParam + "&branchName=" + branchNameParam;
+				bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllLOsPage,  branchParams) + '">' + branchNameParam + '</a>'
+			}
+		}
 		
-		var bcBack = '<a href="' + specificPage("CollectionsDisbursalsBurndown") + '">HOME</a>'
-		var txnType = '';
-		if (currentName.substring(0,11) == "Collections")
-		{
-			txnType = "Collections";
-		}
-		else
-		{
-			txnType = "Disbursals";
-		}
 
-		if (txnType != currentName)
-		{
-			bcBack = bcBack + " >> " + '<a href="' + specificPage(txnType ) + '">' + txnType + '</a>'
-		}
 
-		var bcCurrent = " >> " + currentName;
+
+		var bcCurrent = currentName.toUpperCase();
+		if (branchNameParam > '')
+		{
+			bcCurrent = branchNameParam;
+		}
+		if (LONameParam > '')
+		{
+			bcCurrent = LONameParam;
+		}
+		bcCurrent = " >> " + bcCurrent;
+
+
    		$("#breadcrumbBack").html(bcBack);
    		$("#breadcrumbCurrent").html(bcCurrent);
-
 	}
 }
 
@@ -167,9 +182,8 @@ function constructBreadcrumb(currentName)
 
 function finalisePage()
 {
-	var currentAction = Dashboards.getQueryParameter("action")
-	var fullstop = currentAction.indexOf(".");
-	var currentName = currentAction.substring(0, fullstop);
+	var fullstop = actionParam.indexOf(".");
+	var currentName = actionParam.substring(0, fullstop);
 
 	constructBreadcrumb(currentName);
 
@@ -194,11 +208,6 @@ function finalisePage()
 	$("#burndown").slideToggle("slow");
 }
 
-var collectionCompleted = 0;
-var collectionRemaining = 0;
-var disbursementCompleted = 0;
-var disbursementRemaining = 0;
-
 var lighterOrange = "#FCD5B5";
 var darkOrange = "#F79646";
 var darkBlue = "#4F81BD";
@@ -208,18 +217,22 @@ var oddRow = "#D0D8E8";
 var evenRow = "#E9EDF4";
 var topTableRows = "#FDEFE9";
 
-var currentDate = '2010-09-01';
-//var currentDate = setCurrentDate();
-
-//var currentDateUpdated = currentDate;
-//currentDateUpdated.replace(/-/g,'');
+//var currentDate = '2010-09-01';
+var currentDate = setCurrentDate();
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 var cdaPath = solution + path + "CollectionsDisbursalsBurndown.cda";
+var branchIdParam = Dashboards.getQueryParameter("branchId");
+var branchNameParam = Dashboards.getQueryParameter("branchName");
+var LOIdParam = Dashboards.getQueryParameter("LOId");
+var LONameParam = Dashboards.getQueryParameter("LOName");
+var actionParam = Dashboards.getQueryParameter("action");
 
-var breadcrumbFrom = Dashboards.getQueryParameter("breadcrumbParam");
-//alert(breadcrumbFrom);
+var collectionCompleted = 0;
+var collectionRemaining = 0;
+var disbursementCompleted = 0;
+var disbursementRemaining = 0;
 
 Dashboards.globalcontext = false;
 

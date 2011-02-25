@@ -191,8 +191,9 @@ var remainingBranchesCollection =
     		executeAtStart: true,
   		postExecution: function(){
 					$("#top5CollectionObj td:nth-child(2)").each(function(index) {
-						var paramId = $(this).parent().children("td:nth-child(1)").text();
-						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'CollectionsLO', " + "'" + paramId + "'" + ');return false;">' + $(this).text() + '</a>';
+						var branchParams = "&branchId=" + $(this).parent().children("td:nth-child(1)").text();
+						branchParams = branchParams  + "&branchName=" + $(this).parent().children("td:nth-child(2)").text();
+						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'CollectionsLO', " + "'" + branchParams + "'" + ');return false;">' + $(this).text() + '</a>';
 						$(this).html(linkBranchName);
   					});
    					$("#top5CollectionObj th").addClass("tableHeading");
@@ -228,8 +229,9 @@ var remainingBranchesDisbursement =
     		executeAtStart: true,
   		postExecution: function(){
 					$("#top5DisbursementObj td:nth-child(2)").each(function(index) {
-						var paramId = $(this).parent().children("td:nth-child(1)").text();
-						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'DisbursalsLO', " + "'" + paramId + "'" + ');return false;">' + $(this).text() + '</a>';
+						var branchParams = "&branchId=" + $(this).parent().children("td:nth-child(1)").text();
+						branchParams = branchParams  + "&branchName=" + $(this).parent().children("td:nth-child(2)").text();
+						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'DisbursalsLO', " + "'" + branchParams + "'" + ');return false;">' + $(this).text() + '</a>';
 						$(this).html(linkBranchName);
   					});
 
