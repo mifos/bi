@@ -120,8 +120,7 @@ function removeCommas(commaString)
 
 function linkToPage(pageName, extraParams)
 {
-	linkTo = webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle";
-	linkTo = linkTo + extraParams;
+	linkTo = specificPage(pageName, extraParams);
 	window.location = linkTo;
 }
 
@@ -130,53 +129,58 @@ function specificPage(pageName, extraParams)
 	return webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle" + extraParams;
 }
 
+//Start of Breadcrumb functionality - rigidly coded but works fine
+function bcBackPages(currentName)
+{
+	var viewAllBranchesPage = currentName.substring(0,11);
+	if (viewAllBranchesPage != collections)
+	{
+		viewAllBranchesPage = disbursals;
+	}
+
+	var bcBack = '<a href="' + specificPage(homePage, '') + '">' + homePageText + '</a>';
+	if (viewAllBranchesPage != currentName)
+	{
+		bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllBranchesPage, '') + '">' + viewAllBranchesPage.toUpperCase() + '</a>';
+
+		var viewAllLOsPage = viewAllBranchesPage + LO;
+		if (currentName != viewAllLOsPage)
+		{
+			var branchParams = "&branchId=" + branchIdParam + "&branchName=" + branchNameParam;
+			bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllLOsPage,  branchParams) + '">' + branchNameParam + '</a>'
+		}
+	}
+	return bcBack;
+}
+
+
+function bcCurrentPage(currentName)
+{
+	var bcCurrent = currentName.toUpperCase();
+	if (branchNameParam > '')
+	{
+		bcCurrent = branchNameParam;
+	}
+	if (LONameParam > '')
+	{
+		bcCurrent = LONameParam;
+	}
+	return " >> " + bcCurrent;
+}
+
 function constructBreadcrumb(currentName)
 {
-//rigidly coded but works fine
-	if (currentName == "CollectionsDisbursalsBurndown")
+	if (currentName == homePage)
 	{
    		$("#breadcrumb").css("display", "none");
 	}
 	else
 	{
-		var viewAllBranchesPage = currentName.substring(0,11);
-		if (viewAllBranchesPage != "Collections")
-		{
-			viewAllBranchesPage = "Disbursals";
-		}
-
-		var bcBack = '<a href="' + specificPage("CollectionsDisbursalsBurndown", '') + '">HOME</a>';
-		if (viewAllBranchesPage != currentName)
-		{
-			bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllBranchesPage, '') + '">' + viewAllBranchesPage.toUpperCase() + '</a>';
-
-			var viewAllLOsPage = viewAllBranchesPage + "LO";
-			if (currentName != viewAllLOsPage)
-			{
-				var branchParams = "&branchId=" + branchIdParam + "&branchName=" + branchNameParam;
-				bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllLOsPage,  branchParams) + '">' + branchNameParam + '</a>'
-			}
-		}
-		
-
-
-
-		var bcCurrent = currentName.toUpperCase();
-		if (branchNameParam > '')
-		{
-			bcCurrent = branchNameParam;
-		}
-		if (LONameParam > '')
-		{
-			bcCurrent = LONameParam;
-		}
-		bcCurrent = " >> " + bcCurrent;
-
-
-   		$("#breadcrumbBack").html(bcBack);
-   		$("#breadcrumbCurrent").html(bcCurrent);
+   		$("#breadcrumbBack").html(bcBackPages(currentName));
+   		$("#breadcrumbCurrent").html(bcCurrentPage(currentName));
 	}
 }
+//End of Breadcrumb functionality
 
 
 
@@ -217,8 +221,15 @@ var oddRow = "#D0D8E8";
 var evenRow = "#E9EDF4";
 var topTableRows = "#FDEFE9";
 
-//var currentDate = '2010-09-01';
-var currentDate = setCurrentDate();
+var currentDate = '2010-09-01';
+//var currentDate = setCurrentDate();
+
+var homePage = "CollectionsDisbursalsBurndown";
+var homePageText = "HOME";
+var collections = "Collections";
+var disbursals = "Disbursals";
+var LO = "LO";
+
 
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
