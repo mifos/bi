@@ -18,7 +18,7 @@ class GroupsInformationTest {
 
             // Report settings.
             t.reportPath = 'reports/standardReports/prpts/GroupsInformation.prpt'
-            t.reportParams = ['selected_office': '-1']
+            t.reportParams = ['selected_office': '-1', 'current_date': '2011-02-02']
 
             // MFI Name
             t.assertRowEquals(1, [mfiName])
@@ -54,7 +54,7 @@ class GroupsInformationTest {
 
             // Report settings.
             t.reportPath = 'reports/standardReports/prpts/GroupsInformation.prpt'
-            t.reportParams = ['selected_office': '1.1.1.']
+            t.reportParams = ['selected_office': '1.1.1.', 'current_date': '2011-02-02']
 
             // MFI Name
             t.assertRowEquals(1, [mfiName])
