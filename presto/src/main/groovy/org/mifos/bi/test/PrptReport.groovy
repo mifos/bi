@@ -318,7 +318,10 @@ class PrptReport {
     }
 
     def compareCellValues(expected, actual) {
-        if (actual.endsWith('..')) {
+        if (actual.endsWith('.._..')) {
+            return expected.startsWith(actual[0..-6]);
+        }
+        else if (actual.endsWith('..')) {
             return expected.startsWith(actual[0..-3]);
         }
         else {
