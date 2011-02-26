@@ -22,7 +22,7 @@ class CenterCollectionSheetTest {
     def summary5 = ['TOTAL:', 'TOTAL:']
     def summary6 = ['NET COLLECTION:']
     def summary7 = ['Signatures:']
-    def summary8 = ['Signature 1', 'Signature 2', 'Signature 3', 'Signature 4', 'Signature 5', 'Signature 6']
+    def summary8 = ['Signature 1', 'Signature 2', 'Signature 3']
 
     @Test
     void testParams_MifosHO_All_All_20110208() {
