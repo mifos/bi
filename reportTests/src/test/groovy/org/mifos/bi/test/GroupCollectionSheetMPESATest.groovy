@@ -10,6 +10,8 @@ class GroupCollectionSheetMPESATest {
     def br2Client1xxxlp1 = ['br2 client 1 xxx', 'lp1 - 32', '2924.9000', '2924.9000', '18.1000', '2943.0000']
     def sp1 = ['sp1 - 30', '1209.2000', '400.0000']
 
+    def annotation = ['"* Att = P, A, L, AA"']
+
     def summary1 = ['Summary', 'Total Amount Due:', '3343.0000']
     def summary2 = ['Collection', 'Issues']
     def summary3 = ['Amount Collected Before Meeting:', '0', 'Total Withdrawal Issued:']
@@ -41,8 +43,10 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset, br2Client1xxxlp1)
             t.assertRowEquals(offset+1, sp1)
 
+            t.assertRowEquals(offset+2, annotation)
+
             // Summary
-            offset = 7
+            offset = 8
             t.assertRowEquals(offset, summary1)
             t.assertRowEquals(offset+1, summary2)
             t.assertRowEquals(offset+2, summary3)
@@ -51,7 +55,7 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset+5, summary6)
 
             // Page footer
-            offset = 13
+            offset = 14
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
@@ -81,8 +85,10 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset, br2Client1xxxlp1)
             t.assertRowEquals(offset+1, sp1)
 
+            t.assertRowEquals(offset+2, annotation)
+
             // Summary
-            offset = 7
+            offset = 8
             t.assertRowEquals(offset, summary1)
             t.assertRowEquals(offset+1, summary2)
             t.assertRowEquals(offset+2, summary3)
@@ -91,7 +97,7 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset+5, summary6)
 
             // Page footer
-            offset = 13
+            offset = 14
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
@@ -121,8 +127,10 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset, br2Client1xxxlp1)
             t.assertRowEquals(offset+1, sp1)
 
+            t.assertRowEquals(offset+2, annotation)
+
             // Summary
-            offset = 7
+            offset = 8
             t.assertRowEquals(offset, summary1)
             t.assertRowEquals(offset+1, summary2)
             t.assertRowEquals(offset+2, summary3)
@@ -131,7 +139,7 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset+5, summary6)
 
             // Page footer
-            offset = 13
+            offset = 14
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
@@ -161,8 +169,10 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset, br2Client1xxxlp1)
             t.assertRowEquals(offset+1, sp1)
 
+            t.assertRowEquals(offset+2, annotation)
+
             // Summary
-            offset = 7
+            offset = 8
             t.assertRowEquals(offset, summary1)
             t.assertRowEquals(offset+1, summary2)
             t.assertRowEquals(offset+2, summary3)
@@ -171,7 +181,7 @@ class GroupCollectionSheetMPESATest {
             t.assertRowEquals(offset+5, summary6)
 
             // Page footer
-            offset = 13
+            offset = 14
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
