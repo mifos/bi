@@ -33,7 +33,7 @@ function runTheReport()
 
     event = event + 1;
     Dashboards.fireChange("event", event);
-    document.getElementById('clearReportObj').style.visibility = "visible";
+//    document.getElementById('clearReportObj').style.visibility = "visible";
     enableClearButton();
 }
 
@@ -106,8 +106,8 @@ Dashboards.init([date1, date2, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
         initRunClearButtons();
-	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
-	office = $('#branchSelectorObj select option:selected').val();
+//	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+//	office = $('#branchSelectorObj select option:selected').val();
 });
 
 </script>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdf>
-	<title>PPI Data Dump</title>
+	<title>PPI Client Export</title>
 	<author>John Woodlock</author>
 	<description></description>
 	<icon></icon>
 	<style>mifosreports</style>
-	<template>PPIDataDump.html</template>
+	<template>PPIClientExport.html</template>
 </cdf>

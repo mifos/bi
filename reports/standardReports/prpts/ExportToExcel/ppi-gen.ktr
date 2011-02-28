@@ -194,7 +194,7 @@
     <fileNameInField>N</fileNameInField>
     <fileNameField/>
     <file>
-      <name>../webapps/pentaho/PPIDataDump.csv</name>
+      <name>../webapps/pentaho/PPIClientExport.csv</name>
       <is_command>N</is_command>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention/>

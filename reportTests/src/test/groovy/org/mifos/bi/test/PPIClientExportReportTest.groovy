@@ -2,9 +2,9 @@ package org.mifos.bi.test
 
 import org.junit.Test
 
-class DataDumpReportTest {
+class PPIClientExportReportTest {
 
-    def reportPath = 'reports/standardReports/prpts/PPIDataDumpJob.kjb'
+    def reportPath = 'reports/standardReports/prpts/PPIClientExportJob.kjb'
 
     def reportHeader = [
         'Customer Name', 'Customer Id', 'Date Survey Taken', 'Survey Name', 'Branch', 'Start Date', 'Loan Product Type',

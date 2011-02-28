@@ -92,7 +92,7 @@
       </action-outputs>
       <component-definition> 
         <script><![CDATA[SQL = dynsql.getValueAt(0,0);
-ClickMessage = '<br> <a  href="../../../pentaho/PPIDataDump.csv">Export Finished.  Click here to download.</a>']]></script> 
+ClickMessage = '<br> <a  href="../../../pentaho/PPIClientExport.csv">Export Finished.  Click here to download.</a>']]></script> 
       </component-definition> 
     </action-definition>
   

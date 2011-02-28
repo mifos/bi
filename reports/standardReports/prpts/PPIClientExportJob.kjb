@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>PPIDataDumpJob</name>
+  <name>PPIClientExportJob</name>
     <description/>
     <extended_description/>
     <job_version/>

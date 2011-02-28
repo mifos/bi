@@ -16,7 +16,7 @@
         </parameter>
         <parameter>
             <name>outputFile</name>
-            <default_value>..&#47;webapps&#47;pentaho&#47;PPIDataDump.csv</default_value>
+            <default_value>..&#47;webapps&#47;pentaho&#47;PPIClientExport.csv</default_value>
             <description/>
         </parameter>
     </parameters>
@@ -76,7 +76,7 @@
   </info>
   <notepads>
     <notepad>
-      <note>The outputFile parameter is defaulted to ..&#47;webapps&#47;pentaho&#47;PPIDataDump.csv
+      <note>The outputFile parameter is defaulted to ..&#47;webapps&#47;pentaho&#47;PPIClientExport.csv
 in the Tranformation Setting&#47; Parameters Tab.
 
 It is not passed in from the calling action sequence.</note>
