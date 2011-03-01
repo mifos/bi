@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Product List Key</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs/>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select prd_offering_id, prd_offering_name
+from prd_offering
+where prd_type_id=1)
+union (select -1, " All")
+union (select 99999, "  Select One")
+order by prd_offering_name]]></query>
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>MemberstatusListKey</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs/>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select 
+(case description
+when 'Customer Was Active' then 'Active'
+when 'Customer Was Hold' then 'On Hold'
+when 'Customer Was Close'then 'Closed'
+when'Customer Was Pending' then 'Application Pending Approval'
+when 'Customer Was Cancel' then 'Cancel'
+end ) value_status,
+description
+from customer_state 
+where level_id = 1
+and status_id in (3,4,2,5,6))
+union (select " All", "All")
+union (select "  Select One", " Select One")
+order by value_status]]></query>
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>

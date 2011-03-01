@@ -107,8 +107,8 @@ function pad2(number) {
     return (number < 10 ? '0' : '') + number
 }
 
-function setCurrentDate() {
-    xxDate = new Date();
+function setCurrentServerDate() {
+    xxDate = new Date(Dashboards.context.serverLocalDate);
     return xxDate.getFullYear() + "-" + pad2(xxDate.getMonth() + 1) + "-" + pad2(xxDate.getDate());
 }
 
@@ -191,7 +191,7 @@ function finalisePage()
 
 	constructBreadcrumb(currentName);
 
-	if (currentName == "CollectionsDisbursalsBurndown")
+	if (currentName == homePage)
 	{
    		$(".sectionTable > tbody > tr:nth-child(1)").css("background-color", lighterOrange);
    		$(".sectionTable > tbody > tr:nth-child(1) > td").css("border-bottom-style","solid");
@@ -220,9 +220,6 @@ var black = "black";
 var oddRow = "#D0D8E8";
 var evenRow = "#E9EDF4";
 var topTableRows = "#FDEFE9";
-
-//var currentDate = '2010-09-01';
-var currentDate = setCurrentDate();
 
 var homePage = "CollectionsDisbursalsBurndown";
 var homePageText = "HOME";
@@ -258,5 +255,12 @@ Dashboards.globalcontext = false;
 		{content}
 	</div>
 	<div class="clear"/>
+
+
+<script language="javascript">
+var currentDate = setCurrentServerDate();
+</script>
+
+
 </body>
 </html>
