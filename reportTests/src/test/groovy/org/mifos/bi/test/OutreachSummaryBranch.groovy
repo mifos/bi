@@ -9,12 +9,12 @@ class OutreachSummaryBranchTest {
     def detailsHeader = ['Branch', 'Centers', 'Groups', 'Active Clients', 'Active Borrowers', 'Active Depositors', 'Dropouts', 'No. of Loan Officers']
 
     def details1 = ['Mifos HO', '0', '0', '0', '0', '0', '0', '1']
-    def details2 = ['br2', '3', '5', '8', '1', '2', '0', '1']
-    def details3 = ['br4', '3', '3', '2', '0', '1', '1', '1']
+    def details2 = ['br2', '2', '3', '4', '1', '2', '0', '1']
+    def details3 = ['br4', '3', '2', '1', '0', '1', '1', '1']
     def details4 = ['RO dw1', '0', '0', '0', '0', '0', '0', '1']
     def details5 = ['br3', '0', '0', '0', '0', '0', '0', '0']
-    def details6 = ['BO 1', '6', '23', '49', '0', '6', '0', '3']
-    def total = ['Total', '12', '31', '59', '1', '9', '1', '7']
+    def details6 = ['BO 1', '5', '18', '21', '0', '6', '0', '3']
+    def total = ['Total', '10', '23', '26', '1', '9', '1', '7']
 
     def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
