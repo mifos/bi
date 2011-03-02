@@ -10,8 +10,6 @@ class DormantClientsSummaryTest {
 
     def details1 = ['br2', '2', '3', '4', '0', '0', '0']
     def details2 = ['br4', '3', '2', '1', '0', '0', '0']
-    def details3 = ['BO 1', '5', '18', '21', '1', '173', '4.7619047619047619047619047619047619']
-    def total = ['Total', '10', '23', '26', '1', '173', '3.8461538461538461538461538461538462']
 
     def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
@@ -34,9 +32,19 @@ class DormantClientsSummaryTest {
             // Details
             t.assertRowEquals(offset+1, details1)
             t.assertRowEquals(offset+2, details2)
-            t.assertRowEquals(offset+3, details3)
+            t.assertCellEquals(offset+3, 1, 'BO 1')
+            t.assertCellEquals(offset+3, 2, '5')
+            t.assertCellEquals(offset+3, 3, '18')
+            t.assertCellEquals(offset+3, 4, '21')
+            t.assertCellEquals(offset+3, 5, '1')
+            t.assertCellEquals(offset+3, 7, '4.7619047619047619047619047619047619')
             // Group footer
-            t.assertRowEquals(offset+4, total)
+            t.assertCellEquals(offset+4, 1, 'Total')
+            t.assertCellEquals(offset+4, 2, '10')
+            t.assertCellEquals(offset+4, 3, '23')
+            t.assertCellEquals(offset+4, 4, '26')
+            t.assertCellEquals(offset+4, 5, '1')
+            t.assertCellEquals(offset+4, 7, '3.8461538461538461538461538461538462')
 
             // Page footer
             offset = 8 
