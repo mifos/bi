@@ -30,7 +30,8 @@
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
         <query><![CDATA[(select distinctrow p.prd_offering_id, p.prd_offering_name
-        from prd_offering p)
+        from prd_offering p
+        where p.prd_type_id = 1)
         union (select -1 as prd_offering_id, " All" as prd_offering_name)
         union (select 0 as prd_offering_id, "  Select One" as prd_offering_name)
         order by prd_offering_name]]></query> 
