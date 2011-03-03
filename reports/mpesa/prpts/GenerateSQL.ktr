@@ -154,6 +154,8 @@ SQL = SQL + &quot;and (cad.phone_number is not null and (cad.phone_number rlike 
 SQL = SQL + &apos;and la.disbursement_date = date(EXTRACT_DATE) &apos;;
 SQL = SQL + &apos;and (c.parent_customer_id = C_GROUP or C_GROUP = -1) &apos;;
 SQL = SQL + &apos;and (la.prd_offering_id = L_PRODUCT or L_PRODUCT = 0) &apos;;
+SQL = SQL + &apos;group by phone_number &apos;;
+SQL = SQL + &apos;having count(*) = 1 &apos;;
 SQL = SQL + &apos;) disbursals &apos;;
 SQL = SQL + &apos;left join &apos;;
 SQL = SQL + &apos;(select &apos;;
