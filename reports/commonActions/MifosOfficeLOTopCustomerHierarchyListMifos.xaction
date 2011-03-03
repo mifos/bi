@@ -31,7 +31,7 @@
       <component-name>SQLLookupRule</component-name>
       <action-type>Relational</action-type>
       <action-inputs> 
-        <office type="string"/>  
+        <office type="string"/> 
       </action-inputs>
       <action-outputs> 
         <query-result type="result-set" mapping="query_result"/> 
@@ -45,7 +45,7 @@
 	and branch_id={office})
 union (select -1, " All")
 union (select 0, "  Select One")
-order by display_name]]></query> 
+order by 2]]></query> 
       </component-definition> 
     </action-definition>
  

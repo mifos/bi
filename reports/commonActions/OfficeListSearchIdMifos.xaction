@@ -30,10 +30,10 @@
         <jndi><![CDATA[SourceDB]]></jndi>  
         <live><![CDATA[true]]></live>  
         <query><![CDATA[(select office_id,display_name
-from office
+from office 
 where office_level_id=5)
-union (select "-1"," All")
-union (select "-", "  Select One")
+union (select -1," All")
+union (select 0, "  Select One")
 order by display_name]]></query> 
       </component-definition> 
     </action-definition>

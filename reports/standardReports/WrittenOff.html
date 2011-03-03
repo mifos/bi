@@ -38,7 +38,7 @@ function runTheReport()
         alert("Start Date is after End Date");
         return;
     }
-    else if (office == "-")
+    else if (office == 0)
     {
         alert("Please select appropriate values");
         return;
@@ -58,7 +58,7 @@ var commonActionsSolution = "commonActions";
 
 Dashboards.globalcontext = false;
 var event = 0;
-var office = "";
+var office = 0;
 
 var startDate = setCurrentDate();
 var endDate = setCurrentDate();
