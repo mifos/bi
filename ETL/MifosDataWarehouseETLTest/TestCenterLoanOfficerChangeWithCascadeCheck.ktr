@@ -66,11 +66,15 @@
   </info>
   <notepads>
     <notepad>
-      <note>Tests for a loan officer change made to a center</note>
-      <xloc>476</xloc>
-      <yloc>31</yloc>
-      <width>242</width>
-      <heigth>22</heigth>
+      <note>Tests that when a new loan officer is assigned to a center
+ the center, groups, clients and accounts dims are updated correctly.
+A specific center was set up for this &apos;cascade center&apos;
+created on 2011-02-22 and a new LO assigned 2011-02-25
+Although, the ETL handles any dates, the different date was important for an accurate test.</note>
+      <xloc>51</xloc>
+      <yloc>189</yloc>
+      <width>449</width>
+      <heigth>72</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
@@ -163,48 +167,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Set Test Case Values</from><to>Customer Test Case</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Customer Test Case</name>
-    <type>Mapping</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <specification_method>filename</specification_method>
-    <trans_object_id/>
-    <trans_name/>
-    <filename>${Internal.Transformation.Filename.Directory}&#47;sub_customer_test_case.ktr</filename>
-    <directory_path/>
-    <mappings>
-      <input>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </input>
-      <output>
-    <mapping>    <input_step/>
-    <output_step/>
-    <main_path>N</main_path>
-    <rename_on_output>N</rename_on_output>
-    <description/>
-    </mapping>      </output>
-          <parameters>    <inherit_all_vars>Y</inherit_all_vars>
-    </parameters>
-    </mappings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>355</xloc>
-      <yloc>52</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Cascade Check</from><to>Select values 2</to><enabled>Y</enabled> </hop>  <hop> <from>Failed?</from><to>Remove Test pass&#47;fail info</to><enabled>Y</enabled> </hop>  <hop> <from>Failed?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Get Customer Entries for Change Type</from><to>Failed?</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Test pass&#47;fail info</from><to>Cascade Check</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Case</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 2</from><to>Test Case</to><enabled>Y</enabled> </hop>  <hop> <from>Set Test Case Values</from><to>Get Customer Entries for Change Type</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Set Test Case Values</name>
     <type>RowGenerator</type>
@@ -223,7 +186,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>center loan officer change</nullif>
+        <nullif>Check Cascading from Center to Accounts</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -234,7 +197,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>32</nullif>
+        <nullif>77</nullif>
         <length>15</length>
         <precision>-1</precision>
       </field>
@@ -245,7 +208,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>center with a LO change</nullif>
+        <nullif>cascade center</nullif>
         <length>100</length>
         <precision>-1</precision>
       </field>
@@ -256,7 +219,18 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>2010-07-27</nullif>
+        <nullif>2011-02-25</nullif>
+        <length>10</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>test_date_prev</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>2011-02-22</nullif>
         <length>10</length>
         <precision>-1</precision>
       </field>
@@ -275,8 +249,688 @@
     <limit>1</limit>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>143</xloc>
-      <yloc>52</yloc>
+      <xloc>144</xloc>
+      <yloc>53</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Cascade Check</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+function fail_test(msg)
+{
+	test_result = &quot;Fail&quot;;
+	fail_reason = msg;
+	wasError = &quot;Y&quot;;
+	writeToLog(&quot;e&quot;, msg);
+}
+
+function test_results(dim_type, numExpected)
+{
+
+&#47;&#47;each dim_customer&#47;loan&#47;savings entry linked to the changed center at the time of the change (including itself) is tested: 
+
+&#47;&#47;1: seven entries before and after change 
+	if (changedResults.length != numExpected)
+	{
+		fail_test(&quot;Number of &quot; + dim_type + &quot; Entries after change: &quot; +  changedResults.length + &quot; but should be 7&quot;);
+		return;
+	}
+
+	if (previousResults.length != numExpected)
+	{
+		fail_test(&quot;Number of &quot; + dim_type + &quot; Entries before change: &quot; +  previousResults.length + &quot; but should be 7&quot;);
+		return;
+	}
+
+	for (var i in changedResults)
+	{
+
+&#47;&#47;2: each customer&#47;loan_account&#47;savings_account id only appears once
+    	if (i &gt; 0)
+		{
+    		if (changedResults[i][0] == changedResults[i - 1][0])
+			{
+				fail_test(dim_type + &quot; Id: &quot; + changedResults[i][0] + &quot; In Changed Resultset More than Once&quot;);
+				return;
+			}
+		}
+
+&#47;&#47;3: id must be the same
+    	if (changedResults[i][0] != previousResults[i][0])
+		{
+			fail_test(dim_type + &quot; Ids don&apos;t match: Changed: &quot; + changedResults[i][0] + &quot; Previous: &quot; + previousResults[i][0]);
+			return;
+
+		}
+&#47;&#47;4: key must be different
+
+    	if (changedResults[i][1] == previousResults[i][1])
+		{
+			fail_test(dim_type + &quot; Keys are not different: Changed: &quot; + changedResults[i][1] + &quot; Previous: &quot; + previousResults[i][1]);
+			return;
+		}
+
+&#47;&#47;5: group_key must be different except it must be 0 for center
+		if ((i &gt; 0) || (dim_type != &quot;Customer&quot;))
+		{
+    		if (changedResults[i][2] == previousResults[i][2])
+			{
+				fail_test(dim_type + &quot; Group Keys are not different: Changed: &quot; + changedResults[i][2] + &quot; Previous: &quot; + previousResults[i][2]);
+				return;
+			}
+		}
+		else
+		{
+			if (changedResults[i][2] != 0)
+			{
+				fail_test(dim_type + &quot; After Change Center Group Key should be zero but is: &quot; + changedResults[i][2]);
+				return;
+			}
+			if (previousResults[i][2] != 0)
+			{
+				fail_test(dim_type + &quot; Before Change Center Group Key should be zero but is: &quot; + previousResults[i][2]);
+				return;
+			}
+		}
+
+	}
+}
+
+var test_result = &quot;Pass&quot;;
+var fail_reason = &quot;&quot;;
+
+
+var DBConnection = &quot;DestinationDB&quot;;
+var wasError = &quot;N&quot;;
+
+
+
+var sqlCustomerChanged = &quot;select customer_id, customer_key, group_key from dim_customer where center_key = &quot; + customer_key;
+sqlCustomerChanged = sqlCustomerChanged + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; and valid_to = &apos;2199-12-31&apos; order by customer_id, customer_key&quot;;
+
+var sqlCustomerPrevious = &quot;select customer_id, customer_key, group_key from dim_customer where center_key = &quot; + customer_key_prev;
+sqlCustomerPrevious = sqlCustomerPrevious + &quot; and valid_from = &apos;&quot; + test_date_prev + &quot;&apos; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by customer_id, customer_key&quot;;
+
+
+var sqlLoanChanged = &quot;select loan_account_id, loan_account_key, group_key from dim_loan where center_key = &quot; + customer_key;
+sqlLoanChanged = sqlLoanChanged + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; and valid_to = &apos;2199-12-31&apos; order by loan_account_id, loan_account_key&quot;;
+
+var sqlLoanPrevious = &quot;select loan_account_id, loan_account_key, group_key from dim_loan where center_key = &quot; + customer_key_prev;
+sqlLoanPrevious = sqlLoanPrevious + &quot; and valid_from = &apos;&quot; + test_date_prev + &quot;&apos; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by loan_account_id, loan_account_key&quot;;
+
+var sqlSavingsChanged = &quot;select savings_account_id, savings_account_key, group_key from dim_savings where center_key = &quot; + customer_key;
+sqlSavingsChanged = sqlSavingsChanged + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; and valid_to = &apos;2199-12-31&apos; order by savings_account_id, savings_account_key&quot;;
+Alert(&quot;current: &quot; + sqlSavingsChanged);
+
+var sqlSavingsPrevious = &quot;select savings_account_id, savings_account_key, group_key from dim_savings where center_key = &quot; + customer_key_prev;
+sqlSavingsPrevious = sqlSavingsPrevious + &quot; and valid_from = &apos;&quot; + test_date_prev + &quot;&apos; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key&quot;;
+Alert(&quot;previous: &quot; + sqlSavingsPrevious);
+
+
+var changedResults = fireToDB(DBConnection, sqlCustomerChanged);
+var previousResults = fireToDB(DBConnection, sqlCustomerPrevious);
+
+test_results(&quot;Customer&quot;, 7);
+if (wasError == &quot;N&quot;)
+{
+	changedResults = fireToDB(DBConnection, sqlLoanChanged);
+	previousResults = fireToDB(DBConnection, sqlLoanPrevious);
+	test_results(&quot;Loan Account&quot;, 3);
+}
+if (wasError == &quot;N&quot;)
+{
+	changedResults = fireToDB(DBConnection, sqlSavingsChanged);
+	previousResults = fireToDB(DBConnection, sqlSavingsPrevious);
+	test_results(&quot;Savings Account&quot;, 1);
+}
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>test_result</name>
+        <rename>test_result</rename>
+        <type>String</type>
+        <length>4</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>fail_reason</name>
+        <rename>fail_reason</rename>
+        <type>String</type>
+        <length>100</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>579</xloc>
+      <yloc>248</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Failed?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Select values</send_true_to>
+<send_false_to>Remove Test pass&#47;fail info</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>test_result</leftvalue>
+ <function>=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>String</type><text>Fail</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>717</xloc>
+      <yloc>49</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Customer Entries for Change Type</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function fail_test(msg)
+{
+	test_result = &quot;Fail&quot;;
+	fail_reason = msg;
+Alert(msg);
+}
+
+function getCustomerDataSet()
+{
+	sqlCustomer = &quot;select customer_key, customer_level_id, customer_status, group_key, center_key, loan_officer_key, branch_key &quot;;
+	sqlCustomer = sqlCustomer + &quot; , display_name, valid_from &quot;;
+	sqlCustomer = sqlCustomer + &quot; from dim_customer where customer_id = &quot; + test_customer_id;
+	sqlCustomer = sqlCustomer + &quot; order by customer_key&quot;;
+
+	sqlResults = fireToDB(DBConnection, sqlCustomer);
+}
+
+function doIdsMatch(sqlInput)
+{
+	sqlR = fireToDB(DBConnection, sqlInput);
+
+	if (sqlR.length != 1)
+	{
+			fail_test(&quot;Error - System Error - query expected to return 1 row returned: &quot; + sqlR.length + &quot; rows - Query: &quot; + sqlInput);
+			return &quot;Error&quot;;
+	}
+
+	if (parseInt(sqlR[0][0]) == parseInt(sqlR[0][1]))
+	{
+		return &quot;Y&quot;;
+	}
+	return &quot;N&quot;;
+
+}
+
+
+function getChange(entityType, oldKey, newKey)
+{
+	if (oldKey == newKey)
+	{
+			return &quot;Same&quot;;
+	}
+
+	switch(entityType)
+	{
+	case &quot;branch&quot;:
+		entityTypeSQL = &quot;office&quot;;
+  		break;
+	case &quot;loan officer&quot;:
+		entityTypeSQL = &quot;personnel&quot;;
+  		break;
+	case &quot;center&quot;:
+		entityTypeSQL = &quot;customer&quot;;
+  		break;
+	case &quot;group&quot;:
+		entityTypeSQL = &quot;customer&quot;;
+  		break;
+	default:
+		fail_test(&quot;Error - System Error - Unknown value for entityType: &quot; + entityType);
+		return &quot;Error&quot;;
+	}
+
+	sql = &quot;select old_id, new_id from &quot;
+	sql = sql + &quot;(select &quot; + entityTypeSQL + &quot;_id as old_id from dim_&quot; + entityTypeSQL + &quot; where &quot; + entityTypeSQL +&quot;_key = &quot; + oldKey + &quot; ) a &quot;
+	sql = sql + &quot;join (select &quot; + entityTypeSQL + &quot;_id as new_id from dim_&quot; + entityTypeSQL + &quot; where &quot; + entityTypeSQL + &quot;_key = &quot; + newKey + &quot;) b &quot;
+
+	idsMatch = doIdsMatch(sql);
+	switch(idsMatch)
+	{
+	case &quot;Y&quot;:
+		return &quot;Version&quot;;
+  		break;
+	case &quot;N&quot;:
+		return &quot;Changed&quot;;
+  		break;
+	case &quot;Error&quot;:
+		return &quot;Error&quot;;
+  		break;
+	default:
+		fail_test(&quot;Error - System Error - Unknown return value from doIdsMatch: &quot; + idsMatch);
+		return &quot;Error&quot;;
+	}
+
+}
+
+
+function getChangeType(row_num)
+{
+
+	if ((customer_status == prev_customer_status) &amp;&amp; (group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
+	{
+		fail_test(&quot;Error - System Error - Entry has no change - row index:&quot; + row_num);
+		return &quot;Error&quot;;
+	}
+
+	if (customer_status != prev_customer_status)
+	{
+		if ((group_key == prev_group_key) &amp;&amp; (center_key == prev_center_key) &amp;&amp; (loan_officer_key == prev_loan_officer_key) &amp;&amp; (branch_key == prev_branch_key))
+		{
+			return &quot;status&quot;;
+		}
+		else
+		{
+			fail_test(&quot;Error - System Error - Status Change... but other row changes found - row index: &quot; + row_num);
+			return &quot;Error&quot;;
+		}
+	}
+
+
+&#47;&#47;branch
+	if (branch_key == 0 || prev_branch_key == 0)
+	{
+			fail_test(&quot;Error - System Error - branch key is 0 - row index: &quot; + row_num);
+			return &quot;Error&quot;;
+	}
+	branch_change = getChange(&quot;branch&quot;, prev_branch_key, branch_key);
+	if (branch_change == &quot;Version&quot;)
+	{
+		fail_test(&quot;Error - System Error - Branch IDs same but no office versioning supported: old Key: &quot; + prev_branch_key + &quot; new Key &quot; + branch_key);
+		return &quot;Error&quot;;
+	}
+	if (branch_change == &quot;Error&quot;)
+	{
+			return &quot;Error&quot;;
+	}
+
+&#47;&#47;loan officer
+	loan_officer_change = getChange(&quot;loan officer&quot;, prev_loan_officer_key, loan_officer_key);
+	if (loan_officer_change == &quot;Version&quot;)
+	{
+		fail_test(&quot;Error - System Error - Loan Officer IDs same - invalid because Loan Officers moving branch don&apos;t bring their customers with them: old Key: &quot; + prev_loan_officer_key + &quot; new Key &quot; + loan_officer_key);
+		return &quot;Error&quot;;
+	}
+	if (loan_officer_change == &quot;Error&quot;)
+	{
+			return &quot;Error&quot;;
+	}
+
+&#47;&#47;center
+	center_change = getChange(&quot;center&quot;, prev_center_key, center_key);
+
+&#47;&#47;group
+	group_change = getChange(&quot;group&quot;, prev_group_key, group_key);
+ 
+Alert(&quot;Branch Change: &quot; + branch_change + &quot;      LO Change: &quot; + loan_officer_change + &quot;      Center Change: &quot; + center_change + &quot;      Group Change: &quot; + group_change);
+
+
+
+
+
+	if (branch_change == &quot;Same&quot; &amp;&amp; loan_officer_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Version&quot; &amp;&amp; group_change == &quot;Same&quot;)
+	{
+		return &quot;center loan officer&quot;;
+	}
+	if (branch_change == &quot;Same&quot; &amp;&amp; loan_officer_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Version&quot;)
+	{
+		return &quot;group loan officer&quot;;
+	}
+	if (branch_change == &quot;Same&quot; &amp;&amp; loan_officer_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Same&quot;)
+	{
+		return &quot;client loan officer&quot;;
+	}
+
+
+	if (branch_change == &quot;Same&quot; &amp;&amp; center_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Version&quot; )
+	{
+		return &quot;center within branch&quot;;
+	}
+	if (branch_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Version&quot; )
+	{
+		return &quot;center outside branch&quot;;
+	}
+
+
+	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; group_key != 0 &amp;&amp; center_change == &quot;Same&quot; )
+	{
+		return &quot;group membership within center&quot;;
+	}
+	if (branch_change == &quot;Same&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; prev_group_key != 0 &amp;&amp; center_change == &quot;Changed&quot; )
+	{
+		return &quot;group membership within branch&quot;;
+	}
+	if (branch_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Changed&quot; &amp;&amp; center_change == &quot;Changed&quot; )
+	{
+		return &quot;group membership outside branch&quot;;
+	}
+
+
+	if (branch_change == &quot;Changed&quot; &amp;&amp; group_change == &quot;Same&quot; &amp;&amp; center_change == &quot;Same&quot; )
+	{
+		return &quot;client no group membership outside branch&quot;;
+	}
+
+
+	if (prev_group_key == 0 &amp;&amp; group_change == &quot;Changed&quot;)
+	{
+		return &quot;client no group membership becoming group member&quot;;
+	}
+
+	if (group_key == 0 &amp;&amp; group_change == &quot;Changed&quot;)
+	{
+		return &quot;remove group membership from client&quot;;
+	}
+
+	if (group_change == &quot;Version&quot; &amp;&amp; branch_change == &quot;Changed&quot;)
+	{
+		return &quot;move group no center hierarchy outside branch&quot;;
+	}
+
+	if (prev_center_key == 0 &amp;&amp; group_change == &apos;Version&apos; &amp;&amp; center_change == &quot;Changed&quot;)
+	{
+		return &quot;group add into center hierarchy&quot;;
+	}
+
+
+
+	fail_test(&quot;Error System Error - Was a Change - Branch Change: &quot; + branch_change + &quot;   LO Change: &quot; + loan_officer_change + &quot;   Center Change: &quot; + center_change + &quot;   Group Change: &quot; + group_change + &quot; - but not picked up - row index: &quot; + row_num);
+	return &quot;Error&quot;;
+}
+
+function getCustomerValues()
+{
+	for (var i in sqlResults)
+	{
+&#47;&#47;check from 2nd entry onwards to identify the 1st entry that matches change type on the date specified
+    	if (i &gt; 0)
+		{
+&#47;&#47;convert db date to string
+			db_date = sqlResults[i][8] + &quot;&quot;;
+			if (db_date == test_date)
+			{
+				the_customer_level_id = parseInt(sqlResults[i][1]);
+				customer_status = sqlResults[i][2];
+				group_key = parseInt(sqlResults[i][3]);
+				center_key = parseInt(sqlResults[i][4]);
+				loan_officer_key = parseInt(sqlResults[i][5]);
+				branch_key = parseInt(sqlResults[i][6]);
+				prev_customer_status = sqlResults[i - 1][2];
+				prev_group_key = parseInt(sqlResults[i - 1][3]);
+				prev_center_key = parseInt(sqlResults[i - 1][4]);
+				prev_loan_officer_key = parseInt(sqlResults[i - 1][5]);
+				prev_branch_key = parseInt(sqlResults[i - 1][6]);
+
+				change_is = getChangeType(i);
+				if (change_is == test_change_type)
+				{
+					return i;
+				}
+
+				if (change_is == &quot;Error&quot;)
+				{
+					return -1;
+				}
+			}
+		}
+	}
+
+	fail_test(&quot;Change not found&quot;);
+	return -1;
+}
+
+
+var DBConnection = &quot;DestinationDB&quot;;
+var test_result = &quot;Pass&quot;;
+var fail_reason = &quot;&quot;;
+
+var customer_key;
+var customer_level_id;
+var customer_key_prev;
+
+var customer_status;
+var group_key;
+var center_key;
+var loan_officer_key;
+var branch_key;
+var prev_customer_status;
+var prev_group_key;
+var prev_center_key;
+var prev_loan_officer_key;
+var prev_branch_key;
+
+var sqlResults;
+
+getCustomerDataSet();
+changed_row = getCustomerValues();
+if (changed_row != -1)
+{
+	customer_key = sqlResults[changed_row][0];
+	customer_key_prev = sqlResults[changed_row - 1][0];
+Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &quot; + test_name + &quot; CUSTOMER ID&#47;NAME&#47;DATE: &quot; + test_customer_id + &apos;&#47;&apos; + test_customer + &apos;&#47;&apos; + test_date);
+
+}
+
+
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>test_result</name>
+        <rename>test_result</rename>
+        <type>String</type>
+        <length>4</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>fail_reason</name>
+        <rename>fail_reason</rename>
+        <type>String</type>
+        <length>100</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>customer_key</name>
+        <rename>customer_key</rename>
+        <type>Integer</type>
+        <length>9</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>customer_key_prev</name>
+        <rename>customer_key_prev</rename>
+        <type>Integer</type>
+        <length>9</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>334</xloc>
+      <yloc>54</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove Test pass&#47;fail info</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>test_result</name>
+      </remove>      <remove>        <name>fail_reason</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>580</xloc>
+      <yloc>127</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>test_name</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_change_type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_result</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fail_reason</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>886</xloc>
+      <yloc>124</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>test_name</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_customer</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_change_type</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>test_result</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fail_reason</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>736</xloc>
+      <yloc>248</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Test Case</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+if (test_result == &quot;Pass&quot;){	
+	writeToLog(&quot;m&quot;, &quot;ETL Pass: &quot;+ test_name);
+}
+else
+{
+	writeToLog(&quot;e&quot;, &quot;ETL Fail: &quot;+ &quot;TEST NAME: &quot; + test_name + &quot; CUSTOMER ID&#47;NAME&#47;DATE: &quot; + test_customer_id + &apos;&#47;&apos; + test_customer + &apos;&#47;&apos; + test_date + &quot; CHANGE: &quot; + test_change_type  + &quot;: - &quot; + fail_reason);
+
+}
+
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>886</xloc>
+      <yloc>249</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

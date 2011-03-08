@@ -166,190 +166,7 @@ that matches the test date and test change.
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Customer Entries for Change Type</from><to>Failed?</to><enabled>Y</enabled> </hop>  <hop> <from>Failed?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Test Case</to><enabled>Y</enabled> </hop>  <hop> <from>Cascade Check</from><to>Select values 2</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 2</from><to>Test Case</to><enabled>Y</enabled> </hop>  <hop> <from>Failed?</from><to>Remove Test pass&#47;fail info</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Test pass&#47;fail info</from><to>Cascade Check</to><enabled>Y</enabled> </hop>  <hop> <from>Test Case</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Get Customer Entries for Change Type</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Cascade Check</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-function fail_test(msg)
-{
-	test_result = &quot;Fail&quot;;
-	fail_reason = msg;
-	wasError = &quot;Y&quot;;
-}
-
-function test_results(dim_type)
-{
-return;
-&#47;&#47;each dim_customer&#47;loan&#47;savings entry linked to the changed customer at the time of the change (including itself) must get a new entry
-&#47;&#47;the tests are: 
-&#47;&#47;same number of entries before change as after (a distinct is applied to after as items could have been added)
-&#47;&#47;each customer&#47;loan_account&#47;savings_account id only appears once
-&#47;&#47;id must be the same, key must be different
-
-	if (changedResults.length != previousResults.length)
-	{
-		fail_test(&quot;Number of Changed &quot; + dim_type + &quot; Entries: &quot; +  changedResults.length + &quot; doesn&apos;t match Number of Previous &quot; + dim_type + &quot; Entries: &quot; + previousResults.length);
-
-		writeToLog(&quot;e&quot;, &quot;Number of Changed &quot; + dim_type + &quot; Entries: &quot; +  changedResults.length + &quot; doesn&apos;t match Number of Previous &quot; + dim_type + &quot; Entries: &quot; + previousResults.length);
-		for (var i in changedResults)
-		{
-			writeToLog(&quot;e&quot;, &quot;changed set - id: &quot; + changedResults[i][0] + &quot; - Key: &quot; + changedResults[i][1]);
-		}		
-		for (var i in previousResults)
-		{
-			writeToLog(&quot;e&quot;, &quot;previous set - id: &quot; + previousResults[i][0] + &quot; - Key: &quot; + previousResults[i][1]);
-		}
-
-		return;
-	}
-
-	for (var i in changedResults)
-	{
-
-    	if (i &gt; 0)
-		{
-    		if (changedResults[i][0] == changedResults[i - 1][0])
-			{
-				fail_test(dim_type + &quot; Id: &quot; + changedResults[i][0] + &quot; In Changed Resultset More than Once&quot;);
-				return;
-			}
-		}
-
-
-    	if (changedResults[i][0] != previousResults[i][0])
-		{
-			fail_test(dim_type + &quot; Ids don&apos;t match: Changed: &quot; + changedResults[i][0] + &quot; Previous: &quot; + previousResults[i][0]);
-			return;
-
-		}
-
-    	if (changedResults[i][1] == previousResults[i][1])
-		{
-			fail_test(dim_type + &quot; Keys are not different: Changed: &quot; + changedResults[i][1] + &quot; Previous: &quot; + previousResults[i][1]);
-			return;
-		}
-
-	}
-}
-
-var test_result = &quot;Pass&quot;;
-var fail_reason = &quot;&quot;;
-
-
-var DBConnection = &quot;DestinationDB&quot;;
-var wasError = &quot;N&quot;;
-
-int_customer_level_id = parseInt(customer_level_id);
-
-switch(int_customer_level_id)
-{
-case 1:
-  level_key_name = &quot;customer_key&quot;;
-  break;
-case 2:
-  level_key_name = &quot;group_key&quot;;
-  break;
-case 3:
-  level_key_name = &quot;center_key&quot;;
-  break;
-default:
-  level_key_name = &quot;Unknown customer level: &quot; + customer_level_id;
-}
-
-&#47;&#47;customerMin = &quot; and customer_key = (select min(customer_key) from dim_customer min where min.customer_id = dim_customer.customer_id and min.valid_from = &apos;&quot; + test_date + &quot;&apos;) &quot;;
-&#47;&#47;loanMin = &quot; and loan_account_key = (select min(loan_account_key) from dim_loan min where min.loan_account_id = dim_loan.loan_account_id and min.valid_from = &apos;&quot; + test_date + &quot;&apos;) &quot;;
-&#47;&#47;savingsMin = &quot; and savings_account_key = (select min(savings_account_key) from dim_savings min where min.savings_account_id = dim_savings.savings_account_id and min.valid_from = &apos;&quot; + test_date + &quot;&apos;) &quot;;
-customerMin = &quot;&quot;;
-loanMin = &quot;&quot;;
-savingsMin = &quot;&quot;;
-
-var sqlCustomerChanged = &quot;select customer_id, customer_key from dim_customer where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; &quot; + customerMin + &quot; order by customer_id, customer_key;&quot;;
-var sqlCustomerPrevious = &quot;select customer_id, customer_key from dim_customer where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by customer_id, customer_key;&quot;;
-
-var sqlLoanChanged = &quot;select loan_account_id, loan_account_key from dim_loan where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; &quot; + loanMin + &quot; order by loan_account_id, loan_account_key;&quot;;
-var sqlLoanPrevious = &quot;select loan_account_id, loan_account_key from dim_loan where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by loan_account_id, loan_account_key;&quot;;
- 
-var sqlSavingsChanged = &quot;select savings_account_id, savings_account_key from dim_savings where &quot; + level_key_name + &quot; = &quot; + customer_key + &quot; and valid_from = &apos;&quot; + test_date + &quot;&apos; &quot; + savingsMin + &quot; order by savings_account_id, savings_account_key;&quot;;
-var sqlSavingsPrevious = &quot;select savings_account_id, savings_account_key from dim_savings where &quot; + level_key_name + &quot; = &quot; + customer_key_prev + &quot; and valid_to = &apos;&quot; + test_date + &quot;&apos; order by savings_account_id, savings_account_key;&quot;;
-&#47;&#47;Alert(sqlCustomerChanged);
-var changedResults = fireToDB(DBConnection, sqlCustomerChanged);
-var previousResults = fireToDB(DBConnection, sqlCustomerPrevious);
-
-test_results(&quot;Customer&quot;);
-
-if (wasError == &quot;N&quot;)
-{
-	changedResults = fireToDB(DBConnection, sqlLoanChanged);
-	previousResults = fireToDB(DBConnection, sqlLoanPrevious);
-	test_results(&quot;Loan Account&quot;);
-}
-if (wasError == &quot;N&quot;)
-{
-	changedResults = fireToDB(DBConnection, sqlSavingsChanged);
-	previousResults = fireToDB(DBConnection, sqlSavingsPrevious);
-	test_results(&quot;Savings Account&quot;);
-}
-
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>test_result</name>
-        <rename>test_result</rename>
-        <type>String</type>
-        <length>4</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>fail_reason</name>
-        <rename>fail_reason</rename>
-        <type>String</type>
-        <length>100</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>380</xloc>
-      <yloc>217</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Failed?</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Select values</send_true_to>
-<send_false_to>Remove Test pass&#47;fail info</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>test_result</leftvalue>
- <function>=</function>
- <rightvalue/>
- <value><name>constant</name><type>String</type><text>Fail</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value> </condition>
-    </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>575</xloc>
-      <yloc>18</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Test Case</from><to>Mapping output specification</to><enabled>Y</enabled> </hop>  <hop> <from>Mapping input specification</from><to>Get Customer Entries for Change Type</to><enabled>Y</enabled> </hop>  <hop> <from>Get Customer Entries for Change Type</from><to>Test Case</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get Customer Entries for Change Type</name>
     <type>ScriptValueMod</type>
@@ -650,9 +467,9 @@ getCustomerDataSet();
 changed_row = getCustomerValues();
 if (changed_row != -1)
 {
-	customer_key = sqlResults[changed_row][0];
-	customer_level_id = sqlResults[changed_row][1];
-	customer_key_prev = sqlResults[changed_row - 1][0];
+	&#47;&#47;customer_key = sqlResults[changed_row][0];
+	&#47;&#47;customer_level_id = sqlResults[changed_row][1];
+	&#47;&#47;customer_key_prev = sqlResults[changed_row - 1][0];
 Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &quot; + test_name + &quot; CUSTOMER ID&#47;NAME&#47;DATE: &quot; + test_customer_id + &apos;&#47;&apos; + test_customer + &apos;&#47;&apos; + test_date);
 
 }
@@ -671,24 +488,6 @@ Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &q
         <rename>fail_reason</rename>
         <type>String</type>
         <length>100</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>customer_key</name>
-        <rename>customer_key</rename>
-        <type>Integer</type>
-        <length>9</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>customer_level_id</name>
-        <rename>customer_level_id</rename>
-        <type>Integer</type>
-        <length>4</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>customer_key_prev</name>
-        <rename>customer_key_prev</rename>
-        <type>Integer</type>
-        <length>9</length>
         <precision>-1</precision>
         <replace>N</replace>
       </field>    </fields>     <cluster_schema/>
@@ -762,123 +561,8 @@ Alert(test_change_type + &quot; - Change Type Found: &quot;+ &quot;TEST NAME: &q
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>879</xloc>
-      <yloc>211</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Remove Test pass&#47;fail info</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>        <select_unspecified>N</select_unspecified>
-      <remove>        <name>test_result</name>
-      </remove>      <remove>        <name>fail_reason</name>
-      </remove>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>379</xloc>
-      <yloc>107</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>test_name</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_customer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_customer</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_change_type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_result</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>fail_reason</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>743</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>test_name</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_customer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_customer</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_change_type</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>test_result</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>fail_reason</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>589</xloc>
-      <yloc>217</yloc>
+      <xloc>701</xloc>
+      <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -910,8 +594,8 @@ else
 </jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>739</xloc>
-      <yloc>213</yloc>
+      <xloc>509</xloc>
+      <yloc>23</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
