@@ -1,0 +1,195 @@
+<table>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Loan Officer</div><div id=LOSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Center</div><div id=CenterSelectorObj></div></td><td width="20">&nbsp;</td>
+</tr>
+<tr>
+<td width="200"></td><td width="20">&nbsp;</td>
+<td colspan="2">	
+	<table>
+		<tr>
+			<td  class=reportLabel> Filter results by:</td>
+		</tr>
+		<tr>
+			<td><input id="loansCheckBox" type="checkbox"/>&nbsp;&nbsp;Mature Loans</td>
+		</tr>
+	</table>
+</td><td>&nbsp;</td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td>
+<td><div id=runReportObj></div></td>
+<td>&nbsp;</td>
+<td><div id=clearReportObj></div></td>
+</tr>
+</table>
+
+<div id=theReportObj></div>
+
+<script language="javascript" type="text/javascript">
+
+function updateLOSelect()
+{
+	Dashboards.fireChange("officeId",officeId);
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
+}
+function updateCenterSelect()
+{
+	Dashboards.fireChange("loanOfficerId",loanOfficerId);
+	$('#CenterSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	centerId = $('#CenterSelectorObj select option:selected').val();
+}
+function runTheReport()
+{
+	
+    
+   if (officeId == 0 || loanOfficerId == 0 || centerId == 0)
+    {
+        alert("Please select appropriate values");
+        return;
+    }
+
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+	enableClearButton();
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
+
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+var event = 0;
+var officeId = 0;
+var loanOfficerId = 0;
+var centerId = 0;
+var loansCheckBoxValue="false";
+
+
+var outputType = "application/pdf";
+
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "BranchListWithAll_SourceDB.xaction",
+	parameter: "officeId",
+	valueAsId: false,
+	htmlObject: "branchSelectorObj",
+	postChange: function(){updateLOSelect();},
+	executeAtStart: true
+};
+
+LOSelector = 
+{
+	name: "LOSelector",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "OfficerForBranchId_SourceDB.xaction",
+	parameter: "loanOfficerId",
+	valueAsId: false,
+	htmlObject: "LOSelectorObj",
+	postChange: function(){updateCenterSelect();updateCenterSelect()},
+	executeAtStart: false
+};
+CenterSelector = 
+{
+	name: "CenterSelector",
+	type: "select",
+	listeners: ["loanOfficerId"],
+	parameters:[["officeId", "officeId"],["loanOfficerId", "loanOfficerId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "CenterForLoanOfficerId_SourceDB.xaction",
+	parameter: "centerId",
+	valueAsId: false,
+	htmlObject: "CenterSelectorObj",
+	executeAtStart: false
+};
+
+
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelectorObj",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReportObj",
+  	label: "Run Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: solution,
+  	path: prptPath,
+  	action: "OverdueMatureLoans.prpt",
+  	listeners:["event"],
+  	parameters: [["selected_office","officeId"],["selected_officer","loanOfficerId"],["selected_center","centerId"],["selected_loans","loansCheckBoxValue"],["output-type","outputType"]],
+  	htmlObject: "theReportObj",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([branchSelector, LOSelector, CenterSelector, outputSelector, runReport, clearReport, theReport]);
+
+$(document).ready(function() {
+        initRunClearButtons();
+	
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	officeId = $('#branchSelectorObj select option:selected').val();
+	updateLOSelect();
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected')
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
+	updateCenterSelect();
+	
+	/**Onchange Listeners for loans checkbox**/
+	$('#loansCheckBox').change(function() {
+		if($("#loansCheckBox").attr("checked")){
+			loansCheckBoxValue="true";
+		}else{
+			loansCheckBoxValue="false";;
+			//alert(groupTotalCheckBoxValue);
+		}
+	});
+	
+});
+
+</script>

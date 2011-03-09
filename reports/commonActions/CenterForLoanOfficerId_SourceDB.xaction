@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action-sequence> 
+  <title>Loan Officer List Search Id</title>
+  <version>1</version>
+  <logging-level>ERROR</logging-level>
+  <documentation> 
+    <author/>  
+    <description/>  
+    <help/>  
+    <result-type>none</result-type>  
+    <icon/> 
+  </documentation>
+
+  <inputs> 
+    <loanOfficerId type="long"> 
+      <sources> 
+        <request>loanOfficerId</request> 
+      </sources>  
+      <default-value/> 
+    </loanOfficerId>  
+    <officeId type="long">
+      <sources>
+        <request>officeId</request>
+      </sources>
+    </officeId>
+  </inputs>
+
+  <outputs> 
+    <query_result type="result-set"/> 
+  </outputs>
+
+  <resources/>
+  
+  <actions> 
+    <action-definition> 
+      <component-name>SQLLookupRule</component-name>
+      <action-type>Relational</action-type>
+      <action-inputs> 
+        <loanOfficerId type="long"/>  
+        <officeId type="string"/>
+      </action-inputs>
+      <action-outputs> 
+        <query-result type="result-set" mapping="query_result"/> 
+      </action-outputs>
+      <component-definition> 
+        <jndi><![CDATA[SourceDB]]></jndi>  
+        <live><![CDATA[true]]></live>  
+        <query><![CDATA[(select distinctrow cust.customer_id, cust.display_name
+from customer cust
+where (cust.loan_officer_id = {loanOfficerId} or -1 = {loanOfficerId}) and cust.customer_level_id='3'
+and (cust.branch_id={officeId} or -1={officeId}))
+union (select -1 as customer_id, " All" as display_name)
+union (select 0 as customer_id, "  Select One" as display_name)
+order by 2]]></query> 
+      </component-definition> 
+    </action-definition>
+ 
+  </actions> 
+</action-sequence>
