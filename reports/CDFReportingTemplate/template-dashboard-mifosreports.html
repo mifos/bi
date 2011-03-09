@@ -13,6 +13,15 @@
 
 <style type="text/css">
 
+#DWLabel {
+	font-weight: bold;
+	font-size: 80%;
+}
+
+#DWDate {
+	font-size: 80%;
+}
+
 .reportLabel {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
@@ -107,6 +116,21 @@ function disableClearButton() {
 	$('#clearReportObj button').addClass('buttn2')
 	$('#clearReportObj button').attr('disabled', 'true')
 }
+
+
+var DWNote = {
+	name: "DWNote",
+	type: "select",
+	valueAsId: false,
+        queryDefinition: { dataAccessId: "getDWCompletedToDate", path: "dataAccess/sql-jndiDW.cda" },
+	htmlObject: "DWNoteObj",
+	postExecution: function(){
+				var xx = "<div id=DWLabel>Data Warehouse Up To </div><div id=DWDate>" + $('#DWNoteObj select option:eq(0)').val() + "</div>";
+				$('#DWNoteObj').html(xx);
+			},
+	executeAtStart: true
+};
+
 
 </script>
 

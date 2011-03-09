@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CDADescriptor>
+    <DataSources>
+        <Connection id="2" type="sql.jndi">
+            <Jndi>DestinationDB</Jndi>
+        </Connection>
+    </DataSources>
+    <DataAccess id="getDWCompletedToDate" connection="2" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Data Warehouse Completed To Date</Name>
+        <Query>
+		select cast(ifnull(max(etl_complete_to_date), 'ERROR') as char) as etl_complete_to_date,
+		cast('dummy' as char) as dummy
+		from stg_etl_run_history
+		where etl_name = 'main'
+        	and etl_end_time is not null
+	  </Query>
+    </DataAccess>
+</CDADescriptor>
