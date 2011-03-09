@@ -76,8 +76,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>78</xloc>
-      <yloc>198</yloc>
+      <xloc>59</xloc>
+      <yloc>61</yloc>
       </entry>
     <entry>
       <name>Create Data Warehouse</name>
@@ -106,8 +106,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>554</xloc>
-      <yloc>198</yloc>
+      <xloc>727</xloc>
+      <yloc>61</yloc>
       </entry>
     <entry>
       <name>Set Date Parameters for Initial Load</name>
@@ -138,14 +138,87 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>339</xloc>
-      <yloc>198</yloc>
+      <xloc>500</xloc>
+      <yloc>61</yloc>
+      </entry>
+    <entry>
+      <name>Log Start Entry for Initial Load</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;InitialLoadLogStartEntry.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>295</xloc>
+      <yloc>61</yloc>
+      </entry>
+    <entry>
+      <name>Log Completed Entry for Initial Load</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;InitialLoadLogCompletedEntry.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>726</xloc>
+      <yloc>212</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
+      <from>Set Date Parameters for Initial Load</from>
+      <to>Create Data Warehouse</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>START</from>
-      <to>Set Date Parameters for Initial Load</to>
+      <to>Log Start Entry for Initial Load</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -153,8 +226,17 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Set Date Parameters for Initial Load</from>
-      <to>Create Data Warehouse</to>
+      <from>Log Start Entry for Initial Load</from>
+      <to>Set Date Parameters for Initial Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Create Data Warehouse</from>
+      <to>Log Completed Entry for Initial Load</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
