@@ -13,11 +13,6 @@
 
 <style type="text/css">
 
-#DWLabel {
-	font-weight: bold;
-	font-size: 80%;
-}
-
 #DWDate {
 	font-size: 80%;
 }
@@ -125,8 +120,12 @@ var DWNote = {
         queryDefinition: { dataAccessId: "getDWCompletedToDate", path: "dataAccess/sql-jndiDW.cda" },
 	htmlObject: "DWNoteObj",
 	postExecution: function(){
-				var xx = "<div id=DWLabel>Data Warehouse Up To </div><div id=DWDate>" + $('#DWNoteObj select option:eq(0)').val() + "</div>";
-				$('#DWNoteObj').html(xx);
+				var DWDateTime = $('#DWNoteObj select option:eq(0)').val();
+				DWDateTime = DWDateTime.replace(/ 00:00:00/, 'X');
+				DWDateTime = DWDateTime.replace(/ /," at ");
+				DWDateTime = DWDateTime.replace(/X/, ' (end of)');
+				var htmlInsert = "<div id=DWDate>Data for this report last updated on " + DWDateTime + "</div>";
+				$('#DWNoteObj').html(htmlInsert);
 			},
 	executeAtStart: true
 };

@@ -31,6 +31,11 @@
 <td><div id=runReportObj></div></td>
 <td>&nbsp;</td>
 <td><div id=clearReportObj></div></td>
+
+<td>&nbsp;</td><td>&nbsp;</td>
+<td>&nbsp;</td><td>&nbsp;</td>
+<td colspan=2><div id=DWNoteObj></div></td>
+
 </tr>
 </table>
 
@@ -209,7 +214,7 @@ theReport =
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, LOSelector, ProductStatusSelector, ProductSelector,asOnDate, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([DWNote, branchSelector, LOSelector, ProductStatusSelector, ProductSelector,asOnDate, outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
 
