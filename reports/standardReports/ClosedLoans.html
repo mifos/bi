@@ -19,25 +19,26 @@
 </tr>
 <tr>
 	<td width="200"></td><td width="20">&nbsp;</td>
-	<td colspan="4">
+	<td colspan="2">
 		<table>
 			<tr>
-				<td colspan="2"><div class=reportLabel>Disbursal Date Range</div></td>
+				<td ><div class=reportLabel>Filter By:</div></td>
 			</tr>
 			<tr>
-				<td>Start Date:<span id=date1Obj></span></td>
-				<td>End Date:<span id=date2Obj></span></td>
-			</tr>
+			
+			<td id="DisbursalDateOrClosedDate"><INPUT TYPE=RADIO name="disbursalorcloseddate"  VALUE="true">Disbursal Date<BR>
+            <INPUT TYPE=RADIO name="disbursalorcloseddate"  VALUE="false"  checked="checked">Closure Date<BR></td>
+          	</tr>
 		</table>
 	</td>
 	<td colspan="4">
 		<table>
 			<tr>
-				<td colspan="2"><div class=reportLabel>Closure Date Range</div></td>
+				<td ><div class=reportLabel>Date Range:</div></td>
 			</tr>
 			<tr>
-				<td>Start Date: <span id=date3Obj></span></td>
-				<td>End Date: <span id=date4Obj></span></td>
+				<td>Start Date: <span id=date1Obj></span></td>
+				<td>End Date: <span id=date2Obj></span></td>
 			</tr>
 		</table>
 	</td>
@@ -70,20 +71,29 @@ function updateCenterSelect()
 function runTheReport()
 {
 	
-    startDate_DisbursalDate = $('#date1Obj input').val();
-    endDate_DisbursalDate = $('#date2Obj input').val();
-	startDate_ClosedDate = $('#date3Obj input').val();
-    endDate_ClosedDate = $('#date4Obj input').val();
-	if (startDate_DisbursalDate > endDate_DisbursalDate)
+    startDate =jQuery.trim($('#date1Obj input').val());
+    endDate = jQuery.trim($('#date2Obj input').val());
+	//alert(startDate);
+	//alert(endDate);
+	if(startDate == '')
+	{
+	 
+	 alert(" Please select the Start Date");
+	 return;
+	}
+	//alert(startDate);
+	//alert(endDate);
+	if(endDate == '')
+	{
+	 alert(" Please select the End Date");
+	 return;
+	}
+	if (startDate > endDate)
     {
-        alert("Disbursement Start Date is after Disbursement End Date");
+        alert(" Start Date is after  End Date");
         return;
     }
-	if (startDate_ClosedDate > endDate_ClosedDate)
-    {
-        alert("Closure Start Date is after Closure End Date");
-        return;
-    }
+	
     if (officeId == 0 || loanOfficerId == 0 || centerId == 0 || loanStatus == 0)
     {
         alert("Please select appropriate values");
@@ -107,11 +117,9 @@ var officeId = 0;
 var loanOfficerId = 0;
 var centerId = 0;
 var loanStatus="All";
-var startDate_DisbursalDate = setCurrentDate();
-var endDate_DisbursalDate = setCurrentDate();
-var startDate_ClosedDate = setCurrentDate();
-var endDate_ClosedDate = setCurrentDate();
-
+var startDate =  setCurrentDate();
+var endDate = setCurrentDate();
+var selectedDate="false";
 var outputType = "application/pdf";
 
 branchSelector = 
@@ -165,7 +173,7 @@ date1 =
 	name: "date1",
 	type: "dateInputComponent",
 	parameters:[],
-	parameter: "startDate_DisbursalDate",
+	parameter: "startDate",
 	htmlObject: "date1Obj",
 	executeAtStart: true
 };
@@ -175,29 +183,11 @@ date2 =
 	name: "date2",
 	type: "dateInputComponent",
 	parameters:[],
-	parameter: "endDate_DisbursalDate",
+	parameter: "endDate",
 	htmlObject: "date2Obj",
 	executeAtStart: true
 };
-date3 = 
-{
-	name: "date3",
-	type: "dateInputComponent",
-	parameters:[],
-	parameter: "startDate_ClosedDate",
-	htmlObject: "date3Obj",
-	executeAtStart: true
-};
 
-date4 = 
-{
-	name: "date4",
-	type: "dateInputComponent",
-	parameters:[],
-	parameter: "endDate_ClosedDate",
-	htmlObject: "date4Obj",
-	executeAtStart: true
-};
 outputSelector = 
 {
 	name: "outputSelector",
@@ -238,14 +228,14 @@ theReport =
   	path: prptPath,
   	action: "ClosedLoans.prpt",
   	listeners:["event"],
-  	parameters: [["selected_office","officeId"],["selected_officer","loanOfficerId"],["selected_center","centerId"],["selected_status","loanStatus"],["disbursal_start_date","startDate_DisbursalDate"],["disbursal_end_date","endDate_DisbursalDate"],["closed_start_date","startDate_ClosedDate"],["closed_end_date","endDate_ClosedDate"],["output-type","outputType"]],
+  	parameters: [["selected_office","officeId"],["selected_officer","loanOfficerId"],["selected_center","centerId"],["selected_status","loanStatus"],["disbursal_or_closed_date","selectedDate"],["start_date","startDate"],["end_date","endDate"],["output-type","outputType"]],
   	htmlObject: "theReportObj",
   	executeAtStart: false,
   	paginate: false,
 	showParameters: false
 }
 
-Dashboards.init([branchSelector, LOSelector, CenterSelector, date1, date2, date3, date4, outputSelector, runReport, clearReport, theReport]);
+Dashboards.init([branchSelector, LOSelector, CenterSelector, date1, date2,outputSelector, runReport, clearReport, theReport]);
 
 $(document).ready(function() {
         initRunClearButtons();
@@ -265,7 +255,13 @@ $(document).ready(function() {
 		  loanStatus=selected.val();		  
 		  //alert(selected.val());
 	});
-
+	
+/**Onchange Listeners for selecetd date radiobutton**/
+	$('#DisbursalDateOrClosedDate').change(function() {
+	      selectedDate=$('input[name=disbursalorcloseddate]:checked').val()
+		 //alert($('input[name=disbursalorcloseddate]:checked').val())
+	});
+	
 
 	
 });
