@@ -8,13 +8,11 @@ class OutreachSummaryBranchTest {
     def reportName = 'Outreach Summary by Branch'
     def detailsHeader = ['Branch', 'Centers', 'Groups', 'Active Clients', 'Active Borrowers', 'Active Depositors', 'Dropouts', 'No. of Loan Officers']
 
-    def details1 = ['Mifos HO', '0', '0', '0', '0', '0', '0', '1']
-    def details2 = ['br2', '2', '3', '4', '1', '2', '0', '1']
-    def details3 = ['br4', '3', '2', '1', '0', '1', '1', '1']
-    def details4 = ['RO dw1', '0', '0', '0', '0', '0', '0', '1']
-    def details5 = ['br3', '0', '0', '0', '0', '0', '0', '0']
-    def details6 = ['BO 1', '5', '18', '21', '0', '6', '0', '3']
-    def total = ['Total', '10', '23', '26', '1', '9', '1', '7']
+    def details1 = ['br2', '2', '3', '4', '1', '2', '0', '1']
+    def details2 = ['br4', '3', '2', '1', '0', '1', '1', '1']
+    def details3 = ['br3', '0', '0', '0', '0', '0', '0', '0']
+    def details4 = ['BO 1', '5', '18', '21', '0', '5', '0', '3']
+    def total = ['Total', '10', '23', '26', '1', '8', '1', '5']
 
     def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
@@ -39,13 +37,11 @@ class OutreachSummaryBranchTest {
             t.assertRowEquals(offset+2, details2)
             t.assertRowEquals(offset+3, details3)
             t.assertRowEquals(offset+4, details4)
-            t.assertRowEquals(offset+5, details5)
-            t.assertRowEquals(offset+6, details6)
             // Group footer
-            t.assertRowEquals(offset+7, total)
+            t.assertRowEquals(offset+5, total)
 
             // Page footer
-            offset = 11 
+            offset = 9 
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
