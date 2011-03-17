@@ -47,7 +47,7 @@
         <live><![CDATA[true]]></live>  
         <query><![CDATA[(select distinctrow cust.customer_id, cust.display_name
 from customer cust
-where (cust.loan_officer_id = {loanOfficerId} or -1 = {loanOfficerId}) and cust.customer_level_id='3'
+where (cust.loan_officer_id = {loanOfficerId} or -1 = {loanOfficerId}) and cust.parent_customer_id is null and cust.status_id in(3,4,9,10,13)
 and (cust.branch_id={officeId} or -1={officeId}))
 union (select -1 as customer_id, " All" as display_name)
 union (select 0 as customer_id, "  Select One" as display_name)
