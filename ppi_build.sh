@@ -47,7 +47,7 @@ then
 fi
 
 echo "Running tests..."
-$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
+#$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
 
 mkdir -p target
 groovy $PRGDIR/generate_junit_output.groovy < $log > target/junit_output.xml
