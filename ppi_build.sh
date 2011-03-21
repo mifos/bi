@@ -46,8 +46,13 @@ then
     exit $exitcode
 fi
 
-echo "Running tests..."
-#$PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
+# echo "Running tests..."
+# The following TestDataWarehouseETL job is commented out because...
+# The intention was to combine bi-master build with this build but didn't finish ensuring the junit output from the
+# TestDataWarehouseETL job was shown (so still 2 hudson jobs)
+# Also, any data added for ETL tests would require the "Procedure for updating and running PPI tests" procedure in 
+# http://mifosforge.jira.com/wiki/display/MIFOS/PPI+2010+Update+Process to be done - 
+# $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/TestDataWarehouseETL.kjb` | tee -a $log
 
 mkdir -p target
 groovy $PRGDIR/generate_junit_output.groovy < $log > target/junit_output.xml
