@@ -166,7 +166,7 @@ Also why duplicate loan officer names (even in the history) needs to be cleaned 
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read Personnel Names (and name changes)</from><to>Write stg_personnel_names_and_name_changes</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Read Personnel Names (and name changes)</from><to>Write stg_personnel_names_and_name_changes</to><enabled>Y</enabled> </hop>  <hop> <from>Add row for blank loan_officer_id</from><to>Write stg_personnel_names_and_name_changes</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Read Personnel Names (and name changes)</name>
     <type>TableInput</type>
@@ -252,6 +252,49 @@ order by p.display_name;
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>186</xloc>
       <yloc>218</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Add row for blank loan_officer_id</name>
+    <type>RowGenerator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>personnel_id</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>0</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>display_name</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>-</nullif>
+        <length>200</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <limit>1</limit>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>493</xloc>
+      <yloc>217</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
