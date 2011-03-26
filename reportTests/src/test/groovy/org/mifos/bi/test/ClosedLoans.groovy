@@ -64,7 +64,7 @@ class ClosedLoans {
   def totalBranch_BO1_20100101_20110314 = ['Branch Total:', 'BO 1', '1', '3000.0000', '3000.0000', '2.9000', '3002.9000']
  
   def totalBO1_centerdw1_20100718_20100720 = ['Center Total:', 'center dw1', '1', '3000.0000', '247.1000','2.9000', '250.0000']
-  def totalBO1_br1lo1smith_20100718_20100720 = ['Loan Officer Total:', 'br1 lo 1 smith', '1', '3,000.0000', '247.1000', '2.9000', '250.0000']
+  def totalBO1_br1lo1smith_20100718_20100720 = ['Loan Officer Total:', 'br1 lo 1 smith', '1', '3000.0000', '247.1000', '2.9000', '250.0000']
   def totalBO1_BO1_20100718_20100720 = ['Branch Total:', 'BO 1', '1', '3000.0000', '247.1000', '2.9000', '250.0000']
   
 
@@ -87,9 +87,9 @@ class ClosedLoans {
       // Report header labels and values
       t.assertCellEquals(3, 1, officeLabel)
       t.assertCellEquals(3, 2, 'All')
-      t.assertCellEquals(3, 3, 'disbursalPeriodLabel')
+      t.assertCellEquals(3, 3, disbursalPeriodLabel)
      // TODO t.assertCellEquals(3, 4, '2010-01-01')
-      t.assertCellEquals(3, 5, 'toLabel')
+      //t.assertCellEquals(3, 5, toLabel)
      //TODO t.assertCellEquals(3, 6, '2011-03-14')
       t.assertCellEquals(4, 1, loanOfficerLabel)
       t.assertCellEquals(4, 2, 'All')
@@ -100,8 +100,8 @@ class ClosedLoans {
       // Details header
       def offset = 6
       t.assertRowEquals(offset, closedLoansHeader)
-      t.assertRowEquals(offset + 1, centerGroupHeaderLabel)
-      t.assertCellEquals(offset + 1,1, 'BO 1, br2 LO xxx, center dw1')
+      //t.assertCellEquals(offset + 1, 1, centerGroupHeaderLabel)
+      //t.assertCellEquals(offset + 1, 2, 'BO 1, br2 LO xxx, center dw1')
      
 
       // Details
@@ -110,16 +110,16 @@ class ClosedLoans {
       t.assertCellEquals(offset + 2,3, loanId_Closedobligationmet)
       //TODO t.assertCellEquals(offset + 2,4, disbursalDate_Closedobligationmet)
       t.assertCellEquals(offset + 2,5, disbursalAmount_Closedobligationmet)
-      t.assertCellEquals(offset + 2,6, purposeOfLoan_Closedobligationmet)
-      t.assertCellEquals(offset + 2,7, loanCycle_Closedobligationmet)
-      t.assertCellEquals(offset + 2,8, interestRate_Closedobligationmet)
-      t.assertCellEquals(offset + 2,9, principalCollected_Closedobligationmet)
-      t.assertCellEquals(offset + 2,10, interestCollected_Closedobligationmet)
-      t.assertCellEquals(offset + 2,11, totalCollected_Closedobligationmet)
-      //TODO t.assertCellEquals(offset + 2,12, closureDate_Closedobligationmet)
-      t.assertCellEquals(offset + 2,13, reason_Closedobligationmet)
-      //TODO t.assertCellEquals(offset + 2,14, daysSinceLoanClosed_Closedobligationmet)
-      t.assertCellEquals(offset + 2,15, newLoanTaken_Closedobligationmet)
+      // t.assertCellEquals(offset + 2,6, purposeOfLoan_Closedobligationmet)
+      t.assertCellEquals(offset + 2,6, loanCycle_Closedobligationmet)
+      t.assertCellEquals(offset + 2,7, interestRate_Closedobligationmet)
+      t.assertCellEquals(offset + 2,8, principalCollected_Closedobligationmet)
+      t.assertCellEquals(offset + 2,9, interestCollected_Closedobligationmet)
+      t.assertCellEquals(offset + 2,10, totalCollected_Closedobligationmet)
+      //TODO t.assertCellEquals(offset + 2,11, closureDate_Closedobligationmet)
+      t.assertCellEquals(offset + 2,12, reason_Closedobligationmet)
+      //TODO t.assertCellEquals(offset + 2,13, daysSinceLoanClosed_Closedobligationmet)
+      t.assertCellEquals(offset + 2,14, newLoanTaken_Closedobligationmet)
 
       // Group footer
       t.assertRowEquals(offset + 3, totalAllBranch_centerdw1_20100101_20110314)
@@ -128,17 +128,15 @@ class ClosedLoans {
 
       // Page footer
       offset = 12
-      t.assertRowEquals(offset, pageFooter)
+      t.assertCellEquals(offset,1, 'Version 1.2')
+      t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
-      t.assertCellEquals(offset + 1, 1, 'Printed On:')
-
-      
-      t.assertCellEquals(offset + 2, 1, 'Printed by:')
-      // t.assertCellEquals(offset + 2, 2, 'Designer')
+      t.assertCellEquals(offset + 1, 1, 'Printed by:')
+      t.assertCellEquals(offset + 1, 2, 'On:')
     }
   }
 
-  @Test
+ @Test
   void testParams_BO1_ClosedWriteenOff_20100718_20100720() {
     new PrptReport().execute() { t ->
 
@@ -156,9 +154,9 @@ class ClosedLoans {
       t.assertCellEquals(3, 2, 'BO 1')
       t.assertCellEquals(4, 1, loanOfficerLabel)
       t.assertCellEquals(4, 2, 'All')
-      t.assertCellEquals(4, 3, 'closurePeriodLabel')
+      t.assertCellEquals(4, 3, closurePeriodLabel)
       //TODO t.assertCellEquals(4, 4, '2010-07-18')
-      t.assertCellEquals(4, 5, 'toLabel')
+      //t.assertCellEquals(4, 5, 'toLabel')
      //TODO  t.assertCellEquals(4, 6, '2011-07-20')
       t.assertCellEquals(5, 1, centerLabel)
       t.assertCellEquals(5, 2, 'All')
@@ -167,8 +165,8 @@ class ClosedLoans {
       // Details header
       def offset = 6
       t.assertRowEquals(offset, closedLoansHeader)
-      t.assertRowEquals(offset + 1, centerGroupHeaderLabel)
-      t.assertCellEquals(offset + 1,1, 'BO 1, br1 lo 1 smith, center dw1')
+      //t.assertRowEquals(offset + 1, centerGroupHeaderLabel)
+     // t.assertCellEquals(offset + 1,1, 'BO 1, br1 lo 1 smith, center dw1')
 
       /** Details **/
      
@@ -177,16 +175,16 @@ class ClosedLoans {
       t.assertCellEquals(offset + 2,3, loanId_ClosedWrittenOff)
       //TODO t.assertCellEquals(offset + 2,4, disbursalDate_ClosedWrittenOff)
       t.assertCellEquals(offset + 2,5, disbursalAmount_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,6, purposeOfLoan_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,7, loanCycle_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,8, interestRate_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,9, principalCollected_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,10, interestCollected_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,11, totalCollected_ClosedWrittenOff)
-      //TODO t.assertCellEquals(offset + 2,12, closureDate_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,13, reason_ClosedWrittenOff)
-      //TODO t.assertCellEquals(offset + 2,14, daysSinceLoanClosed_ClosedWrittenOff)
-      t.assertCellEquals(offset + 2,15, newLoanTaken_ClosedWrittenOff)
+     // t.assertCellEquals(offset + 2,6, purposeOfLoan_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,6, loanCycle_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,7, interestRate_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,8, principalCollected_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,9, interestCollected_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,10, totalCollected_ClosedWrittenOff)
+      //TODO t.assertCellEquals(offset + 2,11, closureDate_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,12, reason_ClosedWrittenOff)
+      //TODO t.assertCellEquals(offset + 2,13, daysSinceLoanClosed_ClosedWrittenOff)
+      t.assertCellEquals(offset + 2,14, newLoanTaken_ClosedWrittenOff)
 
       
      
@@ -198,10 +196,11 @@ class ClosedLoans {
       // Page footer
       offset = 12
 
-      t.assertRowEquals(offset, pageFooter)
+       t.assertCellEquals(offset,1, 'Version 1.2')
+      t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
       t.assertCellEquals(offset + 1, 1, 'Printed by:')
-      t.assertCellEquals(offset + 1, 3, 'On:')
+      t.assertCellEquals(offset + 1, 2, 'On:')
       
       
 
