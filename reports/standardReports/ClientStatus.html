@@ -1,0 +1,193 @@
+<table>
+<tr>
+<td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Center</div><div id=centerObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Member Status</div><div id=StatusObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>&nbsp;</td>
+<td><div id=runReportObj></div></td>
+<td>&nbsp;</td>
+<td><div id=clearReportObj></div></td>
+</tr>
+</table>
+
+<div id=theReportObj></div>
+
+<script language="javascript" type="text/javascript">
+
+function updateCenterSelect()
+{
+	Dashboards.fireChange("office",office);
+
+	$('#centerObj select option:eq(0)').attr('selected', 'selected'); 
+	topCustomerHierarchyId = $('#centerObj select option:selected').val();
+}
+
+function runTheReport()
+{
+    startDate = $('#date1Obj input').val();
+    endDate = $('#date2Obj input').val();
+    if (startDate > endDate)
+    {
+        alert("Start Date is after End Date");
+        return;
+    }
+    else if (office == 0 || topCustomerHierarchyId == 0 || memberStatus == "  Select One")
+    {
+        alert("Please select appropriate values");
+        return;
+    }
+
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    document.getElementById('clearReportObj').style.visibility = "visible";
+    enableClearButton();
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
+
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+var event = 0;
+var office = 0;
+
+var startDate = setCurrentDate();
+var endDate = setCurrentDate();
+var memberStatus = "  Select One";
+var outputType = "application/pdf";
+var topCustomerHierarchyId = -1;
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "startDate",
+	htmlObject: "date1Obj",
+	executeAtStart: true
+};
+
+date2 = 
+{
+	name: "date2",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "endDate",
+	htmlObject: "date2Obj",
+	executeAtStart: true
+};
+
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "OfficeListSearchIdMifos.xaction",
+	parameter: "office",
+	valueAsId: false,
+	htmlObject: "branchSelectorObj",
+	postChange: function(){updateCenterSelect();},
+	executeAtStart: true
+};
+
+center = 
+{
+	name: "center",
+	type: "select",
+	listeners: ["office"],
+	parameters:[["office", "office"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosOfficeLOTopCustomerHierarchyListMifos.xaction",
+	parameter: "topCustomerHierarchyId",
+	valueAsId: false,
+	htmlObject: "centerObj",
+	executeAtStart: false
+};
+
+
+statusSelector = 
+{
+	name: "statusSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MemberstatusListKeyMifos.xaction",
+	parameter: "memberStatus",
+	valueAsId: false,
+	htmlObject: "StatusObj",
+	executeAtStart: true
+};
+
+
+outputSelector = 
+{
+	name: "outputSelector",
+	type: "select",
+	parameters:[],
+	valuesArray:[["application/pdf","PDF"], ["text/html","HTML"], ["application/vnd.ms-excel","EXCEL"]],
+	parameter:"outputType",
+	valueAsId: false,
+	htmlObject: "outputSelectorObj",
+	executeAtStart: true
+}
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReportObj",
+  	label: "Run Report",
+  	expression: function(){runTheReport();},
+  	executeAtStart: true
+}
+
+clearReport = 
+{
+  	name: "clearReport",
+  	type: "Button",
+  	htmlObject: "clearReportObj",
+  	label: "Clear Report",
+  	expression: function(){$('#theReportObj').html("");disableClearButton();},
+  	executeAtStart: true
+}
+
+theReport = 
+{
+  	name: "theReport",
+  	type: "prpt",
+  	solution: solution,
+  	path: prptPath,
+  	action: "ClientStatus.prpt",
+  	listeners:["event"],
+  	parameters: [["From_Date","startDate"],["To_Date","endDate"],["Branches","office"],["Centers","topCustomerHierarchyId"],["Member_Status","memberStatus"],
+	["output-type","outputType"]],
+  	htmlObject: "theReportObj",
+  	executeAtStart: false,
+  	paginate: false,
+	showParameters: false
+}
+
+Dashboards.init([date1, date2, branchSelector, center, statusSelector, outputSelector, runReport, clearReport, theReport]);
+
+$(document).ready(function() {
+        initRunClearButtons();
+	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	office = $('#branchSelectorObj select option:selected').val();
+	$('#StatusObj select option:eq(0)').attr('selected', 'selected')
+	memberStatus = $('#StatusObj select option:selected').val();
+	updateCenterSelect();
+});
+
+</script>

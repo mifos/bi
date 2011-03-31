@@ -37,7 +37,13 @@ when 'Customer Was Close'then 'Closed'
 when'Customer Was Pending' then 'Application Pending Approval'
 when 'Customer Was Cancel' then 'Cancel'
 end ) value_status,
-description
+(case description
+when 'Customer Was Active' then 'Active'
+when 'Customer Was Hold' then 'On Hold'
+when 'Customer Was Close'then 'Closed'
+when'Customer Was Pending' then 'Application Pending Approval'
+when 'Customer Was Cancel' then 'Cancel'
+end ) as description
 from customer_state 
 where level_id = 1
 and status_id in (3,4,2,5,6))
