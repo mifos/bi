@@ -10,8 +10,8 @@ class ClosedLoans {
 
   /** Headers for Closed Loans**/
   
-  def closedLoansHeader = ['Group Name','Member Name','Loan Id','Disbursal Date','Disbursal Amount','Purpose Of Loan','Loan Cycle','Interest Rate(%)','Principal Collected','Interest Collected',
-  'Total Collected','Closure / Rescheduled Date','Reason','Days Since Loan Closed','New Loan  Taken']
+  def closedLoansHeader = ['Group Name','Client Name','Loan Id','Disbursal Date','Disbursal Amount','Purpose Of Loan','Loan Cycle','Interest Rate(%)','Principal Collected','Interest Collected',
+  'Total Collected','Closed / Rescheduled Date','Reason','Days Since Loan Closed','New Loan  Taken']
  
   /** assorted Labels                  ***/
   def officeLabel = "Office:"

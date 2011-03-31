@@ -10,15 +10,15 @@ class OverdueMatureLoans {
 
   /** Headers for Overdue Mature Loans**/
   
-def overdueLoansHeader = ['Group Name','Member Name','Loan Id','Disbursal Date','Disbursed Amount','Purpose Of Loan','Principal Repaid','Interest Repaid','Last Paid Date','Principal Overdue','Interest Overdue','Principal Overdue(%)','Principal Outstanding','Interest Outstanding']
+def overdueLoansHeader = ['Group Name','Client Name','Loan Id','Disbursal Date','Disbursed Amount','Purpose Of Loan','Principal Repaid','Interest Repaid','Last Paid Date','Principal Overdue','Interest Overdue','Principal Overdue(%)','Principal Outstanding','Interest Outstanding']
 
-def overdueMatureLoansHeader = ['Group Name','Member Name','Loan Id','Disbursal Date','Disbursed Amount','Purpose Of Loan','Principal Repaid','Interest Repaid','Last Paid Date','Principal Overdue','Interest Overdue','Principal Overdue(%)']
+def overdueMatureLoansHeader = ['Group Name','Client Name','Loan Id','Disbursal Date','Disbursed Amount','Purpose Of Loan','Principal Repaid','Interest Repaid','Last Paid Date','Principal Overdue','Interest Overdue','Principal Overdue(%)']
  
   /** assorted Labels                  ***/
   def officeLabel = "Office:"
   def loanOfficerLabel = "Loan Officer:"
   def centerLabel = "Center:"
-  def overdueMatureLoansLabel = "Filter By Overdue Mature Loans:"
+  def overdueMatureLoansLabel = "Show Only Mature Loans:"
   def centerGroupHeaderLabel="Office, Loan Officer, Center:"
   /** *Expected Data              **/
   def mfiName = 'Mifos HO'
