@@ -188,7 +188,7 @@ In this case, the transaction is attached to the earliest open status entry.
     <connection>DestinationDB</connection>
     <schema/>
     <table>fact_savings_transactions</table>
-    <commit>1000</commit>
+    <commit>2000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Load Fact Tables</name>
+  <name>Load DW Trxn Tables</name>
     <description/>
     <extended_description/>
     <job_version/>
@@ -76,16 +76,16 @@
       <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>341</xloc>
-      <yloc>176</yloc>
+      <xloc>492</xloc>
+      <yloc>168</yloc>
       </entry>
     <entry>
-      <name>Load fact_loan_disbursals</name>
+      <name>Load fact_client_attendances</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanDisbursals.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_ClientAttendances.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -108,16 +108,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>453</xloc>
-      <yloc>29</yloc>
+      <xloc>673</xloc>
+      <yloc>22</yloc>
       </entry>
     <entry>
-      <name>Load fact_loan_repayments</name>
+      <name>Load dw_loan_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanRepayments.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Loan_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -140,16 +140,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>207</xloc>
-      <yloc>39</yloc>
+      <xloc>318</xloc>
+      <yloc>31</yloc>
       </entry>
     <entry>
-      <name>Load fact_savings_transactions</name>
+      <name>Load dw_customer_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_SavingsTransactions.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Customer_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -172,16 +172,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>166</xloc>
-      <yloc>289</yloc>
+      <xloc>642</xloc>
+      <yloc>282</yloc>
       </entry>
     <entry>
-      <name>Load fact_customer_fees_and_charges</name>
+      <name>Load dw_loan_fee_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_CustomerFeesChargesPenalties.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Loan_Fee_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -204,16 +204,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>608</xloc>
-      <yloc>303</yloc>
+      <xloc>248</xloc>
+      <yloc>120</yloc>
       </entry>
     <entry>
-      <name>Load fact_loan_fees_and_charges</name>
+      <name>Load dw_customer_fee_schedules</name>
       <description>Transformation</description>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;Load_LoanFeesChargesPenalties.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;Load_DW_Customer_Fee_Schedules.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -236,14 +236,14 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>601</xloc>
-      <yloc>116</yloc>
+      <xloc>393</xloc>
+      <yloc>301</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>Load fact_loan_disbursals</to>
+      <to>Load fact_client_attendances</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -252,7 +252,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_loan_repayments</to>
+      <to>Load dw_loan_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -261,7 +261,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_savings_transactions</to>
+      <to>Load dw_customer_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -270,7 +270,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_customer_fees_and_charges</to>
+      <to>Load dw_loan_fee_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -279,7 +279,7 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Load fact_loan_fees_and_charges</to>
+      <to>Load dw_customer_fee_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -288,5 +288,26 @@
     </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>Need to put timestamps on these source tables for faster incremental ETL</note>
+      <xloc>32</xloc>
+      <yloc>223</yloc>
+      <width>368</width>
+      <heigth>22</heigth>
+      <fontname/>
+      <fontsize>-1</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>

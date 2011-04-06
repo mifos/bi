@@ -691,7 +691,7 @@ order by d.date_value</sql>
     <connection>DestinationDB</connection>
     <schema/>
     <table>hist_loan_arrears</table>
-    <commit>5000</commit>
+    <commit>25000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
@@ -808,7 +808,7 @@ order by d.date_value</sql>
     <connection>DestinationDB</connection>
     <schema/>
     <table>hist_loan_balances</table>
-    <commit>5000</commit>
+    <commit>25000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>

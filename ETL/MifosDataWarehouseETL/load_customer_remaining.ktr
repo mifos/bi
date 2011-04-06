@@ -189,7 +189,7 @@ where l.funder_name is null*&#47;</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <skip_lookup>N</skip_lookup>
-    <commit>100</commit>
+    <commit>10000</commit>
     <error_ignored>N</error_ignored>
     <ignore_flag_field/>
     <lookup>

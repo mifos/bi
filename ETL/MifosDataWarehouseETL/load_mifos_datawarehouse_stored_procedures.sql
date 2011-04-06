@@ -61,7 +61,7 @@ until done end repeat;
 
 close loan_accounts_referenced_cursor;
 
-commit;
+
 
 update dim_loan
 set valid_to = effective_date_param
@@ -69,7 +69,7 @@ where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
-commit;
+
 
 set done = 0;
 
@@ -92,7 +92,7 @@ until done end repeat;
 
 close savings_accounts_referenced_cursor;
 
-commit;
+
 
 update dim_savings
 set valid_to = effective_date_param
@@ -100,7 +100,7 @@ where customer_key = current_customer_key
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
-commit;
+
 
 
 END */;;
@@ -162,7 +162,7 @@ until done end repeat;
 
 close clients_referenced_cursor;
 
-commit;
+
 
 
 update dim_customer
@@ -172,7 +172,7 @@ and customer_level_id = 1
 and valid_from <= effective_date_param
 and valid_to > effective_date_param;
 
-commit;
+
 
 
 
@@ -240,7 +240,7 @@ until done end repeat;
 
 close groups_referenced_cursor;
 
-commit;
+
 
 
 update dim_customer
@@ -250,7 +250,7 @@ and customer_level_id = 2
 and valid_from <= date_param
 and valid_to > date_param;
 
-commit;
+
 
 
 
@@ -615,7 +615,8 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=CURRENT_USER*/ /*!50003 PROCEDURE `SPetl_customers_and_accounts`()
 BEGIN
 declare done int default 0;
- 
+
+declare loop_count int default 0;
 
 declare effective_date_var date;
 declare level_id_var smallint;
@@ -659,6 +660,7 @@ set @start_savings_account_key = @insert_savings_account_key;
 call SPshow_stats(1);
 
 open customer_and_account_changes_cursor;
+start transaction;
 repeat
     fetch customer_and_account_changes_cursor into effective_date_var, level_id_var, entity_id_var, change_type_var, change_order_var, 
         updated_status_var, updated_parent_id_var, updated_loan_officer_id_var, updated_branch_id_var, customer_formedby_id_var, 
@@ -704,6 +706,13 @@ repeat
         
         end if;
     
+        set loop_count := loop_count + 1;
+        if loop_count > 1000 then
+            set loop_count := 0;
+            commit;
+            start transaction;
+        end if;
+
     end if;
 until done end repeat;
 

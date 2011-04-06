@@ -190,7 +190,7 @@ where l.fund_id is null</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <skip_lookup>N</skip_lookup>
-    <commit>1000</commit>
+    <commit>10000</commit>
     <error_ignored>N</error_ignored>
     <ignore_flag_field/>
     <lookup>

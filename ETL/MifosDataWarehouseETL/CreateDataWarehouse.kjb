@@ -223,11 +223,11 @@
       <pass_export>N</pass_export>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
       </parameters>      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
+      <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>329</xloc>
-      <yloc>159</yloc>
+      <xloc>333</xloc>
+      <yloc>168</yloc>
       </entry>
     <entry>
       <name>Adjust Customer Status Values</name>
@@ -257,7 +257,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>546</xloc>
-      <yloc>164</yloc>
+      <yloc>165</yloc>
       </entry>
     <entry>
       <name>Derive Loan Balances and Arrears</name>
@@ -318,8 +318,8 @@
       <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>95</xloc>
-      <yloc>159</yloc>
+      <xloc>102</xloc>
+      <yloc>169</yloc>
       </entry>
     <entry>
       <name>Load PPI Data</name>
@@ -348,8 +348,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>509</xloc>
-      <yloc>264</yloc>
+      <xloc>516</xloc>
+      <yloc>411</yloc>
       </entry>
     <entry>
       <name>Derive hist_savings_balances</name>
@@ -382,6 +382,36 @@
       <nr>0</nr>
       <xloc>95</xloc>
       <yloc>413</yloc>
+      </entry>
+    <entry>
+      <name>Load DW Trxn Tables</name>
+      <description/>
+      <type>JOB</type>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;LoadDWTrxnTables.kjb</filename>
+      <jobname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>527</xloc>
+      <yloc>277</yloc>
       </entry>
   </entries>
   <hops>
@@ -431,15 +461,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Fact Tables</from>
-      <to>Apply Loan Adjustments and Reversals</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Apply Loan Adjustments and Reversals</from>
       <to>Derive Loan Balances and Arrears</to>
       <from_nr>0</from_nr>
@@ -469,6 +490,24 @@
     <hop>
       <from>Apply Loan Adjustments and Reversals</from>
       <to>Derive hist_savings_balances</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Fact Tables</from>
+      <to>Apply Loan Adjustments and Reversals</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load Fact Tables</from>
+      <to>Load DW Trxn Tables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

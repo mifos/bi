@@ -483,7 +483,7 @@ and c.created_date between date(?) and date(?)
     <connection>DestinationDB</connection>
     <schema/>
     <table>stg_customer_and_account_updates</table>
-    <commit>1000</commit>
+    <commit>10000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
