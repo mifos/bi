@@ -1,12 +1,12 @@
 <table>
 <tr>
 <td><a href="#"><img src="resources/style/images/mifoslogo.jpg" border="0"/></a></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Source of Funds</div><div id=funderSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Office</div><div id=branchSelectorObj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Center</div><div id=centerObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Product</div><div id=ProductSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Source of Funds</div><div id=funderSelectorObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Output Type</div><div id=outputSelectorObj></div></td>
 </tr>
 <tr>
@@ -21,7 +21,7 @@
 
 <script language="javascript" type="text/javascript">
 
-function updateLOSelect()
+function updateCenterSelect()
 {
 	Dashboards.fireChange("office",office);
 
@@ -38,7 +38,7 @@ function runTheReport()
         alert("Start Date is after End Date");
         return;
     }
-    else if (office == "-" || productKey == 99999 || funderId == -2 || topCustomerHierarchyId == 0 )
+    else if (office == 0 || productKey == 99999 || funderId == -2 || topCustomerHierarchyId == 0 )
     {
         alert("Please select appropriate values");
         return;
@@ -58,7 +58,7 @@ var commonActionsSolution = "commonActions";
 
 Dashboards.globalcontext = false;
 var event = 0;
-var office = "";
+var office = 0;
 
 var startDate = setCurrentDate();
 var endDate = setCurrentDate();
@@ -126,7 +126,7 @@ branchSelector =
 	parameter: "office",
 	valueAsId: false,
 	htmlObject: "branchSelectorObj",
-	postChange: function(){updateLOSelect();},
+	postChange: function(){updateCenterSelect();},
 	executeAtStart: true
 };
 
@@ -202,6 +202,7 @@ $(document).ready(function() {
 	funderId = $('#funderSelectorObj select option:selected').val();
 	$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
 	office = $('#branchSelectorObj select option:selected').val();
+	updateCenterSelect();
 });
 
 </script>
