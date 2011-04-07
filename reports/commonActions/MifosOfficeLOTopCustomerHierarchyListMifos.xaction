@@ -42,7 +42,7 @@
         <query><![CDATA[(select customer_id,display_name
 	from customer
 	where customer_level_id=3
-	and branch_id={office})
+	and (branch_id={office} or -1={office}))
 union (select -1, " All")
 union (select 0, "  Select One")
 order by 2]]></query> 
