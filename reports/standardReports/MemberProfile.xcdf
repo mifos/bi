@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cdf>
-	<title>Member Profile</title>
-	<author>Ramya Toshniwal</author>
-	<description></description>
-	<icon></icon>
-	<style>mifosreports</style>
-	<template>MemberProfile.html</template>
-</cdf>
