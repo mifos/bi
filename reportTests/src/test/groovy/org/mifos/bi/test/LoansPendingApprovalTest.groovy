@@ -11,7 +11,7 @@ class LoansPendingApprovalTest {
     def mfiName = 'Mifos HO'
     def reportPath = 'reports/standardReports/prpts/LoansPendingApproval.prpt'
     def reportName = 'Loans Pending Approval';
-    def detailsHeader = ['Office', 'Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Time in existing status (days)', 'Last edited by']
+    def detailsHeader = ['Office', 'Account ID', 'Center name', 'Group name', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Days awaiting disbursal', 'Last edited by']
 
     def total = ['Total', '0']
 

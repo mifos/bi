@@ -13,10 +13,10 @@ class LoansToBeDisbursedTest {
     def mfiName = 'Mifos HO'
     def reportPath = 'reports/standardReports/prpts/LoansToBeDisbursed.prpt'
     def reportName = 'Loans To Be Disbursed';
-    def detailsHeader = ['Office', 'Account ID', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Time in existing status (days)', 'Last edited by']
+    def detailsHeader = ['Office', 'Account ID', 'Center name', 'Group name', 'Client name', 'Product name', 'Loan Officer', 'Loan Amount', 'Days awaiting disbursal', 'Last edited by']
 
-    def detailsAccount55 = ['br2', '000100000000055', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', String.valueOf(159+timeOffset), 'mifos']
-    def detailsAccount59 = ['br2', '000100000000059', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', String.valueOf(159+timeOffset), 'mifos']
+    def detailsAccount55 = ['br2', '000100000000055', '', '', 'group w/o center ..', 'group loan', 'br2 LO xxx', '5000.0000', String.valueOf(159+timeOffset), 'mifos']
+    def detailsAccount59 = ['br2', '000100000000059', '', '', 'client of group w/o ..', 'loan prod 1', 'br2 LO xxx', '3000.0000', String.valueOf(159+timeOffset), 'mifos']
     def totalAll = ['Total', '41000.0000']
     def totalbr4FeesLOxxx = ['Total', '0']
     def totalAllLoanProd1 = ['Total', '18000.0000']
