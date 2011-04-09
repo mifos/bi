@@ -40,13 +40,6 @@ class LoansToBeDisbursedTest {
             // Page header
             t.assertRowEquals(3, ['As Of:', today, 'Office:', 'All'])
             t.assertRowEquals(4, ['Product:', 'All', 'Loan Officer:', 'All'])
-for (x in detailsAccount55){
-    println x
-}
-
-for (x in t[11]){
-    println x
-}
 
             // Details header
             t.assertRowEquals(5, detailsHeader)
