@@ -1,37 +1,24 @@
-<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div> All Loan Officers Remaining</div>
+<div id=mainHeading><div class=boldLabel> COLLECTIONS:</div><div id=headingLabel></div></div>
 <div id=remainingObj></div>
 
 <script language="javascript" type="text/javascript">
 
-function setUpRemaining()
-{
+var completed = "Collected";
+var completedPC = "% " + completed;
+var nameHeading = "Loan Officers" + remainingTextValue;
 
-var MetaLayerVar = {
-
-    remainingDef: {
-      colHeaders: ["Id", nameHeading, "Expected", completed, completedPC],
-      colTypes: ['numeric','string','numeric','numeric','numeric'],
-	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
-      tableStyle: "classic",
-	paginate: false,
-	sort: true,
-	sortBy: [[4,'desc']],
-	filter: false,
-	info: false,
-      dataAccessId: getRemainingQuery, 
-	path: cdaPath
-    }
-
-  };
+setMetaDataVar(nameHeading, completed, completedPC, "getRemainingLOCollection");
+var drillClick = "CollectionsCenter";
+var tableParentId = Dashboards.getQueryParameter("branchId");
 
 
 var remaining =
 	{
  		name: "remaining",
 		type: "tableComponent",
-    		chartDefinition: MetaLayerVar.remainingDef,
-		parameters: [["currentDate","currentDate"], ["tableParentId","tableParentId"]],
-		cdaParams: [["currentDate","currentDate"], ["tableParentId","tableParentId"]],
+    		chartDefinition: dbMetaDataVar.remainingDef,
+		parameters: [["currentDate","currentDate"], ["tableParentId","tableParentId"], ["showall","showallParam"]],
+		cdaParams: [["currentDate","currentDate"], ["tableParentId","tableParentId"], ["showall","showallParam"]],
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
@@ -44,44 +31,12 @@ var remaining =
 						$(this).html(linkBranchName);
   					});
 
-   					$("#remainingObj th").addClass("tableHeading");
-   					$("#remainingObj th").css("background-color", darkBlue);
-   					$("#remainingObj th").css("color", white);
-   					$("#remainingObj th:nth-child(1)").hide();
-   					$("#remainingObj td:nth-child(1)").hide();
-   					$("#remainingObj_wrapper").removeClass("dataTables_wrapper");
-
-					$("#remainingObj").css("color", black);
-					$("#remainingObj tbody tr").each(function(index) {
-						if ($(this).hasClass("odd"))
-						{
-							$(this).css("background-color", oddRow);
-						}
-						else
-						{
-							$(this).css("background-color", evenRow);
-						}				
-  					});
+					decorateRemainingObj();
   				}
   };
 
-  Dashboards.init([remaining]);
-
-}
-
-
-  var remainingText = " Remaining";
-
-  var getRemainingQuery = "getRemainingLOCollection";
-  var completed = "Collected";
-  var completedPC = "% " + completed;
-  var nameHeading = "Loan Officers" + remainingText;
-  var drillClick = "CollectionsCenter";
-  var tableParentId = Dashboards.getQueryParameter("branchId");
-
-setUpRemaining();
-
-
+Dashboards.init([remaining]);
+$("#headingLabel").html(" All Loan Officers" + remainingTextValue);
 
 $(document).ready(function() {
 	finalisePage();

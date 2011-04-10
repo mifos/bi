@@ -60,6 +60,10 @@
 	display: inline;
 }
 
+#headingLabel{
+	display: inline;
+}
+
 .sectionTable {
 	border-collapse: collapse;
 }
@@ -126,7 +130,7 @@ function linkToPage(pageName, extraParams)
 
 function specificPage(pageName, extraParams)
 {
-	return webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&template=mantle" + extraParams;
+	return webAppPath + "/content/pentaho-cdf/RenderXCDF?solution=" + solution + "&path=" + path + "&action=" + pageName + ".xcdf&showall=" + showallParam + "&template=mantle" + extraParams;
 }
 
 //Start of Breadcrumb functionality - rigidly coded but works fine
@@ -212,6 +216,30 @@ function finalisePage()
 	$("#burndown").slideToggle("slow");
 }
 
+function decorateRemainingObj()
+{
+   	$("#remainingObj th").addClass("tableHeading");
+   	$("#remainingObj th").css("background-color", darkBlue);
+   	$("#remainingObj th").css("color", white);
+   	$("#remainingObj th:nth-child(1)").hide();
+   	$("#remainingObj td:nth-child(1)").hide();
+   	$("#remainingObj_wrapper").removeClass("dataTables_wrapper");
+
+	$("#remainingObj").css("color", black);
+	$("#remainingObj tbody tr").each(function(index) {
+		if ($(this).hasClass("odd"))
+		{
+			$(this).css("background-color", oddRow);
+		}
+		else
+		{
+			$(this).css("background-color", evenRow);
+		}				
+  	});
+}
+
+
+
 var lighterOrange = "#FCD5B5";
 var darkOrange = "#F79646";
 var darkBlue = "#4F81BD";
@@ -231,6 +259,18 @@ var LO = "LO";
 var solution = Dashboards.getQueryParameter("solution");
 var path = Dashboards.getQueryParameter("path");
 var cdaPath = solution + path + "CollectionsDisbursalsBurndown.cda";
+
+var showallParam = Dashboards.getQueryParameter("showall");
+if (showallParam != 1)
+{
+	showallParam = 0;
+}
+var remainingTextValue = "";
+if (showallParam == 0)
+{
+	remainingTextValue = " Remaining";
+}
+
 var branchIdParam = Dashboards.getQueryParameter("branchId");
 var branchNameParam = Dashboards.getQueryParameter("branchName");
 var LOIdParam = Dashboards.getQueryParameter("LOId");
@@ -242,7 +282,33 @@ var collectionRemaining = 0;
 var disbursementCompleted = 0;
 var disbursementRemaining = 0;
 
+var dbMetaDataVar; 
+var remaining;
+
 Dashboards.globalcontext = false;
+
+function setMetaDataVar(nameHeadingParam, completedParam, completedPCParam, getRemainingQueryParam)
+{
+
+dbMetaDataVar = {
+
+    remainingDef: {
+      colHeaders: ["Id", nameHeadingParam, "Expected", completedParam, completedPCParam],
+      colTypes: ['numeric','string','numeric','numeric','numeric'],
+	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
+      tableStyle: "classic",
+	paginate: false,
+	sort: true,
+	sortBy: [[4,'desc']],
+	filter: false,
+	info: false,
+      dataAccessId: getRemainingQueryParam, 
+	path: cdaPath
+    }
+
+  };
+
+}
 
 </script>
 

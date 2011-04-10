@@ -6,10 +6,6 @@
             <Jndi>SourceDB</Jndi>
         </Connection>
 
-        <Connection id="2" type="sql.jndi">
-            <Jndi>DestinationDB</Jndi>
-        </Connection>
-
     </DataSources>
 
 
@@ -20,10 +16,10 @@
 <![CDATA[
 
 select o.office_id as branch_id, o.display_name as branch_name, 
-    cast(round(ifnull(sum(ls.principal), 0.0), 1) as char) as expected, 
-    cast(round(ifnull(sum(ls.principal_paid), 0.0), 1) as char) as collected,
+    cast(round(ifnull(sum(ls.principal + ls.interest), 0.0), 1) as char) as expected, 
+    cast(round(ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0), 1) as char) as collected,
     cast(round(
-            ( (ifnull(sum(ls.principal_paid), 0.0) * 100) / ifnull(sum(ls.principal), 0.0))
+            ( (ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0) * 100) / ifnull(sum(ls.principal + ls.interest), 0.0))
                 ,1) as char) as collected_pc
 from office o
 join account a on a.office_id = o.office_id
@@ -39,7 +35,7 @@ join loan_schedule ls on ls.account_id = ast.account_id and ls.action_date = ${c
 where ast.new_status in (5,9)
    
 group by o.office_id 
-having ifnull(sum(ls.principal), 0.0) > ifnull(sum(ls.principal_paid), 0.0)    
+having (ifnull(sum(ls.principal + ls.interest), 0.0) > ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0)) or (${showall} = 1)
 order by 5 desc
 
 LIMIT ${limit}
@@ -47,6 +43,7 @@ LIMIT ${limit}
 </Query>
         <Parameters>
     		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="showall" type="Integer" default="1"/>
     		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
@@ -60,10 +57,10 @@ LIMIT ${limit}
 <![CDATA[
 
 select p.personnel_id as loan_officer_id, p.display_name as loan_officer_name, 
-    cast(round(ifnull(sum(ls.principal), 0.0), 1) as char) as expected, 
-    cast(round(ifnull(sum(ls.principal_paid), 0.0), 1) as char) as collected,
+    cast(round(ifnull(sum(ls.principal + ls.interest), 0.0), 1) as char) as expected, 
+    cast(round(ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0), 1) as char) as collected,
     cast(round(
-            ( (ifnull(sum(ls.principal_paid), 0.0) * 100) / ifnull(sum(ls.principal), 0.0))
+            ( (ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0) * 100) / ifnull(sum(ls.principal + ls.interest), 0.0))
                 ,1) as char) as collected_pc
 from personnel p
 join account a on a.personnel_id = p.personnel_id
@@ -80,7 +77,7 @@ where ast.new_status in (5,9)
 and p.office_id = ${tableParentId}
 
 group by p.personnel_id 
-having ifnull(sum(ls.principal), 0.0) > ifnull(sum(ls.principal_paid), 0.0)    
+having (ifnull(sum(ls.principal + ls.interest), 0.0) > ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0)) or (${showall} = 1)
 order by 5 desc
 
 LIMIT ${limit}
@@ -89,6 +86,7 @@ LIMIT ${limit}
         <Parameters>
     		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="tableParentId" type="Integer" default="0"/>
+    		<Parameter name="showall" type="Integer" default="1"/>
     		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
@@ -102,10 +100,10 @@ LIMIT ${limit}
 <![CDATA[
 
 select center.customer_id as center_id, center.display_name as center_name, 
-    cast(round(ifnull(sum(ls.principal), 0.0), 1) as char) as expected, 
-    cast(round(ifnull(sum(ls.principal_paid), 0.0), 1) as char) as collected,
+    cast(round(ifnull(sum(ls.principal + ls.interest), 0.0), 1) as char) as expected, 
+    cast(round(ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0), 1) as char) as collected,
     cast(round(
-            ( (ifnull(sum(ls.principal_paid), 0.0) * 100) / ifnull(sum(ls.principal), 0.0))
+            ( (ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0) * 100) / ifnull(sum(ls.principal + ls.interest), 0.0))
                 ,1) as char) as collected_pc
 from customer c
 join customer grp on grp.customer_id = c.parent_customer_id
@@ -124,7 +122,7 @@ where ast.new_status in (5,9)
 and c.loan_officer_id = ${tableParentId}
 
 group by center.customer_id
-having ifnull(sum(ls.principal), 0.0) > ifnull(sum(ls.principal_paid), 0.0)    
+having (ifnull(sum(ls.principal + ls.interest), 0.0) > ifnull(sum(ls.principal_paid + ls.interest_paid), 0.0)) or (${showall} = 1)
 order by 5 desc
 
 LIMIT ${limit}
@@ -133,6 +131,7 @@ LIMIT ${limit}
         <Parameters>
     		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="tableParentId" type="Integer" default="0"/>
+    		<Parameter name="showall" type="Integer" default="1"/>
     		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
@@ -167,7 +166,8 @@ left join account_trxn att on att.account_id = ast.account_id and att.account_ac
 join loan_account la on la.account_id = ast.account_id  
 where ast.new_status = 3   
 group by o.office_id 
-having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0) 
+having (ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0)) or (${showall} = 1)
+
 order by 5 desc
     
 LIMIT ${limit}
@@ -176,6 +176,7 @@ LIMIT ${limit}
 </Query>
         <Parameters>
     		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="showall" type="Integer" default="1"/>
     		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
@@ -208,7 +209,7 @@ join loan_account la on la.account_id = ast.account_id
 where ast.new_status = 3   
 and p.office_id = ${tableParentId}
 group by p.personnel_id 
-having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0) 
+having (ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0)) or (${showall} = 1)
 order by 5 desc
     
 LIMIT ${limit}
@@ -218,6 +219,7 @@ LIMIT ${limit}
         <Parameters>
     		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="tableParentId" type="Integer" default="0"/>
+    		<Parameter name="showall" type="Integer" default="1"/>
     		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
@@ -255,7 +257,7 @@ where ast.new_status = 3
 and c.loan_officer_id = ${tableParentId}
 
 group by center.customer_id 
-having ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0) 
+having (ifnull(sum(la.loan_amount), 0.0) > ifnull(sum(att.amount), 0.0)) or (${showall} = 1)
 order by 5 desc    
 LIMIT ${limit}
 
@@ -264,6 +266,7 @@ LIMIT ${limit}
         <Parameters>
     		<Parameter name="currentDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="tableParentId" type="Integer" default="0"/>
+    		<Parameter name="showall" type="Integer" default="1"/>
     		<Parameter name="limit" type="Integer" default="1000000"/>
         </Parameters>
     </DataAccess>
@@ -288,7 +291,7 @@ from
 ((select "Target" as typeName,  repay.branches, repay.centers, repay.clients, repay.collection, disb.disbursement
 from
     (select count(distinct(a.office_id)) as branches, count(distinct(center.customer_id)) as centers,
-        count(distinct(c.customer_id)) as clients,  ifnull(sum(ls.principal), 0.0) as collection
+        count(distinct(c.customer_id)) as clients,  ifnull(sum(ls.principal + ls.interest), 0.0) as collection
     from loan_schedule ls
     join account a on a.account_id = ls.account_id
     join customer c on c.customer_id = a.customer_id
@@ -342,7 +345,7 @@ from
         where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)
         group by a.customer_id
-        having sum(ls.principal - ls.principal_paid) <= 0) as xx) clrepay
+        having sum((ls.principal + interest) - (ls.principal_paid + ls.interest_paid)) <= 0) as xx) clrepay
 
 join
     (select count(*) as centers
@@ -364,7 +367,8 @@ join
         where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)
         group by center.customer_id
-        having sum(ls.principal - ls.principal_paid) <= 0) as xx) cerepay
+        having sum((ls.principal + interest) - (ls.principal_paid + ls.interest_paid)) <= 0) as xx) cerepay
+
     
     join
     (select count(*) as branches
@@ -383,10 +387,11 @@ join
         where  ls.action_date = ${currentDate}
         and ast.new_status in (5,9)
         group by a.office_id
-        having sum(ls.principal - ls.principal_paid) <= 0) as xx) brrepay
+        having sum((ls.principal + interest) - (ls.principal_paid + ls.interest_paid)) <= 0) as xx) brrepay
+
 
   join 
-        (select ifnull(sum(ls.principal_paid), 0.0) as collection 
+        (select ifnull(sum(ls.principal_paid - ls.interest_paid), 0.0) as collection 
         from loan_schedule ls 
         join  account_status_change_history ast on ast.account_id = ls.account_id
         join

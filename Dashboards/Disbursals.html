@@ -1,45 +1,22 @@
-<div id=mainHeading><div class=boldLabel> DISBURSALS:</div> All Branches Remaining</div>
+<div id=mainHeading><div class=boldLabel> DISBURSALS:</div><div id=headingLabel></div></div>
 <div id=remainingObj></div>
 
 <script language="javascript" type="text/javascript">
 
-function setUpRemaining(getRemainingQueryParam, completedParam, nameHeadingParam, drillClickParam)
-{
+var completed = "Disbursed";
+var completedPC = "% " + completed;
+var nameHeading = "Branches" + remainingTextValue;
 
-  var remainingText = " Remaining";
-
-  var getRemainingQuery = getRemainingQueryParam;
-  var completed = completedParam;
-  var completedPC = "% " + completed;
-  var nameHeading = nameHeadingParam + remainingText;
-  var drillClick = drillClickParam;
-
-  var MetaLayerVar = {
-
-    remainingDef: {
-      colHeaders: ["Id", nameHeading, "Expected", completed, completedPC],
-      colTypes: ['numeric','string','numeric','numeric','numeric'],
-	colFormats: [null, null, "%15.1f", "%15.1f", "%3.1f"],
-      tableStyle: "classic",
-	paginate: false,
-	sort: true,
-	sortBy: [[4,'desc']],
-	filter: false,
-	info: false,
-      dataAccessId: getRemainingQuery, 
-	path: cdaPath
-    }
-
-  };
-
+setMetaDataVar(nameHeading, completed, completedPC, "getRemainingBranchesDisbursement");
+var drillClick = "DisbursalsLO";
 
 var remaining =
 	{
  		name: "remaining",
 		type: "tableComponent",
-    		chartDefinition: MetaLayerVar.remainingDef,
-		parameters: [["currentDate","currentDate"]],
-		cdaParams: [["currentDate","currentDate"]],
+    		chartDefinition: dbMetaDataVar.remainingDef,
+		parameters: [["currentDate","currentDate"], ["showall","showallParam"]],
+		cdaParams: [["currentDate","currentDate"], ["showall","showallParam"]],
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
@@ -50,33 +27,12 @@ var remaining =
 						$(this).html(linkBranchName);
   					});
 
-   					$("#remainingObj th").addClass("tableHeading");
-   					$("#remainingObj th").css("background-color", darkBlue);
-   					$("#remainingObj th").css("color", white);
-   					$("#remainingObj th:nth-child(1)").hide();
-   					$("#remainingObj td:nth-child(1)").hide();
-   					$("#remainingObj_wrapper").removeClass("dataTables_wrapper");
-
-					$("#remainingObj").css("color", black);
-					$("#remainingObj tbody tr").each(function(index) {
-						if ($(this).hasClass("odd"))
-						{
-							$(this).css("background-color", oddRow);
-						}
-						else
-						{
-							$(this).css("background-color", evenRow);
-						}				
-  					});
+					decorateRemainingObj();
   				}
   };
 
-  Dashboards.init([remaining]);
-
-}
-
-setUpRemaining("getRemainingBranchesDisbursement", "Disbursed", "Branches", "DisbursalsLO");
-
+Dashboards.init([remaining]);
+$("#headingLabel").html(" All Branches" + remainingTextValue);
 
 $(document).ready(function() {
 	finalisePage();

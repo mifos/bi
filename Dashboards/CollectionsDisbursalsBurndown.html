@@ -185,8 +185,8 @@ var remainingBranchesCollection =
  		name: "remainingBranchesCollection",
 		type: "tableComponent",
     		chartDefinition: MetaLayerVar.branchDef,
-		parameters: [["currentDate","currentDate"], ["limit", "5"]],
-		cdaParams: [["currentDate","currentDate"], ["limit", "5"]],
+		parameters: [["currentDate","currentDate"], ["showall","0"], ["limit", "5"]],
+		cdaParams: [["currentDate","currentDate"], ["showall","0"], ["limit", "5"]],
     		htmlObject: "top5CollectionObj",
     		executeAtStart: true,
   		postExecution: function(){
@@ -223,8 +223,8 @@ var remainingBranchesDisbursement =
  		name: "remainingBranchesDisbursement",
 		type: "tableComponent",
     		chartDefinition: MetaLayerVar.branchDefDisb,
-		parameters: [["currentDate","currentDate"], ["limit", "5"]],
-		cdaParams: [["currentDate","currentDate"], ["limit", "5"]],
+		parameters: [["currentDate","currentDate"], ["showall","0"], ["limit", "5"]],
+		cdaParams: [["currentDate","currentDate"], ["showall","0"], ["limit", "5"]],
     		htmlObject: "top5DisbursementObj",
     		executeAtStart: true,
   		postExecution: function(){
