@@ -20,13 +20,7 @@ var remaining =
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
-					$("#remainingObj td:nth-child(2)").each(function(index) {
-						var branchParams = "&branchId=" + $(this).parent().children("td:nth-child(1)").text();
-						branchParams = branchParams  + "&branchName=" + $(this).parent().children("td:nth-child(2)").text();
-						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'" + drillClick + "', '" + branchParams + "'" + ');return false;">' + $(this).text() + '</a>';
-						$(this).html(linkBranchName);
-  					});
-					decorateRemainingObj();
+					postExecutionFunction(drillClick);
   				}
   };
 

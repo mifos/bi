@@ -22,16 +22,7 @@ var remaining =
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
-					$("#remainingObj td:nth-child(2)").each(function(index) {
-						var extraParams = "&branchId=" + Dashboards.getQueryParameter("branchId");
-						extraParams = extraParams + "&branchName=" + Dashboards.getQueryParameter("branchName");
-						extraParams = extraParams + "&LOId=" + $(this).parent().children("td:nth-child(1)").text();
-						extraParams = extraParams + "&LOName=" + $(this).parent().children("td:nth-child(2)").text();
-						var linkBranchName = '<a href="#" onclick="linkToPage(' + "'" + drillClick + "', '" + extraParams + "'" + ');return false;">' + $(this).text() + '</a>';
-						$(this).html(linkBranchName);
-  					});
-
-					decorateRemainingObj();
+					postExecutionFunction(drillClick);
   				}
   };
 

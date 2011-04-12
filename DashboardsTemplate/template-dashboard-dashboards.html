@@ -136,6 +136,8 @@ function specificPage(pageName, extraParams)
 //Start of Breadcrumb functionality - rigidly coded but works fine
 function bcBackPages(currentName)
 {
+	var params;
+
 	var viewAllBranchesPage = currentName.substring(0,11);
 	if (viewAllBranchesPage != collections)
 	{
@@ -150,8 +152,15 @@ function bcBackPages(currentName)
 		var viewAllLOsPage = viewAllBranchesPage + LO;
 		if (currentName != viewAllLOsPage)
 		{
-			var branchParams = "&branchId=" + branchIdParam + "&branchName=" + branchNameParam;
-			bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllLOsPage,  branchParams) + '">' + branchNameParam + '</a>'
+			params = "&branchId=" + branchIdParam + "&branchName=" + branchNameParam;
+			bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllLOsPage,  params) + '">' + branchNameParam + '</a>'
+
+			var viewAllCentersPage = viewAllBranchesPage + Center;
+			if (currentName != viewAllCentersPage)
+			{
+				params= "&branchId=" + branchIdParam + "&branchName=" + branchNameParam + "&LOId=" + LOIdParam + "&LOName=" + LONameParam;
+				bcBack = bcBack + " >> " + '<a href="' + specificPage(viewAllCentersPage,  params) + '">' + LONameParam + '</a>'			
+			}
 		}
 	}
 	return bcBack;
@@ -169,6 +178,11 @@ function bcCurrentPage(currentName)
 	{
 		bcCurrent = LONameParam;
 	}
+	if (CeNameParam > '')
+	{
+		bcCurrent = CeNameParam;
+	}
+
 	return " >> " + bcCurrent;
 }
 
@@ -216,8 +230,13 @@ function finalisePage()
 	$("#burndown").slideToggle("slow");
 }
 
-function decorateRemainingObj()
+function postExecutionFunction(drillClickParam)
 {
+
+	setDrillDownLink(drillClickParam);
+
+
+/* decorate table output */
    	$("#remainingObj th").addClass("tableHeading");
    	$("#remainingObj th").css("background-color", darkBlue);
    	$("#remainingObj th").css("color", white);
@@ -238,6 +257,56 @@ function decorateRemainingObj()
   	});
 }
 
+function setDrillDownLink(drillClickParam)
+{
+	var params = "";
+
+	if ((drillClickParam == "CollectionsClient") || (drillClickParam ==  "DisbursalsClient"))
+  	{
+		return;
+	}
+
+
+
+  $("#remainingObj td:nth-child(2)").each(function(index) {
+
+	if ((drillClickParam == "CollectionsLO") || (drillClickParam ==  "DisbursalsLO"))
+	{
+		params = "&branchId=" + $(this).parent().children("td:nth-child(1)").text();
+		params = params + "&branchName=" + $(this).parent().children("td:nth-child(2)").text();
+	}
+
+	if ((drillClickParam == "CollectionsCenter") || (drillClickParam ==  "DisbursalsCenter"))
+	{
+		params = "&branchId=" + Dashboards.getQueryParameter("branchId");
+		params = params + "&branchName=" + Dashboards.getQueryParameter("branchName");
+		params = params + "&LOId=" + $(this).parent().children("td:nth-child(1)").text();
+		params = params + "&LOName=" + $(this).parent().children("td:nth-child(2)").text();
+	}
+
+	if ((drillClickParam == "CollectionsGroup") || (drillClickParam ==  "DisbursalsGroup"))
+	{
+		params = "&branchId=" + Dashboards.getQueryParameter("branchId");
+		params = params + "&branchName=" + Dashboards.getQueryParameter("branchName");
+		params = params + "&LOId=" + Dashboards.getQueryParameter("LOId");
+		params = params + "&LOName=" + Dashboards.getQueryParameter("LOName");
+		params = params + "&CeId=" + $(this).parent().children("td:nth-child(1)").text();
+		params = params + "&CeName=" + $(this).parent().children("td:nth-child(2)").text();
+	}
+
+	if (params == "")
+	{
+  		alert("Invalid drill down link: " + drillClickParam);
+	}
+	else
+	{
+		var linkPageValue = '<a href="#" onclick="linkToPage(' + "'" + drillClickParam + "', '" + params + "'" + ');return false;">' + $(this).text() + '</a>';
+		$(this).html(linkPageValue);
+	}
+  });
+
+
+}
 
 
 var lighterOrange = "#FCD5B5";
@@ -254,6 +323,8 @@ var homePageText = "HOME";
 var collections = "Collections";
 var disbursals = "Disbursals";
 var LO = "LO";
+var Center = "Center";
+
 
 
 var solution = Dashboards.getQueryParameter("solution");
@@ -275,6 +346,9 @@ var branchIdParam = Dashboards.getQueryParameter("branchId");
 var branchNameParam = Dashboards.getQueryParameter("branchName");
 var LOIdParam = Dashboards.getQueryParameter("LOId");
 var LONameParam = Dashboards.getQueryParameter("LOName");
+var CeIdParam = Dashboards.getQueryParameter("CeId");
+var CeNameParam = Dashboards.getQueryParameter("CeName");
+
 var actionParam = Dashboards.getQueryParameter("action");
 
 var collectionCompleted = 0;
@@ -324,7 +398,10 @@ dbMetaDataVar = {
 
 
 <script language="javascript">
-var currentDate = setCurrentServerDate();
+//var currentDate = setCurrentServerDate();
+
+var currentDate = "2010-11-04";
+
 </script>
 
 

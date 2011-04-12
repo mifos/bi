@@ -8,7 +8,7 @@ var completedPC = "% " + completed;
 var nameHeading = "Centers" + remainingTextValue;
 
 setMetaDataVar(nameHeading, completed, completedPC, "getRemainingCenterCollection");
-
+var drillClick = "CollectionsGroup";
 var tableParentId = Dashboards.getQueryParameter("LOId");
 
 var remaining =
@@ -21,8 +21,7 @@ var remaining =
     		htmlObject: "remainingObj",
     		executeAtStart: true,
   		postExecution: function(){
-
-					decorateRemainingObj();
+					postExecutionFunction(drillClick);
   				}
   };
 
