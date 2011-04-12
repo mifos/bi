@@ -1,0 +1,36 @@
+<div id=mainHeading><div class=boldLabel> DISBURSALS:</div><div id=headingLabel></div></div>
+<div id=remainingObj></div>
+
+<script language="javascript" type="text/javascript">
+
+var completed = "Disbursed";
+var completedPC = "% " + completed;
+var nameHeading = "Groups" + remainingTextValue;
+
+setMetaDataVar(nameHeading, completed, completedPC, "getRemainingGroupDisbursement");
+var drillClick = "DisbursalsClient";
+var tableParentId = Dashboards.getQueryParameter("CeId");
+
+var remaining =
+	{
+ 		name: "remaining",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.remainingDef,
+		parameters: [["currentDate","currentDate"], ["tableParentId","tableParentId"], ["showall","showallParam"]],
+		cdaParams: [["currentDate","currentDate"], ["tableParentId","tableParentId"], ["showall","showallParam"]],
+    		htmlObject: "remainingObj",
+    		executeAtStart: true,
+  		postExecution: function(){
+					postExecutionFunction(drillClick);
+  				}
+  };
+
+Dashboards.init([remaining]);
+$("#headingLabel").html(" All Groups" + remainingTextValue);
+
+$(document).ready(function() {
+	finalisePage();
+});
+
+</script>
+

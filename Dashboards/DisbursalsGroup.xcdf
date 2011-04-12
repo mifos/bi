@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Disbursals Groups</title>
+	<author>John Woodlock</author>
+	<description></description>
+	<icon></icon>
+	<style>dashboards</style>
+	<template>DisbursalsGroup.html</template>
+</cdf>
