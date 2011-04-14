@@ -63,7 +63,7 @@ public class WrittenOffTest {
 
              // Report settings
             t.reportPath = 'reports/standardReports/prpts/WrittenOff.prpt'
-            t.reportParams = ['BRANCH_NAME': '2', 'CENTER_NAME': '1888', 'PRODUCT_NAME': '-1', 'SOURCE_NAME': '-1', 'FROM_DATE': '2008/04/01 00:00:00.000', 'TO_DATE': '2011/04/02 00:00:00.000']
+            t.reportParams = ['BRANCH_NAME': '2', 'CENTER_NAME': '1888', 'PRODUCT_NAME': '-1', 'SOURCE_NAME': '-1', 'FROM_DATE': '2008-04-01', 'TO_DATE': '2011-04-02']
 
             // MFI Name
             t.assertRowEquals(1, [mfiName])
@@ -127,7 +127,7 @@ public class WrittenOffTest {
 
 			// Report settings
 			t.reportPath = 'reports/standardReports/prpts/WrittenOff.prpt'
-			t.reportParams = ['BRANCH_NAME': '5', 'CENTER_NAME': '-1', 'PRODUCT_NAME': '2', 'SOURCE_NAME': '-1', 'FROM_DATE': '2008/04/01 00:00:00.000', 'TO_DATE': '2011/04/02 00:00:00.000']
+			t.reportParams = ['BRANCH_NAME': '5', 'CENTER_NAME': '-1', 'PRODUCT_NAME': '2', 'SOURCE_NAME': '-1', 'FROM_DATE': '2008-04-01', 'TO_DATE': '2011-04-02']
 
 			// MFI Name
 			t.assertRowEquals(1, [mfiName])
@@ -200,7 +200,7 @@ public class WrittenOffTest {
 
 			/* Report settings.*/
 			t.reportPath = 'reports/standardReports/prpts/WrittenOff.prpt'
-			t.reportParams = ['BRANCH_NAME': '6', 'CENTER_NAME': '-1', 'PRODUCT_NAME': '2', 'SOURCE_NAME': '2', 'FROM_DATE': '2008/04/01 00:00:00.000', 'TO_DATE': '2009/12/31 00:00:00.000']
+			t.reportParams = ['BRANCH_NAME': '6', 'CENTER_NAME': '-1', 'PRODUCT_NAME': '2', 'SOURCE_NAME': '2', 'FROM_DATE': '2008-04-01', 'TO_DATE': '2009-12-31']
 
 			/* MFI Name*/
 			t.assertRowEquals(1, [mfiName])
