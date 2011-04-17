@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Customer - get latest open entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Misc. Charges and Misc. Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Fees</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Remove old amount Columns</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Fees</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Customer Misc. Charges and Misc. Penalties</from><to>Split misc fees and penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Split misc fees and penalties</from><to>Remove old amount Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Misc. Charges and Misc. Penalties</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Customer Fees</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Customer - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Customer - get latest open entry</from><to>Applicable Open Customer Entry Found?</to><enabled>Y</enabled> </hop>  <hop> <from>Applicable Open Customer Entry Found?</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  <hop> <from>Applicable Open Customer Entry Found?</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Lookup Earliest Open Customer Entry</to><enabled>Y</enabled> </hop>  <hop> <from>Lookup Earliest Open Customer Entry</from><to>Create fact_customer_fees_and_charges</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create fact_customer_fees_and_charges</name>
     <type>TableOutput</type>
@@ -302,8 +302,8 @@ order by customer_key desc</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>399</xloc>
-      <yloc>232</yloc>
+      <xloc>631</xloc>
+      <yloc>233</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -343,8 +343,8 @@ order by customer_key desc</sql>
     </mappings>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>718</xloc>
-      <yloc>233</yloc>
+      <xloc>797</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -597,7 +597,112 @@ and atxn.created_date &lt; date(?)
       </GUI>
     </step>
 
+  <step>
+    <name>Applicable Open Customer Entry Found?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Create fact_customer_fees_and_charges</send_true_to>
+<send_false_to>Remove null Key Columns</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>customer_key</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>427</xloc>
+      <yloc>235</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove null Key Columns</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>customer_key</name>
+      </remove>      <remove>        <name>group_key</name>
+      </remove>      <remove>        <name>center_key</name>
+      </remove>      <remove>        <name>loan_officer_key</name>
+      </remove>      <remove>        <name>branch_key</name>
+      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>432</xloc>
+      <yloc>345</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Lookup Earliest Open Customer Entry</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select customer_key, group_key, center_key,
+loan_officer_key, branch_key, formed_by_loan_officer_key
+from dim_customer
+where customer_id = ?
+&#47;*link to the earliest of the status&apos;s below...  caters for when a fee is added after the collection date but before its data entry*&#47;
+and valid_to &gt;= ?
+and customer_status in (&apos;ClientStatus-Active&apos;, &apos;GroupStatus-Active&apos;, &apos;CenterStatus-Active&apos;, &apos;ClientStatus-OnHold&apos;, &apos;GroupStatus-OnHold&apos;)
+order by customer_key </sql>
+    <outer_join>Y</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>customer_id</name>
+        <type>Integer</type>
+      </field>
+      <field>
+        <name>action_date</name>
+        <type>Date</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>195</xloc>
+      <yloc>342</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step_error_handling>
+      <error>
+        <source_step>Create fact_customer_fees_and_charges</source_step>
+        <target_step>Write to log</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors>0</max_errors>
+        <max_pct_errors>0</max_pct_errors>
+        <min_pct_rows>0</min_pct_rows>
+      </error>
   </step_error_handling>
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>
