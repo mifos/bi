@@ -5,4 +5,8 @@
 
 set -e
 
-/usr/bin/zip -r mifos_bi-1.1.0.zip BUILD_ENV.txt README INSTALL LICENSE ETL/MifosDataWarehouseETL reports
+PREFIX=mifos_bi-1.2.0
+
+mkdir ${PREFIX}
+cp -r BUILD_ENV.txt README INSTALL LICENSE ETL/MifosDataWarehouseETL reports ${PREFIX}/
+/usr/bin/zip -r ${PREFIX}.zip ${PREFIX}
