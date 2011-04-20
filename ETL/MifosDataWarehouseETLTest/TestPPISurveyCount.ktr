@@ -204,7 +204,8 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <sql>select 1 as the_join, count(*) as destination_count
-from dw_ppi_survey </sql>
+from dw_ppi_survey 
+where survey_id is not null</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
