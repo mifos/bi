@@ -28,7 +28,7 @@ class ClientStatusTest {
         new PrptReport().execute () { t ->
 
             /* Report settings.*/
-            t.reportPath = 'standardReports/prpts/ClientStatus.prpt'
+            t.reportPath = 'reports/standardReports/prpts/ClientStatus.prpt'
             t.reportParams = ['From_Date': '2010-01-12', 'To_Date': '2010-04-29', 'Branches': '2', 'Centers': '10872', 'Member_Status': '-1']
 
             /* MFI Name*/
