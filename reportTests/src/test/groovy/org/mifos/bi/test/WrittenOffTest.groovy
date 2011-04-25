@@ -70,7 +70,7 @@ public class WrittenOffTest {
 
             t.assertRowEquals(offset+7, pageFooter)
             t.assertCellEquals(offset+9, 1, 'Printed by:')
-            t.assertCellEquals(offset+9, 3, 'On:')
+          //  t.assertCellEquals(offset+9, 3, 'On:')
 
         }
     }  
