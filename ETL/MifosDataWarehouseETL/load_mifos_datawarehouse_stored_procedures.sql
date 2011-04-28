@@ -657,6 +657,8 @@ select ifnull(max(savings_account_key), 0) into @insert_savings_account_key
 from dim_savings;
 set @start_savings_account_key = @insert_savings_account_key; 
 
+truncate table stg_error_message;
+
 call SPshow_stats(1);
 
 open customer_and_account_changes_cursor;
@@ -741,10 +743,12 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=CURRENT_USER*/ /*!50003 PROCEDURE `SPfallover`(IN errormsg varchar(300))
 BEGIN
 
-select errormsg as "Error Message";
+insert into stg_error_message
+select errormsg;
+commit;
 
-select fallover from fallover;
-
+/* then fallover anyway */
+select fallover from pretend_fallover_table;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
