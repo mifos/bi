@@ -1407,3 +1407,8 @@ LOCK TABLES `stg_personnel_names_and_name_changes` WRITE;
 /*!40000 ALTER TABLE `stg_personnel_names_and_name_changes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `stg_personnel_names_and_name_changes` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `stg_error_message`;
+CREATE TABLE `stg_error_message` (
+  `error_message` varchar(3000) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
