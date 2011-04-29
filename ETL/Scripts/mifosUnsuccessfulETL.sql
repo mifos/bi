@@ -1,10 +1,8 @@
-  
 select now() as 'Starting Check';
 
 /*just to make the check queries a bit quicker */
 ALTER TABLE stg_customer_and_account_updates
-ADD INDEX `updated_parent_id` (`updated_parent_id` ASC) ;
-ALTER TABLE stg_customer_and_account_updates
+ADD INDEX `updated_parent_id` (`updated_parent_id` ASC) ,
 ADD INDEX `entity_id` (`entity_id` ASC) ;
 
 
