@@ -23,15 +23,16 @@
     <DataAccess id="getGroupsByLoanOfficer" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Groups By Loan Officer</Name>
         <Query>
-            (select -5 as group_id, "---Select One---" as group_name)
+	select s.group_id, s.group_name,  s.ordering
+	from
+            ((select -5 as group_id, "---Select One---" as group_name, "a" as ordering)
             union all
-            (select -1 as group_id,'--ALL--' as group_name)
+            (select -1 as group_id,'--ALL--' as group_name, "b" as ordering)
             union all
-            (select customer_id as group_id,display_name as group_name
+            (select customer_id as group_id,display_name as group_name, "c" as ordering
             from customer where customer_level_id=2 and
-            (loan_officer_id = ${loan_officer_id} or -1 = ${loan_officer_id}))
-
-            order by if(group_id < 0, concat('a', group_name), concat('b', group_name))
+            (loan_officer_id = ${loan_officer_id} or -1 = ${loan_officer_id}))) s
+	order by s.ordering, s.group_name
         </Query>
         <Parameters>
             <Parameter name="loan_officer_id" type="Integer" default="-5"/>
