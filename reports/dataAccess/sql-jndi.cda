@@ -29,8 +29,9 @@
             union all
             (select customer_id as group_id,display_name as group_name
             from customer where customer_level_id=2 and
-            (loan_officer_id = ${loan_officer_id} or -1 = ${loan_officer_id})
-            order by group_name)
+            (loan_officer_id = ${loan_officer_id} or -1 = ${loan_officer_id}))
+
+            order by if(group_id < 0, concat('a', group_name), concat('b', group_name))
         </Query>
         <Parameters>
             <Parameter name="loan_officer_id" type="Integer" default="-5"/>
