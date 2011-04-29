@@ -51,6 +51,27 @@ having count(*) > 0;
 
 /* Warnings - ETL should run but will link transactions, schedules and attendance entries to the best account or customer history entry it can  */
 
+
+select concat('Warn: Customers created on a future date - ', count(*)) as ' '
+from customer c
+where c.created_date > curdate()
+having count(*) > 0;
+
+select concat('Warn: account_type: ', if(account_type_id=1, 'Loan', 'Savings') , ' - No. of accounts created on a future date: ', 
+                    count(*)) as ' '
+from account a
+where a.created_date > curdate()
+and account_type_id <> 3
+group by account_type_id;
+
+select atxn.account_action_id, lv.lookup_name, concat('Warn: Transactions created on a future date - ', count(*)) as ' '
+from account_trxn atxn
+left join account_action aa on aa.account_action_id = atxn.account_action_id
+left join lookup_value lv on lv.lookup_id = aa.lookup_id
+where atxn.created_date > curdate()
+group by atxn.account_action_id
+having count(*) > 0;
+
 select concat('Warn: Customer Attendance entries created before the Customer - ', count(*)) as ' '
 from customer c
 join customer_attendance ca on ca.customer_id  = c.customer_id
