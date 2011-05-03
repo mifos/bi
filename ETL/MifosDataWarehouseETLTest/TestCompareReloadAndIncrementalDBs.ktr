@@ -377,7 +377,7 @@ from information_schema.key_column_usage k
 where  k.table_schema = schema() 
 and k.table_name not like &apos;stg%&apos;
 and k.constraint_name = &apos;PRIMARY&apos;
-&#47;*and k.table_name = &apos;dim_customer&apos;*&#47;
+&#47;*and k.table_name in (&apos;hist_loan_balances&apos;, &apos;hist_savings_balances&apos;)*&#47;
 group by k.table_name
 order by 1, 2</sql>
     <limit>0</limit>

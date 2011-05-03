@@ -216,13 +216,13 @@ ifnull(sum(sav.interest_amount), 0.0) as total_interest_amount,
 ifnull(sum(sav.withdrawal_amount), 0.0) as total_withdrawal_amount,
 ifnull(sum(sav.deposit_amount + sav.interest_amount - sav.withdrawal_amount), 0.0) as balance
 from dim_savings s
-join dim_product p on p.product_key = s.product_key
-join dim_customer cust on cust.customer_key = s.customer_key
-join dim_customer gr on gr.customer_key = s.group_key
-join dim_customer cen on cen.customer_key = s.center_key
-join dim_personnel lo on lo.personnel_key = s.loan_officer_key
-join dim_office o on o.office_key = s.branch_key
-join dim_personnel flo on flo.personnel_key = s.formed_by_loan_officer_key
+left join dim_product p on p.product_key = s.product_key
+left join dim_customer cust on cust.customer_key = s.customer_key
+left join dim_customer gr on gr.customer_key = s.group_key
+left join dim_customer cen on cen.customer_key = s.center_key
+left join dim_personnel lo on lo.personnel_key = s.loan_officer_key
+left join dim_office o on o.office_key = s.branch_key
+left join dim_personnel flo on flo.personnel_key = s.formed_by_loan_officer_key
 left join fact_savings_transactions sav on sav.savings_account_id = s.savings_account_id and sav.action_date &lt;= &apos;?&apos; 
 where s.valid_from &lt;= &apos;?&apos; and s.valid_to &gt; &apos;?&apos;    
 and s.savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)

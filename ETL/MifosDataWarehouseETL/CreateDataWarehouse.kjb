@@ -136,8 +136,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>774</xloc>
-      <yloc>21</yloc>
+      <xloc>615</xloc>
+      <yloc>19</yloc>
       </entry>
     <entry>
       <name>Load Personnel Dimension</name>
@@ -166,8 +166,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>476</xloc>
-      <yloc>22</yloc>
+      <xloc>452</xloc>
+      <yloc>20</yloc>
       </entry>
     <entry>
       <name>Load Customer And Loan And Savings Dimensions</name>
@@ -196,8 +196,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>775</xloc>
-      <yloc>164</yloc>
+      <xloc>855</xloc>
+      <yloc>20</yloc>
       </entry>
     <entry>
       <name>Load Fact Tables</name>
@@ -223,11 +223,11 @@
       <pass_export>N</pass_export>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
       </parameters>      <set_append_logfile>N</set_append_logfile>
-      <parallel>Y</parallel>
+      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>333</xloc>
-      <yloc>168</yloc>
+      <xloc>607</xloc>
+      <yloc>198</yloc>
       </entry>
     <entry>
       <name>Adjust Customer Status Values</name>
@@ -256,8 +256,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>546</xloc>
-      <yloc>165</yloc>
+      <xloc>858</xloc>
+      <yloc>199</yloc>
       </entry>
     <entry>
       <name>Derive Loan Balances and Arrears</name>
@@ -315,11 +315,11 @@
       <pass_export>N</pass_export>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
       </parameters>      <set_append_logfile>N</set_append_logfile>
-      <parallel>Y</parallel>
+      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>102</xloc>
-      <yloc>169</yloc>
+      <xloc>412</xloc>
+      <yloc>198</yloc>
       </entry>
     <entry>
       <name>Load PPI Data</name>
@@ -348,8 +348,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>516</xloc>
-      <yloc>411</yloc>
+      <xloc>482</xloc>
+      <yloc>413</yloc>
       </entry>
     <entry>
       <name>Derive hist_savings_balances</name>
@@ -380,8 +380,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>95</xloc>
-      <yloc>413</yloc>
+      <xloc>96</xloc>
+      <yloc>414</yloc>
       </entry>
     <entry>
       <name>Load DW Trxn Tables</name>
@@ -407,11 +407,11 @@
       <pass_export>N</pass_export>
       <parameters>        <pass_all_parameters>Y</pass_all_parameters>
       </parameters>      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
+      <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>527</xloc>
-      <yloc>277</yloc>
+      <xloc>190</xloc>
+      <yloc>199</yloc>
       </entry>
   </entries>
   <hops>
@@ -461,15 +461,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Apply Loan Adjustments and Reversals</from>
-      <to>Derive Loan Balances and Arrears</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>START</from>
       <to>Load Simple High Level Dimensions</to>
       <from_nr>0</from_nr>
@@ -477,24 +468,6 @@
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Apply Loan Adjustments and Reversals</from>
-      <to>Load PPI Data</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Apply Loan Adjustments and Reversals</from>
-      <to>Derive hist_savings_balances</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Load Fact Tables</from>
@@ -506,8 +479,35 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load Fact Tables</from>
+      <from>Apply Loan Adjustments and Reversals</from>
       <to>Load DW Trxn Tables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load DW Trxn Tables</from>
+      <to>Derive hist_savings_balances</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load DW Trxn Tables</from>
+      <to>Derive Loan Balances and Arrears</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load DW Trxn Tables</from>
+      <to>Load PPI Data</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -518,8 +518,8 @@
   <notepads>
     <notepad>
       <note>Create History tables from DW tables</note>
-      <xloc>92</xloc>
-      <yloc>355</yloc>
+      <xloc>739</xloc>
+      <yloc>892</yloc>
       <width>191</width>
       <heigth>22</heigth>
       <fontname/>
