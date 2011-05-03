@@ -316,18 +316,20 @@ in so it stands out if an a loan not in arrears makes it through to arrears proc
 ifnull(max(ls.installment_id), -99) as last_installment_due
 
 from dim_loan l
-join dim_product p on p.product_key = l.product_key
-join dim_customer cust on cust.customer_key = l.customer_key
-join dim_customer gr on gr.customer_key = l.group_key
-join dim_customer cen on cen.customer_key = l.center_key
-join dim_personnel lo on lo.personnel_key = l.loan_officer_key
-join dim_office o on o.office_key = l.branch_key
-join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
+left join dim_product p on p.product_key = l.product_key
+left join dim_customer cust on cust.customer_key = l.customer_key
+left join dim_customer gr on gr.customer_key = l.group_key
+left join dim_customer cen on cen.customer_key = l.center_key
+left join dim_personnel lo on lo.personnel_key = l.loan_officer_key
+left join dim_office o on o.office_key = l.branch_key
+left join dim_personnel flo on flo.personnel_key = l.formed_by_loan_officer_key
 left join dw_loan_schedules ls on ls.loan_account_id = l.loan_account_id and ls.due_date &lt;= ?
 where l.valid_from &lt;= ? and l.valid_to &gt; ?   
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 group by as_of_date,l.loan_account_id
 order by as_of_date, l.loan_account_id;
+
+
 
 </sql>
     <limit>0</limit>

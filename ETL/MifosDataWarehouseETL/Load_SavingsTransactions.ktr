@@ -174,7 +174,7 @@ In this case, the transaction is attached to the earliest open status entry.
     </attributes>
   </connection>
   <order>
-  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Savings Transactions</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Savings Account - get latest open entry</from><to>Filter rows</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows</from><to>Remove null Key Columns</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns</from><to>Savings Account - get earliest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Do Transaction Lookups</from><to>Savings Account - get latest open entry</to><enabled>Y</enabled> </hop>  <hop> <from>Read account_trxn for Savings Transactions</from><to>Do Transaction Lookups</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read account_trxn for Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry</from><to>Filter rows 2</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows 2</from><to>Remove null Key Columns 2</to><enabled>Y</enabled> </hop>  <hop> <from>Filter rows 2</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  <hop> <from>Remove null Key Columns 2</from><to>Savings Account - get earliest open entry catchall</to><enabled>Y</enabled> </hop>  <hop> <from>Savings Account - get earliest open entry catchall</from><to>Create Savings Transactions</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Create Savings Transactions</name>
     <type>TableOutput</type>
@@ -499,8 +499,7 @@ and atxn.created_date &lt; date(?)
 loan_officer_key, branch_key, formed_by_loan_officer_key, currency_id
 from dim_savings
 where savings_account_id = ?
-&#47;*link savings to the earliest of the status&apos;s below... (only for rare situations where the &apos;action date&apos; was
-up to 6 days prior to account activation ... although the system entered date was not before that date*&#47;
+&#47;*link savings to the earliest of the status&apos;s below (due to migration or other non-mifos needs *&#47;
 and valid_to &gt;= ?
 and savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
 order by savings_account_key</sql>
@@ -518,8 +517,8 @@ order by savings_account_key</sql>
     </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>297</xloc>
-      <yloc>288</yloc>
+      <xloc>108</xloc>
+      <yloc>187</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -565,6 +564,96 @@ order by savings_account_key desc</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>757</xloc>
       <yloc>109</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows 2</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Create Savings Transactions</send_true_to>
+<send_false_to>Remove null Key Columns 2</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>savings_account_key</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>307</xloc>
+      <yloc>286</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove null Key Columns 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>savings_account_key</name>
+      </remove>      <remove>        <name>customer_key</name>
+      </remove>      <remove>        <name>product_key</name>
+      </remove>      <remove>        <name>group_key</name>
+      </remove>      <remove>        <name>center_key</name>
+      </remove>      <remove>        <name>loan_officer_key</name>
+      </remove>      <remove>        <name>branch_key</name>
+      </remove>      <remove>        <name>formed_by_loan_officer_key</name>
+      </remove>      <remove>        <name>currency_id</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>420</xloc>
+      <yloc>332</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Savings Account - get earliest open entry catchall</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select savings_account_key, customer_key, product_key, group_key, center_key,
+loan_officer_key, branch_key, formed_by_loan_officer_key, currency_id
+from dim_savings
+where savings_account_id = ?
+and savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
+order by savings_account_key</sql>
+    <outer_join>Y</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>savings_account_id</name>
+        <type>Integer</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>633</xloc>
+      <yloc>331</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

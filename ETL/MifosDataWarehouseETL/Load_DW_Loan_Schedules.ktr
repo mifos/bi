@@ -72,15 +72,11 @@ or... always use production schema for this
 
 Need to add create and&#47;or update timestamp to determine changes.
 
-some secdep schedule action_dates are before the account opening date!
-might be a bit to do with moving to a different group with a different meeting date.
-
-and some null action dates
 </note>
       <xloc>174</xloc>
       <yloc>149</yloc>
-      <width>510</width>
-      <heigth>153</heigth>
+      <width>456</width>
+      <heigth>85</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
