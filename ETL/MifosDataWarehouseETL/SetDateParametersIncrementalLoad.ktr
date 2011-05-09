@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Check for Previous Incremental Runs</from><to>If Previous Run</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Dates Completed To</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Initial Incremental Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Dates Completed To</from><to>Set Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Get Initial Incremental Dates</from><to>Set Variables</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Check for Previous Incremental Runs</from><to>If Previous Run</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Dates Completed To</to><enabled>Y</enabled> </hop>  <hop> <from>Get Dates Completed To</from><to>Set Variables</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Initial Incremental Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Initial Incremental Dates</from><to>Set Variables</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Check for Previous Incremental Runs</name>
     <type>TableInput</type>
@@ -166,78 +166,6 @@ where etl_end_time is not null</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>113</xloc>
       <yloc>25</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Dates Completed To</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select d1.startfrom_date as mainStartDate,
-        date_sub(curdate(), INTERVAL 1 DAY) as mainEndDate,
-        curdate() as mainEndTransactionDate,
-        d1.startfrom_date as arrearsStartDate, date_sub(curdate(), interval 1 day) as arrearsEndDate,
-        d1.startfrom_date as savingsStartDate, date_sub(curdate(), interval 1 day) as savingsEndDate
-
-from
-    (select date(date_add(max(erh.etl_complete_to_date), interval 1 day)) as startfrom_date
-    from stg_etl_run_history erh
-    where etl_end_time is not null) d1</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>452</xloc>
-      <yloc>24</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Initial Incremental Dates</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, date_sub(curdate(), interval 1 day) as mainEndDate, curdate() as mainEndTransactionDate,
-a.startDate as arrearsStartDate, date_sub(curdate(), interval 1 day) as arrearsEndDate,
-b.startDate as savingsStartDate, date_sub(curdate(), interval 1 day) as savingsEndDate
-
-from
-    (select ifnull(min(action_date), date(&apos;3000-01-01&apos;)) as startDate
-	from account_trxn
-	where account_action_id = 10) a
-&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;
-
-,
-    (select ifnull(min(ac.created_date), date(&apos;3000-01-01&apos;)) as startDate
-	from account ac
-	where ac.account_type_id = 2) b</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>458</xloc>
-      <yloc>109</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -327,8 +255,80 @@ from
     <use_formatting>Y</use_formatting>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>663</xloc>
-      <yloc>53</yloc>
+      <xloc>752</xloc>
+      <yloc>45</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Dates Completed To</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select d1.startfrom_date as mainStartDate,
+        date_sub(curdate(), INTERVAL 1 DAY) as mainEndDate,
+        curdate() as mainEndTransactionDate,
+        d1.startfrom_date as arrearsStartDate, date_sub(curdate(), interval 1 day) as arrearsEndDate,
+        d1.startfrom_date as savingsStartDate, date_sub(curdate(), interval 1 day) as savingsEndDate
+
+from
+    (select date(date_add(max(erh.etl_complete_to_date), interval 1 day)) as startfrom_date
+    from stg_etl_run_history erh
+    where etl_end_time is not null) d1</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>473</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Initial Incremental Dates</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, date_sub(curdate(), interval 1 day) as mainEndDate, curdate() as mainEndTransactionDate,
+a.startDate as arrearsStartDate, date_sub(curdate(), interval 1 day) as arrearsEndDate,
+b.startDate as savingsStartDate, date_sub(curdate(), interval 1 day) as savingsEndDate
+
+from
+    (select ifnull(min(action_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account_trxn
+	where account_action_id = 10) a
+&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;
+
+,
+    (select ifnull(min(ac.created_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account ac
+	where ac.account_type_id = 2) b</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>476</xloc>
+      <yloc>116</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
