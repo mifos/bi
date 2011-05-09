@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Set Date Parameters Initial Load</name>
+    <name>Set Date Parameters Incremental Load</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -142,10 +142,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Set Date Parameters</from><to>Set Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Get Variables</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Set Date Parameters</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Check for Previous Incremental Runs</from><to>If Previous Run</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Dates Completed To</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Initial Incremental Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Dates Completed To</from><to>Set Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Get Initial Incremental Dates</from><to>Set Variables</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Calculator</name>
-    <type>Calculator</type>
+    <name>Check for Previous Incremental Runs</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -153,59 +153,26 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <calculation><field_name>endDate2</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>endDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>String</value_type>
-<value_length>10</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>startDate2</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>startDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>String</value_type>
-<value_length>10</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>endDate3</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>endDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>String</value_type>
-<value_length>10</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
+    <connection>DestinationDB</connection>
+    <sql>select count(*) as previous_runs
+from stg_etl_run_history 
+where etl_end_time is not null</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>293</xloc>
-      <yloc>72</yloc>
+      <xloc>113</xloc>
+      <yloc>25</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Get Variables</name>
-    <type>GetVariable</type>
+    <name>Get Dates Completed To</name>
+    <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -213,42 +180,32 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>
-      <field>
-        <name>startDate</name>
-        <variable>${DATE1}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>endDate</name>
-        <variable>${DATE2}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
+    <connection>DestinationDB</connection>
+    <sql>select d1.startfrom_date as mainStartDate,
+        date_sub(curdate(), INTERVAL 1 DAY) as mainEndDate,
+        curdate() as mainEndTransactionDate,
+        d1.startfrom_date as arrearsStartDate, date_sub(curdate(), interval 1 day) as arrearsEndDate,
+        d1.startfrom_date as savingsStartDate, date_sub(curdate(), interval 1 day) as savingsEndDate
+
+from
+    (select date(date_add(max(erh.etl_complete_to_date), interval 1 day)) as startfrom_date
+    from stg_etl_run_history erh
+    where etl_end_time is not null) d1</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>112</xloc>
-      <yloc>73</yloc>
+      <xloc>452</xloc>
+      <yloc>24</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Set Date Parameters</name>
+    <name>Get Initial Incremental Dates</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -258,25 +215,57 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select cast(? as date) as mainStartDate, cast(? as date) as mainEndDate, 
-date_add(cast(? as date), INTERVAL 1 DAY) as mainEndTransactionDate,
-cast(GREATEST(?, a.startDate) as date) as arrearsStartDate, cast(? as date) as arrearsEndDate
+    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate, date_sub(curdate(), interval 1 day) as mainEndDate, curdate() as mainEndTransactionDate,
+a.startDate as arrearsStartDate, date_sub(curdate(), interval 1 day) as arrearsEndDate,
+b.startDate as savingsStartDate, date_sub(curdate(), interval 1 day) as savingsEndDate
 
 from
-    (select ifnull(min(action_date), &apos;3000-01-01&apos;) as startDate
+    (select ifnull(min(action_date), date(&apos;3000-01-01&apos;)) as startDate
 	from account_trxn
 	where account_action_id = 10) a
+&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;
 
-&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;</sql>
+,
+    (select ifnull(min(ac.created_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account ac
+	where ac.account_type_id = 2) b</sql>
     <limit>0</limit>
-    <lookup>Calculator</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>474</xloc>
-      <yloc>74</yloc>
+      <xloc>458</xloc>
+      <yloc>109</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>If Previous Run</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Get Dates Completed To</send_true_to>
+<send_false_to>Get Initial Incremental Dates</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>previous_runs</leftvalue>
+ <function>&gt;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>286</xloc>
+      <yloc>25</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -322,12 +311,24 @@ from
         <variable_type>PARENT_JOB</variable_type>
         <default_value/>
         </field>
+      <field>
+        <field_name>savingsStartDate</field_name>
+        <variable_name>SAVINGSSTARTDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>savingsEndDate</field_name>
+        <variable_name>SAVINGSENDDATE</variable_name>
+        <variable_type>PARENT_JOB</variable_type>
+        <default_value/>
+        </field>
       </fields>
     <use_formatting>Y</use_formatting>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>686</xloc>
-      <yloc>75</yloc>
+      <xloc>663</xloc>
+      <yloc>53</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

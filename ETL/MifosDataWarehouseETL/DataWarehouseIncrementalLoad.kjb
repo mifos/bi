@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Data Warehouse Test Incrementals</name>
+  <name>DataWarehouse Incremental Load</name>
     <description/>
     <extended_description/>
     <job_version/>
@@ -12,6 +12,31 @@
   <modified_date>2010&#47;09&#47;18 16:53:49.815</modified_date>
     <parameters>
     </parameters>
+  <connection>
+    <name>DestinationDB</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>DestinationDB</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>wcm</name>
     <server>localhost</server>
@@ -76,8 +101,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>78</xloc>
-      <yloc>198</yloc>
+      <xloc>31</xloc>
+      <yloc>21</yloc>
       </entry>
     <entry>
       <name>Create Data Warehouse</name>
@@ -106,16 +131,16 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>554</xloc>
-      <yloc>198</yloc>
+      <xloc>819</xloc>
+      <yloc>18</yloc>
       </entry>
     <entry>
-      <name>Set Date Parameters for Testing Incrementals</name>
+      <name>Set Date Parameters for Incremental Load</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;SetDateParametersTestIncrementals.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;SetDateParametersInitialLoad.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -138,151 +163,180 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>255</xloc>
-      <yloc>199</yloc>
+      <xloc>629</xloc>
+      <yloc>19</yloc>
       </entry>
     <entry>
-      <name>Mail Failure</name>
-      <description>Mail</description>
-      <type>MAIL</type>
-      <server>smtp.gmail.com</server>
-      <port>465</port>
-      <destination>john.woodlock@gmail.com</destination>
-      <destinationCc/>
-      <destinationBCc/>
-      <replyto>john@nassles.com</replyto>
-      <replytoname>Agitated User</replytoname>
-      <subject>${Internal.Job.Filename.Name} Failed!</subject>
-      <include_date>Y</include_date>
-      <contact_person/>
-      <contact_phone/>
-      <comment>${Internal.Job.Filename.Name} did not complete successfully.
-
-But we love you anyway.</comment>
-      <include_files>N</include_files>
-      <zip_files>N</zip_files>
-      <zip_name/>
-      <use_auth>Y</use_auth>
-      <use_secure_auth>Y</use_secure_auth>
-      <auth_user>john.woodlock</auth_user>
-      <auth_password>Encrypted 2be98afc86aa7f2e49811fe77d69bee9b</auth_password>
-      <only_comment>N</only_comment>
-      <use_HTML>N</use_HTML>
-      <use_Priority>N</use_Priority>
-      <encoding>UTF-8</encoding>
-      <priority>normal</priority>
-      <importance>normal</importance>
-      <secureconnectiontype>SSL</secureconnectiontype>
-      <replyToAddresses/>
-      <filetypes>      </filetypes>      <embeddedimages>
-      </embeddedimages>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>726</xloc>
-      <yloc>110</yloc>
-      </entry>
-    <entry>
-      <name>Mail Success</name>
-      <description>Mail</description>
-      <type>MAIL</type>
-      <server>smtp.gmail.com</server>
-      <port>465</port>
-      <destination>john.woodlock@gmail.com</destination>
-      <destinationCc/>
-      <destinationBCc/>
-      <replyto>john.woodlock@gmail.com</replyto>
-      <replytoname>Very Happy Schedule Executor</replytoname>
-      <subject>${Internal.Job.Filename.Name} Succeeded</subject>
-      <include_date>Y</include_date>
-      <contact_person/>
-      <contact_phone/>
-      <comment>The Job completed successfully.</comment>
-      <include_files>N</include_files>
-      <zip_files>N</zip_files>
-      <zip_name/>
-      <use_auth>Y</use_auth>
-      <use_secure_auth>Y</use_secure_auth>
-      <auth_user>john.woodlock</auth_user>
-      <auth_password>Encrypted 2be98afc86aa7f2e49811fe77d69bee9b</auth_password>
-      <only_comment>N</only_comment>
-      <use_HTML>N</use_HTML>
-      <use_Priority>N</use_Priority>
-      <encoding>UTF-8</encoding>
-      <priority>normal</priority>
-      <importance>normal</importance>
-      <secureconnectiontype>SSL</secureconnectiontype>
-      <replyToAddresses/>
-      <filetypes>      </filetypes>      <embeddedimages>
-      </embeddedimages>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>729</xloc>
-      <yloc>258</yloc>
-      </entry>
-    <entry>
-      <name>Display Msgbox Info</name>
+      <name>Log Start Entry for Incremental Load</name>
       <description/>
-      <type>MSGBOX_INFO</type>
-      <bodymessage>MAINSTARTDATE  ${MAINSTARTDATE}
-MAINENDDATE  ${MAINENDDATE}
-MAINENDTRANSACTIONDATE  ${MAINENDTRANSACTIONDATE}
-ARREARSSTARTDATE  ${ARREARSSTARTDATE}
-ARREARSENDDATE  ${ARREARSENDDATE}</bodymessage>
-      <titremessage>xxx</titremessage>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;IncrementalLoadLogStartEntry.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>412</xloc>
+      <yloc>22</yloc>
+      </entry>
+    <entry>
+      <name>Log Completed Entry for Incremental Load</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;IncrementalLoadLogCompletedEntry.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>822</xloc>
+      <yloc>168</yloc>
+      </entry>
+    <entry>
+      <name>Check DestinationDb connection Exists</name>
+      <description/>
+      <type>CHECK_DB_CONNECTIONS</type>
+      <connections>
+        <connection>
+          <name>DestinationDB</name>
+          <waitfor>2</waitfor>
+          <waittime>second</waittime>
+        </connection>
+      </connections>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>426</xloc>
-      <yloc>197</yloc>
+      <xloc>206</xloc>
+      <yloc>22</yloc>
+      </entry>
+    <entry>
+      <name>create_datawarehouse_database.bat</name>
+      <description/>
+      <type>SHELL</type>
+      <filename>C:\dev\businessIntelligenceRepo\bi\create_datawarehouse_database.bat</filename>
+      <work_directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>Y</set_logfile>
+      <logfile>create_datawarehouse_database</logfile>
+      <set_append_logfile>N</set_append_logfile>
+      <logext>.out</logext>
+      <add_date>Y</add_date>
+      <add_time>Y</add_time>
+      <insertScript>N</insertScript>
+      <script/>
+      <loglevel>Basic</loglevel>
+      <argument0>mifos_dwh</argument0>
+      <argument1>root</argument1>
+      <argument2>mysql</argument2>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>206</xloc>
+      <yloc>146</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
-      <from>START</from>
-      <to>Set Date Parameters for Testing Incrementals</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Create Data Warehouse</from>
-      <to>Mail Failure</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Create Data Warehouse</from>
-      <to>Mail Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Set Date Parameters for Testing Incrementals</from>
-      <to>Display Msgbox Info</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Display Msgbox Info</from>
+      <from>Set Date Parameters for Incremental Load</from>
       <to>Create Data Warehouse</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>N</evaluation>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Log Start Entry for Incremental Load</from>
+      <to>Set Date Parameters for Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Create Data Warehouse</from>
+      <to>Log Completed Entry for Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Check DestinationDb connection Exists</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Check DestinationDb connection Exists</from>
+      <to>create_datawarehouse_database.bat</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>create_datawarehouse_database.bat</from>
+      <to>Log Start Entry for Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Check DestinationDb connection Exists</from>
+      <to>Log Start Entry for Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
