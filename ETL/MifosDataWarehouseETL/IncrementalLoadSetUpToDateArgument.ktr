@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Set DB Parameters ForCreating Data Warehouse DB</name>
+    <name>Incremental Load Set UpToDate Argument</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -117,10 +117,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Read jdbc.properties</from><to>Set DB Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Generate Rows</from><to>Set etl_dir and etl_job Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Set etl_dir and etl_job Variables</from><to>Read jdbc.properties</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get uptoDate Command Line Argument</from><to>Set etl_complete_to_date Variable</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Generate Rows</name>
-    <type>RowGenerator</type>
+    <name>Get uptoDate Command Line Argument</name>
+    <type>SystemInfo</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -130,29 +130,21 @@
            </partitioning>
     <fields>
       <field>
-        <name>a</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>a</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <limit>1</limit>
+        <name>uptoDate</name>
+        <type>command line argument 1</type>
+        </field>
+      </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>110</xloc>
-      <yloc>102</yloc>
+      <xloc>134</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Read jdbc.properties</name>
-    <type>PropertyInput</type>
+    <name>Set etl_complete_to_date Variable</name>
+    <type>SetVariable</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -160,144 +152,19 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <file_type>property</file_type>
-    <encoding>UTF-8</encoding>
-    <include>N</include>
-    <include_field/>
-    <filename_Field/>
-    <rownum>N</rownum>
-    <isaddresult>Y</isaddresult>
-    <filefield>N</filefield>
-    <rownum_field/>
-    <resetrownumber>N</resetrownumber>
-    <resolvevaluevariable>N</resolvevaluevariable>
-    <ini_section>N</ini_section>
-    <ini_section_field/>
-    <section/>
-    <file>
-      <name>simple-jndi</name>
-      <filemask>jdbc.properties</filemask>
-      <file_required>Y</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
     <fields>
       <field>
-        <name>Key</name>
-        <column>key</column>
-        <type>String</type>
-        <format/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <currency/>
-        <decimal/>
-        <group/>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>Value</name>
-        <column>value</column>
-        <type>String</type>
-        <format/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <currency/>
-        <decimal/>
-        <group/>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
+        <field_name>uptoDate</field_name>
+        <variable_name>etl_complete_to_date</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      </fields>
+    <use_formatting>Y</use_formatting>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>439</xloc>
-      <yloc>102</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set DB Variables</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-if (Key == &quot;DestinationDB&#47;user&quot;)
-{
-	setVariable(&quot;db_username&quot;, Value, &quot;r&quot;);
-	&#47;&#47;Alert(getVariable(&quot;db_username&quot;, &quot;&quot;));
-}
-if (Key == &quot;DestinationDB&#47;password&quot;)
-{
-	setVariable(&quot;db_password&quot;, Value, &quot;r&quot;);
-	&#47;&#47;Alert(getVariable(&quot;db_password&quot;, &quot;&quot;));
-}
-if (Key == &quot;DestinationDB&#47;url&quot;)
-{
-
-	var dbname;
-	var questionPos = indexOf(Value,&quot;?&quot;);
-	if (questionPos == -1)
-	{
-		dbname = Value;
-	}
-	else
-	{
-		dbname = substr(Value,0, questionPos);
-	}
-
-	var slashpos = indexOf(dbname,&quot;&#47;&quot;, slashpos);
-	while ( slashpos != -1)
-  	{
-		dbname = substr(dbname, slashpos + 1);
-		slashpos = indexOf(dbname,&quot;&#47;&quot;, slashpos) 
-  	}
-
-	setVariable(&quot;dwdb&quot;, dbname, &quot;r&quot;);
-	&#47;&#47;Alert(getVariable(&quot;dwdb&quot;, &quot;&quot;));
-}</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>604</xloc>
-      <yloc>103</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set etl_dir and etl_job Variables</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-
-var etlDir = replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
-setVariable(&quot;etl_dir&quot;, etlDir, &quot;r&quot;);
-setVariable(&quot;etl_job&quot;, &quot;Initial Incremental Entry&quot;, &quot;r&quot;);
-
-
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>281</xloc>
-      <yloc>102</yloc>
+      <xloc>447</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

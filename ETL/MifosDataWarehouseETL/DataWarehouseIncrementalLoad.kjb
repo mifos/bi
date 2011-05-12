@@ -131,8 +131,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>434</xloc>
-      <yloc>28</yloc>
+      <xloc>512</xloc>
+      <yloc>30</yloc>
       </entry>
     <entry>
       <name>Log Completed Entry for Incremental Load</name>
@@ -163,8 +163,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>696</xloc>
-      <yloc>27</yloc>
+      <xloc>702</xloc>
+      <yloc>31</yloc>
       </entry>
     <entry>
       <name>Initialise Incremental Load</name>
@@ -193,8 +193,40 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>206</xloc>
+      <xloc>332</xloc>
       <yloc>28</yloc>
+      </entry>
+    <entry>
+      <name>Set etl_complete_to_date Variable from Command Line Arg 1</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}&#47;IncrementalLoadSetUpToDateArgument.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>176</xloc>
+      <yloc>73</yloc>
       </entry>
   </entries>
   <hops>
@@ -208,15 +240,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>START</from>
-      <to>Initialise Incremental Load</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
       <from>Initialise Incremental Load</from>
       <to>Create Data Warehouse</to>
       <from_nr>0</from_nr>
@@ -225,7 +248,58 @@
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
+    <hop>
+      <from>START</from>
+      <to>Set etl_complete_to_date Variable from Command Line Arg 1</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Set etl_complete_to_date Variable from Command Line Arg 1</from>
+      <to>Initialise Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>This job has an optional command line argument for the date the ETL processes to (format YYYY-MM-DD).  
+By default, and the main usage, processing runs up to &apos;yesterday&apos;.
+
+This means it is possible to create a data warehouse up to say 2009-12-31,
+ then add it to by using 2010-12-31 etc and finish with no date.
+It should also be possible to only start balances (the main time taker) from a certain date and also
+choose between daily, weekly, monthly etc... but this hasn&apos;t been implemented.
+
+Most probably this parameter will only be used to test that successive runs of the incremental ETL results 
+in the same data as a full reload without having to shift system dates around.
+
+Note: a series of incremental runs will only equal a full reload if the tests are run on the same day
+and no addition data has been added on the date of the run (as the full reload will pick up this data but not the incremental)</note>
+      <xloc>7</xloc>
+      <yloc>126</yloc>
+      <width>604</width>
+      <heigth>172</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>

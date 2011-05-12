@@ -101,8 +101,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>33</xloc>
-      <yloc>28</yloc>
+      <xloc>124</xloc>
+      <yloc>24</yloc>
       </entry>
     <entry>
       <name>Set Date Parameters for Incremental Load</name>
@@ -133,8 +133,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>642</xloc>
-      <yloc>30</yloc>
+      <xloc>750</xloc>
+      <yloc>29</yloc>
       </entry>
     <entry>
       <name>Log Start Entry for Incremental Load</name>
@@ -165,8 +165,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>434</xloc>
-      <yloc>30</yloc>
+      <xloc>536</xloc>
+      <yloc>29</yloc>
       </entry>
     <entry>
       <name>Check DestinationDB connection Exists</name>
@@ -182,8 +182,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>216</xloc>
-      <yloc>28</yloc>
+      <xloc>331</xloc>
+      <yloc>25</yloc>
       </entry>
     <entry>
       <name>create_datawarehouse_database</name>
@@ -215,8 +215,8 @@ del createdb.sql</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>211</xloc>
-      <yloc>255</yloc>
+      <xloc>329</xloc>
+      <yloc>256</yloc>
       </entry>
     <entry>
       <name>Set Variables for creating Data Warehouse DB</name>
@@ -247,8 +247,8 @@ del createdb.sql</script>
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>212</xloc>
-      <yloc>139</yloc>
+      <xloc>332</xloc>
+      <yloc>135</yloc>
       </entry>
   </entries>
   <hops>
@@ -260,15 +260,6 @@ del createdb.sql</script>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>START</from>
-      <to>Check DestinationDB connection Exists</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
     </hop>
     <hop>
       <from>create_datawarehouse_database</from>
@@ -306,7 +297,51 @@ del createdb.sql</script>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
+    <hop>
+      <from>START</from>
+      <to>Check DestinationDB connection Exists</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>The purpose of this job is to 
+
+1) Initialise the data warehouse database if necessary
+2) Log the start of the ETL process
+3) Most importantly to set the following variables
+ that are used in the Create Data Warehouse job
+
+MAINSTARTDATE 
+MAINENDDATE 
+MAINENDTRANSACTIONDATE 
+ARREARSSTARTDATE 
+SAVINGSSTARTDATE 
+SAVINGSENDDATE 
+
+ </note>
+      <xloc>547</xloc>
+      <yloc>111</yloc>
+      <width>278</width>
+      <heigth>197</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>
