@@ -163,8 +163,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>702</xloc>
-      <yloc>31</yloc>
+      <xloc>710</xloc>
+      <yloc>172</yloc>
       </entry>
     <entry>
       <name>Initialise Incremental Load</name>
@@ -228,17 +228,38 @@
       <xloc>176</xloc>
       <yloc>73</yloc>
       </entry>
+    <entry>
+      <name>Adjust Hist Tables for Transactions With an Action Date Previous to this Run</name>
+      <description/>
+      <type>JOB</type>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename/>
+      <jobname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>710</xloc>
+      <yloc>66</yloc>
+      </entry>
   </entries>
   <hops>
-    <hop>
-      <from>Create Data Warehouse</from>
-      <to>Log Completed Entry for Incremental Load</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
     <hop>
       <from>Initialise Incremental Load</from>
       <to>Create Data Warehouse</to>
@@ -266,6 +287,24 @@
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
+    <hop>
+      <from>Create Data Warehouse</from>
+      <to>Adjust Hist Tables for Transactions With an Action Date Previous to this Run</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Adjust Hist Tables for Transactions With an Action Date Previous to this Run</from>
+      <to>Log Completed Entry for Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
   </hops>
   <notepads>
     <notepad>
@@ -282,8 +321,8 @@ in the same data as a full reload without having to shift system dates around.
 
 Note: a series of incremental runs will only equal a full reload if the tests are run on the same day
 and no addition data has been added on the date of the run (as the full reload will pick up this data but not the incremental)</note>
-      <xloc>7</xloc>
-      <yloc>126</yloc>
+      <xloc>4</xloc>
+      <yloc>220</yloc>
       <width>604</width>
       <heigth>172</heigth>
       <fontname>Microsoft Sans Serif</fontname>
