@@ -151,6 +151,34 @@
     </step>
 
   <step>
+    <name>Identify Dates to Process for Account Id</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>SELECT d.date_value as d1, ? as adjust_savings_account_id, d.date_value as d2, ? as adjust_savings_account_id2
+from dim_date d
+where d.date_value between ? and ?
+order by d.date_value;</sql>
+    <limit>0</limit>
+    <lookup>Select values</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>549</xloc>
+      <yloc>57</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Identify Savings Accounts to be Adjusted and From When</name>
     <type>TableInput</type>
     <description/>
@@ -181,34 +209,6 @@ group by sav.savings_account_id</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>219</xloc>
       <yloc>63</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify Dates to Process for Account Id</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>SELECT d.date_value as d1, ? as adjust_savings_account_id, d.date_value as d2, ? as adjust_savings_account_id2
-from dim_date d
-where d.date_value between ? and ?
-order by d.date_value;</sql>
-    <limit>0</limit>
-    <lookup>Select values</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>549</xloc>
-      <yloc>30</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -296,8 +296,8 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>308</xloc>
-      <yloc>132</yloc>
+      <xloc>372</xloc>
+      <yloc>142</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -454,8 +454,8 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <storage_type/>
       </meta>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>722</xloc>
-      <yloc>30</yloc>
+      <xloc>725</xloc>
+      <yloc>22</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -563,8 +563,8 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <storage_type/>
       </meta>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>526</xloc>
-      <yloc>132</yloc>
+      <xloc>553</xloc>
+      <yloc>178</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
