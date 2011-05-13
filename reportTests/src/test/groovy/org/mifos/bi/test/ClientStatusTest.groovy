@@ -10,16 +10,16 @@ class ClientStatusTest {
 
     def firstBranchHeader = ['Branch Name:', 'BO 1', 'Center Name:', 'center 2', 'Group Name:', 'group 1 for  center 2']
 	def SecondBranchHeader = ['Branch Name:', 'BO 1', 'Center Name:', 'center 2', 'Group Name:', 'group standalone']
-	def ThirdBranchHeader = ['Branch Name:', 'BO 1', 'Center Name:', 'center 2', 'Group Name:', 'group xfer  another branch']
+	//def ThirdBranchHeader = ['Branch Name:', 'BO 1', 'Center Name:', 'center 2', 'Group Name:', 'group xfer  another branch']
     def detailsBO1_20100718 = ['xfer to gr in same  branch xxx', '0003-000000023', '23', '2010-07-22', 'Active']
 	def detailsBO1_20100719 = ['client group standalone  xxx', '0003-000000038', '23', '2010-07-29', 'Active']
-	def detailsBO1_20100720 = ['client xfer to another  branch xxx', '0003-000000040', '23', '2010-07-29', 'Active']
+	//def detailsBO1_20100720 = ['client xfer to another  branch xxx', '0003-000000040', '23', '2010-07-29', 'Active']
     def GrouptotalBO1 = ['Group Total:', '1']
 	def GrouptotalBO1_2 = ['Group Total:', '1']
-	def GrouptotalBO1_3 = ['Group Total:', '1']
-	def CentertotalBO1 = ['Center Total:', '3']
-	def BranchtotalBO1 = ['Branch Total:', '3']
-	def GrandtotalBO1 = ['Grand Total:', '3']
+	//def GrouptotalBO1_3 = ['Group Total:', '1']
+	def CentertotalBO1 = ['Center Total:', '2']
+	def BranchtotalBO1 = ['Branch Total:', '2']
+	def GrandtotalBO1 = ['Grand Total:', '2']
     def pageFooter = ['Version 1.0', 'Page', '1 / 1']
 
     @Test
@@ -65,7 +65,7 @@ class ClientStatusTest {
 			t.assertRowEquals(offset+6, detailsBO1_20100719)
 	   // 2nd group total
 			t.assertRowEquals(offset+7, GrouptotalBO1_2)
-	   // 3rd group header
+	 /*  // 3rd group header
 			t.assertRowEquals(offset+8, ThirdBranchHeader)
             // detail header
             t.assertRowEquals(offset+9, detailsHeader)
@@ -74,22 +74,22 @@ class ClientStatusTest {
             t.assertRowEquals(offset+10, detailsBO1_20100720)
         // 3rd group total
 			
-            t.assertRowEquals(offset+11, GrouptotalBO1_3)
+            t.assertRowEquals(offset+11, GrouptotalBO1_3)*/
 
         // center total
 			
-            t.assertRowEquals(offset+12, CentertotalBO1)
+            t.assertRowEquals(offset+8, CentertotalBO1)
 			// branch total
-			t.assertRowEquals(offset+13, BranchtotalBO1)
+			t.assertRowEquals(offset+9, BranchtotalBO1)
 			//grand total
-			t.assertRowEquals(offset+14, GrandtotalBO1)
+			t.assertRowEquals(offset+10, GrandtotalBO1)
 
 
             // Page footer
 
-            t.assertRowEquals(offset+15, pageFooter)
-            t.assertCellEquals(offset+16, 1, 'Printed by:')
-            t.assertCellEquals(offset+16, 3, 'On:') 
+            t.assertRowEquals(offset+11, pageFooter)
+            t.assertCellEquals(offset+12, 1, 'Printed by:')
+            t.assertCellEquals(offset+12, 3, 'On:') 
 
         }
     }  
