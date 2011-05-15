@@ -162,7 +162,7 @@ from dim_loan l
 join dim_loan l1 on l1.loan_account_id = l.loan_account_id
                         and l1.loan_account_key = 
                                 (select max(maxl.loan_account_key) from dim_loan maxl
-                                where maxl.loan_account_id = l1.loan_account_id
+                                where maxl.loan_account_id = l.loan_account_id
                                 and maxl.fund_id is not null)
 where l.fund_id is null</sql>
     <limit>0</limit>

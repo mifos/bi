@@ -142,7 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>New Customers not Already Covered</from><to>Update dim_customer</to><enabled>N</enabled> </hop>  </order>
+  <hop> <from>New Customers not Already Covered</from><to>Update dim_customer</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>New Customers not Already Covered</name>
     <type>TableInput</type>
@@ -155,15 +155,16 @@
            </partitioning>
     <connection>DestinationDB</connection>
     <sql>&#47;*identify any dim_customers that have been created but not covered by identified customer updates... e.g. changes due to loan officer or customer hierarchy changes *&#47;
-&#47;*need to change this query*&#47;
-select *
-from dim_customer l
-&#47;*join dim_customer l1 on l1.loan_account_id = l.loan_account_id
-                        and l1.loan_account_key = 
-                                (select max(maxl.loan_account_key) from dim_loan maxl
-                                where maxl.loan_account_id = l1.loan_account_id
-                                and maxl.funder_name is not null)
-where l.funder_name is null*&#47;</sql>
+
+select c.customer_key, c1.display_name, c1.gender, c1.date_of_birth, c1.government_id, c1.num_children, c1.business_activity, c1.ethnicity, 
+c1.citizenship, c1.handicapped, c1.marital_status, c1.education_level
+from dim_customer c
+join dim_customer c1 on c1.customer_id = c.customer_id
+                        and c1.customer_key = 
+                                (select max(maxl.customer_key) from dim_customer maxl
+                                where maxl.customer_id = c.customer_id
+                                and maxl.display_name is not null)
+where c.display_name is null</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -201,6 +202,50 @@ where l.funder_name is null*&#47;</sql>
         <condition>=</condition>
         <name2/>
         </key>
+      <value>
+        <name>display_name</name>
+        <rename>display_name</rename>
+        </value>
+      <value>
+        <name>gender</name>
+        <rename>gender</rename>
+        </value>
+      <value>
+        <name>date_of_birth</name>
+        <rename>date_of_birth</rename>
+        </value>
+      <value>
+        <name>government_id</name>
+        <rename>government_id</rename>
+        </value>
+      <value>
+        <name>num_children</name>
+        <rename>num_children</rename>
+        </value>
+      <value>
+        <name>business_activity</name>
+        <rename>business_activity</rename>
+        </value>
+      <value>
+        <name>ethnicity</name>
+        <rename>ethnicity</rename>
+        </value>
+      <value>
+        <name>citizenship</name>
+        <rename>citizenship</rename>
+        </value>
+      <value>
+        <name>handicapped</name>
+        <rename>handicapped</rename>
+        </value>
+      <value>
+        <name>marital_status</name>
+        <rename>marital_status</rename>
+        </value>
+      <value>
+        <name>education_level</name>
+        <rename>education_level</rename>
+        </value>
       </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
