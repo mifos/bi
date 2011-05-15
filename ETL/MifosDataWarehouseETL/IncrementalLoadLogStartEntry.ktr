@@ -131,10 +131,7 @@
     <compatible>N</compatible>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>
-
-
-var fail_reason = &quot;&quot;;
+        <jsScript_script>var fail_reason = &quot;&quot;;
 var DBConnection = &quot;DestinationDB&quot;;
 var queryCount;
 
@@ -147,7 +144,9 @@ if (queryCount &gt; 0)
 {
 	fail_reason = &quot;The Data Warehouse has Previously Been Built using the Full Reload Functionality - Can&apos;t run an incremental ETL job over it.  Either Delete the Current Data Warehouse Database or Configure a Different DestinationDB Database Name.&quot;;
 }
-else
+
+
+if (fail_reason == &quot;&quot;)
 {
 	sql = &quot;select count(*) from stg_etl_run_history where etl_end_time is null&quot;;
 	sqlResults = fireToDB(DBConnection, sql);
@@ -157,18 +156,40 @@ else
 	{
 		fail_reason = &quot;A Previous Incremental Build Did Not Successfully Complete.&quot;;
 	}
-	else
-	{
-		sql = &quot;select if(max(etl_complete_to_date) &gt;= date_sub(curdate(), interval 1 day), 1, 0) from stg_etl_run_history&quot;;
+}
+
+
+if (fail_reason == &quot;&quot;)
+{
+
+		sql = &quot;select ifnull(max(etl_complete_to_date), &apos;1900-01-01&apos;) from stg_etl_run_history&quot;;
+		sqlResults = fireToDB(DBConnection, sql);
+		var max_etl_complete_to_date = sqlResults[0][0];
+
+
+		sql = &quot;select if(ifnull(max(etl_complete_to_date), &apos;1900-01-01&apos;) &gt;= &apos;&quot; + etl_complete_to_date + &quot;&apos;, 1, 0) from stg_etl_run_history&quot;;
 		sqlResults = fireToDB(DBConnection, sql);
 		queryCount = parseInt(sqlResults[0][0]);
 
 		if (queryCount &gt; 0)
 		{
-			fail_reason = &quot;Duplicate Run - Yesterday&apos;s Incremental Build has Already Completed&quot;;
+			fail_reason = &quot;Invalid Run - &quot; + etl_complete_to_date + &quot;: Data is Already Built Upto End: &quot; + max_etl_complete_to_date;
 		}
-	}
+}
 
+
+if (fail_reason == &quot;&quot;)
+{
+
+
+		sql = &quot;select if(curdate() &lt;= &apos;&quot; + etl_complete_to_date + &quot;&apos;, 1, 0) &quot;;
+		sqlResults = fireToDB(DBConnection, sql);
+		queryCount = parseInt(sqlResults[0][0]);
+
+		if (queryCount &gt; 0)
+		{
+			fail_reason = &quot;Invalid Run - &quot; + etl_complete_to_date + &quot;: You Can&apos;t Build for Dates from Today Onwards&quot;;
+		}
 }
 
 if (fail_reason &gt; &quot;&quot;)

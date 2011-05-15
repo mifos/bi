@@ -117,7 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>N</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Write hist_loan_balances</to><enabled>N</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Fees and Charges</from><to>Merge Join 2</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Merge Join 2</to><enabled>Y</enabled> </hop>  <hop> <from>Select loan, first and last date</from><to>Identify Dates to Process for Account Id</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start Date Variable</from><to>Create start dates as parameters</to><enabled>Y</enabled> </hop>  <hop> <from>Create start dates as parameters</from><to>Identify Loan Accounts to be Adjusted and From When</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Accounts to be Adjusted and From When</from><to>Select loan, first and last date</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process for Account Id</from><to>select date 4 times and the loan</to><enabled>Y</enabled> </hop>  <hop> <from>select date 4 times and the loan</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>select date 4 times and the loan</from><to>Get Loan Fees and Charges</to><enabled>Y</enabled> </hop>  <hop> <from>select date 4 times and the loan</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Write to log</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join 2</from><to>Cut down columns to whats needed</to><enabled>Y</enabled> </hop>  <hop> <from>Cut down columns to whats needed</from><to>Calculator</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Build Loan Arrears Entry for a Date</from><to>Write hist_loan_arrears</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Is Loan In Arrears?</from><to>Dummy (do nothing)</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Is Loan In Arrears?</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Build Loan Arrears Entry for a Date</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Write hist_loan_balances</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Amounts Due</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Repayments</from><to>Merge Join</to><enabled>Y</enabled> </hop>  <hop> <from>Get Loan Fees and Charges</from><to>Merge Join 2</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join</from><to>Merge Join 2</to><enabled>Y</enabled> </hop>  <hop> <from>select date 4 times and the loan</from><to>Get Loan Repayments</to><enabled>Y</enabled> </hop>  <hop> <from>select date 4 times and the loan</from><to>Get Loan Fees and Charges</to><enabled>Y</enabled> </hop>  <hop> <from>select date 4 times and the loan</from><to>Get Loan Amounts Due</to><enabled>Y</enabled> </hop>  <hop> <from>Merge Join 2</from><to>Cut down columns to whats needed</to><enabled>Y</enabled> </hop>  <hop> <from>Cut down columns to whats needed</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Create start dates as parameters</from><to>Identify Loan Accounts to be Adjusted and From When</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start Date Variable</from><to>Create start dates as parameters</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Loan Accounts to be Adjusted and From When</from><to>Select loan, first and last date</to><enabled>Y</enabled> </hop>  <hop> <from>Select loan, first and last date</from><to>Identify Dates to Process for Account Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process for Account Id</from><to>select date 4 times and the loan</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Build Loan Arrears Entry for a Date</name>
     <type>Mapping</type>
@@ -276,6 +276,161 @@
     </step>
 
   <step>
+    <name>Create start dates as parameters</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+       <calculation><field_name>d2</field_name>
+<calc_type>COPY_FIELD</calc_type>
+<field_a>startDate</field_a>
+<field_b/>
+<field_c/>
+<value_type>Date</value_type>
+<value_length>23</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>d3</field_name>
+<calc_type>COPY_FIELD</calc_type>
+<field_a>startDate</field_a>
+<field_b/>
+<field_c/>
+<value_type>Date</value_type>
+<value_length>23</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+       <calculation><field_name>d4</field_name>
+<calc_type>COPY_FIELD</calc_type>
+<field_a>startDate</field_a>
+<field_b/>
+<field_c/>
+<value_type>Date</value_type>
+<value_length>23</value_length>
+<value_precision>-1</value_precision>
+<remove>N</remove>
+<conversion_mask/>
+<decimal_symbol/>
+<grouping_symbol/>
+<currency_symbol/>
+</calculation>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>724</xloc>
+      <yloc>472</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Cut down columns to whats needed</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>as_of_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>loan_account_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>original_principal</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>original_interest</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>currency_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>prd_offering_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>customer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>group_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>center_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>loan_officer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>branch_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>formed_by_loan_officer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>principal_due</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>interest_due</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>last_installment_due</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>principal_paid</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>interest_paid</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>last_installment_having_payment</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fees_and_charges_paid</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>560</xloc>
+      <yloc>214</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Dummy (do nothing)</name>
     <type>Dummy</type>
     <description/>
@@ -304,7 +459,7 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select ? as as_of_date, l.loan_account_id, l.original_principal, l.original_interest, l.currency_id, 
+    <sql>select cast(? as date) as as_of_date, l.loan_account_id, l.original_principal, l.original_interest, l.currency_id, 
 p.prd_offering_id, 
 cust.customer_id, gr.customer_id as group_id, cen.customer_id as center_id,
 lo.personnel_id as loan_officer_id, o.office_id as branch_id, flo.personnel_id as formed_by_loan_officer_id,
@@ -328,7 +483,8 @@ where l.valid_from &lt;= ? and l.valid_to &gt; ?
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 and l.loan_account_id = ?
 group by as_of_date,l.loan_account_id
-order by as_of_date, l.loan_account_id;
+order by l.loan_account_id, as_of_date;
+&#47;* order must be loan_account_id, as_of_date as need data in order to merge join*&#47;
 
 
 
@@ -357,7 +513,7 @@ order by as_of_date, l.loan_account_id;
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select ? as as_of_date, l.loan_account_id, ifnull(sum(amount), 0.0) as fees_and_charges_paid
+    <sql>select cast(? as date) as as_of_date,  l.loan_account_id, ifnull(sum(amount), 0.0) as fees_and_charges_paid
 from dim_loan l
 left join fact_loan_fees_and_charges f on f.loan_account_id = l.loan_account_id and f.action_date &lt;= ?
                                                 and f.account_action_id = 1 and f.adjusted = false
@@ -365,7 +521,8 @@ where l.valid_from &lt;= ? and l.valid_to &gt; ?
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 and l.loan_account_id = ?
 group by as_of_date,l.loan_account_id 
-order by as_of_date, l.loan_account_id;</sql>
+order by l.loan_account_id, as_of_date;
+&#47;* order must be loan_account_id, as_of_date as need data in order to merge join*&#47;</sql>
     <limit>0</limit>
     <lookup>select date 4 times and the loan</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -390,7 +547,7 @@ order by as_of_date, l.loan_account_id;</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>select ? as as_of_date, l.loan_account_id,
+    <sql>select cast(? as date) as as_of_date, l.loan_account_id,
 ifnull(sum(lr.principal_amount), 0.0) as principal_paid,
 ifnull(sum(lr.interest_amount), 0.0)  as interest_paid,
 
@@ -406,7 +563,8 @@ where l.valid_from &lt;= ? and l.valid_to &gt; ?
 and l.loan_status in (&apos;AccountState-ActiveInGoodStanding&apos;, &apos;AccountState-ActiveInBadStanding&apos;)
 and l.loan_account_id = ?
 group by as_of_date,l.loan_account_id 
-order by as_of_date, l.loan_account_id;
+order by l.loan_account_id, as_of_date;
+&#47;* order must be loan_account_id, as_of_date as need data in order to merge join*&#47;
 
 &#47;* only pick up unadjusted repayments. i.e. adjustments (even though perhaps entered in the system after the arrears date being processed) are taken into account.
 Reversals are ignored.  Although the reversal (aka cancel) transaction is backdated to the date of each entry it reverses... it doesn&apos;t come into play
@@ -422,6 +580,123 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>257</xloc>
       <yloc>108</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Start Date Variable</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${ARREARSSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>456</xloc>
+      <yloc>472</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Dates to Process for Account Id</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>SELECT d.date_value as d1, d.date_value as d2, d.date_value as d3, d.date_value as d4, ? as adjust_savings_account_id
+from dim_date d
+where d.date_value between ? and ?
+order by d.date_value;</sql>
+    <limit>0</limit>
+    <lookup>Select loan, first and last date</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>89</xloc>
+      <yloc>334</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify Loan Accounts to be Adjusted and From When</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <sql>select loan_account_id, min(affected.first_date) as first_date, cast(date_sub(?, interval 1 day) as date) as last_date
+from 
+    (
+        (select lt.loan_account_id, min(actiondate.date_value) as first_date
+        from fact_loan_disbursals lt
+        join dim_date cutoffdate on cutoffdate.date_value = ?
+        join dim_date actiondate on actiondate.date_key = lt.disbursal_date_key
+        where lt.disbursal_date_key &lt; cutoffdate.date_key
+        and lt.created_date_key &gt;= cutoffdate.date_key   
+        group by lt.loan_account_id)
+
+        union all
+ 
+        (select lt.loan_account_id, min(actiondate.date_value) as first_date
+        from fact_loan_repayments lt
+        join dim_date cutoffdate on cutoffdate.date_value = ?
+        join dim_date actiondate on actiondate.date_key = lt.action_date_key
+        where lt.action_date_key &lt; cutoffdate.date_key
+        and lt.created_date_key &gt;= cutoffdate.date_key   
+        group by lt.loan_account_id)
+        
+        union all
+ 
+        (select lt.loan_account_id, min(actiondate.date_value) as first_date
+        from fact_loan_fees_and_charges lt
+        join dim_date cutoffdate on cutoffdate.date_value = ?
+        join dim_date actiondate on actiondate.date_key = lt.action_date_key
+        where lt.action_date_key &lt; cutoffdate.date_key
+        and lt.created_date_key &gt;= cutoffdate.date_key   
+        group by lt.loan_account_id)
+    ) affected
+group by loan_account_id
+order by loan_account_id</sql>
+    <limit>0</limit>
+    <lookup>Create start dates as parameters</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>724</xloc>
+      <yloc>337</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -468,12 +743,12 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
 <step1>Get Loan Amounts Due</step1>
 <step2>Get Loan Repayments</step2>
     <keys_1>
-      <key>as_of_date</key>
       <key>loan_account_id</key>
+      <key>as_of_date</key>
     </keys_1>
     <keys_2>
-      <key>as_of_date</key>
       <key>loan_account_id</key>
+      <key>as_of_date</key>
     </keys_2>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -497,17 +772,48 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
 <step1>Merge Join</step1>
 <step2>Get Loan Fees and Charges</step2>
     <keys_1>
-      <key>as_of_date</key>
       <key>loan_account_id</key>
+      <key>as_of_date</key>
     </keys_1>
     <keys_2>
-      <key>as_of_date</key>
       <key>loan_account_id</key>
+      <key>as_of_date</key>
     </keys_2>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>399</xloc>
       <yloc>195</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select loan, first and last date</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>loan_account_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>first_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>last_date</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>437</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -834,213 +1140,6 @@ until the day the reversal is entered on the system (indicated by a cancel loan 
     </step>
 
   <step>
-    <name>Get Start Date Variable</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>startDate</name>
-        <variable>${ARREARSSTARTDATE}</variable>
-        <type>Date</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>91</xloc>
-      <yloc>510</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify Dates to Process for Account Id</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>SELECT d.date_value as d1, d.date_value as d2, d.date_value as d3, d.date_value as d4, ? as adjust_savings_account_id
-from dim_date d
-where d.date_value between ? and ?
-order by d.date_value;</sql>
-    <limit>0</limit>
-    <lookup>Select loan, first and last date</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>121</xloc>
-      <yloc>378</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select loan, first and last date</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>loan_account_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>first_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>last_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>533</xloc>
-      <yloc>377</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Create start dates as parameters</name>
-    <type>Calculator</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-       <calculation><field_name>d2</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>startDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>Date</value_type>
-<value_length>23</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>d3</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>startDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>Date</value_type>
-<value_length>23</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>d4</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>startDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>Date</value_type>
-<value_length>23</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>292</xloc>
-      <yloc>511</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Identify Loan Accounts to be Adjusted and From When</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <sql>select loan_account_id, min(affected.first_date) as first_date, cast(date_sub(?, interval 1 day) as date) as last_date
-from 
-    (
-        (select lt.loan_account_id, min(actiondate.date_value) as first_date
-        from fact_loan_disbursals lt
-        join dim_date cutoffdate on cutoffdate.date_value = ?
-        join dim_date actiondate on actiondate.date_key = lt.disbursal_date_key
-        where lt.disbursal_date_key &lt; cutoffdate.date_key
-        and lt.created_date_key &gt;= cutoffdate.date_key   
-        group by lt.loan_account_id)
-
-        union all
- 
-        (select lt.loan_account_id, min(actiondate.date_value) as first_date
-        from fact_loan_repayments lt
-        join dim_date cutoffdate on cutoffdate.date_value = ?
-        join dim_date actiondate on actiondate.date_key = lt.action_date_key
-        where lt.action_date_key &lt; cutoffdate.date_key
-        and lt.created_date_key &gt;= cutoffdate.date_key   
-        group by lt.loan_account_id)
-        
-        union all
- 
-        (select lt.loan_account_id, min(actiondate.date_value) as first_date
-        from fact_loan_fees_and_charges lt
-        join dim_date cutoffdate on cutoffdate.date_value = ?
-        join dim_date actiondate on actiondate.date_key = lt.action_date_key
-        where lt.action_date_key &lt; cutoffdate.date_key
-        and lt.created_date_key &gt;= cutoffdate.date_key   
-        group by lt.loan_account_id)
-    ) affected
-group by loan_account_id</sql>
-    <limit>0</limit>
-    <lookup>Create start dates as parameters</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>537</xloc>
-      <yloc>510</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>select date 4 times and the loan</name>
     <type>SelectValues</type>
     <description/>
@@ -1084,203 +1183,8 @@ group by loan_account_id</sql>
         <storage_type/>
       </meta>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>76</xloc>
+      <xloc>89</xloc>
       <yloc>103</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Write to log</name>
-    <type>WriteToLog</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <loglevel>log_level_basic</loglevel>
-      <displayHeader>Y</displayHeader>
-    <fields>
-      <field>
-        <name>as_of_date</name>
-        </field>
-      <field>
-        <name>loan_account_id</name>
-        </field>
-      <field>
-        <name>original_principal</name>
-        </field>
-      <field>
-        <name>original_interest</name>
-        </field>
-      <field>
-        <name>currency_id</name>
-        </field>
-      <field>
-        <name>prd_offering_id</name>
-        </field>
-      <field>
-        <name>customer_id</name>
-        </field>
-      <field>
-        <name>group_id</name>
-        </field>
-      <field>
-        <name>center_id</name>
-        </field>
-      <field>
-        <name>loan_officer_id</name>
-        </field>
-      <field>
-        <name>branch_id</name>
-        </field>
-      <field>
-        <name>formed_by_loan_officer_id</name>
-        </field>
-      <field>
-        <name>principal_due</name>
-        </field>
-      <field>
-        <name>interest_due</name>
-        </field>
-      <field>
-        <name>last_installment_due</name>
-        </field>
-      <field>
-        <name>principal_paid</name>
-        </field>
-      <field>
-        <name>interest_paid</name>
-        </field>
-      <field>
-        <name>last_installment_having_payment</name>
-        </field>
-      <field>
-        <name>fees_and_charges_paid</name>
-        </field>
-      <field>
-        <name>amount_zero</name>
-        </field>
-      <field>
-        <name>principal_outstanding</name>
-        </field>
-      <field>
-        <name>interest_outstanding</name>
-        </field>
-      <field>
-        <name>principal_in_arrears</name>
-        </field>
-      <field>
-        <name>interest_in_arrears</name>
-        </field>
-      <field>
-        <name>total_in_arrears</name>
-        </field>
-      <field>
-        <name>total_outstanding</name>
-        </field>
-      </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>494</xloc>
-      <yloc>43</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Cut down columns to whats needed</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>as_of_date</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>loan_account_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>original_principal</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>original_interest</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>currency_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>prd_offering_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>customer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>group_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>center_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>loan_officer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>branch_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>formed_by_loan_officer_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>principal_due</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>interest_due</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>last_installment_due</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>principal_paid</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>interest_paid</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>last_installment_having_payment</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>fees_and_charges_paid</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>560</xloc>
-      <yloc>214</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
