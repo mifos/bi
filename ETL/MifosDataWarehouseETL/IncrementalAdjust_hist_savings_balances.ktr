@@ -117,7 +117,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Get Start Date Variable</from><to>Identify Savings Accounts to be Adjusted and From When</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Savings Accounts to be Adjusted and From When</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Identify Dates to Process for Account Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process for Account Id</from><to>Select values 2</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 2</from><to>Recalculate Savings Account Balances</to><enabled>Y</enabled> </hop>  <hop> <from>Recalculate Savings Account Balances</from><to>Select values 3</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 3</from><to>Rewrite Savings Balances</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Start Date Variable</from><to>Identify Savings Accounts to be Adjusted and From When</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Savings Accounts to be Adjusted and From When</from><to>Select values</to><enabled>Y</enabled> </hop>  <hop> <from>Select values</from><to>Identify Dates to Process for Account Id</to><enabled>Y</enabled> </hop>  <hop> <from>Identify Dates to Process for Account Id</from><to>Select values 2</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 2</from><to>Recalculate Savings Account Balances</to><enabled>Y</enabled> </hop>  <hop> <from>Recalculate Savings Account Balances</from><to>Select values 3</to><enabled>Y</enabled> </hop>  <hop> <from>Select values 3</from><to>Create Adjusted History Savings Balances</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Get Start Date Variable</name>
     <type>GetVariable</type>
@@ -161,7 +161,7 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>SELECT d.date_value as d1, ? as adjust_savings_account_id, d.date_value as d2, ? as adjust_savings_account_id2
+    <sql>SELECT d.date_value as d1, d.date_value as d2, d.date_value as d3, d.date_value as d4, ? as adjust_savings_account_id
 from dim_date d
 where d.date_value between ? and ?
 order by d.date_value;</sql>
@@ -190,7 +190,7 @@ order by d.date_value;</sql>
            </partitioning>
     <connection>DestinationDB</connection>
     <sql>
-select sav.savings_account_id, sav.savings_account_id as savings_account_id2, min(actiondate.date_value) as first_date, date_sub(cutoffdate.date_value, interval 1 day) as last_date
+select sav.savings_account_id, min(actiondate.date_value) as first_date, date_sub(cutoffdate.date_value, interval 1 day) as last_date
 from fact_savings_transactions sav
 join dim_date cutoffdate on cutoffdate.date_value = ?
 
@@ -224,14 +224,26 @@ group by sav.savings_account_id</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>
-select ? as as_of_date, ? as savings_account_id,
+    <sql>select cast(? as date) as as_of_date, s.savings_account_id, s.currency_id, p.prd_offering_id, 
+cust.customer_id, gr.customer_id as group_id, cen.customer_id as center_id,
+lo.personnel_id as loan_officer_id, o.office_id as branch_id, flo.personnel_id as formed_by_loan_officer_id,
 ifnull(sum(sav.deposit_amount), 0.0) as total_deposit_amount,
 ifnull(sum(sav.interest_amount), 0.0) as total_interest_amount,
 ifnull(sum(sav.withdrawal_amount), 0.0) as total_withdrawal_amount,
 ifnull(sum(sav.deposit_amount + sav.interest_amount - sav.withdrawal_amount), 0.0) as balance
-from fact_savings_transactions sav  
-where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
+from dim_savings s
+left join dim_product p on p.product_key = s.product_key
+left join dim_customer cust on cust.customer_key = s.customer_key
+left join dim_customer gr on gr.customer_key = s.group_key
+left join dim_customer cen on cen.customer_key = s.center_key
+left join dim_personnel lo on lo.personnel_key = s.loan_officer_key
+left join dim_office o on o.office_key = s.branch_key
+left join dim_personnel flo on flo.personnel_key = s.formed_by_loan_officer_key
+left join fact_savings_transactions sav on sav.savings_account_id = s.savings_account_id and sav.action_date &lt;= ?
+where s.valid_from &lt;= ? and s.valid_to &gt; ?    
+and s.savings_status in (&apos;SavingsStatus-Active&apos;, &apos;SavingsStatus-Inactive&apos;)
+and sav.savings_account_id = ?
+group by as_of_date,s.savings_account_id;</sql>
     <limit>0</limit>
     <lookup>Select values 2</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -241,63 +253,6 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>725</xloc>
       <yloc>132</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Rewrite Savings Balances</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <commit>2000</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema/>
-      <table>hist_savings_balances</table>
-      <key>
-        <name>as_of_date</name>
-        <field>as_of_date</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>savings_account_id</name>
-        <field>savings_account_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>total_deposit_amount</name>
-        <rename>total_deposit_amount</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>total_interest_amount</name>
-        <rename>total_interest_amount</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>total_withdrawal_amount</name>
-        <rename>total_withdrawal_amount</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>balance</name>
-        <rename>balance</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>372</xloc>
-      <yloc>142</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -316,10 +271,6 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>savings_account_id2</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
       </field>      <field>        <name>first_date</name>
         <rename/>
         <length>-2</length>
@@ -329,51 +280,7 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
-      <meta>        <name>savings_account_id</name>
-        <rename>savings_account_id</rename>
-        <type>-</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>savings_account_id2</name>
-        <rename>savings_account_id2</rename>
-        <type>-</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>first_date</name>
-        <rename>first_date</rename>
-        <type>-</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>last_date</name>
-        <rename>last_date</rename>
-        <type>-</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>    </fields>     <cluster_schema/>
+    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>368</xloc>
       <yloc>31</yloc>
@@ -395,55 +302,26 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>adjust_savings_account_id</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
       </field>      <field>        <name>d2</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>adjust_savings_account_id2</name>
+      </field>      <field>        <name>d3</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>d4</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>adjust_savings_account_id</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
-      <meta>        <name>d1</name>
-        <rename>d1</rename>
-        <type>Date</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>adjust_savings_account_id</name>
+      <meta>        <name>adjust_savings_account_id</name>
         <rename>adjust_savings_account_id</rename>
-        <type>Number</type>
-        <length>9</length>
-        <precision>0</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>d2</name>
-        <rename>d2</rename>
-        <type>Date</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>adjust_savings_account_id2</name>
-        <rename>adjust_savings_account_id2</rename>
-        <type>Number</type>
+        <type>Integer</type>
         <length>9</length>
         <precision>0</precision>
         <conversion_mask/>
@@ -478,6 +356,38 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
+      </field>      <field>        <name>currency_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>prd_offering_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>customer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>group_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>center_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>loan_officer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>branch_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>formed_by_loan_officer_id</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
       </field>      <field>        <name>total_deposit_amount</name>
         <rename/>
         <length>-2</length>
@@ -495,75 +405,102 @@ where sav.action_date &lt;= ? and sav.savings_account_id = ?;</sql>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
-      <meta>        <name>as_of_date</name>
-        <rename>as_of_date</rename>
-        <type>Date</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>savings_account_id</name>
-        <rename>savings_account_id</rename>
-        <type>Number</type>
-        <length>9</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>total_deposit_amount</name>
-        <rename>total_deposit_amount</rename>
-        <type>-</type>
-        <length>43</length>
-        <precision>4</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>total_interest_amount</name>
-        <rename>total_interest_amount</rename>
-        <type>-</type>
-        <length>43</length>
-        <precision>4</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>total_withdrawal_amount</name>
-        <rename>total_withdrawal_amount</rename>
-        <type>-</type>
-        <length>43</length>
-        <precision>4</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>      <meta>        <name>balance</name>
-        <rename>balance</rename>
-        <type>-</type>
-        <length>45</length>
-        <precision>4</precision>
-        <conversion_mask/>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>    </fields>     <cluster_schema/>
+    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>553</xloc>
+      <yloc>178</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Create Adjusted History Savings Balances</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <schema/>
+    <table>hist_savings_balances</table>
+    <commit>25000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>as_of_date</column_name>
+          <stream_name>as_of_date</stream_name>
+        </field>
+        <field>
+          <column_name>savings_account_id</column_name>
+          <stream_name>savings_account_id</stream_name>
+        </field>
+        <field>
+          <column_name>currency_id</column_name>
+          <stream_name>currency_id</stream_name>
+        </field>
+        <field>
+          <column_name>prd_offering_id</column_name>
+          <stream_name>prd_offering_id</stream_name>
+        </field>
+        <field>
+          <column_name>customer_id</column_name>
+          <stream_name>customer_id</stream_name>
+        </field>
+        <field>
+          <column_name>group_id</column_name>
+          <stream_name>group_id</stream_name>
+        </field>
+        <field>
+          <column_name>center_id</column_name>
+          <stream_name>center_id</stream_name>
+        </field>
+        <field>
+          <column_name>loan_officer_id</column_name>
+          <stream_name>loan_officer_id</stream_name>
+        </field>
+        <field>
+          <column_name>branch_id</column_name>
+          <stream_name>branch_id</stream_name>
+        </field>
+        <field>
+          <column_name>formed_by_loan_officer_id</column_name>
+          <stream_name>formed_by_loan_officer_id</stream_name>
+        </field>
+        <field>
+          <column_name>total_deposit_amount</column_name>
+          <stream_name>total_deposit_amount</stream_name>
+        </field>
+        <field>
+          <column_name>total_interest_amount</column_name>
+          <stream_name>total_interest_amount</stream_name>
+        </field>
+        <field>
+          <column_name>total_withdrawal_amount</column_name>
+          <stream_name>total_withdrawal_amount</stream_name>
+        </field>
+        <field>
+          <column_name>balance</column_name>
+          <stream_name>balance</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>350</xloc>
       <yloc>178</yloc>
       <draw>Y</draw>
       </GUI>
