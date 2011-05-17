@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Set Date Parameters Initial Load</name>
+    <name>Incremental Load Log Start Entry</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -92,31 +92,6 @@
     </attributes>
   </connection>
   <connection>
-    <name>SourceDB</name>
-    <server/>
-    <type>MYSQL</type>
-    <access>JNDI</access>
-    <database>SourceDB</database>
-    <port>1521</port>
-    <username/>
-    <password>Encrypted </password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>wcm</name>
     <server>localhost</server>
     <type>MYSQL</type>
@@ -142,10 +117,10 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Set Date Parameters</from><to>Set Variables</to><enabled>Y</enabled> </hop>  <hop> <from>Get Variables</from><to>Calculator</to><enabled>Y</enabled> </hop>  <hop> <from>Calculator</from><to>Set Date Parameters</to><enabled>Y</enabled> </hop>  </order>
+  </order>
   <step>
-    <name>Calculator</name>
-    <type>Calculator</type>
+    <name>Set ETL end time</name>
+    <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -153,181 +128,26 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-       <calculation><field_name>endDate2</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>endDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>String</value_type>
-<value_length>10</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>startDate2</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>startDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>String</value_type>
-<value_length>10</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
-       <calculation><field_name>endDate3</field_name>
-<calc_type>COPY_FIELD</calc_type>
-<field_a>endDate</field_a>
-<field_b/>
-<field_c/>
-<value_type>String</value_type>
-<value_length>10</value_length>
-<value_precision>-1</value_precision>
-<remove>N</remove>
-<conversion_mask/>
-<decimal_symbol/>
-<grouping_symbol/>
-<currency_symbol/>
-</calculation>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>update stg_etl_run_history
+set etl_end_time = now()
+where etl_name = &apos;main&apos;
+and etl_end_time is  null
+
+ </sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>293</xloc>
-      <yloc>72</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get Variables</name>
-    <type>GetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>startDate</name>
-        <variable>${DATE1}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>endDate</name>
-        <variable>${DATE2}</variable>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>10</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>112</xloc>
-      <yloc>73</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set Date Parameters</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select cast(? as date) as mainStartDate, cast(? as date) as mainEndDate, 
-date_add(cast(? as date), INTERVAL 1 DAY) as mainEndTransactionDate,
-cast(GREATEST(?, a.startDate) as date) as arrearsStartDate, cast(? as date) as arrearsEndDate
-
-from
-    (select ifnull(min(action_date), &apos;3000-01-01&apos;) as startDate
-	from account_trxn
-	where account_action_id = 10) a
-
-&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;</sql>
-    <limit>0</limit>
-    <lookup>Calculator</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>474</xloc>
-      <yloc>74</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Set Variables</name>
-    <type>SetVariable</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <field_name>mainStartDate</field_name>
-        <variable_name>MAINSTARTDATE</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
-        </field>
-      <field>
-        <field_name>mainEndDate</field_name>
-        <variable_name>MAINENDDATE</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
-        </field>
-      <field>
-        <field_name>mainEndTransactionDate</field_name>
-        <variable_name>MAINENDTRANSACTIONDATE</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
-        </field>
-      <field>
-        <field_name>arrearsStartDate</field_name>
-        <variable_name>ARREARSSTARTDATE</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
-        </field>
-      <field>
-        <field_name>arrearsEndDate</field_name>
-        <variable_name>ARREARSENDDATE</variable_name>
-        <variable_type>PARENT_JOB</variable_type>
-        <default_value/>
-        </field>
-      </fields>
-    <use_formatting>Y</use_formatting>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>686</xloc>
-      <yloc>75</yloc>
+      <xloc>117</xloc>
+      <yloc>49</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

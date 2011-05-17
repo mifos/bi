@@ -67,8 +67,8 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             t.reportParams = ['selected_office': '1.1.3.2.', 'start_date': '2010-07-01', 'end_date': '2010-09-30']
 
             def branch = ['Office:', 'BO 1']
-            def detailsDuringPeriod1 = ['br1 lo 1 smith', '2010-07-01', '21', '3', '12000.0000', '3252.9000', '17', '24', '391.0000', '341.0000', '0']
-            def detailsDuringPeriod2 = ['br1 lo 2 xxx', '2010-07-04', '4', '0', '0.0000', '0.0000', '5', '2', '756.0000', '0.0000', '0']
+            def detailsDuringPeriod1 = ['br1 lo 1 smith', '2010-07-01', '21', '3', '12000.0000', '3252.9000', '16', '24', '391.0000', '341.0000', '0']
+            def detailsDuringPeriod2 = ['br1 lo 2 xxx', '2010-07-04', '4', '0', '0.0000', '0.0000', '6', '2', '756.0000', '0.0000', '0']
             def detailsDuringPeriod3 = ['br1 lo3 Sturt.. ..', '2010-07-29', '1', '0', '0.0000', '0.0000', '0', '0', '0.0000', '0.0000', '0']
             def totalDuringPeriod = ['Total During Period', '26', '3', '12000.0000', '3252.9000', '22', '26', '1147.0000', '341.0000', '0']
             def grandTotalDuringPeriod = ['Grand Total During Period', '26', '3', '12000.0000', '3252.9000', '22', '26', '1147.0000', '341.0000', '0']

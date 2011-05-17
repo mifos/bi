@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Test Compare Reload An IncrementalDBs Job</name>
+  <name>Compare Data Warehouse Database Tables</name>
     <description/>
     <extended_description/>
     <job_version/>
@@ -80,12 +80,12 @@
       <yloc>69</yloc>
       </entry>
     <entry>
-      <name>Compare Reload And Incremental DBs</name>
+      <name>Compare Data Warehouse Database Tables</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;TestCompareReloadAndIncrementalDBs.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;CompareDatabaseTables.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -115,7 +115,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Compare Reload And Incremental DBs</to>
+      <to>Compare Data Warehouse Database Tables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

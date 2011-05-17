@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Test Compare Reload And Incremental DBs</name>
+    <name>Compare Data Warehouse Database Tables</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -98,11 +98,11 @@ necessary
       <drawshadow>N</drawshadow>
     </notepad>
     <notepad>
-      <note>Table comparison is between ReloadDB and IncrementalDB jndi settings.
+      <note>Table comparison is between DB1 and DB2 jndi settings.
 </note>
       <xloc>24</xloc>
       <yloc>40</yloc>
-      <width>373</width>
+      <width>293</width>
       <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
@@ -120,6 +120,56 @@ necessary
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
+  <connection>
+    <name>DB1</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>DB1</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>DB2</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>DB2</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>ENSEMBL.HOMO_SAPIENS_CORE_24_34_E</name>
     <server>ensembldb.ensembl.org</server>
@@ -171,31 +221,6 @@ necessary
     </attributes>
   </connection>
   <connection>
-    <name>IncrementalDB</name>
-    <server/>
-    <type>MYSQL</type>
-    <access>JNDI</access>
-    <database>IncrementalDB</database>
-    <port>1521</port>
-    <username/>
-    <password>Encrypted </password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>LOGGING</name>
     <server>${LOGGING_HOSTNAME}</server>
     <type>MYSQL</type>
@@ -214,31 +239,6 @@ necessary
       <attribute><code>PORT_NUMBER</code><attribute>${LOGGING_PORT}</attribute></attribute>
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>ReloadDB</name>
-    <server/>
-    <type>MYSQL</type>
-    <access>JNDI</access>
-    <database>ReloadDB</database>
-    <port>1521</port>
-    <username/>
-    <password>Encrypted </password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
-      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
@@ -368,7 +368,7 @@ necessary
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>ReloadDB</connection>
+    <connection>DB2</connection>
     <sql>
 select k.table_name as table_field, group_concat(k.column_name) as key_fields_field,
 
@@ -377,7 +377,7 @@ from information_schema.key_column_usage k
 where  k.table_schema = schema() 
 and k.table_name not like &apos;stg%&apos;
 and k.constraint_name = &apos;PRIMARY&apos;
-&#47;*and k.table_name in (&apos;hist_loan_balances&apos;, &apos;hist_savings_balances&apos;)*&#47;
+&#47;*and k.table_name not in (&apos;hist_loan_balances&apos;, &apos;hist_loan_arrears&apos;, &apos;hist_savings_balances&apos;)*&#47;
 group by k.table_name
 order by 1, 2</sql>
     <limit>0</limit>
@@ -403,10 +403,10 @@ order by 1, 2</sql>
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <reference_connection>ReloadDB</reference_connection>
+      <reference_connection>DB2</reference_connection>
       <reference_schema_field>no_schema_field</reference_schema_field>
       <reference_table_field>table_field</reference_table_field>
-      <compare_connection>IncrementalDB</compare_connection>
+      <compare_connection>DB1</compare_connection>
       <compare_schema_field>no_schema_field</compare_schema_field>
       <compare_table_field>table_field</compare_table_field>
       <key_fields_field>key_fields_field</key_fields_field>

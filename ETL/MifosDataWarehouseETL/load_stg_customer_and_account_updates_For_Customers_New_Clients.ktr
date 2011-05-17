@@ -250,7 +250,9 @@ from customer c
 
 &#47;* clients without group membership that are transferred to another branch are set to on-hold and have their loan officer nulled out 
 - so the current value of c.load_officer_id could be null *&#47;
-left join personnel p on p.personnel_id = c.loan_officer_id
+&#47;* clients w&#47;o group membership could get put under a group the same day as they are created.  The means its better to use customer formed by
+to identify the first loan officer *&#47;
+left join personnel p on p.personnel_id = c.customer_formedby_id
 left join change_log cllo on c.customer_id = cllo.entity_id
                         and cllo.entity_type = 1
                         and cllo.change_log_id = 

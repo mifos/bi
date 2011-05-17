@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>testDynamicSqlstep</name>
+    <name>Incremental Load Log Start Entry</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#47;</directory>
     <parameters>
     </parameters>
@@ -16,7 +17,7 @@
 <size_limit_lines/>
 <interval/>
 <timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field></trans-log-table>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></trans-log-table>
 <perf-log-table><connection/>
 <schema/>
 <table/>
@@ -41,17 +42,17 @@
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
-    <size_rowset>10000</size_rowset>
-    <sleep_time_empty>50</sleep_time_empty>
-    <sleep_time_full>50</sleep_time_full>
+    <size_rowset>1000</size_rowset>
+    <sleep_time_empty>1</sleep_time_empty>
+    <sleep_time_full>1</sleep_time_full>
     <unique_connections>N</unique_connections>
     <feedback_shown>Y</feedback_shown>
-    <feedback_size>50000</feedback_size>
-    <using_thread_priorities>Y</using_thread_priorities>
+    <feedback_size>5000</feedback_size>
+    <using_thread_priorities>N</using_thread_priorities>
     <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
-    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <step_performance_capturing_size_limit/>
     <dependencies>
     </dependencies>
     <partitionschemas>
@@ -61,7 +62,7 @@
     <clusterschemas>
     </clusterschemas>
   <modified_user>-</modified_user>
-  <modified_date>2010&#47;11&#47;11 22:53:12.701</modified_date>
+  <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
   </notepads>
@@ -116,10 +117,98 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Generate Rows</from><to>Dynamic SQL row</to><enabled>Y</enabled> </hop>  <hop> <from>Dynamic SQL row</from><to>Write to log</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Set ETL start time</from><to>Log Start</to><enabled>Y</enabled> </hop>  <hop> <from>Confirm Okay to Proceed</from><to>Set ETL start time</to><enabled>Y</enabled> </hop>  <hop> <from>Set ETL name</from><to>Set ETL Job and Incremental Complete Up To Date</to><enabled>Y</enabled> </hop>  <hop> <from>Set ETL Job and Incremental Complete Up To Date</from><to>Confirm Okay to Proceed</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Dynamic SQL row</name>
-    <type>DynamicSQLRow</type>
+    <name>Confirm Okay to Proceed</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var fail_reason = &quot;&quot;;
+var DBConnection = &quot;DestinationDB&quot;;
+var queryCount;
+
+
+var sql = &quot;select count(*) from stg_etl_run_history where etl_job = &apos;Initial Entry&apos; &quot;;
+var sqlResults = fireToDB(DBConnection, sql);
+queryCount = parseInt(sqlResults[0][0]);
+
+if (queryCount &gt; 0)
+{
+	fail_reason = &quot;The Data Warehouse has Previously Been Built using the Full Reload Functionality - Can&apos;t run an incremental ETL job over it.  Either Delete the Current Data Warehouse Database or Configure a Different DestinationDB Database Name.&quot;;
+}
+
+
+if (fail_reason == &quot;&quot;)
+{
+	sql = &quot;select count(*) from stg_etl_run_history where etl_end_time is null&quot;;
+	sqlResults = fireToDB(DBConnection, sql);
+	queryCount = parseInt(sqlResults[0][0]);
+
+	if (queryCount &gt; 0)
+	{
+		fail_reason = &quot;A Previous Incremental Build Did Not Successfully Complete.&quot;;
+	}
+}
+
+
+if (fail_reason == &quot;&quot;)
+{
+
+		sql = &quot;select ifnull(max(etl_complete_to_date), &apos;1900-01-01&apos;) from stg_etl_run_history&quot;;
+		sqlResults = fireToDB(DBConnection, sql);
+		var max_etl_complete_to_date = sqlResults[0][0];
+
+
+		sql = &quot;select if(ifnull(max(etl_complete_to_date), &apos;1900-01-01&apos;) &gt;= &apos;&quot; + etl_complete_to_date + &quot;&apos;, 1, 0) from stg_etl_run_history&quot;;
+		sqlResults = fireToDB(DBConnection, sql);
+		queryCount = parseInt(sqlResults[0][0]);
+
+		if (queryCount &gt; 0)
+		{
+			fail_reason = &quot;Invalid Run - &quot; + etl_complete_to_date + &quot;: Data is Already Built Upto End: &quot; + max_etl_complete_to_date;
+		}
+}
+
+
+if (fail_reason == &quot;&quot;)
+{
+
+
+		sql = &quot;select if(curdate() &lt;= &apos;&quot; + etl_complete_to_date + &quot;&apos;, 1, 0) &quot;;
+		sqlResults = fireToDB(DBConnection, sql);
+		queryCount = parseInt(sqlResults[0][0]);
+
+		if (queryCount &gt; 0)
+		{
+			fail_reason = &quot;Invalid Run - &quot; + etl_complete_to_date + &quot;: You Can&apos;t Build for Dates from Today Onwards&quot;;
+		}
+}
+
+if (fail_reason &gt; &quot;&quot;)
+{
+	writeToLog(&quot;e&quot;, fail_reason);
+	trans_Status = ERROR_TRANSFORMATION;
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>476</xloc>
+      <yloc>57</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Log Start</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -128,22 +217,100 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <rowlimit>0</rowlimit>
-    <sql>select customer_id, display_name from dim_customer where 1 = 0</sql>
-    <outer_join>N</outer_join>
-    <replace_vars>N</replace_vars>
-    <sql_fieldname>sql</sql_fieldname>
-    <query_only_on_change>N</query_only_on_change>
+    <schema/>
+    <table>stg_etl_run_history</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>etl_name</column_name>
+          <stream_name>etl_name</stream_name>
+        </field>
+        <field>
+          <column_name>etl_job</column_name>
+          <stream_name>etl_job</stream_name>
+        </field>
+        <field>
+          <column_name>etl_complete_to_date</column_name>
+          <stream_name>etl_complete_to_date</stream_name>
+        </field>
+        <field>
+          <column_name>etl_start_time</column_name>
+          <stream_name>etl_start_time</stream_name>
+        </field>
+    </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>128</yloc>
+      <xloc>811</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Generate Rows</name>
+    <name>Set ETL Job and Incremental Complete Up To Date</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+var etl_job = getVariable(&quot;etl_job&quot;,  &quot;Incremental Entry&quot;);
+
+
+var etl_complete_to_date = getVariable(&quot;etl_complete_to_date&quot;,  &quot;&quot;);
+
+
+if (etl_complete_to_date == null || etl_complete_to_date &lt;= &quot;&quot;)
+{
+	var DBConnection = &quot;DestinationDB&quot;;
+	var sql = &quot;select date_sub(curdate(), interval 1 day) as default_date&quot;;
+	var sqlResults = fireToDB(DBConnection, sql);
+	etl_complete_to_date = sqlResults[0][0]; 
+	setVariable(&quot;etl_complete_to_date&quot;,etl_complete_to_date, &quot;r&quot;);
+}
+
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>etl_job</name>
+        <rename>etl_job</rename>
+        <type>String</type>
+        <length>50</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>etl_complete_to_date</name>
+        <rename>etl_complete_to_date</rename>
+        <type>String</type>
+        <length>20</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>126</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set ETL name</name>
     <type>RowGenerator</type>
     <description/>
     <distribute>Y</distribute>
@@ -154,29 +321,29 @@
            </partitioning>
     <fields>
       <field>
-        <name>sql</name>
+        <name>etl_name</name>
         <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
-        <nullif>select customer_id, display_name from dim_customer</nullif>
-        <length>100</length>
+        <nullif>Main</nullif>
+        <length>50</length>
         <precision>-1</precision>
       </field>
     </fields>
     <limit>1</limit>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>88</xloc>
-      <yloc>127</yloc>
+      <xloc>59</xloc>
+      <yloc>58</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Write to log</name>
-    <type>WriteToLog</type>
+    <name>Set ETL start time</name>
+    <type>DBJoin</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -184,14 +351,17 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-      <loglevel>log_level_basic</loglevel>
-      <displayHeader>Y</displayHeader>
-    <fields>
-      </fields>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select now() as etl_start_time </sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+    </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>435</xloc>
-      <yloc>256</yloc>
+      <xloc>645</xloc>
+      <yloc>127</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

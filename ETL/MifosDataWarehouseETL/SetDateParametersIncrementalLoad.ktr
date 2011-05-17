@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>load customer remaining</name>
+    <name>Set Date Parameters Incremental Load</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -142,9 +142,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>New Customers not Already Covered</from><to>Update dim_customer</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Check for Previous Incremental Runs</from><to>If Previous Run</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Dates Completed To</to><enabled>Y</enabled> </hop>  <hop> <from>If Previous Run</from><to>Get Initial Incremental Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Get Initial Incremental Dates</from><to>Identify End Date from etl_complete_to_date variable</to><enabled>Y</enabled> </hop>  <hop> <from>Get Dates Completed To</from><to>Identify End Date from etl_complete_to_date variable</to><enabled>Y</enabled> </hop>  <hop> <from>Identify End Date from etl_complete_to_date variable</from><to>Set All End Dates</to><enabled>Y</enabled> </hop>  <hop> <from>Set All End Dates</from><to>Set Variables</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>New Customers not Already Covered</name>
+    <name>Check for Previous Incremental Runs</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -154,17 +154,9 @@
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <sql>&#47;*identify any dim_customers that have been created but not covered by identified customer updates... e.g. changes due to loan officer or customer hierarchy changes *&#47;
-
-select c.customer_key, c1.display_name, c1.gender, c1.date_of_birth, c1.government_id, c1.num_children, c1.business_activity, c1.ethnicity, 
-c1.citizenship, c1.handicapped, c1.marital_status, c1.education_level
-from dim_customer c
-join dim_customer c1 on c1.customer_id = c.customer_id
-                        and c1.customer_key = 
-                                (select max(maxl.customer_key) from dim_customer maxl
-                                where maxl.customer_id = c.customer_id
-                                and maxl.display_name is not null)
-where c.display_name is null</sql>
+    <sql>select count(*) as previous_runs
+from stg_etl_run_history 
+where etl_end_time is not null</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -172,15 +164,15 @@ where c.display_name is null</sql>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>149</xloc>
-      <yloc>70</yloc>
+      <xloc>114</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Update dim_customer</name>
-    <type>Update</type>
+    <name>Get Dates Completed To</name>
+    <type>DBJoin</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -189,68 +181,217 @@ where c.display_name is null</sql>
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <skip_lookup>N</skip_lookup>
-    <commit>10000</commit>
-    <error_ignored>N</error_ignored>
-    <ignore_flag_field/>
-    <lookup>
-      <schema/>
-      <table>dim_customer</table>
-      <key>
-        <name>customer_key</name>
-        <field>customer_key</field>
-        <condition>=</condition>
-        <name2/>
-        </key>
-      <value>
-        <name>display_name</name>
-        <rename>display_name</rename>
-        </value>
-      <value>
-        <name>gender</name>
-        <rename>gender</rename>
-        </value>
-      <value>
-        <name>date_of_birth</name>
-        <rename>date_of_birth</rename>
-        </value>
-      <value>
-        <name>government_id</name>
-        <rename>government_id</rename>
-        </value>
-      <value>
-        <name>num_children</name>
-        <rename>num_children</rename>
-        </value>
-      <value>
-        <name>business_activity</name>
-        <rename>business_activity</rename>
-        </value>
-      <value>
-        <name>ethnicity</name>
-        <rename>ethnicity</rename>
-        </value>
-      <value>
-        <name>citizenship</name>
-        <rename>citizenship</rename>
-        </value>
-      <value>
-        <name>handicapped</name>
-        <rename>handicapped</rename>
-        </value>
-      <value>
-        <name>marital_status</name>
-        <rename>marital_status</rename>
-        </value>
-      <value>
-        <name>education_level</name>
-        <rename>education_level</rename>
-        </value>
-      </lookup>
+    <rowlimit>1</rowlimit>
+    <sql>select d1.startfrom_date as mainStartDate,
+        d1.startfrom_date as arrearsStartDate, 
+        d1.startfrom_date as savingsStartDate
+
+from
+    (select date(date_add(max(erh.etl_complete_to_date), interval 1 day)) as startfrom_date
+    from stg_etl_run_history erh
+    where etl_end_time is not null) d1</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+    </parameter>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>375</xloc>
-      <yloc>69</yloc>
+      <xloc>421</xloc>
+      <yloc>8</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Get Initial Incremental Dates</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select date(&apos;1900-01-01&apos;) as mainStartDate,a.startDate as arrearsStartDate, b.startDate as savingsStartDate
+
+from
+    (select ifnull(min(action_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account_trxn
+	where account_action_id = 10) a
+&#47;* Start arrears tracking from the date of the first disbursal.  Even if that disbursal was reversed... it&apos;ll be a good enough date to start*&#47;
+
+,
+    (select ifnull(min(ac.created_date), date(&apos;3000-01-01&apos;)) as startDate
+	from account ac
+	where ac.account_type_id = 2) b</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>N</replace_vars>
+    <parameter>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>418</xloc>
+      <yloc>101</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>If Previous Run</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Get Dates Completed To</send_true_to>
+<send_false_to>Get Initial Incremental Dates</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>previous_runs</leftvalue>
+ <function>&gt;</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>284</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set Variables</name>
+    <type>SetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <field_name>mainStartDate</field_name>
+        <variable_name>MAINSTARTDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>mainEndDate</field_name>
+        <variable_name>MAINENDDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>mainEndTransactionDate</field_name>
+        <variable_name>MAINENDTRANSACTIONDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>arrearsStartDate</field_name>
+        <variable_name>ARREARSSTARTDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>arrearsEndDate</field_name>
+        <variable_name>ARREARSENDDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>savingsStartDate</field_name>
+        <variable_name>SAVINGSSTARTDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      <field>
+        <field_name>savingsEndDate</field_name>
+        <variable_name>SAVINGSENDDATE</variable_name>
+        <variable_type>ROOT_JOB</variable_type>
+        <default_value/>
+        </field>
+      </fields>
+    <use_formatting>Y</use_formatting>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>821</xloc>
+      <yloc>191</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Identify End Date from etl_complete_to_date variable</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>end_date</name>
+        <variable>${etl_complete_to_date}</variable>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>20</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>626</xloc>
+      <yloc>66</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Set All End Dates</name>
+    <type>DBJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <rowlimit>1</rowlimit>
+    <sql>select d1.end_date as mainEndDate,
+        date_add(d1.end_date, interval 1 day) as mainEndTransactionDate, 
+        d1.end_date as arrearsEndDate,
+        d1.end_date as savingsEndDate
+
+from
+    (select date(?) as end_date) d1</sql>
+    <outer_join>N</outer_join>
+    <replace_vars>Y</replace_vars>
+    <parameter>
+      <field>
+        <name>end_date</name>
+        <type>String</type>
+      </field>
+    </parameter>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>822</xloc>
+      <yloc>66</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

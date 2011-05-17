@@ -1,3 +1,6 @@
 
 For table compare to work (and its used when testing full reload vs incremental ETL) 
 then kff-plugins4.jar has to be put in the pdi directory plugins/steps 
+
+
+Table compare uses 2 jndi settings DB1 and DB2

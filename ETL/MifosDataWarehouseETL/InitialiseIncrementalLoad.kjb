@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Load Customer And Loan And Savings Dimensions</name>
+  <name>Initialise Incremental Load</name>
     <description/>
     <extended_description/>
     <job_version/>
@@ -12,6 +12,31 @@
   <modified_date>2010&#47;09&#47;18 16:53:49.815</modified_date>
     <parameters>
     </parameters>
+  <connection>
+    <name>DestinationDB</name>
+    <server/>
+    <type>MYSQL</type>
+    <access>JNDI</access>
+    <database>DestinationDB</database>
+    <port>1521</port>
+    <username/>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>wcm</name>
     <server>localhost</server>
@@ -76,16 +101,16 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>87</xloc>
-      <yloc>107</yloc>
+      <xloc>124</xloc>
+      <yloc>24</yloc>
       </entry>
     <entry>
-      <name>Load dim_customer, dim_loan and dim_savings</name>
-      <description>Transformation</description>
+      <name>Set Date Parameters for Incremental Load</name>
+      <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;load_customer_loan_savings_dim.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;SetDateParametersIncrementalLoad.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -97,39 +122,7 @@
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>      <parallel>Y</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>390</xloc>
-      <yloc>104</yloc>
-      </entry>
-    <entry>
-      <name>Load Loan Remaining</name>
-      <description>Transformation</description>
-      <type>TRANS</type>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;load_loan_remaining.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <loglevel>Basic</loglevel>
       <cluster>N</cluster>
       <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
@@ -140,16 +133,16 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>659</xloc>
-      <yloc>31</yloc>
+      <xloc>750</xloc>
+      <yloc>29</yloc>
       </entry>
     <entry>
-      <name>Load Customer Remaining</name>
-      <description>Transformation</description>
+      <name>Log Start Entry for Incremental Load</name>
+      <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;load_customer_remaining.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;IncrementalLoadLogStartEntry.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -161,7 +154,7 @@
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <loglevel>Basic</loglevel>
       <cluster>N</cluster>
       <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
@@ -172,16 +165,66 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>658</xloc>
-      <yloc>146</yloc>
+      <xloc>536</xloc>
+      <yloc>29</yloc>
       </entry>
     <entry>
-      <name>Log Stored Procedure Error Message</name>
-      <description>Transformation</description>
+      <name>Check DestinationDB connection Exists</name>
+      <description/>
+      <type>CHECK_DB_CONNECTIONS</type>
+      <connections>
+        <connection>
+          <name>DestinationDB</name>
+          <waitfor>2</waitfor>
+          <waittime>second</waittime>
+        </connection>
+      </connections>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>331</xloc>
+      <yloc>25</yloc>
+      </entry>
+    <entry>
+      <name>create_datawarehouse_database</name>
+      <description/>
+      <type>SHELL</type>
+      <filename/>
+      <work_directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <set_append_logfile>N</set_append_logfile>
+      <logext>.out</logext>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>Y</insertScript>
+      <script>
+cd ${etl_dir}
+
+echo CREATE DATABASE ${dwdb};  &gt; createdb.sql
+mysql -u${db_username} -p${db_password} &lt; createdb.sql
+mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_mifos_datawarehouse.sql
+mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_mifos_datawarehouse_stored_procedures.sql
+mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_ppi_poverty_lines.sql
+mysql -u${db_username} -p${db_password}    ${dwdb}  --default_character_set utf8 &lt; load_dw_ppi_survey.sql
+
+del createdb.sql</script>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>329</xloc>
+      <yloc>256</yloc>
+      </entry>
+    <entry>
+      <name>Set Variables for creating Data Warehouse DB</name>
+      <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Job.Filename.Directory}&#47;log_stored_procedure_error_message.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}&#47;SetDBParametersForCreatingDWDB.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -193,7 +236,7 @@
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
+      <loglevel>Basic</loglevel>
       <cluster>N</cluster>
       <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
@@ -204,23 +247,14 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>641</xloc>
-      <yloc>279</yloc>
+      <xloc>332</xloc>
+      <yloc>135</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
-      <from>START</from>
-      <to>Load dim_customer, dim_loan and dim_savings</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Load dim_customer, dim_loan and dim_savings</from>
-      <to>Load Loan Remaining</to>
+      <from>Log Start Entry for Incremental Load</from>
+      <to>Set Date Parameters for Incremental Load</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -228,8 +262,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load dim_customer, dim_loan and dim_savings</from>
-      <to>Load Customer Remaining</to>
+      <from>create_datawarehouse_database</from>
+      <to>Log Start Entry for Incremental Load</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -237,15 +271,77 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Load dim_customer, dim_loan and dim_savings</from>
-      <to>Log Stored Procedure Error Message</to>
+      <from>Check DestinationDB connection Exists</from>
+      <to>Log Start Entry for Incremental Load</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Check DestinationDB connection Exists</from>
+      <to>Set Variables for creating Data Warehouse DB</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
+    <hop>
+      <from>Set Variables for creating Data Warehouse DB</from>
+      <to>create_datawarehouse_database</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>START</from>
+      <to>Check DestinationDB connection Exists</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>The purpose of this job is to 
+
+1) Initialise the data warehouse database if necessary
+2) Log the start of the ETL process
+3) Most importantly to set the following variables
+ that are used in the Create Data Warehouse job
+
+MAINSTARTDATE 
+MAINENDDATE 
+MAINENDTRANSACTIONDATE 
+ARREARSSTARTDATE 
+SAVINGSSTARTDATE 
+SAVINGSENDDATE 
+
+ </note>
+      <xloc>547</xloc>
+      <yloc>111</yloc>
+      <width>278</width>
+      <heigth>197</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>255</backgroundcolorgreen>
+      <backgroundcolorblue>0</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>
