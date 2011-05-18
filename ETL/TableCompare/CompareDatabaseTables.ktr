@@ -388,7 +388,7 @@ order by 1, 2</sql>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>88</xloc>
-      <yloc>191</yloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
