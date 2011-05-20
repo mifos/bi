@@ -50,7 +50,7 @@ class ClientStatusTest {
 
             /* Report settings.*/
             t.reportPath = 'reports/standardReports/prpts/ClientStatus.prpt'
-            t.reportParams = ['From_Date': '2010/04/01 00:00:00.000', 'To_Date': '2011/05/12 00:00:00.000', 'Branches': '3', 'Centers': '19', 'Member_Status': 'Active']
+            t.reportParams = ['From_Date': '2010/08/01 00:00:00.000', 'To_Date': '2010/08/31 00:00:00.000', 'Branches': '3', 'Centers': '19', 'Member_Status': 'Active']
 
             /* MFI Name*/
            t.assertRowEquals(1, [mfiName])
