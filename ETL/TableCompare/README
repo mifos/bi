@@ -4,3 +4,12 @@ then kff-plugins4.jar has to be put in the pdi directory plugins/steps
 
 
 Table compare uses 2 jndi settings DB1 and DB2
+
+Output goes to the $PDI_HOME directory (data-integration)
+Summary output -> ComparisonStatistics.txt
+Error output -> ComparisonErrorDetails.txt
+
+Job currently compares data warehouse databases but could be for any db 
+by changing step "Get DW Table Names" in CompareDatabaseTables.ktr
+
+Quick when no errors... much slower when loads of errors.
