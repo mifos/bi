@@ -203,7 +203,7 @@
       <script>
 cd ${etl_dir}
 
-echo CREATE DATABASE ${dwdb}; | mysql -u${db_username} -p${db_password}
+echo CREATE DATABASE ${dwdb} | mysql -u${db_username} -p${db_password}
 mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_mifos_datawarehouse.sql
 mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_mifos_datawarehouse_stored_procedures.sql
 mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_ppi_poverty_lines.sql
