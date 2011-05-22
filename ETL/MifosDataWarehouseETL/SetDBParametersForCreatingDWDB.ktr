@@ -287,12 +287,26 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
+var etlDir = &quot;&quot;;
+var osname = substr(getVariable(&quot;os.name&quot;, &quot;&quot;), 0, 7);
 
-var etlDir = replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
+writeToLog(&quot;e&quot;, &quot;osname substr: &quot; + osname);
+if (osname == &quot;Windows&quot;)
+{
+	etlDir = replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
+}
+else
+{
+	etlDir = &quot;&#47;&quot; + getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;);
+}
+
 setVariable(&quot;etl_dir&quot;, etlDir, &quot;r&quot;);
 setVariable(&quot;etl_job&quot;, &quot;Initial Incremental Entry&quot;, &quot;r&quot;);
 
 writeToLog(&quot;e&quot;, &quot;etldir: &quot; + etlDir);
+writeToLog(&quot;e&quot;, &quot;os.arch: &quot; + getVariable(&quot;os.arch&quot;, &quot;&quot;));
+writeToLog(&quot;e&quot;, &quot;os.name: &quot; + getVariable(&quot;os.name&quot;, &quot;&quot;));
+writeToLog(&quot;e&quot;, &quot;os.version: &quot; + getVariable(&quot;os.version&quot;, &quot;&quot;));
 
 
 </jsScript_script>
