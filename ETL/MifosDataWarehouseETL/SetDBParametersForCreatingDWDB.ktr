@@ -297,7 +297,7 @@ if (osname == &quot;Windows&quot;)
 }
 else
 {
-	etlDir = &quot;&#47;&quot; + getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;);
+	etlDir = &quot;&#47;&quot; + replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
 }
 
 setVariable(&quot;etl_dir&quot;, etlDir, &quot;r&quot;);
