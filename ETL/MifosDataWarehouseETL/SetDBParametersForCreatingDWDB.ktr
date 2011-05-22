@@ -234,12 +234,12 @@
 if (Key == &quot;DestinationDB&#47;user&quot;)
 {
 	setVariable(&quot;db_username&quot;, Value, &quot;r&quot;);
-	&#47;&#47;Alert(getVariable(&quot;db_username&quot;, &quot;&quot;));
+	writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;user: &quot; + Value);
 }
 if (Key == &quot;DestinationDB&#47;password&quot;)
 {
 	setVariable(&quot;db_password&quot;, Value, &quot;r&quot;);
-	&#47;&#47;Alert(getVariable(&quot;db_password&quot;, &quot;&quot;));
+	writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;password: &quot; + Value);
 }
 if (Key == &quot;DestinationDB&#47;url&quot;)
 {
@@ -263,7 +263,7 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
   	}
 
 	setVariable(&quot;dwdb&quot;, dbname, &quot;r&quot;);
-	&#47;&#47;Alert(getVariable(&quot;dwdb&quot;, &quot;&quot;));
+	writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;url: &quot; + Value);
 }</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -291,6 +291,8 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
 var etlDir = replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
 setVariable(&quot;etl_dir&quot;, etlDir, &quot;r&quot;);
 setVariable(&quot;etl_job&quot;, &quot;Initial Incremental Entry&quot;, &quot;r&quot;);
+
+writeToLog(&quot;e&quot;, &quot;etldir: &quot; + etlDir);
 
 
 </jsScript_script>
