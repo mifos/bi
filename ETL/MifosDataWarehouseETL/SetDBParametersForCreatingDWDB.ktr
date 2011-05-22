@@ -234,12 +234,12 @@
 if (Key == &quot;DestinationDB&#47;user&quot;)
 {
 	setVariable(&quot;db_username&quot;, Value, &quot;r&quot;);
-	writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;user: &quot; + Value);
+	&#47;&#47;writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;user: &quot; + Value);
 }
 if (Key == &quot;DestinationDB&#47;password&quot;)
 {
 	setVariable(&quot;db_password&quot;, Value, &quot;r&quot;);
-	writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;password: &quot; + Value);
+	&#47;&#47;writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;password: &quot; + Value);
 }
 if (Key == &quot;DestinationDB&#47;url&quot;)
 {
@@ -263,7 +263,7 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
   	}
 
 	setVariable(&quot;dwdb&quot;, dbname, &quot;r&quot;);
-	writeToLog(&quot;e&quot;, &quot;dwdb: &quot; + dbname);
+	&#47;&#47;writeToLog(&quot;e&quot;, &quot;dwdb: &quot; + dbname);
 }</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -290,7 +290,7 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
 var etlDir = &quot;&quot;;
 var osname = substr(getVariable(&quot;os.name&quot;, &quot;&quot;), 0, 7);
 
-writeToLog(&quot;e&quot;, &quot;osname substr: &quot; + osname);
+&#47;&#47;writeToLog(&quot;e&quot;, &quot;osname substr: &quot; + osname);
 if (osname == &quot;Windows&quot;)
 {
 	etlDir = replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
@@ -303,10 +303,10 @@ else
 setVariable(&quot;etl_dir&quot;, etlDir, &quot;r&quot;);
 setVariable(&quot;etl_job&quot;, &quot;Initial Incremental Entry&quot;, &quot;r&quot;);
 
-writeToLog(&quot;e&quot;, &quot;etldir: &quot; + etlDir);
-writeToLog(&quot;e&quot;, &quot;os.arch: &quot; + getVariable(&quot;os.arch&quot;, &quot;&quot;));
-writeToLog(&quot;e&quot;, &quot;os.name: &quot; + getVariable(&quot;os.name&quot;, &quot;&quot;));
-writeToLog(&quot;e&quot;, &quot;os.version: &quot; + getVariable(&quot;os.version&quot;, &quot;&quot;));
+&#47;&#47;writeToLog(&quot;e&quot;, &quot;etldir: &quot; + etlDir);
+&#47;&#47;writeToLog(&quot;e&quot;, &quot;os.arch: &quot; + getVariable(&quot;os.arch&quot;, &quot;&quot;));
+&#47;&#47;writeToLog(&quot;e&quot;, &quot;os.name: &quot; + getVariable(&quot;os.name&quot;, &quot;&quot;));
+&#47;&#47;writeToLog(&quot;e&quot;, &quot;os.version: &quot; + getVariable(&quot;os.version&quot;, &quot;&quot;));
 
 
 </jsScript_script>
