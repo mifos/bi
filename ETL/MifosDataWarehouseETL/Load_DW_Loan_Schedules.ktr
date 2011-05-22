@@ -70,13 +70,11 @@
 though it might be more useful to include current payment for expected payments reporting
 or... always use production schema for this
 
-Need to add create and&#47;or update timestamp to determine changes.
-
 </note>
       <xloc>174</xloc>
       <yloc>149</yloc>
       <width>456</width>
-      <heigth>85</heigth>
+      <heigth>60</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>

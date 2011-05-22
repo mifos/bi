@@ -66,16 +66,15 @@
   </info>
   <notepads>
     <notepad>
-      <note>Need to add create and&#47;or update timestamp to determine changes.
+      <note>in secdep, are some meeting dates that are before the clients created_date
+and there can be duplicate meeting_id&#47;customer_id entries. (but catering for
+the duplicates in the transformation causes inability to do bulk entry)
 
-in secdep, are some meeting dates that are before the clients created_date
-and there can be duplicate meeting_id&#47;customer_id entries.
-
-Note: this information might not be used in the standard DW reports</note>
+Note: dont believe this information is used in the standard DW reports</note>
       <xloc>6</xloc>
       <yloc>118</yloc>
-      <width>380</width>
-      <heigth>85</heigth>
+      <width>384</width>
+      <heigth>72</heigth>
       <fontname>Microsoft Sans Serif</fontname>
       <fontsize>8</fontsize>
       <fontbold>N</fontbold>
