@@ -263,7 +263,7 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
   	}
 
 	setVariable(&quot;dwdb&quot;, dbname, &quot;r&quot;);
-	writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;url: &quot; + Value);
+	writeToLog(&quot;e&quot;, &quot;dwdb: &quot; + dbname);
 }</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
