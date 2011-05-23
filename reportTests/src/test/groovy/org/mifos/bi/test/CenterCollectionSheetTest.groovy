@@ -19,7 +19,7 @@ class CenterCollectionSheetTest {
 
     def summary1 = ['Summary', 'Total Amount Due:', '4143.0000']
     def summary2 = ['Collection', 'Issues']
-    def summary3 = ['Amount Prepaid:', '0.000', 'Total Withdrawal Issued:']
+    def summary3 = ['Amount Prepaid:', '0.0000', 'Total Withdrawal Issued:']
     def summary4 = ['Amount Collected During Meeting:', 'Total Disbursals Issued:']
     def summary5 = ['TOTAL:', 'TOTAL:']
     def summary6 = ['NET COLLECTION:']
