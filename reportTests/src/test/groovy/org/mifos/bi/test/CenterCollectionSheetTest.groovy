@@ -23,8 +23,6 @@ class CenterCollectionSheetTest {
     def summary4 = ['Amount Collected During Meeting:', 'Total Disbursals Issued:']
     def summary5 = ['TOTAL:', 'TOTAL:']
     def summary6 = ['NET COLLECTION:']
-    def summary7 = ['Signatures:']
-    def summary8 = ['Signature 1', 'Signature 2', 'Signature 3']
 
     @Test
     void testParams_MifosHO_All_All_20110208() {
@@ -66,11 +64,9 @@ class CenterCollectionSheetTest {
             t.assertRowEquals(offset+3, summary4)
             t.assertRowEquals(offset+4, summary5)
             t.assertRowEquals(offset+5, summary6)
-            t.assertRowEquals(offset+6, summary7)
-            t.assertRowEquals(offset+7, summary8)
 
             // Page footer
-            offset = 20
+            offset = 18
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
@@ -116,11 +112,9 @@ class CenterCollectionSheetTest {
             t.assertRowEquals(offset+3, summary4)
             t.assertRowEquals(offset+4, summary5)
             t.assertRowEquals(offset+5, summary6)
-            t.assertRowEquals(offset+6, summary7)
-            t.assertRowEquals(offset+7, summary8)
 
             // Page footer
-            offset = 20
+            offset = 18
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
@@ -166,11 +160,9 @@ class CenterCollectionSheetTest {
             t.assertRowEquals(offset+3, summary4)
             t.assertRowEquals(offset+4, summary5)
             t.assertRowEquals(offset+5, summary6)
-            t.assertRowEquals(offset+6, summary7)
-            t.assertRowEquals(offset+7, summary8)
 
             // Page footer
-            offset = 20
+            offset = 18
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
@@ -216,11 +208,9 @@ class CenterCollectionSheetTest {
             t.assertRowEquals(offset+3, summary4)
             t.assertRowEquals(offset+4, summary5)
             t.assertRowEquals(offset+5, summary6)
-            t.assertRowEquals(offset+6, summary7)
-            t.assertRowEquals(offset+7, summary8)
 
             // Page footer
-            offset = 20
+            offset = 18
             t.assertCellEquals(offset, 1, 'v1.1/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
