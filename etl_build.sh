@@ -39,7 +39,9 @@ log=`mktemp`
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
 #A step which checks for the existance of a last_updated column returns an error which can be disregarded
-sed -i '/Column [last_updated] doesn/d' $log
+sed '/Column [last_updated] doesn/d' $log > copyof.log
+rm $log
+mv copyof.log $log
 
 exitcode=0
 if grep -q '^ERROR ' $log
