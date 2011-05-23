@@ -142,72 +142,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Due Date Lookup</from><to>Create dw_customer_schedules</to><enabled>Y</enabled> </hop>  <hop> <from>Read customer_schedule</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read customer_schedule</to><enabled>Y</enabled> </hop>  </order>
-  <step>
-    <name>Create dw_customer_schedules</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <schema/>
-    <table>dw_customer_schedules</table>
-    <commit>2000</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>id</column_name>
-          <stream_name>id</stream_name>
-        </field>
-        <field>
-          <column_name>customer_id</column_name>
-          <stream_name>customer_id</stream_name>
-        </field>
-        <field>
-          <column_name>installment_id</column_name>
-          <stream_name>installment_id</stream_name>
-        </field>
-        <field>
-          <column_name>misc_fees</column_name>
-          <stream_name>misc_fees</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty</column_name>
-          <stream_name>misc_penalty</stream_name>
-        </field>
-        <field>
-          <column_name>due_date</column_name>
-          <stream_name>due_date</stream_name>
-        </field>
-        <field>
-          <column_name>due_date_key</column_name>
-          <stream_name>due_date_key</stream_name>
-        </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>589</xloc>
-      <yloc>68</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
+  <hop> <from>Read customer_schedule</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Get Start and End Date Variables</from><to>Read customer_schedule</to><enabled>Y</enabled> </hop>  <hop> <from>Due Date Lookup</from><to>Insert &#47; Update dw_customer_schedules</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Due Date Lookup</name>
     <type>DBLookup</type>
@@ -245,37 +180,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>320</xloc>
       <yloc>68</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Read customer_schedule</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>SourceDB</connection>
-    <sql>select cs.id,
-cs.customer_id, cs.installment_id,
-cs.misc_fees, 
-cs.misc_penalty,
-cs.action_date as due_date
-from customer_schedule cs
-where last_updated &gt;= date(?) and last_updated &lt; date(?)</sql>
-    <limit>0</limit>
-    <lookup>Get Start and End Date Variables</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>164</xloc>
-      <yloc>66</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -320,6 +224,103 @@ where last_updated &gt;= date(?) and last_updated &lt; date(?)</sql>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>164</xloc>
       <yloc>249</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Read customer_schedule</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>select cs.id,
+cs.customer_id, cs.installment_id,
+cs.misc_fees, 
+cs.misc_penalty,
+cs.action_date as due_date
+from customer_schedule cs
+where last_updated &gt;= date(?) and last_updated &lt; date(?)</sql>
+    <limit>0</limit>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>164</xloc>
+      <yloc>68</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Insert &#47; Update dw_customer_schedules</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <commit>2000</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dw_customer_schedules</table>
+      <key>
+        <name>id</name>
+        <field>id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id</name>
+        <rename>id</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>customer_id</name>
+        <rename>customer_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>installment_id</name>
+        <rename>installment_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>misc_fees</name>
+        <rename>misc_fees</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>misc_penalty</name>
+        <rename>misc_penalty</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>due_date</name>
+        <rename>due_date</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>due_date_key</name>
+        <rename>due_date_key</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>524</xloc>
+      <yloc>68</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

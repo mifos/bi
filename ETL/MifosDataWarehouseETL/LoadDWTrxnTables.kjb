@@ -197,8 +197,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>714</xloc>
-      <yloc>350</yloc>
+      <xloc>814</xloc>
+      <yloc>273</yloc>
       </entry>
     <entry>
       <name>Load dw_loan_fee_schedules</name>
@@ -261,8 +261,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>794</xloc>
-      <yloc>272</yloc>
+      <xloc>746</xloc>
+      <yloc>352</yloc>
       </entry>
     <entry>
       <name>Columns exist in a table</name>
@@ -281,46 +281,6 @@
       <nr>0</nr>
       <xloc>283</xloc>
       <yloc>99</yloc>
-      </entry>
-    <entry>
-      <name>DUMMY</name>
-      <description/>
-      <type>SPECIAL</type>
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>Y</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>469</xloc>
-      <yloc>50</yloc>
-      </entry>
-    <entry>
-      <name>DUMMY 2</name>
-      <description/>
-      <type>SPECIAL</type>
-      <start>N</start>
-      <dummy>Y</dummy>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
-      <intervalSeconds>0</intervalSeconds>
-      <intervalMinutes>60</intervalMinutes>
-      <hour>12</hour>
-      <minutes>0</minutes>
-      <weekDay>1</weekDay>
-      <DayOfMonth>1</DayOfMonth>
-      <parallel>Y</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>227</xloc>
-      <yloc>250</yloc>
       </entry>
     <entry>
       <name>Load Incremental client_attendances</name>
@@ -383,8 +343,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>99</xloc>
-      <yloc>461</yloc>
+      <xloc>98</xloc>
+      <yloc>463</yloc>
       </entry>
     <entry>
       <name>Load Incremental dw_loan_fee_schedules</name>
@@ -482,6 +442,26 @@
       <xloc>356</xloc>
       <yloc>475</yloc>
       </entry>
+    <entry>
+      <name>No Schedules Audit Found</name>
+      <description/>
+      <type>SUCCESS</type>
+      <parallel>Y</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>462</xloc>
+      <yloc>100</yloc>
+      </entry>
+    <entry>
+      <name>Schedule Audit Found</name>
+      <description/>
+      <type>SUCCESS</type>
+      <parallel>Y</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>285</xloc>
+      <yloc>235</yloc>
+      </entry>
   </entries>
   <hops>
     <hop>
@@ -495,7 +475,7 @@
     </hop>
     <hop>
       <from>Columns exist in a table</from>
-      <to>DUMMY</to>
+      <to>No Schedules Audit Found</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -503,8 +483,53 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>No Schedules Audit Found</from>
+      <to>Load fact_client_attendances</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>No Schedules Audit Found</from>
+      <to>Load dw_loan_schedules</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>No Schedules Audit Found</from>
+      <to>Load dw_loan_fee_schedules</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>No Schedules Audit Found</from>
+      <to>Load dw_customer_fee_schedules</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>No Schedules Audit Found</from>
+      <to>Load dw_customer_schedules</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
       <from>Columns exist in a table</from>
-      <to>DUMMY 2</to>
+      <to>Schedule Audit Found</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -512,93 +537,48 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>DUMMY</from>
-      <to>Load fact_client_attendances</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>DUMMY</from>
-      <to>Load dw_loan_schedules</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>DUMMY</from>
-      <to>Load dw_customer_fee_schedules</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>DUMMY</from>
-      <to>Load dw_loan_fee_schedules</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>DUMMY</from>
-      <to>Load dw_customer_schedules</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>DUMMY 2</from>
+      <from>Schedule Audit Found</from>
       <to>Load Incremental client_attendances</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
+      <evaluation>N</evaluation>
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>DUMMY 2</from>
+      <from>Schedule Audit Found</from>
       <to>Load Incremental dw_loan_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
+      <evaluation>N</evaluation>
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>DUMMY 2</from>
+      <from>Schedule Audit Found</from>
       <to>Load Incremental dw_loan_fee_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
+      <evaluation>N</evaluation>
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>DUMMY 2</from>
-      <to>Load Incremental dw_customer_fee_schedules</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>DUMMY 2</from>
+      <from>Schedule Audit Found</from>
       <to>Load Incremental dw_customer_schedules</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Schedule Audit Found</from>
+      <to>Load Incremental dw_customer_fee_schedules</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
       <unconditional>Y</unconditional>
     </hop>
   </hops>
