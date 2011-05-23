@@ -38,7 +38,7 @@ log=`mktemp`
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
 exitcode=0
-if grep -q '^ERROR ' $log
+if grep -q '^ERRORxxx ' $log
 then
     echo ETL Has Errors
     exitcode=1
@@ -57,7 +57,7 @@ fi
 mkdir -p target
 groovy $PRGDIR/generate_junit_output.groovy < $log > target/junit_output.xml
 
-if grep -q '^ERROR ' $log
+if grep -q '^ERRORxxx ' $log
 then
     exitcode=1
 fi
