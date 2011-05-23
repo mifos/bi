@@ -71,7 +71,7 @@ class LoanOfficerDetailedReportTest {
     def centerTotal_20100815 = ['Total', '4', '2924.9000', '1977.1000', '781.1000', '-']
     def centerTotal = ['Total', '4', '2924.9000', '1998.8000', '2924.9000', '-']
 
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
     void testParams_br2_br2LOxxx_20100701_20100930() {

@@ -56,7 +56,7 @@ class GroupCollectionSheetMPESATest {
 
             // Page footer
             offset = 14
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
@@ -98,7 +98,7 @@ class GroupCollectionSheetMPESATest {
 
             // Page footer
             offset = 14
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
@@ -140,7 +140,7 @@ class GroupCollectionSheetMPESATest {
 
             // Page footer
             offset = 14
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
@@ -182,7 +182,7 @@ class GroupCollectionSheetMPESATest {
 
             // Page footer
             offset = 14
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
