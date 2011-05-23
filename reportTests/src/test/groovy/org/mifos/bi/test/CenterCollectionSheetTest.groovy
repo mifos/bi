@@ -67,7 +67,7 @@ class CenterCollectionSheetTest {
 
             // Page footer
             offset = 18
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
@@ -115,7 +115,7 @@ class CenterCollectionSheetTest {
 
             // Page footer
             offset = 18
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
@@ -163,7 +163,7 @@ class CenterCollectionSheetTest {
 
             // Page footer
             offset = 18
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
@@ -211,7 +211,7 @@ class CenterCollectionSheetTest {
 
             // Page footer
             offset = 18
-            t.assertCellEquals(offset, 1, 'v1.1/<null>')
+            t.assertCellEquals(offset, 1, 'v1.2/<null>')
             t.assertCellEquals(offset, 2, 'Page 1 / 1')
         }
     }
