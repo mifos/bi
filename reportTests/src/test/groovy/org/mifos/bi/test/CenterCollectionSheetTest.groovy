@@ -13,7 +13,7 @@ class CenterCollectionSheetTest {
 
     def br2Client1xxxlp1 = ['13', 'br2 client 1 xxx', 'lp1 - 32', '7', '2924.9000', '18.1000', '2943.0000', '0.0000']
     def sp1 = ['sp1 - 30', '400.0000']
-    def total2 = ['TOTAL:', '2924.9000', '18.1000', '3343.0000', '0']
+    def total2 = ['TOTAL:', '2924.9000', '18.1000', '3343.0000', '0.0000']
 
     def annotation = ['"* Att = P, A, L, AA"']
 
