@@ -279,8 +279,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>283</xloc>
-      <yloc>99</yloc>
+      <xloc>282</xloc>
+      <yloc>98</yloc>
       </entry>
     <entry>
       <name>Load Incremental client_attendances</name>
@@ -407,8 +407,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>521</xloc>
-      <yloc>435</yloc>
+      <xloc>520</xloc>
+      <yloc>430</yloc>
       </entry>
     <entry>
       <name>Load Incremental dw_customer_schedules</name>

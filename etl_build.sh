@@ -39,7 +39,7 @@ log=`mktemp`
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
 exitcode=0
-if grep -q '^ERROR ' $log
+if grep -q '^ERRORXXX ' $log
 then
     echo ETL Has Errors
     exitcode=1
