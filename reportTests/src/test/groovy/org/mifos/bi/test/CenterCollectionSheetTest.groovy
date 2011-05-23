@@ -11,7 +11,7 @@ class CenterCollectionSheetTest {
     def group70 = ['70', 'group for change to center in diff branch after mifos fix - 2', 'Other Fees', 'Group Fee Default Periodic  40: 400.00', '400.0000']
     def total1 = ['TOTAL:', '0', '0', '800.0000', '0']
 
-    def br2Client1xxxlp1 = ['13', 'br2 client 1 xxx', 'lp1 - 32', '7', '2924.9000', '18.1000', '2943.0000', '0.00']
+    def br2Client1xxxlp1 = ['13', 'br2 client 1 xxx', 'lp1 - 32', '7', '2924.9000', '18.1000', '2943.0000', '0.0000']
     def sp1 = ['sp1 - 30', '400.0000']
     def total2 = ['TOTAL:', '2924.9000', '18.1000', '3343.0000', '0']
 
