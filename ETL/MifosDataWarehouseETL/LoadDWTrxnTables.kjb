@@ -265,7 +265,7 @@
       <yloc>352</yloc>
       </entry>
     <entry>
-      <name>Columns exist in a table</name>
+      <name>Check For Schedules Audit</name>
       <description/>
       <type>COLUMNS_EXIST</type>
       <tablename>customer_schedule</tablename>
@@ -466,7 +466,7 @@
   <hops>
     <hop>
       <from>START</from>
-      <to>Columns exist in a table</to>
+      <to>Check For Schedules Audit</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -474,7 +474,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Columns exist in a table</from>
+      <from>Check For Schedules Audit</from>
       <to>No Schedules Audit Found</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -528,7 +528,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Columns exist in a table</from>
+      <from>Check For Schedules Audit</from>
       <to>Schedule Audit Found</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
