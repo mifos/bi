@@ -30,7 +30,7 @@ class DueVsCollectedBranchTest {
     def grandTotalbr2_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
     def grandTotal_20100701_20100930 = ['Grand Total', '3000.0000', '21.0000', '-', '-', '-', '3322.2000', '8.7000', '-', '-', '-']
     def collectionsFootnote = ['* These amounts do not include adjusted nor reversed payments']
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
     void testParams_All_20100701_20100930() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load_DW_Loan_Schedules</name>
+    <name>Load Incremental_Loan_fee_schedules</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,31 +65,6 @@
   <modified_date>2010&#47;08&#47;04 15:02:22.858</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Decided not to &apos;star schema&apos; loan schedule info... just copying as is without payment info
-though it might be more useful to include current payment for expected payments reporting
-or... always use production schema for this
-
-</note>
-      <xloc>174</xloc>
-      <yloc>149</yloc>
-      <width>456</width>
-      <heigth>60</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -167,10 +142,54 @@ or... always use production schema for this
     </attributes>
   </connection>
   <order>
-  <hop> <from>Due Date Lookup</from><to>Create dw_loan_schedules</to><enabled>Y</enabled> </hop>  <hop> <from>Read loan_schedule</from><to>Due Date Lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Get Start and End Date Variables</from><to>Read loan_fee_schedule</to><enabled>Y</enabled> </hop>  <hop> <from>Read loan_fee_schedule</from><to>Insert &#47; Update dw_loan_fee_schedules</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Create dw_loan_schedules</name>
-    <type>TableOutput</type>
+    <name>Get Start and End Date Variables</name>
+    <type>GetVariable</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>startDate</name>
+        <variable>${MAINSTARTDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endDate</name>
+        <variable>${MAINENDTRANSACTIONDATE}</variable>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>227</xloc>
+      <yloc>252</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Insert &#47; Update dw_loan_fee_schedules</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -179,111 +198,48 @@ or... always use production schema for this
            <schema_name/>
            </partitioning>
     <connection>DestinationDB</connection>
-    <schema/>
-    <table>dw_loan_schedules</table>
     <commit>2000</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>id</column_name>
-          <stream_name>id</stream_name>
-        </field>
-        <field>
-          <column_name>loan_account_id</column_name>
-          <stream_name>loan_account_id</stream_name>
-        </field>
-        <field>
-          <column_name>installment_id</column_name>
-          <stream_name>installment_id</stream_name>
-        </field>
-        <field>
-          <column_name>principal_amount</column_name>
-          <stream_name>principal_amount</stream_name>
-        </field>
-        <field>
-          <column_name>interest_amount</column_name>
-          <stream_name>interest_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_fee_amount</column_name>
-          <stream_name>misc_fee_amount</stream_name>
-        </field>
-        <field>
-          <column_name>misc_penalty_amount</column_name>
-          <stream_name>misc_penalty_amount</stream_name>
-        </field>
-        <field>
-          <column_name>due_date_key</column_name>
-          <stream_name>due_date_key</stream_name>
-        </field>
-        <field>
-          <column_name>due_date</column_name>
-          <stream_name>due_date</stream_name>
-        </field>
-    </fields>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema/>
+      <table>dw_loan_fee_schedules</table>
+      <key>
+        <name>account_fees_detail_id</name>
+        <field>account_fees_detail_id</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>account_fees_detail_id</name>
+        <rename>account_fees_detail_id</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id</name>
+        <rename>id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>fee_id</name>
+        <rename>fee_id</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>amount</name>
+        <rename>amount</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>592</xloc>
+      <xloc>532</xloc>
       <yloc>69</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Due Date Lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>400</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_date</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>due_date</name>
-        <field>date_value</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>date_key</name>
-        <rename>due_date_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>320</xloc>
-      <yloc>68</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Read loan_schedule</name>
+    <name>Read loan_fee_schedule</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -293,23 +249,21 @@ or... always use production schema for this
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql>select ls.id,
-ls.account_id as loan_account_id, ls.installment_id,
-ls.principal as principal_amount, 
-ls.interest as interest_amount, 
-ls.misc_fees as misc_fee_amount, 
-(ls.misc_penalty+ls.penalty) as misc_penalty_amount,
-ls.action_date as due_date
-from loan_schedule ls</sql>
+    <sql>select lfs.account_fees_detail_id,
+lfs.id,
+lfs.fee_id,
+lfs.amount
+from loan_fee_schedule lfs
+where last_updated &gt;= date(?) and last_updated &lt; date(?)</sql>
     <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
+    <lookup>Get Start and End Date Variables</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>58</xloc>
-      <yloc>66</yloc>
+      <xloc>227</xloc>
+      <yloc>69</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

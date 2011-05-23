@@ -17,7 +17,7 @@ class ClientExitTest {
     def subTotalsClient = ['Total', '1', '', '', '', '', '', '', '0.0000', '']
     def subTotalsEmpty = ['Total', '0', '', '', '', '', '', '', '0', '']
 
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
     void testParams_20100101_20110123_All_All_All() {

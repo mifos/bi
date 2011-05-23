@@ -23,7 +23,7 @@ class FundsMovementTest {
     def detailsSecondFundFirstAccount_20101231 = ['4', 'client dw1 1 1 zeppelin', '2010-07-16', '3000.0000', '7', '1 week(s)', '2752.9000', '0.0000', '0.0000', '0.0000', '0']
     def subTotalSecondFund_20101231 = ['Sub Total', '1', ' ', '3000.0000', ' ', ' ', '2752.9000', '0.0000', '0.0000', '0.0000', ' ']
 
-    def pageFooter = ['Version 1.0', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_20101231() {

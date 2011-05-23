@@ -20,7 +20,7 @@ class LoanOfficerPerformanceSummaryCumulativeTest {
     def grandTotalAsOf20100815 = ['Grand Total As of Date', '2', '4', '4', '50.00000000000000', '1', '2943.0000', '2924.9000', '18.1000', '781.1000', '100.00000000000000', '1977.1000']
     def grandTotalAsOf20100930 = ['Grand Total As of Date', '2', '4', '5', '50.00000000000000', '1', '2943.0000', '2924.9000', '18.1000', '2924.9000', '100.00000000000000', '1998.8000']
 
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
     void testParams_br2_20100701_20100930() {

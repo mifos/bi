@@ -203,14 +203,12 @@
       <script>
 cd ${etl_dir}
 
-echo CREATE DATABASE ${dwdb};  &gt; createdb.sql
-mysql -u${db_username} -p${db_password} &lt; createdb.sql
+echo CREATE DATABASE ${dwdb} | mysql -u${db_username} -p${db_password}
 mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_mifos_datawarehouse.sql
 mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_mifos_datawarehouse_stored_procedures.sql
 mysql -u${db_username} -p${db_password}    ${dwdb} &lt; load_ppi_poverty_lines.sql
 mysql -u${db_username} -p${db_password}    ${dwdb}  --default_character_set utf8 &lt; load_dw_ppi_survey.sql
-
-del createdb.sql</script>
+</script>
       <loglevel>Basic</loglevel>
       <parallel>N</parallel>
       <draw>Y</draw>

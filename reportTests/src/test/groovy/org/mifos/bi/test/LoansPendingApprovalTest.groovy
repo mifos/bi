@@ -15,7 +15,7 @@ class LoansPendingApprovalTest {
 
     def total = ['Total', '0']
 
-    def pageFooter = ['Version 1.1', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_All() {
