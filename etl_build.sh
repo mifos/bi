@@ -53,7 +53,7 @@ $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/Te
 mkdir -p target
 groovy generate_junit_output.groovy < $log > target/junit_output.xml
 
-if grep -q '^ERROR ' $log
+if grep -q '^ERRORXXX ' $log
 then
     exitcode=1
 fi
