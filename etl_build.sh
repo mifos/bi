@@ -38,13 +38,8 @@ echo "Running ETL..."
 log=`mktemp`
 $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETL/DataWarehouseInitialLoad.kjb` | tee $log
 
-#A step which checks for the existance of a last_updated column returns an error which can be disregarded
-#sed '/Column [last_updated] doesn/d' $log > copyof.log
-#rm $log
-#mv copyof.log $log
-
 exitcode=0
-if grep -q '^ERRORx ' $log
+if grep -q '^ERROR ' $log
 then
     echo ETL Has Errors
     exitcode=1
@@ -58,7 +53,7 @@ $PDI_HOME/kitchen.sh /file:`readlink -f $PRGDIR/ETL/MifosDataWarehouseETLTest/Te
 mkdir -p target
 groovy generate_junit_output.groovy < $log > target/junit_output.xml
 
-if grep -q '^ERRORx ' $log
+if grep -q '^ERROR ' $log
 then
     exitcode=1
 fi
