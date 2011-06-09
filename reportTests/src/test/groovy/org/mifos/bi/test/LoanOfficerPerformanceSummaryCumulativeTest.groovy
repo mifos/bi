@@ -17,8 +17,6 @@ class LoanOfficerPerformanceSummaryCumulativeTest {
     def detailsAsOf20100930Br2LOxxx = ['br2 LO xxx', '2010-07-20', '2', '4', '5', '50.00', '1', '2943.0000', '2924.9000', '18.1000', '2924.9000', '100.00', '1998.8000']
     def totalAsOf20100815 = ['Total As of Date', '2', '4', '4', '50.00000000000000', '1', '2943.0000', '2924.9000', '18.1000', '781.1000', '100.00000000000000', '1977.1000']
     def totalAsOf20100930 = ['Total As of Date', '2', '4', '5', '50.00000000000000', '1', '2943.0000', '2924.9000', '18.1000', '2924.9000', '100.00000000000000', '1998.8000']
-    def grandTotalAsOf20100815 = ['Grand Total As of Date', '2', '4', '4', '50.00000000000000', '1', '2943.0000', '2924.9000', '18.1000', '781.1000', '100.00000000000000', '1977.1000']
-    def grandTotalAsOf20100930 = ['Grand Total As of Date', '2', '4', '5', '50.00000000000000', '1', '2943.0000', '2924.9000', '18.1000', '2924.9000', '100.00000000000000', '1998.8000']
 
     def pageFooter = ['Version 1.2', 'Page', '1 / 1']
 
@@ -50,12 +48,9 @@ class LoanOfficerPerformanceSummaryCumulativeTest {
             // Details
             t.assertRowEquals(offset+3, detailsAsOf20100930Br2LOxxx)
             t.assertRowEquals(offset+4, totalAsOf20100930)
-            // Details footer
-            t.assertRowEquals(offset+5, details2ndHeader)
-            t.assertRowEquals(offset+6, grandTotalAsOf20100930)
 
             // Page footer
-            offset = 11
+            offset = 9
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -90,12 +85,9 @@ class LoanOfficerPerformanceSummaryCumulativeTest {
             // Details
             t.assertRowEquals(offset+3, detailsAsOf20100815Br2LOxxx)
             t.assertRowEquals(offset+4, totalAsOf20100815)
-            // 2nd Details footer
-            t.assertRowEquals(offset+5, details2ndHeader)
-            t.assertRowEquals(offset+6, grandTotalAsOf20100815)
 
             // Page footer
-            offset = 11
+            offset = 9
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')

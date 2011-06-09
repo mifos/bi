@@ -25,7 +25,6 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             def branch = ['Office:', 'br2']
             def detailsDuringPeriod = ['br2 LO xxx', '2010-07-20', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
             def totalDuringPeriod = ['Total During Period', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
-            def grandTotalDuringPeriod = ['Grand Total During Period', '3', '1', '3000.0000', '78.0000', '5', '3', '1977.0000', '0.0000', '0']
 
             // MFI Name
             t.assertRowEquals(1, [MFIName])
@@ -46,12 +45,9 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             // Details
             t.assertRowEquals(offset+2, detailsDuringPeriod)
             t.assertRowEquals(offset+3, totalDuringPeriod)
-            // 1st Details footer
-            t.assertRowEquals(offset+4, detailsHeader)
-            t.assertRowEquals(offset+5, grandTotalDuringPeriod)
 
             // Page footer
-            offset = 10
+            offset = 8
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
@@ -71,7 +67,6 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             def detailsDuringPeriod2 = ['br1 lo 2 xxx', '2010-07-04', '4', '0', '0.0000', '0.0000', '6', '2', '756.0000', '0.0000', '0']
             def detailsDuringPeriod3 = ['br1 lo3 Sturt.. ..', '2010-07-29', '1', '0', '0.0000', '0.0000', '0', '0', '0.0000', '0.0000', '0']
             def totalDuringPeriod = ['Total During Period', '26', '3', '12000.0000', '3252.9000', '22', '26', '1147.0000', '341.0000', '0']
-            def grandTotalDuringPeriod = ['Grand Total During Period', '26', '3', '12000.0000', '3252.9000', '22', '26', '1147.0000', '341.0000', '0']
 
             // MFI Name
             t.assertRowEquals(1, [MFIName])
@@ -95,12 +90,9 @@ class LoanOfficerPerformanceSummaryDuringPeriodTest {
             t.assertRowEquals(offset+3, detailsDuringPeriod2)
             t.assertRowEquals(offset+4, detailsDuringPeriod3)
             t.assertRowEquals(offset+5, totalDuringPeriod)
-            // 1st Details footer
-            t.assertRowEquals(offset+6, detailsHeader)
-            t.assertRowEquals(offset+7, grandTotalDuringPeriod)
 
             // Page footer
-            offset = 12
+            offset = 10
             t.assertRowEquals(offset, pageFooter)
             t.assertCellEquals(offset+1, 1, 'Printed by:')
             t.assertCellEquals(offset+1, 2, 'On:')
