@@ -244,30 +244,56 @@ if (Key == &quot;DestinationDB&#47;password&quot;)
 if (Key == &quot;DestinationDB&#47;url&quot;)
 {
 
-	var dbname;
+	var cutoffFromQuestionMark;
 	var questionPos = indexOf(Value,&quot;?&quot;);
 	if (questionPos == -1)
 	{
-		dbname = Value;
+		cutoffFromQuestionMark = Value;
 	}
 	else
 	{
-		dbname = substr(Value,0, questionPos);
+		cutoffFromQuestionMark = substr(Value,0, questionPos);
 	}
 
-	var slashpos = indexOf(dbname,&quot;&#47;&quot;, slashpos);
+	var dbname;
+	var hostname;
+	var portnumber;
+	var hostandport;
+	var slashpos;
+	var doubleslashpos;
+	var colonpos;
+
+	dbname = cutoffFromQuestionMark;
+	slashpos = indexOf(cutoffFromQuestionMark,&quot;&#47;&quot;, 0);
 	while ( slashpos != -1)
   	{
 		dbname = substr(dbname, slashpos + 1);
 		slashpos = indexOf(dbname,&quot;&#47;&quot;, slashpos) 
   	}
 
+
+
+	doubleslashpos = indexOf(cutoffFromQuestionMark,&quot;&#47;&#47;&quot;, 0);
+	hostandport = substr(cutoffFromQuestionMark, doubleslashpos + 2);
+	slashpos = indexOf(hostandport,&quot;&#47;&quot;, 0);
+	hostandport = substr(hostandport, 0, slashpos );
+
+	colonpos = indexOf(hostandport,&quot;:&quot;, 0);
+	hostname = substr(hostandport, 0, colonpos);
+	portnumber = substr(hostandport, colonpos + 1);
+
+
 	setVariable(&quot;dwdb&quot;, dbname, &quot;r&quot;);
 	&#47;&#47;writeToLog(&quot;e&quot;, &quot;dwdb: &quot; + dbname);
+	setVariable(&quot;hname&quot;, hostname, &quot;r&quot;);
+	&#47;&#47;writeToLog(&quot;e&quot;, &quot;hname: &quot; + hostname);
+	setVariable(&quot;portnum&quot;, portnumber, &quot;r&quot;);
+	&#47;&#47;writeToLog(&quot;e&quot;, &quot;portnum: &quot; + portnumber);
+
 }</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>604</xloc>
+      <xloc>603</xloc>
       <yloc>103</yloc>
       <draw>Y</draw>
       </GUI>
