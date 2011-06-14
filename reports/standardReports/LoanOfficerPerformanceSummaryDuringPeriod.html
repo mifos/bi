@@ -24,6 +24,18 @@ function runTheReport()
 {
     startDate = $('#date1Obj input').val();
     endDate = $('#date2Obj input').val();
+
+    if (invalidDate(startDate))
+    {
+        alert("Start Date: " + startDate + " is Invalid");
+        return;
+    }
+    if (invalidDate(endDate))
+    {
+        alert("End Date: " + endDate + " is Invalid");
+        return;
+    }
+
     if (startDate > endDate)
     {
         alert("Start Date is after End Date");

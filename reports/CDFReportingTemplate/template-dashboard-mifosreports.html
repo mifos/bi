@@ -78,6 +78,23 @@ function setCurrentDate() {
     return xxDate.getFullYear() + "-" + pad2(xxDate.getMonth() + 1) + "-" + pad2(xxDate.getDate());
 }
 
+function invalidDate(checkDate) {
+//validates for yyyy-mm-dd returns true if invalid, false is valid
+var dateformat = /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/;
+
+    	if(!(dateformat.test(checkDate))) {
+      	return true;
+    	}
+	else
+	{
+		var dyear = checkDate.substring(0,4);
+		var dmonth = checkDate.substring(5,7) - 1;
+		var dday = checkDate.substring(8);
+
+		var newDate=new Date(dyear,dmonth ,dday);
+		return !((dday==newDate.getDate()) && (dmonth==newDate.getMonth()) && (dyear==newDate.getFullYear()));
+	}
+}
 
 
 
