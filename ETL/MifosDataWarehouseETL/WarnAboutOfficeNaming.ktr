@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Load dim_personnel</name>
+    <name>Warn About Office Naming</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -65,28 +65,6 @@
   <modified_date>2007&#47;06&#47;07 12:04:59.781</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>Only office changes are treated at type 2 (where a new entry and valid_from &amp; valid_to dates are set).
-</note>
-      <xloc>203</xloc>
-      <yloc>18</yloc>
-      <width>508</width>
-      <heigth>22</heigth>
-      <fontname>Microsoft Sans Serif</fontname>
-      <fontsize>8</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <connection>
     <name>DestinationDB</name>
@@ -188,9 +166,9 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Office lookup</from><to>Personnel Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Personnel Data</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>  <hop> <from>Modified Java Script Value</from><to>Office lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Look For Office Name Problems</from><to>Write to log</to><enabled>Y</enabled> </hop>  </order>
   <step>
-    <name>Extract Personnel Data</name>
+    <name>Look For Office Name Problems</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -201,48 +179,30 @@
            </partitioning>
     <connection>SourceDB</connection>
     <sql>
- select p.*, ifnull(
-        (select og.office_id
-        from office og
-        where soundex(og.display_name) = 
-                soundex(p.office_name)
-        order by 1
-        limit 1), 0) as office_id
-from
-    (
-    &#47;* first offices *&#47;
-    (select p.personnel_id, &apos;n&#47;a&apos; as display_name, false as is_loan_officer,
-        if(cld.sequence_num is null, o.display_name, cld.old_value) office_name, 
-        &#47;*extra ifnull to ensure mifos personnel entry gets transferred*&#47;
-        ifnull(ifnull(pd.date_of_joining_branch, p.created_date), date(&apos;1900-01-01&apos;)) as date_of_joining_branch, null as date_of_leaving_branch   
-        from personnel p
-        join personnel_details pd on pd.personnel_id = p.personnel_id
-        join office o on o.office_id = p.office_id
-        &#47;* find first office move if there has been an office move *&#47;
-        left join change_log cl on p.personnel_id = cl.entity_id
-                        and cl.entity_type = 17
-                        and cl.change_log_id = 
-                            (select min(clmin.change_log_id)
-                            from change_log clmin
-                            join change_log_detail cldmin on cldmin.change_log_id = clmin.change_log_id
-                                                and cldmin.field_name =  &apos;Office&apos;
-                            where clmin.entity_id = p.personnel_id
-                            and clmin.entity_type = 17)
-        left join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                        and cld.field_name =  &apos;Office&apos;)
+(select &quot;Office Move - Warning. No single fuzzy match on Old Value - Office set to &apos;-&apos;&quot; as msg, cl.change_log_id, 
+p.personnel_id, p.display_name as &quot;Name&quot;, cl.changed_date, cld.old_value as &quot;Unmatched Office Name&quot;
+from change_log cl
+join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                            and cld.field_name =  &apos;Office&apos;
+                            and cl.entity_type = 17
+join personnel p on p.personnel_id = cl.entity_id
+where 1 != (select count(*) from office o
+                where soundex(o.display_name) = soundex(cld.old_value)))
+                
+union all
 
-    union all
-    
-        (select p.personnel_id, &apos;n&#47;a&apos; as display_name, false as is_loan_officer,
-        cld.new_value as office_name, 
-        cl.changed_date as date_of_joining_branch, null as date_of_leaving_branch
-        from personnel p
-        join change_log cl on cl.entity_id = p.personnel_id and cl.entity_type = 17
-        join change_log_detail cld on cld.change_log_id = cl.change_log_id
-                    and cld.field_name = (&quot;office&quot;))) p
+(select &quot;Office Move - Warning. No single fuzzy match on New Value - Office set to &apos;-&apos;&quot; as msg, cl.change_log_id, 
+p.personnel_id, p.display_name as &quot;Name&quot;, cl.changed_date, cld.new_value as &quot;Unmatched Office Name&quot;
+from change_log cl
+join change_log_detail cld on cld.change_log_id = cl.change_log_id
+                            and cld.field_name =  &apos;Office&apos;
+                            and cl.entity_type = 17
+join personnel p on p.personnel_id = cl.entity_id
+where 1 != (select count(*) from office o
+                where soundex(o.display_name) = soundex(cld.new_value)))
 
-order by 1,5;
- </sql>
+order by 2
+           </sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -250,15 +210,15 @@ order by 1,5;
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>93</xloc>
-      <yloc>192</yloc>
+      <xloc>170</xloc>
+      <yloc>59</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Modified Java Script Value</name>
-    <type>ScriptValueMod</type>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -266,166 +226,32 @@ order by 1,5;
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
-
-var date_leave_branch = &apos;2199-12-31&apos;;
-if (!(date_of_leaving_branch == null))
-{
-	date_leave_branch = date_of_leaving_branch;
-}
-
-
-var DBConnection = &quot;DestinationDB&quot;;
-var sql = &quot;select count(*) from dim_personnel p&quot;;
-sql = sql + &quot; join dim_office o on o.office_key = p.office_key&quot;;
-sql = sql + &quot; where p.personnel_id = &quot; + personnel_id;
-sql = sql + &quot; and o.office_id = &quot; + office_id;
-sql = sql + &quot; and p.valid_from =  &apos;&quot; +  date_of_joining_branch + &quot;&apos;&quot;;
-sql = sql + &quot; and ifnull(p.valid_to, &apos;2199-12-31&apos;) =  &apos;&quot; +  date_leave_branch + &quot;&apos;&quot;;
-var sqlResults = fireToDB(DBConnection, sql);
-
-
-var queryCount = parseInt(sqlResults[0][0]);
-
-if (queryCount &gt; 0)
-{
-	trans_Status = SKIP_TRANSFORMATION;
-} </jsScript_script>
-      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>311</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Office lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>DestinationDB</connection>
-    <cache>Y</cache>
-    <cache_load_all>Y</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_office</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>Y</eat_row_on_failure>
-      <key>
-        <name>office_id</name>
-        <field>office_id</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>date_of_joining_branch</name>
-        <field>valid_from</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>date_of_joining_branch</name>
-        <field>valid_to</field>
-        <condition>&gt;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>office_key</name>
-        <rename>office_key</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>529</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Personnel Dimension lookup&#47;update</name>
-    <type>DimensionLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <schema/>
-      <table>dim_personnel</table>
-      <connection>DestinationDB</connection>
-      <commit>1000</commit>
-      <update>Y</update>
-      <fields>
-        <key>
-          <name>personnel_id</name>
-          <lookup>personnel_id</lookup>
-        </key>
-        <date>
-          <name/>
-          <from>valid_from</from>
-          <to>valid_to</to>
-        </date>
-        <field>
-          <name>display_name</name>
-          <lookup>display_name</lookup>
-          <update>Punch through</update>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+    <fields>
+      <field>
+        <name>msg</name>
         </field>
-        <field>
-          <name>is_loan_officer</name>
-          <lookup>is_loan_officer</lookup>
-          <update>Punch through</update>
+      <field>
+        <name>change_log_id</name>
         </field>
-        <field>
-          <name>date_of_joining_branch</name>
-          <lookup>date_of_joining_branch</lookup>
-          <update>Insert</update>
+      <field>
+        <name>personnel_id</name>
         </field>
-        <field>
-          <name>date_of_leaving_branch</name>
-          <lookup>date_of_leaving_branch</lookup>
-          <update>Insert</update>
+      <field>
+        <name>Name</name>
         </field>
-        <field>
-          <name>office_key</name>
-          <lookup>office_key</lookup>
-          <update>Insert</update>
+      <field>
+        <name>changed_date</name>
         </field>
-        <return>
-          <name>personnel_key</name>
-          <rename/>
-          <creation_method>tablemax</creation_method>
-          <use_autoinc>N</use_autoinc>
-          <version>version</version>
-        </return>
+      <field>
+        <name>Unmatched Office Name</name>
+        </field>
       </fields>
-      <sequence/>
-      <min_year>1900</min_year>
-      <max_year>2199</max_year>
-      <cache_size>-1</cache_size>
-      <preload_cache>N</preload_cache>
-      <use_start_date_alternative>Y</use_start_date_alternative>
-      <start_date_alternative>column_value</start_date_alternative>
-      <start_date_field_name>date_of_joining_branch</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>721</xloc>
-      <yloc>191</yloc>
+      <xloc>382</xloc>
+      <yloc>59</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

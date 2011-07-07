@@ -473,8 +473,7 @@ CREATE TABLE `dw_fee` (
   `category_type` varchar(30) NOT NULL,
   `fee_frequency_type` varchar(30) NOT NULL,
   `fee_payment` varchar(40) NOT NULL,
-  PRIMARY KEY (`fee_id`),
-  UNIQUE KEY `fee_name` (`fee_name`)
+  PRIMARY KEY (`fee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

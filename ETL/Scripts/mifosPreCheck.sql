@@ -1,11 +1,5 @@
 select now() as 'Starting Check';
 
-select cast(concat('Fail: Duplicate Fee: ', fee_name) as char) as ' '
-from fees
-group by fee_name
-having count(*) > 1;
-
-
 select cast(concat('Fail: Personnel entry: ', p.display_name, ' has ', count(*), 
             ' occurences (either on the personnel table or as a result of a name change)') as char) as ' '
 from
