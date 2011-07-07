@@ -214,7 +214,7 @@ from
     (select p.personnel_id, &apos;n&#47;a&apos; as display_name, false as is_loan_officer,
         if(cld.sequence_num is null, o.display_name, cld.old_value) office_name, 
         &#47;*extra ifnull to ensure mifos personnel entry gets transferred*&#47;
-        ifnull(ifnull(pd.date_of_joining_branch, p.created_date), date(&apos;1900-01-01&apos;)) as date_of_joining_branch, null as date_of_leaving_branch   
+        ifnull(p.created_date, date(&apos;1900-01-01&apos;)) as date_of_joining_branch, null as date_of_leaving_branch   
         from personnel p
         join personnel_details pd on pd.personnel_id = p.personnel_id
         join office o on o.office_id = p.office_id
