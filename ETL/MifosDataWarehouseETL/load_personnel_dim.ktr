@@ -68,8 +68,8 @@
     <notepad>
       <note>Only office changes are treated at type 2 (where a new entry and valid_from &amp; valid_to dates are set).
 </note>
-      <xloc>203</xloc>
-      <yloc>18</yloc>
+      <xloc>204</xloc>
+      <yloc>4</yloc>
       <width>508</width>
       <heigth>22</heigth>
       <fontname>Microsoft Sans Serif</fontname>
@@ -188,7 +188,7 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Office lookup</from><to>Personnel Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Personnel Data</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>  <hop> <from>Modified Java Script Value</from><to>Office lookup</to><enabled>Y</enabled> </hop>  </order>
+  <hop> <from>Office lookup</from><to>Personnel Dimension lookup&#47;update</to><enabled>Y</enabled> </hop>  <hop> <from>Dont Add Office Move Again if Already There (Incremental ETL Case)</from><to>Office lookup</to><enabled>Y</enabled> </hop>  <hop> <from>Extract Personnel Data</from><to>Office Id Populated?</to><enabled>Y</enabled> </hop>  <hop> <from>Office Id Populated?</from><to>Dont Add Office Move Again if Already There (Incremental ETL Case)</to><enabled>Y</enabled> </hop>  <hop> <from>Office Id Populated?</from><to>Match Office Name</to><enabled>Y</enabled> </hop>  <hop> <from>Match Office Name</from><to>Office Id Populated Now (&gt;=0) ?</to><enabled>Y</enabled> </hop>  <hop> <from>Office Id Populated Now (&gt;=0) ?</from><to>Write Warning Message If Needed</to><enabled>Y</enabled> </hop>  <hop> <from>Write Warning Message If Needed</from><to>Remove msg field</to><enabled>Y</enabled> </hop>  <hop> <from>Remove msg field</from><to>Dont Add Office Move Again if Already There (Incremental ETL Case)</to><enabled>Y</enabled> </hop>  <hop> <from>Office Id Populated Now (&gt;=0) ?</from><to>Office Name Fuzzy Match</to><enabled>Y</enabled> </hop>  <hop> <from>Reference Office Data</from><to>Office Name Fuzzy Match</to><enabled>Y</enabled> </hop>  <hop> <from>Office Name Fuzzy Match</from><to>Process Fuzzy Match Output</to><enabled>Y</enabled> </hop>  <hop> <from>Process Fuzzy Match Output</from><to>Remove Unnecessary Fields</to><enabled>Y</enabled> </hop>  <hop> <from>Remove Unnecessary Fields</from><to>Write Warning Message If Needed</to><enabled>Y</enabled> </hop>  </order>
   <step>
     <name>Extract Personnel Data</name>
     <type>TableInput</type>
@@ -201,28 +201,16 @@
            </partitioning>
     <connection>SourceDB</connection>
     <sql>
-select p.*, 
-&#47;*if the_office_id is populated use it
-otherwise use first soundex match returned
-*&#47;
-
-ifnull(the_office_id, 
-
-        ifnull((select og.office_id
-        from office og
-        where soundex(og.display_name) = 
-                soundex(p.office_name)
-        order by 1
-        limit 1), 0)) as office_id
+select p.*
 from
     (
     &#47;* first offices *&#47;
     (select -1 as the_order, p.personnel_id, &apos;n&#47;a&apos; as display_name, false as is_loan_officer,
+        if(cld.sequence_num is null, o.office_id, null) as office_id,
         if(cld.sequence_num is null, o.display_name, cld.old_value) office_name, 
         &#47;*extra ifnull to ensure mifos personnel entry gets transferred*&#47;
         ifnull(if(cld.sequence_num is null, pd.date_of_joining_branch, p.created_date), date(&apos;1900-01-01&apos;)) as date_of_joining_branch,
-        if(cld.sequence_num is null, null, cl.changed_date) as date_of_leaving_branch, 
-        if(cld.sequence_num is null, o.office_id, null) as the_office_id
+        if(cld.sequence_num is null, null, cl.changed_date) as date_of_leaving_branch
         from personnel p
         join personnel_details pd on pd.personnel_id = p.personnel_id
         join office o on o.office_id = p.office_id
@@ -242,7 +230,8 @@ from
     union all
     
         (select cl.change_log_id as the_order, p.personnel_id, &apos;n&#47;a&apos; as display_name, false as is_loan_officer,
-        cld.new_value as office_name, cl.changed_date as date_of_joining_branch,
+			null as office_id, cld.new_value as office_name, 
+			cl.changed_date as date_of_joining_branch,
         
             (select clnext.changed_date &#47;* find next office move if there has been one and use that date*&#47;
             from change_log clnext 
@@ -252,7 +241,7 @@ from
             and clnext.change_log_id &gt; cl.change_log_id
             and clnext.entity_type = 17
             order by cl.change_log_id 
-            limit 1) as date_of_leaving_branch, null as the_office_id
+            limit 1) as date_of_leaving_branch
             
         from personnel p
         join change_log cl on cl.entity_id = p.personnel_id and cl.entity_type = 17
@@ -269,14 +258,14 @@ order by 2,1;
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>93</xloc>
-      <yloc>192</yloc>
+      <xloc>81</xloc>
+      <yloc>51</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Modified Java Script Value</name>
+    <name>Dont Add Office Move Again if Already There (Incremental ETL Case)</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -316,8 +305,8 @@ if (queryCount &gt; 0)
 } </jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>311</xloc>
-      <yloc>192</yloc>
+      <xloc>482</xloc>
+      <yloc>51</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -369,8 +358,8 @@ if (queryCount &gt; 0)
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>529</xloc>
-      <yloc>192</yloc>
+      <xloc>832</xloc>
+      <yloc>51</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -443,8 +432,319 @@ if (queryCount &gt; 0)
       <start_date_field_name>date_of_joining_branch</start_date_field_name>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>721</xloc>
-      <yloc>191</yloc>
+      <xloc>832</xloc>
+      <yloc>170</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Office Id Populated?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Dont Add Office Move Again if Already There (Incremental ETL Case)</send_true_to>
+<send_false_to>Match Office Name</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>office_id</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>51</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Match Office Name</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+
+var date_leave_branch = &apos;2199-12-31&apos;;
+if (!(date_of_leaving_branch == null))
+{
+	date_leave_branch = date_of_leaving_branch;
+}
+
+
+var DBConnection = &quot;SourceDB&quot;;
+var sql = &quot;select count(*) from office o where o.display_name = &apos;&quot; + office_name + &quot;&apos;&quot;;
+var sqlResults = fireToDB(DBConnection, sql);
+
+
+var queryCount = parseInt(sqlResults[0][0]);
+var matched_office_id;
+var msg = &quot;&quot;;
+
+switch(queryCount)
+{
+case 1:
+	sql = &quot;select o.office_id from office o where o.display_name = &apos;&quot; + office_name + &quot;&apos;&quot;;
+	sqlResults = fireToDB(DBConnection, sql);
+	matched_office_id = parseInt(sqlResults[0][0]);
+	msg = &quot;&quot;;
+  break;
+case 0:
+	matched_office_id = -1;
+	msg = &quot;No match for Office: &quot; + office_name;
+  break;
+default:
+	matched_office_id = 0;
+	msg = &quot;Personnel: &quot; + personnel_id + &quot; - More than one match for Incoming Office Name: &quot; + office_name + &quot; - Setting Office Id to 0&quot;;
+}
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>matched_office_id</name>
+        <rename>office_id</rename>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>0</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>msg</name>
+        <rename>msg</rename>
+        <type>String</type>
+        <length>200</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>75</xloc>
+      <yloc>169</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Office Id Populated Now (&gt;=0) ?</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Write Warning Message If Needed</send_true_to>
+<send_false_to>Office Name Fuzzy Match</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>office_id</leftvalue>
+ <function>&gt;=</function>
+ <rightvalue/>
+ <value><name>constant</name><type>Integer</type><text>0</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>#;-#</mask></value> </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>231</xloc>
+      <yloc>168</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Write Warning Message If Needed</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+if (msg &gt; &quot;&quot;)
+{
+	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
+}</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>536</xloc>
+      <yloc>168</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove msg field</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>msg</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>412</xloc>
+      <yloc>118</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Office Name Fuzzy Match</name>
+    <type>FuzzyMatch</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <from>Reference Office Data</from>
+    <lookupfield>ref_office_name</lookupfield>
+    <mainstreamfield>office_name</mainstreamfield>
+    <outputmatchfield>ChampValeur</outputmatchfield>
+    <outputvaluefield>ChampMesure</outputvaluefield>
+    <caseSensitive>N</caseSensitive>
+    <closervalue>Y</closervalue>
+    <minimalValue>.8</minimalValue>
+    <maximalValue>1</maximalValue>
+    <separator>,</separator>
+    <algorithm>jarowinkler</algorithm>
+    <lookup>
+      <value>
+        <name>ref_office_id</name>
+        <rename>ref_office_id</rename>
+      </value>
+      <value>
+        <name>ref_office_name</name>
+        <rename>ref_office_name</rename>
+      </value>
+    </lookup>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>368</xloc>
+      <yloc>274</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Reference Office Data</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>SourceDB</connection>
+    <sql>SELECT office_id as ref_office_id, display_name as ref_office_name
+from office</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>75</xloc>
+      <yloc>274</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Process Fuzzy Match Output</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+var update_office_id;
+var newmsg;
+
+if (isNum(ref_office_id))
+{
+	update_office_id = ref_office_id;
+	newmsg = &quot;Personnel: &quot; + personnel_id + &quot; - Incoming Office Name: &quot; + office_name;
+	newmsg = newmsg + &quot; - Fuzzy matched to Database Office Name: &quot; + ref_office_name;
+	newmsg = newmsg + &quot; - Database Office Id: &quot; + update_office_id;
+}
+else
+{
+
+	update_office_id = 0;	
+	newmsg = &quot;Personnel: &quot; + personnel_id + &quot; - No Match (exact or fuzzy) for Incoming Office Name: &quot; + office_name 
+	newmsg = newmsg + &quot; - Setting Office Id to 0&quot;;
+}
+ </jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>update_office_id</name>
+        <rename>office_id</rename>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>0</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>newmsg</name>
+        <rename>msg</rename>
+        <type>String</type>
+        <length>200</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>572</xloc>
+      <yloc>274</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Remove Unnecessary Fields</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>        <select_unspecified>N</select_unspecified>
+      <remove>        <name>ChampValeur</name>
+      </remove>      <remove>        <name>ChampMesure</name>
+      </remove>      <remove>        <name>ref_office_id</name>
+      </remove>      <remove>        <name>ref_office_name</name>
+      </remove>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>668</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
