@@ -200,13 +200,20 @@
            <schema_name/>
            </partitioning>
     <connection>SourceDB</connection>
-    <sql> select p.*, ifnull(
-        (select og.office_id
+    <sql>
+select p.*, 
+&#47;*if the_office_id is populated use it
+otherwise use first soundex match returned
+*&#47;
+
+ifnull(the_office_id, 
+
+        ifnull((select og.office_id
         from office og
         where soundex(og.display_name) = 
                 soundex(p.office_name)
         order by 1
-        limit 1), 0) as office_id
+        limit 1), 0)) as office_id
 from
     (
     &#47;* first offices *&#47;
@@ -214,7 +221,8 @@ from
         if(cld.sequence_num is null, o.display_name, cld.old_value) office_name, 
         &#47;*extra ifnull to ensure mifos personnel entry gets transferred*&#47;
         ifnull(if(cld.sequence_num is null, pd.date_of_joining_branch, p.created_date), date(&apos;1900-01-01&apos;)) as date_of_joining_branch,
-        if(cld.sequence_num is null, null, cl.changed_date) as date_of_leaving_branch   
+        if(cld.sequence_num is null, null, cl.changed_date) as date_of_leaving_branch, 
+        if(cld.sequence_num is null, o.office_id, null) as the_office_id
         from personnel p
         join personnel_details pd on pd.personnel_id = p.personnel_id
         join office o on o.office_id = p.office_id
@@ -244,7 +252,7 @@ from
             and clnext.change_log_id &gt; cl.change_log_id
             and clnext.entity_type = 17
             order by cl.change_log_id 
-            limit 1) as date_of_leaving_branch
+            limit 1) as date_of_leaving_branch, null as the_office_id
             
         from personnel p
         join change_log cl on cl.entity_id = p.personnel_id and cl.entity_type = 17
@@ -253,7 +261,7 @@ from
                     
                     
 order by 2,1;
- </sql>
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
