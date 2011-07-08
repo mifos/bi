@@ -6,7 +6,8 @@ ADD INDEX `updated_parent_id` (`updated_parent_id` ASC) ,
 ADD INDEX `entity_id` (`entity_id` ASC) ;
 
 
-select 'Customers created before loan officers', p.personnel_id, p.valid_from, 
+/* This next check not required from BI 1.3 */
+select 'Customers created before loan officers (not a problem from BI 1.3)', p.personnel_id, p.valid_from, 
 s.effective_date, s.level_id, s.entity_id,  
         s.updated_status, s.updated_parent_id, s.updated_loan_officer_id, s.updated_branch_id, s.customer_formedby_id 
 from stg_customer_and_account_updates s 

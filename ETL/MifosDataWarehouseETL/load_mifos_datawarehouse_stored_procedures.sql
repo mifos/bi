@@ -1034,11 +1034,19 @@ where o.office_id = office_id_param
 and o.valid_from <= date_param
 and o.valid_to > date_param;
 
-
 if current_office_key is null then
-    call SPfallover(concat('SPoffice_return_current_key_values for officie id: ', office_id_param, ' date: ', date_param, 
-            ' - expected one current dim_office entry but found none')); 
-end if;
+/* return the first entry for the office */
+	select o.office_key into current_office_key
+	from dim_office o 
+	where o.office_id = office_id_param
+	order by o.valid_from
+	limit 1;
+
+    if current_office_key is null then
+    	call SPfallover(concat('SPoffice_return_current_key_values for office id: ', office_id_param, ' date: ', date_param, 
+            ' - No dim_office entry found')); 
+    end if;
+end if;                                                                
                                                                 
 END */;;
 DELIMITER ;
@@ -1066,12 +1074,19 @@ where p.personnel_id = personnel_id_param
 and p.valid_from <= date_param
 and p.valid_to > date_param;
 
-
 if current_personnel_key is null then
-    call SPfallover(concat('SPpersonnel_return_current_key_values for personnel id: ', personnel_id_param, ' date: ', date_param, 
-            ' - expected one current dim_personnel entry but found none')); 
-end if;
-                                                                
+/* return the first entry for the personnel */
+	select p.personnel_key, p.office_key into current_personnel_key, current_office_key
+	from dim_personnel p 
+	where p.personnel_id = personnel_id_param
+	order by p.valid_from
+	limit 1;
+
+    if current_personnel_key is null then
+        call SPfallover(concat('SPpersonnel_return_current_key_values for personnel id: ', personnel_id_param, ' date: ', date_param, 
+            ' - No dim_personnel entry found')); 
+    end if;
+end if;                                                                
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1098,10 +1113,18 @@ where p.prd_offering_id = prd_offering_id_param
 and p.valid_from <= effective_date_param
 and p.valid_to > effective_date_param;
 
-
 if current_product_key is null then
-    call SPfallover(concat('SPproduct_return_current_key_value for product id: ', prd_offering_id_param, ' - expected one current dim_product entry but found none')); 
-end if;
+/* return the first entry for the product */
+	select p.product_key into current_product_key
+	from dim_product p 
+	where p.prd_offering_id = prd_offering_id_param
+	order by p.valid_from
+	limit 1;
+
+    if current_product_key is null then
+    	call SPfallover(concat('SPproduct_return_current_key_value for product id: ', prd_offering_id_param, ' - No dim_product entry found')); 
+    end if;
+end if;                                                                
                                                                 
 
 END */;;

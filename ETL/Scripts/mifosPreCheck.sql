@@ -27,7 +27,9 @@ where not exists
 and account_type_id <> 3
 group by account_type_id;
 
-select cast(concat('Fail: Clients/Customers created before their formed by Loan officers: ', 
+
+/* This next check not required from BI 1.3 */
+select cast(concat('Fail until BI 1.3: Clients/Customers created before their formed by Loan officers: ', 
                     count(*)) as char) as ' '
 from customer c
 join personnel p on p.personnel_id = c.customer_formedby_id
