@@ -327,13 +327,6 @@ order by 2,1;
         <jsScript_script>&#47;&#47;Script here
 
 
-var date_leave_branch = &apos;2199-12-31&apos;;
-if (!(date_of_leaving_branch == null))
-{
-	date_leave_branch = date_of_leaving_branch;
-}
-
-
 var DBConnection = &quot;SourceDB&quot;;
 var sql = &quot;select count(*) from office o where o.display_name = &apos;&quot; + office_name + &quot;&apos;&quot;;
 var sqlResults = fireToDB(DBConnection, sql);

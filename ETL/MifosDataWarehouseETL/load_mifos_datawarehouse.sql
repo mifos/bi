@@ -247,6 +247,7 @@ CREATE TABLE `dim_personnel` (
 LOCK TABLES `dim_personnel` WRITE;
 /*!40000 ALTER TABLE `dim_personnel` DISABLE KEYS */;
 INSERT INTO `dim_personnel` VALUES (0,0,'-','-','-',0,NULL,NULL,NULL,NULL,NULL,0,'1900-01-01','3000-01-01',1,'2010-12-03 09:42:16');
+INSERT INTO `dim_personnel` VALUES (1,-1,'Duplicate Display Name Found','-','-',0,NULL,NULL,NULL,NULL,NULL,0,'1900-01-01','3000-01-01',1,'2010-12-03 09:42:16');
 /*!40000 ALTER TABLE `dim_personnel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1394,7 +1395,7 @@ CREATE TABLE `stg_personnel_names_and_name_changes` (
   `PERSONNEL_ID` smallint(6) NOT NULL,
   `DISPLAY_NAME` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`PERSONNEL_ID_AUTO`),
-  UNIQUE KEY `DISPLAY_NAME` (`DISPLAY_NAME`)
+  KEY `DISPLAY_NAME` (`DISPLAY_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
