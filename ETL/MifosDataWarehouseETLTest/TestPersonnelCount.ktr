@@ -229,8 +229,7 @@
     <connection>DestinationDB</connection>
     <sql>select 1 as the_join, count(distinct(personnel_id)) as destination_count
 from dim_personnel
-where personnel_key &gt; 1
-&#47;*  0 and 1 keys are taken up by the unknown and duplicate entry respectively*&#47;</sql>
+where personnel_key &gt; 0</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>

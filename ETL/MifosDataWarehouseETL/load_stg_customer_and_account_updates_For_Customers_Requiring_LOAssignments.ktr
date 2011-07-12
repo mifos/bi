@@ -365,8 +365,8 @@ case 0:
 	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
   break;
 default:
-	updated_loan_officer_id = -1;
-	msg = &quot;Customer: &quot; + entity_id + &quot; - More than one match for Incoming Loan Officer Name: &quot; + loan_officer_name + &quot; - Setting Loan Officer Id to -1&quot;;
+	updated_loan_officer_id = 0;
+	msg = &quot;Customer: &quot; + entity_id + &quot; - More than one match for Incoming Loan Officer Name: &quot; + loan_officer_name + &quot; - Setting Loan Officer Id to 0&quot;;
 	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
 }
 </jsScript_script>
