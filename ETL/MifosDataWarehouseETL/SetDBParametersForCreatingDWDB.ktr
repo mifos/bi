@@ -92,6 +92,30 @@
     </attributes>
   </connection>
   <connection>
+    <name>SalesForceRealtime</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>crmadmin@applab.org</username>
+    <password>Encrypted 6170706c61627567323031306c43754758786c5146efaafd8d0deeb0a5fd14fb57d1b89ac2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>com.ddtek.jdbc.sforce.SForceDriver</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>jdbc:datadirect:sforce:&#47;&#47;login.salesforce.com</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>wcm</name>
     <server>localhost</server>
     <type>MYSQL</type>
@@ -234,12 +258,12 @@
 if (Key == &quot;DestinationDB&#47;user&quot;)
 {
 	setVariable(&quot;db_username&quot;, Value, &quot;r&quot;);
-	&#47;&#47;writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;user: &quot; + Value);
+	writeToLog(&quot;m&quot;, &quot;DEBUGGING: DestinationDB&#47;user: &quot; + Value);
 }
 if (Key == &quot;DestinationDB&#47;password&quot;)
 {
 	setVariable(&quot;db_password&quot;, Value, &quot;r&quot;);
-	&#47;&#47;writeToLog(&quot;e&quot;, &quot;DestinationDB&#47;password: &quot; + Value);
+	writeToLog(&quot;m&quot;, &quot;DEBUGGING: DestinationDB&#47;password: &quot; + Value);
 }
 if (Key == &quot;DestinationDB&#47;url&quot;)
 {
@@ -284,11 +308,11 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
 
 
 	setVariable(&quot;dwdb&quot;, dbname, &quot;r&quot;);
-	&#47;&#47;writeToLog(&quot;e&quot;, &quot;dwdb: &quot; + dbname);
+	writeToLog(&quot;m&quot;, &quot;DEBUGGING: dwdb: &quot; + dbname);
 	setVariable(&quot;hname&quot;, hostname, &quot;r&quot;);
-	&#47;&#47;writeToLog(&quot;e&quot;, &quot;hname: &quot; + hostname);
+	writeToLog(&quot;m&quot;, &quot;DEBUGGING: hname: &quot; + hostname);
 	setVariable(&quot;portnum&quot;, portnumber, &quot;r&quot;);
-	&#47;&#47;writeToLog(&quot;e&quot;, &quot;portnum: &quot; + portnumber);
+	writeToLog(&quot;m&quot;, &quot;DEBUGGING: portnum: &quot; + portnumber);
 
 }</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
