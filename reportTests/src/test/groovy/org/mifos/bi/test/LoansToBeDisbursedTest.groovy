@@ -21,7 +21,7 @@ class LoansToBeDisbursedTest {
     def totalbr4FeesLOxxx = ['Total', '0']
     def totalAllLoanProd1 = ['Total', '18000.0000']
 
-    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_All() {

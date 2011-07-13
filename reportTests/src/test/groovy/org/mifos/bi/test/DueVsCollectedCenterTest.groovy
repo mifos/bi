@@ -22,7 +22,7 @@ class DueVsCollectedCenterTest {
     def totalbr2_20100815 = ['Total', '856.2000', '5.8000', '-', '-', '-', '75.1000', '2.9000', '-', '-', '-']
 
     def collectionsFootnote = ['* These amounts do not include adjusted nor reversed payments']
-    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
     @Test
     void testParams_br2_All_All_20100701_20100930() {

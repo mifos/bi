@@ -10,7 +10,7 @@ class GroupsInformationTest {
     def summaryHeader = ['Branch Name', 'No. of Centers', 'No. of Active Groups', 'No. of On Hold Groups', 'No. of Closed Groups']
     def detailsHeader = ['External ID',	'Center Name', 'Group Name', 'System ID', 'Formation Date', 'Group Size', 'Status', 'Closed Reason', 'Closed Date', 'Loan Officer']
     
-    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
     @Test
     void testParams_All() {

@@ -44,7 +44,7 @@ class BalanceOutstandingTest {
   def loanProduct = ['Loan Product:', 'loan prod 1']
   def savingProduct = ['Saving Product:', 'savings product 1']
 
-  def pageFooter = ['Version 1.2', 'Page:']
+  def pageFooter = ['Version 1.3', 'Page:']
 
 
   @Test

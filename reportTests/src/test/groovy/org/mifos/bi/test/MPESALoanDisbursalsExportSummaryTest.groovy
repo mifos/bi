@@ -12,7 +12,7 @@ class MPESALoanDisbursalsExportSummaryTest {
 	def tableName = 'List Of Export Errors:'
 	def detailsHeader = ['Loan Account Number', 'Error Description', 'Phone Number']
 
-	def versionAndPage = ['Version 1.2', 'Page', '1 / 1']
+	def versionAndPage = ['Version 1.3', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_20100708() {

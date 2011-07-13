@@ -11,7 +11,7 @@ class ClosedLoanSummaryBranchTest {
     def details = ['BO 1', '2', '3', '3', '3', '12000.0000', '5.8000']
     def total = ['Total', '2', '3', '3', '3', '12000.0000', '5.8000']
 
-    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
     @Test
     void testParams_() {

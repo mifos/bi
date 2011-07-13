@@ -88,7 +88,7 @@ class ClosedLoans {
   def loanOfficerTotal=['Loan Officer Total:','br1 lo 1 smith','2','9000.0000','247.1000','2.9000','250.0000']
   def branchTotal=['Branch Total:','BO 1','3','12000.0000','3247.1000','5.8000','3252.9000']
 
-  def pageFooter = ['Version 1.2', 'Page']
+  def pageFooter = ['Version 1.3', 'Page']
 
 
   @Test
@@ -148,7 +148,7 @@ class ClosedLoans {
 
       // Page footer
       offset = 12
-      t.assertCellEquals(offset,1, 'Version 1.2')
+      t.assertCellEquals(offset,1, 'Version 1.3')
       t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
       t.assertCellEquals(offset + 1, 1, 'Printed by:')
@@ -216,7 +216,7 @@ class ClosedLoans {
       // Page footer
       offset = 12
 
-       t.assertCellEquals(offset,1, 'Version 1.2')
+       t.assertCellEquals(offset,1, 'Version 1.3')
       t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
       t.assertCellEquals(offset + 1, 1, 'Printed by:')
@@ -326,7 +326,7 @@ class ClosedLoans {
 	  t.assertRowEquals(offset + 12, branchTotal)
       // Page footer
       offset = 19
-      t.assertCellEquals(offset,1, 'Version 1.2')
+      t.assertCellEquals(offset,1, 'Version 1.3')
       t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
       t.assertCellEquals(offset + 1, 1, 'Printed by:')

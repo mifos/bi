@@ -11,7 +11,7 @@ class ActiveLoanSummaryBranchTest {
     def details = ['br2', '1', '1', '1', '1', '0', '3000.0000', '75.1000', '2.9000', '2924.9000', '18.1000', '0.0000']
     def total = ['Total', '1', '1', '1', '1', '0', '3000.0000', '75.1000', '2.9000', '2924.9000', '18.1000', '0.0000']
 
-    def pageFooter = ['Version 1.2', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
     @Test
     void testParams_() {

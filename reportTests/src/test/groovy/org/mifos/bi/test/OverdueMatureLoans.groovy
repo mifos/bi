@@ -33,7 +33,7 @@ def overdueMatureLoansHeader = ['Group Name','Client Name','Loan Id','Disbursal 
   def branchTotal_br2_OverdueMatureLoans = ['Branch Total:', 'br2', '1', '3000.0000', '75.1000','2.9000', '3000.0000','21.0000']
   
 
-  def pageFooter = ['Version 1.2', 'Page']
+  def pageFooter = ['Version 1.3', 'Page']
 
 
   @Test
@@ -77,7 +77,7 @@ def overdueMatureLoansHeader = ['Group Name','Client Name','Loan Id','Disbursal 
 
       // Page footer
       offset = 12
-       t.assertCellEquals(offset,1, 'Version 1.2')
+       t.assertCellEquals(offset,1, 'Version 1.3')
       t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
       t.assertCellEquals(offset + 1, 1, 'Printed by:')
@@ -127,7 +127,7 @@ def overdueMatureLoansHeader = ['Group Name','Client Name','Loan Id','Disbursal 
 
       // Page footer
       offset = 12
-      t.assertCellEquals(offset,1, 'Version 1.2')
+      t.assertCellEquals(offset,1, 'Version 1.3')
       t.assertCellEquals(offset,2, 'Page  ')
       t.assertCellEquals(offset, 3, '1 / 1')
       t.assertCellEquals(offset + 1, 1, 'Printed by:')
