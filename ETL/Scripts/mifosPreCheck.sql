@@ -1,5 +1,6 @@
 select now() as 'Starting Check';
 
+/* This next check only a warning from BI 1.3 */
 select cast(concat('Fail: Personnel entry: ', p.display_name, ' has ', count(*), 
             ' occurences (either on the personnel table or as a result of a name change)') as char) as ' '
 from
