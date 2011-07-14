@@ -5,7 +5,7 @@
 
 set -e
 
-PREFIX=mifos_bi-1.2.0
+PREFIX=mifos_bi-1.3.0
 
 mkdir -p ${PREFIX}/ETL
 cp -r BUILD_ENV.txt README INSTALL LICENSE reports DashboardsTemplate ${PREFIX}/
