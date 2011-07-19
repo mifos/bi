@@ -343,14 +343,11 @@ var bslash = &quot;&#47;&quot;;
 
 var ifnd = getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;);
 
-var osname = substr(getVariable(&quot;os.name&quot;, &quot;&quot;), 0, 10);
-if (substr(osname,0,7) == &quot;Windows&quot;)
+var osname = substr(getVariable(&quot;os.name&quot;, &quot;&quot;), 0, 7);
+if (osname == &quot;Windows&quot;)
 {
 	etlDir = replace(ifnd,&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
-	if (substr(osname,0,10) == &quot;Windows XP&quot;)
-	{
-		etlDir = replace(etlDir,bslash, fslash);
-	}
+	etlDir = replace(etlDir,bslash, fslash);
 }
 else
 {

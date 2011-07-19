@@ -343,8 +343,9 @@ where c.customer_level_id = 2
         <jsScript_script>&#47;&#47;Script here
 
 
+var sqlSafeLO = escapeSQL(loan_officer_name);
 var DBConnection = &quot;DestinationDB&quot;;
-var sql = &quot;select count(*) from stg_personnel_names_and_name_changes p where p.display_name = &apos;&quot; + loan_officer_name + &quot;&apos;&quot;;
+var sql = &quot;select count(*) from stg_personnel_names_and_name_changes p where p.display_name = &apos;&quot; + sqlSafeLO + &quot;&apos;&quot;;
 var sqlResults = fireToDB(DBConnection, sql);
 
 
@@ -355,7 +356,7 @@ var msg = &quot;&quot;;
 switch(queryCount)
 {
 case 1:
-	sql = &quot;select p.personnel_id from stg_personnel_names_and_name_changes p where p.display_name = &apos;&quot; + loan_officer_name + &quot;&apos;&quot;;
+	sql = &quot;select p.personnel_id from stg_personnel_names_and_name_changes p where p.display_name = &apos;&quot; + sqlSafeLO + &quot;&apos;&quot;;
 	sqlResults = fireToDB(DBConnection, sql);
 	updated_loan_officer_id = parseInt(sqlResults[0][0]);
   break;
