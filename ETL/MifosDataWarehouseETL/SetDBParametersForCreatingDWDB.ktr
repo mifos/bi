@@ -338,32 +338,39 @@ if (Key == &quot;DestinationDB&#47;url&quot;)
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>
 var etlDir = &quot;&quot;;
-var osname = substr(getVariable(&quot;os.name&quot;, &quot;&quot;), 0, 7);
+var fslash = &quot;\\\\&quot;;
+var bslash = &quot;&#47;&quot;;
 
-&#47;&#47;writeToLog(&quot;e&quot;, &quot;osname substr: &quot; + osname);
-if (osname == &quot;Windows&quot;)
+var ifnd = getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;);
+
+var osname = substr(getVariable(&quot;os.name&quot;, &quot;&quot;), 0, 10);
+if (substr(osname,0,7) == &quot;Windows&quot;)
 {
-	etlDir = replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
+	etlDir = replace(ifnd,&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
+	if (substr(osname,0,10) == &quot;Windows XP&quot;)
+	{
+		etlDir = replace(etlDir,bslash, fslash);
+	}
 }
 else
 {
-	etlDir = &quot;&#47;&quot; + replace(getVariable(&quot;Internal.Transformation.Filename.Directory&quot;, &quot;&quot;),&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
+	etlDir = &quot;&#47;&quot; + replace(ifnd,&quot;file:&#47;&#47;&#47;&quot;, &quot;&quot;);
 }
 
 setVariable(&quot;etl_dir&quot;, etlDir, &quot;r&quot;);
 setVariable(&quot;etl_job&quot;, &quot;Initial Incremental Entry&quot;, &quot;r&quot;);
 
-&#47;&#47;writeToLog(&quot;e&quot;, &quot;etldir: &quot; + etlDir);
-&#47;&#47;writeToLog(&quot;e&quot;, &quot;os.arch: &quot; + getVariable(&quot;os.arch&quot;, &quot;&quot;));
-&#47;&#47;writeToLog(&quot;e&quot;, &quot;os.name: &quot; + getVariable(&quot;os.name&quot;, &quot;&quot;));
-&#47;&#47;writeToLog(&quot;e&quot;, &quot;os.version: &quot; + getVariable(&quot;os.version&quot;, &quot;&quot;));
+writeToLog(&quot;m&quot;, &quot;etldir: &quot; + etlDir);
+writeToLog(&quot;m&quot;, &quot;os.arch: &quot; + getVariable(&quot;os.arch&quot;, &quot;&quot;));
+writeToLog(&quot;m&quot;, &quot;os.name: &quot; + getVariable(&quot;os.name&quot;, &quot;&quot;));
+writeToLog(&quot;m&quot;, &quot;os.version: &quot; + getVariable(&quot;os.version&quot;, &quot;&quot;));
 
 
 </jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>281</xloc>
-      <yloc>102</yloc>
+      <xloc>279</xloc>
+      <yloc>103</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
