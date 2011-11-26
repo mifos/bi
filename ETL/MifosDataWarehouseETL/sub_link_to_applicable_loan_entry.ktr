@@ -92,6 +92,30 @@
     </attributes>
   </connection>
   <connection>
+    <name>SalesForceRealtime</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>crmadmin@applab.org</username>
+    <password>Encrypted 6170706c61627567323031306c43754758786c5146efaafd8d0deeb0a5fd14fb57d1b89ac2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>com.ddtek.jdbc.sforce.SForceDriver</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>jdbc:datadirect:sforce:&#47;&#47;login.salesforce.com</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>SourceDB</name>
     <server/>
     <type>MYSQL</type>
@@ -508,7 +532,7 @@ and valid_to &gt; ?</sql>
 <grouping_symbol/>
 <currency_symbol/>
 </calculation>
-       <calculation><field_name>currency_key</field_name>
+       <calculation><field_name>currency_id</field_name>
 <calc_type>CONSTANT</calc_type>
 <field_a>0</field_a>
 <field_b/>

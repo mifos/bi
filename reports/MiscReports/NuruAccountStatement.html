@@ -1,0 +1,341 @@
+
+<style type="text/css">
+
+.reportBuffer{
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+</style>
+
+
+<div class=reportBuffer>
+<table>
+<tr>
+<td><div class=reportLabel>External Id</div><div id=externalIdObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Name</div><div id=customerNameObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3"><div id=IdCustomerObj></div><td width="20">&nbsp;</td>
+<td colspan="3"><div id=accountSelectorObj></div></td><td width="20">&nbsp;</td>
+</tr>
+</table>
+<div id=theReportObj></div>
+</div class=reportBuffer>
+
+<script language="javascript" type="text/javascript">
+var cdaPath = "MiscdataAccess/sql-jndi.cda";
+
+
+
+function tidySavingsTable()
+{
+var balanceText = "";
+var moneyOutText = "";
+var moneyInText = "";
+var balance = 0.0;
+var prevBalance = 0.0;
+var moneyOut = 0.0;
+var moneyIn = 0.0;
+
+   	$("#theReportObj td:nth-child(6)").css("color", "red");
+   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
+
+	$("#theReportObj td:nth-child(8)").each(function(index) {
+		balanceText = $(this).text();
+		if (balanceText == "")
+		{
+			moneyOutText = $(this).parent().children("td:nth-child(6)").text();
+			if (moneyOutText =="")
+			{
+				moneyOut = 0.0;
+			}
+			else
+			{
+				moneyOut = parseFloat(moneyOutText);
+			}
+			moneyInText = $(this).parent().children("td:nth-child(7)").text();
+			if (moneyInText =="")
+			{
+				moneyIn = 0.0;
+			}
+			else
+			{
+				moneyIn = parseFloat(moneyInText);
+			}
+			//alert(moneyOut + " - " + moneyIn);
+
+			balance = prevBalance + moneyIn - moneyOut;
+			$(this).text(balance.toFixed(4));
+		}
+		else
+		{
+			balance = parseFloat(balanceText);
+			$(this).parent().children("td:nth-child(1)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(2)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(8)").css("font-weight", "bold");
+
+		}
+		prevBalance = balance;
+  	});
+
+}
+
+
+function checkAccountSelector()
+{
+var cntOptions = $('#accountSelectorObj option').size();
+//alert(cntOptions); 
+
+switch (cntOptions){
+	case 1: 
+  		$('#accountSelectorObj').html("No Accounts to Select");
+		accountId = -5;
+		$('#theReportObj').html("");
+  		break;
+
+	case 2: 
+		$('#accountSelectorObj select option:eq(1)').attr('selected', 'selected'); 
+		accountId = $('#accountSelectorObj select option:selected').val();
+		runTheReport();
+  		break;
+	default : 	
+		$('#accountSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+		accountId = $('#accountSelectorObj select option:selected').val();
+		$('#theReportObj').html("");
+	}
+}
+
+function checkIdCustomer(inputId)
+{
+var cntOptions = $('#IdCustomerObj option').size();
+//alert(cntOptions); 
+
+switch (cntOptions){
+	case 1: 
+  		$('#IdCustomerObj').html("No Client or Customer Entry Found for: " + inputId);
+  		$('#accountSelectorObj').html("");
+		accountId = -5;
+	  	$('#theReportObj').html("");
+  		break;
+	case 2: 	
+		$('#IdCustomerObj select option:eq(1)').attr('selected', 'selected'); 
+		customerId = $('#IdCustomerObj select option:selected').val();
+		processIdCustomer();
+		break;
+	default : 
+		$('#IdCustomerObj select option:eq(0)').attr('selected', 'selected'); 
+		customerId = $('#IdCustomerObj select option:selected').val();
+  		$('#accountSelectorObj').html("");
+		accountId = -5;
+	  	$('#theReportObj').html("");
+	}
+}
+
+function processIdCustomer()
+{
+	Dashboards.fireChange("customerId", customerId);
+}
+
+function runTheReport()
+{
+    startDate = $('#date1Obj input').val();
+    endDate = $('#date2Obj input').val();
+
+    if (invalidDate(startDate))
+    {
+        alert("Start Date: " + startDate + " is Invalid");
+        return;
+    }
+    if (invalidDate(endDate))
+    {
+        alert("End Date: " + endDate + " is Invalid");
+        return;
+    }
+
+    if (startDate > endDate)
+    {
+        alert("Start Date is after End Date");
+        return;
+    }
+    if (accountId < 0)
+    {
+        // just ignore and clear down any previous report as the "select one" option is picked 
+	  $('#theReportObj').html("");
+        return;
+    }
+
+
+    if ($('#accountSelectorObj select option:selected').text().substr(0,4) == "Loan")
+    {
+        alert("Loans aren't Done Yet!");
+        return;
+    }
+
+    event = event + 1;
+    Dashboards.fireChange("event", event);
+    //enableClearButton();
+}
+
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+var event = 0;
+var office = "";
+
+var startDate = setCurrentDate();
+var endDate = setCurrentDate();
+var extId = "";
+var custName = "";
+var accountId = -5;
+var customerId = -5;
+
+//var outputType = "application/pdf";
+
+  var dbMetaDataVar = {
+    savingsAccountDef: {
+      colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Money Out", "Money In", "Balance"],
+      colTypes: ['string','string','string','string','string','string','string','string'],
+	/*colFormats: [null, null, null, null, null, "%15.4f", "%15.4f", "%15.4f"],*/
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getSavingsAccountStatement", 
+	path: cdaPath
+    } 
+  };
+
+externalId = 
+{
+	name: "externalId",
+	type: "textInputComponent",
+	parameters:[],
+	parameter: "extId",
+	htmlObject: "externalIdObj",
+	executeAtStart: true,
+	postChange: function(){ custName = "";
+					$('#customerName').val(custName);
+					Dashboards.fireChange("extId", extId);}
+};
+ 
+customerName = 
+{
+	name: "customerName",
+	type: "textInputComponent",
+	parameters:[],
+	parameter: "custName",
+	htmlObject: "customerNameObj",
+	executeAtStart: true,
+	postChange: function(){ extId = "";
+					$('#externalId').val(extId);
+					Dashboards.fireChange("custName", custName);}
+
+};
+
+
+accountSelector = 
+{
+	name: "accountSelector",
+	type: "select",
+	listeners: ["customerId"],
+	valueAsId: false,
+      queryDefinition: { dataAccessId: "getAccountListForCustomer", path: cdaPath },
+	parameters:[["customerId", "customerId"]],
+      cdaParams: [["customerId","customerId"]], 
+	parameter: "accountId",
+	htmlObject: "accountSelectorObj",
+	executeAtStart: false,
+	postExecution: function(){checkAccountSelector();},
+	postChange: function(){ runTheReport();}
+};
+
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "startDate",
+	htmlObject: "date1Obj",
+	executeAtStart: true,
+	postChange: function(){ runTheReport();}
+
+};
+
+date2 = 
+{
+	name: "date2",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "endDate",
+	htmlObject: "date2Obj",
+	executeAtStart: true,
+	postChange: function(){ runTheReport();}
+
+};
+
+var externalIdCustomer =
+	{
+ 		name: "externalIdCustomer",
+		type: "select",
+     		queryDefinition: { dataAccessId: "getCustomerIdFromExternalId", path: cdaPath },
+  		listeners:["extId"],
+		valueAsId: false,
+		parameters: [["externalId","extId"]],
+		cdaParams: [["externalId","extId"]],
+		parameter: "customerId",
+    		htmlObject: "IdCustomerObj",
+    		executeAtStart: false,
+		postExecution: function(){checkIdCustomer(extId);},
+		postChange: function(){processIdCustomer();}
+  };
+
+var customerNameCustomer =
+	{
+ 		name: "customerNameCustomer",
+		type: "select",
+     		queryDefinition: { dataAccessId: "getCustomerIdFromCustomerName", path: cdaPath },
+  		listeners:["custName"],
+		valueAsId: false,
+		parameters: [["customerName","custName"]],
+		cdaParams: [["customerName","custName"]],
+		parameter: "customerId",
+    		htmlObject: "IdCustomerObj",
+    		executeAtStart: false,
+		postExecution: function(){checkIdCustomer(custName);},
+		postChange: function(){processIdCustomer();}
+  };
+
+var savingsAccount =
+	{
+ 		name: "savingsAccount",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.savingsAccountDef,
+  		listeners:["event"],
+		parameters: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
+		cdaParams: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
+    		htmlObject: "theReportObj",
+    		executeAtStart: false,
+  		postExecution: function(){ tidySavingsTable()}
+
+  };
+
+
+Dashboards.init([customerName, externalId, externalIdCustomer, customerNameCustomer, accountSelector, date1, date2, savingsAccount]);
+
+$(document).ready(function() {
+        //initRunClearButtons();
+});
+
+</script>
