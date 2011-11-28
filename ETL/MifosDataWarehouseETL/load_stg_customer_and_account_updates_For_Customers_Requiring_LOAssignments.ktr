@@ -352,7 +352,7 @@ var displayName = &quot;&quot;;
 	{
 
 		displayName = trim(sqlResults[i][1]);
-		if (lo_name == displayName)
+		if (upper(lo_name) == upper(displayName))
 		{
 &#47;&#47;Alert(&quot;Match: &quot; + displayName);
 			loCount = loCount + 1;
@@ -371,7 +371,7 @@ var displayName = &quot;&quot;;
 	for (var i in sqlResults)
 	{
 		displayName = trim(sqlResults[i][1]);
-		if (lo_name == displayName)
+		if (upper(lo_name) == upper(displayName))
 		{
 			return parseInt(sqlResults[i][0]);
 		}

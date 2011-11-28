@@ -351,64 +351,6 @@ where c.customer_id = ?</sql>
     </step>
 
   <step>
-    <name>Match Loan Officer</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#47;&#47;Script here
-
-
-var sqlSafeLO = escapeSQL(loan_officer_name);
-var DBConnection = &quot;DestinationDB&quot;;
-var sql = &quot;select count(*) from stg_personnel_names_and_name_changes p where p.display_name = &apos;&quot; + sqlSafeLO + &quot;&apos;&quot;;
-var sqlResults = fireToDB(DBConnection, sql);
-
-
-var queryCount = parseInt(sqlResults[0][0]);
-var updated_loan_officer_id;
-var msg = &quot;&quot;;
-
-switch(queryCount)
-{
-case 1:
-	sql = &quot;select p.personnel_id from stg_personnel_names_and_name_changes p where p.display_name = &apos;&quot; + sqlSafeLO + &quot;&apos;&quot;;
-	sqlResults = fireToDB(DBConnection, sql);
-	updated_loan_officer_id = parseInt(sqlResults[0][0]);
-  break;
-case 0:
-	updated_loan_officer_id = 0;
-	msg = &quot;Customer: &quot; + entity_id + &quot; - No match for Incoming Loan Officer Name: &quot; + loan_officer_name + &quot; - Setting Loan Officer Id to 0&quot;;
-	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
-  break;
-default:
-	updated_loan_officer_id = 0;
-	msg = &quot;Customer: &quot; + entity_id + &quot; - More than one match for Incoming Loan Officer Name: &quot; + loan_officer_name + &quot; - Setting Loan Officer Id to 0&quot;;
-	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
-}
-</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>updated_loan_officer_id</name>
-        <rename>updated_loan_officer_id</rename>
-        <type>Integer</type>
-        <length>4</length>
-        <precision>0</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>702</xloc>
-      <yloc>43</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>New Clients</name>
     <type>TableInput</type>
     <description/>
@@ -618,6 +560,103 @@ and c.created_date between date(?) and date(?)
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>314</xloc>
       <yloc>148</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Match Loan Officer</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>SetUpdatedLoanOfficerId</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+
+function getLOCount(lo_name)
+{
+var loCount = 0;
+var displayName = &quot;&quot;;
+&#47;&#47;Alert(&quot;lo_name: &quot; + lo_name);
+	for (var i in sqlResults)
+	{
+
+		displayName = trim(sqlResults[i][1]);
+		if (upper(lo_name) == upper(displayName))
+		{
+&#47;&#47;Alert(&quot;Match: &quot; + displayName);
+			loCount = loCount + 1;
+		}
+	}
+
+	return loCount;
+
+}
+
+function getPersonnelId(lo_name)
+{
+var pId = 0;
+var displayName = &quot;&quot;;
+
+	for (var i in sqlResults)
+	{
+		displayName = trim(sqlResults[i][1]);
+		if (upper(lo_name) == upper(displayName))
+		{
+			return parseInt(sqlResults[i][0]);
+		}
+	}
+	Alert(&quot;System Error: Loan Officer Name: &quot; + lo_name + &quot; not found when looking for personnel_id&quot;);
+	return pId;
+}
+
+
+var updated_loan_officer_id;
+var msg = &quot;&quot;;
+var queryCount = getLOCount(loan_officer_name);
+switch(queryCount)
+{
+case 1:
+	updated_loan_officer_id = getPersonnelId(loan_officer_name);
+	&#47;&#47;Alert(&quot;LO: &quot; + loan_officer_name + &quot; - id: &quot; + updated_loan_officer_id);
+  break;
+case 0:
+	updated_loan_officer_id = 0;
+	msg = &quot;Customer: &quot; + entity_id + &quot; - No match for Incoming Loan Officer Name: &quot; + loan_officer_name + &quot; - Setting Loan Officer Id to 0&quot;;
+	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
+  break;
+default:
+	updated_loan_officer_id = 0;
+	msg = &quot;Customer: &quot; + entity_id + &quot; - More than one match for Incoming Loan Officer Name: &quot; + loan_officer_name + &quot; - Setting Loan Officer Id to 0&quot;;
+	writeToLog(&quot;m&quot;, &quot;WARNING: &quot; + msg);
+}
+</jsScript_script>
+      </jsScript>      <jsScript>        <jsScript_type>1</jsScript_type>
+        <jsScript_name>InitArray</jsScript_name>
+        <jsScript_script>&#47;&#47;Script here
+
+var DBConnection = &quot;DestinationDB&quot;;
+var sql = &quot;select personnel_id, display_name from stg_personnel_names_and_name_changes&quot;;
+var sqlResults = fireToDB(DBConnection, sql);
+&#47;&#47;Alert(sqlResults.length);
+</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>updated_loan_officer_id</name>
+        <rename>updated_loan_officer_id</rename>
+        <type>Integer</type>
+        <length>4</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>704</xloc>
+      <yloc>44</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
