@@ -14,14 +14,12 @@
 <div class=reportBuffer>
 <table width="100%">
 <tr>
-<td><div class=reportLabel>External Id</div><div id=externalIdObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Name</div><div id=customerNameObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>External Id</div><div id=externalIdObj></div></td><td width="20">&nbsp;</td><td width="20">&nbsp;</td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
 </tr>
 <tr>
-<td colspan="3"><div id=IdCustomerObj></div><td width="20">&nbsp;</td>
-<td colspan="3"><div id=accountSelectorObj></div></td><td width="20">&nbsp;</td>
+<td colspan="3"><div id=externalIdAccountObj></div><td width="20">&nbsp;</td><td width="20">&nbsp;</td><td width="20">&nbsp;</td>
 </tr>
 </table>
 
@@ -49,68 +47,6 @@ alert(accountId );
    	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
 
 }
-
-function tidySavingsTable()
-{
-var balanceText = "";
-var moneyOutText = "";
-var moneyInText = "";
-var balance = 0.0;
-var prevBalance = 0.0;
-var moneyOut = 0.0;
-var moneyIn = 0.0;
-
-   	$("#theReportObj td:nth-child(6)").css("color", "red");
-   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
-
-   	$("#theReportObj th").css("width", "0");
-   	$("#theReportObjTable").css("width", "100%");
-
-   	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
-
-
-	$("#theReportObj td:nth-child(8)").each(function(index) {
-		balanceText = $(this).text();
-		if (balanceText == "")
-		{
-			moneyOutText = $(this).parent().children("td:nth-child(6)").text();
-			if (moneyOutText =="")
-			{
-				moneyOut = 0.0;
-			}
-			else
-			{
-				moneyOut = parseFloat(moneyOutText);
-			}
-			moneyInText = $(this).parent().children("td:nth-child(7)").text();
-			if (moneyInText =="")
-			{
-				moneyIn = 0.0;
-			}
-			else
-			{
-				moneyIn = parseFloat(moneyInText);
-			}
-			//alert(moneyOut + " - " + moneyIn);
-
-			balance = prevBalance + moneyIn - moneyOut;
-			$(this).text(balance.toFixed(4));
-		}
-		else
-		{
-			balance = parseFloat(balanceText);
-			$(this).parent().children("td:nth-child(1)").css("font-weight", "bold");
-			$(this).parent().children("td:nth-child(2)").css("font-weight", "bold");
-			$(this).parent().children("td:nth-child(8)").css("font-weight", "bold");
-
-		}
-		prevBalance = balance;
-  	});
-
-}
-
 
 function checkAccountSelector()
 {
@@ -216,7 +152,6 @@ var path = Dashboards.getQueryParameter("path");
 var commonActionsSolution = "commonActions";
 
 Dashboards.globalcontext = false;
-var savingsEvent = 0;
 var loanEvent = 0;
 
 var startDate = "2000-01-01";
@@ -224,22 +159,9 @@ var endDate = setCurrentDate();
 
 
 var extId = "";
-var custName = "";
 var accountId = -5;
-var customerId = -5;
 
   var dbMetaDataVar = {
-    savingsAccountDef: {
-      colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Money Out", "Money In", "Balance"],
-      colTypes: ['string','string','string','string','string','string','string','string'],
-      tableStyle: "classic",
-	paginate: false,
-	sort: false,
-	filter: false,
-	info: false,
-      dataAccessId: "getSavingsAccountStatement", 
-	path: cdaPath
-    },
     loanAccountDef: {
       colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Paid", "Principal", "Interest", "Fees / Charges / Penalties", "Principal Balance", "Interest Balance", "Fees / Charges / Penalties Balance", "Total Balance"],
       colTypes: ['string','string','string','string','string','string','string','string','string','string','string','string','string'],
@@ -262,43 +184,9 @@ externalId =
 	parameter: "extId",
 	htmlObject: "externalIdObj",
 	executeAtStart: true,
-	postChange: function(){ custName = "";
-					$('#customerName').val(custName);
-					Dashboards.fireChange("extId", extId);}
+	postChange: function(){ Dashboards.fireChange("extId", extId);}
 };
  
-customerName = 
-{
-	name: "customerName",
-	type: "textInputComponent",
-	parameters:[],
-	parameter: "custName",
-	htmlObject: "customerNameObj",
-	executeAtStart: true,
-	postChange: function(){ extId = "";
-					$('#externalId').val(extId);
-					Dashboards.fireChange("custName", custName);}
-
-};
-
-
-accountSelector = 
-{
-	name: "accountSelector",
-	type: "select",
-	listeners: ["customerId"],
-	valueAsId: false,
-      queryDefinition: { dataAccessId: "getAccountListForCustomer", path: cdaPath },
-	parameters:[["customerId", "customerId"]],
-      cdaParams: [["customerId","customerId"]], 
-	parameter: "accountId",
-	htmlObject: "accountSelectorObj",
-	executeAtStart: false,
-	postExecution: function(){checkAccountSelector();},
-	postChange: function(){ runTheReport();}
-};
-
-
 date1 = 
 {
 	name: "date1",
@@ -323,50 +211,20 @@ date2 =
 
 };
 
-var externalIdCustomer =
+var externalIdAccount =
 	{
  		name: "externalIdCustomer",
 		type: "select",
-     		queryDefinition: { dataAccessId: "getCustomerIdFromExternalId", path: cdaPath },
+     		queryDefinition: { dataAccessId: "getLoanIdFromExternalId", path: cdaPath },
   		listeners:["extId"],
 		valueAsId: false,
 		parameters: [["externalId","extId"]],
 		cdaParams: [["externalId","extId"]],
 		parameter: "customerId",
-    		htmlObject: "IdCustomerObj",
+    		htmlObject: "externalIdAccount",
     		executeAtStart: false,
-		postExecution: function(){checkIdCustomer(extId);},
-		postChange: function(){processIdCustomer();}
-  };
-
-var customerNameCustomer =
-	{
- 		name: "customerNameCustomer",
-		type: "select",
-     		queryDefinition: { dataAccessId: "getCustomerIdFromCustomerName", path: cdaPath },
-  		listeners:["custName"],
-		valueAsId: false,
-		parameters: [["customerName","custName"]],
-		cdaParams: [["customerName","custName"]],
-		parameter: "customerId",
-    		htmlObject: "IdCustomerObj",
-    		executeAtStart: false,
-		postExecution: function(){checkIdCustomer(custName);},
-		postChange: function(){processIdCustomer();}
-  };
-
-var savingsAccount =
-	{
- 		name: "savingsAccount",
-		type: "tableComponent",
-    		chartDefinition: dbMetaDataVar.savingsAccountDef,
-  		listeners:["savingsEvent"],
-		parameters: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
-		cdaParams: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
-    		htmlObject: "theReportObj",
-    		executeAtStart: false,
-  		postExecution: function(){ tidySavingsTable()}
-
+		postExecution: function(){checkAccountSelector();},
+		postChange: function(){ runTheReport();}
   };
 
 var loanAccount =
@@ -384,7 +242,7 @@ var loanAccount =
   };
 
 
-Dashboards.init([customerName, externalId, externalIdCustomer, customerNameCustomer, accountSelector, date1, date2, savingsAccount, loanAccount]);
+Dashboards.init([externalId, externalIdAccount , date1, date2, loanAccount]);
 
 $(document).ready(function() {
 });

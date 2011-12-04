@@ -61,6 +61,28 @@ order by 2);
     </DataAccess>
 
 
+    <DataAccess id="getLoanIdFromExternalId" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Loan Id From External Id</Name>
+        <Query>
+select * from
+((select -5 as account_id, "---Select One---" as account_name)
+union all
+(select a.account_id, 
+concat("Loan: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
+from account a 
+join loan_account la on la.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = la.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.external_id = ${externalId})) a
+order by 2;        
+	</Query>
+        <Parameters>
+            <Parameter name="externalId" type="String" default="; ;"/>
+        </Parameters>
+    </DataAccess>
+
+
     <DataAccess id="getAccountListForCustomer" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Account List For Customer</Name>
         <Query>
@@ -84,7 +106,6 @@ join prd_offering po on po.prd_offering_id = la.prd_offering_id
 left join account_state ast on ast.account_state_id = a.account_state_id
 left join lookup_value lv on lv.lookup_id = ast.lookup_id
 where a.customer_id = ${customerId})) a
-
 order by 2;        
 	</Query>
         <Parameters>
@@ -162,17 +183,148 @@ cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdraw
 from account_trxn atxn
 join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
 where atxn.account_id = ${accountId}
-and atxn.action_date < date_add(${endDate}, interval 1 day))
+and atxn.action_date <= ${endDate})
 ]]>
         </Query>
         <Parameters>
     		<Parameter name="startDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="endDate" type="Date" pattern="yyyy-MM-dd" default="3000-01-01"/>
-            <Parameter name="accountId" type="Integer" default="2846"/>
+            <Parameter name="accountId" type="Integer" default="0"/>
         </Parameters>
 
     </DataAccess>
 
+
+
+    <DataAccess id="getLoanAccountStatement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Loan Account Statement</Name>
+        <Query>
+<![CDATA[
+
+(select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+"" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
+"" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
+cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), 4) as char) as "Principal Balance", 
+cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), 4) as char) as "Interest Balance", 
+cast(round(ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0)
+                - ifnull(paidschedfees.fees_charges_penalties, 0.0), 4) as char) as "Fees/Charges/Penalties Balance",
+cast(round(
+	ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0) + ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0) +
+	ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0) - ifnull(paidschedfees.fees_charges_penalties, 0.0)
+, 4) as char) as "Total Balance"
+from 
+    (select ifnull(lsum.orig_principal, 0.0) as principal, ifnull(lsum.orig_interest, 0.0) as interest, 
+        (ifnull(lsum.orig_fees, 0.0) + ifnull(lsum.orig_penalty, 0.0)) as fees_charges_penalties
+    from loan_summary lsum
+    where lsum.account_id = ${accountId}) original,
+    
+    (select sum(ifnull(ltxn.principal_amount, 0.0)) as principal,
+            sum(ifnull(ltxn.interest_amount, 0.0)) as interest,
+            sum(ifnull(ltxn.penalty_amount, 0.0) + ifnull(ltxn.misc_fee_amount, 0.0) 
+                + ifnull(ltxn.misc_penalty_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date <= ${startDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paid,
+    (select sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join fee_trxn_detail ftxn on atxn.account_trxn_id = ftxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date <= ${startDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)
+    
+union all
+
+
+(select cast(ap.payment_date as char) as "Txn Date", 
+    (select group_concat(DISTINCT substring(aalv.lookup_name,15)
+                ORDER BY substring(aalv.lookup_name,15) DESC SEPARATOR '; ')
+    from account_trxn atxn
+    left join account_action aa on aa.account_action_id = atxn.account_action_id
+    left join lookup_value aalv on aalv.lookup_id = aa.lookup_id
+    where atxn.payment_id = ap.payment_id) as "Txn Type",
+ifnull(ptlvl.lookup_value, substring(ptlv.lookup_name,13)) as "Payment", 
+ap.receipt_number as "Receipt No.", cast(ap.receipt_date as char) as "Receipt Date", 
+cast(round(
+	ifnull(loantxn.principal, 0.0) + ifnull(loantxn.interest, 0.0) + ifnull(loantxn.fees_charges_penalties, 0.0) 
+		+ ifnull(feetxn.fees_charges_penalties, 0.0), 4) as char) as "Paid",
+cast(round(ifnull(loantxn.principal, 0.0), 4) as char) as "Principal", 
+cast(round(ifnull(loantxn.interest, 0.0), 4) as char) as "Interest", 
+cast(round(ifnull(loantxn.fees_charges_penalties, 0.0) + ifnull(feetxn.fees_charges_penalties, 0.0), 4) as char) as "Fees/Charges/Penalties",
+"" as "Principal Balance", 
+"" as "Interest Balance", 
+"" as "Fees/Charges/Penalties Balance",
+"" as "Total Balance" 
+from account_payment ap  
+left join payment_type pt on pt.payment_type_id = ap.payment_type_id
+left join lookup_value ptlv on ptlv.lookup_id = pt.payment_type_lookup_id
+left join lookup_value_locale ptlvl on ptlvl.lookup_id = ptlv.lookup_id 
+left join 
+        (select atxn.payment_id, sum(ifnull(ltxn.principal_amount, 0.0)) as principal,
+            sum(ifnull(ltxn.interest_amount, 0.0)) as interest,
+            sum(ifnull(ltxn.penalty_amount, 0.0) + ifnull(ltxn.misc_fee_amount, 0.0) 
+                + ifnull(ltxn.misc_penalty_amount, 0.0)) as fees_charges_penalties
+        from account_trxn atxn
+        join loan_trxn_detail ltxn on ltxn.account_trxn_id = atxn.account_trxn_id
+        where atxn.account_id = ${accountId}
+        and atxn.account_action_id not in (10, 19) 
+        group by atxn.payment_id) loantxn on loantxn.payment_id = ap.payment_id
+left join 
+        (select atxn.payment_id, sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
+        from account_trxn atxn
+        join fee_trxn_detail ftxn on ftxn.account_trxn_id = atxn.account_trxn_id
+        where atxn.account_id = ${accountId}
+        and atxn.account_action_id not in (10, 19) 
+        group by atxn.payment_id) feetxn on feetxn.payment_id = ap.payment_id
+where ap.account_id = ${accountId}
+and ap.payment_date between ${startDate} and ${endDate}
+order by ap.payment_date, ap.payment_id)
+
+union all
+
+(select cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
+"" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
+"" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
+cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), 4) as char) as "Principal Balance", 
+cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), 4) as char) as "Interest Balance", 
+cast(round(ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0)
+                - ifnull(paidschedfees.fees_charges_penalties, 0.0), 4) as char) as "Fees/Charges/Penalties Balance",
+cast(round(
+	ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0) + ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0) +
+	ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0) - ifnull(paidschedfees.fees_charges_penalties, 0.0)
+, 4) as char) as "Total Balance"
+from 
+    (select ifnull(lsum.orig_principal, 0.0) as principal, ifnull(lsum.orig_interest, 0.0) as interest, 
+        (ifnull(lsum.orig_fees, 0.0) + ifnull(lsum.orig_penalty, 0.0)) as fees_charges_penalties
+    from loan_summary lsum
+    where lsum.account_id = ${accountId}) original,
+    
+    (select sum(ifnull(ltxn.principal_amount, 0.0)) as principal,
+            sum(ifnull(ltxn.interest_amount, 0.0)) as interest,
+            sum(ifnull(ltxn.penalty_amount, 0.0) + ifnull(ltxn.misc_fee_amount, 0.0) 
+                + ifnull(ltxn.misc_penalty_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date <= ${endDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paid,
+    (select sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join fee_trxn_detail ftxn on atxn.account_trxn_id = ftxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date <= ${endDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)
+  
+]]>
+        </Query>
+        <Parameters>
+    		<Parameter name="startDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="endDate" type="Date" pattern="yyyy-MM-dd" default="3000-01-01"/>
+            <Parameter name="accountId" type="Integer" default="0"/>
+        </Parameters>
+
+    </DataAccess>
 
 
 
