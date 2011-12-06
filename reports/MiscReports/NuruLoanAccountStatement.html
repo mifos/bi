@@ -1,109 +1,89 @@
-
-<style type="text/css">
-
-.reportBuffer{
-	width=100%;
-	padding-top: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-</style>
-
-
 <div class=reportBuffer>
 <table width="100%">
 <tr>
-<td><div class=reportLabel>External Id</div><div id=externalIdObj></div></td><td width="20">&nbsp;</td><td width="20">&nbsp;</td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
 <td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Loan External Id</div><div id=externalIdObj></div></td>
 </tr>
 <tr>
-<td colspan="3"><div id=externalIdAccountObj></div><td width="20">&nbsp;</td><td width="20">&nbsp;</td><td width="20">&nbsp;</td>
+<td colspan="5"><div id=externalIdAccountObj></div></td>
 </tr>
 </table>
 
-<div id=theReportObj width="100%"></div>
-</div class=reportBuffer>
+<div id=fullStatement>
+<table class="fullBorder" width="100%">
+<tr><td class="bottomBorder"><div id=headerReportObj></div></td></tr>
+<tr><td><div id=theReportObj></div></td></tr>
+</table>
+</div>
+
+</div>
 
 <script language="javascript" type="text/javascript">
-var cdaPath = "MiscdataAccess/sql-jndi.cda";
 
+  var dbMetaDataVar = {
+    loanAccountDef: {
+      colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Paid", "Principal", "Interest", "Fees / Charges / Penalties", "Principal Balance", "Interest Balance", "Fees / Charges / Penalties Balance", "Total Balance"],
+      colTypes: ['string','string','string','string','string','string','string','string','string','string','string','string','string'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getLoanAccountStatement", 
+	path: cdaPath
+    },
+    loanAccountHeaderDef: {
+      colHeaders: ["Loan Product", "Disbursed", "Loan Amount", "Loan External ID", "Account No."],
+      colTypes: ['string','string','string','string','string'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getLoanHeader", 
+	path: cdaPath
+    } 
 
-function tidyLoanTable()
-{
-alert(accountId );
-   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(9)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(10)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(11)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(12)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(13)").css("text-align", "right");
-
-   	$("#theReportObj th").css("width", "0");
-   	$("#theReportObjTable").css("width", "100%");
-   	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
-
-}
+  };
 
 function checkAccountSelector()
 {
-var cntOptions = $('#accountSelectorObj option').size();
-//alert(cntOptions); 
+
+var cntOptions = $('#externalIdAccountObj option').size();
+//alert(cntOptions + " : " + accountId); 
 
 switch (cntOptions){
 	case 1: 
-  		$('#accountSelectorObj').html("No Accounts to Select");
+  		$('#externalIdAccountObj').html("No Accounts to Select");
 		accountId = -5;
-		$('#theReportObj').html("");
   		break;
 
 	case 2: 
-		$('#accountSelectorObj select option:eq(1)').attr('selected', 'selected'); 
-		accountId = $('#accountSelectorObj select option:selected').val();
+		$('#externalIdAccountObj select option:eq(1)').attr('selected', 'selected'); 
+		accountId = $('#externalIdAccountObj select option:selected').val();
 		runTheReport();
   		break;
 	default : 	
-		$('#accountSelectorObj select option:eq(0)').attr('selected', 'selected'); 
-		accountId = $('#accountSelectorObj select option:selected').val();
-		$('#theReportObj').html("");
+		$('#externalIdAccountObj select option:eq(0)').attr('selected', 'selected'); 
+		accountId = $('#externalIdAccountObj select option:selected').val();
 	}
-}
-
-function checkIdCustomer(inputId)
-{
-var cntOptions = $('#IdCustomerObj option').size();
-//alert(cntOptions); 
-
-switch (cntOptions){
-	case 1: 
-  		$('#IdCustomerObj').html("No Client or Customer Entry Found for: " + inputId);
-  		$('#accountSelectorObj').html("");
-		accountId = -5;
-	  	$('#theReportObj').html("");
-  		break;
-	case 2: 	
-		$('#IdCustomerObj select option:eq(1)').attr('selected', 'selected'); 
-		customerId = $('#IdCustomerObj select option:selected').val();
-		processIdCustomer();
-		break;
-	default : 
-		$('#IdCustomerObj select option:eq(0)').attr('selected', 'selected'); 
-		customerId = $('#IdCustomerObj select option:selected').val();
-  		$('#accountSelectorObj').html("");
-		accountId = -5;
-	  	$('#theReportObj').html("");
-	}
-}
-
-function processIdCustomer()
-{
-	Dashboards.fireChange("customerId", customerId);
 }
 
 function runTheReport()
+{
+    if (accountId < 0)
+    {
+        // just ignore as the "select one" option is picked 
+        return;
+    }
+
+    loanEvent = loanEvent + 1;
+    Dashboards.fireChange("loanEvent", loanEvent);
+    
+}
+
+function runTheStatement()
 {
     startDate = $('#date1Obj input').val();
     endDate = $('#date2Obj input').val();
@@ -124,57 +104,21 @@ function runTheReport()
         alert("Start Date is after End Date");
         return;
     }
-    if (accountId < 0)
-    {
-        // just ignore and clear down any previous report as the "select one" option is picked 
-	  $('#theReportObj').html("");
-        return;
-    }
 
-
-    if ($('#accountSelectorObj select option:selected').text().substr(0,4) == "Loan")
+    if (startDate < disbursedDate)
     {
-    	  loanEvent = loanEvent + 1;
-    	  Dashboards.fireChange("loanEvent", loanEvent);
-
+		startDate = disbursedDate;
+    		if (startDate > endDate)
+    		{
+        		alert("Disbursed Date is after End Date");
+			$('#theReportObj').html("");
+        		return;
+    		}
     }
-    else
-    {
-    	  savingsEvent = savingsEvent + 1;
-    	  Dashboards.fireChange("savingsEvent", savingsEvent);
-    }
+    loanEventStatement = loanEventStatement + 1;
+    Dashboards.fireChange("loanEventStatement", loanEventStatement);
     
 }
-
-var solution = Dashboards.getQueryParameter("solution");
-var path = Dashboards.getQueryParameter("path");
-
-var commonActionsSolution = "commonActions";
-
-Dashboards.globalcontext = false;
-var loanEvent = 0;
-
-var startDate = "2000-01-01";
-var endDate = setCurrentDate();
-
-
-var extId = "";
-var accountId = -5;
-
-  var dbMetaDataVar = {
-    loanAccountDef: {
-      colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Paid", "Principal", "Interest", "Fees / Charges / Penalties", "Principal Balance", "Interest Balance", "Fees / Charges / Penalties Balance", "Total Balance"],
-      colTypes: ['string','string','string','string','string','string','string','string','string','string','string','string','string'],
-      tableStyle: "classic",
-	paginate: false,
-	sort: false,
-	filter: false,
-	info: false,
-      dataAccessId: "getLoanAccountStatement", 
-	path: cdaPath
-    } 
-
-  };
 
 externalId = 
 {
@@ -184,7 +128,9 @@ externalId =
 	parameter: "extId",
 	htmlObject: "externalIdObj",
 	executeAtStart: true,
-	postChange: function(){ Dashboards.fireChange("extId", extId);}
+	postChange: function(){
+					//Dashboards.fireChange("extId", extId);
+					}
 };
  
 date1 = 
@@ -213,18 +159,34 @@ date2 =
 
 var externalIdAccount =
 	{
- 		name: "externalIdCustomer",
+ 		name: "externalIdAccount",
 		type: "select",
      		queryDefinition: { dataAccessId: "getLoanIdFromExternalId", path: cdaPath },
   		listeners:["extId"],
 		valueAsId: false,
 		parameters: [["externalId","extId"]],
 		cdaParams: [["externalId","extId"]],
-		parameter: "customerId",
-    		htmlObject: "externalIdAccount",
+		parameter: "accountId",
+    		htmlObject: "externalIdAccountObj",
     		executeAtStart: false,
-		postExecution: function(){checkAccountSelector();},
-		postChange: function(){ runTheReport();}
+		postExecution: function(){	clearReport();
+							checkAccountSelector();},
+		postChange: function(){		clearReport();
+							runTheReport();}
+  };
+
+
+var loanAccountHeader =
+	{
+ 		name: "loanAccountHeader",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.loanAccountHeaderDef,
+  		listeners:["loanEvent"],
+		parameters: [["accountId","accountId"]],
+		cdaParams: [["accountId","accountId"]],
+    		htmlObject: "headerReportObj",
+    		executeAtStart: false,
+  		postExecution: function(){ tidyLoanHeaderTable()}
   };
 
 var loanAccount =
@@ -232,17 +194,15 @@ var loanAccount =
  		name: "loanAccount",
 		type: "tableComponent",
     		chartDefinition: dbMetaDataVar.loanAccountDef,
-  		listeners:["loanEvent"],
+  		listeners:["loanEventStatement"],
 		parameters: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
 		cdaParams: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
     		htmlObject: "theReportObj",
     		executeAtStart: false,
   		postExecution: function(){ tidyLoanTable()}
-
   };
 
-
-Dashboards.init([externalId, externalIdAccount , date1, date2, loanAccount]);
+Dashboards.init([externalId, externalIdAccount , date1, date2, loanAccountHeader, loanAccount]);
 
 $(document).ready(function() {
 });

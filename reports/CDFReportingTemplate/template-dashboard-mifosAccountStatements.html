@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Community Dashboard Framework</title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<!--link href="/pentaho-style/dashboard.css" rel="stylesheet" type="text/css" media="screen" /-->
+		<link rel="stylesheet" type="text/css" href="resources/style/template.css"/>
+	</head>
+	<body>
+</script>
+
+<style type="text/css">
+
+.reportBuffer{
+	width=100%;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.fullBorder {
+	border-style: solid;
+      border-width: 1px;
+}
+
+.bottomBorder{
+	border-bottom-style: solid;
+      border-bottom-width: 1px;
+}
+
+.reportLabel {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+#fullStatement {
+	display: none;
+}
+
+</style>
+
+
+<script language="javascript" type="text/javascript">
+
+	isAdmin = "{isAdmin}";
+	isLoggedIn = "{isLoggedIn}";
+
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function pad2(number) {
+    return (number < 10 ? '0' : '') + number
+}
+
+function setCurrentDate() {
+    xxDate = new Date();
+    return xxDate.getFullYear() + "-" + pad2(xxDate.getMonth() + 1) + "-" + pad2(xxDate.getDate());
+}
+
+function invalidDate(checkDate) {
+//validates for yyyy-mm-dd returns true if invalid, false is valid
+var dateformat = /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/;
+
+    	if(!(dateformat.test(checkDate))) {
+      	return true;
+    	}
+	else
+	{
+		var dyear = checkDate.substring(0,4);
+		var dmonth = checkDate.substring(5,7) - 1;
+		var dday = checkDate.substring(8);
+
+		var newDate=new Date(dyear,dmonth ,dday);
+		return !((dday==newDate.getDate()) && (dmonth==newDate.getMonth()) && (dyear==newDate.getFullYear()));
+	}
+}
+
+
+function floatVal(textVal) {
+
+	if (textVal == "")
+	{
+		return 0.0;
+	}
+	else
+	{
+		return parseFloat(textVal);
+	}
+}
+
+
+function clearReport()
+{
+   	$("#fullStatement").css("display", "none");
+	$('#theReportObj').html("");
+	$('#headerReportObj').html("");
+}
+
+function showReport()
+{
+   	$("#fullStatement").css("display", "inline");
+}
+
+function tidyLoanTable()
+{
+   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(9)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(10)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(11)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(12)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(13)").css("text-align", "right");
+
+   	$("#theReportObj th").css("width", "0");
+   	$("#theReportObjTable").css("width", "100%");
+   	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
+
+var totalBalanceText = "";
+var totalBalance = 0.0;
+var prevTotalBalance = 0.0;
+var paid = 0.0;
+
+var totalPrincipalBalanceText = "";
+var totalPrincipalBalance = 0.0;
+var prevTotalPrincipalBalance = 0.0;
+var principal = 0.0;
+
+var totalInterestBalanceText = "";
+var totalInterestBalance = 0.0;
+var prevTotalInterestBalance = 0.0;
+var interest = 0.0;
+
+var totalFCPBalanceText = "";
+var totalFCPBalance = 0.0;
+var prevTotalFCPBalance = 0.0;
+var FCP = 0.0;
+
+	$("#theReportObj td:nth-child(13)").each(function(index) {
+		totalBalanceText = $(this).text();
+		totalPrincipalBalanceText = $(this).parent().children("td:nth-child(10)").text();
+		totalInterestBalanceText = $(this).parent().children("td:nth-child(11)").text();
+		totalFCPBalanceText = $(this).parent().children("td:nth-child(12)").text();
+		if (totalBalanceText == "")
+		{
+			paid = floatVal($(this).parent().children("td:nth-child(6)").text());
+			principal = floatVal($(this).parent().children("td:nth-child(7)").text());
+			interest = floatVal($(this).parent().children("td:nth-child(8)").text());
+			FCP = floatVal($(this).parent().children("td:nth-child(9)").text());
+
+			totalBalance = prevTotalBalance - paid;
+			totalPrincipalBalance = prevTotalPrincipalBalance - principal;
+			totalInterestBalance = prevTotalInterestBalance - interest;
+			totalFCPBalance = prevTotalFCPBalance - FCP;
+			$(this).text(totalBalance.toFixed(decimalsShown));
+			$(this).parent().children("td:nth-child(10)").text(totalPrincipalBalance.toFixed(decimalsShown));
+			$(this).parent().children("td:nth-child(11)").text(totalInterestBalance.toFixed(decimalsShown));
+			$(this).parent().children("td:nth-child(12)").text(totalFCPBalance.toFixed(decimalsShown));
+		}
+		else
+		{
+			totalBalance = parseFloat(totalBalanceText);
+			totalPrincipalBalance = parseFloat(totalPrincipalBalanceText);
+			totalInterestBalance = parseFloat(totalInterestBalanceText);
+			totalFCPBalance = parseFloat(totalFCPBalanceText);
+			$(this).parent().children("td:nth-child(1)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(2)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(10)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(11)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(12)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(13)").css("font-weight", "bold");
+		}
+		prevTotalBalance = totalBalance;
+		prevTotalPrincipalBalance = totalPrincipalBalance;
+		prevTotalInterestBalance = totalInterestBalance;
+		prevTotalFCPBalance = totalFCPBalance;
+		$(this).parent().children("td:nth-child(6)").css("font-weight", "bold");
+		$(this).parent().children("td:nth-child(13)").css("font-weight", "bold");
+  	});
+}
+
+
+function tidyLoanHeaderTable()
+{
+   	$("#headerReportObj td:nth-child(3)").css("text-align", "right");
+   	$("#headerReportObj th").css("width", "0");
+   	$("#headerReportObjTable").css("width", "100%");
+   	$("#headerReportObjTable_wrapper").removeClass("dataTables_wrapper");
+
+var productName = "";
+var disbursed = "";
+	$("#headerReportObj td:nth-child(1)").each(function(index) {
+		$(this).css("font-weight", "bold");
+
+		productName = $(this).text();
+		if (productName.indexOf("ActiveInBadStanding") > -1)
+		{
+			$(this).css("color", "red");
+		}
+		if (productName.indexOf("ActiveInGoodStanding") > -1)
+		{
+			$(this).css("color", "green");
+		}
+
+		disbursedDate = "1900-01-01";
+		disbursed= $(this).parent().children("td:nth-child(2)").text();
+		if (!(disbursed == "Never Disbursed"))
+		{
+			if (disbursed > $('#date1Obj input').val())
+			{
+				disbursedDate = disbursed;
+			}
+			runTheStatement();
+		}
+  	});
+
+	showReport();
+}
+
+
+function tidySavingsTable()
+{
+var balanceText = "";
+var balance = 0.0;
+var prevBalance = 0.0;
+
+var moneyOut = 0.0;
+var moneyIn = 0.0;
+
+   	$("#theReportObj td:nth-child(6)").css("color", "red");
+   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
+   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
+
+   	$("#theReportObj th").css("width", "0");
+   	$("#theReportObjTable").css("width", "100%");
+   	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
+
+
+	$("#theReportObj td:nth-child(8)").each(function(index) {
+		balanceText = $(this).text();
+		if (balanceText == "")
+		{
+			moneyOut = floatVal($(this).parent().children("td:nth-child(6)").text());
+			moneyIn = floatVal($(this).parent().children("td:nth-child(7)").text());
+
+			balance = prevBalance + moneyIn - moneyOut;
+			$(this).text(balance.toFixed(decimalsShown));
+		}
+		else
+		{
+			balance = parseFloat(balanceText);
+			$(this).parent().children("td:nth-child(1)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(2)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(8)").css("font-weight", "bold");
+		}
+		prevBalance = balance;
+  	});
+}
+
+function tidySavingsHeaderTable()
+{
+   	$("#headerReportObj th").css("width", "0");
+   	$("#headerReportObjTable").css("width", "100%");
+   	$("#headerReportObjTable_wrapper").removeClass("dataTables_wrapper");
+
+	$("#headerReportObj td:nth-child(1)").each(function(index) {
+		$(this).css("font-weight", "bold");
+		runTheStatement();
+  	});
+
+	showReport();
+}
+
+var decimalsShown = 2;
+var cdaPath = "MiscdataAccess/sql-jndi.cda";
+var solution = Dashboards.getQueryParameter("solution");
+var path = Dashboards.getQueryParameter("path");
+Dashboards.globalcontext = false;
+
+var startDate = "2000-01-01";
+var endDate = setCurrentDate();
+
+var loanEvent = 0;
+var loanEventStatement = 0;
+var savingsEvent = 0;
+var savingsEventStatement = 0;
+
+var extId = "";
+var custName = "";
+var accountId = -5;
+var customerId = -5;
+
+var disbursedDate = "";
+
+</script>
+
+		<!-- start header -->
+			{content}
+			<div class="clear"/>
+</body>
+</html>

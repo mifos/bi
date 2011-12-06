@@ -68,8 +68,9 @@ select * from
 ((select -5 as account_id, "---Select One---" as account_name)
 union all
 (select a.account_id, 
-concat("Loan: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
+concat(c.display_name, ": ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
 from account a 
+join customer c on c.customer_id = a.customer_id
 join loan_account la on la.account_id = a.account_id
 join prd_offering po on po.prd_offering_id = la.prd_offering_id
 left join account_state ast on ast.account_state_id = a.account_state_id
@@ -114,6 +115,57 @@ order by 2;
     </DataAccess>
 
 
+    <DataAccess id="getLoanHeader" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Loan Header</Name>
+        <Query>
+<![CDATA[
+select cast(concat(po.prd_offering_name, ": " , lv.lookup_name) as char) as productName,
+cast(ifnull((select atxn.action_date
+		from account_trxn atxn
+		where atxn.account_id = a.account_id
+		and atxn.account_action_id = 10), "Never Disbursed") as char) as disbursement_date,
+cast(round(ifnull(la.loan_amount, 0.0), ${decimalsNo}) as char) as loanAmount,
+ifnull(a.external_id,"") as externalId, a.global_account_num
+from account a 
+join loan_account la on la.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = la.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.account_id = ${accountId}
+]]>
+
+	</Query>
+        <Parameters>
+            <Parameter name="accountId" type="Integer" default="0"/>
+            <Parameter name="decimalsNo" type="Integer" default="2"/>
+        </Parameters>
+    </DataAccess>
+
+
+
+    <DataAccess id="getSavingsHeader" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Savings Header</Name>
+        <Query>
+<![CDATA[
+select cast(concat(po.prd_offering_name, ": " , lv.lookup_name) as char) as productName, a.global_account_num
+from account a 
+join savings_account sa on sa.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = sa.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.account_id = ${accountId}
+]]>
+
+	</Query>
+        <Parameters>
+            <Parameter name="accountId" type="Integer" default="0"/>
+        </Parameters>
+    </DataAccess>
+
+
+
+
+
 
     <DataAccess id="getSavingsAccountStatement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Savings Account Statement</Name>
@@ -122,7 +174,7 @@ order by 2;
 (select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Money Out", "" as "Money In", 
-cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount),4),0.0) as char) as "Balance"
+cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
 from account_trxn atxn
 join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
 where atxn.account_id = ${accountId}
@@ -141,21 +193,21 @@ ifnull(ptlvl.lookup_value, substring(ptlv.lookup_name,13)) as "Payment",
 ifnull(ap.receipt_number,"") as "Receipt No.", cast(ifnull(ap.receipt_date,"") as char) as "Receipt Date", 
 CASE atxn.account_action_id
     WHEN 7 THEN 
-        cast(round(stxn.withdrawal_amount, 4) as char) 
+        cast(round(stxn.withdrawal_amount, ${decimalsNo}) as char) 
     WHEN 14 THEN 
         CASE arev.account_action_id
-            WHEN 7 THEN  cast(round(stxn.withdrawal_amount, 4) as char) 
+            WHEN 7 THEN  cast(round(stxn.withdrawal_amount, ${decimalsNo}) as char) 
             ELSE ""  
         END
     ELSE ""
 END as "Money Out",
 CASE atxn.account_action_id
-    WHEN 6 THEN  cast(round(stxn.deposit_amount, 4) as char) 
-    WHEN 11 THEN cast(round(stxn.interest_amount, 4) as char) 
+    WHEN 6 THEN  cast(round(stxn.deposit_amount, ${decimalsNo}) as char) 
+    WHEN 11 THEN cast(round(stxn.interest_amount, ${decimalsNo}) as char) 
     WHEN 14 THEN 
         CASE arev.account_action_id
-            WHEN 6 THEN  cast(round(stxn.deposit_amount, 4) as char) 
-            WHEN 11 THEN cast(round(stxn.interest_amount, 4) as char)    
+            WHEN 6 THEN  cast(round(stxn.deposit_amount, ${decimalsNo}) as char) 
+            WHEN 11 THEN cast(round(stxn.interest_amount, ${decimalsNo}) as char)    
             ELSE ""
         END
     ELSE ""
@@ -179,7 +231,7 @@ union all
 (select cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Money Out", "" as "Money In", 
-cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount),4),0.0) as char) as "Balance"
+cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
 from account_trxn atxn
 join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
 where atxn.account_id = ${accountId}
@@ -190,6 +242,7 @@ and atxn.action_date <= ${endDate})
     		<Parameter name="startDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="endDate" type="Date" pattern="yyyy-MM-dd" default="3000-01-01"/>
             <Parameter name="accountId" type="Integer" default="0"/>
+            <Parameter name="decimalsNo" type="Integer" default="2"/>
         </Parameters>
 
     </DataAccess>
@@ -204,14 +257,14 @@ and atxn.action_date <= ${endDate})
 (select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
-cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), 4) as char) as "Principal Balance", 
-cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), 4) as char) as "Interest Balance", 
+cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
+cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), ${decimalsNo}) as char) as "Interest Balance", 
 cast(round(ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0)
-                - ifnull(paidschedfees.fees_charges_penalties, 0.0), 4) as char) as "Fees/Charges/Penalties Balance",
+                - ifnull(paidschedfees.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Fees/Charges/Penalties Balance",
 cast(round(
 	ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0) + ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0) +
 	ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0) - ifnull(paidschedfees.fees_charges_penalties, 0.0)
-, 4) as char) as "Total Balance"
+, ${decimalsNo}) as char) as "Total Balance"
 from 
     (select ifnull(lsum.orig_principal, 0.0) as principal, ifnull(lsum.orig_interest, 0.0) as interest, 
         (ifnull(lsum.orig_fees, 0.0) + ifnull(lsum.orig_penalty, 0.0)) as fees_charges_penalties
@@ -245,13 +298,13 @@ union all
     left join lookup_value aalv on aalv.lookup_id = aa.lookup_id
     where atxn.payment_id = ap.payment_id) as "Txn Type",
 ifnull(ptlvl.lookup_value, substring(ptlv.lookup_name,13)) as "Payment", 
-ap.receipt_number as "Receipt No.", cast(ap.receipt_date as char) as "Receipt Date", 
+ifnull(ap.receipt_number,"") as "Receipt No.", cast(ifnull(ap.receipt_date, "") as char) as "Receipt Date", 
 cast(round(
 	ifnull(loantxn.principal, 0.0) + ifnull(loantxn.interest, 0.0) + ifnull(loantxn.fees_charges_penalties, 0.0) 
-		+ ifnull(feetxn.fees_charges_penalties, 0.0), 4) as char) as "Paid",
-cast(round(ifnull(loantxn.principal, 0.0), 4) as char) as "Principal", 
-cast(round(ifnull(loantxn.interest, 0.0), 4) as char) as "Interest", 
-cast(round(ifnull(loantxn.fees_charges_penalties, 0.0) + ifnull(feetxn.fees_charges_penalties, 0.0), 4) as char) as "Fees/Charges/Penalties",
+		+ ifnull(feetxn.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Paid",
+cast(round(ifnull(loantxn.principal, 0.0), ${decimalsNo}) as char) as "Principal", 
+cast(round(ifnull(loantxn.interest, 0.0), ${decimalsNo}) as char) as "Interest", 
+cast(round(ifnull(loantxn.fees_charges_penalties, 0.0) + ifnull(feetxn.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Fees/Charges/Penalties",
 "" as "Principal Balance", 
 "" as "Interest Balance", 
 "" as "Fees/Charges/Penalties Balance",
@@ -286,14 +339,14 @@ union all
 (select cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
-cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), 4) as char) as "Principal Balance", 
-cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), 4) as char) as "Interest Balance", 
+cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
+cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), ${decimalsNo}) as char) as "Interest Balance", 
 cast(round(ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0)
-                - ifnull(paidschedfees.fees_charges_penalties, 0.0), 4) as char) as "Fees/Charges/Penalties Balance",
+                - ifnull(paidschedfees.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Fees/Charges/Penalties Balance",
 cast(round(
 	ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0) + ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0) +
 	ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0) - ifnull(paidschedfees.fees_charges_penalties, 0.0)
-, 4) as char) as "Total Balance"
+, ${decimalsNo}) as char) as "Total Balance"
 from 
     (select ifnull(lsum.orig_principal, 0.0) as principal, ifnull(lsum.orig_interest, 0.0) as interest, 
         (ifnull(lsum.orig_fees, 0.0) + ifnull(lsum.orig_penalty, 0.0)) as fees_charges_penalties
@@ -322,6 +375,7 @@ from
     		<Parameter name="startDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
     		<Parameter name="endDate" type="Date" pattern="yyyy-MM-dd" default="3000-01-01"/>
             <Parameter name="accountId" type="Integer" default="0"/>
+            <Parameter name="decimalsNo" type="Integer" default="2"/>
         </Parameters>
 
     </DataAccess>
