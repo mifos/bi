@@ -171,7 +171,9 @@ where a.account_id = ${accountId}
         <Name>Get Savings Account Statement</Name>
         <Query>
 <![CDATA[
-(select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+select *
+from
+((select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Money Out", "" as "Money In", 
 cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
@@ -235,7 +237,8 @@ cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdraw
 from account_trxn atxn
 join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
 where atxn.account_id = ${accountId}
-and atxn.action_date <= ${endDate})
+and atxn.action_date <= ${endDate})) fullunion
+order by 1;
 ]]>
         </Query>
         <Parameters>
@@ -253,8 +256,9 @@ and atxn.action_date <= ${endDate})
         <Name>Get Loan Account Statement</Name>
         <Query>
 <![CDATA[
-
-(select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+select *
+from
+((select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
 cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
@@ -367,7 +371,8 @@ from
     join fee_trxn_detail ftxn on atxn.account_trxn_id = ftxn.account_trxn_id
     where atxn.account_id = ${accountId}
     and atxn.action_date <= ${endDate}
-    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)) fullunion
+order by 1;
   
 ]]>
         </Query>
