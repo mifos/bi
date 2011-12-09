@@ -22,7 +22,7 @@
 
 .fullBorder {
 	border-style: solid;
-      border-width: 1px;
+      border-width: 2px;
 }
 
 .bottomBorder{
@@ -96,8 +96,18 @@ function floatVal(textVal) {
 function clearReport()
 {
    	$("#fullStatement").css("display", "none");
-	$('#theReportObj').html("");
-	$('#headerReportObj').html("");
+	if (reportType == "multi")
+	{
+		$('#multiStatement').html("");
+	}
+}
+
+function clearMultiArray()
+{
+	if (reportType == "multi")
+	{
+		accountIdsSelected = new Array();
+	}
 }
 
 function showReport()
@@ -105,20 +115,74 @@ function showReport()
    	$("#fullStatement").css("display", "inline");
 }
 
+function checkIdCustomer(inputId)
+{
+	if (reportType == "multi")
+	{
+		checkMultiIdCustomer(inputId);
+	}
+	else
+	{
+   		checkSingleIdCustomer(inputId);
+	}
+}
+
+function processIdCustomer()
+{
+	Dashboards.fireChange("customerId", customerId);
+}
+
+function checkAccountSelector(objDivName)
+{
+	if (reportType == "multi")
+	{
+		checkMultiAccountSelector();
+	}
+	else
+	{
+   		checkSingleAccountSelector(objDivName);
+	}
+}
+
+function checkSingleAccountSelector(objDivName)
+{
+var cntOptions = $('#' + objDivName + ' option').size();
+
+switch (cntOptions){
+	case 1: 
+  		$('#' + objDivName).html("No Accounts to Select");
+		accountId = -5;
+  		break;
+
+	case 2: 
+		$('#' + objDivName + ' select option:eq(1)').attr('selected', 'selected'); 
+		accountId = $('#' + objDivName + ' select option:selected').val();
+		runTheReport();
+  		break;
+	default : 	
+		$('#' + objDivName + ' select option:eq(0)').attr('selected', 'selected'); 
+		accountId = $('#' + objDivName + ' select option:selected').val();
+	}
+}
+
+
 function tidyLoanTable()
 {
-   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(9)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(10)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(11)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(12)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(13)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " th:nth-child(1)").hide();
+   	$("#" + loanAccount.htmlObject + " td:nth-child(1)").hide();
 
-   	$("#theReportObj th").css("width", "0");
-   	$("#theReportObjTable").css("width", "100%");
-   	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(7)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(8)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(9)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(10)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(11)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(12)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(13)").css("text-align", "right");
+   	$("#" + loanAccount.htmlObject + " td:nth-child(14)").css("text-align", "right");
+
+   	$("#" + loanAccount.htmlObject + " th").css("width", "0");
+   	$("#" + loanAccount.htmlObject + "Table").css("width", "100%");
+   	$("#" + loanAccount.htmlObject + "Table_wrapper").removeClass("dataTables_wrapper");
 
 var totalBalanceText = "";
 var totalBalance = 0.0;
@@ -140,26 +204,26 @@ var totalFCPBalance = 0.0;
 var prevTotalFCPBalance = 0.0;
 var FCP = 0.0;
 
-	$("#theReportObj td:nth-child(13)").each(function(index) {
+	$("#" + loanAccount.htmlObject + " td:nth-child(14)").each(function(index) {
 		totalBalanceText = $(this).text();
-		totalPrincipalBalanceText = $(this).parent().children("td:nth-child(10)").text();
-		totalInterestBalanceText = $(this).parent().children("td:nth-child(11)").text();
-		totalFCPBalanceText = $(this).parent().children("td:nth-child(12)").text();
+		totalPrincipalBalanceText = $(this).parent().children("td:nth-child(11)").text();
+		totalInterestBalanceText = $(this).parent().children("td:nth-child(12)").text();
+		totalFCPBalanceText = $(this).parent().children("td:nth-child(13)").text();
 		if (totalBalanceText == "")
 		{
-			paid = floatVal($(this).parent().children("td:nth-child(6)").text());
-			principal = floatVal($(this).parent().children("td:nth-child(7)").text());
-			interest = floatVal($(this).parent().children("td:nth-child(8)").text());
-			FCP = floatVal($(this).parent().children("td:nth-child(9)").text());
+			paid = floatVal($(this).parent().children("td:nth-child(7)").text());
+			principal = floatVal($(this).parent().children("td:nth-child(8)").text());
+			interest = floatVal($(this).parent().children("td:nth-child(9)").text());
+			FCP = floatVal($(this).parent().children("td:nth-child(10)").text());
 
 			totalBalance = prevTotalBalance - paid;
 			totalPrincipalBalance = prevTotalPrincipalBalance - principal;
 			totalInterestBalance = prevTotalInterestBalance - interest;
 			totalFCPBalance = prevTotalFCPBalance - FCP;
 			$(this).text(totalBalance.toFixed(decimalsShown));
-			$(this).parent().children("td:nth-child(10)").text(totalPrincipalBalance.toFixed(decimalsShown));
-			$(this).parent().children("td:nth-child(11)").text(totalInterestBalance.toFixed(decimalsShown));
-			$(this).parent().children("td:nth-child(12)").text(totalFCPBalance.toFixed(decimalsShown));
+			$(this).parent().children("td:nth-child(11)").text(totalPrincipalBalance.toFixed(decimalsShown));
+			$(this).parent().children("td:nth-child(12)").text(totalInterestBalance.toFixed(decimalsShown));
+			$(this).parent().children("td:nth-child(13)").text(totalFCPBalance.toFixed(decimalsShown));
 		}
 		else
 		{
@@ -167,33 +231,33 @@ var FCP = 0.0;
 			totalPrincipalBalance = parseFloat(totalPrincipalBalanceText);
 			totalInterestBalance = parseFloat(totalInterestBalanceText);
 			totalFCPBalance = parseFloat(totalFCPBalanceText);
-			$(this).parent().children("td:nth-child(1)").css("font-weight", "bold");
 			$(this).parent().children("td:nth-child(2)").css("font-weight", "bold");
-			$(this).parent().children("td:nth-child(10)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(3)").css("font-weight", "bold");
 			$(this).parent().children("td:nth-child(11)").css("font-weight", "bold");
 			$(this).parent().children("td:nth-child(12)").css("font-weight", "bold");
 			$(this).parent().children("td:nth-child(13)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(14)").css("font-weight", "bold");
 		}
 		prevTotalBalance = totalBalance;
 		prevTotalPrincipalBalance = totalPrincipalBalance;
 		prevTotalInterestBalance = totalInterestBalance;
 		prevTotalFCPBalance = totalFCPBalance;
-		$(this).parent().children("td:nth-child(6)").css("font-weight", "bold");
-		$(this).parent().children("td:nth-child(13)").css("font-weight", "bold");
+		$(this).parent().children("td:nth-child(7)").css("font-weight", "bold");
+		$(this).parent().children("td:nth-child(14)").css("font-weight", "bold");
   	});
 }
 
-
 function tidyLoanHeaderTable()
 {
-   	$("#headerReportObj td:nth-child(3)").css("text-align", "right");
-   	$("#headerReportObj th").css("width", "0");
-   	$("#headerReportObjTable").css("width", "100%");
-   	$("#headerReportObjTable_wrapper").removeClass("dataTables_wrapper");
+
+   	$("#" + loanAccountHeader.htmlObject + " td:nth-child(3)").css("text-align", "right");
+   	$("#" + loanAccountHeader.htmlObject + " th").css("width", "0");
+   	$("#" + loanAccountHeader.htmlObject + "Table").css("width", "100%");
+   	$("#" + loanAccountHeader.htmlObject + "Table_wrapper").removeClass("dataTables_wrapper");
 
 var productName = "";
 var disbursed = "";
-	$("#headerReportObj td:nth-child(1)").each(function(index) {
+	$("#" + loanAccountHeader.htmlObject + " td:nth-child(1)").each(function(index) {
 		$(this).css("font-weight", "bold");
 
 		productName = $(this).text();
@@ -214,11 +278,9 @@ var disbursed = "";
 			{
 				disbursedDate = disbursed;
 			}
-			runTheStatement();
+			runLoanStatement();
 		}
   	});
-
-	showReport();
 }
 
 
@@ -231,22 +293,25 @@ var prevBalance = 0.0;
 var moneyOut = 0.0;
 var moneyIn = 0.0;
 
-   	$("#theReportObj td:nth-child(6)").css("color", "red");
-   	$("#theReportObj td:nth-child(6)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(7)").css("text-align", "right");
-   	$("#theReportObj td:nth-child(8)").css("text-align", "right");
+   	$("#" + savingsAccount.htmlObject + " th:nth-child(1)").hide();
+   	$("#" + savingsAccount.htmlObject + " td:nth-child(1)").hide();
 
-   	$("#theReportObj th").css("width", "0");
-   	$("#theReportObjTable").css("width", "100%");
-   	$("#theReportObjTable_wrapper").removeClass("dataTables_wrapper");
+   	$("#" + savingsAccount.htmlObject + " td:nth-child(7)").css("color", "red");
+   	$("#" + savingsAccount.htmlObject + " td:nth-child(7)").css("text-align", "right");
+   	$("#" + savingsAccount.htmlObject + " td:nth-child(8)").css("text-align", "right");
+   	$("#" + savingsAccount.htmlObject + " td:nth-child(9)").css("text-align", "right");
+
+   	$("#" + savingsAccount.htmlObject + " th").css("width", "0");
+   	$("#" + savingsAccount.htmlObject + "Table").css("width", "100%");
+   	$("#" + savingsAccount.htmlObject + "Table_wrapper").removeClass("dataTables_wrapper");
 
 
-	$("#theReportObj td:nth-child(8)").each(function(index) {
+	$("#" + savingsAccount.htmlObject + " td:nth-child(9)").each(function(index) {
 		balanceText = $(this).text();
 		if (balanceText == "")
 		{
-			moneyOut = floatVal($(this).parent().children("td:nth-child(6)").text());
-			moneyIn = floatVal($(this).parent().children("td:nth-child(7)").text());
+			moneyOut = floatVal($(this).parent().children("td:nth-child(7)").text());
+			moneyIn = floatVal($(this).parent().children("td:nth-child(8)").text());
 
 			balance = prevBalance + moneyIn - moneyOut;
 			$(this).text(balance.toFixed(decimalsShown));
@@ -254,9 +319,9 @@ var moneyIn = 0.0;
 		else
 		{
 			balance = parseFloat(balanceText);
-			$(this).parent().children("td:nth-child(1)").css("font-weight", "bold");
 			$(this).parent().children("td:nth-child(2)").css("font-weight", "bold");
-			$(this).parent().children("td:nth-child(8)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(3)").css("font-weight", "bold");
+			$(this).parent().children("td:nth-child(9)").css("font-weight", "bold");
 		}
 		prevBalance = balance;
   	});
@@ -264,17 +329,77 @@ var moneyIn = 0.0;
 
 function tidySavingsHeaderTable()
 {
-   	$("#headerReportObj th").css("width", "0");
-   	$("#headerReportObjTable").css("width", "100%");
-   	$("#headerReportObjTable_wrapper").removeClass("dataTables_wrapper");
+   	$("#" + savingsAccountHeader.htmlObject + " th").css("width", "0");
+   	$("#" + savingsAccountHeader.htmlObject + "Table").css("width", "100%");
+   	$("#" + savingsAccountHeader.htmlObject + "Table_wrapper").removeClass("dataTables_wrapper");
 
-	$("#headerReportObj td:nth-child(1)").each(function(index) {
+	$("#" + savingsAccountHeader.htmlObject + " td:nth-child(1)").each(function(index) {
 		$(this).css("font-weight", "bold");
-		runTheStatement();
+		runSavingsStatement();
   	});
-
-	showReport();
 }
+
+
+function runTheReport()
+{
+	clearReport();
+
+
+    	startDate = $('#date1Obj input').val();
+    	endDate = $('#date2Obj input').val();
+    	if (invalidDate(startDate))
+    	{
+        	alert("Start Date: " + startDate + " is Invalid");
+        	return;
+    	}
+    	if (invalidDate(endDate))
+    	{
+        	alert("End Date: " + endDate + " is Invalid");
+        	return;
+    	}
+    	if (startDate > endDate)
+    	{
+        	alert("Start Date is after End Date");
+        	return;
+    	}
+
+
+	if (reportType == "multi")
+	{
+		runTheMultiReport();
+	}
+	else
+	{
+		runTheSingleReport();
+	}
+
+}
+
+
+function runLoanStatement()
+{
+
+    	if (disbursedDate > endDate)
+    	{
+        	return;
+    	}
+	if (startDate > disbursedDate)
+	{
+		disbursedDate = startDate ;
+	}
+	loanEventStatement = loanEventStatement + 1;
+	Dashboards.fireChange("loanEventStatement", loanEventStatement);
+}
+
+
+function runSavingsStatement()
+{
+	savingsEventStatement = savingsEventStatement + 1;
+	Dashboards.fireChange("savingsEventStatement", savingsEventStatement);
+}
+
+
+
 
 var decimalsShown = 2;
 var cdaPath = "MiscdataAccess/sql-jndi.cda";
@@ -296,6 +421,110 @@ var accountId = -5;
 var customerId = -5;
 
 var disbursedDate = "";
+
+
+
+date1 = 
+{
+	name: "date1",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "startDate",
+	htmlObject: "date1Obj",
+	executeAtStart: true,
+	postChange: function(){ runTheReport();}
+
+};
+
+date2 = 
+{
+	name: "date2",
+	type: "dateInputComponent",
+	parameters:[],
+	parameter: "endDate",
+	htmlObject: "date2Obj",
+	executeAtStart: true,
+	postChange: function(){ runTheReport();}
+
+};
+
+
+externalId = 
+{
+	name: "externalId",
+	type: "textInputComponent",
+	parameters:[],
+	parameter: "extId",
+	htmlObject: "externalIdObj",
+	executeAtStart: true,
+	postChange: function(){ clearMultiArray();
+					custName = "";
+					$('#customerName').val(custName);
+					Dashboards.fireChange("extId", extId);}
+};
+ 
+customerName = 
+{
+	name: "customerName",
+	type: "textInputComponent",
+	parameters:[],
+	parameter: "custName",
+	htmlObject: "customerNameObj",
+	executeAtStart: true,
+	postChange: function(){ clearMultiArray();
+					extId = "";
+					$('#externalId').val(extId);
+					Dashboards.fireChange("custName", custName);}
+};
+
+
+externalIdCustomer =
+	{
+ 		name: "externalIdCustomer",
+		type: "select",
+     		queryDefinition: { dataAccessId: "getCustomerIdFromExternalId", path: cdaPath },
+  		listeners:["extId"],
+		valueAsId: false,
+		parameters: [["externalId","extId"]],
+		cdaParams: [["externalId","extId"]],
+		parameter: "customerId",
+    		htmlObject: "IdCustomerObj",
+    		executeAtStart: false,
+		postExecution: function(){	clearReport();
+							checkIdCustomer(extId);},
+		postChange: function(){		clearReport();
+							processIdCustomer();}
+  };
+
+customerNameCustomer =
+	{
+ 		name: "customerNameCustomer",
+		type: "select",
+     		queryDefinition: { dataAccessId: "getCustomerIdFromCustomerName", path: cdaPath },
+  		listeners:["custName"],
+		valueAsId: false,
+		//size: "4",
+		parameters: [["customerName","custName"]],
+		cdaParams: [["customerName","custName"]],
+		parameter: "customerId",
+    		htmlObject: "IdCustomerObj",
+    		executeAtStart: false,
+		postExecution: function(){	clearReport();
+							checkIdCustomer(custName);},
+		postChange: function(){		//alert("pc custname");
+							clearReport();
+							processIdCustomer();}
+  };
+
+runReport = 
+{
+  	name: "runReport",
+  	type: "Button",
+  	htmlObject: "runReportObj",
+  	label: "Run Statements",
+  	expression: function(){ runTheReport();},
+  	executeAtStart: true
+}
 
 </script>
 

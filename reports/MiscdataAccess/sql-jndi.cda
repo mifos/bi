@@ -10,14 +10,15 @@
     <DataAccess id="getCustomerIdFromCustomerName" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Customer Id From Customer Name</Name>
         <Query>
-(select "-5", "---Select One---" as customer_name)
+select * from 
+((select "-5", "---Select One---" as customer_name)
 union all
 (select cast(c.customer_id as char) as customer_id, cast(concat( c.display_name, " - ", lv.lookup_name, " (", c.global_cust_num, ")") as char) as customer_name
 from customer c
 left join customer_state cs on cs.status_id = c.status_id
 left join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-where display_name like concat("%", ${customerName}, "%") and display_name > ""
-order by 2);
+where display_name like concat("%", ${customerName}, "%") and display_name > "")) x
+order by 2;
 	</Query>
         <Parameters>
             <Parameter name="customerName" type="String" default="; ;"/>
@@ -28,14 +29,15 @@ order by 2);
     <DataAccess id="getCustomerIdFromGovernmentId" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Customer Id From Government Id</Name>
         <Query>
-(select "-5", "---Select One---" as customer_name)
+select * from 
+((select "-5", "---Select One---" as customer_name)
 union all
 (select cast(c.customer_id as char) as customer_id, cast(concat( c.display_name, " - ", lv.lookup_name, " (", c.global_cust_num, ")") as char) as customer_name
 from customer c
 left join customer_state cs on cs.status_id = c.status_id
 left join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-where government_id = ${governmentId} and government_id > ""
-order by 2);
+where government_id = ${governmentId} and government_id > "")) x
+order by 2;
 	</Query>
         <Parameters>
             <Parameter name="governmentId" type="String" default="; ;"/>
@@ -46,14 +48,15 @@ order by 2);
     <DataAccess id="getCustomerIdFromExternalId" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Customer Id From External Id</Name>
         <Query>
-(select "-5", "---Select One---" as customer_name)
+select * from 
+((select "-5", "   ---Select One---" as customer_name)
 union all
 (select cast(c.customer_id as char) as customer_id, cast(concat( c.display_name, " - ", lv.lookup_name, " (", c.global_cust_num, ")") as char) as customer_name
 from customer c
 left join customer_state cs on cs.status_id = c.status_id
 left join lookup_value lv on lv.lookup_id = cs.status_lookup_id
-where external_id = ${externalId} and external_id > ""
-order by 2);
+where external_id = ${externalId} and external_id > "")) x
+order by 2;
 	</Query>
         <Parameters>
             <Parameter name="externalId" type="String" default="; ;"/>
@@ -88,7 +91,8 @@ order by 2;
         <Name>Get Account List For Customer</Name>
         <Query>
 select * from
-((select -5 as account_id, "---Select One---" as account_name)
+((select -5 as account_id, "  ---Select One---" as account_name
+    from dual where 1 = ${showSelectOne})
 union all
 (select a.account_id, 
 concat("Loan: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
@@ -100,7 +104,7 @@ left join lookup_value lv on lv.lookup_id = ast.lookup_id
 where a.customer_id = ${customerId})
 union all
 (select a.account_id, 
-concat("Savings: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
+concat(" Savings: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
 from account a 
 join savings_account la on la.account_id = a.account_id
 join prd_offering po on po.prd_offering_id = la.prd_offering_id
@@ -111,6 +115,7 @@ order by 2;
 	</Query>
         <Parameters>
             <Parameter name="customerId" type="Integer" default="-5"/>
+            <Parameter name="showSelectOne" type="Integer" default="1"/>
         </Parameters>
     </DataAccess>
 
@@ -164,16 +169,13 @@ where a.account_id = ${accountId}
 
 
 
-
-
-
     <DataAccess id="getSavingsAccountStatement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
         <Name>Get Savings Account Statement</Name>
         <Query>
 <![CDATA[
 select *
 from
-((select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+((select "A" as ordering, cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Money Out", "" as "Money In", 
 cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
@@ -183,7 +185,8 @@ where atxn.account_id = ${accountId}
 and atxn.action_date < ${startDate})
 
 union all
-(select cast(atxn.action_date as char) as "Txn Date",
+
+(select "B" as ordering, cast(atxn.action_date as char) as "Txn Date",
 CASE atxn.account_action_id
     WHEN 6 THEN "Deposit"
     WHEN 7 THEN "Withdrawal"
@@ -227,10 +230,11 @@ left join account_trxn arev on arev.account_trxn_id = atxn.related_trxn_id
 where atxn.account_action_id in (6,7, 11, 14)   
 and atxn.action_date between ${startDate} and ${endDate}
 and atxn.account_id = ${accountId}
-
 order by atxn.action_date, atxn.account_trxn_id)
+
 union all
-(select cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
+
+(select "C" as ordering, cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Money Out", "" as "Money In", 
 cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
@@ -238,7 +242,7 @@ from account_trxn atxn
 join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
 where atxn.account_id = ${accountId}
 and atxn.action_date <= ${endDate})) fullunion
-order by 1;
+order by 1, 2;
 ]]>
         </Query>
         <Parameters>
@@ -258,7 +262,7 @@ order by 1;
 <![CDATA[
 select *
 from
-((select cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+((select "A" as ordering, cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
 cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
@@ -282,19 +286,18 @@ from
     from account_trxn atxn
     join loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
     where atxn.account_id = ${accountId}
-    and atxn.action_date <= ${startDate}
+    and atxn.action_date < ${startDate}
     and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paid,
     (select sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
     from account_trxn atxn
     join fee_trxn_detail ftxn on atxn.account_trxn_id = ftxn.account_trxn_id
     where atxn.account_id = ${accountId}
-    and atxn.action_date <= ${startDate}
+    and atxn.action_date < ${startDate}
     and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)
     
 union all
 
-
-(select cast(ap.payment_date as char) as "Txn Date", 
+(select "B" as ordering, cast(ap.payment_date as char) as "Txn Date", 
     (select group_concat(DISTINCT substring(aalv.lookup_name,15)
                 ORDER BY substring(aalv.lookup_name,15) DESC SEPARATOR '; ')
     from account_trxn atxn
@@ -340,7 +343,7 @@ order by ap.payment_date, ap.payment_id)
 
 union all
 
-(select cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
+(select "C" as ordering, cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
 "" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
 "" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
 cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
@@ -372,7 +375,7 @@ from
     where atxn.account_id = ${accountId}
     and atxn.action_date <= ${endDate}
     and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)) fullunion
-order by 1;
+order by 1, 2;
   
 ]]>
         </Query>

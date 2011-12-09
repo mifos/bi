@@ -1,17 +1,17 @@
 <div class=reportBuffer>
 <table width="100%">
 <tr>
-<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Client External Id</div><div id=externalIdObj></div></td><td width="20">&nbsp;</td>
-<td><div class=reportLabel>Name</div><div id=customerNameObj></div></td><td width="20">&nbsp;</td>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Client External Id</div><div id=externalIdObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Name</div><div id=customerNameObj></div></td><td width="5">&nbsp;</td>
 </tr>
 <tr>
-<td colspan="3"><div id=IdCustomerObj></div><td width="20">&nbsp;</td>
-<td colspan="3"><div id=accountSelectorObj></div></td><td width="20">&nbsp;</td>
+<td colspan="3" valign="top"><div id=IdCustomerObj></div><td width="5">&nbsp;</td>
+<td colspan="3" valign="top"><div id=accountSelectorObj></div></td><td width="5">&nbsp;</td>
 </tr>
 </table>
-
+<br>
 <div id=fullStatement>
 <table class="fullBorder" width="100%">
 <tr><td class="bottomBorder"><div id=headerReportObj></div></td></tr>
@@ -23,10 +23,12 @@
 
 <script language="javascript" type="text/javascript">
 
-  var dbMetaDataVar = {
+reportType = "single";
+
+dbMetaDataVar = {
     savingsAccountDef: {
-      colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Money Out", "Money In", "Balance"],
-      colTypes: ['string','string','string','string','string','string','string','string'],
+      colHeaders: ["Ordering", "Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Money Out", "Money In", "Balance"],
+      colTypes: ['string','string','string','string','string','string','string','string','string'],
       tableStyle: "classic",
 	paginate: false,
 	sort: false,
@@ -47,8 +49,8 @@
 	path: cdaPath
     },
     loanAccountDef: {
-      colHeaders: ["Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Paid", "Principal", "Interest", "Fees / Charges / Penalties", "Principal Balance", "Interest Balance", "Fees / Charges / Penalties Balance", "Total Balance"],
-      colTypes: ['string','string','string','string','string','string','string','string','string','string','string','string','string'],
+      colHeaders: ["Ordering", "Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Paid", "Principal", "Interest", "Fees / Charges / Penalties", "Principal Balance", "Interest Balance", "Fees / Charges / Penalties Balance", "Total Balance"],
+      colTypes: ['string','string','string','string','string','string','string','string','string','string','string','string','string','string'],
       tableStyle: "classic",
 	paginate: false,
 	sort: false,
@@ -72,31 +74,7 @@
   };
 
 
-function checkAccountSelector()
-{
-var cntOptions = $('#accountSelectorObj option').size();
-//alert(cntOptions); 
-
-switch (cntOptions){
-	case 1: 
-  		$('#accountSelectorObj').html("No Accounts to Select");
-		accountId = -5;
-  		break;
-
-	case 2: 
-		$('#accountSelectorObj select option:eq(1)').attr('selected', 'selected'); 
-		accountId = $('#accountSelectorObj select option:selected').val();
-		//alert("check ac sel");
-		runTheReport();
-  		break;
-	default : 	
-		$('#accountSelectorObj select option:eq(0)').attr('selected', 'selected'); 
-		accountId = $('#accountSelectorObj select option:selected').val();
-	}
-}
-
-
-function checkIdCustomer(inputId)
+function checkSingleIdCustomer(inputId)
 {
 var cntOptions = $('#IdCustomerObj option').size();
 //alert(cntOptions); 
@@ -120,18 +98,11 @@ switch (cntOptions){
 	}
 }
 
-function processIdCustomer()
+function runTheSingleReport()
 {
-	Dashboards.fireChange("customerId", customerId);
-}
-
-function runTheReport()
-{
-//alert("the report: " + accountId);
 
     if (accountId < 0)
     {
-        // just ignore as the "select one" option is picked 
         return;
     }
 
@@ -147,86 +118,9 @@ function runTheReport()
     	  Dashboards.fireChange("savingsEvent", savingsEvent);
     }
     
+	showReport();
+
 }
-
-
-function runTheStatement()
-{
-//alert("the statement");
-    startDate = $('#date1Obj input').val();
-    endDate = $('#date2Obj input').val();
-
-    if (invalidDate(startDate))
-    {
-        alert("Start Date: " + startDate + " is Invalid");
-        return;
-    }
-    if (invalidDate(endDate))
-    {
-        alert("End Date: " + endDate + " is Invalid");
-        return;
-    }
-
-    if (startDate > endDate)
-    {
-        alert("Start Date is after End Date");
-        return;
-    }
-
-
-    if ($('#accountSelectorObj select option:selected').text().substr(0,4) == "Loan")
-    {
-    	  if (startDate < disbursedDate)
-    	  {
-		startDate = disbursedDate;
-    		if (startDate > endDate)
-    		{
-        		alert("Disbursed Date is after End Date");
-			$('#theReportObj').html("");
-        		return;
-    		}
-    	  }
-    	  loanEventStatement = loanEventStatement + 1;
-    	  Dashboards.fireChange("loanEventStatement", loanEventStatement);
-    }
-    else
-    {
-    	  savingsEventStatement = savingsEventStatement + 1;
-    	  Dashboards.fireChange("savingsEventStatement", savingsEventStatement);
-    }
-    
-}
-
-
-
-
-externalId = 
-{
-	name: "externalId",
-	type: "textInputComponent",
-	parameters:[],
-	parameter: "extId",
-	htmlObject: "externalIdObj",
-	executeAtStart: true,
-	postChange: function(){ custName = "";
-					$('#customerName').val(custName);
-					Dashboards.fireChange("extId", extId);
-												}
-};
- 
-customerName = 
-{
-	name: "customerName",
-	type: "textInputComponent",
-	parameters:[],
-	parameter: "custName",
-	htmlObject: "customerNameObj",
-	executeAtStart: true,
-	postChange: function(){ extId = "";
-					$('#externalId').val(extId);
-					Dashboards.fireChange("custName", custName);}
-
-};
 
 
 accountSelector = 
@@ -239,76 +133,16 @@ accountSelector =
 	parameters:[["customerId", "customerId"]],
       cdaParams: [["customerId","customerId"]], 
 	parameter: "accountId",
+	size: "4",
 	htmlObject: "accountSelectorObj",
 	executeAtStart: false,
 	postExecution: function(){	clearReport();
-						checkAccountSelector();},
-	postChange: function(){		clearReport();
-						runTheReport();}
+						checkAccountSelector("accountSelectorObj");},
+	postChange: function(){		runTheReport();}
 
 };
 
-
-date1 = 
-{
-	name: "date1",
-	type: "dateInputComponent",
-	parameters:[],
-	parameter: "startDate",
-	htmlObject: "date1Obj",
-	executeAtStart: true,
-	postChange: function(){ runTheReport();}
-
-};
-
-date2 = 
-{
-	name: "date2",
-	type: "dateInputComponent",
-	parameters:[],
-	parameter: "endDate",
-	htmlObject: "date2Obj",
-	executeAtStart: true,
-	postChange: function(){ runTheReport();}
-
-};
-
-var externalIdCustomer =
-	{
- 		name: "externalIdCustomer",
-		type: "select",
-     		queryDefinition: { dataAccessId: "getCustomerIdFromExternalId", path: cdaPath },
-  		listeners:["extId"],
-		valueAsId: false,
-		parameters: [["externalId","extId"]],
-		cdaParams: [["externalId","extId"]],
-		parameter: "customerId",
-    		htmlObject: "IdCustomerObj",
-    		executeAtStart: false,
-		postExecution: function(){	clearReport();
-							checkIdCustomer(extId);},
-		postChange: function(){		clearReport();
-							processIdCustomer();}
-  };
-
-var customerNameCustomer =
-	{
- 		name: "customerNameCustomer",
-		type: "select",
-     		queryDefinition: { dataAccessId: "getCustomerIdFromCustomerName", path: cdaPath },
-  		listeners:["custName"],
-		valueAsId: false,
-		parameters: [["customerName","custName"]],
-		cdaParams: [["customerName","custName"]],
-		parameter: "customerId",
-    		htmlObject: "IdCustomerObj",
-    		executeAtStart: false,
-		postExecution: function(){	clearReport();
-							checkIdCustomer(custName);},
-		postChange: function(){		//alert("pc custname");
-							clearReport();
-							processIdCustomer();}
-  };
+ 
 
 var savingsAccountHeader =
 	{
@@ -356,8 +190,8 @@ var loanAccount =
 		type: "tableComponent",
     		chartDefinition: dbMetaDataVar.loanAccountDef,
   		listeners:["loanEventStatement"],
-		parameters: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
-		cdaParams: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
+		parameters: [["startDate","disbursedDate"], ["endDate","endDate"], ["accountId","accountId"]],
+		cdaParams: [["startDate","disbursedDate"], ["endDate","endDate"], ["accountId","accountId"]],
     		htmlObject: "theReportObj",
     		executeAtStart: false,
   		postExecution: function(){ tidyLoanTable()}
