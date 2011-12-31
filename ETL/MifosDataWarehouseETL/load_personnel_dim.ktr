@@ -217,8 +217,8 @@ var sql = &quot;select count(*) from dim_personnel p&quot;;
 sql = sql + &quot; join dim_office o on o.office_key = p.office_key&quot;;
 sql = sql + &quot; where p.personnel_id = &quot; + personnel_id;
 sql = sql + &quot; and o.office_id = &quot; + office_id;
-sql = sql + &quot; and p.valid_from =  &apos;&quot; +  date_of_joining_branch + &quot;&apos;&quot;;
-sql = sql + &quot; and ifnull(p.valid_to, &apos;2199-12-31&apos;) =  &apos;&quot; +  date_leave_branch + &quot;&apos;&quot;;
+sql = sql + &quot; and p.valid_from =  date(&apos;&quot; +  date_of_joining_branch + &quot;&apos;)&quot;;
+sql = sql + &quot; and ifnull(p.valid_to, &apos;2199-12-31&apos;) =  date(&apos;&quot; +  date_leave_branch + &quot;&apos;)&quot;;
 var sqlResults = fireToDB(DBConnection, sql);
 
 
@@ -227,7 +227,11 @@ var queryCount = parseInt(sqlResults[0][0]);
 if (queryCount &gt; 0)
 {
 	trans_Status = SKIP_TRANSFORMATION;
-} </jsScript_script>
+} 
+else
+{
+	trans_Status = CONTINUE_TRANSFORMATION;
+}</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>482</xloc>
@@ -294,8 +298,7 @@ from
         join change_log cl on cl.entity_id = p.personnel_id and cl.entity_type = 17
         join change_log_detail cld on cld.change_log_id = cl.change_log_id
                     and cld.field_name = (&quot;office&quot;))) p
-                    
-                    
+                                      
 order by 2,1;
 </sql>
     <limit>0</limit>
