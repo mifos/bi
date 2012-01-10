@@ -36,7 +36,7 @@ class ClientSummaryTest {
             t.assertRowEquals(offset+1, ['Total Clients', '31', '18 - 25', '16'])
             t.assertRowEquals(offset+2, ['Active Clients', '26', '26 - 30', '0'])
             t.assertRowEquals(offset+3, ['On Hold Clients', '4', '31 - 35', '5'])
-            t.assertRowEquals(offset+4, ['Closed Clients', '1', '36 - 40', '0'])
+            t.assertRowEquals(offset+4, ['Closed Clients', '1', '36 - 40', '3'])
             t.assertRowEquals(offset+5, ['Active Centers', '10', '41 - 45', '2'])
             t.assertRowEquals(offset+6, ['Active Groups', '23', '46 - 50', '0'])
             t.assertRowEquals(offset+7, ['> 50', '2'])
