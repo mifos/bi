@@ -10,7 +10,7 @@ class ClientSummaryTest {
     def clientDetailsAndAgeHeaders = ['Client Details', 'Age']
     def maritalStatusAndGenderHeaders = ['Marital Status', 'Gender']
     def educationLevelAndPovertyStatusHeaders = ['Education Level', 'Poverty Status']
-    def citizenshipAndEthinicityHeaders = ['Citizenship', 'Ethinicity']
+    def citizenshipAndEthnicityHeaders = ['Citizenship', 'Ethnicity']
     
     def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
@@ -56,9 +56,9 @@ class ClientSummaryTest {
             t.assertRowEquals(offset+3, ['N/A', '28', 'NonPoor', '1'])
             t.assertRowEquals(offset+4, ['N/A', '0'])
 
-            // Citizenship and Ethinicity
+            // Citizenship and Ethnicity
             offset = 21
-            t.assertRowEquals(offset, citizenshipAndEthinicityHeaders)
+            t.assertRowEquals(offset, citizenshipAndEthnicityHeaders)
             t.assertRowEquals(offset+1, ['Us', '2', 'Irish', '2'])
             t.assertRowEquals(offset+2, ['Ghana', '1', 'European', '0'])
             t.assertRowEquals(offset+3, ['N/A', '28', 'Arabic', '1'])
@@ -114,9 +114,9 @@ class ClientSummaryTest {
             t.assertRowEquals(offset+3, ['N/A', '7', 'NonPoor', '0'])
             t.assertRowEquals(offset+4, ['N/A', '0'])
 
-            // Citizenship and Ethinicity
+            // Citizenship and Ethnicity
             offset = 21
-            t.assertRowEquals(offset, citizenshipAndEthinicityHeaders)
+            t.assertRowEquals(offset, citizenshipAndEthnicityHeaders)
             t.assertRowEquals(offset+1, ['Us', '1', 'Irish', '1'])
             t.assertRowEquals(offset+2, ['Ghana', '0', 'European', '0'])
             t.assertRowEquals(offset+3, ['N/A', '7', 'Arabic', '0'])
