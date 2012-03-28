@@ -10,7 +10,7 @@ class ClientSummaryTest {
     def clientDetailsAndAgeHeaders = ['Client Details', 'Age']
     def maritalStatusAndGenderHeaders = ['Marital Status', 'Gender']
     def educationLevelAndPovertyStatusHeaders = ['Education Level', 'Poverty Status']
-    def citizenshipAndEthnicityHeaders = ['Citizenship', 'Ethnicity']
+    def citizenshipAndEthnicityHeaders = ['Citizenship', 'Ethinicity']
     
     def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
