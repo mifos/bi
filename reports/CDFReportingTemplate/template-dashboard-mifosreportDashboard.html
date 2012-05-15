@@ -1,0 +1,795 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>Community Dashboard Framework</title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+		<!--link href="/pentaho-style/dashboard.css" rel="stylesheet" type="text/css" media="screen" /-->
+		<link rel="stylesheet" type="text/css" href="resources/style/template.css"/>
+	</head>
+	<body>
+</script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+<script>
+$j = jQuery.noConflict();
+
+</script>
+
+<style type="text/css">
+
+#DWDate {
+	font-size: 80%;
+}
+
+.reportLabel {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+#reportOutput{
+  	width: 100%; 
+  	height: 600px;
+}
+
+</style>
+
+
+<script language="javascript" type="text/javascript">
+
+	isAdmin = "{isAdmin}";
+	isLoggedIn = "{isLoggedIn}";
+
+//details to build up report url... this for pentaho server
+	httpUrl = "http://localhost:8880";
+	pentahoPartURL = "/pentaho/content/reporting?solution=standardReports&path=prpts&name=";
+	localeParam = "&locale={locale}"
+	generalParams = "&autoSubmit=true&showParameters=false&paginate=false&autoSubmitUI=true";
+
+
+
+
+
+var listOfParameters = [ 
+	{
+		name : 'branchSelector',
+		label : 'office',
+		inputField : 'branchSelectorObj',
+		type : 'number',
+		variable : 'officeId',
+		default : 0,
+		oldComment: 'Select One, ALL... then just a list of branches',
+		oldAction : 'BranchListWithAll_SourceDB.xaction'
+	},
+	{
+		name : 'branchSelectorNoAll',
+		label : 'office',
+		inputField : 'branchSelectorNoAllObj',
+		type : 'number',
+		variable : 'officeId',
+		default : 0,
+		oldComment: 'Select One, ... then just a list of branches (DW only probably)',
+		oldAction : 'BranchList.xaction'
+	},
+	{
+		name : 'branchSearchIdSelector',
+		label : 'office',
+		inputField : 'branchSearchIdSelectorObj',
+		type : 'string',
+		variable : 'searchId',
+		default : "-",
+		oldComment: 'Select One, ALL, ... then all office hierarchy including MIFOS HO',
+		oldAction : 'MifosOfficeList.xaction'
+
+	},
+	{
+		name : 'branchSearchIdSelectorNoMifos',
+		label : 'office',
+		inputField : 'branchSearchIdSelectorNoMifosObj',
+		type : 'string',
+		variable : 'searchId',
+		default : "-",
+		oldComment: 'Select One, ALL, ... then all office hierarchy excluding MIFOS HO',
+		oldAction : 'OfficeListSearchId.xaction'
+	},
+	{
+		name : 'LOSelector',
+		label : 'loanofficer',
+		inputField : 'LOSelectorObj',
+		type : 'number',
+		variable : 'loanOfficerId',
+		default : 0
+	},
+	{
+		name : 'LOSelectorDW',
+		label : 'loanofficer',
+		inputField : 'LOSelectorDWObj',
+		type : 'number',
+		variable : 'loanOfficerId',
+		default : 0
+	},
+	{
+		name : 'centerSelector',
+		label : 'Center',
+		inputField : 'centerSelectorObj',
+		type : 'number',
+		variable : 'centerId',
+		default : 0
+	},
+	{
+		name : 'centerSelectorDW',
+		label : 'Center',
+		inputField : 'centerSelectorDWObj',
+		type : 'number',
+		variable : 'centerId',
+		default : 0
+	},
+	{
+		name : 'productSelector',
+		label : 'Product',
+		inputField : 'productSelectorObj',
+		type : 'number',
+		variable : 'productId',
+		default : 0
+	},
+	{
+		name : 'purposeSelector',
+		label : 'Purpose',
+		inputField : 'purposeSelectorObj',
+		type : 'number',
+		variable : 'purposeId',
+		default : 0
+	},
+	{
+		name : 'date1div',
+		label : 'startdate',
+		inputField : 'date1Obj',
+		type : 'date',
+		variable : 'date1Val',
+		default : 'today'
+	},
+	{
+		name : 'date2div',
+		label : 'enddate',
+		inputField : 'date2Obj',
+		type : 'date',
+		variable : 'date2Val',
+		default : 'today'
+	}
+];
+
+
+reportListing = [
+	{
+  		name: "Select One",
+  		action: "SelectOne",
+  		type: "Not Applicable",
+  		category: "Not Applicable",
+  		parameters: []
+	},
+	{
+  		name: "Active Loan Summary per Branch",
+  		action: "ActiveLoanSummaryBranch",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: []
+	},
+	{
+  		name: "Active Loans by Center",
+  		action: "ActiveLoansCenter",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSelector"],["selected_center","centerSelector"]]
+	},
+	{
+  		name: "Active Loans by Loan Officer",
+  		action: "ActiveLoansLoanOfficer",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office", "branchSelector"],["selected_officer", "LOSelector"]]
+	},
+	{
+  		name: "Active Loans by Loan Product",
+  		action: "ActiveLoansLoanProduct",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSelector"],["selected_product","productSelector"]]
+	},
+	{
+  		name: "Active Loans by Loan Purpose",
+  		action: "ActiveLoansLoanPurpose",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSelector"],["selected_purpose","purposeSelector"]]
+	},
+	{
+  		name: "Active Loans in their Last Installment",
+  		action: "ActiveLoansLastInstallment",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSelector"]]
+	},
+	{
+  		name: "Aging Summary",
+  		action: "AgingSummary",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSearchIdSelector"]]
+	},
+	{
+  		name: "Branch Expected Cash Flow",
+  		action: "BranchExpectedCashFlow",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSearchIdSelectorNoMifos"],["start_date","date1div"],["end_date","date2div"]]
+	},
+	{
+  		name: "Center Schedule by Loan Officer",
+  		action: "CenterScheduleLoanOfficer",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["branch_filter","branchSearchIdSelector"],["from_date","date1div"],["to_date","date2div"]]
+	},
+	{
+  		name: "Client Summary",
+  		action: "ClientSummary",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSearchIdSelector"]]
+	},
+	{
+  		name: "Closed Loan Summary per Branch",
+  		action: "ClosedLoanSummaryBranch",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: []
+	},
+	{
+  		name: "Dormant Clients Summary",
+  		action: "DormantClientsSummary",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: []
+	},
+	{
+  		name: "Due Vs Collected by Branch",
+  		action: "DueVsCollectedBranch",
+  		type: "prpt",
+  		category: "Warehouse",
+  		parameters: [["selected_office","branchSearchIdSelectorNoMifos"],["start_date","date1div"],["end_date","date2div"]]
+	},
+	{
+  		name: "Due Vs Collected by Loan Officer",
+  		action: "DueVsCollectedLoanOfficer",
+  		type: "prpt",
+  		category: "Warehouse",
+  		parameters: [["selected_office","branchSelectorNoAll"],["selected_loan_officer","LOSelectorDW"],["start_date","date1div"],["end_date","date2div"]]
+	},
+	{
+  		name: "Due Vs Collected by Center",
+  		action: "DueVsCollectedCenter",
+  		type: "prpt",
+  		category: "Warehouse",
+  		parameters: [["selected_office","branchSelectorNoAll"],["selected_loan_officer","LOSelectorDW"],["selected_center","centerSelectorDW"],["start_date","date1div"],["end_date","date2div"]]
+	},
+	{
+  		name: "Groups Information",
+  		action: "GroupsInformation",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: [["selected_office","branchSearchIdSelector"]]
+	},
+	{
+  		name: "Loans Pending Approval (LO parm to be fixed)",
+  		action: "LoansPendingApproval",
+  		type: "prpt",
+  		category: "Operational",
+
+  		parameters: [["selected_office", "branchSearchIdSelector"],["selected_officer", "LOSelector"],["selected_product","productSelector"]]
+	},
+	{
+  		name: "Outreach Summary by Branch",
+  		action: "OutreachSummaryBranch",
+  		type: "prpt",
+  		category: "Operational",
+  		parameters: []
+	},
+  ];
+
+
+var solution = Dashboards.getQueryParameter("solution");
+solution = solution .replace("AllReports","standardReports");
+var path = Dashboards.getQueryParameter("path");
+var prptPath = endsWith(path, "/") ? path + "prpts" : path + "/prpts";
+var commonActionsSolution = "commonActions";
+
+Dashboards.globalcontext = false;
+
+reportListingIndex = 0;
+
+
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+function pad2(number) {
+    return (number < 10 ? '0' : '') + number
+}
+
+function setCurrentDate() {
+    xxDate = new Date();
+    return xxDate.getFullYear() + "-" + pad2(xxDate.getMonth() + 1) + "-" + pad2(xxDate.getDate());
+}
+
+function invalidDate(checkDate) {
+//validates for yyyy-mm-dd returns true if invalid, false is valid
+var dateformat = /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/;
+
+    	if(!(dateformat.test(checkDate))) {
+      	return true;
+    	}
+	else
+	{
+		var dyear = checkDate.substring(0,4);
+		var dmonth = checkDate.substring(5,7) - 1;
+		var dday = checkDate.substring(8);
+
+		var newDate=new Date(dyear,dmonth ,dday);
+		return !((dday==newDate.getDate()) && (dmonth==newDate.getMonth()) && (dyear==newDate.getFullYear()));
+	}
+}
+
+
+function enableClearButton() {
+	$j("#clearRpt" ).button( "option", "disabled", false );
+}
+
+function disableClearButton() {
+	$j("#clearRpt" ).button( "option", "disabled", true );
+}
+
+function clearTheReport() {
+	$('#reportOutput').html("");disableClearButton();
+}
+
+var DWNote = {
+	name: "DWNote",
+	type: "select",
+	valueAsId: false,
+        queryDefinition: { dataAccessId: "getDWCompletedToDate", path: "dataAccess/sql-jndiDW.cda" },
+	htmlObject: "DWNoteObj",
+	postExecution: function(){
+				var DWDateTime = $('#DWNoteObj select option:eq(0)').val();
+				DWDateTime = DWDateTime.replace(/ 00:00:00/, 'X');
+				DWDateTime = DWDateTime.replace(/ /," at ");
+				DWDateTime = DWDateTime.replace(/X/, ' (end of)');
+				var htmlInsert = "<div id=DWDate>Data for this report last updated on " + DWDateTime + "</div>";
+				$('#DWNoteObj').html(htmlInsert);
+			},
+	executeAtStart: true
+};
+
+
+
+function getVariableValidationDetails(inputParam) {
+
+var returnObj = {
+			variable: "unknownInputField",
+			type: "unknownInputField"
+			}
+
+	for (var i in listOfParameters )
+	{
+		if (listOfParameters[i].name == inputParam)
+		{
+			returnObj.variable = listOfParameters[i].variable;
+			returnObj.type = listOfParameters[i].type;
+			return returnObj;
+		}
+	}
+	return returnObj;
+}
+
+function getVariableName(inputParam) {
+	for (var i in listOfParameters )
+	{
+		if (listOfParameters[i].name == inputParam)
+		{
+			return listOfParameters[i].variable;
+		}
+	}
+		return "unknownInputField";
+}
+
+
+function initialiseReportsAndParameters() {
+	initialiseAllReports();
+	initialiseAllParameters();
+
+	$('#rptOutputType select option:eq(0)').attr('selected', 'selected');
+	$('#reportOutput').html("");
+}
+
+
+function initialiseAllReports() {
+
+var reportChoiceHtml = '<select onChange="newReportSelected()">';
+
+	for (var i in reportListing)
+	{
+		reportChoiceHtml = reportChoiceHtml + '<option value="' + reportListing[i].action + '">' + reportListing[i].name + '</option>';
+	}
+	reportChoiceHtml = reportChoiceHtml + '</select>';
+	$('#reportChoice').html(reportChoiceHtml);
+
+	$('#reportChoice select option:eq(0)').attr('selected', 'selected');
+}
+
+function initialiseAllParameters() {
+
+var parameterTableHtml = '<table><tr>';
+
+	for (var i in listOfParameters)
+	{
+
+		if (listOfParameters[i].type == 'date')
+		{
+			switch(listOfParameters[i].default)
+			{
+				case "today":
+					window[listOfParameters[i].variable] = setCurrentDate();
+  					break;
+
+				case "fromstart":
+					window[listOfParameters[i].variable] = "1900-01-01";
+  					break;
+				default:
+					window[listOfParameters[i].variable] = listOfParameters[i].default;
+			}
+		}
+		else
+		{
+			window[listOfParameters[i].variable] = listOfParameters[i].default;
+		}
+
+
+		parameterTableHtml = parameterTableHtml + '<td width="20">&nbsp;</td>';
+		parameterTableHtml = parameterTableHtml + '<td><div id=' + listOfParameters[i].name + '><div class=reportLabel>' + listOfParameters[i].label + '</div>';
+
+		if (listOfParameters[i].type == 'date')
+		{
+			parameterTableHtml = parameterTableHtml + '<input id=' + listOfParameters[i].inputField + ' type="text" size="12"/>';
+		}
+		else
+		{
+			parameterTableHtml = parameterTableHtml + '<div id=' + listOfParameters[i].inputField + '></div>';
+		}
+		parameterTableHtml = parameterTableHtml + '</div></td>';
+
+	}
+
+	parameterTableHtml = parameterTableHtml + '</tr></table>';
+
+	$('#inputParameters').html(parameterTableHtml);
+	initDateFields();
+	hideAllParameters();
+}
+
+function hideAllParameters() {
+
+	clearTheReport();
+
+	for (var i in listOfParameters)
+	{
+		$("#" + listOfParameters[i].name).css("display", "none");
+	}
+
+}
+
+function getReportListingIndex(reportOption) {
+
+	for (var i in reportListing)
+	{
+		if (reportListing[i].action == reportOption)
+		{
+			return i;
+		}
+	}
+
+	var returnMessage = "Report Option not Found: " + reportOption;
+	alert(returnMessage);
+	return "returnMessage";
+}
+
+function newReportSelected() {
+
+	reportListingIndex = getReportListingIndex($('#reportChoice select option:selected').val());
+	hideAllParameters();
+
+	for (var i in reportListing[reportListingIndex].parameters)
+	{
+		$('#' + reportListing[reportListingIndex].parameters[i][1]).css("display", "inline");
+	}
+
+
+}
+
+
+function updateLOSelect()
+{
+//lose this later
+	Dashboards.fireChange("officeId",officeId);
+	$('#LOSelectorObj select option:eq(0)').attr('selected', 'selected'); 
+	loanOfficerId = $('#LOSelectorObj select option:selected').val();
+}
+function updateCenterSelect()
+{
+	Dashboards.fireChange("loanOfficerId",loanOfficerId);
+	$('#centerSelectorDWObj select option:eq(0)').attr('selected', 'selected'); 
+	centerId = $('#centerSelectorDWObj select option:selected').val();
+}
+
+
+
+
+
+function parameterValidationErrors()
+{
+	for (var i in reportListing[reportListingIndex].parameters)
+	{
+		var valDetails = getVariableValidationDetails(reportListing[reportListingIndex].parameters[i][1]);
+		
+		switch(valDetails.type)
+		{
+			case "number":
+				if (window[valDetails.variable] == 0)
+				{
+        				alert("Please select appropriate values: " + valDetails.variable + "  Number: " +  window[valDetails.variable]);
+					return 1;
+				}
+  				break;
+			case "string":
+				if (!(window[valDetails.variable] > ""))
+				{
+        				alert("Please select appropriate values: " + valDetails.variable + "  String not > '': " +  window[valDetails.variable]);
+					return 1;
+				}
+				if (window[valDetails.variable] == "-")
+				{
+        				alert("Please select appropriate values: " + valDetails.variable + "  String -: " +  window[valDetails.variable]);
+					return 1;
+				}
+  				break;
+			case "date":
+				if (!(window[valDetails.variable] > ""))
+				{
+        				alert("Please select appropriate values: " + valDetails.variable + "  Date: " +  window[valDetails.variable]);
+					return 1;
+				}
+  				break;
+			default:
+  				alert("System Error: Unknow type : " + valDetails.type);
+				return 1;
+		}
+	}
+	return 0;
+}
+
+function runTheReport()
+{
+	clearTheReport();
+
+
+	if (reportListing[reportListingIndex].action == "SelectOne")
+	{
+		return;
+	}
+	else
+	{
+		if (parameterValidationErrors() == 1)
+		{
+			return;
+		}
+
+		var specificParams = ""
+		var tmpParam = "";
+		for (var i in reportListing[reportListingIndex].parameters)
+		{
+			tmpParam = getVariableName(reportListing[reportListingIndex].parameters[i][1]);
+			if (tmpParam == "date1Val")
+			{
+				window[tmpParam] = $j("#date1Obj").val();
+			}
+			if (tmpParam == "date2Val")
+			{
+				window[tmpParam] = $j("#date2Obj").val();
+			}
+
+
+
+			specificParams = specificParams + "&" + encodeURIComponent(reportListing[reportListingIndex].parameters[i][0]) + "=" + encodeURIComponent(window[tmpParam]);
+		}
+
+		reportOutputURL = httpUrl + pentahoPartURL + reportListing[reportListingIndex].action + "." + reportListing[reportListingIndex].type + localeParam + generalParams + specificParams;
+		reportOutputURL = reportOutputURL + "&output-type=" + encodeURIComponent($('#rptOutputType option:selected').val());
+		//alert(reportOutputURL );
+		reportOutputHtml = '<iframe src="' + reportOutputURL + '" frameborder="1" width="100%" height="100%"><p>Your browser does not support iframes.</p></iframe>';
+		$('#reportOutput').html(reportOutputHtml);
+    		enableClearButton();
+	}
+}
+
+
+//common object definitions
+
+branchSelector = 
+{
+	name: "branchSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "BranchListWithAll_SourceDB.xaction",
+	parameter: "officeId",
+	valueAsId: false,
+	htmlObject: "branchSelectorObj",
+	postChange: function(){updateLOSelect();},
+	executeAtStart: true
+};
+
+branchSelectorNoAll = 
+{
+	name: "branchSelectorNoAll",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "BranchList.xaction",
+	parameter: "officeId",
+	valueAsId: false,
+	htmlObject: "branchSelectorNoAllObj",
+	postChange: function(){updateLOSelect();},
+	executeAtStart: true
+};
+
+branchSearchIdSelector = 
+{
+	name: "branchSearchIdSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "MifosOfficeList.xaction",
+	parameter: "searchId",
+	valueAsId: false,
+	htmlObject: "branchSearchIdSelectorObj",
+	executeAtStart: true
+};
+
+
+branchSearchIdSelectorNoMifos = 
+{
+	name: "branchSearchIdSelectorNoMifos",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "OfficeListSearchId.xaction",
+	parameter: "searchId",
+	valueAsId: false,
+	htmlObject: "branchSearchIdSelectorNoMifosObj",
+	executeAtStart: true
+};
+
+
+
+LOSelector = 
+{
+	name: "LOSelector",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "OfficerForBranchId_SourceDB.xaction",
+	parameter: "loanOfficerId",
+	valueAsId: false,
+	htmlObject: "LOSelectorObj",
+	executeAtStart: false
+};
+
+centerSelector= 
+{
+	name: "centerSelector",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "CenterForBranchId_SourceDB.xaction",
+	parameter: "centerId",
+	valueAsId: false,
+	htmlObject: "centerSelectorObj",
+	executeAtStart: false
+};
+
+
+LOSelectorDW = 
+{
+	name: "LOSelectorDW",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "OfficerForBranchId.xaction",
+	parameter: "loanOfficerId",
+	valueAsId: false,
+	htmlObject: "LOSelectorDWObj",
+	postChange: function(){updateCenterSelect();},
+	executeAtStart: false
+};
+
+centerSelectorDW =
+{
+	name: "centerSelectorDW",
+	type: "select",
+	listeners: ["loanOfficerId"],
+	parameters:[["loanOfficerId", "loanOfficerId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "CentersForOfficerId.xaction",
+	parameter: "centerId",
+	valueAsId: false,
+	htmlObject: "centerSelectorDWObj",
+	postChange: function(){alert("centerId: " + centerId);},
+
+	executeAtStart: false
+};
+
+
+
+
+
+productSelector= 
+{
+	name: "productSelector",
+	type: "select",
+	parameters:[],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "Products_SourceDB.xaction",
+	parameter: "productId",
+	valueAsId: false,
+	htmlObject: "productSelectorObj",
+	executeAtStart: true
+};
+
+
+purposeSelector= 
+{
+	name: "purposeSelector",
+	type: "select",
+	listeners: ["officeId"],
+	parameters:[["officeId", "officeId"]],
+  	solution: commonActionsSolution,
+  	path: "/" ,
+  	action: "PurposeForBranchId_SourceDB.xaction",
+	parameter: "purposeId",
+	valueAsId: false,
+	htmlObject: "purposeSelectorObj",
+	executeAtStart: false
+};
+
+
+</script>
+
+		<!-- start header -->
+			{content}
+			<div class="clear"/>
+</body>
+</html>

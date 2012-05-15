@@ -1,0 +1,92 @@
+<table>
+ <tr valign="top">
+  <td>
+
+   <table>
+    <tr>
+     <td><div class=reportLabel>Report</div>
+		<div id=reportChoice></div>
+     </td>
+    </tr>
+    <tr>
+     <td>
+
+      <table>
+       <tr>
+	  <td>&nbsp;</td><td>&nbsp;</td>
+	  <td><div id=runRpt></div></td>
+	  <td>&nbsp;</td>
+	  <td><div id=clearRpt></div></td>
+	  <td>&nbsp;</td>
+	  <td>
+		<select id=rptOutputType>
+		<option value="application/pdf">PDF</option>
+		<option value="text/html">HTML</option>
+		<option value="application/vnd.ms-excel">EXCEL</option>
+		</select>
+	  </td>
+
+	 </tr>
+	</table>
+
+     </td>
+    </tr>
+   </table>
+
+  </td>
+  <td>
+
+   <div id=inputParameters>
+   </div>
+
+  </td>
+ </tr>
+</table>
+
+<div id=reportOutput></div>
+
+
+<script language="javascript" type="text/javascript">
+ 
+$j("#runRpt").button(); 
+$j( "#runRpt").button({ label: "Run" });
+$j("#runRpt").click(function() {
+  				runTheReport();
+						});
+
+$j("#clearRpt").button(); 
+$j( "#clearRpt").button({ label: "Clear" });
+$j("#clearRpt").click(function() {
+  				clearTheReport();
+						});
+
+ 
+function initDateFields() {
+
+$j( "#date1Obj" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-mm-dd'
+		});
+$j("#date1Obj").val('2000-01-01');
+
+$j( "#date2Obj" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: 'yy-mm-dd'
+		});
+$j("#date2Obj").val(setCurrentDate());
+
+}
+
+
+initialiseReportsAndParameters();
+Dashboards.init([branchSelector, branchSelectorNoAll, branchSearchIdSelector, branchSearchIdSelectorNoMifos, LOSelector, centerSelector, LOSelectorDW, centerSelectorDW, productSelector, purposeSelector]);
+  
+$(document).ready(function() {
+	//$('#branchSelectorObj select option:eq(0)').attr('selected', 'selected')
+	//officeId = $('#branchSelectorObj select option:selected').val();
+	//updateLOSelect();
+});
+
+</script>

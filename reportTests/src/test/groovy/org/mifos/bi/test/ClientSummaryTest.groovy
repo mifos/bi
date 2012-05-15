@@ -10,7 +10,7 @@ class ClientSummaryTest {
     def clientDetailsAndAgeHeaders = ['Client Details', 'Age']
     def maritalStatusAndGenderHeaders = ['Marital Status', 'Gender']
     def educationLevelAndPovertyStatusHeaders = ['Education Level', 'Poverty Status']
-    def citizenshipAndEthinicityHeaders = ['Citizenship', 'Ethinicity']
+    def citizenshipAndEthnicityHeaders = ['Citizenship', 'Ethinicity']
     
     def pageFooter = ['Version 1.3', 'Page', '1 / 1']
 
@@ -35,8 +35,8 @@ class ClientSummaryTest {
             t.assertRowEquals(offset, clientDetailsAndAgeHeaders)
             t.assertRowEquals(offset+1, ['Total Clients', '31', '18 - 25', '16'])
             t.assertRowEquals(offset+2, ['Active Clients', '26', '26 - 30', '0'])
-            t.assertRowEquals(offset+3, ['On Hold Clients', '4', '31 - 35', '8'])
-            t.assertRowEquals(offset+4, ['Closed Clients', '1', '36 - 40', '0'])
+            t.assertRowEquals(offset+3, ['On Hold Clients', '4', '31 - 35', '5'])
+            t.assertRowEquals(offset+4, ['Closed Clients', '1', '36 - 40', '3'])
             t.assertRowEquals(offset+5, ['Active Centers', '10', '41 - 45', '2'])
             t.assertRowEquals(offset+6, ['Active Groups', '23', '46 - 50', '0'])
             t.assertRowEquals(offset+7, ['> 50', '2'])
@@ -56,9 +56,9 @@ class ClientSummaryTest {
             t.assertRowEquals(offset+3, ['N/A', '28', 'NonPoor', '1'])
             t.assertRowEquals(offset+4, ['N/A', '0'])
 
-            // Citizenship and Ethinicity
+            // Citizenship and Ethnicity
             offset = 21
-            t.assertRowEquals(offset, citizenshipAndEthinicityHeaders)
+            t.assertRowEquals(offset, citizenshipAndEthnicityHeaders)
             t.assertRowEquals(offset+1, ['Us', '2', 'Irish', '2'])
             t.assertRowEquals(offset+2, ['Ghana', '1', 'European', '0'])
             t.assertRowEquals(offset+3, ['N/A', '28', 'Arabic', '1'])
@@ -114,9 +114,9 @@ class ClientSummaryTest {
             t.assertRowEquals(offset+3, ['N/A', '7', 'NonPoor', '0'])
             t.assertRowEquals(offset+4, ['N/A', '0'])
 
-            // Citizenship and Ethinicity
+            // Citizenship and Ethnicity
             offset = 21
-            t.assertRowEquals(offset, citizenshipAndEthinicityHeaders)
+            t.assertRowEquals(offset, citizenshipAndEthnicityHeaders)
             t.assertRowEquals(offset+1, ['Us', '1', 'Irish', '1'])
             t.assertRowEquals(offset+2, ['Ghana', '0', 'European', '0'])
             t.assertRowEquals(offset+3, ['N/A', '7', 'Arabic', '0'])

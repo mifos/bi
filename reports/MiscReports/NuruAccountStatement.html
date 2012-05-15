@@ -1,0 +1,207 @@
+<div class=reportBuffer>
+<table width="100%">
+<tr>
+<td><div class=reportLabel>Start Date</div><div id=date1Obj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>End Date</div><div id=date2Obj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Client External Id</div><div id=externalIdObj></div></td><td width="5">&nbsp;</td>
+<td><div class=reportLabel>Name</div><div id=customerNameObj></div></td><td width="5">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3" valign="top"><div id=IdCustomerObj></div><td width="5">&nbsp;</td>
+<td colspan="3" valign="top"><div id=accountSelectorObj></div></td><td width="5">&nbsp;</td>
+</tr>
+</table>
+<br>
+<div id=fullStatement>
+<table class="fullBorder" width="100%">
+<tr><td class="bottomBorder"><div id=headerReportObj></div></td></tr>
+<tr><td><div id=theReportObj></div></td></tr>
+</table>
+</div>
+
+</div>
+
+<script language="javascript" type="text/javascript">
+
+reportType = "single";
+
+dbMetaDataVar = {
+    savingsAccountDef: {
+      colHeaders: ["Ordering", "Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Money Out", "Money In", "Balance"],
+      colTypes: ['string','string','string','string','string','string','string','string','string'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getSavingsAccountStatement", 
+	path: cdaPath
+    },
+    savingsAccountHeaderDef: {
+      colHeaders: ["Savings Product", "Account No."],
+      colTypes: ['string','string'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getSavingsHeader", 
+	path: cdaPath
+    },
+    loanAccountDef: {
+      colHeaders: ["Ordering", "Txn Date", "Txn Type", "Payment", "Receipt No.", "Receipt Date", "Paid", "Principal", "Interest", "Fees / Charges / Penalties", "Principal Balance", "Interest Balance", "Fees / Charges / Penalties Balance", "Total Balance"],
+      colTypes: ['string','string','string','string','string','string','string','string','string','string','string','string','string','string'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getLoanAccountStatement", 
+	path: cdaPath
+    },
+    loanAccountHeaderDef: {
+      colHeaders: ["Loan Product", "Disbursed", "Loan Amount", "Loan External ID", "Account No."],
+      colTypes: ['string','string','string','string','string'],
+      tableStyle: "classic",
+	paginate: false,
+	sort: false,
+	filter: false,
+	info: false,
+      dataAccessId: "getLoanHeader", 
+	path: cdaPath
+    } 
+
+  };
+
+
+function checkSingleIdCustomer(inputId)
+{
+var cntOptions = $('#IdCustomerObj option').size();
+//alert(cntOptions); 
+
+switch (cntOptions){
+	case 1: 
+  		$('#IdCustomerObj').html("No Client or Customer Entry Found for: " + inputId);
+  		$('#accountSelectorObj').html("");
+		accountId = -5;
+  		break;
+	case 2: 	
+		$('#IdCustomerObj select option:eq(1)').attr('selected', 'selected'); 
+		customerId = $('#IdCustomerObj select option:selected').val();
+		processIdCustomer();
+		break;
+	default : 
+		$('#IdCustomerObj select option:eq(0)').attr('selected', 'selected'); 
+		customerId = $('#IdCustomerObj select option:selected').val();
+  		$('#accountSelectorObj').html("");
+		accountId = -5;
+	}
+}
+
+function runTheSingleReport()
+{
+
+    if (accountId < 0)
+    {
+        return;
+    }
+
+
+    if ($('#accountSelectorObj select option:selected').text().substr(0,4) == "Loan")
+    {
+        loanEvent = loanEvent + 1;
+        Dashboards.fireChange("loanEvent", loanEvent);
+    }
+    else
+    {
+    	  savingsEvent = savingsEvent + 1;
+    	  Dashboards.fireChange("savingsEvent", savingsEvent);
+    }
+    
+	showReport();
+
+}
+
+
+accountSelector = 
+{
+	name: "accountSelector",
+	type: "select",
+	listeners: ["customerId"],
+	valueAsId: false,
+      queryDefinition: { dataAccessId: "getAccountListForCustomer", path: cdaPath },
+	parameters:[["customerId", "customerId"]],
+      cdaParams: [["customerId","customerId"]], 
+	parameter: "accountId",
+	size: "4",
+	htmlObject: "accountSelectorObj",
+	executeAtStart: false,
+	postExecution: function(){	clearReport();
+						checkAccountSelector("accountSelectorObj");},
+	postChange: function(){		runTheReport();}
+
+};
+
+ 
+
+var savingsAccountHeader =
+	{
+ 		name: "savingsAccountHeader",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.savingsAccountHeaderDef,
+  		listeners:["savingsEvent"],
+		parameters: [["accountId","accountId"]],
+		cdaParams: [["accountId","accountId"]],
+    		htmlObject: "headerReportObj",
+    		executeAtStart: false,
+  		postExecution: function(){ tidySavingsHeaderTable()}
+  };
+
+var savingsAccount =
+	{
+ 		name: "savingsAccount",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.savingsAccountDef,
+  		listeners:["savingsEventStatement"],
+		parameters: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
+		cdaParams: [["startDate","startDate"], ["endDate","endDate"], ["accountId","accountId"]],
+    		htmlObject: "theReportObj",
+    		executeAtStart: false,
+  		postExecution: function(){ tidySavingsTable()}
+
+  };
+
+var loanAccountHeader =
+	{
+ 		name: "loanAccountHeader",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.loanAccountHeaderDef,
+  		listeners:["loanEvent"],
+		parameters: [["accountId","accountId"]],
+		cdaParams: [["accountId","accountId"]],
+    		htmlObject: "headerReportObj",
+    		executeAtStart: false,
+  		postExecution: function(){ tidyLoanHeaderTable()}
+  };
+
+var loanAccount =
+	{
+ 		name: "loanAccount",
+		type: "tableComponent",
+    		chartDefinition: dbMetaDataVar.loanAccountDef,
+  		listeners:["loanEventStatement"],
+		parameters: [["startDate","disbursedDate"], ["endDate","endDate"], ["accountId","accountId"]],
+		cdaParams: [["startDate","disbursedDate"], ["endDate","endDate"], ["accountId","accountId"]],
+    		htmlObject: "theReportObj",
+    		executeAtStart: false,
+  		postExecution: function(){ tidyLoanTable()}
+
+  };
+
+
+Dashboards.init([customerName, externalId, externalIdCustomer, customerNameCustomer, accountSelector, date1, date2, savingsAccountHeader, savingsAccount, loanAccountHeader, loanAccount]);
+
+$(document).ready(function() {
+});
+
+</script>

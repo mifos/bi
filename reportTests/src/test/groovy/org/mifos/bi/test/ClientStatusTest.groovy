@@ -18,17 +18,17 @@ class ClientStatusTest {
 	def SeventhBranchHeader = ['Branch :', 'BO 1', 'Center :', ' center dw1', 'Group :', 'group dw1 2']
 	def EighthBranchHeader = ['Branch :', 'br4', 'Center :', 'Fee and Charge  Testing Center', 'Group :', 'Group with lots  of fees']
 	
-    def detailsBO1_20100718 = ['client remove group  membership xxx', '0003-000000050', '21', '2010-08-01', 'Active']
-	def detailsBO1_20100719 = ['remove group  membership xxx', '0003-000000054', '21', '2010-08-04', 'Active']
+    def detailsBO1_20100718 = ['client remove group  membership xxx', '0003-000000050', '22', '2010-08-01', 'Active']
+	def detailsBO1_20100719 = ['remove group  membership xxx', '0003-000000054', '22', '2010-08-04', 'Active']
 	
 	def detailsBO1_20100720 = ['Will be deleted Very  soon', '0006-000000075', '24', '2010-07-18', 'Active']
 //	def detailsBO1_20100721 = ['She2'll also be deleted  Very2 soon', '0003-000000050', '21', '2010-08-01', 'Active']
 	
-	def detailsBO1_20100722 = ['client remove group  membership xxx', '0003-000000050', '21', '2010-08-01', 'Active']
-	def detailsBO1_20100723 = ['remove group  membership xxx', '0003-000000054', '21', '2010-08-04', 'Active']
-	def detailsBO1_20100724 = ['client redo loans xxx', '0003-000000059', '21', '2010-08-20', 'Active']
-	def detailsBO1_20100725 = ['client add back to group  hierarchy after xxx', '0003-000000051', '23', '2010-08-01', 'Active']
-	def detailsBO1_20100726 = ['client charge anyone  xxx', '0006-000000063', '34', '2010-08-27', 'Active']
+	def detailsBO1_20100722 = ['client remove group  membership xxx', '0003-000000050', '22', '2010-08-01', 'Active']
+	def detailsBO1_20100723 = ['remove group  membership xxx', '0003-000000054', '22', '2010-08-04', 'Active']
+	def detailsBO1_20100724 = ['client redo loans xxx', '0003-000000059', '22', '2010-08-20', 'Active']
+	def detailsBO1_20100725 = ['client add back to group  hierarchy after xxx', '0003-000000051', '24', '2010-08-01', 'Active']
+	def detailsBO1_20100726 = ['client charge anyone  xxx', '0006-000000063', '35', '2010-08-27', 'Active']
 	
     def GrouptotalBO1 = ['Group Total:', '1']
 	def GrouptotalBO2 = ['Group Total:', '2']

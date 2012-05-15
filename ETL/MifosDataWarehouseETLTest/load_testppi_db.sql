@@ -2426,7 +2426,7 @@ DROP TABLE IF EXISTS `customer_detail`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer_detail` (
   `customer_id` int(11) NOT NULL,
-  `ethinicity` int(11) DEFAULT NULL,
+  `ethnicity` int(11) DEFAULT NULL,
   `citizenship` int(11) DEFAULT NULL,
   `handicapped` int(11) DEFAULT NULL,
   `business_activities` int(11) DEFAULT NULL,
@@ -2441,14 +2441,14 @@ CREATE TABLE `customer_detail` (
   PRIMARY KEY (`customer_id`),
   KEY `citizenship` (`citizenship`),
   KEY `education_level` (`education_level`),
-  KEY `ethinicity` (`ethinicity`),
+  KEY `ethnicity` (`ethnicity`),
   KEY `handicapped` (`handicapped`),
   KEY `marital_status` (`marital_status`),
   KEY `poverty_status` (`poverty_status`),
   CONSTRAINT `customer_detail_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `customer_detail_ibfk_2` FOREIGN KEY (`citizenship`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `customer_detail_ibfk_3` FOREIGN KEY (`education_level`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `customer_detail_ibfk_4` FOREIGN KEY (`ethinicity`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `customer_detail_ibfk_4` FOREIGN KEY (`ethnicity`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `customer_detail_ibfk_5` FOREIGN KEY (`handicapped`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `customer_detail_ibfk_6` FOREIGN KEY (`marital_status`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `customer_detail_ibfk_7` FOREIGN KEY (`poverty_status`) REFERENCES `lookup_value` (`lookup_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -5757,7 +5757,8 @@ CREATE TABLE `personnel` (
 
 LOCK TABLES `personnel` WRITE;
 /*!40000 ALTER TABLE `personnel` DISABLE KEYS */;
-INSERT INTO `personnel` VALUES (1,2,'1',1,1,1,1,NULL,1,'\"då§#0•añMæ2ıNj§ùÚ d≤QS8Ÿ','mifos',NULL,1,'mifos',1,NULL,1,'2011-01-13','2011-01-13',0,0,26),(2,2,'0002-00002',2,NULL,1,1,NULL,NULL,'’L∂a∏ŸÌ}õê$π\"UíÙahú','ROadminperson','',0,'RO admin person now',1,'2010-07-01',NULL,NULL,NULL,0,0,1),(3,1,'0003-00003',3,NULL,1,1,NULL,NULL,'|™ﬁSõ*å°ùíΩ°û˙ (Ωˇ8@¿vƒÎ€','br1lo1','',0,'br1 lo 1 smith',1,'2010-07-01',NULL,NULL,NULL,0,0,1),(4,1,'0003-00004',3,632,1,1,NULL,NULL,'≥]g°ô-]`É t!wÍı≈ETCÜ;ywá','br1lo2','',0,'br1 lo 2 xxx',1,'2010-07-04',NULL,NULL,NULL,0,0,1),(5,1,'0004-00005',4,NULL,1,1,NULL,NULL,'Ï>ø%):[ÄÔL,ìU_I>çHJTiX9ı','br2LOxx','',0,'br2 LO xxx',1,'2010-07-20',NULL,NULL,NULL,0,0,1),(6,1,'0003-00006',3,NULL,1,1,NULL,NULL,'©Ï¡„∫ãêYWJãûr]Çˇ__Ø»DfYT´','br1lo3Sturty','',0,'br1 lo3 Sturty xxx',1,'2010-07-29',NULL,NULL,NULL,0,0,1),(7,1,'0006-00007',6,632,1,1,NULL,NULL,'tQ$–ìÄÊ“%*¢•Få≈”7Yc_7	$u»','mahfees','',0,'Fees LO xxx',1,'2010-08-27',NULL,NULL,NULL,0,0,1);
+INSERT INTO `personnel` VALUES (1,2,'1',1,1,1,1,NULL,1,'\"då§#0•añMæ2ıNj§ùÚ d≤QS8Ÿ','mifos',NULL,1,'mifos',1,NULL,1,'2011-01-13','2011-01-13',0,0,26),(2,2,'0002-00002',2,NULL,1,1,NULL,NULL,'’L∂a∏ŸÌ}õê$π\"UíÙahú','ROadminperson','',0,'RO admin person now',1,'2010-07-01',NULL,NULL,NULL,0,0,1),(3,1,'0003-00003',3,NULL,1,1,NULL,NULL,'|™ﬁSõ*å°ùíΩ°û˙ (Ωˇ8@¿ vƒÎ€','br1lo1','',0,'br1 lo 1 smith',1,'2010-07-01',NULL,NULL,NULL,0,0,1),(4,1,'0003-00004',3,632,1,1,NULL,NULL,'≥]g°ô-]`É t!wÍı≈ETCÜ;ywá','br1lo2','',0,'br1 lo 2 xxx',1,'2010-07-04',NULL,NULL,NULL,0,0,1),(5,1,'0004-00005',4,NULL,1,1,NULL,NULL,'Ï>ø%):[ÄÔL,ìU_I>çHJTiX9ı','br2LOxx','',0,'br2 LO xxx',1,'2010-07-20',NULL,NULL,NULL,0,0,1),(6,1,'0003-00006',3,NULL,1,1,NULL,NULL,'©Ï¡„∫ãêYWJãûr]Ç
+ˇ__Ø»DfYT´','br1lo3Sturty','',0,'br1 lo3 Sturty xxx',1,'2010-07-29',NULL,NULL,NULL,0,0,1),(7,1,'0006-00007',6,632,1,1,NULL,NULL,'tQ$–ìÄÊ“%*¢•Få≈”7Yc_7	$u»','mahfees','',0,'Fees LO xxx',1,'2010-08-27',NULL,NULL,NULL,0,0,1);
 /*!40000 ALTER TABLE `personnel` ENABLE KEYS */;
 UNLOCK TABLES;
 

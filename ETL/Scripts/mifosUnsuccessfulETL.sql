@@ -1,4 +1,4 @@
-select now() as 'Starting Check';
+use mifos_dwh;
 
 /*just to make the check queries a bit quicker */
 ALTER TABLE stg_customer_and_account_updates
@@ -31,6 +31,13 @@ where s.level_id > 0 and s.change_type = 'a'
 and skid.level_id > 0 and skid.change_type =   'a'
 and skid.effective_date < s.effective_date
 order by s.effective_date, s.level_id desc, s.entity_id, s.change_type, s.change_order, s.updated_parent_id desc, s.updated_loan_officer_id desc;
+
+
+
+
+
+
+
 
 
 select now() as 'Finished Check';

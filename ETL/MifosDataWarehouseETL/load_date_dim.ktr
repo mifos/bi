@@ -66,48 +66,6 @@
   </info>
   <notepads>
     <notepad>
-      <note>Prepare</note>
-      <xloc>8</xloc>
-      <yloc>40</yloc>
-      <width>60</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
-      <note>Input</note>
-      <xloc>8</xloc>
-      <yloc>114</yloc>
-      <width>44</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>255</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
-    </notepad>
-    <notepad>
       <note>Output</note>
       <xloc>9</xloc>
       <yloc>441</yloc>
@@ -129,13 +87,17 @@
       <drawshadow>N</drawshadow>
     </notepad>
     <notepad>
-      <note>Transformation</note>
-      <xloc>6</xloc>
-      <yloc>190</yloc>
-      <width>104</width>
-      <heigth>25</heigth>
-      <fontname/>
-      <fontsize>-1</fontsize>
+      <note>This transformation will clear down the dim_date table and use the initial_date and limit in &quot;Generate Rows with Initial Date&quot;
+to rebuild it from date initial_date for &quot;limit&quot; number of days.
+
+You then should take a mysqldump of the dim_date table and  copy the insert lines from the mysqldump ( there will only be 2 or 3) 
+and replace the existing insert lines for dim_date in ETL&#47;MifosDataWarehouseETL&#47;load_mifos_datawarehouse.sql</note>
+      <xloc>366</xloc>
+      <yloc>25</yloc>
+      <width>648</width>
+      <heigth>72</heigth>
+      <fontname>Microsoft Sans Serif</fontname>
+      <fontsize>8</fontsize>
       <fontbold>N</fontbold>
       <fontitalic>N</fontitalic>
       <fontcolorred>0</fontcolorred>
@@ -147,7 +109,7 @@
       <bordercolorred>100</bordercolorred>
       <bordercolorgreen>100</bordercolorgreen>
       <bordercolorblue>100</bordercolorblue>
-      <drawshadow>N</drawshadow>
+      <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
   <connection>
@@ -171,6 +133,30 @@
       <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
+    <name>SalesForceRealtime</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>crmadmin@applab.org</username>
+    <password>Encrypted 6170706c61627567323031306c43754758786c5146efaafd8d0deeb0a5fd14fb57d1b89ac2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>com.ddtek.jdbc.sforce.SForceDriver</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>jdbc:datadirect:sforce:&#47;&#47;login.salesforce.com</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
@@ -683,6 +669,35 @@
     </step>
 
   <step>
+    <name>Clear Down Existing dim_date table</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>DestinationDB</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>Y</single_statement>
+    <replace_variables>N</replace_variables>
+    <sql>truncate table dim_date;</sql>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>113</xloc>
+      <yloc>24</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Days Sequence</name>
     <type>Sequence</type>
     <description/>
@@ -728,12 +743,12 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>20070101</nullif>
+        <nullif>20000101</nullif>
         <length>-1</length>
         <precision>-1</precision>
       </field>
     </fields>
-    <limit>5400</limit>
+    <limit>9000</limit>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>274</xloc>
@@ -909,7 +924,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>00010101</nullif>
+        <nullif>30010101</nullif>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -931,7 +946,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>00010101</nullif>
+        <nullif>30010101</nullif>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -942,7 +957,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>10101</nullif>
+        <nullif>30010101</nullif>
         <length>-1</length>
         <precision>-1</precision>
       </field>

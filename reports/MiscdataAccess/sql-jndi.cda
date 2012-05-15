@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CDADescriptor>
+    <DataSources>
+        <Connection id="1" type="sql.jndi">
+            <Jndi>SourceDB</Jndi>
+        </Connection>
+    </DataSources>
+
+
+    <DataAccess id="getCustomerIdFromCustomerName" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Customer Id From Customer Name</Name>
+        <Query>
+select * from 
+((select "-5", "---Select One---" as customer_name)
+union all
+(select cast(c.customer_id as char) as customer_id, cast(concat( c.display_name, " - ", lv.lookup_name, " (", c.global_cust_num, ")") as char) as customer_name
+from customer c
+left join customer_state cs on cs.status_id = c.status_id
+left join lookup_value lv on lv.lookup_id = cs.status_lookup_id
+where display_name like concat("%", ${customerName}, "%") and display_name > "")) x
+order by 2;
+	</Query>
+        <Parameters>
+            <Parameter name="customerName" type="String" default="; ;"/>
+        </Parameters>
+    </DataAccess>
+
+
+    <DataAccess id="getCustomerIdFromGovernmentId" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Customer Id From Government Id</Name>
+        <Query>
+select * from 
+((select "-5", "---Select One---" as customer_name)
+union all
+(select cast(c.customer_id as char) as customer_id, cast(concat( c.display_name, " - ", lv.lookup_name, " (", c.global_cust_num, ")") as char) as customer_name
+from customer c
+left join customer_state cs on cs.status_id = c.status_id
+left join lookup_value lv on lv.lookup_id = cs.status_lookup_id
+where government_id = ${governmentId} and government_id > "")) x
+order by 2;
+	</Query>
+        <Parameters>
+            <Parameter name="governmentId" type="String" default="; ;"/>
+        </Parameters>
+    </DataAccess>
+
+
+    <DataAccess id="getCustomerIdFromExternalId" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Customer Id From External Id</Name>
+        <Query>
+select * from 
+((select "-5", "   ---Select One---" as customer_name)
+union all
+(select cast(c.customer_id as char) as customer_id, cast(concat( c.display_name, " - ", lv.lookup_name, " (", c.global_cust_num, ")") as char) as customer_name
+from customer c
+left join customer_state cs on cs.status_id = c.status_id
+left join lookup_value lv on lv.lookup_id = cs.status_lookup_id
+where external_id = ${externalId} and external_id > "")) x
+order by 2;
+	</Query>
+        <Parameters>
+            <Parameter name="externalId" type="String" default="; ;"/>
+        </Parameters>
+    </DataAccess>
+
+
+    <DataAccess id="getLoanIdFromExternalId" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Loan Id From External Id</Name>
+        <Query>
+select * from
+((select -5 as account_id, "---Select One---" as account_name)
+union all
+(select a.account_id, 
+concat(c.display_name, ": ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
+from account a 
+join customer c on c.customer_id = a.customer_id
+join loan_account la on la.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = la.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.external_id = ${externalId})) a
+order by 2;        
+	</Query>
+        <Parameters>
+            <Parameter name="externalId" type="String" default="; ;"/>
+        </Parameters>
+    </DataAccess>
+
+
+    <DataAccess id="getAccountListForCustomer" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Account List For Customer</Name>
+        <Query>
+select * from
+((select -5 as account_id, "  ---Select One---" as account_name
+    from dual where 1 = ${showSelectOne})
+union all
+(select a.account_id, 
+concat("Loan: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
+from account a 
+join loan_account la on la.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = la.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.customer_id = ${customerId})
+union all
+(select a.account_id, 
+concat(" Savings: ", po.prd_offering_name, " - ", lv.lookup_name, " (", a.global_account_num, ")") as account_name 
+from account a 
+join savings_account la on la.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = la.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.customer_id = ${customerId})) a
+order by 2;        
+	</Query>
+        <Parameters>
+            <Parameter name="customerId" type="Integer" default="-5"/>
+            <Parameter name="showSelectOne" type="Integer" default="1"/>
+        </Parameters>
+    </DataAccess>
+
+
+    <DataAccess id="getLoanHeader" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Loan Header</Name>
+        <Query>
+<![CDATA[
+select cast(concat(po.prd_offering_name, ": " , lv.lookup_name) as char) as productName,
+cast(ifnull((select atxn.action_date
+		from account_trxn atxn
+		where atxn.account_id = a.account_id
+		and atxn.account_action_id = 10), "Never Disbursed") as char) as disbursement_date,
+cast(round(ifnull(la.loan_amount, 0.0), ${decimalsNo}) as char) as loanAmount,
+ifnull(a.external_id,"") as externalId, a.global_account_num
+from account a 
+join loan_account la on la.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = la.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.account_id = ${accountId}
+]]>
+
+	</Query>
+        <Parameters>
+            <Parameter name="accountId" type="Integer" default="0"/>
+            <Parameter name="decimalsNo" type="Integer" default="2"/>
+        </Parameters>
+    </DataAccess>
+
+
+
+    <DataAccess id="getSavingsHeader" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Savings Header</Name>
+        <Query>
+<![CDATA[
+select cast(concat(po.prd_offering_name, ": " , lv.lookup_name) as char) as productName, a.global_account_num
+from account a 
+join savings_account sa on sa.account_id = a.account_id
+join prd_offering po on po.prd_offering_id = sa.prd_offering_id
+left join account_state ast on ast.account_state_id = a.account_state_id
+left join lookup_value lv on lv.lookup_id = ast.lookup_id
+where a.account_id = ${accountId}
+]]>
+
+	</Query>
+        <Parameters>
+            <Parameter name="accountId" type="Integer" default="0"/>
+        </Parameters>
+    </DataAccess>
+
+
+
+    <DataAccess id="getSavingsAccountStatement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Savings Account Statement</Name>
+        <Query>
+<![CDATA[
+select *
+from
+((select "A" as ordering, cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+"" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
+"" as "Money Out", "" as "Money In", 
+cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
+from account_trxn atxn
+join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
+where atxn.account_id = ${accountId}
+and atxn.action_date < ${startDate})
+
+union all
+
+(select "B" as ordering, cast(atxn.action_date as char) as "Txn Date",
+CASE atxn.account_action_id
+    WHEN 6 THEN "Deposit"
+    WHEN 7 THEN "Withdrawal"
+    WHEN 11 THEN "Interest Posting"
+    WHEN 14 THEN "Adjustment"
+    ELSE cast(concat("Unknown Action: ", atxn.account_action_id) as char)
+END as "Txn Type",
+ifnull(ptlvl.lookup_value, substring(ptlv.lookup_name,13)) as "Payment",
+ifnull(ap.receipt_number,"") as "Receipt No.", cast(ifnull(ap.receipt_date,"") as char) as "Receipt Date", 
+CASE atxn.account_action_id
+    WHEN 7 THEN 
+        cast(round(stxn.withdrawal_amount, ${decimalsNo}) as char) 
+    WHEN 14 THEN 
+        CASE arev.account_action_id
+            WHEN 7 THEN  cast(round(stxn.withdrawal_amount, ${decimalsNo}) as char) 
+            ELSE ""  
+        END
+    ELSE ""
+END as "Money Out",
+CASE atxn.account_action_id
+    WHEN 6 THEN  cast(round(stxn.deposit_amount, ${decimalsNo}) as char) 
+    WHEN 11 THEN cast(round(stxn.interest_amount, ${decimalsNo}) as char) 
+    WHEN 14 THEN 
+        CASE arev.account_action_id
+            WHEN 6 THEN  cast(round(stxn.deposit_amount, ${decimalsNo}) as char) 
+            WHEN 11 THEN cast(round(stxn.interest_amount, ${decimalsNo}) as char)    
+            ELSE ""
+        END
+    ELSE ""
+END as "Money In", 
+"" as Balance
+from account_trxn atxn
+join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
+join account_payment ap on ap.payment_id = atxn.payment_id
+left join account_action aa on aa.account_action_id = atxn.account_action_id
+left join lookup_value aalv on aalv.lookup_id = aa.lookup_id
+left join payment_type pt on pt.payment_type_id = ap.payment_type_id
+left join lookup_value ptlv on ptlv.lookup_id = pt.payment_type_lookup_id
+left join lookup_value_locale ptlvl on ptlvl.lookup_id = ptlv.lookup_id 
+left join account_trxn arev on arev.account_trxn_id = atxn.related_trxn_id
+where atxn.account_action_id in (6,7, 11, 14)   
+and atxn.action_date between ${startDate} and ${endDate}
+and atxn.account_id = ${accountId}
+order by atxn.action_date, atxn.account_trxn_id)
+
+union all
+
+(select "C" as ordering, cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
+"" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
+"" as "Money Out", "" as "Money In", 
+cast(ifnull(round(sum(stxn.deposit_amount + stxn.interest_amount - stxn.withdrawal_amount), ${decimalsNo}),0.0) as char) as "Balance"
+from account_trxn atxn
+join savings_trxn_detail stxn on atxn.account_trxn_id = stxn.account_trxn_id
+where atxn.account_id = ${accountId}
+and atxn.action_date <= ${endDate})) fullunion
+order by 1, 2;
+]]>
+        </Query>
+        <Parameters>
+    		<Parameter name="startDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="endDate" type="Date" pattern="yyyy-MM-dd" default="3000-01-01"/>
+            <Parameter name="accountId" type="Integer" default="0"/>
+            <Parameter name="decimalsNo" type="Integer" default="2"/>
+        </Parameters>
+
+    </DataAccess>
+
+
+
+    <DataAccess id="getLoanAccountStatement" connection="1" type="sql" access="public" cache="false" cacheDuration="3600">
+        <Name>Get Loan Account Statement</Name>
+        <Query>
+<![CDATA[
+select *
+from
+((select "A" as ordering, cast(date(${startDate}) as char) as "Txn Date", "Opening Balance" as "Txn Type",
+"" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
+"" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
+cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
+cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), ${decimalsNo}) as char) as "Interest Balance", 
+cast(round(ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0)
+                - ifnull(paidschedfees.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Fees/Charges/Penalties Balance",
+cast(round(
+	ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0) + ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0) +
+	ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0) - ifnull(paidschedfees.fees_charges_penalties, 0.0)
+, ${decimalsNo}) as char) as "Total Balance"
+from 
+    (select ifnull(lsum.orig_principal, 0.0) as principal, ifnull(lsum.orig_interest, 0.0) as interest, 
+        (ifnull(lsum.orig_fees, 0.0) + ifnull(lsum.orig_penalty, 0.0)) as fees_charges_penalties
+    from loan_summary lsum
+    where lsum.account_id = ${accountId}) original,
+    
+    (select sum(ifnull(ltxn.principal_amount, 0.0)) as principal,
+            sum(ifnull(ltxn.interest_amount, 0.0)) as interest,
+            sum(ifnull(ltxn.penalty_amount, 0.0) + ifnull(ltxn.misc_fee_amount, 0.0) 
+                + ifnull(ltxn.misc_penalty_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date < ${startDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paid,
+    (select sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join fee_trxn_detail ftxn on atxn.account_trxn_id = ftxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date < ${startDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)
+    
+union all
+
+(select "B" as ordering, cast(ap.payment_date as char) as "Txn Date", 
+    (select group_concat(DISTINCT substring(aalv.lookup_name,15)
+                ORDER BY substring(aalv.lookup_name,15) DESC SEPARATOR '; ')
+    from account_trxn atxn
+    left join account_action aa on aa.account_action_id = atxn.account_action_id
+    left join lookup_value aalv on aalv.lookup_id = aa.lookup_id
+    where atxn.payment_id = ap.payment_id) as "Txn Type",
+ifnull(ptlvl.lookup_value, substring(ptlv.lookup_name,13)) as "Payment", 
+ifnull(ap.receipt_number,"") as "Receipt No.", cast(ifnull(ap.receipt_date, "") as char) as "Receipt Date", 
+cast(round(
+	ifnull(loantxn.principal, 0.0) + ifnull(loantxn.interest, 0.0) + ifnull(loantxn.fees_charges_penalties, 0.0) 
+		+ ifnull(feetxn.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Paid",
+cast(round(ifnull(loantxn.principal, 0.0), ${decimalsNo}) as char) as "Principal", 
+cast(round(ifnull(loantxn.interest, 0.0), ${decimalsNo}) as char) as "Interest", 
+cast(round(ifnull(loantxn.fees_charges_penalties, 0.0) + ifnull(feetxn.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Fees/Charges/Penalties",
+"" as "Principal Balance", 
+"" as "Interest Balance", 
+"" as "Fees/Charges/Penalties Balance",
+"" as "Total Balance" 
+from account_payment ap  
+left join payment_type pt on pt.payment_type_id = ap.payment_type_id
+left join lookup_value ptlv on ptlv.lookup_id = pt.payment_type_lookup_id
+left join lookup_value_locale ptlvl on ptlvl.lookup_id = ptlv.lookup_id 
+left join 
+        (select atxn.payment_id, sum(ifnull(ltxn.principal_amount, 0.0)) as principal,
+            sum(ifnull(ltxn.interest_amount, 0.0)) as interest,
+            sum(ifnull(ltxn.penalty_amount, 0.0) + ifnull(ltxn.misc_fee_amount, 0.0) 
+                + ifnull(ltxn.misc_penalty_amount, 0.0)) as fees_charges_penalties
+        from account_trxn atxn
+        join loan_trxn_detail ltxn on ltxn.account_trxn_id = atxn.account_trxn_id
+        where atxn.account_id = ${accountId}
+        and atxn.account_action_id not in (10, 19) 
+        group by atxn.payment_id) loantxn on loantxn.payment_id = ap.payment_id
+left join 
+        (select atxn.payment_id, sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
+        from account_trxn atxn
+        join fee_trxn_detail ftxn on ftxn.account_trxn_id = atxn.account_trxn_id
+        where atxn.account_id = ${accountId}
+        and atxn.account_action_id not in (10, 19) 
+        group by atxn.payment_id) feetxn on feetxn.payment_id = ap.payment_id
+where ap.account_id = ${accountId}
+and ap.payment_date between ${startDate} and ${endDate}
+order by ap.payment_date, ap.payment_id)
+
+union all
+
+(select "C" as ordering, cast(date(${endDate}) as char) as "Txn Date", "Closing Balance" as "Txn Type",
+"" as "Payment", "" as "Receipt No.", "" as "Receipt Date", 
+"" as "Paid", "" as "Principal", "" as "Interest", "" as "Fees/Charges/Penalties",
+cast(round(ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0), ${decimalsNo}) as char) as "Principal Balance", 
+cast(round(ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0), ${decimalsNo}) as char) as "Interest Balance", 
+cast(round(ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0)
+                - ifnull(paidschedfees.fees_charges_penalties, 0.0), ${decimalsNo}) as char) as "Fees/Charges/Penalties Balance",
+cast(round(
+	ifnull(original.principal, 0.0) - ifnull(paid.principal, 0.0) + ifnull(original.interest, 0.0) - ifnull(paid.interest, 0.0) +
+	ifnull(original.fees_charges_penalties, 0.0) - ifnull(paid.fees_charges_penalties, 0.0) - ifnull(paidschedfees.fees_charges_penalties, 0.0)
+, ${decimalsNo}) as char) as "Total Balance"
+from 
+    (select ifnull(lsum.orig_principal, 0.0) as principal, ifnull(lsum.orig_interest, 0.0) as interest, 
+        (ifnull(lsum.orig_fees, 0.0) + ifnull(lsum.orig_penalty, 0.0)) as fees_charges_penalties
+    from loan_summary lsum
+    where lsum.account_id = ${accountId}) original,
+    
+    (select sum(ifnull(ltxn.principal_amount, 0.0)) as principal,
+            sum(ifnull(ltxn.interest_amount, 0.0)) as interest,
+            sum(ifnull(ltxn.penalty_amount, 0.0) + ifnull(ltxn.misc_fee_amount, 0.0) 
+                + ifnull(ltxn.misc_penalty_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join loan_trxn_detail ltxn on atxn.account_trxn_id = ltxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date <= ${endDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paid,
+    (select sum(ifnull(ftxn.fee_amount, 0.0)) as fees_charges_penalties
+    from account_trxn atxn
+    join fee_trxn_detail ftxn on atxn.account_trxn_id = ftxn.account_trxn_id
+    where atxn.account_id = ${accountId}
+    and atxn.action_date <= ${endDate}
+    and atxn.account_action_id in (1, 15, 20, 4, 9, 18)) paidschedfees)) fullunion
+order by 1, 2;
+  
+]]>
+        </Query>
+        <Parameters>
+    		<Parameter name="startDate" type="Date" pattern="yyyy-MM-dd" default="1900-01-01"/>
+    		<Parameter name="endDate" type="Date" pattern="yyyy-MM-dd" default="3000-01-01"/>
+            <Parameter name="accountId" type="Integer" default="0"/>
+            <Parameter name="decimalsNo" type="Integer" default="2"/>
+        </Parameters>
+
+    </DataAccess>
+
+
+
+
+</CDADescriptor>

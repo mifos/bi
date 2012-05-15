@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf>
+	<title>Multi Loan and Savings Account Statement</title>
+	<author>John Woodlock</author>
+	<description></description>
+	<icon></icon>
+	<style>mifosAccountStatements</style>
+	<template>NuruAccountStatementMulti.html</template>
+</cdf>

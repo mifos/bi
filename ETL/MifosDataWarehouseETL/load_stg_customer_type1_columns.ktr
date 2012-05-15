@@ -114,6 +114,30 @@ These columns can be added to the dim_customer table with no impact on the curre
     </attributes>
   </connection>
   <connection>
+    <name>SalesForceRealtime</name>
+    <server/>
+    <type>GENERIC</type>
+    <access>Native</access>
+    <database/>
+    <port>1521</port>
+    <username>crmadmin@applab.org</username>
+    <password>Encrypted 6170706c61627567323031306c43754758786c5146efaafd8d0deeb0a5fd14fb57d1b89ac2</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>CUSTOM_DRIVER_CLASS</code><attribute>com.ddtek.jdbc.sforce.SForceDriver</attribute></attribute>
+      <attribute><code>CUSTOM_URL</code><attribute>jdbc:datadirect:sforce:&#47;&#47;login.salesforce.com</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>1521</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>N</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>SourceDB</name>
     <server/>
     <type>MYSQL</type>
@@ -282,7 +306,7 @@ from customer c
 left join customer_detail cd on cd.customer_id = c.customer_id
 left join lookup_value_locale bus_lv on bus_lv.lookup_id = cd.business_activities 
 left join lookup_value gen_lv on gen_lv.lookup_id = cd.gender 
-left join lookup_value_locale eth_lv on eth_lv.lookup_id = cd.ethinicity 
+left join lookup_value_locale eth_lv on eth_lv.lookup_id = cd.ethnicity 
 left join lookup_value_locale cit_lv on cit_lv.lookup_id = cd.citizenship 
 left join lookup_value_locale hand_lv on hand_lv.lookup_id = cd.handicapped 
 left join lookup_value_locale mar_lv on mar_lv.lookup_id = cd.marital_status 
