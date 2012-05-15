@@ -32,7 +32,7 @@ class BranchExpectedCashFlowTest {
     def detailsbr2_20100728 = ['2010-07-28', '0.0000', '0.0000', '0.0000', '0.0000', '8000.0000', '-8000.0000']
     def totalbr2_20100701_20100731 = ['Total', '0.0000', '0.0000', '0.0000', '0.0000', '11000.0000', '-11000.0000']
 
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_All_20100701_20100731() {

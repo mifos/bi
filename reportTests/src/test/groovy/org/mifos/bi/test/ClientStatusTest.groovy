@@ -42,7 +42,7 @@ class ClientStatusTest {
 	def BranchtotalBO3 = ['Branch Total:', '4']
 	def GrandtotalBO1 = ['Grand Total:', '2']
 	def GrandtotalBO2 = ['Grand Total:', '5']
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_All_20090101_20110101() {

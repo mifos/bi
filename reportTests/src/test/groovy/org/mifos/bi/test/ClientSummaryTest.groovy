@@ -12,7 +12,7 @@ class ClientSummaryTest {
     def educationLevelAndPovertyStatusHeaders = ['Education Level', 'Poverty Status']
     def citizenshipAndEthnicityHeaders = ['Citizenship', 'Ethinicity']
     
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_All() {

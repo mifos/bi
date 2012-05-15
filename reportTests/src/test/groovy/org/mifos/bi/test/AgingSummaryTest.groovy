@@ -38,7 +38,7 @@ class AgingSummaryTest {
     def daysInArrears4 = ['91 to 180 Days in Arrears', '0', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000']
     def daysInArrears5 = ['> 180 Days in Arrears', '0', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000']
 
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_All() {

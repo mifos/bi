@@ -18,7 +18,7 @@ public class WrittenOffTest {
 	def ReportHeader3 = ['To Date:', '2011-04-25', 'Branch Name:', 'BO 1']
 	def ReportHeader4 = ['Product Name:', 'loan prod 1', 'Center Name:', 'center dw1']
     
-    def pageFooter = ['Version 1.3', 'Page']
+    def pageFooter = ['Version 1.3.1', 'Page']
 
 
 	

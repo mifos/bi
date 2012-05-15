@@ -12,7 +12,7 @@ class ActiveLoansLoanOfficerTest {
     def details = ['32', 'br2 center 1', 'br2 group 1', 'br2 client 1 xxx', '3000.0000', '5.0000000000', '2010-07-21', '75.1000', '2.9000', '2924.9000', '18.1000', 'br2 LO xxx']
     def total = ['Total', '', '', '', '3000.0000', '', '', '75.1000', '2.9000', '2924.9000', '18.1000', '']
 
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All() {

@@ -8,7 +8,7 @@ class DormantClientsSummaryTest {
     def reportName = 'Dormant Clients Summary'
     def detailsHeader = ['Branch', 'No. of Centers', 'No. of Groups', 'No. of Clients', 'No. of Clients without Active Loan', 'Longest Time without Loan', '% of Active Clients that are Dormant']
 
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_() {

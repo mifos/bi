@@ -14,7 +14,7 @@ class OutreachSummaryBranchTest {
     def details4 = ['BO 1', '5', '18', '21', '0', '5', '0', '3']
     def total = ['Total', '10', '23', '26', '1', '8', '1', '5']
 
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_() {

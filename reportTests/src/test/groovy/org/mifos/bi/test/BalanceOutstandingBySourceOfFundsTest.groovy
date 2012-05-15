@@ -23,7 +23,7 @@ class BalanceOutstandingBySourceOfFundsTest {
 
     def grandTotal_20100723 = ['Total', '15000.0000', '322.2000', '14677.8000', '0.0000', '4', ' ']
     def grandTotal_20101231 = ['Total', '15000.0000', '3322.2000', '11677.8000', '2924.9000', '4', ' ']
-    def pageFooter = ['Version 1.3', 'Page', '1 / 1']
+    def pageFooter = ['Version 1.3.1', 'Page', '1 / 1']
 
     @Test
     void testParams_All_All_20101231() {
