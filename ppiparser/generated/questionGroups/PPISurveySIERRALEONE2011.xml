@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Sierraleone 2011</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Sierraleone 2011</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_sierraleone_2011_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_sierraleone_2011_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Ten or more</value>
+            </choice>
+            <choice order="2">
+                <value>Seven, eight, or nine</value>
+            </choice>
+            <choice order="3">
+                <value>Six</value>
+            </choice>
+            <choice order="4">
+                <value>Five</value>
+            </choice>
+            <choice order="5">
+                <value>Four</value>
+            </choice>
+            <choice order="6">
+                <value>One, two, or three</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Are all household members ages 6 to 13 in school now?</text>
+            <nickname>ppi_sierraleone_2011_family_members_5_to_13_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, or no one aged 6 to 13</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What was the activity of the female head/spouse in her main occupation in the past 12 months?</text>
+            <nickname>ppi_sierraleone_2011_female_head_occupation</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="2">
+                <value>Agriculture, forestry, mining, or quarrying</value>
+            </choice>
+            <choice order="3">
+                <value>Other, or does not work</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>How many rooms does the household occupy (exclude bathrooms, toilets, kitchen, pantry, hall, and storage)?</text>
+            <nickname>ppi_sierraleone_2011_house_rooms</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the main flooring material?</text>
+            <nickname>ppi_sierraleone_2011_house_floors</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Earth/mud, stone/brick, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Wood, or cement/concrete</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What is the main construction material of the outside walls?</text>
+            <nickname>ppi_sierraleone_2011_house_walls</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Stone/burnt bricks, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Mud/mud bricks, or wood</value>
+            </choice>
+            <choice order="3">
+                <value>Cement/sandcrete, or corrugated iron sheets</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What type of toilet is used by the household?</text>
+            <nickname>ppi_sierraleone_2011_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Bush/river, none, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Bucket, common pit, or VIP</value>
+            </choice>
+            <choice order="3">
+                <value>Private pit, common flush, or flush toilet</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>What is the main source of lighting for the dwelling?</text>
+            <nickname>ppi_sierraleone_2011_lighting_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Generator, kerosene, gas lamp, candles/torch light, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Electricity (mains)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>What is the main fuel used by the household for cooking?</text>
+            <nickname>ppi_sierraleone_2011_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Wood, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Charcoal</value>
+            </choice>
+            <choice order="3">
+                <value>Gas, kerosene, or electricity</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>How many radios, radio cassettes, record players, or 3-in-1 radio cassettes do members of the household own?</text>
+            <nickname>ppi_sierraleone_2011_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

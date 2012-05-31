@@ -1,0 +1,502 @@
+Uganda Progress out of Poverty Index® (PPI®): Scorecard 
+
+To assist with collection, organizations can use the household roster located on the second page to assist with question 1 and 2. 
+
+Entity 
+
+Name 
+
+ 
+
+ID 
+
+ 
+
+Date (DD/MM/YY) 
+
+Member: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Joined: 
+
+ 
+
+Field agent: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Today: 
+
+ 
+
+Service point: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Household size: 
+
+ 
+
+ 
+
+Indicator 
+
+Value 
+
+Points 
+
+Score 
+
+1. How many members does the household have? 
+
+A. Six or more 
+
+0 
+
+ 
+
+B. Four or five 
+
+6 
+
+ 
+
+C. Three 
+
+9 
+
+ 
+
+D. Two 
+
+14 
+
+ 
+
+E. One 
+
+27 
+
+ 
+
+ 
+
+2. Do all children ages 6 to 18 currently attend school (government, private, NGO/religious, or boarding)? 
+
+A. Not all attend 
+
+0 
+
+ 
+
+B. All attend government schools 
+
+2 
+
+ 
+
+C. No children ages 6 to 18 
+
+4 
+
+ 
+
+D. All attend, and one or more attend a private, NGO/religious, or boarding school 
+
+5 
+
+ 
+
+ 
+
+3. What is the highest grade that the female head/spouse completed? 
+
+A. No female head/spouse 
+
+0 
+
+ 
+
+B. P.5 or less, or none 
+
+2 
+
+ 
+
+C. P.6 
+
+6 
+
+ 
+
+D. P.7 to S.6 
+
+8 
+
+ 
+
+E. Higher than S.6 
+
+19 
+
+ 
+
+ 
+
+4. What is the major construction material of the roof? 
+
+A. Thatch, straw, or other 
+
+0 
+
+ 
+
+B. Iron sheets, or tiles 
+
+5 
+
+ 
+
+ 
+
+5. What is the major construction material of the external wall? 
+
+A. Un-burnt bricks, mud and poles, thatch/straw. timber, stone, burnt bricks with mud, other 
+
+0 
+
+ 
+
+B. Burnt bricks with cement, or cement blocks 
+
+2 
+
+ 
+
+ 
+
+6. What is the main source of lighting in your dwelling? 
+
+A. Firewood 
+
+0 
+
+ 
+
+B. Tadooba, or other 
+
+11 
+
+ 
+
+C. Paraffin lantern, or electricity (grid, generator, solar) 
+
+17 
+
+ 
+
+ 
+
+7. What is the type of toilet that is mainly used in your household? 
+
+A. Bush (none) 
+
+0 
+
+ 
+
+B. Covered pit latrine (private or shared), VIP latrine (private or shared), uncovered pit latrine, flush toilet (private or shared), or other 
+
+4 
+
+ 
+
+ 
+
+8. Does any member of your household own electronic equipment (e.g., TV, radio, cassette, etc.) at present? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+7 
+
+ 
+
+ 
+
+9. Does every member of the household have at least two sets of clothes? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+5 
+
+ 
+
+ 
+
+10. Does every member of the household have at least one pair of shoes? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+9 
+
+ 
+
+ 
+
+
+
+Source: Microfinance Risk Management, L.L.C., http://www.microfinance.com 	Total score:
+
+
+Uganda PPI®: Household Roster 
+
+ 
+
+Complete the household roster using the key definitions1. Then record household size and responses for scorecard 
+questions 1 and 2. 
+
+1 Key definitions are located in the “Interview Guide”, “Interpretation of Indicators” and “PPI: A Simple Scorecard for Uganda”. 
+
+ 
+
+Name of household 
+member 
+
+How old is 
+[name]? (in 
+completed 
+years) 
+
+Does [name] currently 
+attend school? (ask only 
+for ages 6 to 18) 
+
+Who manages the school [name] attends? 
+(ask only for ages 6 to 18) 
+
+Does not 
+attend 
+
+Govt. 
+
+Private, 
+NGO/religious, 
+
+or boarding 
+
+1. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+2. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+3. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+4. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+5. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+6. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+7. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+8. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+9. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+10. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+11. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+12. 
+
+ 
+
+Not 6 to 18 No Yes 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+Use an additional sheet if there are more than 12 household members. 
+
+ 
+
+ Record the total number of household members under “household size” at the top of the scorecard 
+ Mark scorecard Question 1 based on the total number of household members 
+ Mark scorecard Question 2 based on school attendance by household members ages 6 to 18 
+
+
+ 
+
+A household is a person or people, related or unrelated, who live together, who acknowledge a head of household, and 
+who ate their meals together for at least 6 of the last 12 months. Infants, newlyweds, and others present for less than six 
+months are household members if they expect to remain. So are students and seasonal workers who have not been living 
+in another household. Servants and farm workers are members if they live and eat there. People who live in the same 
+dwelling, but who do not share food expenses or eat meals together, are not members. Visitors are not members. 
+Polygamous marriages are separate households if each wife and her children live and eat separately. 
+
+ 
+
+Currently attending school refers to primary, secondary, vocational/technical, or professional school. Students are counted 
+as currently attending if they are not attending because they are on holiday, on vacation, studying for exams, or if school 
+is temporarily closed. Government, private, NGO/religious, or boarding refers to who manages the school. “Day and 
+boarding” counts as “Boarding”. 
+
+ 
+
+Please consult the “Interview Guide” and “Guidelines for the Interpretation of Scorecard Indicators” for further details 
+and definitions. 
+
+

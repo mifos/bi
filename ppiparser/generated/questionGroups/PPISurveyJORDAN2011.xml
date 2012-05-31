@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Jordan 2011</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Jordan 2011</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_jordan_2011_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_jordan_2011_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Nine or more</value>
+            </choice>
+            <choice order="2">
+                <value>Eight</value>
+            </choice>
+            <choice order="3">
+                <value>Seven</value>
+            </choice>
+            <choice order="4">
+                <value>Six</value>
+            </choice>
+            <choice order="5">
+                <value>Five</value>
+            </choice>
+            <choice order="6">
+                <value>Four</value>
+            </choice>
+            <choice order="7">
+                <value>Three</value>
+            </choice>
+            <choice order="8">
+                <value>One or two</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>How many household members worked at least one hour in the past week?</text>
+            <nickname>ppi_jordan_2011_family_members_worked_last_week</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>Three or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Does any household member work as a legislator, senior official, manager, professional, technician, or associated professional?</text>
+            <nickname>ppi_jordan_2011_employed_in_highly_skilled_work</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>How many rooms (not counting the kitchen) does the residence of the household have?</text>
+            <nickname>ppi_jordan_2011_house_rooms</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One or two</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Four</value>
+            </choice>
+            <choice order="4">
+                <value>Five</value>
+            </choice>
+            <choice order="5">
+                <value>Six or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>Does the household own a combined gas stove with oven?</text>
+            <nickname>ppi_jordan_2011_owns_gas_stove_with_oven</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>Does the household own a vacuum cleaner?</text>
+            <nickname>ppi_jordan_2011_has_vacuum</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household own an air conditioner?</text>
+            <nickname>ppi_jordan_2011_has_air_conditioner</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household have a computer connected to the internet?</text>
+            <nickname>ppi_jordan_2011_has_internet</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Only computer</value>
+            </choice>
+            <choice order="3">
+                <value>Computer and internet</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>How many land-line and/or mobile telephones does the household have?</text>
+            <nickname>ppi_jordan_2011_phones</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One mobile, but no land-lines</value>
+            </choice>
+            <choice order="3">
+                <value>One or more land-lines, but no mobile</value>
+            </choice>
+            <choice order="4">
+                <value>One or more landlines, and one mobile</value>
+            </choice>
+            <choice order="5">
+                <value>Two or more mobiles, but no land-lines</value>
+            </choice>
+            <choice order="6">
+                <value>One or more landlines, and two or more mobiles</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household own a private car?</text>
+            <nickname>ppi_jordan_2011_owns_car</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

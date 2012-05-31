@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Benin 2010</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Benin 2010</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_benin_2010_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>Department (as observed)</text>
+            <nickname>ppi_benin_2010_department</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Littoral</value>
+            </choice>
+            <choice order="2">
+                <value>Mono</value>
+            </choice>
+            <choice order="3">
+                <value>Zou, Atlantique, or Collines</value>
+            </choice>
+            <choice order="4">
+                <value>Couffo</value>
+            </choice>
+            <choice order="5">
+                <value>Plateau</value>
+            </choice>
+            <choice order="6">
+                <value>Ou?m?</value>
+            </choice>
+            <choice order="7">
+                <value>Donga, or Borgou</value>
+            </choice>
+            <choice order="8">
+                <value>Alibori</value>
+            </choice>
+            <choice order="9">
+                <value>Atakora</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Main material of the exterior walls of the main building (as observed)</text>
+            <nickname>ppi_benin_2010_main_exterior_wall_material</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Earth, stone, wood/planks, palm leaves/bamboo, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Mud plastered with cement</value>
+            </choice>
+            <choice order="3">
+                <value>Bricks</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>How many household members are there?</text>
+            <nickname>ppi_benin_2010_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Eight or more</value>
+            </choice>
+            <choice order="2">
+                <value>Seven</value>
+            </choice>
+            <choice order="3">
+                <value>Six</value>
+            </choice>
+            <choice order="4">
+                <value>Five</value>
+            </choice>
+            <choice order="5">
+                <value>Four</value>
+            </choice>
+            <choice order="6">
+                <value>Three</value>
+            </choice>
+            <choice order="7">
+                <value>Two</value>
+            </choice>
+            <choice order="8">
+                <value>One</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>Does the female head/spouse know how to read and write with understanding in French?</text>
+            <nickname>ppi_benin_2010_female_head_can_read_french</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+            <choice order="3">
+                <value>There is no female head/spouse</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the main source of energy for lighting in your household?</text>
+            <nickname>ppi_benin_2010_lighting_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Kerosene</value>
+            </choice>
+            <choice order="2">
+                <value>Electricity, LPG, oil, solar energy, electric generator (community or private), or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>Out of all the rooms available to your household, how many do household members use for sleeping?</text>
+            <nickname>ppi_benin_2010_sleeping_rooms</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>One</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What is the main cooking fuel used in your household?</text>
+            <nickname>ppi_benin_2010_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Firewood, or straw</value>
+            </choice>
+            <choice order="2">
+                <value>Charcoal, electricity, LPG, kerosene, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does your household have a motorcycle, scooter, or automobile?</text>
+            <nickname>ppi_benin_2010_owns_car_motorcycle</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>How many mobile telephones does your household have?</text>
+            <nickname>ppi_benin_2010_phones</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Has the household owned (including as an inheritance) or rented any sub-divided, developed, or irrigated land in the past 12 months?</text>
+            <nickname>ppi_benin_2010_land_owned</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Does not own etc.</value>
+            </choice>
+            <choice order="2">
+                <value>Does own etc., but land is not sub-divided, developed, or irrigated</value>
+            </choice>
+            <choice order="3">
+                <value>Does own etc., and some land is sub-divided, developed, or irrigated</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

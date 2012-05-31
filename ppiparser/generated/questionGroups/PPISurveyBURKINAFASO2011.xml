@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Burkinafaso 2011</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Burkinafaso 2011</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_burkinafaso_2011_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 14-years-old or younger?</text>
+            <nickname>ppi_burkinafaso_2011_family_members_0_to_14</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Six or more</value>
+            </choice>
+            <choice order="2">
+                <value>Five</value>
+            </choice>
+            <choice order="3">
+                <value>Four</value>
+            </choice>
+            <choice order="4">
+                <value>Three</value>
+            </choice>
+            <choice order="5">
+                <value>Two</value>
+            </choice>
+            <choice order="6">
+                <value>One</value>
+            </choice>
+            <choice order="7">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>In what languages can the male head/spouse read and write?</text>
+            <nickname>ppi_burkinafaso_2011_male_head_read_write_languages</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None, or no male head/spouse</value>
+            </choice>
+            <choice order="2">
+                <value>French only</value>
+            </choice>
+            <choice order="3">
+                <value>A non-French language (regardless of French literacy)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Has the female head/spouse completed first grade?</text>
+            <nickname>ppi_burkinafaso_2011_female_head_first_gradel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="3">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main source of energy for lighting?</text>
+            <nickname>ppi_burkinafaso_2011_lighting_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Firewood, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Candles, kerosene, or LPG</value>
+            </choice>
+            <choice order="3">
+                <value>Flashlight, or batteries</value>
+            </choice>
+            <choice order="4">
+                <value>Electricity, or solar energy</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What toilet arrangement does the household have?</text>
+            <nickname>ppi_burkinafaso_2011_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No toilet arrangement, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Non-ventilated pit latrine</value>
+            </choice>
+            <choice order="3">
+                <value>Ventilated pit latrine, or flush to a septic tank</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>Does the household own a television?</text>
+            <nickname>ppi_burkinafaso_2011_owns_television</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household own a bed or a mattress?</text>
+            <nickname>ppi_burkinafaso_2011_owns_mattress_or_bed</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household own a scooter or a motorcycle?</text>
+            <nickname>ppi_burkinafaso_2011_owns_scooter_motorcycle</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Have any household members, in their main occupation in the last seven days, worked in agriculture, animal husbandry, fishing, or forestry?</text>
+            <nickname>ppi_burkinafaso_2011_family_members_worked_last_week</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Yes</value>
+            </choice>
+            <choice order="2">
+                <value>No</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>How many head of cattle or other large animals does the household now own?</text>
+            <nickname>ppi_burkinafaso_2011_cattle_owned</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None, or one</value>
+            </choice>
+            <choice order="2">
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three to five</value>
+            </choice>
+            <choice order="4">
+                <value>Six or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

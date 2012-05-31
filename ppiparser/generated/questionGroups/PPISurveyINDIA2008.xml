@@ -18,155 +18,164 @@
             <mandatory>true</mandatory>
         </question>
         <question order="2">
-            <text>How many people aged 0 to 17 are in the household? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ೦-೧೭ ವಯಸ್ಸಿನವರು ಎಷ್ಟು ಜನರಿದ್ದಾರೆ? ( ೧೮ ವರ್ಷಕ್ಕಿ೦ತ ಒಳಪಟ್ಟವರು ಎಷ್ಟು ಜನರಿದ್ದಾರೆ?) / परिवार मे कितने सदस्यो कि उम्र ०-१७ साल तक कि है?</text>
+            <text>How many household members are 17-years-old or younger?</text>
             <nickname>ppi_india_2008_family_members_0_to_17</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Five or more / ಐದು ಅಥವಾ ಅಧಿಕ / पान्च या उससे अधिक</value>
+                <value>Four or more</value>
             </choice>
             <choice order="2">
-                <value>Four / ನಾಲ್ಕು / चार</value>
+                <value>Three</value>
             </choice>
             <choice order="3">
-                <value>Three / ಮೂರು / तीन</value>
+                <value>Two</value>
             </choice>
             <choice order="4">
-                <value>Two / ಎರಡು / दो</value>
+                <value>One</value>
             </choice>
             <choice order="5">
-                <value>One / ಒ೦ದು / एक</value>
-            </choice>
-            <choice order="6">
-                <value>None / ಯಾವುದು ಇಲ್ಲ / कॊई नहीं</value>
+                <value>Zero</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="3">
-            <text>What is the household's principal occupation? / ನಿಮ್ಮ ಕುಟು೦ಬದ ಮುಖ್ಯ ಉದ್ಯೋಗ ಯಾವುದು? / परिवार के आय क मुक्य क्षॆत्र क्या है?</text>
-            <nickname>ppi_india_2008_principal_occupation</nickname>
+            <text>What is the general education level of the male head/spouse?</text>
+            <nickname>ppi_india_2008_male_head_education_level</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Labourers (agricultural, plantation, other farm), hunters, tobacco preparers and tobacco product makers, and other labourers / ಕೂಲಿಕಾರರು (ಕೃಷಿ/ಕೃಷಿಗೆ ಸ೦ಬ೦ದಿಸಿದ/ಇತರೆ) ಕೂಲಿಕಾರರು ಬೀಡಿ ತಯಾರಕರು / ಹೊಗೆ ಸೊಪ್ಪು ಉತ್ಪನ್ನ ತಯಾರಕರು / मजदूर, शिकारि, बीडी व तंबाकू उत्पादन अन्य मजदूर</value>
+                <value>No male head/spouse</value>
             </choice>
             <choice order="2">
-                <value>Others / ಇತರೆ / अन्य</value>
+                <value>Not literate, no formal school, or primary or below</value>
             </choice>
             <choice order="3">
-                <value>Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers / ತಾ೦ತ್ರಿಕಗಾರರು/ವೃತ್ತಿ ನಿರತರು/ಆಡಳಿತ ವರ್ಗ/ವ್ಯವಸ್ಥಾಪಕ ವರ್ಗ/ನಿರ್ವಾಹಕರು/ನಿರ್ಧೇಶಕರು/ಶಿಕ್ಷಕರು / पेशॆवार, तकनीशियन, क्लर्क, प्रशासक, प्रबन्धक, अधिशासी निर्दॆशक, पर्यवॆक्षक ऎव० शिक्षक</value>
+                <value>Middle</value>
+            </choice>
+            <choice order="4">
+                <value>Secondary or higher secondary</value>
+            </choice>
+            <choice order="5">
+                <value>Diploma/certificate course, graduate, or postgraduate and above</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="4">
-            <text>Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard/cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)? / ನಿಮ್ಮ ಮನೆಯು ಪೂರ್ತಿ ಪಕ್ಕಾ ಮನೆಯೇ? (ಸಿಮೆ೦ಟ್/ಕಲ್ಲು/ಇಟ್ಟಿಗೆ/ಮರ/ಟೈಲ್ಸ್/ಟಿನ್ ಶೀಟ್ಸ್/ಅಸ್ಬೆಸ್ಟೋಸ್ ಸಿಮೆ೦ಟ್ ಶೀಟ್ಸ್/ಇತರೆ) / क्या आपका पूरा घर पक्का है?(ईट/पत्थर/सिमॆंट/कांक्रीट, सिमॆंट जेकबॊर्ड/ सिमेंट-प्लास्टर्ड रीड्स/टैल्स/लकडि /टिन रॊड/अस्बेस्ट्स शीट)</text>
-            <nickname>ppi_india_2008_has_pucca_home</nickname>
+            <text>What is the household type?</text>
+            <nickname>ppi_india_2008_household_type</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No / ಇಲ್ಲ / नहीं</value>
+                <value>Labour (agricultural, casual, or other)</value>
             </choice>
             <choice order="2">
-                <value>Yes / ಹೌದು / हाँ</value>
+                <value>Self-employed (agriculture or non-agriculture), regular wage/salary-earning, or others</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="5">
-            <text>What is the household's primary source of energy for cooking? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಬಳಸುವ ಮೂಲ ಅಡುಗೆ ಇ೦ಧನ ಯಾವುದು? / भॊजन पकाने के लिये परिवार के पास इंधन का प्रमुख स्रॊत क्या है?</text>
+            <text>What is the primary source of energy for cooking?</text>
             <nickname>ppi_india_2008_cooking_fuel</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Firewood and chips, charcoal, or none / ಕಟ್ಟಿಗೆ/ಇದ್ದಿಲು/ಯಾವುದೂ ಅಲ್ಲ / जलावन, लकडी और टूकडे, कॊयला अथवा कुछ नहीं</value>
+                <value>Firewood and chips, dung cake, kerosene, charcoal, coke or coal, gobar gas, or others</value>
             </choice>
             <choice order="2">
-                <value>Others / ಸೀಮೆ ಎಣ್ಣೆ/ಗೋಬರ್ ಗ್ಯಾಸ್/ವಿದ್ಯುತ್ ಸ್ಟೌವ್/ಇತರೆ / अन्य</value>
+                <value>LPG or electricity</value>
             </choice>
             <choice order="3">
-                <value>LPG / ಗ್ಯಾಸ್ (ಎಲ್.ಪಿ.ಜಿ) / गैस चूंल्हा</value>
+                <value>No cooking arrangement</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="6">
-            <text>Does the household own a television? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಟೀವಿ ಇದೆಯೇ? / क्या परिवार के पास टेलिविजन है?</text>
-            <nickname>ppi_india_2008_owns_television</nickname>
+            <text>Does the household possess any casseroles, thermos, or thermoware?</text>
+            <nickname>ppi_india_2008_owns_casseroles_thermos_thermoware</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No / ಇಲ್ಲ / नहीं</value>
+                <value>No</value>
             </choice>
             <choice order="2">
-                <value>Yes / ಇದೆ / हाँ</value>
+                <value>Yes</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="7">
-            <text>Does the household own a bicycle, scooter, or motor cycle? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಸೈಕಲ್ / ಸ್ಕೂಟರ್ ಇದೆಯೇ? / क्या परिवार मे अपना सईकिल, स्कूटर अथवा मॊटर सईकिल है?</text>
-            <nickname>ppi_india_2008_owns_bicycle_scooter_motorcycle</nickname>
+            <text>Does the household possess a television and a VCR/VCD/DVD player?</text>
+            <nickname>ppi_india_2008_owns_vcr_vcd_dvd</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No / ಇಲ್ಲ / नहीं</value>
+                <value>No, neither one</value>
             </choice>
             <choice order="2">
-                <value>Yes / ಇದೆ / हाँ</value>
+                <value>Yes, only one</value>
+            </choice>
+            <choice order="3">
+                <value>Yes, both</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="8">
-            <text>Does the household own an almirah/dressing table? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಬೀರು/ಡ್ರೆಸ್ಸಿ೦ಗ್ ಟೇಬಲ್ ಇದೆಯೇ? / क्या परिवार मे अपना अलमारि या श्रुंगारदान है?</text>
-            <nickname>ppi_india_2008_owns_almirah</nickname>
+            <text>Does the household possess a mobile handset and a telephone instrument (landline)?</text>
+            <nickname>ppi_india_2008_phones</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No / ಇಲ್ಲ / नहीं</value>
+                <value>No, neither one</value>
             </choice>
             <choice order="2">
-                <value>Yes / ಇದೆ / हाँ</value>
+                <value>Yes, only a mobile</value>
+            </choice>
+            <choice order="3">
+                <value>Yes, a landline, regardless of mobile</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="9">
-            <text>Does the household own a sewing machine? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಹೊಲಿಗೆ ಯ೦ತ್ರ ಇದೆಯೇ? / क्या परिवार मे अपना सिलाई मशीन है?</text>
+            <text>Does the household possess a sewing machine?</text>
             <nickname>ppi_india_2008_owns_sewing_machine</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No / ಇಲ್ಲ / नहीं</value>
+                <value>No</value>
             </choice>
             <choice order="2">
-                <value>Yes / ಇದೆ / हाँ</value>
+                <value>Yes</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="10">
-            <text>How many pressure cookers or pressure pans does the household own? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಷ್ಟು ಕುಕ್ಕರ್ ಪ್ರೆಷರ್ ಪ್ಯಾನ್ ಇದೆ? / परिवार मे कितने प्रॆशर कुक्कर है?</text>
-            <nickname>ppi_india_2008_pressure_cookers</nickname>
+            <text>Does the household possess an almirah/dressing table?</text>
+            <nickname>ppi_india_2008_onws_almirah</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>None / ಒ೦ದೂ ಇಲ್ಲ / कुछ नहीं</value>
+                <value>No</value>
             </choice>
             <choice order="2">
-                <value>One / ಒ೦ದು / एक</value>
-            </choice>
-            <choice order="3">
-                <value>Two or more / ಎರಡು ಅಥವಾ ಅಧಿಕ / दो या उससे अधिक</value>
+                <value>Yes</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="11">
-            <text>How many electric fans does the household own? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಲೆಕ್ಟ್ರಿಕ್ ಫ್ಯಾನ್ ಇದೆಯೇ? / परिवार मे कितने बिजलि के पंखे है?</text>
-            <nickname>ppi_india_2008_electric_fans</nickname>
+            <text>Does the household possess a bicycle, motorcycle/scooter, or motor car/jeep?</text>
+            <nickname>ppi_india_2008_owns_bicycle_scooter_car</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>None / ಒ೦ದೂ ಇಲ್ಲ / कुछ नहीं</value>
+                <value>No, none</value>
             </choice>
             <choice order="2">
-                <value>One / ಒ೦ದು / एक</value>
+                <value>Yes, bicycle only, no motorcycle/scooter, or car</value>
             </choice>
             <choice order="3">
-                <value>Two or more / ಎರಡು ಅಥವಾ ಅಧಿಕ / दो या उससे अधिक</value>
+                <value>Motorcycle/scooter, but no car (regardless of bicycle)</value>
+            </choice>
+            <choice order="4">
+                <value>Motor car/jeep (regardless of others)</value>
             </choice>
 
             <mandatory>true</mandatory>

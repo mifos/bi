@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Tanzania 2011</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Tanzania 2011</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_tanzania_2011_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 17-years-old or younger?</text>
+            <nickname>ppi_tanzania_2011_family_members_0_to_17</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Four or more</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>One</value>
+            </choice>
+            <choice order="5">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Do all children ages 6 to 17 attend school?</text>
+            <nickname>ppi_tanzania_2011_family_members_6_to_17_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, or no children ages 6 to 17</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>Can the female head/spouse read and write?</text>
+            <nickname>ppi_tanzania_2011_female_head_can_read</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes, but not in Kiswahili nor English</value>
+            </choice>
+            <choice order="3">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="4">
+                <value>Yes, only in Kiswahili</value>
+            </choice>
+            <choice order="5">
+                <value>Yes, in English (regardless of others)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the main building material of the floor of the main dwelling?</text>
+            <nickname>ppi_tanzania_2011_house_floor</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Earth</value>
+            </choice>
+            <choice order="2">
+                <value>Concrete, cement, tiles, timber, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the main building material of the roof of the main dwelling?</text>
+            <nickname>ppi_tanzania_2011_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Mud and grass</value>
+            </choice>
+            <choice order="2">
+                <value>Grass, leaves, bamboo</value>
+            </choice>
+            <choice order="3">
+                <value>Concrete, cement, metal sheets (GCI), asbestos sheets, tiles, or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>How many bicycles, mopeds, motorcycles, tractors, or motor vehicles does your household own?</text>
+            <nickname>ppi_tanzania_2011_bicycles_and_motorcycles</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does your household own any radios or radio cassettes?</text>
+            <nickname>ppi_tanzania_2011_owns_radio</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does your household own any lanterns?</text>
+            <nickname>ppi_tanzania_2011_owns_lantern</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does your household own any irons (charcoal or electric)?</text>
+            <nickname>ppi_tanzania_2011_owns_iron</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>How many tables does your household own?</text>
+            <nickname>ppi_tanzania_2011_tables</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>Three or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

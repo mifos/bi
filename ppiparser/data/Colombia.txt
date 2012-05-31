@@ -1,0 +1,311 @@
+ 
+
+Colombia Progress out of Poverty Index (PPI): Scorecard 
+
+ 
+
+Entity 
+
+Name 
+
+ 
+
+ID 
+
+ 
+
+Date (DD/MM/YY) 
+
+Member: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Joined: 
+
+ 
+
+Field agent: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Today: 
+
+ 
+
+Service point: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Household size: 
+
+ 
+
+ 
+
+ 
+
+Indicator 
+
+Value 
+
+Points 
+
+Score 
+
+1. How many household members are 18-years-old or younger? 
+
+A. Four or more 
+
+0 
+
+ 
+
+B. Three 
+
+5 
+
+ 
+
+C. Two 
+
+11 
+
+ 
+
+D. One 
+
+17 
+
+ 
+
+E. None 
+
+23 
+
+ 
+
+ 
+
+2. What is the highest educational level reached by the female head/spouse? 
+
+A. None, or pre-school 
+
+0 
+
+ 
+
+B. Primary or middle school 
+
+3 
+
+ 
+
+C. High school 
+
+6 
+
+ 
+
+D. No female head/spouse 
+
+8 
+
+ 
+
+E. Post-secondary or college (1 to 4 years) 
+
+9 
+
+ 
+
+F. Post-secondary or college (5 years or more) 
+
+17 
+
+ 
+
+ 
+
+3. How many household members spent most of the past week working? 
+
+A. None 
+
+0 
+
+ 
+
+B. One 
+
+9 
+
+ 
+
+C. Two or more 
+
+14 
+
+ 
+
+ 
+
+4. In their main line of work, how many household members work as wage or salary employees for a private firm or the government? 
+
+A. None 
+
+0 
+
+ 
+
+B. One 
+
+4 
+
+ 
+
+C. Two or more 
+
+11 
+
+ 
+
+ 
+
+5. What is the residence’s rate class for electricity? 
+
+A. No class or zero (no connection, pirated connection, or generator), one, or two 
+
+0 
+
+ 
+
+B. Three 
+
+4 
+
+ 
+
+C. Four, five, or six 
+
+9 
+
+ 
+
+ 
+
+6. What fuel or energy source does the household usually cook with? 
+
+A. Firewood, wood, charcoal, coal, electricity, gasoline, petroleum, kerosene, alcohol, or waste material 
+
+0 
+
+ 
+
+B. LPG from a cylinder or tank 
+
+2 
+
+ 
+
+C. Natural gas from a public network 
+
+3 
+
+ 
+
+D. Does not cook 
+
+6 
+
+ 
+
+ 
+
+7. Does the household have a working clothes washing machine? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+4 
+
+ 
+
+ 
+
+8. Does the household have a working refrigerator or freezer? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+3 
+
+ 
+
+ 
+
+9. Does the household have a working DVD? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+4 
+
+ 
+
+ 
+
+10. Does the household have a motorcycle and/or a car for its own use? 
+
+A. None 
+
+0 
+
+ 
+
+B. Motorcycle only 
+
+3 
+
+ 
+
+C. Car (regardless of motorcycle) 
+
+9 
+
+ 
+
+
+
+Source: Microfinance Risk Management, L.L.C. based on Colombia’s 2009 GEIH. Total score: 

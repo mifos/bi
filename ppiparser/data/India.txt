@@ -1,971 +1,142 @@
+India Progress out of Poverty Index? (PPI?): Scorecard
 
-                 Progress out of Poverty Index^TM for India
 
+Indicator
+Value
+Points
+Score
+1. How many household members are 17-years-old or younger?
+A. Four or more
+0
 
-                                  Indicator
 
-                                    Value
+B. Three
+7
 
-                                   Points
 
-                                    Score
+C. Two
+11
 
-   1. How many people aged 0 to 17 are in the household? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ೦-೧೭ ವಯಸ್ಸಿನವರು ಎಷ್ಟು ಜನರಿದ್ದಾರೆ? ( ೧೮ ವರ್ಷಕ್ಕಿ೦ತ ಒಳಪಟ್ಟವರು ಎಷ್ಟು ಜನರಿದ್ದಾರೆ?) / परिवार मे कितने सदस्यो कि उम्र ०-१७ साल तक कि है?
 
-   A. Five or more / ಐದು ಅಥವಾ ಅಧಿಕ / पान्च या उससे अधिक
+D. One
+17
 
-                                      0
 
-   B. Four / ನಾಲ್ಕು / चार
+E. Zero
+26
 
-                                      4
 
-   C. Three / ಮೂರು / तीन
+2. What is the general education level of the male head/spouse?
+A. No male head/spouse
+0
 
-                                      8
 
-   D. Two / ಎರಡು / दो
+B. Not literate, no formal school, or primary or below
+0
 
-                                     13
 
-   E. One / ಒ೦ದು / एक
+C. Middle
+3
 
-                                     20
 
-   F. None / ಯಾವುದು ಇಲ್ಲ / कॊई नहीं
+D. Secondary or higher secondary
+5
 
-                                     27
 
-   2. What is the household's principal occupation? / ನಿಮ್ಮ ಕುಟು೦ಬದ ಮುಖ್ಯ ಉದ್ಯೋಗ ಯಾವುದು? / परिवार के आय क मुक्य क्षॆत्र क्या है?
+E. Diploma/certificate course, graduate, or postgraduate and above
+7
 
-   A. Labourers (agricultural, plantation, other farm), hunters, tobacco preparers and tobacco product makers, and other labourers / ಕೂಲಿಕಾರರು (ಕೃಷಿ/ಕೃಷಿಗೆ ಸ೦ಬ೦ದಿಸಿದ/ಇತರೆ) ಕೂಲಿಕಾರರು ಬೀಡಿ ತಯಾರಕರು / ಹೊಗೆ ಸೊಪ್ಪು ಉತ್ಪನ್ನ ತಯಾರಕರು / मजदूर, शिकारि, बीडी व तंबाकू उत्पादन अन्य मजदूर
 
-                                      0
+3. What is the household type?
+A. Labour (agricultural, casual, or other)
+0
 
-   B. Others / ಇತರೆ / अन्य
 
-                                      8
+B. Self-employed (agriculture or non-agriculture), regular wage/salary-earning, or others
+5
 
-   C. Professionals, technicians, clerks, administrators, managers, executives, directors, supervisors, and teachers / ತಾ೦ತ್ರಿಕಗಾರರು/ವೃತ್ತಿ ನಿರತರು/ಆಡಳಿತ ವರ್ಗ/ವ್ಯವಸ್ಥಾಪಕ ವರ್ಗ/ನಿರ್ವಾಹಕರು/ನಿರ್ಧೇಶಕರು/ಶಿಕ್ಷಕರು / पेशॆवार, तकनीशियन, क्लर्क, प्रशासक, प्रबन्धक, अधिशासी निर्दॆशक, पर्यवॆक्षक ऎव० शिक्षक
 
-                                     14
+4. What is the primary source of energy for cooking?
+A. Firewood and chips, dung cake, kerosene, charcoal, coke or coal, gobar gas, or others
+0
 
-   3. Is the residence all pucca (burnt bricks, stone, cement, concrete, jackboard/cement-plastered reeds, timber, tiles, galvanised tin or asbestos cement sheets)? / ನಿಮ್ಮ ಮನೆಯು ಪೂರ್ತಿ ಪಕ್ಕಾ ಮನೆಯೇ? (ಸಿಮೆ೦ಟ್/ಕಲ್ಲು/ಇಟ್ಟಿಗೆ/ಮರ/ಟೈಲ್ಸ್/ಟಿನ್ ಶೀಟ್ಸ್/ಅಸ್ಬೆಸ್ಟೋಸ್ ಸಿಮೆ೦ಟ್ ಶೀಟ್ಸ್/ಇತರೆ) / क्या आपका पूरा घर पक्का है?(ईट/पत्थर/सिमॆंट/कांक्रीट, सिमॆंट जेकबॊर्ड/ सिमेंट-प्लास्टर्ड रीड्स/टैल्स/लकडि /टिन रॊड/अस्बेस्ट्स शीट)
 
-   A. No / ಇಲ್ಲ / नहीं
+B. LPG or electricity
+3
 
-                                      0
 
-   B. Yes / ಹೌದು / हाँ
+C. No cooking arrangement
+9
 
-                                      4
 
-   4. What is the household's primary source of energy for cooking? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಬಳಸುವ ಮೂಲ ಅಡುಗೆ ಇ೦ಧನ ಯಾವುದು? / भॊजन पकाने के लिये परिवार के पास इंधन का प्रमुख स्रॊत क्या है?
+5. Does the household possess any casseroles, thermos, or thermoware?
+A. No 
+0
 
-   A. Firewood and chips, charcoal, or none / ಕಟ್ಟಿಗೆ/ಇದ್ದಿಲು/ಯಾವುದೂ ಅಲ್ಲ / जलावन, लकडी और टूकडे, कॊयला अथवा कुछ नहीं
 
-                                      0
+B. Yes
+5
 
-   B. Others / ಸೀಮೆ ಎಣ್ಣೆ/ಗೋಬರ್ ಗ್ಯಾಸ್/ವಿದ್ಯುತ್ ಸ್ಟೌವ್/ಇತರೆ / अन्य
 
-                                      5
+6. Does the household possess a television and a VCR/VCD/DVD player?
+A. No, neither one
+0
 
-   C. LPG / ಗ್ಯಾಸ್ (ಎಲ್.ಪಿ.ಜಿ) / गैस चूंल्हा
 
-                                     17
+B. Yes, only one
+4
 
-   5. Does the household own a television? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಟೀವಿ ಇದೆಯೇ? / क्या परिवार के पास टेलिविजन है?
 
-   A. No / ಇಲ್ಲ / नहीं
+C. Yes, both
+9
 
-                                      0
+7. Does the household possess a mobile handset and a telephone instrument (landline)?
+A. No, neither one
+0
 
-   B. Yes / ಇದೆ / हाँ
 
-                                      6
+B. Yes, only a mobile
+9
 
-   6. Does the household own a bicycle, scooter, or motor cycle? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಸೈಕಲ್ / ಸ್ಕೂಟರ್ ಇದೆಯೇ? / क्या परिवार मे अपना सईकिल, स्कूटर अथवा मॊटर सईकिल है?
 
-   A. No / ಇಲ್ಲ / नहीं
+C. Yes, a landline, regardless of mobile
+15
 
-                                      0
 
-   B. Yes / ಇದೆ / हाँ
+8. Does the household possess a sewing machine?
+A. No
+0
 
-                                      5
 
-   7. Does the household own an almirah/dressing table? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಬೀರು/ಡ್ರೆಸ್ಸಿ೦ಗ್ ಟೇಬಲ್ ಇದೆಯೇ? / क्या परिवार मे अपना अलमारि या श्रुंगारदान है?
+B. Yes
+1
 
 
-   A. No / ಇಲ್ಲ / नहीं
+9. Does the household possess an almirah/dressing table?
+A. No
+0
 
-                                      0
 
-   B. Yes / ಇದೆ / हाँ
+B. Yes
+5
 
-                                      3
 
-   8. Does the household own a sewing machine? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಹೊಲಿಗೆ ಯ೦ತ್ರ ಇದೆಯೇ? / क्या परिवार मे अपना सिलाई मशीन है?
+10. Does the household possess a bicycle, motorcycle/scooter, or motor car/jeep?
+A. No, none
+0
 
-   A. No / ಇಲ್ಲ / नहीं
 
-                                      0
+B. Yes, bicycle only, no motorcycle/scooter, or car
+1
 
-   B. Yes / ಇದೆ / हाँ
 
-                                      6
+C. Motorcycle/scooter, but no car (regardless of bicycle)
+13
 
-   9. How many pressure cookers or pressure pans does the household own? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಷ್ಟು ಕುಕ್ಕರ್ ಪ್ರೆಷರ್ ಪ್ಯಾನ್ ಇದೆ? / परिवार मे कितने प्रॆशर कुक्कर है?
 
-   A. None / ಒ೦ದೂ ಇಲ್ಲ / कुछ नहीं
+D. Motor car/jeep (regardless of others)
+18
 
-                                      0
+Total score:
 
-   B. One / ಒ೦ದು / एक
 
-                                      6
-
-   C. Two or more / ಎರಡು ಅಥವಾ ಅಧಿಕ / दो या उससे अधिक
-
-                                      9
-
-   10. How many electric fans does the household own? / ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಲೆಕ್ಟ್ರಿಕ್ ಫ್ಯಾನ್ ಇದೆಯೇ? / परिवार मे कितने बिजलि के पंखे है?
-
-   A. None / ಒ೦ದೂ ಇಲ್ಲ / कुछ नहीं
-
-                                      0
-
-   B. One / ಒ೦ದು / एक
-
-                                      5
-
-   C. Two or more / ಎರಡು ಅಥವಾ ಅಧಿಕ / दो या उससे अधिक
-
-                                      9
-
-   Microfinance Risk Management, L.L.C., http://www.microfinance.com Total score:
-
-            Category Likelihoods according to India PPI™ Score
-
-                            National Poverty Line
-
-                        USAID "Extreme" Poverty Line
-
-                                  PPI Score
-
-                    Total Below the National Poverty Line
-
-                    Total Above the National Poverty Line
-
-                Total Below the USAID "Extreme" Poverty Line
-
-                Total Above the USAID "Extreme" Poverty Line
-
-                                     0-4
-
-                                    77.0%
-
-                                    23.0%
-
-
-                                    41.7%
-
-                                    58.3%
-
-                                     5-9
-
-                                    58.5%
-
-                                    41.5%
-
-
-                                    34.3%
-
-                                    65.7%
-
-                                    10-14
-
-                                    51.2%
-
-                                    48.8%
-
-
-                                    24.7%
-
-                                    75.3%
-
-                                    15-19
-
-                                    35.5%
-
-                                    64.5%
-
-
-                                    21.0%
-
-                                    79.0%
-
-                                    20-24
-
-                                    28.7%
-
-                                    71.3%
-
-
-                                    14.0%
-
-                                    86.0%
-
-                                    25-29
-
-                                    21.3%
-
-                                    78.7%
-
-
-                                    9.2%
-
-                                    90.8%
-
-                                    30-34
-
-                                    18.9%
-
-                                    81.1%
-
-
-                                    9.2%
-
-                                    90.8%
-
-                                    35-39
-
-                                    14.9%
-
-                                    85.1%
-
-
-                                    7.6%
-
-                                    92.4%
-
-                                    40-44
-
-                                    10.0%
-
-                                    90.0%
-
-
-                                    4.5%
-
-                                    95.5%
-
-                                    45-49
-
-                                    4.5%
-
-                                    95.5%
-
-
-                                    1.3%
-
-                                    98.7%
-
-                                    50-54
-
-                                    5.1%
-
-                                    94.9%
-
-
-                                    1.3%
-
-                                    98.7%
-
-                                    55-59
-
-                                    5.7%
-
-                                    94.3%
-
-
-                                    1.3%
-
-                                    98.7%
-
-                                    60-64
-
-                                    6.1%
-
-                                    93.9%
-
-
-                                    2.2%
-
-                                    97.8%
-
-                                    65-69
-
-                                    3.7%
-
-                                    96.3%
-
-
-                                    0.7%
-
-                                    99.3%
-
-                                    70-74
-
-                                    1.5%
-
-                                    98.5%
-
-
-                                    0.2%
-
-                                    99.8%
-
-                                    75-79
-
-                                    1.6%
-
-                                    98.4%
-
-
-                                    0.4%
-
-                                    99.6%
-
-                                    80-84
-
-                                    0.7%
-
-                                    99.3%
-
-
-                                    0.2%
-
-                                    99.8%
-
-                                    85-89
-
-                                    1.2%
-
-                                    98.8%
-
-
-                                    0.5%
-
-                                    99.5%
-
-                                    90-94
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.0%
-
-                                   100.0%
-
-                                   95-100
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.0%
-
-                                   100.0%
-
-     Source: Microfinance Risk Management, L.L.C. based on Schedule 1.0,
-                       Round 62 of India's SES by NSSO
-
-            Category Likelihoods according to India PPI™ Score
-
-                         $0.75/Day/PPP Poverty Line
-
-                           $1/Day/PPP Poverty Line
-
-                         $1.25/Day/PPP Poverty Line
-
-                                  PPI Score
-
-                     Total Below the $0.75/Day/PPP Line
-
-                     Total Above the $0.75/Day/PPP Line
-
-                       Total Below the $1/Day/PPP Line
-
-                       Total Above the $1/Day/PPP Line
-
-                     Total Below the $1.25/Day/PPP Line
-
-                     Total Above the $1.25/Day/PPP Line
-
-                                     0-4
-
-                                    54.3%
-
-                                    45.7%
-
-
-                                    93.7%
-
-                                    6.3%
-
-
-                                    98.5%
-
-                                    1.5%
-
-                                     5-9
-
-                                    43.5%
-
-                                    56.5%
-
-
-                                    78.8%
-
-                                    21.2%
-
-
-                                    92.7%
-
-                                    7.3%
-
-                                    10-14
-
-                                    32.2%
-
-                                    67.8%
-
-
-                                    68.4%
-
-                                    31.6%
-
-
-                                    88.1%
-
-                                    11.9%
-
-                                    15-19
-
-                                    20.8%
-
-                                    79.2%
-
-
-                                    58.0%
-
-                                    42.0%
-
-
-                                    82.0%
-
-                                    18.0%
-
-                                    20-24
-
-                                    18.0%
-
-                                    82.0%
-
-
-                                    53.3%
-
-                                    46.7%
-
-
-                                    78.7%
-
-                                    21.3%
-
-                                    25-29
-
-                                    11.8%
-
-                                    88.2%
-
-
-                                    37.5%
-
-                                    62.5%
-
-
-                                    65.2%
-
-                                    34.8%
-
-                                    30-34
-
-                                    9.3%
-
-                                    90.7%
-
-
-                                    29.7%
-
-                                    70.3%
-
-
-                                    55.8%
-
-                                    44.2%
-
-                                    35-39
-
-                                    7.9%
-
-                                    92.1%
-
-
-                                    23.1%
-
-                                    76.9%
-
-
-                                    45.4%
-
-                                    54.6%
-
-                                    40-44
-
-                                    4.0%
-
-                                    96.0%
-
-
-                                    14.8%
-
-                                    85.2%
-
-
-                                    32.9%
-
-                                    67.1%
-
-                                    45-49
-
-                                    1.0%
-
-                                    99.0%
-
-
-                                    5.8%
-
-                                    94.2%
-
-
-                                    24.0%
-
-                                    76.0%
-
-                                    50-54
-
-                                    1.0%
-
-                                    99.0%
-
-
-                                    5.0%
-
-                                    95.0%
-
-
-                                    17.4%
-
-                                    82.6%
-
-                                    55-59
-
-                                    1.0%
-
-                                    99.0%
-
-
-                                    3.0%
-
-                                    97.0%
-
-
-                                    16.0%
-
-                                    84.0%
-
-                                    60-64
-
-                                    1.2%
-
-                                    98.8%
-
-
-                                    3.3%
-
-                                    96.7%
-
-
-                                    12.2%
-
-                                    87.8%
-
-                                    65-69
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.8%
-
-                                    99.2%
-
-
-                                    8.5%
-
-                                    91.5%
-
-                                    70-74
-
-                                    0.1%
-
-                                    99.9%
-
-
-                                    0.3%
-
-                                    99.7%
-
-
-                                    6.4%
-
-                                    93.6%
-
-                                    75-79
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    1.1%
-
-                                    98.9%
-
-
-                                    2.1%
-
-                                    97.9%
-
-                                    80-84
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.2%
-
-                                    99.8%
-
-
-                                    0.7%
-
-                                    99.3%
-
-                                    85-89
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    1.9%
-
-                                    98.1%
-
-                                    90-94
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.1%
-
-                                    99.9%
-
-                                   95-100
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.0%
-
-                                   100.0%
-
-
-                                    0.0%
-
-                                   100.0%
-
-     Source: Microfinance Risk Management, L.L.C. based on Schedule 1.0,
-                       Round 62 of India's SES by NSSO
-
-            Category Likelihoods according to India PPI™ Score
-
-                         $1.50/Day/PPP Poverty Line
-
-                           $2/Day/PPP Poverty Line
-
-                                  PPI Score
-
-                     Total Below the $1.50/Day/PPP Line
-
-                     Total Above the $1.50/Day/PPP Line
-
-                       Total Below the $2/Day/PPP Line
-
-                       Total Above the $2/Day/PPP Line
-
-                                     0-4
-
-                                   100.0%
-
-                                    0.0%
-
-
-                                   100.0%
-
-                                    0.0%
-
-                                     5-9
-
-                                    95.5%
-
-                                    4.5%
-
-
-                                    99.1%
-
-                                    0.9%
-
-                                    10-14
-
-                                    95.3%
-
-                                    4.7%
-
-
-                                    97.5%
-
-                                    2.5%
-
-                                    15-19
-
-                                    95.3%
-
-                                    4.7%
-
-
-                                    98.9%
-
-                                    1.1%
-
-                                    20-24
-
-                                    90.2%
-
-                                    9.8%
-
-
-                                    98.0%
-
-                                    2.0%
-
-                                    25-29
-
-                                    84.4%
-
-                                    15.6%
-
-
-                                    94.9%
-
-                                    5.1%
-
-                                    30-34
-
-                                    74.3%
-
-                                    25.7%
-
-
-                                    93.7%
-
-                                    6.3%
-
-                                    35-39
-
-                                    62.8%
-
-                                    37.2%
-
-
-                                    84.7%
-
-                                    15.3%
-
-                                    40-44
-
-                                    50.5%
-
-                                    49.5%
-
-
-                                    77.8%
-
-                                    22.2%
-
-                                    45-49
-
-                                    48.0%
-
-                                    52.0%
-
-
-                                    79.0%
-
-                                    21.0%
-
-                                    50-54
-
-                                    34.5%
-
-                                    65.5%
-
-
-                                    64.0%
-
-                                    36.0%
-
-                                    55-59
-
-                                    38.7%
-
-                                    61.3%
-
-
-                                    69.9%
-
-                                    30.1%
-
-                                    60-64
-
-                                    22.7%
-
-                                    77.3%
-
-
-                                    55.2%
-
-                                    44.8%
-
-                                    65-69
-
-                                    21.8%
-
-                                    78.2%
-
-
-                                    50.0%
-
-                                    50.0%
-
-                                    70-74
-
-                                    16.3%
-
-                                    83.7%
-
-
-                                    42.9%
-
-                                    57.1%
-
-                                    75-79
-
-                                    7.9%
-
-                                    92.1%
-
-
-                                    27.3%
-
-                                    72.7%
-
-                                    80-84
-
-                                    3.6%
-
-                                    96.4%
-
-
-                                    15.5%
-
-                                    84.5%
-
-                                    85-89
-
-                                    4.0%
-
-                                    96.0%
-
-
-                                    12.9%
-
-                                    87.1%
-
-                                    90-94
-
-                                    1.7%
-
-                                    98.3%
-
-
-                                    8.3%
-
-                                    91.7%
-
-                                   95-100
-
-                                    0.7%
-
-                                    99.3%
-
-
-                                    4.4%
-
-                                    95.6%
-
-     Source: Microfinance Risk Management, L.L.C. based on Schedule 1.0,
-                       Round 62 of India's SES by NSSO
-
-     Progress out of Poverty Index™ India Indicators and Lookup Table

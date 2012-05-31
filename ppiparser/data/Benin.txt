@@ -1,0 +1,137 @@
+Benin Progress out of Poverty Index? (PPI?): Scorecard
+Entity
+Name
+Date (DD/MM/YY)
+ID
+:
+Member:
+Field agent:
+Service point:
+Date joined:
+Date scored:
+Household size
+Score
+
+Indicator
+Response
+Points
+
+Score
+
+1. Department (as observed)
+A. Littoral
+0
+
+
+B. Mono
+1
+
+
+C. Zou, Atlantique, or Collines
+3
+
+
+D. Couffo
+4
+
+
+E. Plateau
+7
+
+
+F. Ou?m?
+11
+
+
+G. Donga, or Borgou
+12
+
+
+H. Alibori
+13
+
+
+I. Atakora
+14
+
+
+2. Main material of the exterior walls of the main building (as observed)
+
+A. Earth, stone, wood/planks, palm leaves/bamboo, or other
+0
+B. Mud plastered with cement
+1
+C. Bricks
+4
+
+3. How many household members are there? 
+A. Eight or more 
+0
+B. Seven
+6
+C. Six
+10
+D. Five
+14
+E. Four
+20
+F. Three
+30
+G. Two
+40
+H. One
+48
+
+4. Does the female head/spouse know how to read and write with understanding in French?
+A. No 
+0
+B. Yes 
+3
+C. There is no female head/spouse
+3
+
+5. What is the main source of energy for lighting in your household?
+A. Kerosene 
+0
+B. Electricity, LPG, oil, solar energy, electric generator (community or private), or other 
+4
+6. Out of all the rooms available to your household, how many do household members use for sleeping?
+A. One 
+0
+B. Two 
+2
+C. Three or more 
+5
+
+7. What is the main cooking fuel used in your household?
+A. Firewood, or straw
+0
+B. Charcoal, electricity, LPG, kerosene, or other
+3
+
+8. Does your household have a motorcycle, scooter, or automobile?
+A. No
+0
+B. Yes
+5
+9. How many mobile telephones does your household have? 
+A. None 
+0
+B. One
+2
+C. Two or more
+9
+
+10. Has the household owned (including as an inheritance) or rented any sub-divided, developed, or irrigated land in the past 12 months?
+A. Does not own etc. 
+0
+B. Does own etc., but land is not sub-divided, developed, or irrigated
+2
+C. Does own etc., and some land is sub-divided, developed, or irrigated
+5
+
+Total score:
+Microfinance Risk Management, L.L.C., microfinance.com
+This PPI was created in March 2012 based on data from 2010. For more information about the PPI, please visit
+www.progressoutofpoverty.org.
+

@@ -1,0 +1,144 @@
+	
+  
+Afghanistan Progress out of Poverty Index (PPI ): Scorecard
+
+Indicator
+Value
+Points
+Score
+1. How many household members are 16-years-old or younger?
+A. Seven or more 
+0
+
+
+B. Five or six 
+4
+
+
+C. Four 
+9
+
+
+D. Three 
+12
+
+
+E. Two 
+17
+
+
+F. One 
+23
+
+
+G. None 
+29
+
+
+2. Can both the male head/spouse and the female head/spouse read and write?
+A. No male head/spouse 
+0
+
+
+B. No female head/spouse 
+5
+
+
+C. No 
+5
+
+D. Yes 
+11
+
+
+3. What type of dwelling best describes where the household lives?
+A. Temporary shelter/shack, part of a shared house, separate apartment, shared apartment, tent, or other
+0
+
+
+B. Single-family house
+3
+
+
+4. How many rooms (both exclusively yours and shared) does your household occupy (exclude corridors and balconies)?
+A. One to four
+0
+
+
+B. Five or more
+4
+
+
+5. Which main toilet facility does the household use?
+A. None (open field, bush) or sahrahi, dearan (area inside or outside compound but not pit), or other
+0
+
+
+B. Open pit
+5
+
+
+C. Traditional covered latrine
+6
+
+
+D. Improved latrine, or flush latrine
+11
+
+
+6. In the past 30 days, what has been the household's main source of cooking fuel?
+A. Animal dung, scavenged material/trash, bushes (ping)/twigs, branches, or other
+0
+
+
+B. Crop residues, firewood, charcoal/coal, kerosene or oil, gas, or electricity
+4
+
+
+7. How many stoves/gas cylinders does the household own? 
+A. None 
+0
+
+
+B. One 
+1
+
+
+C. Two or more 
+9
+
+
+8. Does the household own any sewing machines?
+A. No 
+0
+
+
+B. Yes 
+3
+
+
+9. Does the household own any motorcycles or cars? 
+A. No 
+0
+
+
+B. Motorcycle only 
+12
+
+
+C. Car (regardless of motorcycle) 
+22
+
+
+10. Did anyone in the household own or have access to any irrigated land in the most recent summer cultivation season, excluding a garden plot?
+A. No 
+0
+
+
+B. Yes 
+4
+
+Source: Progress out of Poverty Index?: A Simple Poverty Scorecard for Afghanistan created by Mark Schreiner. Total score
+This PPI was created in January 2012 based on data from 2007. For more information about the PPI, please visit	www.progressoutofpoverty.org.	
+
+

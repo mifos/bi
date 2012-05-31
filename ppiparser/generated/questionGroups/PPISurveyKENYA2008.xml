@@ -18,89 +18,128 @@
             <mandatory>true</mandatory>
         </question>
         <question order="2">
-            <text>How many household members are aged 25 or younger?</text>
-            <nickname>ppi_kenya_2008_family_members_0_to_25</nickname>
+            <text>How many members does the household have?</text>
+            <nickname>ppi_kenya_2008_family_members</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>3 or more</value>
+                <value>Nine or more</value>
             </choice>
             <choice order="2">
-                <value>0, 1, or 2</value>
+                <value>Seven or eight</value>
+            </choice>
+            <choice order="3">
+                <value>Six</value>
+            </choice>
+            <choice order="4">
+                <value>Five</value>
+            </choice>
+            <choice order="5">
+                <value>Four</value>
+            </choice>
+            <choice order="6">
+                <value>Three</value>
+            </choice>
+            <choice order="7">
+                <value>One or two</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="3">
-            <text>How many household members aged 6 to 17 are currently attending school?</text>
-            <nickname>ppi_kenya_2008_family_members_6_to_17_in_school</nickname>
+            <text>What is the highest school grade that the female head/spouse has completed?</text>
+            <nickname>ppi_kenya_2008_female_head_education_level</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Not all</value>
+                <value>None, or pre-school</value>
             </choice>
             <choice order="2">
-                <value>All</value>
+                <value>Primary standards 1 to 6</value>
             </choice>
             <choice order="3">
-                <value>No children aged 6 to 17</value>
+                <value>Primary standard 7</value>
+            </choice>
+            <choice order="4">
+                <value>Primary standard 8, or secondary</value>
+            </choice>
+            <choice order="5">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="6">
+                <value>Secondary form 4 or higher</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="4">
-            <text>What is the material of the walls of the house?</text>
-            <nickname>ppi_kenya_2008_house_walls</nickname>
+            <text>What kind of business (type of industry) is the main occupation of the male head/spouse connected with?</text>
+            <nickname>ppi_kenya_2008_male_head_occupation</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Mud/cow dung; grass/sticks/makuti;</value>
+                <value>Does not work</value>
             </choice>
             <choice order="2">
-                <value>Other</value>
+                <value>No male head/spouse</value>
+            </choice>
+            <choice order="3">
+                <value>Agriculture, hunting, forestry, fishing, mining, or quarrying</value>
+            </choice>
+            <choice order="4">
+                <value>Any other</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="5">
-            <text>What kind of toilet facility does your household use?</text>
-            <nickname>ppi_kenya_2008_toilet_type</nickname>
+            <text>How many habitable rooms does this household occupy in its main dwelling (do not count bathrooms, toilets, storerooms, or garage)?</text>
+            <nickname>ppi_kenya_2008_house_rooms</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>Other</value>
+                <value>One</value>
             </choice>
             <choice order="2">
-                <value>Flush to sewer; flush to septic tank; pan/bucket; covered pit latrine; or ventilation improved pit latrine</value>
+                <value>Two</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Four or more</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="6">
-            <text>Does the household own a TV?</text>
-            <nickname>ppi_kenya_2008_owns_television</nickname>
+            <text>The floor of the main dwelling is predominantly made of what</text>
+            <nickname>ppi_kenya_2008_house_floors</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No</value>
+                <value>Wood, earth, or other</value>
             </choice>
             <choice order="2">
-                <value>Yes</value>
+                <value>Cement, or tiles</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="7">
-            <text>Does the household own a sofa?</text>
-            <nickname>ppi_kenya_2008_owns_sofa</nickname>
+            <text>What is the main source of lighting fuel for the household?</text>
+            <nickname>ppi_kenya_2008_lighting_fuel</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No</value>
+                <value>Collected firewood, purchased firewood, grass, or dry cell (torch)</value>
             </choice>
             <choice order="2">
-                <value>Yes</value>
+                <value>Paraffin, candles, biogas, or other</value>
+            </choice>
+            <choice order="3">
+                <value>Electricity, solar, or gas</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="8">
-            <text>Does the household own a stove?</text>
-            <nickname>ppi_kenya_2008_owns_stove</nickname>
+            <text>Does your household own any irons (charcoal or electric)?</text>
+            <nickname>ppi_kenya_2008_owns_iron</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -112,40 +151,49 @@
             <mandatory>true</mandatory>
         </question>
         <question order="9">
-            <text>Does the household own a radio?</text>
-            <nickname>ppi_kenya_2008_owns_radio</nickname>
+            <text>How many mosquito nets does your household own?</text>
+            <nickname>ppi_kenya_2008_mosquito_nets</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No</value>
+                <value>None</value>
             </choice>
             <choice order="2">
-                <value>Yes</value>
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="10">
-            <text>Does the household own a bicycle?</text>
-            <nickname>ppi_kenya_2008_owns_bicycle</nickname>
+            <text>How many towels does your household own?</text>
+            <nickname>ppi_kenya_2008_towels</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>No</value>
+                <value>None</value>
             </choice>
             <choice order="2">
-                <value>Yes</value>
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
             </choice>
 
             <mandatory>true</mandatory>
         </question>
         <question order="11">
-            <text>How many head of cattle are owned by the household currently?</text>
-            <nickname>ppi_kenya_2008_cattle_owned</nickname>
+            <text>How many frying pans does your household own?</text>
+            <nickname>ppi_kenya_2008_frying_pans</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
-                <value>None or unknown</value>
+                <value>None</value>
             </choice>
             <choice order="2">
-                <value>1 or more</value>
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
             </choice>
 
             <mandatory>true</mandatory>

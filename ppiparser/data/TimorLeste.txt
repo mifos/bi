@@ -1,0 +1,538 @@
+Timor-Leste Progress out of Poverty Index® (PPI): Scorecard 
+To assist with collection, organizations can use the household roster located on the second page to assist with 2, 3 and 5. 
+
+Entity 
+
+Name 
+
+ 
+
+ID 
+
+ 
+
+Date (DD/MM/YY) 
+
+Member: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Joined: 
+
+ 
+
+Field agent: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Today: 
+
+ 
+
+Service point: 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Household size: 
+
+ 
+
+ 
+
+Indicator 
+
+Value 
+
+Points 
+
+Score 
+
+1. In what district does the household live? 
+
+A. Ainaro, Manufahi, or Manatuto 
+
+0 
+
+ 
+
+B. Aileu, Dili, or Ermera 
+
+6 
+
+ 
+
+C. Bobonaro, Cova Lima, Liquiçá, or Oecussi 
+
+11 
+
+ 
+
+D. Baucau, Lautém, and Viqueque 
+
+23 
+
+ 
+
+ 
+
+2. How many household members are 17-years-old or younger? 
+
+A. Six or more 
+
+0 
+
+ 
+
+B. Four or five 
+
+8 
+
+ 
+
+C. Three 
+
+13 
+
+ 
+
+D. Two 
+
+19 
+
+ 
+
+E. One 
+
+29 
+
+ 
+
+F. None 
+
+34 
+
+ 
+
+ 
+
+3. Are all household members ages 8 to 17 currently attending school? 
+
+A. No, or no members 8 to 17 
+
+0 
+
+ 
+
+B. Yes 
+
+3 
+
+ 
+
+ 
+
+4. In their main occupation in the past 12 months, did any household members have a wage job or a non-wage, non-farming job? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+3 
+
+ 
+
+ 
+
+5. What is the highest level and class that the male head/spouse has completed in school? 
+
+A. None, pre-school, or primary class 1 
+
+0 
+
+ 
+
+B. Primary class 2 to 5 
+
+2 
+
+ 
+
+C. No male head/spouse 
+
+3 
+
+ 
+
+D. Primary class 6, to pre-secondary class 2 
+
+5 
+
+ 
+
+E. Pre-secondary class 3, or higher 
+
+7 
+
+ 
+
+ 
+
+6. What is the major construction material of the external walls? 
+
+A. Mud, wood, bamboo, rattan, tin, or other 
+
+0 
+
+ 
+
+B. Brick, concrete, or unbaked brick 
+
+8 
+
+ 
+
+ 
+
+7. What is the primary material of the floor? 
+
+A. Earth/clay, wood, bamboo, or other 
+
+0 
+
+ 
+
+B. Concrete/brick, floor tile/cement, marble/ceramic 
+
+3 
+
+ 
+
+ 
+
+8. Does the household own any televisions, tape players/CD players, or radios? 
+
+A. No 
+
+0 
+
+ 
+
+B. Yes 
+
+4 
+
+ 
+
+ 
+
+9. How many clothes cupboards (lemari pakaian) does the household own? 
+
+A. None 
+
+0 
+
+ 
+
+B. One 
+
+2 
+
+ 
+
+C. Two or more 
+
+4 
+
+ 
+
+ 
+
+10. How many meters squared of land does the household cultivate (or has or controls, even if the land does not belong to the household) that is for annual crops or fallow, tree crops, pasture, plantation, grassland, or garden/garden plot? 
+
+A. 1 to 1,499 
+
+0 
+
+ 
+
+B. 1,500 to 2,999 
+
+3 
+
+ 
+
+C. 3,000 to 9,999 
+
+6 
+
+ 
+
+D. None 
+
+6 
+
+ 
+
+E. 10,000 or more 
+
+11 
+
+ 
+
+ 
+
+Total score:
+
+Source: Progress out of Poverty Index®: A Simple Poverty Scorecard for Timor-Leste by Mark Schreiner. 
+
+
+Timor-Leste PPI®: Household Roster 
+Complete this household roster using the definition of household member below and in the “Guidelines for the 
+Interpretation of Scorecard Indicators”. Then record household size and responses for questions 2, 3, and 5 in the 
+scorecard. 
+
+
+Name 
+
+How old is 
+[name]? (in 
+completed 
+years) 
+
+Does [name] currently 
+attend school? (ask only for 
+ages 8 to 17) 
+
+What was the main occupation of [name] in 
+the past 12 months? (ask only if 10-years-old 
+or older) 
+
+None 
+
+Wage 
+
+Non-wage 
+
+Farming 
+
+1. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+2. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+5. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+6. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+7. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+8. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+9. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+10. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+11. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+12. 
+
+ 
+
+No Yes Not 8 to 17 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+Use an additional sheet if there are more than 12 household members.  
+
+
+ 
+Record the total number of household members under “household size” at the top of the scorecard 
+ 
+Mark scorecard Question 2 based on the number of household members 17-years-old or younger 
+ 
+Mark scorecard Question 3 based on whether all household members ages 8 to 17 attend school 
+ 
+Mark scorecard Question 4 based on whether any household member’s main occupation was a wage or non-wage, 
+non-farming job 
+
+
+ 
+Household members are defined as the people who normally live in the same house and eat from the same pot (that is, 
+they have a common arrangement for food, such as using a common kitchen or a common food budget), including young 
+children, newborns, old people, sick people, people who are temporarily absent, domestic employees (inside doors), and 
+relatives, pensioners, and guests. The persons may be related to each other or may be non-relatives, including servants or 
+employees who stay with the employer. The field agent should make a complete list of all the people who normally live 
+and eat their meals together in this dwelling. All people who currently live in the residence are counted as members. 
+People who normally live in the residence but who are currently absent are also counted as members if the total length of 
+their absence (counting both actual past absence and expected future absence) is six months or less. Newborns, 
+newlyweds, and people who recently joined the household permanently are counted as members even though their past 
+absence may have exceeded six months. Please consult the Interpretation of Indicators document for further details and 
+definitions. 
+
+
+

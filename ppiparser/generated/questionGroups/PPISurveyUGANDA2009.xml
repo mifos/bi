@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Uganda 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Uganda 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_uganda_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many members does the household have?</text>
+            <nickname>ppi_uganda_2009_family_members</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Six or more</value>
+            </choice>
+            <choice order="2">
+                <value>Four or five</value>
+            </choice>
+            <choice order="3">
+                <value>Three</value>
+            </choice>
+            <choice order="4">
+                <value>Two</value>
+            </choice>
+            <choice order="5">
+                <value>One</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>Do all children ages 6 to 18 currently attend school (government, private, NGO/religious, or boarding)?</text>
+            <nickname>ppi_uganda_2009_family_members_6_to_18_in_school</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Not all attend</value>
+            </choice>
+            <choice order="2">
+                <value>All attend government schools</value>
+            </choice>
+            <choice order="3">
+                <value>No children ages 6 to 18</value>
+            </choice>
+            <choice order="4">
+                <value>All attend, and one or more attend a private, NGO/religious, or boarding school</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>What is the highest grade that the female head/spouse completed?</text>
+            <nickname>ppi_uganda_2009_female_head_education_level</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="2">
+                <value>P.5 or less, or none</value>
+            </choice>
+            <choice order="3">
+                <value>P.6</value>
+            </choice>
+            <choice order="4">
+                <value>P.7 to S.6</value>
+            </choice>
+            <choice order="5">
+                <value>Higher than S.6</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>What is the major construction material of the roof?</text>
+            <nickname>ppi_uganda_2009_house_roof</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Thatch, straw, or other</value>
+            </choice>
+            <choice order="2">
+                <value>Iron sheets, or tiles</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the major construction material of the external wall?</text>
+            <nickname>ppi_uganda_2009_house_walls</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Un-burnt bricks, mud and poles, thatch/straw. timber, stone, burnt bricks with mud, other</value>
+            </choice>
+            <choice order="2">
+                <value>Burnt bricks with cement, or cement blocks</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What is the main source of lighting in your dwelling?</text>
+            <nickname>ppi_uganda_2009_lighting_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Firewood</value>
+            </choice>
+            <choice order="2">
+                <value>Tadooba, or other</value>
+            </choice>
+            <choice order="3">
+                <value>Paraffin lantern, or electricity (grid, generator, solar)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>What is the type of toilet that is mainly used in your household?</text>
+            <nickname>ppi_uganda_2009_toilet_type</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Bush (none)</value>
+            </choice>
+            <choice order="2">
+                <value>Covered pit latrine (private or shared), VIP latrine (private or shared), uncovered pit latrine, flush toilet (private or shared), or other</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does any member of your household own electronic equipment (e.g., TV, radio, cassette, etc.) at present?</text>
+            <nickname>ppi_uganda_2009_owns_electronic_equipment</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does every member of the household have at least two sets of clothes?</text>
+            <nickname>ppi_uganda_2009_at_least_two_sets_of_clothes</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does every member of the household have at least one pair of shoes?</text>
+            <nickname>ppi_uganda_2009_at_least_a_pair_of_shoes</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>

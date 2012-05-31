@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionGroup xmlns="http://www.mifos.org/QuestionGroupDefinition"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
+    <ppi>true</ppi>
+    <title>PPI Colombia 2009</title>
+    <editable>false</editable>
+    <eventSource>
+        <event>Create</event>
+        <source>Client</source>
+    </eventSource>
+    <section order="1">
+        <name>PPI Colombia 2009</name>
+        <question order="1">
+            <text>Date Survey Was Taken</text>
+            <nickname>ppi_colombia_2009_survey_date</nickname>
+            <type>DATE</type>
+            <mandatory>true</mandatory>
+        </question>
+        <question order="2">
+            <text>How many household members are 18-years-old or younger?</text>
+            <nickname>ppi_colombia_2009_family_members_0_to_18</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Four or more</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Two</value>
+            </choice>
+            <choice order="4">
+                <value>One</value>
+            </choice>
+            <choice order="5">
+                <value>None</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="3">
+            <text>What is the highest educational level reached by the female head/spouse?</text>
+            <nickname>ppi_colombia_2009_female_head_education_level</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None, or pre-school</value>
+            </choice>
+            <choice order="2">
+                <value>Primary or middle school</value>
+            </choice>
+            <choice order="3">
+                <value>High school</value>
+            </choice>
+            <choice order="4">
+                <value>No female head/spouse</value>
+            </choice>
+            <choice order="5">
+                <value>Post-secondary or college (1 to 4 years)</value>
+            </choice>
+            <choice order="6">
+                <value>Post-secondary or college (5 years or more)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="4">
+            <text>How many household members spent most of the past week working?</text>
+            <nickname>ppi_colombia_2009_family_members_working_last_week</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="5">
+            <text>In their main line of work, how many household members work as wage or salary employees for a private firm or the government?</text>
+            <nickname>ppi_colombia_2009_family_members_employed</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>One</value>
+            </choice>
+            <choice order="3">
+                <value>Two or more</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="6">
+            <text>What is the residence’s rate class for electricity?</text>
+            <nickname>ppi_colombia_2009_electricity_class</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No class or zero (no connection, pirated connection, or generator), one, or two</value>
+            </choice>
+            <choice order="2">
+                <value>Three</value>
+            </choice>
+            <choice order="3">
+                <value>Four, five, or six</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="7">
+            <text>What fuel or energy source does the household usually cook with?</text>
+            <nickname>ppi_colombia_2009_cooking_fuel</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>Firewood, wood, charcoal, coal, electricity, gasoline, petroleum, kerosene, alcohol, or waste material</value>
+            </choice>
+            <choice order="2">
+                <value>LPG from a cylinder or tank</value>
+            </choice>
+            <choice order="3">
+                <value>Natural gas from a public network</value>
+            </choice>
+            <choice order="4">
+                <value>Does not cook</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="8">
+            <text>Does the household have a working clothes washing machine?</text>
+            <nickname>ppi_colombia_2009_owns_washing_machine</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="9">
+            <text>Does the household have a working refrigerator or freezer?</text>
+            <nickname>ppi_colombia_2009_owns_refrigerator</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="10">
+            <text>Does the household have a working DVD?</text>
+            <nickname>ppi_colombia_2009_owns_dvd</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>No</value>
+            </choice>
+            <choice order="2">
+                <value>Yes</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+        <question order="11">
+            <text>Does the household have a motorcycle and/or a car for its own use?</text>
+            <nickname>ppi_colombia_2009_owns_car_motorcycle</nickname>
+            <type>SINGLE_SELECT</type>
+            <choice order="1">
+                <value>None</value>
+            </choice>
+            <choice order="2">
+                <value>Motorcycle only</value>
+            </choice>
+            <choice order="3">
+                <value>Car (regardless of motorcycle)</value>
+            </choice>
+
+            <mandatory>true</mandatory>
+        </question>
+
+    </section>
+</QuestionGroup>
