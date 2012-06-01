@@ -42,8 +42,8 @@ class PPIClientExportReportTest {
             // Check row for PPI Kenya 2008:
             t.assertRowEquals(16, ['client dw1 2 1 xxx', '6', '2010-11-01', 'PPI Kenya 2008', 'BO 1', '2010-07-03', '50.0000', 'Female', '1987-07-07', '0', '55.8', '81.2', '63.1', '10.0', '63.4'])
 
-            // Check row for PPI Honduras 2010:
-            t.assertRowEquals(45, ['client dw1 2 1 xxx', '6', '2010-11-02', 'PPI Honduras 2010', 'BO 1', '2010-07-03', '50.0000', 'Female', '1987-07-07', '100', '0.0', '0.0', '0.0', '2.7', '0.0', '2.7'])
+            // Check row for PPI Haiti 2006:
+            t.assertRowEquals(45, ['client dw1 2 1 xxx', '6', '2010-11-02', 'PPI Haiti 2006', 'BO 1', '2010-07-03', '50.0000', 'Female', '1987-07-07', '100', '0.0', '0.0'])
         }  
     }
 }
