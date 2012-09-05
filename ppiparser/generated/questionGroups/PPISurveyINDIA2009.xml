@@ -3,23 +3,23 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
     <ppi>true</ppi>
-    <title>PPI India 2008</title>
+    <title>PPI India 2009</title>
     <editable>false</editable>
     <eventSource>
         <event>Create</event>
         <source>Client</source>
     </eventSource>
     <section order="1">
-        <name>PPI India 2008</name>
+        <name>PPI India 2009</name>
         <question order="1">
             <text>Date Survey Was Taken</text>
-            <nickname>ppi_india_2008_survey_date</nickname>
+            <nickname>ppi_india_2009_survey_date</nickname>
             <type>DATE</type>
             <mandatory>true</mandatory>
         </question>
         <question order="2">
             <text>How many household members are 17-years-old or younger?</text>
-            <nickname>ppi_india_2008_family_members_0_to_17</nickname>
+            <nickname>ppi_india_2009_family_members_0_to_17</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Four or more</value>
@@ -41,7 +41,7 @@
         </question>
         <question order="3">
             <text>What is the general education level of the male head/spouse?</text>
-            <nickname>ppi_india_2008_male_head_education_level</nickname>
+            <nickname>ppi_india_2009_male_head_education_level</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No male head/spouse</value>
@@ -63,7 +63,7 @@
         </question>
         <question order="4">
             <text>What is the household type?</text>
-            <nickname>ppi_india_2008_household_type</nickname>
+            <nickname>ppi_india_2009_household_type</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Labour (agricultural, casual, or other)</value>
@@ -76,7 +76,7 @@
         </question>
         <question order="5">
             <text>What is the primary source of energy for cooking?</text>
-            <nickname>ppi_india_2008_cooking_fuel</nickname>
+            <nickname>ppi_india_2009_cooking_fuel</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Firewood and chips, dung cake, kerosene, charcoal, coke or coal, gobar gas, or others</value>
@@ -92,7 +92,7 @@
         </question>
         <question order="6">
             <text>Does the household possess any casseroles, thermos, or thermoware?</text>
-            <nickname>ppi_india_2008_owns_casseroles_thermos_thermoware</nickname>
+            <nickname>ppi_india_2009_owns_casseroles_thermos_thermoware</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -105,7 +105,7 @@
         </question>
         <question order="7">
             <text>Does the household possess a television and a VCR/VCD/DVD player?</text>
-            <nickname>ppi_india_2008_owns_vcr_vcd_dvd</nickname>
+            <nickname>ppi_india_2009_owns_vcr_vcd_dvd</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No, neither one</value>
@@ -121,7 +121,7 @@
         </question>
         <question order="8">
             <text>Does the household possess a mobile handset and a telephone instrument (landline)?</text>
-            <nickname>ppi_india_2008_phones</nickname>
+            <nickname>ppi_india_2009_phones</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No, neither one</value>
@@ -137,7 +137,7 @@
         </question>
         <question order="9">
             <text>Does the household possess a sewing machine?</text>
-            <nickname>ppi_india_2008_owns_sewing_machine</nickname>
+            <nickname>ppi_india_2009_owns_sewing_machine</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -150,7 +150,7 @@
         </question>
         <question order="10">
             <text>Does the household possess an almirah/dressing table?</text>
-            <nickname>ppi_india_2008_onws_almirah</nickname>
+            <nickname>ppi_india_2009_onws_almirah</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -163,7 +163,7 @@
         </question>
         <question order="11">
             <text>Does the household possess a bicycle, motorcycle/scooter, or motor car/jeep?</text>
-            <nickname>ppi_india_2008_owns_bicycle_scooter_car</nickname>
+            <nickname>ppi_india_2009_owns_bicycle_scooter_car</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No, none</value>

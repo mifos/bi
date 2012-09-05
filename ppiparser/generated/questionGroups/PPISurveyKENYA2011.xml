@@ -3,23 +3,23 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.mifos.org/QuestionGroupDefinition QuestionGroupDefinition.xsd ">
     <ppi>true</ppi>
-    <title>PPI Kenya 2008</title>
+    <title>PPI Kenya 2011</title>
     <editable>false</editable>
     <eventSource>
         <event>Create</event>
         <source>Client</source>
     </eventSource>
     <section order="1">
-        <name>PPI Kenya 2008</name>
+        <name>PPI Kenya 2011</name>
         <question order="1">
             <text>Date Survey Was Taken</text>
-            <nickname>ppi_kenya_2008_survey_date</nickname>
+            <nickname>ppi_kenya_2011_survey_date</nickname>
             <type>DATE</type>
             <mandatory>true</mandatory>
         </question>
         <question order="2">
             <text>How many members does the household have?</text>
-            <nickname>ppi_kenya_2008_family_members</nickname>
+            <nickname>ppi_kenya_2011_family_members</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Nine or more</value>
@@ -47,7 +47,7 @@
         </question>
         <question order="3">
             <text>What is the highest school grade that the female head/spouse has completed?</text>
-            <nickname>ppi_kenya_2008_female_head_education_level</nickname>
+            <nickname>ppi_kenya_2011_female_head_education_level</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None, or pre-school</value>
@@ -72,7 +72,7 @@
         </question>
         <question order="4">
             <text>What kind of business (type of industry) is the main occupation of the male head/spouse connected with?</text>
-            <nickname>ppi_kenya_2008_male_head_occupation</nickname>
+            <nickname>ppi_kenya_2011_male_head_occupation</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Does not work</value>
@@ -91,7 +91,7 @@
         </question>
         <question order="5">
             <text>How many habitable rooms does this household occupy in its main dwelling (do not count bathrooms, toilets, storerooms, or garage)?</text>
-            <nickname>ppi_kenya_2008_house_rooms</nickname>
+            <nickname>ppi_kenya_2011_house_rooms</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>One</value>
@@ -110,7 +110,7 @@
         </question>
         <question order="6">
             <text>The floor of the main dwelling is predominantly made of what</text>
-            <nickname>ppi_kenya_2008_house_floors</nickname>
+            <nickname>ppi_kenya_2011_house_floors</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Wood, earth, or other</value>
@@ -123,7 +123,7 @@
         </question>
         <question order="7">
             <text>What is the main source of lighting fuel for the household?</text>
-            <nickname>ppi_kenya_2008_lighting_fuel</nickname>
+            <nickname>ppi_kenya_2011_lighting_fuel</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>Collected firewood, purchased firewood, grass, or dry cell (torch)</value>
@@ -139,7 +139,7 @@
         </question>
         <question order="8">
             <text>Does your household own any irons (charcoal or electric)?</text>
-            <nickname>ppi_kenya_2008_owns_iron</nickname>
+            <nickname>ppi_kenya_2011_owns_iron</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>No</value>
@@ -152,7 +152,7 @@
         </question>
         <question order="9">
             <text>How many mosquito nets does your household own?</text>
-            <nickname>ppi_kenya_2008_mosquito_nets</nickname>
+            <nickname>ppi_kenya_2011_mosquito_nets</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
@@ -168,7 +168,7 @@
         </question>
         <question order="10">
             <text>How many towels does your household own?</text>
-            <nickname>ppi_kenya_2008_towels</nickname>
+            <nickname>ppi_kenya_2011_towels</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
@@ -184,7 +184,7 @@
         </question>
         <question order="11">
             <text>How many frying pans does your household own?</text>
-            <nickname>ppi_kenya_2008_frying_pans</nickname>
+            <nickname>ppi_kenya_2011_frying_pans</nickname>
             <type>SINGLE_SELECT</type>
             <choice order="1">
                 <value>None</value>
